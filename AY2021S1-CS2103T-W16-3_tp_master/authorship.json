@@ -1,5 +1,727 @@
 [
   {
+    "path": ".github/check-eof-newline.sh",
+    "fileType": "other",
+    "lines": [
+      {
+        "lineNumber": 1,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "#!/bin/sh"
+      },
+      {
+        "lineNumber": 2,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "# Checks that all text files end with a newline."
+      },
+      {
+        "lineNumber": 3,
+        "author": {
+          "gitId": "ianyong"
+        },
+        "content": "echo \"Checking for newline at EOF...\""
+      },
+      {
+        "lineNumber": 4,
+        "author": {
+          "gitId": "-"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 5,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "ret\u003d0"
+      },
+      {
+        "lineNumber": 6,
+        "author": {
+          "gitId": "-"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 7,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "# Preserve filename with spaces by only splitting on newlines."
+      },
+      {
+        "lineNumber": 8,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "IFS\u003d\u0027"
+      },
+      {
+        "lineNumber": 9,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "\u0027"
+      },
+      {
+        "lineNumber": 10,
+        "author": {
+          "gitId": "-"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 11,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "for filename in $(git grep --cached -I -l -e \u0027\u0027 -- \u0027:/\u0027); do"
+      },
+      {
+        "lineNumber": 12,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "    if [ \"$(tail -c 1 \"./$filename\")\" !\u003d \u0027\u0027 ]; then"
+      },
+      {
+        "lineNumber": 13,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "        line\u003d\"$(wc -l \"./$filename\" | cut -d\u0027 \u0027 -f1)\""
+      },
+      {
+        "lineNumber": 14,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "        echo \"ERROR:$filename:$line: no newline at EOF.\""
+      },
+      {
+        "lineNumber": 15,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "        ret\u003d1"
+      },
+      {
+        "lineNumber": 16,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "    fi"
+      },
+      {
+        "lineNumber": 17,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "done"
+      },
+      {
+        "lineNumber": 18,
+        "author": {
+          "gitId": "-"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 19,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "exit $ret"
+      }
+    ],
+    "authorContributionMap": {
+      "-": 18,
+      "ianyong": 1
+    }
+  },
+  {
+    "path": ".github/check-line-endings.sh",
+    "fileType": "other",
+    "lines": [
+      {
+        "lineNumber": 1,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "#!/bin/sh"
+      },
+      {
+        "lineNumber": 2,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "# Checks for prohibited line endings."
+      },
+      {
+        "lineNumber": 3,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "# Prohibited line endings: \\r\\n"
+      },
+      {
+        "lineNumber": 4,
+        "author": {
+          "gitId": "ianyong"
+        },
+        "content": "echo \"Checking for prohibited line endings...\""
+      },
+      {
+        "lineNumber": 5,
+        "author": {
+          "gitId": "-"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 6,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "git grep --cached -I -n --no-color -P \u0027\\r$\u0027 -- \u0027:/\u0027 |"
+      },
+      {
+        "lineNumber": 7,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "awk \u0027"
+      },
+      {
+        "lineNumber": 8,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "    BEGIN {"
+      },
+      {
+        "lineNumber": 9,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "        FS \u003d \":\""
+      },
+      {
+        "lineNumber": 10,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "        OFS \u003d \":\""
+      },
+      {
+        "lineNumber": 11,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "        ret \u003d 0"
+      },
+      {
+        "lineNumber": 12,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "    }"
+      },
+      {
+        "lineNumber": 13,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "    {"
+      },
+      {
+        "lineNumber": 14,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "        ret \u003d 1"
+      },
+      {
+        "lineNumber": 15,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "        print \"ERROR\", $1, $2, \" prohibited \\\\r\\\\n line ending, use \\\\n instead.\""
+      },
+      {
+        "lineNumber": 16,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "    }"
+      },
+      {
+        "lineNumber": 17,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "    END {"
+      },
+      {
+        "lineNumber": 18,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "        exit ret"
+      },
+      {
+        "lineNumber": 19,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "    }"
+      },
+      {
+        "lineNumber": 20,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "\u0027"
+      }
+    ],
+    "authorContributionMap": {
+      "-": 19,
+      "ianyong": 1
+    }
+  },
+  {
+    "path": ".github/check-trailing-whitespace.sh",
+    "fileType": "other",
+    "lines": [
+      {
+        "lineNumber": 1,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "#!/bin/sh"
+      },
+      {
+        "lineNumber": 2,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "# Checks for trailing whitespace"
+      },
+      {
+        "lineNumber": 3,
+        "author": {
+          "gitId": "ianyong"
+        },
+        "content": "echo \"Checking for trailing whitespace...\""
+      },
+      {
+        "lineNumber": 4,
+        "author": {
+          "gitId": "-"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 5,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "git grep --cached -I -n --no-color -P \u0027[ \\t]+$\u0027 -- \u0027:/\u0027 |"
+      },
+      {
+        "lineNumber": 6,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "awk \u0027"
+      },
+      {
+        "lineNumber": 7,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "    BEGIN {"
+      },
+      {
+        "lineNumber": 8,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "        FS \u003d \":\""
+      },
+      {
+        "lineNumber": 9,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "        OFS \u003d \":\""
+      },
+      {
+        "lineNumber": 10,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "        ret \u003d 0"
+      },
+      {
+        "lineNumber": 11,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "    }"
+      },
+      {
+        "lineNumber": 12,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "    {"
+      },
+      {
+        "lineNumber": 13,
+        "author": {
+          "gitId": "ianyong"
+        },
+        "content": "        # Only warn for markdown files (*.md) to accommodate text editors"
+      },
+      {
+        "lineNumber": 14,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "        # which do not properly handle trailing whitespace."
+      },
+      {
+        "lineNumber": 15,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "        # (e.g. GitHub web editor)"
+      },
+      {
+        "lineNumber": 16,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "        if ($1 ~ /\\.md$/) {"
+      },
+      {
+        "lineNumber": 17,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "            severity \u003d \"WARN\""
+      },
+      {
+        "lineNumber": 18,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "        } else {"
+      },
+      {
+        "lineNumber": 19,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "            severity \u003d \"ERROR\""
+      },
+      {
+        "lineNumber": 20,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "            ret \u003d 1"
+      },
+      {
+        "lineNumber": 21,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "        }"
+      },
+      {
+        "lineNumber": 22,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "        print severity, $1, $2, \" trailing whitespace.\""
+      },
+      {
+        "lineNumber": 23,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "    }"
+      },
+      {
+        "lineNumber": 24,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "    END {"
+      },
+      {
+        "lineNumber": 25,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "        exit ret"
+      },
+      {
+        "lineNumber": 26,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "    }"
+      },
+      {
+        "lineNumber": 27,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "\u0027"
+      }
+    ],
+    "authorContributionMap": {
+      "-": 25,
+      "ianyong": 2
+    }
+  },
+  {
+    "path": ".github/run-checks.sh",
+    "fileType": "other",
+    "lines": [
+      {
+        "lineNumber": 1,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "#!/bin/sh"
+      },
+      {
+        "lineNumber": 2,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "# Runs all check-* scripts, and returns a non-zero exit code if any of them fail."
+      },
+      {
+        "lineNumber": 3,
+        "author": {
+          "gitId": "-"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 4,
+        "author": {
+          "gitId": "ianyong"
+        },
+        "content": "echo \"Running formatting checks...\""
+      },
+      {
+        "lineNumber": 5,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "dir\u003d$(CDPATH\u003d cd -- \"$(dirname -- \"$0\")\" \u0026\u0026 pwd) \u0026\u0026"
+      },
+      {
+        "lineNumber": 6,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "ret\u003d0 \u0026\u0026"
+      },
+      {
+        "lineNumber": 7,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "for checkscript in \"$dir\"/check-*; do"
+      },
+      {
+        "lineNumber": 8,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "    if ! \"$checkscript\"; then"
+      },
+      {
+        "lineNumber": 9,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "        ret\u003d1"
+      },
+      {
+        "lineNumber": 10,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "    fi"
+      },
+      {
+        "lineNumber": 11,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "done"
+      },
+      {
+        "lineNumber": 12,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "exit $ret"
+      }
+    ],
+    "authorContributionMap": {
+      "-": 11,
+      "ianyong": 1
+    }
+  },
+  {
+    "path": "README.md",
+    "fileType": "docs",
+    "lines": [
+      {
+        "lineNumber": 1,
+        "author": {
+          "gitId": "siddarth2824"
+        },
+        "content": "[![CI Status](https://github.com/AY2021S1-CS2103T-W16-3/tp/workflows/Java%20CI/badge.svg)](https://github.com/AY2021S1-CS2103T-W16-3/tp/actions)"
+      },
+      {
+        "lineNumber": 2,
+        "author": {
+          "gitId": "-"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 3,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "![Ui](docs/images/Ui.png)"
+      },
+      {
+        "lineNumber": 4,
+        "author": {
+          "gitId": "-"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 5,
+        "author": {
+          "gitId": "siddarth2824"
+        },
+        "content": "* Fine$$e is a desktop app for **managing finances, optimized for use via a Command Line Interface (CLI)** while still having the benefits of a Graphical User Interface (GUI). If you can type fast, Fine\\$\\$e can track and help you cultivate good financial habits faster than traditional GUI apps."
+      },
+      {
+        "lineNumber": 6,
+        "author": {
+          "gitId": "siddarth2824"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 7,
+        "author": {
+          "gitId": "siddarth2824"
+        },
+        "content": " Site Map"
+      },
+      {
+        "lineNumber": 8,
+        "author": {
+          "gitId": "siddarth2824"
+        },
+        "content": "\u003d\u003d"
+      },
+      {
+        "lineNumber": 9,
+        "author": {
+          "gitId": "siddarth2824"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 10,
+        "author": {
+          "gitId": "siddarth2824"
+        },
+        "content": "* [User Guide](https://ay2021s1-cs2103t-w16-3.github.io/tp/UserGuide.html)"
+      },
+      {
+        "lineNumber": 11,
+        "author": {
+          "gitId": "siddarth2824"
+        },
+        "content": "* [Developer Guide](https://ay2021s1-cs2103t-w16-3.github.io/tp/DeveloperGuide.html)"
+      },
+      {
+        "lineNumber": 12,
+        "author": {
+          "gitId": "siddarth2824"
+        },
+        "content": "* [About Us](https://ay2021s1-cs2103t-w16-3.github.io/tp/AboutUs.html)"
+      },
+      {
+        "lineNumber": 13,
+        "author": {
+          "gitId": "siddarth2824"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 14,
+        "author": {
+          "gitId": "siddarth2824"
+        },
+        "content": "Acknowledgments"
+      },
+      {
+        "lineNumber": 15,
+        "author": {
+          "gitId": "siddarth2824"
+        },
+        "content": "\u003d\u003d"
+      },
+      {
+        "lineNumber": 16,
+        "author": {
+          "gitId": "siddarth2824"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 17,
+        "author": {
+          "gitId": "siddarth2824"
+        },
+        "content": "* This project is based on the AddressBook-Level3 project created by the [SE-EDU initiative](https://se-education.org)."
+      },
+      {
+        "lineNumber": 18,
+        "author": {
+          "gitId": "siddarth2824"
+        },
+        "content": "* Libraries used: [JavaFX](https://openjfx.io/), [Jackson](https://github.com/FasterXML/jackson), [JUnit5](https://github.com/junit-team/junit5)"
+      }
+    ],
+    "authorContributionMap": {
+      "siddarth2824": 15,
+      "-": 3
+    }
+  },
+  {
     "path": "build.gradle",
     "fileType": "other",
     "lines": [
@@ -386,234 +1108,241 @@
         "author": {
           "gitId": "ianyong"
         },
-        "content": "        \u0027pre-push\u0027: \u0027clean check\u0027"
+        "content": "        // Git hooks run in a bash environment regardless of OS."
       },
       {
         "lineNumber": 56,
         "author": {
           "gitId": "ianyong"
         },
-        "content": "    ]"
+        "content": "        \u0027pre-push\u0027: \u0027clean check \u0026\u0026 .github/run-checks.sh\u0027"
       },
       {
         "lineNumber": 57,
         "author": {
           "gitId": "ianyong"
         },
-        "content": "}"
+        "content": "    ]"
       },
       {
         "lineNumber": 58,
         "author": {
           "gitId": "ianyong"
         },
-        "content": ""
+        "content": "}"
       },
       {
         "lineNumber": 59,
         "author": {
-          "gitId": "-"
+          "gitId": "ianyong"
         },
-        "content": "dependencies {"
+        "content": ""
       },
       {
         "lineNumber": 60,
         "author": {
           "gitId": "-"
         },
-        "content": "    String jUnitVersion \u003d \u00275.4.0\u0027"
+        "content": "dependencies {"
       },
       {
         "lineNumber": 61,
         "author": {
           "gitId": "-"
         },
-        "content": "    String javaFxVersion \u003d \u002711\u0027"
+        "content": "    String jUnitVersion \u003d \u00275.4.0\u0027"
       },
       {
         "lineNumber": 62,
         "author": {
           "gitId": "-"
         },
-        "content": ""
+        "content": "    String javaFxVersion \u003d \u002711\u0027"
       },
       {
         "lineNumber": 63,
         "author": {
           "gitId": "-"
         },
-        "content": "    implementation group: \u0027org.openjfx\u0027, name: \u0027javafx-base\u0027, version: javaFxVersion, classifier: \u0027win\u0027"
+        "content": ""
       },
       {
         "lineNumber": 64,
         "author": {
           "gitId": "-"
         },
-        "content": "    implementation group: \u0027org.openjfx\u0027, name: \u0027javafx-base\u0027, version: javaFxVersion, classifier: \u0027mac\u0027"
+        "content": "    implementation group: \u0027org.openjfx\u0027, name: \u0027javafx-base\u0027, version: javaFxVersion, classifier: \u0027win\u0027"
       },
       {
         "lineNumber": 65,
         "author": {
           "gitId": "-"
         },
-        "content": "    implementation group: \u0027org.openjfx\u0027, name: \u0027javafx-base\u0027, version: javaFxVersion, classifier: \u0027linux\u0027"
+        "content": "    implementation group: \u0027org.openjfx\u0027, name: \u0027javafx-base\u0027, version: javaFxVersion, classifier: \u0027mac\u0027"
       },
       {
         "lineNumber": 66,
         "author": {
           "gitId": "-"
         },
-        "content": "    implementation group: \u0027org.openjfx\u0027, name: \u0027javafx-controls\u0027, version: javaFxVersion, classifier: \u0027win\u0027"
+        "content": "    implementation group: \u0027org.openjfx\u0027, name: \u0027javafx-base\u0027, version: javaFxVersion, classifier: \u0027linux\u0027"
       },
       {
         "lineNumber": 67,
         "author": {
           "gitId": "-"
         },
-        "content": "    implementation group: \u0027org.openjfx\u0027, name: \u0027javafx-controls\u0027, version: javaFxVersion, classifier: \u0027mac\u0027"
+        "content": "    implementation group: \u0027org.openjfx\u0027, name: \u0027javafx-controls\u0027, version: javaFxVersion, classifier: \u0027win\u0027"
       },
       {
         "lineNumber": 68,
         "author": {
           "gitId": "-"
         },
-        "content": "    implementation group: \u0027org.openjfx\u0027, name: \u0027javafx-controls\u0027, version: javaFxVersion, classifier: \u0027linux\u0027"
+        "content": "    implementation group: \u0027org.openjfx\u0027, name: \u0027javafx-controls\u0027, version: javaFxVersion, classifier: \u0027mac\u0027"
       },
       {
         "lineNumber": 69,
         "author": {
           "gitId": "-"
         },
-        "content": "    implementation group: \u0027org.openjfx\u0027, name: \u0027javafx-fxml\u0027, version: javaFxVersion, classifier: \u0027win\u0027"
+        "content": "    implementation group: \u0027org.openjfx\u0027, name: \u0027javafx-controls\u0027, version: javaFxVersion, classifier: \u0027linux\u0027"
       },
       {
         "lineNumber": 70,
         "author": {
           "gitId": "-"
         },
-        "content": "    implementation group: \u0027org.openjfx\u0027, name: \u0027javafx-fxml\u0027, version: javaFxVersion, classifier: \u0027mac\u0027"
+        "content": "    implementation group: \u0027org.openjfx\u0027, name: \u0027javafx-fxml\u0027, version: javaFxVersion, classifier: \u0027win\u0027"
       },
       {
         "lineNumber": 71,
         "author": {
           "gitId": "-"
         },
-        "content": "    implementation group: \u0027org.openjfx\u0027, name: \u0027javafx-fxml\u0027, version: javaFxVersion, classifier: \u0027linux\u0027"
+        "content": "    implementation group: \u0027org.openjfx\u0027, name: \u0027javafx-fxml\u0027, version: javaFxVersion, classifier: \u0027mac\u0027"
       },
       {
         "lineNumber": 72,
         "author": {
           "gitId": "-"
         },
-        "content": "    implementation group: \u0027org.openjfx\u0027, name: \u0027javafx-graphics\u0027, version: javaFxVersion, classifier: \u0027win\u0027"
+        "content": "    implementation group: \u0027org.openjfx\u0027, name: \u0027javafx-fxml\u0027, version: javaFxVersion, classifier: \u0027linux\u0027"
       },
       {
         "lineNumber": 73,
         "author": {
           "gitId": "-"
         },
-        "content": "    implementation group: \u0027org.openjfx\u0027, name: \u0027javafx-graphics\u0027, version: javaFxVersion, classifier: \u0027mac\u0027"
+        "content": "    implementation group: \u0027org.openjfx\u0027, name: \u0027javafx-graphics\u0027, version: javaFxVersion, classifier: \u0027win\u0027"
       },
       {
         "lineNumber": 74,
         "author": {
           "gitId": "-"
         },
-        "content": "    implementation group: \u0027org.openjfx\u0027, name: \u0027javafx-graphics\u0027, version: javaFxVersion, classifier: \u0027linux\u0027"
+        "content": "    implementation group: \u0027org.openjfx\u0027, name: \u0027javafx-graphics\u0027, version: javaFxVersion, classifier: \u0027mac\u0027"
       },
       {
         "lineNumber": 75,
         "author": {
           "gitId": "-"
         },
-        "content": ""
+        "content": "    implementation group: \u0027org.openjfx\u0027, name: \u0027javafx-graphics\u0027, version: javaFxVersion, classifier: \u0027linux\u0027"
       },
       {
         "lineNumber": 76,
         "author": {
           "gitId": "-"
         },
-        "content": "    implementation group: \u0027com.fasterxml.jackson.core\u0027, name: \u0027jackson-databind\u0027, version: \u00272.7.0\u0027"
+        "content": ""
       },
       {
         "lineNumber": 77,
         "author": {
           "gitId": "-"
         },
-        "content": "    implementation group: \u0027com.fasterxml.jackson.datatype\u0027, name: \u0027jackson-datatype-jsr310\u0027, version: \u00272.7.4\u0027"
+        "content": "    implementation group: \u0027com.fasterxml.jackson.core\u0027, name: \u0027jackson-databind\u0027, version: \u00272.7.0\u0027"
       },
       {
         "lineNumber": 78,
         "author": {
           "gitId": "-"
         },
-        "content": ""
+        "content": "    implementation group: \u0027com.fasterxml.jackson.datatype\u0027, name: \u0027jackson-datatype-jsr310\u0027, version: \u00272.7.4\u0027"
       },
       {
         "lineNumber": 79,
         "author": {
           "gitId": "-"
         },
-        "content": "    testImplementation group: \u0027org.junit.jupiter\u0027, name: \u0027junit-jupiter-api\u0027, version: jUnitVersion"
+        "content": ""
       },
       {
         "lineNumber": 80,
         "author": {
           "gitId": "-"
         },
-        "content": ""
+        "content": "    testImplementation group: \u0027org.junit.jupiter\u0027, name: \u0027junit-jupiter-api\u0027, version: jUnitVersion"
       },
       {
         "lineNumber": 81,
         "author": {
           "gitId": "-"
         },
-        "content": "    testRuntimeOnly group: \u0027org.junit.jupiter\u0027, name: \u0027junit-jupiter-engine\u0027, version: jUnitVersion"
+        "content": ""
       },
       {
         "lineNumber": 82,
         "author": {
           "gitId": "-"
         },
-        "content": "}"
+        "content": "    testRuntimeOnly group: \u0027org.junit.jupiter\u0027, name: \u0027junit-jupiter-engine\u0027, version: jUnitVersion"
       },
       {
         "lineNumber": 83,
         "author": {
           "gitId": "-"
         },
-        "content": ""
+        "content": "}"
       },
       {
         "lineNumber": 84,
         "author": {
           "gitId": "-"
         },
-        "content": "shadowJar {"
+        "content": ""
       },
       {
         "lineNumber": 85,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "shadowJar {"
+      },
+      {
+        "lineNumber": 86,
         "author": {
           "gitId": "wltan"
         },
         "content": "    archiveFileName \u003d \u0027addressbook.jar\u0027"
       },
       {
-        "lineNumber": 86,
+        "lineNumber": 87,
         "author": {
           "gitId": "-"
         },
         "content": "}"
       },
       {
-        "lineNumber": 87,
+        "lineNumber": 88,
         "author": {
           "gitId": "-"
         },
         "content": ""
       },
       {
-        "lineNumber": 88,
+        "lineNumber": 89,
         "author": {
           "gitId": "-"
         },
@@ -623,7 +1352,7 @@
     "authorContributionMap": {
       "wltan": 8,
       "-": 71,
-      "ianyong": 9
+      "ianyong": 10
     }
   },
   {
@@ -4675,6 +5404,149 @@
     }
   },
   {
+    "path": "docs/index.md",
+    "fileType": "docs",
+    "lines": [
+      {
+        "lineNumber": 1,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "---"
+      },
+      {
+        "lineNumber": 2,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "layout: page"
+      },
+      {
+        "lineNumber": 3,
+        "author": {
+          "gitId": "siddarth2824"
+        },
+        "content": "title: Fine$$e"
+      },
+      {
+        "lineNumber": 4,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "---"
+      },
+      {
+        "lineNumber": 5,
+        "author": {
+          "gitId": "-"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 6,
+        "author": {
+          "gitId": "siddarth2824"
+        },
+        "content": "[![CI Status](https://github.com/AY2021S1-CS2103T-W16-3/tp/workflows/Java%20CI/badge.svg)](https://github.com/AY2021S1-CS2103T-W16-3/tp/actions)"
+      },
+      {
+        "lineNumber": 7,
+        "author": {
+          "gitId": "siddarth2824"
+        },
+        "content": "[![codecov](https://codecov.io/gh/AY2021S1-CS2103T-W16-3/tp/branch/master/graph/badge.svg)](https://codecov.io/gh/AY2021S1-CS2103T-W16-3/tp)"
+      },
+      {
+        "lineNumber": 8,
+        "author": {
+          "gitId": "-"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 9,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "![Ui](images/Ui.png)"
+      },
+      {
+        "lineNumber": 10,
+        "author": {
+          "gitId": "-"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 11,
+        "author": {
+          "gitId": "siddarth2824"
+        },
+        "content": "**Fine$$e is a desktop app for managing finances, optimized for use via a Command Line Interface** (CLI) while still having the benefits of a Graphical User Interface (GUI). If you can type fast, Fine\\$\\$e can track and help you cultivate good financial habits faster than traditional GUI apps."
+      },
+      {
+        "lineNumber": 12,
+        "author": {
+          "gitId": "-"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 13,
+        "author": {
+          "gitId": "siddarth2824"
+        },
+        "content": "* If you are interested in using Fine$$e, head over to the [_Quick Start_ section of the **User Guide**](UserGuide.html#quick-start)."
+      },
+      {
+        "lineNumber": 14,
+        "author": {
+          "gitId": "siddarth2824"
+        },
+        "content": "* If you are interested in developing Fine$$e, the [**Developer Guide**](DeveloperGuide.html) is a good place to start."
+      },
+      {
+        "lineNumber": 15,
+        "author": {
+          "gitId": "-"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 16,
+        "author": {
+          "gitId": "-"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 17,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "**Acknowledgements**"
+      },
+      {
+        "lineNumber": 18,
+        "author": {
+          "gitId": "-"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 19,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "* Libraries used: [JavaFX](https://openjfx.io/), [Jackson](https://github.com/FasterXML/jackson), [JUnit5](https://github.com/junit-team/junit5)"
+      }
+    ],
+    "authorContributionMap": {
+      "siddarth2824": 6,
+      "-": 13
+    }
+  },
+  {
     "path": "docs/minutes/20200829.md",
     "fileType": "docs",
     "lines": [
@@ -5898,6 +6770,316 @@
     ],
     "authorContributionMap": {
       "ianyong": 40
+    }
+  },
+  {
+    "path": "docs/minutes/20200925.md",
+    "fileType": "docs",
+    "lines": [
+      {
+        "lineNumber": 1,
+        "author": {
+          "gitId": "zhaojj2209"
+        },
+        "content": "---"
+      },
+      {
+        "lineNumber": 2,
+        "author": {
+          "gitId": "zhaojj2209"
+        },
+        "content": "layout: minutes"
+      },
+      {
+        "lineNumber": 3,
+        "author": {
+          "gitId": "zhaojj2209"
+        },
+        "content": "date: 2020-09-25"
+      },
+      {
+        "lineNumber": 4,
+        "author": {
+          "gitId": "zhaojj2209"
+        },
+        "content": "---"
+      },
+      {
+        "lineNumber": 5,
+        "author": {
+          "gitId": "zhaojj2209"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 6,
+        "author": {
+          "gitId": "zhaojj2209"
+        },
+        "content": "_\\*Foreword: Meetings have been shifted from Saturdays to Fridays_"
+      },
+      {
+        "lineNumber": 7,
+        "author": {
+          "gitId": "zhaojj2209"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 8,
+        "author": {
+          "gitId": "zhaojj2209"
+        },
+        "content": "### Tasks for v1.2 (Due: 11th October)"
+      },
+      {
+        "lineNumber": 9,
+        "author": {
+          "gitId": "zhaojj2209"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 10,
+        "author": {
+          "gitId": "zhaojj2209"
+        },
+        "content": "- Renaming (Yong Ping)"
+      },
+      {
+        "lineNumber": 11,
+        "author": {
+          "gitId": "zhaojj2209"
+        },
+        "content": "  - Person \u0026rarr; Transaction"
+      },
+      {
+        "lineNumber": 12,
+        "author": {
+          "gitId": "zhaojj2209"
+        },
+        "content": "    - Name \u0026rarr; Name"
+      },
+      {
+        "lineNumber": 13,
+        "author": {
+          "gitId": "zhaojj2209"
+        },
+        "content": "    - Phone \u0026rarr; Amount"
+      },
+      {
+        "lineNumber": 14,
+        "author": {
+          "gitId": "zhaojj2209"
+        },
+        "content": "    - Tags \u0026rarr; Category"
+      },
+      {
+        "lineNumber": 15,
+        "author": {
+          "gitId": "zhaojj2209"
+        },
+        "content": "    - Email \u0026rarr; Date"
+      },
+      {
+        "lineNumber": 16,
+        "author": {
+          "gitId": "zhaojj2209"
+        },
+        "content": "    - Address \u0026rarr; (deleted)"
+      },
+      {
+        "lineNumber": 17,
+        "author": {
+          "gitId": "zhaojj2209"
+        },
+        "content": "- Slowly fix tests"
+      },
+      {
+        "lineNumber": 18,
+        "author": {
+          "gitId": "zhaojj2209"
+        },
+        "content": "  - Test data for Name/Amount/Category"
+      },
+      {
+        "lineNumber": 19,
+        "author": {
+          "gitId": "zhaojj2209"
+        },
+        "content": "- UI"
+      },
+      {
+        "lineNumber": 20,
+        "author": {
+          "gitId": "zhaojj2209"
+        },
+        "content": "  - Make it look like the mock-up (Siddarth)"
+      },
+      {
+        "lineNumber": 21,
+        "author": {
+          "gitId": "zhaojj2209"
+        },
+        "content": "- Models"
+      },
+      {
+        "lineNumber": 22,
+        "author": {
+          "gitId": "zhaojj2209"
+        },
+        "content": "  - Set up expenses, income, etc once transaction is up (Jingjing)"
+      },
+      {
+        "lineNumber": 23,
+        "author": {
+          "gitId": "zhaojj2209"
+        },
+        "content": "  - Modify AB3 to accommodate two lists (expenses and income)"
+      },
+      {
+        "lineNumber": 24,
+        "author": {
+          "gitId": "zhaojj2209"
+        },
+        "content": "- Commands"
+      },
+      {
+        "lineNumber": 25,
+        "author": {
+          "gitId": "zhaojj2209"
+        },
+        "content": "  - Expenses (Ian)"
+      },
+      {
+        "lineNumber": 26,
+        "author": {
+          "gitId": "zhaojj2209"
+        },
+        "content": "    - Adding expense: `add-expense` / `adde`"
+      },
+      {
+        "lineNumber": 27,
+        "author": {
+          "gitId": "zhaojj2209"
+        },
+        "content": "    - List expense: `ls-expense` / `lse`"
+      },
+      {
+        "lineNumber": 28,
+        "author": {
+          "gitId": "zhaojj2209"
+        },
+        "content": "    - Delete expense: `rm-expense` / `rme`"
+      },
+      {
+        "lineNumber": 29,
+        "author": {
+          "gitId": "zhaojj2209"
+        },
+        "content": "  - Income (Wei Liang)"
+      },
+      {
+        "lineNumber": 30,
+        "author": {
+          "gitId": "zhaojj2209"
+        },
+        "content": "    - Adding income: `add-income` / `addi`"
+      },
+      {
+        "lineNumber": 31,
+        "author": {
+          "gitId": "zhaojj2209"
+        },
+        "content": "    - List income: `ls-income` / `lsi`"
+      },
+      {
+        "lineNumber": 32,
+        "author": {
+          "gitId": "zhaojj2209"
+        },
+        "content": "    - Delete income: `rm-income` / `rmi`"
+      },
+      {
+        "lineNumber": 33,
+        "author": {
+          "gitId": "zhaojj2209"
+        },
+        "content": "- To be delegated at a later date:"
+      },
+      {
+        "lineNumber": 34,
+        "author": {
+          "gitId": "zhaojj2209"
+        },
+        "content": "  - Savings"
+      },
+      {
+        "lineNumber": 35,
+        "author": {
+          "gitId": "zhaojj2209"
+        },
+        "content": "    - Check savings: `savings`"
+      },
+      {
+        "lineNumber": 36,
+        "author": {
+          "gitId": "zhaojj2209"
+        },
+        "content": "  - Exiting the program: `exit`"
+      },
+      {
+        "lineNumber": 37,
+        "author": {
+          "gitId": "zhaojj2209"
+        },
+        "content": "  - Viewing help: `help`"
+      },
+      {
+        "lineNumber": 38,
+        "author": {
+          "gitId": "zhaojj2209"
+        },
+        "content": "  - Delete unused commands"
+      },
+      {
+        "lineNumber": 39,
+        "author": {
+          "gitId": "zhaojj2209"
+        },
+        "content": "- Integration"
+      },
+      {
+        "lineNumber": 40,
+        "author": {
+          "gitId": "zhaojj2209"
+        },
+        "content": "  - OTOT pull from other teammates\u0026#39; branches to test integration"
+      },
+      {
+        "lineNumber": 41,
+        "author": {
+          "gitId": "zhaojj2209"
+        },
+        "content": "- Documentation"
+      },
+      {
+        "lineNumber": 42,
+        "author": {
+          "gitId": "zhaojj2209"
+        },
+        "content": "  - UG at the end of v1.2"
+      },
+      {
+        "lineNumber": 43,
+        "author": {
+          "gitId": "zhaojj2209"
+        },
+        "content": "  - DG at the end of v1.2"
+      }
+    ],
+    "authorContributionMap": {
+      "zhaojj2209": 43
     }
   },
   {
