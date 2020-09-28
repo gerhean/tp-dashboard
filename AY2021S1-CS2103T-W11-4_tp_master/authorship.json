@@ -2126,9 +2126,9 @@
       {
         "lineNumber": 83,
         "author": {
-          "gitId": "-"
+          "gitId": "afroneth"
         },
-        "content": "1. `Logic` uses the `AddressBookParser` class to parse the user command."
+        "content": "1. `Logic` uses the `CliniCalParser` class to parse the user command."
       },
       {
         "lineNumber": 84,
@@ -2280,9 +2280,9 @@
       {
         "lineNumber": 105,
         "author": {
-          "gitId": "-"
+          "gitId": "afroneth"
         },
-        "content": "* stores the address book data."
+        "content": "* stores the CliniCal application data."
       },
       {
         "lineNumber": 106,
@@ -2315,9 +2315,9 @@
       {
         "lineNumber": 110,
         "author": {
-          "gitId": "ktaekwon000"
+          "gitId": "afroneth"
         },
-        "content": "\u003cdiv markdown\u003d\"span\" class\u003d\"alert alert-info\"\u003e:information_source: **Note:** An alternative (arguably, a more OOP) model is given below. It has a `Tag` list in the `AddressBook`, which `Patient` references. This allows `AddressBook` to only require one `Tag` object per unique `Tag`, instead of each `Patient` needing their own `Tag` object.\u003cbr\u003e"
+        "content": "\u003cdiv markdown\u003d\"span\" class\u003d\"alert alert-info\"\u003e:information_source: **Note:** An alternative (arguably, a more OOP) model is given below. It has a `Tag` list in the `CliniCal` application, which `Patient` references. This allows `CliniCal` to only require one `Tag` object per unique `Tag`, instead of each `Patient` needing their own `Tag` object.\u003cbr\u003e"
       },
       {
         "lineNumber": 111,
@@ -2413,9 +2413,9 @@
       {
         "lineNumber": 124,
         "author": {
-          "gitId": "-"
+          "gitId": "afroneth"
         },
-        "content": "* can save the address book data in json format and read it back."
+        "content": "* can save the patient data in json format and read it back."
       },
       {
         "lineNumber": 125,
@@ -2525,9 +2525,9 @@
       {
         "lineNumber": 140,
         "author": {
-          "gitId": "-"
+          "gitId": "afroneth"
         },
-        "content": "The proposed undo/redo mechanism is facilitated by `VersionedAddressBook`. It extends `AddressBook` with an undo/redo history, stored internally as an `addressBookStateList` and `currentStatePointer`. Additionally, it implements the following operations:"
+        "content": "The proposed undo/redo mechanism is facilitated by `VersionedCliniCal`. It extends `CliniCal` with an undo/redo history, stored internally as an `CliniCalStateList` and `currentStatePointer`. Additionally, it implements the following operations:"
       },
       {
         "lineNumber": 141,
@@ -2539,23 +2539,23 @@
       {
         "lineNumber": 142,
         "author": {
-          "gitId": "-"
+          "gitId": "afroneth"
         },
-        "content": "* `VersionedAddressBook#commit()` — Saves the current address book state in its history."
+        "content": "* `VersionedCliniCal#commit()` — Saves the current CliniCal application state in its history."
       },
       {
         "lineNumber": 143,
         "author": {
-          "gitId": "-"
+          "gitId": "afroneth"
         },
-        "content": "* `VersionedAddressBook#undo()` — Restores the previous address book state from its history."
+        "content": "* `VersionedCliniCal#undo()` — Restores the previous CliniCal application state from its history."
       },
       {
         "lineNumber": 144,
         "author": {
-          "gitId": "-"
+          "gitId": "afroneth"
         },
-        "content": "* `VersionedAddressBook#redo()` — Restores a previously undone address book state from its history."
+        "content": "* `VersionedCliniCal#redo()` — Restores a previously undone CliniCal application state from its history."
       },
       {
         "lineNumber": 145,
@@ -2567,9 +2567,9 @@
       {
         "lineNumber": 146,
         "author": {
-          "gitId": "-"
+          "gitId": "afroneth"
         },
-        "content": "These operations are exposed in the `Model` interface as `Model#commitAddressBook()`, `Model#undoAddressBook()` and `Model#redoAddressBook()` respectively."
+        "content": "These operations are exposed in the `Model` interface as `Model#commitCliniCal()`, `Model#undoCliniCal()` and `Model#redoCliniCal()` respectively."
       },
       {
         "lineNumber": 147,
@@ -2595,9 +2595,9 @@
       {
         "lineNumber": 150,
         "author": {
-          "gitId": "-"
+          "gitId": "afroneth"
         },
-        "content": "Step 1. The user launches the application for the first time. The `VersionedAddressBook` will be initialized with the initial address book state, and the `currentStatePointer` pointing to that single address book state."
+        "content": "Step 1. The user launches the application for the first time. The `VersionedCliniCal` will be initialized with the initial CliniCal application state, and the `currentStatePointer` pointing to that single CliniCal application state."
       },
       {
         "lineNumber": 151,
@@ -2623,9 +2623,9 @@
       {
         "lineNumber": 154,
         "author": {
-          "gitId": "ktaekwon000"
+          "gitId": "afroneth"
         },
-        "content": "Step 2. The user executes `delete 5` command to delete the 5th patient in the address book. The `delete` command calls `Model#commitAddressBook()`, causing the modified state of the address book after the `delete 5` command executes to be saved in the `addressBookStateList`, and the `currentStatePointer` is shifted to the newly inserted address book state."
+        "content": "Step 2. The user executes `delete 5` command to delete the 5th patient in the patient data list. The `delete` command calls `Model#commitCliniCal()`, causing the modified state of the CliniCal application after the `delete 5` command executes to be saved in the `CliniCalStateList`, and the `currentStatePointer` is shifted to the newly inserted CliniCal application state."
       },
       {
         "lineNumber": 155,
@@ -2651,9 +2651,9 @@
       {
         "lineNumber": 158,
         "author": {
-          "gitId": "ktaekwon000"
+          "gitId": "afroneth"
         },
-        "content": "Step 3. The user executes `add n/David …​` to add a new patient. The `add` command also calls `Model#commitAddressBook()`, causing another modified address book state to be saved into the `addressBookStateList`."
+        "content": "Step 3. The user executes `add n/David …​` to add a new patient. The `add` command also calls `Model#commitCliniCal()`, causing another modified CliniCal application state to be saved into the `CliniCalStateList`."
       },
       {
         "lineNumber": 159,
@@ -2679,9 +2679,9 @@
       {
         "lineNumber": 162,
         "author": {
-          "gitId": "-"
+          "gitId": "afroneth"
         },
-        "content": "\u003cdiv markdown\u003d\"span\" class\u003d\"alert alert-info\"\u003e:information_source: **Note:** If a command fails its execution, it will not call `Model#commitAddressBook()`, so the address book state will not be saved into the `addressBookStateList`."
+        "content": "\u003cdiv markdown\u003d\"span\" class\u003d\"alert alert-info\"\u003e:information_source: **Note:** If a command fails its execution, it will not call `Model#commitCliniCal()`, so the CliniCal application state will not be saved into the `CliniCalStateList`."
       },
       {
         "lineNumber": 163,
@@ -2707,9 +2707,9 @@
       {
         "lineNumber": 166,
         "author": {
-          "gitId": "ktaekwon000"
+          "gitId": "afroneth"
         },
-        "content": "Step 4. The user now decides that adding the patient was a mistake, and decides to undo that action by executing the `undo` command. The `undo` command will call `Model#undoAddressBook()`, which will shift the `currentStatePointer` once to the left, pointing it to the previous address book state, and restores the address book to that state."
+        "content": "Step 4. The user now decides that adding the patient was a mistake, and decides to undo that action by executing the `undo` command. The `undo` command will call `Model#undoCliniCal()`, which will shift the `currentStatePointer` once to the left, pointing it to the previous CliniCal application state, and restores the CliniCal application to that state."
       },
       {
         "lineNumber": 167,
@@ -2735,9 +2735,9 @@
       {
         "lineNumber": 170,
         "author": {
-          "gitId": "-"
+          "gitId": "afroneth"
         },
-        "content": "\u003cdiv markdown\u003d\"span\" class\u003d\"alert alert-info\"\u003e:information_source: **Note:** If the `currentStatePointer` is at index 0, pointing to the initial AddressBook state, then there are no previous AddressBook states to restore. The `undo` command uses `Model#canUndoAddressBook()` to check if this is the case. If so, it will return an error to the user rather"
+        "content": "\u003cdiv markdown\u003d\"span\" class\u003d\"alert alert-info\"\u003e:information_source: **Note:** If the `currentStatePointer` is at index 0, pointing to the initial CliniCal state, then there are no previous CliniCal states to restore. The `undo` command uses `Model#canUndoCliniCal()` to check if this is the case. If so, it will return an error to the user rather"
       },
       {
         "lineNumber": 171,
@@ -2826,9 +2826,9 @@
       {
         "lineNumber": 183,
         "author": {
-          "gitId": "-"
+          "gitId": "afroneth"
         },
-        "content": "The `redo` command does the opposite — it calls `Model#redoAddressBook()`, which shifts the `currentStatePointer` once to the right, pointing to the previously undone state, and restores the address book to that state."
+        "content": "The `redo` command does the opposite — it calls `Model#redoCliniCal()`, which shifts the `currentStatePointer` once to the right, pointing to the previously undone state, and restores the CliniCal application to that state."
       },
       {
         "lineNumber": 184,
@@ -2840,9 +2840,9 @@
       {
         "lineNumber": 185,
         "author": {
-          "gitId": "-"
+          "gitId": "afroneth"
         },
-        "content": "\u003cdiv markdown\u003d\"span\" class\u003d\"alert alert-info\"\u003e:information_source: **Note:** If the `currentStatePointer` is at index `addressBookStateList.size() - 1`, pointing to the latest address book state, then there are no undone AddressBook states to restore. The `redo` command uses `Model#canRedoAddressBook()` to check if this is the case. If so, it will return an error to the user rather than attempting to perform the redo."
+        "content": "\u003cdiv markdown\u003d\"span\" class\u003d\"alert alert-info\"\u003e:information_source: **Note:** If the `currentStatePointer` is at index `CliniCalStateList.size() - 1`, pointing to the latest CliniCal application state, then there are no undone CliniCal states to restore. The `redo` command uses `Model#canRedoCliniCal()` to check if this is the case. If so, it will return an error to the user rather than attempting to perform the redo."
       },
       {
         "lineNumber": 186,
@@ -2868,9 +2868,9 @@
       {
         "lineNumber": 189,
         "author": {
-          "gitId": "-"
+          "gitId": "afroneth"
         },
-        "content": "Step 5. The user then decides to execute the command `list`. Commands that do not modify the address book, such as `list`, will usually not call `Model#commitAddressBook()`, `Model#undoAddressBook()` or `Model#redoAddressBook()`. Thus, the `addressBookStateList` remains unchanged."
+        "content": "Step 5. The user then decides to execute the command `list`. Commands that do not modify the CliniCal application, such as `list`, will usually not call `Model#commitCliniCal()`, `Model#undoCliniCal()` or `Model#redoCliniCal()`. Thus, the `CliniCalStateList` remains unchanged."
       },
       {
         "lineNumber": 190,
@@ -2896,9 +2896,9 @@
       {
         "lineNumber": 193,
         "author": {
-          "gitId": "-"
+          "gitId": "afroneth"
         },
-        "content": "Step 6. The user executes `clear`, which calls `Model#commitAddressBook()`. Since the `currentStatePointer` is not pointing at the end of the `addressBookStateList`, all address book states after the `currentStatePointer` will be purged. Reason: It no longer makes sense to redo the `add n/David …​` command. This is the behavior that most modern desktop applications follow."
+        "content": "Step 6. The user executes `clear`, which calls `Model#commitCliniCal()`. Since the `currentStatePointer` is not pointing at the end of the `CliniCalStateList`, all CliniCal application states after the `currentStatePointer` will be purged. Reason: It no longer makes sense to redo the `add n/David …​` command. This is the behavior that most modern desktop applications follow."
       },
       {
         "lineNumber": 194,
@@ -2980,9 +2980,9 @@
       {
         "lineNumber": 205,
         "author": {
-          "gitId": "-"
+          "gitId": "afroneth"
         },
-        "content": "* **Alternative 1 (current choice):** Saves the entire address book."
+        "content": "* **Alternative 1 (current choice):** Saves the entire patient details in CliniCal application."
       },
       {
         "lineNumber": 206,
@@ -4128,9 +4128,9 @@
       {
         "lineNumber": 369,
         "author": {
-          "gitId": "-"
+          "gitId": "afroneth"
         },
-        "content": "   1. Double-click the jar file Expected: Shows the GUI with a set of sample contacts. The window size may not be optimum."
+        "content": "   1. Double-click the jar file Expected: Shows the GUI with a set of sample patient contact details. The window size may not be optimum."
       },
       {
         "lineNumber": 370,
@@ -4254,9 +4254,9 @@
       {
         "lineNumber": 387,
         "author": {
-          "gitId": "-"
+          "gitId": "afroneth"
         },
-        "content": "      Expected: First contact is deleted from the list. Details of the deleted contact shown in the status message. Timestamp in the status bar is updated."
+        "content": "      Expected: First patient is deleted from the list. Details of the deleted patient shown in the status message. Timestamp in the status bar is updated."
       },
       {
         "lineNumber": 388,
@@ -4372,11 +4372,11 @@
       }
     ],
     "authorContributionMap": {
-      "ktaekwon000": 39,
+      "ktaekwon000": 35,
       "Michaeliaaa": 2,
-      "afroneth": 4,
+      "afroneth": 26,
       "eugene3231": 10,
-      "-": 317,
+      "-": 299,
       "gsmoon97": 31
     }
   },
@@ -6622,268 +6622,268 @@
       {
         "lineNumber": 72,
         "author": {
-          "gitId": "-"
+          "gitId": "afroneth"
         },
-        "content": "     * Returns a {@code ModelManager} with the data from {@code storage}\u0027s address book and {@code userPrefs}. \u003cbr\u003e"
+        "content": "     * Returns a {@code ModelManager} with the data from {@code storage}\u0027s CliniCal application"
       },
       {
         "lineNumber": 73,
         "author": {
-          "gitId": "-"
+          "gitId": "afroneth"
         },
-        "content": "     * The data from the sample address book will be used instead if {@code storage}\u0027s address book is not found,"
+        "content": "     * and {@code userPrefs}. \u003cbr\u003e"
       },
       {
         "lineNumber": 74,
         "author": {
-          "gitId": "-"
+          "gitId": "afroneth"
         },
-        "content": "     * or an empty address book will be used instead if errors occur when reading {@code storage}\u0027s address book."
+        "content": "     * The data from the sample CliniCal application will be used instead if {@code storage}\u0027s CliniCal application"
       },
       {
         "lineNumber": 75,
+        "author": {
+          "gitId": "afroneth"
+        },
+        "content": "     * is not found, or an empty CliniCal application with zero patient data will be used instead if errors occur when"
+      },
+      {
+        "lineNumber": 76,
+        "author": {
+          "gitId": "afroneth"
+        },
+        "content": "     * reading {@code storage}\u0027s CliniCal application."
+      },
+      {
+        "lineNumber": 77,
         "author": {
           "gitId": "-"
         },
         "content": "     */"
       },
       {
-        "lineNumber": 76,
+        "lineNumber": 78,
         "author": {
           "gitId": "-"
         },
         "content": "    private Model initModelManager(Storage storage, ReadOnlyUserPrefs userPrefs) {"
       },
       {
-        "lineNumber": 77,
+        "lineNumber": 79,
         "author": {
           "gitId": "gsmoon97"
         },
         "content": "        Optional\u003cReadOnlyCliniCal\u003e cliniCalOptional;"
       },
       {
-        "lineNumber": 78,
+        "lineNumber": 80,
         "author": {
           "gitId": "gsmoon97"
         },
         "content": "        ReadOnlyCliniCal initialData;"
       },
       {
-        "lineNumber": 79,
+        "lineNumber": 81,
         "author": {
           "gitId": "-"
         },
         "content": "        try {"
       },
       {
-        "lineNumber": 80,
+        "lineNumber": 82,
         "author": {
           "gitId": "gsmoon97"
         },
         "content": "            cliniCalOptional \u003d storage.readCliniCal();"
       },
       {
-        "lineNumber": 81,
+        "lineNumber": 83,
         "author": {
           "gitId": "gsmoon97"
         },
         "content": "            if (!cliniCalOptional.isPresent()) {"
       },
       {
-        "lineNumber": 82,
+        "lineNumber": 84,
         "author": {
           "gitId": "gsmoon97"
         },
         "content": "                logger.info(\"Data file not found. Will be starting with a sample CliniCal\");"
       },
       {
-        "lineNumber": 83,
+        "lineNumber": 85,
         "author": {
           "gitId": "-"
         },
         "content": "            }"
       },
       {
-        "lineNumber": 84,
+        "lineNumber": 86,
         "author": {
           "gitId": "gsmoon97"
         },
         "content": "            initialData \u003d cliniCalOptional.orElseGet(SampleDataUtil::getSampleCliniCal);"
       },
       {
-        "lineNumber": 85,
+        "lineNumber": 87,
         "author": {
           "gitId": "-"
         },
         "content": "        } catch (DataConversionException e) {"
       },
       {
-        "lineNumber": 86,
+        "lineNumber": 88,
         "author": {
           "gitId": "gsmoon97"
         },
         "content": "            logger.warning(\"Data file not in the correct format. Will be starting with an empty CliniCal\");"
       },
       {
-        "lineNumber": 87,
+        "lineNumber": 89,
         "author": {
           "gitId": "gsmoon97"
         },
         "content": "            initialData \u003d new CliniCal();"
       },
       {
-        "lineNumber": 88,
+        "lineNumber": 90,
         "author": {
           "gitId": "-"
         },
         "content": "        } catch (IOException e) {"
       },
       {
-        "lineNumber": 89,
+        "lineNumber": 91,
         "author": {
           "gitId": "gsmoon97"
         },
         "content": "            logger.warning(\"Problem while reading from the file. Will be starting with an empty CliniCal\");"
       },
       {
-        "lineNumber": 90,
+        "lineNumber": 92,
         "author": {
           "gitId": "gsmoon97"
         },
         "content": "            initialData \u003d new CliniCal();"
       },
       {
-        "lineNumber": 91,
+        "lineNumber": 93,
         "author": {
           "gitId": "-"
         },
         "content": "        }"
       },
       {
-        "lineNumber": 92,
-        "author": {
-          "gitId": "-"
-        },
-        "content": ""
-      },
-      {
-        "lineNumber": 93,
-        "author": {
-          "gitId": "-"
-        },
-        "content": "        return new ModelManager(initialData, userPrefs);"
-      },
-      {
         "lineNumber": 94,
         "author": {
           "gitId": "-"
         },
-        "content": "    }"
+        "content": ""
       },
       {
         "lineNumber": 95,
         "author": {
           "gitId": "-"
         },
-        "content": ""
+        "content": "        return new ModelManager(initialData, userPrefs);"
       },
       {
         "lineNumber": 96,
         "author": {
           "gitId": "-"
         },
-        "content": "    private void initLogging(Config config) {"
+        "content": "    }"
       },
       {
         "lineNumber": 97,
         "author": {
           "gitId": "-"
         },
-        "content": "        LogsCenter.init(config);"
+        "content": ""
       },
       {
         "lineNumber": 98,
         "author": {
           "gitId": "-"
         },
-        "content": "    }"
+        "content": "    private void initLogging(Config config) {"
       },
       {
         "lineNumber": 99,
         "author": {
           "gitId": "-"
         },
-        "content": ""
+        "content": "        LogsCenter.init(config);"
       },
       {
         "lineNumber": 100,
         "author": {
           "gitId": "-"
         },
-        "content": "    /**"
+        "content": "    }"
       },
       {
         "lineNumber": 101,
         "author": {
           "gitId": "-"
         },
-        "content": "     * Returns a {@code Config} using the file at {@code configFilePath}. \u003cbr\u003e"
+        "content": ""
       },
       {
         "lineNumber": 102,
         "author": {
           "gitId": "-"
         },
-        "content": "     * The default file path {@code Config#DEFAULT_CONFIG_FILE} will be used instead"
+        "content": "    /**"
       },
       {
         "lineNumber": 103,
         "author": {
           "gitId": "-"
         },
-        "content": "     * if {@code configFilePath} is null."
+        "content": "     * Returns a {@code Config} using the file at {@code configFilePath}. \u003cbr\u003e"
       },
       {
         "lineNumber": 104,
         "author": {
           "gitId": "-"
         },
-        "content": "     */"
+        "content": "     * The default file path {@code Config#DEFAULT_CONFIG_FILE} will be used instead"
       },
       {
         "lineNumber": 105,
         "author": {
           "gitId": "-"
         },
-        "content": "    protected Config initConfig(Path configFilePath) {"
+        "content": "     * if {@code configFilePath} is null."
       },
       {
         "lineNumber": 106,
         "author": {
           "gitId": "-"
         },
-        "content": "        Config initializedConfig;"
+        "content": "     */"
       },
       {
         "lineNumber": 107,
         "author": {
           "gitId": "-"
         },
-        "content": "        Path configFilePathUsed;"
+        "content": "    protected Config initConfig(Path configFilePath) {"
       },
       {
         "lineNumber": 108,
         "author": {
           "gitId": "-"
         },
-        "content": ""
+        "content": "        Config initializedConfig;"
       },
       {
         "lineNumber": 109,
         "author": {
           "gitId": "-"
         },
-        "content": "        configFilePathUsed \u003d Config.DEFAULT_CONFIG_FILE;"
+        "content": "        Path configFilePathUsed;"
       },
       {
         "lineNumber": 110,
@@ -6897,42 +6897,42 @@
         "author": {
           "gitId": "-"
         },
-        "content": "        if (configFilePath !\u003d null) {"
+        "content": "        configFilePathUsed \u003d Config.DEFAULT_CONFIG_FILE;"
       },
       {
         "lineNumber": 112,
         "author": {
           "gitId": "-"
         },
-        "content": "            logger.info(\"Custom Config file specified \" + configFilePath);"
+        "content": ""
       },
       {
         "lineNumber": 113,
         "author": {
           "gitId": "-"
         },
-        "content": "            configFilePathUsed \u003d configFilePath;"
+        "content": "        if (configFilePath !\u003d null) {"
       },
       {
         "lineNumber": 114,
         "author": {
           "gitId": "-"
         },
-        "content": "        }"
+        "content": "            logger.info(\"Custom Config file specified \" + configFilePath);"
       },
       {
         "lineNumber": 115,
         "author": {
           "gitId": "-"
         },
-        "content": ""
+        "content": "            configFilePathUsed \u003d configFilePath;"
       },
       {
         "lineNumber": 116,
         "author": {
           "gitId": "-"
         },
-        "content": "        logger.info(\"Using config file : \" + configFilePathUsed);"
+        "content": "        }"
       },
       {
         "lineNumber": 117,
@@ -6946,458 +6946,472 @@
         "author": {
           "gitId": "-"
         },
-        "content": "        try {"
+        "content": "        logger.info(\"Using config file : \" + configFilePathUsed);"
       },
       {
         "lineNumber": 119,
         "author": {
           "gitId": "-"
         },
-        "content": "            Optional\u003cConfig\u003e configOptional \u003d ConfigUtil.readConfig(configFilePathUsed);"
+        "content": ""
       },
       {
         "lineNumber": 120,
         "author": {
           "gitId": "-"
         },
-        "content": "            initializedConfig \u003d configOptional.orElse(new Config());"
+        "content": "        try {"
       },
       {
         "lineNumber": 121,
         "author": {
           "gitId": "-"
         },
-        "content": "        } catch (DataConversionException e) {"
+        "content": "            Optional\u003cConfig\u003e configOptional \u003d ConfigUtil.readConfig(configFilePathUsed);"
       },
       {
         "lineNumber": 122,
         "author": {
           "gitId": "-"
         },
-        "content": "            logger.warning(\"Config file at \" + configFilePathUsed + \" is not in the correct format. \""
+        "content": "            initializedConfig \u003d configOptional.orElse(new Config());"
       },
       {
         "lineNumber": 123,
         "author": {
           "gitId": "-"
         },
-        "content": "                    + \"Using default config properties\");"
+        "content": "        } catch (DataConversionException e) {"
       },
       {
         "lineNumber": 124,
         "author": {
           "gitId": "-"
         },
-        "content": "            initializedConfig \u003d new Config();"
+        "content": "            logger.warning(\"Config file at \" + configFilePathUsed + \" is not in the correct format. \""
       },
       {
         "lineNumber": 125,
         "author": {
           "gitId": "-"
         },
-        "content": "        }"
+        "content": "                    + \"Using default config properties\");"
       },
       {
         "lineNumber": 126,
         "author": {
           "gitId": "-"
         },
-        "content": ""
+        "content": "            initializedConfig \u003d new Config();"
       },
       {
         "lineNumber": 127,
         "author": {
           "gitId": "-"
         },
-        "content": "        //Update config file in case it was missing to begin with or there are new/unused fields"
+        "content": "        }"
       },
       {
         "lineNumber": 128,
         "author": {
           "gitId": "-"
         },
-        "content": "        try {"
+        "content": ""
       },
       {
         "lineNumber": 129,
         "author": {
           "gitId": "-"
         },
-        "content": "            ConfigUtil.saveConfig(initializedConfig, configFilePathUsed);"
+        "content": "        //Update config file in case it was missing to begin with or there are new/unused fields"
       },
       {
         "lineNumber": 130,
         "author": {
           "gitId": "-"
         },
-        "content": "        } catch (IOException e) {"
+        "content": "        try {"
       },
       {
         "lineNumber": 131,
         "author": {
           "gitId": "-"
         },
-        "content": "            logger.warning(\"Failed to save config file : \" + StringUtil.getDetails(e));"
+        "content": "            ConfigUtil.saveConfig(initializedConfig, configFilePathUsed);"
       },
       {
         "lineNumber": 132,
         "author": {
           "gitId": "-"
         },
-        "content": "        }"
+        "content": "        } catch (IOException e) {"
       },
       {
         "lineNumber": 133,
         "author": {
           "gitId": "-"
         },
-        "content": "        return initializedConfig;"
+        "content": "            logger.warning(\"Failed to save config file : \" + StringUtil.getDetails(e));"
       },
       {
         "lineNumber": 134,
         "author": {
           "gitId": "-"
         },
-        "content": "    }"
+        "content": "        }"
       },
       {
         "lineNumber": 135,
         "author": {
           "gitId": "-"
         },
-        "content": ""
+        "content": "        return initializedConfig;"
       },
       {
         "lineNumber": 136,
         "author": {
           "gitId": "-"
         },
-        "content": "    /**"
+        "content": "    }"
       },
       {
         "lineNumber": 137,
         "author": {
           "gitId": "-"
         },
-        "content": "     * Returns a {@code UserPrefs} using the file at {@code storage}\u0027s user prefs file path,"
+        "content": ""
       },
       {
         "lineNumber": 138,
         "author": {
           "gitId": "-"
         },
-        "content": "     * or a new {@code UserPrefs} with default configuration if errors occur when"
+        "content": "    /**"
       },
       {
         "lineNumber": 139,
         "author": {
           "gitId": "-"
         },
-        "content": "     * reading from the file."
+        "content": "     * Returns a {@code UserPrefs} using the file at {@code storage}\u0027s user prefs file path,"
       },
       {
         "lineNumber": 140,
         "author": {
           "gitId": "-"
         },
-        "content": "     */"
+        "content": "     * or a new {@code UserPrefs} with default configuration if errors occur when"
       },
       {
         "lineNumber": 141,
         "author": {
           "gitId": "-"
         },
-        "content": "    protected UserPrefs initPrefs(UserPrefsStorage storage) {"
+        "content": "     * reading from the file."
       },
       {
         "lineNumber": 142,
         "author": {
           "gitId": "-"
         },
-        "content": "        Path prefsFilePath \u003d storage.getUserPrefsFilePath();"
+        "content": "     */"
       },
       {
         "lineNumber": 143,
         "author": {
           "gitId": "-"
         },
-        "content": "        logger.info(\"Using prefs file : \" + prefsFilePath);"
+        "content": "    protected UserPrefs initPrefs(UserPrefsStorage storage) {"
       },
       {
         "lineNumber": 144,
         "author": {
           "gitId": "-"
         },
-        "content": ""
+        "content": "        Path prefsFilePath \u003d storage.getUserPrefsFilePath();"
       },
       {
         "lineNumber": 145,
         "author": {
           "gitId": "-"
         },
-        "content": "        UserPrefs initializedPrefs;"
+        "content": "        logger.info(\"Using prefs file : \" + prefsFilePath);"
       },
       {
         "lineNumber": 146,
         "author": {
           "gitId": "-"
         },
-        "content": "        try {"
+        "content": ""
       },
       {
         "lineNumber": 147,
         "author": {
           "gitId": "-"
         },
-        "content": "            Optional\u003cUserPrefs\u003e prefsOptional \u003d storage.readUserPrefs();"
+        "content": "        UserPrefs initializedPrefs;"
       },
       {
         "lineNumber": 148,
         "author": {
           "gitId": "-"
         },
-        "content": "            initializedPrefs \u003d prefsOptional.orElse(new UserPrefs());"
+        "content": "        try {"
       },
       {
         "lineNumber": 149,
         "author": {
           "gitId": "-"
         },
-        "content": "        } catch (DataConversionException e) {"
+        "content": "            Optional\u003cUserPrefs\u003e prefsOptional \u003d storage.readUserPrefs();"
       },
       {
         "lineNumber": 150,
         "author": {
           "gitId": "-"
         },
-        "content": "            logger.warning(\"UserPrefs file at \" + prefsFilePath + \" is not in the correct format. \""
+        "content": "            initializedPrefs \u003d prefsOptional.orElse(new UserPrefs());"
       },
       {
         "lineNumber": 151,
         "author": {
           "gitId": "-"
         },
-        "content": "                    + \"Using default user prefs\");"
+        "content": "        } catch (DataConversionException e) {"
       },
       {
         "lineNumber": 152,
         "author": {
           "gitId": "-"
         },
-        "content": "            initializedPrefs \u003d new UserPrefs();"
+        "content": "            logger.warning(\"UserPrefs file at \" + prefsFilePath + \" is not in the correct format. \""
       },
       {
         "lineNumber": 153,
         "author": {
           "gitId": "-"
         },
-        "content": "        } catch (IOException e) {"
+        "content": "                    + \"Using default user prefs\");"
       },
       {
         "lineNumber": 154,
-        "author": {
-          "gitId": "gsmoon97"
-        },
-        "content": "            logger.warning(\"Problem while reading from the file. Will be starting with an empty CliniCal\");"
-      },
-      {
-        "lineNumber": 155,
         "author": {
           "gitId": "-"
         },
         "content": "            initializedPrefs \u003d new UserPrefs();"
       },
       {
-        "lineNumber": 156,
+        "lineNumber": 155,
         "author": {
           "gitId": "-"
         },
-        "content": "        }"
+        "content": "        } catch (IOException e) {"
+      },
+      {
+        "lineNumber": 156,
+        "author": {
+          "gitId": "gsmoon97"
+        },
+        "content": "            logger.warning(\"Problem while reading from the file. Will be starting with an empty CliniCal\");"
       },
       {
         "lineNumber": 157,
         "author": {
           "gitId": "-"
         },
-        "content": ""
+        "content": "            initializedPrefs \u003d new UserPrefs();"
       },
       {
         "lineNumber": 158,
         "author": {
           "gitId": "-"
         },
-        "content": "        //Update prefs file in case it was missing to begin with or there are new/unused fields"
+        "content": "        }"
       },
       {
         "lineNumber": 159,
         "author": {
           "gitId": "-"
         },
-        "content": "        try {"
+        "content": ""
       },
       {
         "lineNumber": 160,
         "author": {
           "gitId": "-"
         },
-        "content": "            storage.saveUserPrefs(initializedPrefs);"
+        "content": "        //Update prefs file in case it was missing to begin with or there are new/unused fields"
       },
       {
         "lineNumber": 161,
         "author": {
           "gitId": "-"
         },
-        "content": "        } catch (IOException e) {"
+        "content": "        try {"
       },
       {
         "lineNumber": 162,
         "author": {
           "gitId": "-"
         },
-        "content": "            logger.warning(\"Failed to save config file : \" + StringUtil.getDetails(e));"
+        "content": "            storage.saveUserPrefs(initializedPrefs);"
       },
       {
         "lineNumber": 163,
         "author": {
           "gitId": "-"
         },
-        "content": "        }"
+        "content": "        } catch (IOException e) {"
       },
       {
         "lineNumber": 164,
         "author": {
           "gitId": "-"
         },
-        "content": ""
+        "content": "            logger.warning(\"Failed to save config file : \" + StringUtil.getDetails(e));"
       },
       {
         "lineNumber": 165,
         "author": {
           "gitId": "-"
         },
-        "content": "        return initializedPrefs;"
+        "content": "        }"
       },
       {
         "lineNumber": 166,
         "author": {
           "gitId": "-"
         },
-        "content": "    }"
+        "content": ""
       },
       {
         "lineNumber": 167,
         "author": {
           "gitId": "-"
         },
-        "content": ""
+        "content": "        return initializedPrefs;"
       },
       {
         "lineNumber": 168,
         "author": {
           "gitId": "-"
         },
-        "content": "    @Override"
+        "content": "    }"
       },
       {
         "lineNumber": 169,
         "author": {
           "gitId": "-"
         },
-        "content": "    public void start(Stage primaryStage) {"
-      },
-      {
-        "lineNumber": 170,
-        "author": {
-          "gitId": "gsmoon97"
-        },
-        "content": "        logger.info(\"Starting CliniCal \" + MainApp.VERSION);"
-      },
-      {
-        "lineNumber": 171,
-        "author": {
-          "gitId": "-"
-        },
-        "content": "        ui.start(primaryStage);"
-      },
-      {
-        "lineNumber": 172,
-        "author": {
-          "gitId": "-"
-        },
-        "content": "    }"
-      },
-      {
-        "lineNumber": 173,
-        "author": {
-          "gitId": "-"
-        },
         "content": ""
       },
       {
-        "lineNumber": 174,
+        "lineNumber": 170,
         "author": {
           "gitId": "-"
         },
         "content": "    @Override"
       },
       {
-        "lineNumber": 175,
+        "lineNumber": 171,
         "author": {
           "gitId": "-"
         },
-        "content": "    public void stop() {"
+        "content": "    public void start(Stage primaryStage) {"
       },
       {
-        "lineNumber": 176,
+        "lineNumber": 172,
+        "author": {
+          "gitId": "gsmoon97"
+        },
+        "content": "        logger.info(\"Starting CliniCal \" + MainApp.VERSION);"
+      },
+      {
+        "lineNumber": 173,
         "author": {
           "gitId": "-"
         },
-        "content": "        logger.info(\"\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d [ Stopping Address Book ] \u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\");"
+        "content": "        ui.start(primaryStage);"
       },
       {
-        "lineNumber": 177,
-        "author": {
-          "gitId": "-"
-        },
-        "content": "        try {"
-      },
-      {
-        "lineNumber": 178,
-        "author": {
-          "gitId": "-"
-        },
-        "content": "            storage.saveUserPrefs(model.getUserPrefs());"
-      },
-      {
-        "lineNumber": 179,
-        "author": {
-          "gitId": "-"
-        },
-        "content": "        } catch (IOException e) {"
-      },
-      {
-        "lineNumber": 180,
-        "author": {
-          "gitId": "-"
-        },
-        "content": "            logger.severe(\"Failed to save preferences \" + StringUtil.getDetails(e));"
-      },
-      {
-        "lineNumber": 181,
-        "author": {
-          "gitId": "-"
-        },
-        "content": "        }"
-      },
-      {
-        "lineNumber": 182,
+        "lineNumber": 174,
         "author": {
           "gitId": "-"
         },
         "content": "    }"
       },
       {
+        "lineNumber": 175,
+        "author": {
+          "gitId": "-"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 176,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "    @Override"
+      },
+      {
+        "lineNumber": 177,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "    public void stop() {"
+      },
+      {
+        "lineNumber": 178,
+        "author": {
+          "gitId": "afroneth"
+        },
+        "content": "        logger.info(\"\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d [ Stopping CliniCal ] \u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\");"
+      },
+      {
+        "lineNumber": 179,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "        try {"
+      },
+      {
+        "lineNumber": 180,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "            storage.saveUserPrefs(model.getUserPrefs());"
+      },
+      {
+        "lineNumber": 181,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "        } catch (IOException e) {"
+      },
+      {
+        "lineNumber": 182,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "            logger.severe(\"Failed to save preferences \" + StringUtil.getDetails(e));"
+      },
+      {
         "lineNumber": 183,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "        }"
+      },
+      {
+        "lineNumber": 184,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "    }"
+      },
+      {
+        "lineNumber": 185,
         "author": {
           "gitId": "-"
         },
@@ -7405,7 +7419,8 @@
       }
     ],
     "authorContributionMap": {
-      "-": 164,
+      "afroneth": 6,
+      "-": 160,
       "gsmoon97": 19
     }
   },
@@ -8563,9 +8578,9 @@
       {
         "lineNumber": 37,
         "author": {
-          "gitId": "-"
+          "gitId": "afroneth"
         },
-        "content": "     * Returns the user prefs\u0027 address book file path."
+        "content": "     * Returns the user prefs\u0027 CliniCal application file path."
       },
       {
         "lineNumber": 38,
@@ -8661,7 +8676,8 @@
     ],
     "authorContributionMap": {
       "Michaeliaaa": 3,
-      "-": 42,
+      "afroneth": 1,
+      "-": 41,
       "gsmoon97": 5
     }
   },
@@ -9383,9 +9399,9 @@
       {
         "lineNumber": 15,
         "author": {
-          "gitId": "Michaeliaaa"
+          "gitId": "afroneth"
         },
-        "content": " * Adds a patient to the address book."
+        "content": " * Adds a patient to the CliniCal application."
       },
       {
         "lineNumber": 16,
@@ -9425,9 +9441,9 @@
       {
         "lineNumber": 21,
         "author": {
-          "gitId": "Michaeliaaa"
+          "gitId": "afroneth"
         },
-        "content": "    public static final String MESSAGE_USAGE \u003d COMMAND_WORD + \": Adds a patient to the address book. \""
+        "content": "    public static final String MESSAGE_USAGE \u003d COMMAND_WORD + \": Adds a patient to the list of patients. \""
       },
       {
         "lineNumber": 22,
@@ -9537,9 +9553,9 @@
       {
         "lineNumber": 37,
         "author": {
-          "gitId": "Michaeliaaa"
+          "gitId": "afroneth"
         },
-        "content": "    public static final String MESSAGE_DUPLICATE_PATIENT \u003d \"This patient already exists in the address book\";"
+        "content": "    public static final String MESSAGE_DUPLICATE_PATIENT \u003d \"This patient already exists in the list of patients\";"
       },
       {
         "lineNumber": 38,
@@ -9753,7 +9769,8 @@
       }
     ],
     "authorContributionMap": {
-      "Michaeliaaa": 13,
+      "Michaeliaaa": 10,
+      "afroneth": 3,
       "-": 54
     }
   },
@@ -9855,9 +9872,9 @@
       {
         "lineNumber": 14,
         "author": {
-          "gitId": "-"
+          "gitId": "afroneth"
         },
-        "content": "    public static final String MESSAGE_SUCCESS \u003d \"Address book has been cleared!\";"
+        "content": "    public static final String MESSAGE_SUCCESS \u003d \"All patient data has been cleared!\";"
       },
       {
         "lineNumber": 15,
@@ -9924,7 +9941,8 @@
       }
     ],
     "authorContributionMap": {
-      "-": 21,
+      "afroneth": 1,
+      "-": 20,
       "gsmoon97": 2
     }
   },
@@ -10026,9 +10044,9 @@
       {
         "lineNumber": 14,
         "author": {
-          "gitId": "Michaeliaaa"
+          "gitId": "afroneth"
         },
-        "content": " * Deletes a patient identified using it\u0027s displayed index from the address book."
+        "content": " * Deletes a patient identified using it\u0027s displayed index from the list of patient in CliniCal."
       },
       {
         "lineNumber": 15,
@@ -10305,7 +10323,8 @@
       }
     ],
     "authorContributionMap": {
-      "Michaeliaaa": 9,
+      "Michaeliaaa": 8,
+      "afroneth": 1,
       "-": 44
     }
   },
@@ -10519,9 +10538,9 @@
       {
         "lineNumber": 30,
         "author": {
-          "gitId": "Michaeliaaa"
+          "gitId": "afroneth"
         },
-        "content": " * Edits the details of an existing patient in the address book."
+        "content": " * Edits the details of an existing patient in the CliniCal application."
       },
       {
         "lineNumber": 31,
@@ -10666,9 +10685,9 @@
       {
         "lineNumber": 51,
         "author": {
-          "gitId": "Michaeliaaa"
+          "gitId": "afroneth"
         },
-        "content": "    public static final String MESSAGE_DUPLICATE_PATIENT \u003d \"This patient already exists in the address book.\";"
+        "content": "    public static final String MESSAGE_DUPLICATE_PATIENT \u003d \"This patient already exists in the list of patients.\";"
       },
       {
         "lineNumber": 52,
@@ -11897,8 +11916,152 @@
       }
     ],
     "authorContributionMap": {
-      "Michaeliaaa": 44,
+      "Michaeliaaa": 42,
+      "afroneth": 2,
       "-": 182
+    }
+  },
+  {
+    "path": "src/main/java/seedu/address/logic/commands/ExitCommand.java",
+    "fileType": "functional-code",
+    "lines": [
+      {
+        "lineNumber": 1,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "package seedu.address.logic.commands;"
+      },
+      {
+        "lineNumber": 2,
+        "author": {
+          "gitId": "-"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 3,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "import seedu.address.model.Model;"
+      },
+      {
+        "lineNumber": 4,
+        "author": {
+          "gitId": "-"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 5,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "/**"
+      },
+      {
+        "lineNumber": 6,
+        "author": {
+          "gitId": "-"
+        },
+        "content": " * Terminates the program."
+      },
+      {
+        "lineNumber": 7,
+        "author": {
+          "gitId": "-"
+        },
+        "content": " */"
+      },
+      {
+        "lineNumber": 8,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "public class ExitCommand extends Command {"
+      },
+      {
+        "lineNumber": 9,
+        "author": {
+          "gitId": "-"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 10,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "    public static final String COMMAND_WORD \u003d \"exit\";"
+      },
+      {
+        "lineNumber": 11,
+        "author": {
+          "gitId": "-"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 12,
+        "author": {
+          "gitId": "afroneth"
+        },
+        "content": "    public static final String MESSAGE_EXIT_ACKNOWLEDGEMENT \u003d \"Exiting CliniCal as requested ...\";"
+      },
+      {
+        "lineNumber": 13,
+        "author": {
+          "gitId": "-"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 14,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "    @Override"
+      },
+      {
+        "lineNumber": 15,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "    public CommandResult execute(Model model) {"
+      },
+      {
+        "lineNumber": 16,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "        return new CommandResult(MESSAGE_EXIT_ACKNOWLEDGEMENT, false, true);"
+      },
+      {
+        "lineNumber": 17,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "    }"
+      },
+      {
+        "lineNumber": 18,
+        "author": {
+          "gitId": "-"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 19,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "}"
+      }
+    ],
+    "authorContributionMap": {
+      "afroneth": 1,
+      "-": 18
     }
   },
   {
@@ -11971,9 +12134,9 @@
       {
         "lineNumber": 10,
         "author": {
-          "gitId": "Michaeliaaa"
+          "gitId": "afroneth"
         },
-        "content": " * Finds and lists all patients in address book whose name contains any of the argument keywords."
+        "content": " * Finds and lists all patients in CliniCal whose name contains any of the argument keywords."
       },
       {
         "lineNumber": 11,
@@ -12201,7 +12364,8 @@
       }
     ],
     "authorContributionMap": {
-      "Michaeliaaa": 5,
+      "Michaeliaaa": 4,
+      "afroneth": 1,
       "-": 37
     }
   },
@@ -12268,9 +12432,9 @@
       {
         "lineNumber": 9,
         "author": {
-          "gitId": "Michaeliaaa"
+          "gitId": "afroneth"
         },
-        "content": " * Lists all patients in the address book to the user."
+        "content": " * Lists all patients in the CliniCal application to the user."
       },
       {
         "lineNumber": 10,
@@ -12379,7 +12543,8 @@
       }
     ],
     "authorContributionMap": {
-      "Michaeliaaa": 4,
+      "Michaeliaaa": 3,
+      "afroneth": 1,
       "-": 20
     }
   },
@@ -15150,9 +15315,9 @@
       {
         "lineNumber": 12,
         "author": {
-          "gitId": "-"
+          "gitId": "afroneth"
         },
-        "content": " * Wraps all data at the address-book level"
+        "content": " * Wraps all data at the CliniCal application level"
       },
       {
         "lineNumber": 13,
@@ -15920,7 +16085,8 @@
     ],
     "authorContributionMap": {
       "Michaeliaaa": 31,
-      "-": 81,
+      "afroneth": 1,
+      "-": 80,
       "gsmoon97": 9
     }
   },
@@ -16190,9 +16356,9 @@
       {
         "lineNumber": 38,
         "author": {
-          "gitId": "-"
+          "gitId": "afroneth"
         },
-        "content": "     * Returns the user prefs\u0027 address book file path."
+        "content": "     * Returns the user prefs\u0027 CliniCal application file path."
       },
       {
         "lineNumber": 39,
@@ -16225,9 +16391,9 @@
       {
         "lineNumber": 43,
         "author": {
-          "gitId": "-"
+          "gitId": "afroneth"
         },
-        "content": "     * Sets the user prefs\u0027 address book file path."
+        "content": "     * Sets the user prefs\u0027 CliniCal application file path."
       },
       {
         "lineNumber": 44,
@@ -16260,9 +16426,9 @@
       {
         "lineNumber": 48,
         "author": {
-          "gitId": "gsmoon97"
+          "gitId": "afroneth"
         },
-        "content": "     * Replaces address book data with the data in {@code cliniCal}."
+        "content": "     * Replaces CliniCal application data with the data in {@code cliniCal}."
       },
       {
         "lineNumber": 49,
@@ -16316,9 +16482,9 @@
       {
         "lineNumber": 56,
         "author": {
-          "gitId": "Michaeliaaa"
+          "gitId": "afroneth"
         },
-        "content": "     * Returns true if a patient with the same identity as {@code patient} exists in the address book."
+        "content": "     * Returns true if a patient with the same identity as {@code patient} exists in the CliniCal application."
       },
       {
         "lineNumber": 57,
@@ -16358,9 +16524,9 @@
       {
         "lineNumber": 62,
         "author": {
-          "gitId": "Michaeliaaa"
+          "gitId": "afroneth"
         },
-        "content": "     * The patient must exist in the address book."
+        "content": "     * The patient must exist in the CliniCal application."
       },
       {
         "lineNumber": 63,
@@ -16400,9 +16566,9 @@
       {
         "lineNumber": 68,
         "author": {
-          "gitId": "Michaeliaaa"
+          "gitId": "afroneth"
         },
-        "content": "     * {@code patient} must not already exist in the address book."
+        "content": "     * {@code patient} must not already exist in the CliniCal application."
       },
       {
         "lineNumber": 69,
@@ -16442,9 +16608,9 @@
       {
         "lineNumber": 74,
         "author": {
-          "gitId": "-"
+          "gitId": "afroneth"
         },
-        "content": "     * {@code target} must exist in the address book."
+        "content": "     * {@code target} must exist in the CliniCal application."
       },
       {
         "lineNumber": 75,
@@ -16456,9 +16622,9 @@
       {
         "lineNumber": 76,
         "author": {
-          "gitId": "Michaeliaaa"
+          "gitId": "afroneth"
         },
-        "content": "     * in the address book."
+        "content": "     * in the CliniCal application."
       },
       {
         "lineNumber": 77,
@@ -16546,9 +16712,10 @@
       }
     ],
     "authorContributionMap": {
-      "Michaeliaaa": 18,
-      "-": 64,
-      "gsmoon97": 6
+      "Michaeliaaa": 14,
+      "afroneth": 8,
+      "-": 61,
+      "gsmoon97": 5
     }
   },
   {
@@ -16670,9 +16837,9 @@
       {
         "lineNumber": 17,
         "author": {
-          "gitId": "-"
+          "gitId": "afroneth"
         },
-        "content": " * Represents the in-memory model of the address book data."
+        "content": " * Represents the in-memory model of the CliniCal application data."
       },
       {
         "lineNumber": 18,
@@ -16782,9 +16949,9 @@
       {
         "lineNumber": 33,
         "author": {
-          "gitId": "gsmoon97"
+          "gitId": "afroneth"
         },
-        "content": "        logger.fine(\"Initializing with address book: \" + cliniCal + \" and user prefs \" + userPrefs);"
+        "content": "        logger.fine(\"Initializing with CliniCal application: \" + cliniCal + \" and user prefs \" + userPrefs);"
       },
       {
         "lineNumber": 34,
@@ -17615,8 +17782,9 @@
     ],
     "authorContributionMap": {
       "Michaeliaaa": 16,
-      "-": 111,
-      "gsmoon97": 24
+      "afroneth": 2,
+      "-": 110,
+      "gsmoon97": 23
     }
   },
   {
@@ -17668,9 +17836,9 @@
       {
         "lineNumber": 7,
         "author": {
-          "gitId": "-"
+          "gitId": "afroneth"
         },
-        "content": " * Unmodifiable view of an address book"
+        "content": " * Unmodifiable view of the CliniCal application"
       },
       {
         "lineNumber": 8,
@@ -17745,7 +17913,8 @@
     ],
     "authorContributionMap": {
       "Michaeliaaa": 4,
-      "-": 12,
+      "afroneth": 1,
+      "-": 11,
       "gsmoon97": 1
     }
   },
@@ -18539,9 +18708,9 @@
       {
         "lineNumber": 7,
         "author": {
-          "gitId": "Michaeliaaa"
+          "gitId": "afroneth"
         },
-        "content": " * Represents a Patient\u0027s address in the address book."
+        "content": " * Represents a Patient\u0027s address in the CliniCal application."
       },
       {
         "lineNumber": 8,
@@ -18895,7 +19064,8 @@
       }
     ],
     "authorContributionMap": {
-      "Michaeliaaa": 2,
+      "Michaeliaaa": 1,
+      "afroneth": 1,
       "-": 55
     }
   },
@@ -18948,9 +19118,9 @@
       {
         "lineNumber": 7,
         "author": {
-          "gitId": "Michaeliaaa"
+          "gitId": "afroneth"
         },
-        "content": " * Represents a Patient\u0027s email in the address book."
+        "content": " * Represents a Patient\u0027s email in the CliniCal application."
       },
       {
         "lineNumber": 8,
@@ -19374,7 +19544,8 @@
       }
     ],
     "authorContributionMap": {
-      "Michaeliaaa": 2,
+      "Michaeliaaa": 1,
+      "afroneth": 1,
       "-": 65
     }
   },
@@ -19427,9 +19598,9 @@
       {
         "lineNumber": 7,
         "author": {
-          "gitId": "Michaeliaaa"
+          "gitId": "afroneth"
         },
-        "content": " * Represents a Patient\u0027s name in the address book."
+        "content": " * Represents a Patient\u0027s name in the CliniCal application."
       },
       {
         "lineNumber": 8,
@@ -19797,7 +19968,8 @@
       }
     ],
     "authorContributionMap": {
-      "Michaeliaaa": 2,
+      "Michaeliaaa": 1,
+      "afroneth": 1,
       "-": 57
     }
   },
@@ -20119,9 +20291,9 @@
       {
         "lineNumber": 13,
         "author": {
-          "gitId": "Michaeliaaa"
+          "gitId": "afroneth"
         },
-        "content": " * Represents a Patient in the address book."
+        "content": " * Represents a Patient in the CliniCal application."
       },
       {
         "lineNumber": 14,
@@ -20874,7 +21046,8 @@
       }
     ],
     "authorContributionMap": {
-      "Michaeliaaa": 20,
+      "Michaeliaaa": 19,
+      "afroneth": 1,
       "-": 100
     }
   },
@@ -20927,9 +21100,9 @@
       {
         "lineNumber": 7,
         "author": {
-          "gitId": "Michaeliaaa"
+          "gitId": "afroneth"
         },
-        "content": " * Represents a Patient\u0027s phone number in the address book."
+        "content": " * Represents a Patient\u0027s phone number in the CliniCal application."
       },
       {
         "lineNumber": 8,
@@ -21255,7 +21428,8 @@
       }
     ],
     "authorContributionMap": {
-      "Michaeliaaa": 2,
+      "Michaeliaaa": 1,
+      "afroneth": 1,
       "-": 51
     }
   },
@@ -22369,6 +22543,394 @@
     ],
     "authorContributionMap": {
       "Michaeliaaa": 6
+    }
+  },
+  {
+    "path": "src/main/java/seedu/address/model/tag/Tag.java",
+    "fileType": "functional-code",
+    "lines": [
+      {
+        "lineNumber": 1,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "package seedu.address.model.tag;"
+      },
+      {
+        "lineNumber": 2,
+        "author": {
+          "gitId": "-"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 3,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "import static java.util.Objects.requireNonNull;"
+      },
+      {
+        "lineNumber": 4,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "import static seedu.address.commons.util.AppUtil.checkArgument;"
+      },
+      {
+        "lineNumber": 5,
+        "author": {
+          "gitId": "-"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 6,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "/**"
+      },
+      {
+        "lineNumber": 7,
+        "author": {
+          "gitId": "afroneth"
+        },
+        "content": " * Represents a Tag in the CliniCal application."
+      },
+      {
+        "lineNumber": 8,
+        "author": {
+          "gitId": "-"
+        },
+        "content": " * Guarantees: immutable; name is valid as declared in {@link #isValidTagName(String)}"
+      },
+      {
+        "lineNumber": 9,
+        "author": {
+          "gitId": "-"
+        },
+        "content": " */"
+      },
+      {
+        "lineNumber": 10,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "public class Tag {"
+      },
+      {
+        "lineNumber": 11,
+        "author": {
+          "gitId": "-"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 12,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "    public static final String MESSAGE_CONSTRAINTS \u003d \"Tags names should be alphanumeric\";"
+      },
+      {
+        "lineNumber": 13,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "    public static final String VALIDATION_REGEX \u003d \"\\\\p{Alnum}+\";"
+      },
+      {
+        "lineNumber": 14,
+        "author": {
+          "gitId": "-"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 15,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "    public final String tagName;"
+      },
+      {
+        "lineNumber": 16,
+        "author": {
+          "gitId": "-"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 17,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "    /**"
+      },
+      {
+        "lineNumber": 18,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "     * Constructs a {@code Tag}."
+      },
+      {
+        "lineNumber": 19,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "     *"
+      },
+      {
+        "lineNumber": 20,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "     * @param tagName A valid tag name."
+      },
+      {
+        "lineNumber": 21,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "     */"
+      },
+      {
+        "lineNumber": 22,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "    public Tag(String tagName) {"
+      },
+      {
+        "lineNumber": 23,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "        requireNonNull(tagName);"
+      },
+      {
+        "lineNumber": 24,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "        checkArgument(isValidTagName(tagName), MESSAGE_CONSTRAINTS);"
+      },
+      {
+        "lineNumber": 25,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "        this.tagName \u003d tagName;"
+      },
+      {
+        "lineNumber": 26,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "    }"
+      },
+      {
+        "lineNumber": 27,
+        "author": {
+          "gitId": "-"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 28,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "    /**"
+      },
+      {
+        "lineNumber": 29,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "     * Returns true if a given string is a valid tag name."
+      },
+      {
+        "lineNumber": 30,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "     */"
+      },
+      {
+        "lineNumber": 31,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "    public static boolean isValidTagName(String test) {"
+      },
+      {
+        "lineNumber": 32,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "        return test.matches(VALIDATION_REGEX);"
+      },
+      {
+        "lineNumber": 33,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "    }"
+      },
+      {
+        "lineNumber": 34,
+        "author": {
+          "gitId": "-"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 35,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "    @Override"
+      },
+      {
+        "lineNumber": 36,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "    public boolean equals(Object other) {"
+      },
+      {
+        "lineNumber": 37,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "        return other \u003d\u003d this // short circuit if same object"
+      },
+      {
+        "lineNumber": 38,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "                || (other instanceof Tag // instanceof handles nulls"
+      },
+      {
+        "lineNumber": 39,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "                \u0026\u0026 tagName.equals(((Tag) other).tagName)); // state check"
+      },
+      {
+        "lineNumber": 40,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "    }"
+      },
+      {
+        "lineNumber": 41,
+        "author": {
+          "gitId": "-"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 42,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "    @Override"
+      },
+      {
+        "lineNumber": 43,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "    public int hashCode() {"
+      },
+      {
+        "lineNumber": 44,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "        return tagName.hashCode();"
+      },
+      {
+        "lineNumber": 45,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "    }"
+      },
+      {
+        "lineNumber": 46,
+        "author": {
+          "gitId": "-"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 47,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "    /**"
+      },
+      {
+        "lineNumber": 48,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "     * Format state as text for viewing."
+      },
+      {
+        "lineNumber": 49,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "     */"
+      },
+      {
+        "lineNumber": 50,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "    public String toString() {"
+      },
+      {
+        "lineNumber": 51,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "        return \u0027[\u0027 + tagName + \u0027]\u0027;"
+      },
+      {
+        "lineNumber": 52,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "    }"
+      },
+      {
+        "lineNumber": 53,
+        "author": {
+          "gitId": "-"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 54,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "}"
+      }
+    ],
+    "authorContributionMap": {
+      "afroneth": 1,
+      "-": 53
     }
   },
   {
@@ -24784,9 +25346,9 @@
       {
         "lineNumber": 44,
         "author": {
-          "gitId": "gsmoon97"
+          "gitId": "afroneth"
         },
-        "content": "     * Converts this address book into the model\u0027s {@code CliniCal} object."
+        "content": "     * Converts this CliniCal application into the model\u0027s {@code CliniCal} object."
       },
       {
         "lineNumber": 45,
@@ -24903,8 +25465,9 @@
     ],
     "authorContributionMap": {
       "Michaeliaaa": 8,
+      "afroneth": 1,
       "-": 36,
-      "gsmoon97": 16
+      "gsmoon97": 15
     }
   },
   {
