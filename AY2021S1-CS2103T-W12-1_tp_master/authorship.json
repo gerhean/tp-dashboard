@@ -19547,6 +19547,1493 @@
     }
   },
   {
+    "path": "src/main/java/seedu/address/ui/MainWindow.java",
+    "fileType": "functional-code",
+    "lines": [
+      {
+        "lineNumber": 1,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "package seedu.address.ui;"
+      },
+      {
+        "lineNumber": 2,
+        "author": {
+          "gitId": "-"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 3,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "import java.util.logging.Logger;"
+      },
+      {
+        "lineNumber": 4,
+        "author": {
+          "gitId": "-"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 5,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "import javafx.event.ActionEvent;"
+      },
+      {
+        "lineNumber": 6,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "import javafx.fxml.FXML;"
+      },
+      {
+        "lineNumber": 7,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "import javafx.scene.control.MenuItem;"
+      },
+      {
+        "lineNumber": 8,
+        "author": {
+          "gitId": "chiamyunqing"
+        },
+        "content": "import javafx.scene.control.Tab;"
+      },
+      {
+        "lineNumber": 9,
+        "author": {
+          "gitId": "chiamyunqing"
+        },
+        "content": "import javafx.scene.control.TabPane;"
+      },
+      {
+        "lineNumber": 10,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "import javafx.scene.control.TextInputControl;"
+      },
+      {
+        "lineNumber": 11,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "import javafx.scene.input.KeyCombination;"
+      },
+      {
+        "lineNumber": 12,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "import javafx.scene.input.KeyEvent;"
+      },
+      {
+        "lineNumber": 13,
+        "author": {
+          "gitId": "chiamyunqing"
+        },
+        "content": "import javafx.scene.layout.HBox;"
+      },
+      {
+        "lineNumber": 14,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "import javafx.scene.layout.StackPane;"
+      },
+      {
+        "lineNumber": 15,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "import javafx.stage.Stage;"
+      },
+      {
+        "lineNumber": 16,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "import seedu.address.commons.core.GuiSettings;"
+      },
+      {
+        "lineNumber": 17,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "import seedu.address.commons.core.LogsCenter;"
+      },
+      {
+        "lineNumber": 18,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "import seedu.address.logic.Logic;"
+      },
+      {
+        "lineNumber": 19,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "import seedu.address.logic.commands.CommandResult;"
+      },
+      {
+        "lineNumber": 20,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "import seedu.address.logic.commands.exceptions.CommandException;"
+      },
+      {
+        "lineNumber": 21,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "import seedu.address.logic.parser.exceptions.ParseException;"
+      },
+      {
+        "lineNumber": 22,
+        "author": {
+          "gitId": "-"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 23,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "/**"
+      },
+      {
+        "lineNumber": 24,
+        "author": {
+          "gitId": "-"
+        },
+        "content": " * The Main Window. Provides the basic application layout containing"
+      },
+      {
+        "lineNumber": 25,
+        "author": {
+          "gitId": "-"
+        },
+        "content": " * a menu bar and space where other JavaFX elements can be placed."
+      },
+      {
+        "lineNumber": 26,
+        "author": {
+          "gitId": "-"
+        },
+        "content": " */"
+      },
+      {
+        "lineNumber": 27,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "public class MainWindow extends UiPart\u003cStage\u003e {"
+      },
+      {
+        "lineNumber": 28,
+        "author": {
+          "gitId": "-"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 29,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "    private static final String FXML \u003d \"MainWindow.fxml\";"
+      },
+      {
+        "lineNumber": 30,
+        "author": {
+          "gitId": "-"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 31,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "    private final Logger logger \u003d LogsCenter.getLogger(getClass());"
+      },
+      {
+        "lineNumber": 32,
+        "author": {
+          "gitId": "-"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 33,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "    private Stage primaryStage;"
+      },
+      {
+        "lineNumber": 34,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "    private Logic logic;"
+      },
+      {
+        "lineNumber": 35,
+        "author": {
+          "gitId": "-"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 36,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "    // Independent Ui parts residing in this Ui container"
+      },
+      {
+        "lineNumber": 37,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "    private PersonListPanel personListPanel;"
+      },
+      {
+        "lineNumber": 38,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "    private ResultDisplay resultDisplay;"
+      },
+      {
+        "lineNumber": 39,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "    private HelpWindow helpWindow;"
+      },
+      {
+        "lineNumber": 40,
+        "author": {
+          "gitId": "-"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 41,
+        "author": {
+          "gitId": "chiamyunqing"
+        },
+        "content": "    @FXML"
+      },
+      {
+        "lineNumber": 42,
+        "author": {
+          "gitId": "chiamyunqing"
+        },
+        "content": "    private HBox covigentLogoPlaceholder;"
+      },
+      {
+        "lineNumber": 43,
+        "author": {
+          "gitId": "chiamyunqing"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 44,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "    @FXML"
+      },
+      {
+        "lineNumber": 45,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "    private StackPane commandBoxPlaceholder;"
+      },
+      {
+        "lineNumber": 46,
+        "author": {
+          "gitId": "-"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 47,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "    @FXML"
+      },
+      {
+        "lineNumber": 48,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "    private MenuItem helpMenuItem;"
+      },
+      {
+        "lineNumber": 49,
+        "author": {
+          "gitId": "-"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 50,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "    @FXML"
+      },
+      {
+        "lineNumber": 51,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "    private StackPane personListPanelPlaceholder;"
+      },
+      {
+        "lineNumber": 52,
+        "author": {
+          "gitId": "-"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 53,
+        "author": {
+          "gitId": "chiamyunqing"
+        },
+        "content": "    @FXML"
+      },
+      {
+        "lineNumber": 54,
+        "author": {
+          "gitId": "chiamyunqing"
+        },
+        "content": "    private TabPane patientRoomTabs;"
+      },
+      {
+        "lineNumber": 55,
+        "author": {
+          "gitId": "chiamyunqing"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 56,
+        "author": {
+          "gitId": "chiamyunqing"
+        },
+        "content": "    @FXML"
+      },
+      {
+        "lineNumber": 57,
+        "author": {
+          "gitId": "chiamyunqing"
+        },
+        "content": "    private Tab patientTab;"
+      },
+      {
+        "lineNumber": 58,
+        "author": {
+          "gitId": "chiamyunqing"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 59,
+        "author": {
+          "gitId": "chiamyunqing"
+        },
+        "content": "    @FXML"
+      },
+      {
+        "lineNumber": 60,
+        "author": {
+          "gitId": "chiamyunqing"
+        },
+        "content": "    private Tab roomTab;"
+      },
+      {
+        "lineNumber": 61,
+        "author": {
+          "gitId": "chiamyunqing"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 62,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "    @FXML"
+      },
+      {
+        "lineNumber": 63,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "    private StackPane resultDisplayPlaceholder;"
+      },
+      {
+        "lineNumber": 64,
+        "author": {
+          "gitId": "-"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 65,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "    @FXML"
+      },
+      {
+        "lineNumber": 66,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "    private StackPane statusbarPlaceholder;"
+      },
+      {
+        "lineNumber": 67,
+        "author": {
+          "gitId": "-"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 68,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "    /**"
+      },
+      {
+        "lineNumber": 69,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "     * Creates a {@code MainWindow} with the given {@code Stage} and {@code Logic}."
+      },
+      {
+        "lineNumber": 70,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "     */"
+      },
+      {
+        "lineNumber": 71,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "    public MainWindow(Stage primaryStage, Logic logic) {"
+      },
+      {
+        "lineNumber": 72,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "        super(FXML, primaryStage);"
+      },
+      {
+        "lineNumber": 73,
+        "author": {
+          "gitId": "-"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 74,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "        // Set dependencies"
+      },
+      {
+        "lineNumber": 75,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "        this.primaryStage \u003d primaryStage;"
+      },
+      {
+        "lineNumber": 76,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "        this.logic \u003d logic;"
+      },
+      {
+        "lineNumber": 77,
+        "author": {
+          "gitId": "-"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 78,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "        // Configure the UI"
+      },
+      {
+        "lineNumber": 79,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "        setWindowDefaultSize(logic.getGuiSettings());"
+      },
+      {
+        "lineNumber": 80,
+        "author": {
+          "gitId": "-"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 81,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "        setAccelerators();"
+      },
+      {
+        "lineNumber": 82,
+        "author": {
+          "gitId": "-"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 83,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "        helpWindow \u003d new HelpWindow();"
+      },
+      {
+        "lineNumber": 84,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "    }"
+      },
+      {
+        "lineNumber": 85,
+        "author": {
+          "gitId": "-"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 86,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "    public Stage getPrimaryStage() {"
+      },
+      {
+        "lineNumber": 87,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "        return primaryStage;"
+      },
+      {
+        "lineNumber": 88,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "    }"
+      },
+      {
+        "lineNumber": 89,
+        "author": {
+          "gitId": "-"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 90,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "    private void setAccelerators() {"
+      },
+      {
+        "lineNumber": 91,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "        setAccelerator(helpMenuItem, KeyCombination.valueOf(\"F1\"));"
+      },
+      {
+        "lineNumber": 92,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "    }"
+      },
+      {
+        "lineNumber": 93,
+        "author": {
+          "gitId": "-"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 94,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "    /**"
+      },
+      {
+        "lineNumber": 95,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "     * Sets the accelerator of a MenuItem."
+      },
+      {
+        "lineNumber": 96,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "     * @param keyCombination the KeyCombination value of the accelerator"
+      },
+      {
+        "lineNumber": 97,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "     */"
+      },
+      {
+        "lineNumber": 98,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "    private void setAccelerator(MenuItem menuItem, KeyCombination keyCombination) {"
+      },
+      {
+        "lineNumber": 99,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "        menuItem.setAccelerator(keyCombination);"
+      },
+      {
+        "lineNumber": 100,
+        "author": {
+          "gitId": "-"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 101,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "        /*"
+      },
+      {
+        "lineNumber": 102,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "         * TODO: the code below can be removed once the bug reported here"
+      },
+      {
+        "lineNumber": 103,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "         * https://bugs.openjdk.java.net/browse/JDK-8131666"
+      },
+      {
+        "lineNumber": 104,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "         * is fixed in later version of SDK."
+      },
+      {
+        "lineNumber": 105,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "         *"
+      },
+      {
+        "lineNumber": 106,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "         * According to the bug report, TextInputControl (TextField, TextArea) will"
+      },
+      {
+        "lineNumber": 107,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "         * consume function-key events. Because CommandBox contains a TextField, and"
+      },
+      {
+        "lineNumber": 108,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "         * ResultDisplay contains a TextArea, thus some accelerators (e.g F1) will"
+      },
+      {
+        "lineNumber": 109,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "         * not work when the focus is in them because the key event is consumed by"
+      },
+      {
+        "lineNumber": 110,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "         * the TextInputControl(s)."
+      },
+      {
+        "lineNumber": 111,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "         *"
+      },
+      {
+        "lineNumber": 112,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "         * For now, we add following event filter to capture such key events and open"
+      },
+      {
+        "lineNumber": 113,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "         * help window purposely so to support accelerators even when focus is"
+      },
+      {
+        "lineNumber": 114,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "         * in CommandBox or ResultDisplay."
+      },
+      {
+        "lineNumber": 115,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "         */"
+      },
+      {
+        "lineNumber": 116,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "        getRoot().addEventFilter(KeyEvent.KEY_PRESSED, event -\u003e {"
+      },
+      {
+        "lineNumber": 117,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "            if (event.getTarget() instanceof TextInputControl \u0026\u0026 keyCombination.match(event)) {"
+      },
+      {
+        "lineNumber": 118,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "                menuItem.getOnAction().handle(new ActionEvent());"
+      },
+      {
+        "lineNumber": 119,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "                event.consume();"
+      },
+      {
+        "lineNumber": 120,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "            }"
+      },
+      {
+        "lineNumber": 121,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "        });"
+      },
+      {
+        "lineNumber": 122,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "    }"
+      },
+      {
+        "lineNumber": 123,
+        "author": {
+          "gitId": "-"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 124,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "    /**"
+      },
+      {
+        "lineNumber": 125,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "     * Fills up all the placeholders of this window."
+      },
+      {
+        "lineNumber": 126,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "     */"
+      },
+      {
+        "lineNumber": 127,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "    void fillInnerParts() {"
+      },
+      {
+        "lineNumber": 128,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "        personListPanel \u003d new PersonListPanel(logic.getFilteredPersonList());"
+      },
+      {
+        "lineNumber": 129,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "        personListPanelPlaceholder.getChildren().add(personListPanel.getRoot());"
+      },
+      {
+        "lineNumber": 130,
+        "author": {
+          "gitId": "-"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 131,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "        resultDisplay \u003d new ResultDisplay();"
+      },
+      {
+        "lineNumber": 132,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "        resultDisplayPlaceholder.getChildren().add(resultDisplay.getRoot());"
+      },
+      {
+        "lineNumber": 133,
+        "author": {
+          "gitId": "-"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 134,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "        StatusBarFooter statusBarFooter \u003d new StatusBarFooter(logic.getAddressBookFilePath());"
+      },
+      {
+        "lineNumber": 135,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "        statusbarPlaceholder.getChildren().add(statusBarFooter.getRoot());"
+      },
+      {
+        "lineNumber": 136,
+        "author": {
+          "gitId": "-"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 137,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "        CommandBox commandBox \u003d new CommandBox(this::executeCommand);"
+      },
+      {
+        "lineNumber": 138,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "        commandBoxPlaceholder.getChildren().add(commandBox.getRoot());"
+      },
+      {
+        "lineNumber": 139,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "    }"
+      },
+      {
+        "lineNumber": 140,
+        "author": {
+          "gitId": "-"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 141,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "    /**"
+      },
+      {
+        "lineNumber": 142,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "     * Sets the default size based on {@code guiSettings}."
+      },
+      {
+        "lineNumber": 143,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "     */"
+      },
+      {
+        "lineNumber": 144,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "    private void setWindowDefaultSize(GuiSettings guiSettings) {"
+      },
+      {
+        "lineNumber": 145,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "        primaryStage.setHeight(guiSettings.getWindowHeight());"
+      },
+      {
+        "lineNumber": 146,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "        primaryStage.setWidth(guiSettings.getWindowWidth());"
+      },
+      {
+        "lineNumber": 147,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "        if (guiSettings.getWindowCoordinates() !\u003d null) {"
+      },
+      {
+        "lineNumber": 148,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "            primaryStage.setX(guiSettings.getWindowCoordinates().getX());"
+      },
+      {
+        "lineNumber": 149,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "            primaryStage.setY(guiSettings.getWindowCoordinates().getY());"
+      },
+      {
+        "lineNumber": 150,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "        }"
+      },
+      {
+        "lineNumber": 151,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "    }"
+      },
+      {
+        "lineNumber": 152,
+        "author": {
+          "gitId": "-"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 153,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "    /**"
+      },
+      {
+        "lineNumber": 154,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "     * Opens the help window or focuses on it if it\u0027s already opened."
+      },
+      {
+        "lineNumber": 155,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "     */"
+      },
+      {
+        "lineNumber": 156,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "    @FXML"
+      },
+      {
+        "lineNumber": 157,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "    public void handleHelp() {"
+      },
+      {
+        "lineNumber": 158,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "        if (!helpWindow.isShowing()) {"
+      },
+      {
+        "lineNumber": 159,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "            helpWindow.show();"
+      },
+      {
+        "lineNumber": 160,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "        } else {"
+      },
+      {
+        "lineNumber": 161,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "            helpWindow.focus();"
+      },
+      {
+        "lineNumber": 162,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "        }"
+      },
+      {
+        "lineNumber": 163,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "    }"
+      },
+      {
+        "lineNumber": 164,
+        "author": {
+          "gitId": "-"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 165,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "    void show() {"
+      },
+      {
+        "lineNumber": 166,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "        primaryStage.show();"
+      },
+      {
+        "lineNumber": 167,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "    }"
+      },
+      {
+        "lineNumber": 168,
+        "author": {
+          "gitId": "-"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 169,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "    /**"
+      },
+      {
+        "lineNumber": 170,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "     * Closes the application."
+      },
+      {
+        "lineNumber": 171,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "     */"
+      },
+      {
+        "lineNumber": 172,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "    @FXML"
+      },
+      {
+        "lineNumber": 173,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "    private void handleExit() {"
+      },
+      {
+        "lineNumber": 174,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "        GuiSettings guiSettings \u003d new GuiSettings(primaryStage.getWidth(), primaryStage.getHeight(),"
+      },
+      {
+        "lineNumber": 175,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "                (int) primaryStage.getX(), (int) primaryStage.getY());"
+      },
+      {
+        "lineNumber": 176,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "        logic.setGuiSettings(guiSettings);"
+      },
+      {
+        "lineNumber": 177,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "        helpWindow.hide();"
+      },
+      {
+        "lineNumber": 178,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "        primaryStage.hide();"
+      },
+      {
+        "lineNumber": 179,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "    }"
+      },
+      {
+        "lineNumber": 180,
+        "author": {
+          "gitId": "-"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 181,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "    public PersonListPanel getPersonListPanel() {"
+      },
+      {
+        "lineNumber": 182,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "        return personListPanel;"
+      },
+      {
+        "lineNumber": 183,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "    }"
+      },
+      {
+        "lineNumber": 184,
+        "author": {
+          "gitId": "-"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 185,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "    /**"
+      },
+      {
+        "lineNumber": 186,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "     * Executes the command and returns the result."
+      },
+      {
+        "lineNumber": 187,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "     *"
+      },
+      {
+        "lineNumber": 188,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "     * @see seedu.address.logic.Logic#execute(String)"
+      },
+      {
+        "lineNumber": 189,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "     */"
+      },
+      {
+        "lineNumber": 190,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "    private CommandResult executeCommand(String commandText) throws CommandException, ParseException {"
+      },
+      {
+        "lineNumber": 191,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "        try {"
+      },
+      {
+        "lineNumber": 192,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "            CommandResult commandResult \u003d logic.execute(commandText);"
+      },
+      {
+        "lineNumber": 193,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "            logger.info(\"Result: \" + commandResult.getFeedbackToUser());"
+      },
+      {
+        "lineNumber": 194,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "            resultDisplay.setFeedbackToUser(commandResult.getFeedbackToUser());"
+      },
+      {
+        "lineNumber": 195,
+        "author": {
+          "gitId": "-"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 196,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "            if (commandResult.isShowHelp()) {"
+      },
+      {
+        "lineNumber": 197,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "                handleHelp();"
+      },
+      {
+        "lineNumber": 198,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "            }"
+      },
+      {
+        "lineNumber": 199,
+        "author": {
+          "gitId": "-"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 200,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "            if (commandResult.isExit()) {"
+      },
+      {
+        "lineNumber": 201,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "                handleExit();"
+      },
+      {
+        "lineNumber": 202,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "            }"
+      },
+      {
+        "lineNumber": 203,
+        "author": {
+          "gitId": "-"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 204,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "            return commandResult;"
+      },
+      {
+        "lineNumber": 205,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "        } catch (CommandException | ParseException e) {"
+      },
+      {
+        "lineNumber": 206,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "            logger.info(\"Invalid command: \" + commandText);"
+      },
+      {
+        "lineNumber": 207,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "            resultDisplay.setFeedbackToUser(e.getMessage());"
+      },
+      {
+        "lineNumber": 208,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "            throw e;"
+      },
+      {
+        "lineNumber": 209,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "        }"
+      },
+      {
+        "lineNumber": 210,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "    }"
+      },
+      {
+        "lineNumber": 211,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "}"
+      }
+    ],
+    "authorContributionMap": {
+      "chiamyunqing": 15,
+      "-": 196
+    }
+  },
+  {
     "path": "src/main/java/seedu/address/ui/PersonCard.java",
     "fileType": "functional-code",
     "lines": [
@@ -20082,6 +21569,663 @@
     }
   },
   {
+    "path": "src/main/resources/view/CommandBox.fxml",
+    "fileType": "functional-code",
+    "lines": [
+      {
+        "lineNumber": 1,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "\u003c?xml version\u003d\"1.0\" encoding\u003d\"UTF-8\"?\u003e"
+      },
+      {
+        "lineNumber": 2,
+        "author": {
+          "gitId": "-"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 3,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "\u003c?import javafx.scene.control.TextField?\u003e"
+      },
+      {
+        "lineNumber": 4,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "\u003c?import javafx.scene.layout.StackPane?\u003e"
+      },
+      {
+        "lineNumber": 5,
+        "author": {
+          "gitId": "-"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 6,
+        "author": {
+          "gitId": "chiamyunqing"
+        },
+        "content": "\u003cStackPane style\u003d\"-fx-background-color: #FFFFFF;\" styleClass\u003d\"stack-pane\" xmlns\u003d\"http://javafx.com/javafx/8\" xmlns:fx\u003d\"http://javafx.com/fxml/1\"\u003e"
+      },
+      {
+        "lineNumber": 7,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "  \u003cTextField fx:id\u003d\"commandTextField\" onAction\u003d\"#handleCommandEntered\" promptText\u003d\"Enter command here...\" /\u003e"
+      },
+      {
+        "lineNumber": 8,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "\u003c/StackPane\u003e"
+      }
+    ],
+    "authorContributionMap": {
+      "chiamyunqing": 1,
+      "-": 7
+    }
+  },
+  {
+    "path": "src/main/resources/view/MainWindow.fxml",
+    "fileType": "functional-code",
+    "lines": [
+      {
+        "lineNumber": 1,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "\u003c?xml version\u003d\"1.0\" encoding\u003d\"UTF-8\"?\u003e"
+      },
+      {
+        "lineNumber": 2,
+        "author": {
+          "gitId": "-"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 3,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "\u003c?import java.net.URL?\u003e"
+      },
+      {
+        "lineNumber": 4,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "\u003c?import javafx.geometry.Insets?\u003e"
+      },
+      {
+        "lineNumber": 5,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "\u003c?import javafx.scene.Scene?\u003e"
+      },
+      {
+        "lineNumber": 6,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "\u003c?import javafx.scene.control.Menu?\u003e"
+      },
+      {
+        "lineNumber": 7,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "\u003c?import javafx.scene.control.MenuBar?\u003e"
+      },
+      {
+        "lineNumber": 8,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "\u003c?import javafx.scene.control.MenuItem?\u003e"
+      },
+      {
+        "lineNumber": 9,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "\u003c?import javafx.scene.image.Image?\u003e"
+      },
+      {
+        "lineNumber": 10,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "\u003c?import javafx.scene.layout.StackPane?\u003e"
+      },
+      {
+        "lineNumber": 11,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "\u003c?import javafx.scene.layout.VBox?\u003e"
+      },
+      {
+        "lineNumber": 12,
+        "author": {
+          "gitId": "chiamyunqing"
+        },
+        "content": "\u003c?import javafx.scene.layout.HBox?\u003e"
+      },
+      {
+        "lineNumber": 13,
+        "author": {
+          "gitId": "-"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 14,
+        "author": {
+          "gitId": "chiamyunqing"
+        },
+        "content": "\u003c?import javafx.scene.image.ImageView?\u003e"
+      },
+      {
+        "lineNumber": 15,
+        "author": {
+          "gitId": "chiamyunqing"
+        },
+        "content": "\u003c?import javafx.scene.control.TabPane?\u003e"
+      },
+      {
+        "lineNumber": 16,
+        "author": {
+          "gitId": "chiamyunqing"
+        },
+        "content": "\u003c?import javafx.scene.control.Tab?\u003e"
+      },
+      {
+        "lineNumber": 17,
+        "author": {
+          "gitId": "chiamyunqing"
+        },
+        "content": "\u003c?import javafx.scene.layout.AnchorPane?\u003e"
+      },
+      {
+        "lineNumber": 18,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "\u003cfx:root type\u003d\"javafx.stage.Stage\" xmlns\u003d\"http://javafx.com/javafx/8\" xmlns:fx\u003d\"http://javafx.com/fxml/1\""
+      },
+      {
+        "lineNumber": 19,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "         title\u003d\"Address App\" minWidth\u003d\"450\" minHeight\u003d\"600\" onCloseRequest\u003d\"#handleExit\"\u003e"
+      },
+      {
+        "lineNumber": 20,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "  \u003cicons\u003e"
+      },
+      {
+        "lineNumber": 21,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "    \u003cImage url\u003d\"@/images/address_book_32.png\" /\u003e"
+      },
+      {
+        "lineNumber": 22,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "  \u003c/icons\u003e"
+      },
+      {
+        "lineNumber": 23,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "  \u003cscene\u003e"
+      },
+      {
+        "lineNumber": 24,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "    \u003cScene\u003e"
+      },
+      {
+        "lineNumber": 25,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "      \u003cstylesheets\u003e"
+      },
+      {
+        "lineNumber": 26,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "        \u003cURL value\u003d\"@DarkTheme.css\" /\u003e"
+      },
+      {
+        "lineNumber": 27,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "        \u003cURL value\u003d\"@Extensions.css\" /\u003e"
+      },
+      {
+        "lineNumber": 28,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "      \u003c/stylesheets\u003e"
+      },
+      {
+        "lineNumber": 29,
+        "author": {
+          "gitId": "-"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 30,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "      \u003cVBox\u003e"
+      },
+      {
+        "lineNumber": 31,
+        "author": {
+          "gitId": "chiamyunqing"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 32,
+        "author": {
+          "gitId": "chiamyunqing"
+        },
+        "content": "        \u003cHBox fx:id\u003d\"covigentLogoPlaceholder\" styleClass\u003d\"stack-pane\" HBox.hgrow\u003d\"NEVER\"\u003e"
+      },
+      {
+        "lineNumber": 33,
+        "author": {
+          "gitId": "chiamyunqing"
+        },
+        "content": "          \u003cchildren\u003e"
+      },
+      {
+        "lineNumber": 34,
+        "author": {
+          "gitId": "chiamyunqing"
+        },
+        "content": "            \u003cImageView fitHeight\u003d\"53.0\" fitWidth\u003d\"157.0\" pickOnBounds\u003d\"true\" preserveRatio\u003d\"true\"\u003e"
+      },
+      {
+        "lineNumber": 35,
+        "author": {
+          "gitId": "chiamyunqing"
+        },
+        "content": "              \u003cimage\u003e"
+      },
+      {
+        "lineNumber": 36,
+        "author": {
+          "gitId": "chiamyunqing"
+        },
+        "content": "                \u003cImage url\u003d\"/images/covigent_logo.png\" /\u003e"
+      },
+      {
+        "lineNumber": 37,
+        "author": {
+          "gitId": "chiamyunqing"
+        },
+        "content": "              \u003c/image\u003e"
+      },
+      {
+        "lineNumber": 38,
+        "author": {
+          "gitId": "chiamyunqing"
+        },
+        "content": "            \u003c/ImageView\u003e"
+      },
+      {
+        "lineNumber": 39,
+        "author": {
+          "gitId": "chiamyunqing"
+        },
+        "content": "          \u003c/children\u003e"
+      },
+      {
+        "lineNumber": 40,
+        "author": {
+          "gitId": "chiamyunqing"
+        },
+        "content": "        \u003c/HBox\u003e"
+      },
+      {
+        "lineNumber": 41,
+        "author": {
+          "gitId": "chiamyunqing"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 42,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "        \u003cMenuBar fx:id\u003d\"menuBar\" VBox.vgrow\u003d\"NEVER\"\u003e"
+      },
+      {
+        "lineNumber": 43,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "          \u003cMenu mnemonicParsing\u003d\"false\" text\u003d\"File\"\u003e"
+      },
+      {
+        "lineNumber": 44,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "            \u003cMenuItem mnemonicParsing\u003d\"false\" onAction\u003d\"#handleExit\" text\u003d\"Exit\" /\u003e"
+      },
+      {
+        "lineNumber": 45,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "          \u003c/Menu\u003e"
+      },
+      {
+        "lineNumber": 46,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "          \u003cMenu mnemonicParsing\u003d\"false\" text\u003d\"Help\"\u003e"
+      },
+      {
+        "lineNumber": 47,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "            \u003cMenuItem fx:id\u003d\"helpMenuItem\" mnemonicParsing\u003d\"false\" onAction\u003d\"#handleHelp\" text\u003d\"Help\" /\u003e"
+      },
+      {
+        "lineNumber": 48,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "          \u003c/Menu\u003e"
+      },
+      {
+        "lineNumber": 49,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "        \u003c/MenuBar\u003e"
+      },
+      {
+        "lineNumber": 50,
+        "author": {
+          "gitId": "-"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 51,
+        "author": {
+          "gitId": "chiamyunqing"
+        },
+        "content": "        \u003cTabPane fx:id\u003d\"patientRoomTabs\" tabClosingPolicy\u003d\"UNAVAILABLE\"\u003e"
+      },
+      {
+        "lineNumber": 52,
+        "author": {
+          "gitId": "chiamyunqing"
+        },
+        "content": "          \u003ctabs\u003e"
+      },
+      {
+        "lineNumber": 53,
+        "author": {
+          "gitId": "chiamyunqing"
+        },
+        "content": "            \u003cTab fx:id\u003d\"patientTab\" text\u003d\"Patients\"\u003e"
+      },
+      {
+        "lineNumber": 54,
+        "author": {
+          "gitId": "chiamyunqing"
+        },
+        "content": "              \u003ccontent\u003e"
+      },
+      {
+        "lineNumber": 55,
+        "author": {
+          "gitId": "chiamyunqing"
+        },
+        "content": "                \u003cStackPane fx:id\u003d\"personListPanelPlaceholder\" VBox.vgrow\u003d\"ALWAYS\"/\u003e"
+      },
+      {
+        "lineNumber": 56,
+        "author": {
+          "gitId": "chiamyunqing"
+        },
+        "content": "              \u003c/content\u003e"
+      },
+      {
+        "lineNumber": 57,
+        "author": {
+          "gitId": "chiamyunqing"
+        },
+        "content": "            \u003c/Tab\u003e"
+      },
+      {
+        "lineNumber": 58,
+        "author": {
+          "gitId": "chiamyunqing"
+        },
+        "content": "            \u003cTab fx:id\u003d\"roomTab\" text\u003d\"Rooms\"\u003e"
+      },
+      {
+        "lineNumber": 59,
+        "author": {
+          "gitId": "chiamyunqing"
+        },
+        "content": "              \u003ccontent\u003e"
+      },
+      {
+        "lineNumber": 60,
+        "author": {
+          "gitId": "chiamyunqing"
+        },
+        "content": "                \u003cAnchorPane minHeight\u003d\"0.0\" minWidth\u003d\"0.0\" prefHeight\u003d\"180.0\" prefWidth\u003d\"200.0\" /\u003e"
+      },
+      {
+        "lineNumber": 61,
+        "author": {
+          "gitId": "chiamyunqing"
+        },
+        "content": "              \u003c/content\u003e"
+      },
+      {
+        "lineNumber": 62,
+        "author": {
+          "gitId": "chiamyunqing"
+        },
+        "content": "            \u003c/Tab\u003e"
+      },
+      {
+        "lineNumber": 63,
+        "author": {
+          "gitId": "chiamyunqing"
+        },
+        "content": "          \u003c/tabs\u003e"
+      },
+      {
+        "lineNumber": 64,
+        "author": {
+          "gitId": "chiamyunqing"
+        },
+        "content": "        \u003c/TabPane\u003e"
+      },
+      {
+        "lineNumber": 65,
+        "author": {
+          "gitId": "chiamyunqing"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 66,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "        \u003cStackPane VBox.vgrow\u003d\"NEVER\" fx:id\u003d\"commandBoxPlaceholder\" styleClass\u003d\"pane-with-border\"\u003e"
+      },
+      {
+        "lineNumber": 67,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "          \u003cpadding\u003e"
+      },
+      {
+        "lineNumber": 68,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "            \u003cInsets top\u003d\"5\" right\u003d\"10\" bottom\u003d\"5\" left\u003d\"10\" /\u003e"
+      },
+      {
+        "lineNumber": 69,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "          \u003c/padding\u003e"
+      },
+      {
+        "lineNumber": 70,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "        \u003c/StackPane\u003e"
+      },
+      {
+        "lineNumber": 71,
+        "author": {
+          "gitId": "-"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 72,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "        \u003cStackPane VBox.vgrow\u003d\"NEVER\" fx:id\u003d\"resultDisplayPlaceholder\" styleClass\u003d\"pane-with-border\""
+      },
+      {
+        "lineNumber": 73,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "                   minHeight\u003d\"100\" prefHeight\u003d\"100\" maxHeight\u003d\"100\"\u003e"
+      },
+      {
+        "lineNumber": 74,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "          \u003cpadding\u003e"
+      },
+      {
+        "lineNumber": 75,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "            \u003cInsets top\u003d\"5\" right\u003d\"10\" bottom\u003d\"5\" left\u003d\"10\" /\u003e"
+      },
+      {
+        "lineNumber": 76,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "          \u003c/padding\u003e"
+      },
+      {
+        "lineNumber": 77,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "        \u003c/StackPane\u003e"
+      },
+      {
+        "lineNumber": 78,
+        "author": {
+          "gitId": "-"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 79,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "        \u003cStackPane fx:id\u003d\"statusbarPlaceholder\" VBox.vgrow\u003d\"NEVER\" /\u003e"
+      },
+      {
+        "lineNumber": 80,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "      \u003c/VBox\u003e"
+      },
+      {
+        "lineNumber": 81,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "    \u003c/Scene\u003e"
+      },
+      {
+        "lineNumber": 82,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "  \u003c/scene\u003e"
+      },
+      {
+        "lineNumber": 83,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "\u003c/fx:root\u003e"
+      }
+    ],
+    "authorContributionMap": {
+      "chiamyunqing": 31,
+      "-": 52
+    }
+  },
+  {
     "path": "src/main/resources/view/PersonListCard.fxml",
     "fileType": "functional-code",
     "lines": [
@@ -20355,6 +22499,72 @@
     "authorContributionMap": {
       "chiamyunqing": 4,
       "-": 34
+    }
+  },
+  {
+    "path": "src/main/resources/view/ResultDisplay.fxml",
+    "fileType": "functional-code",
+    "lines": [
+      {
+        "lineNumber": 1,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "\u003c?xml version\u003d\"1.0\" encoding\u003d\"UTF-8\"?\u003e"
+      },
+      {
+        "lineNumber": 2,
+        "author": {
+          "gitId": "-"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 3,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "\u003c?import javafx.scene.control.TextArea?\u003e"
+      },
+      {
+        "lineNumber": 4,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "\u003c?import javafx.scene.layout.StackPane?\u003e"
+      },
+      {
+        "lineNumber": 5,
+        "author": {
+          "gitId": "-"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 6,
+        "author": {
+          "gitId": "chiamyunqing"
+        },
+        "content": "\u003cStackPane fx:id\u003d\"placeHolder\" style\u003d\"-fx-background-color: #FFFFFF#FFFFFF;\" styleClass\u003d\"pane-with-border\" xmlns\u003d\"http://javafx.com/javafx/8\" xmlns:fx\u003d\"http://javafx.com/fxml/1\"\u003e"
+      },
+      {
+        "lineNumber": 7,
+        "author": {
+          "gitId": "chiamyunqing"
+        },
+        "content": "  \u003cTextArea fx:id\u003d\"resultDisplay\" editable\u003d\"false\" styleClass\u003d\"result-display\" text\u003d\"Welcome to Covigent. Key in any command to get started.\"/\u003e"
+      },
+      {
+        "lineNumber": 8,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "\u003c/StackPane\u003e"
+      }
+    ],
+    "authorContributionMap": {
+      "chiamyunqing": 2,
+      "-": 6
     }
   },
   {
