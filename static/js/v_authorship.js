@@ -69,7 +69,7 @@ window.vAuthorship = {
         : [];
       if (hash.authorshipFileTypes) {
         this.selectedFileTypes = hash.authorshipFileTypes
-            .split(window.HASH_FILETYPE_DELIMITER)
+            .split(window.HASH_DELIMITER)
             .filter((fileType) => this.fileTypes.includes(fileType));
       }
 
