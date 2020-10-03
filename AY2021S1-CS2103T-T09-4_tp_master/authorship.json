@@ -7026,9 +7026,9 @@
       {
         "lineNumber": 229,
         "author": {
-          "gitId": "-"
+          "gitId": "IlyaRin"
         },
-        "content": "Create a new `Remark` in `seedu.address.model.person`. Since a `Remark` is a field that is similar to `Address`, we can reuse a significant bit of code."
+        "content": "Create a new `Remark` in `seedu.address.model.entry`. Since a `Remark` is a field that is similar to `Address`, we can reuse a significant bit of code."
       },
       {
         "lineNumber": 230,
@@ -8187,8 +8187,739 @@
       }
     ],
     "authorContributionMap": {
+      "IlyaRin": 2,
+      "-": 392
+    }
+  },
+  {
+    "path": "docs/tutorials/RemovingFields.md",
+    "fileType": "docs",
+    "lines": [
+      {
+        "lineNumber": 1,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "---"
+      },
+      {
+        "lineNumber": 2,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "layout: page"
+      },
+      {
+        "lineNumber": 3,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "title: \"Tutorial: Removing Fields\""
+      },
+      {
+        "lineNumber": 4,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "---"
+      },
+      {
+        "lineNumber": 5,
+        "author": {
+          "gitId": "-"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 6,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "\u003e Perfection is achieved, not when there is nothing more to add, but when there is nothing left to take away."
+      },
+      {
+        "lineNumber": 7,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "\u003e"
+      },
+      {
+        "lineNumber": 8,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "\u003e —  Antoine de Saint-Exupery"
+      },
+      {
+        "lineNumber": 9,
+        "author": {
+          "gitId": "-"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 10,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "When working on AddressBook, you will most likely find that some features and fields that are no longer necessary. In scenarios like this, you can consider refactoring the existing `Person` model to suit your use case."
+      },
+      {
+        "lineNumber": 11,
+        "author": {
+          "gitId": "-"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 12,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "In this tutorial, we’ll do exactly just that and remove the `address` field from `Person`."
+      },
+      {
+        "lineNumber": 13,
+        "author": {
+          "gitId": "-"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 14,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "* Table of Contents"
+      },
+      {
+        "lineNumber": 15,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "{:toc}"
+      },
+      {
+        "lineNumber": 16,
+        "author": {
+          "gitId": "-"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 17,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "## Safely deleting `Address`"
+      },
+      {
+        "lineNumber": 18,
+        "author": {
+          "gitId": "-"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 19,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "Fortunately, IntelliJ IDEA provides a robust refactoring tool that can identify *most* usages. Let’s try to use it as much as we can."
+      },
+      {
+        "lineNumber": 20,
+        "author": {
+          "gitId": "-"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 21,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "### Assisted refactoring"
+      },
+      {
+        "lineNumber": 22,
+        "author": {
+          "gitId": "-"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 23,
+        "author": {
+          "gitId": "IlyaRin"
+        },
+        "content": "The `address` field in `Person` is actually an instance of the `seedu.address.model.entry.Address` class. Since removing the `Address` class will break the application, we start by identifying `Address`\u0027s usages. This allows us to see code that depends on `Address` to function properly and edit them on a case-by-case basis. Right-click the `Address` class and select `Refactor` \\\u003e `Safe Delete` through the menu."
+      },
+      {
+        "lineNumber": 24,
+        "author": {
+          "gitId": "-"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 25,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "![Usages detected](../images/remove/UnsafeDelete.png)"
+      },
+      {
+        "lineNumber": 26,
+        "author": {
+          "gitId": "-"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 27,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "Choose to `View Usages` and you should be presented with a list of `Safe Delete Conflicts`. These conflicts describe locations in which the `Address` class is used."
+      },
+      {
+        "lineNumber": 28,
+        "author": {
+          "gitId": "-"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 29,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "![List of conflicts](../images/remove/SafeDeleteConflicts.png)"
+      },
+      {
+        "lineNumber": 30,
+        "author": {
+          "gitId": "-"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 31,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "Remove usages of `Address` by performing `Safe Delete`s on each entry. You will need to exercise discretion when removing usages of `Address`. Functions like `ParserUtil#parseAddress()` can be safely removed but its usages must be removed as well. Other usages like in `EditPersonDescriptor` may require more careful inspection."
+      },
+      {
+        "lineNumber": 32,
+        "author": {
+          "gitId": "-"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 33,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "Let’s try removing references to `Address` in `EditPersonDescriptor`."
+      },
+      {
+        "lineNumber": 34,
+        "author": {
+          "gitId": "-"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 35,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "1. Safe delete the field `address` in `EditPersonDescriptor`."
+      },
+      {
+        "lineNumber": 36,
+        "author": {
+          "gitId": "-"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 37,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "1. Select `Yes` when prompted to remove getters and setters."
+      },
+      {
+        "lineNumber": 38,
+        "author": {
+          "gitId": "-"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 39,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "1. Select `View Usages` again.\u003cbr\u003e"
+      },
+      {
+        "lineNumber": 40,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "   ![UnsafeDeleteOnField](../images/remove/UnsafeDeleteOnField.png)"
+      },
+      {
+        "lineNumber": 41,
+        "author": {
+          "gitId": "-"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 42,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "1. Remove the usages of `address` and select `Do refactor` when you are done."
+      },
+      {
+        "lineNumber": 43,
+        "author": {
+          "gitId": "-"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 44,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "   \u003cdiv markdown\u003d\"span\" class\u003d\"alert alert-primary\"\u003e"
+      },
+      {
+        "lineNumber": 45,
+        "author": {
+          "gitId": "-"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 46,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "   :bulb: **Tip:** Removing usages may result in errors. Exercise discretion and fix them. For example, removing the `address` field from the `Person` class will require you to modify its constructor."
+      },
+      {
+        "lineNumber": 47,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "   \u003c/div\u003e"
+      },
+      {
+        "lineNumber": 48,
+        "author": {
+          "gitId": "-"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 49,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "1. Repeat the steps for the remaining usages of `Address`"
+      },
+      {
+        "lineNumber": 50,
+        "author": {
+          "gitId": "-"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 51,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "After you are done, verify that the application still works by compiling and running it again."
+      },
+      {
+        "lineNumber": 52,
+        "author": {
+          "gitId": "-"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 53,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "### Manual refactoring"
+      },
+      {
+        "lineNumber": 54,
+        "author": {
+          "gitId": "-"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 55,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "Unfortunately, there are usages of `Address` that IntelliJ IDEA cannot identify. You can find them by searching for instances of the word `address` in your code (`Edit` \\\u003e `Find` \\\u003e `Find in path`)."
+      },
+      {
+        "lineNumber": 56,
+        "author": {
+          "gitId": "-"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 57,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "Places of interest to look out for would be resources used by the application. `main/resources` contains images and `fxml` files used by the application and `test/resources` contains test data. For example, there is a `$address` in each `PersonCard` that has not been removed nor identified."
+      },
+      {
+        "lineNumber": 58,
+        "author": {
+          "gitId": "-"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 59,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "![$address](../images/remove/$address.png)"
+      },
+      {
+        "lineNumber": 60,
+        "author": {
+          "gitId": "-"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 61,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "A quick look at the `PersonCard` class and its `fxml` file quickly reveals why it slipped past the automated refactoring."
+      },
+      {
+        "lineNumber": 62,
+        "author": {
+          "gitId": "-"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 63,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "**`PersonCard.java`**"
+      },
+      {
+        "lineNumber": 64,
+        "author": {
+          "gitId": "-"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 65,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "``` java"
+      },
+      {
+        "lineNumber": 66,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "..."
+      },
+      {
+        "lineNumber": 67,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "@FXML"
+      },
+      {
+        "lineNumber": 68,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "private Label address;"
+      },
+      {
+        "lineNumber": 69,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "..."
+      },
+      {
+        "lineNumber": 70,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "```"
+      },
+      {
+        "lineNumber": 71,
+        "author": {
+          "gitId": "-"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 72,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "**`PersonCard.fxml`**"
+      },
+      {
+        "lineNumber": 73,
+        "author": {
+          "gitId": "-"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 74,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "``` xml"
+      },
+      {
+        "lineNumber": 75,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "..."
+      },
+      {
+        "lineNumber": 76,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "\u003cLabel fx:id\u003d\"phone\" styleClass\u003d\"cell_small_label\" text\u003d\"\\$phone\" /\u003e"
+      },
+      {
+        "lineNumber": 77,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "\u003cLabel fx:id\u003d\"address\" styleClass\u003d\"cell_small_label\" text\u003d\"\\$address\" /\u003e"
+      },
+      {
+        "lineNumber": 78,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "\u003cLabel fx:id\u003d\"email\" styleClass\u003d\"cell_small_label\" text\u003d\"\\$email\" /\u003e"
+      },
+      {
+        "lineNumber": 79,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "..."
+      },
+      {
+        "lineNumber": 80,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "```"
+      },
+      {
+        "lineNumber": 81,
+        "author": {
+          "gitId": "-"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 82,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "After removing the `Label`, we can proceed to formally test our code. If everything went well, you should have most of your tests pass. Fix any remaining errors until the tests all pass."
+      },
+      {
+        "lineNumber": 83,
+        "author": {
+          "gitId": "-"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 84,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "## Tidying up"
+      },
+      {
+        "lineNumber": 85,
+        "author": {
+          "gitId": "-"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 86,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "At this point, your application is working as intended and all your tests are passing. What’s left to do is to clean up references to `Address` in test data and documentation."
+      },
+      {
+        "lineNumber": 87,
+        "author": {
+          "gitId": "-"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 88,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "In `src/test/data/`, data meant for testing purposes are stored. While keeping the `address` field in the json files does not cause the tests to fail, it is not good practice to let cruft from old features accumulate."
+      },
+      {
+        "lineNumber": 89,
+        "author": {
+          "gitId": "-"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 90,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "**`invalidPersonAddressBook.json`:**"
+      },
+      {
+        "lineNumber": 91,
+        "author": {
+          "gitId": "-"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 92,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "```json"
+      },
+      {
+        "lineNumber": 93,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "{"
+      },
+      {
+        "lineNumber": 94,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "  \"persons\": [ {"
+      },
+      {
+        "lineNumber": 95,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "    \"name\": \"Person with invalid name field: Ha!ns Mu@ster\","
+      },
+      {
+        "lineNumber": 96,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "    \"phone\": \"9482424\","
+      },
+      {
+        "lineNumber": 97,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "    \"email\": \"hans@example.com\","
+      },
+      {
+        "lineNumber": 98,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "    \"address\": \"4th street\""
+      },
+      {
+        "lineNumber": 99,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "  } ]"
+      },
+      {
+        "lineNumber": 100,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "}"
+      },
+      {
+        "lineNumber": 101,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "```"
+      },
+      {
+        "lineNumber": 102,
+        "author": {
+          "gitId": "-"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 103,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "You can go through each individual `json` file and manually remove the `address` field."
+      }
+    ],
+    "authorContributionMap": {
       "IlyaRin": 1,
-      "-": 393
+      "-": 102
     }
   },
   {
@@ -8556,7 +9287,7 @@
         "author": {
           "gitId": "IlyaRin"
         },
-        "content": "import seedu.address.model.person.Entry;"
+        "content": "import seedu.address.model.entry.Entry;"
       },
       {
         "lineNumber": 12,
@@ -8958,7 +9689,7 @@
         "author": {
           "gitId": "IlyaRin"
         },
-        "content": "import seedu.address.model.person.Entry;"
+        "content": "import seedu.address.model.entry.Entry;"
       },
       {
         "lineNumber": 18,
@@ -9479,7 +10210,7 @@
         "author": {
           "gitId": "IlyaRin"
         },
-        "content": "import seedu.address.model.person.Entry;"
+        "content": "import seedu.address.model.entry.Entry;"
       },
       {
         "lineNumber": 10,
@@ -9500,7 +10231,7 @@
         "author": {
           "gitId": "IlyaRin"
         },
-        "content": " * Adds an entry to the address book."
+        "content": " * Adds an entry to the word bank."
       },
       {
         "lineNumber": 13,
@@ -9542,7 +10273,7 @@
         "author": {
           "gitId": "IlyaRin"
         },
-        "content": "    public static final String MESSAGE_USAGE \u003d COMMAND_WORD + \": Adds a entry to the address book. \""
+        "content": "    public static final String MESSAGE_USAGE \u003d COMMAND_WORD + \": Adds a entry to the word bank. \""
       },
       {
         "lineNumber": 19,
@@ -9577,14 +10308,14 @@
         "author": {
           "gitId": "IlyaRin"
         },
-        "content": "            + PREFIX_WORD + \"John Doe \""
+        "content": "            + PREFIX_WORD + \"Fruits \""
       },
       {
         "lineNumber": 24,
         "author": {
           "gitId": "IlyaRin"
         },
-        "content": "            + PREFIX_TRANSLATION + \"johnd@example.com \";"
+        "content": "            + PREFIX_TRANSLATION + \"果物\";"
       },
       {
         "lineNumber": 25,
@@ -9605,7 +10336,7 @@
         "author": {
           "gitId": "IlyaRin"
         },
-        "content": "    public static final String MESSAGE_DUPLICATE_ENTRY \u003d \"This entry already exists in the address book\";"
+        "content": "    public static final String MESSAGE_DUPLICATE_ENTRY \u003d \"This entry already exists in the word bank\";"
       },
       {
         "lineNumber": 28,
@@ -9902,7 +10633,7 @@
         "author": {
           "gitId": "IlyaRin"
         },
-        "content": "import seedu.address.model.person.Entry;"
+        "content": "import seedu.address.model.entry.Entry;"
       },
       {
         "lineNumber": 12,
@@ -10318,21 +11049,21 @@
         "author": {
           "gitId": "IlyaRin"
         },
-        "content": "import seedu.address.model.person.Entry;"
+        "content": "import seedu.address.model.entry.Entry;"
       },
       {
         "lineNumber": 17,
         "author": {
           "gitId": "IlyaRin"
         },
-        "content": "import seedu.address.model.person.Translation;"
+        "content": "import seedu.address.model.entry.Translation;"
       },
       {
         "lineNumber": 18,
         "author": {
           "gitId": "IlyaRin"
         },
-        "content": "import seedu.address.model.person.Word;"
+        "content": "import seedu.address.model.entry.Word;"
       },
       {
         "lineNumber": 19,
@@ -11577,7 +12308,7 @@
         "author": {
           "gitId": "IlyaRin"
         },
-        "content": "import seedu.address.model.person.WordContainsKeywordsPredicate;"
+        "content": "import seedu.address.model.entry.WordContainsKeywordsPredicate;"
       },
       {
         "lineNumber": 8,
@@ -12087,21 +12818,21 @@
         "author": {
           "gitId": "IlyaRin"
         },
-        "content": "import seedu.address.model.person.Entry;"
+        "content": "import seedu.address.model.entry.Entry;"
       },
       {
         "lineNumber": 12,
         "author": {
           "gitId": "IlyaRin"
         },
-        "content": "import seedu.address.model.person.Translation;"
+        "content": "import seedu.address.model.entry.Translation;"
       },
       {
         "lineNumber": 13,
         "author": {
           "gitId": "IlyaRin"
         },
-        "content": "import seedu.address.model.person.Word;"
+        "content": "import seedu.address.model.entry.Word;"
       },
       {
         "lineNumber": 14,
@@ -12887,7 +13618,7 @@
         "author": {
           "gitId": "IlyaRin"
         },
-        "content": "import seedu.address.model.person.WordContainsKeywordsPredicate;"
+        "content": "import seedu.address.model.entry.WordContainsKeywordsPredicate;"
       },
       {
         "lineNumber": 10,
@@ -13121,14 +13852,14 @@
         "author": {
           "gitId": "IlyaRin"
         },
-        "content": "import seedu.address.model.person.Translation;"
+        "content": "import seedu.address.model.entry.Translation;"
       },
       {
         "lineNumber": 9,
         "author": {
           "gitId": "IlyaRin"
         },
-        "content": "import seedu.address.model.person.Word;"
+        "content": "import seedu.address.model.entry.Word;"
       },
       {
         "lineNumber": 10,
@@ -13551,14 +14282,14 @@
         "author": {
           "gitId": "IlyaRin"
         },
-        "content": "import seedu.address.model.person.Entry;"
+        "content": "import seedu.address.model.entry.Entry;"
       },
       {
         "lineNumber": 9,
         "author": {
           "gitId": "IlyaRin"
         },
-        "content": "import seedu.address.model.person.UniqueEntryList;"
+        "content": "import seedu.address.model.entry.UniqueEntryList;"
       },
       {
         "lineNumber": 10,
@@ -14401,7 +15132,7 @@
         "author": {
           "gitId": "IlyaRin"
         },
-        "content": "import seedu.address.model.person.Entry;"
+        "content": "import seedu.address.model.entry.Entry;"
       },
       {
         "lineNumber": 9,
@@ -15062,7 +15793,7 @@
         "author": {
           "gitId": "IlyaRin"
         },
-        "content": "import seedu.address.model.person.Entry;"
+        "content": "import seedu.address.model.entry.Entry;"
       },
       {
         "lineNumber": 15,
@@ -16059,7 +16790,7 @@
         "author": {
           "gitId": "IlyaRin"
         },
-        "content": "import seedu.address.model.person.Entry;"
+        "content": "import seedu.address.model.entry.Entry;"
       },
       {
         "lineNumber": 5,
@@ -16159,15 +16890,15 @@
     }
   },
   {
-    "path": "src/main/java/seedu/address/model/person/Entry.java",
+    "path": "src/main/java/seedu/address/model/entry/Entry.java",
     "fileType": "functional-code",
     "lines": [
       {
         "lineNumber": 1,
         "author": {
-          "gitId": "-"
+          "gitId": "IlyaRin"
         },
-        "content": "package seedu.address.model.person;"
+        "content": "package seedu.address.model.entry;"
       },
       {
         "lineNumber": 2,
@@ -16738,20 +17469,20 @@
       }
     ],
     "authorContributionMap": {
-      "IlyaRin": 29,
-      "-": 53
+      "IlyaRin": 30,
+      "-": 52
     }
   },
   {
-    "path": "src/main/java/seedu/address/model/person/Translation.java",
+    "path": "src/main/java/seedu/address/model/entry/Translation.java",
     "fileType": "functional-code",
     "lines": [
       {
         "lineNumber": 1,
         "author": {
-          "gitId": "-"
+          "gitId": "IlyaRin"
         },
-        "content": "package seedu.address.model.person;"
+        "content": "package seedu.address.model.entry;"
       },
       {
         "lineNumber": 2,
@@ -17119,12 +17850,12 @@
       }
     ],
     "authorContributionMap": {
-      "IlyaRin": 20,
-      "-": 33
+      "IlyaRin": 21,
+      "-": 32
     }
   },
   {
-    "path": "src/main/java/seedu/address/model/person/UniqueEntryList.java",
+    "path": "src/main/java/seedu/address/model/entry/UniqueEntryList.java",
     "fileType": "functional-code",
     "lines": [
       {
@@ -17132,7 +17863,7 @@
         "author": {
           "gitId": "IlyaRin"
         },
-        "content": "package seedu.address.model.person;"
+        "content": "package seedu.address.model.entry;"
       },
       {
         "lineNumber": 2,
@@ -17202,14 +17933,14 @@
         "author": {
           "gitId": "IlyaRin"
         },
-        "content": "import seedu.address.model.person.exceptions.DuplicateEntryException;"
+        "content": "import seedu.address.model.entry.exceptions.DuplicateEntryException;"
       },
       {
         "lineNumber": 12,
         "author": {
           "gitId": "IlyaRin"
         },
-        "content": "import seedu.address.model.person.exceptions.EntryNotFoundException;"
+        "content": "import seedu.address.model.entry.exceptions.EntryNotFoundException;"
       },
       {
         "lineNumber": 13,
@@ -18092,15 +18823,15 @@
     }
   },
   {
-    "path": "src/main/java/seedu/address/model/person/Word.java",
+    "path": "src/main/java/seedu/address/model/entry/Word.java",
     "fileType": "functional-code",
     "lines": [
       {
         "lineNumber": 1,
         "author": {
-          "gitId": "-"
+          "gitId": "IlyaRin"
         },
-        "content": "package seedu.address.model.person;"
+        "content": "package seedu.address.model.entry;"
       },
       {
         "lineNumber": 2,
@@ -18503,20 +19234,20 @@
       }
     ],
     "authorContributionMap": {
-      "IlyaRin": 17,
-      "-": 41
+      "IlyaRin": 18,
+      "-": 40
     }
   },
   {
-    "path": "src/main/java/seedu/address/model/person/WordContainsKeywordsPredicate.java",
+    "path": "src/main/java/seedu/address/model/entry/WordContainsKeywordsPredicate.java",
     "fileType": "functional-code",
     "lines": [
       {
         "lineNumber": 1,
         "author": {
-          "gitId": "-"
+          "gitId": "IlyaRin"
         },
-        "content": "package seedu.address.model.person;"
+        "content": "package seedu.address.model.entry;"
       },
       {
         "lineNumber": 2,
@@ -18730,12 +19461,12 @@
       }
     ],
     "authorContributionMap": {
-      "IlyaRin": 7,
-      "-": 24
+      "IlyaRin": 8,
+      "-": 23
     }
   },
   {
-    "path": "src/main/java/seedu/address/model/person/exceptions/DuplicateEntryException.java",
+    "path": "src/main/java/seedu/address/model/entry/exceptions/DuplicateEntryException.java",
     "fileType": "functional-code",
     "lines": [
       {
@@ -18743,7 +19474,7 @@
         "author": {
           "gitId": "IlyaRin"
         },
-        "content": "package seedu.address.model.person.exceptions;"
+        "content": "package seedu.address.model.entry.exceptions;"
       },
       {
         "lineNumber": 2,
@@ -18821,15 +19552,15 @@
     }
   },
   {
-    "path": "src/main/java/seedu/address/model/person/exceptions/EntryNotFoundException.java",
+    "path": "src/main/java/seedu/address/model/entry/exceptions/EntryNotFoundException.java",
     "fileType": "functional-code",
     "lines": [
       {
         "lineNumber": 1,
         "author": {
-          "gitId": "-"
+          "gitId": "IlyaRin"
         },
-        "content": "package seedu.address.model.person.exceptions;"
+        "content": "package seedu.address.model.entry.exceptions;"
       },
       {
         "lineNumber": 2,
@@ -18868,8 +19599,8 @@
       }
     ],
     "authorContributionMap": {
-      "IlyaRin": 1,
-      "-": 5
+      "IlyaRin": 2,
+      "-": 4
     }
   },
   {
@@ -18909,21 +19640,21 @@
         "author": {
           "gitId": "IlyaRin"
         },
-        "content": "import seedu.address.model.person.Entry;"
+        "content": "import seedu.address.model.entry.Entry;"
       },
       {
         "lineNumber": 6,
         "author": {
           "gitId": "IlyaRin"
         },
-        "content": "import seedu.address.model.person.Translation;"
+        "content": "import seedu.address.model.entry.Translation;"
       },
       {
         "lineNumber": 7,
         "author": {
           "gitId": "IlyaRin"
         },
-        "content": "import seedu.address.model.person.Word;"
+        "content": "import seedu.address.model.entry.Word;"
       },
       {
         "lineNumber": 8,
@@ -19150,21 +19881,21 @@
         "author": {
           "gitId": "IlyaRin"
         },
-        "content": "import seedu.address.model.person.Entry;"
+        "content": "import seedu.address.model.entry.Entry;"
       },
       {
         "lineNumber": 8,
         "author": {
           "gitId": "IlyaRin"
         },
-        "content": "import seedu.address.model.person.Translation;"
+        "content": "import seedu.address.model.entry.Translation;"
       },
       {
         "lineNumber": 9,
         "author": {
           "gitId": "IlyaRin"
         },
-        "content": "import seedu.address.model.person.Word;"
+        "content": "import seedu.address.model.entry.Word;"
       },
       {
         "lineNumber": 10,
@@ -19657,7 +20388,7 @@
         "author": {
           "gitId": "IlyaRin"
         },
-        "content": "import seedu.address.model.person.Entry;"
+        "content": "import seedu.address.model.entry.Entry;"
       },
       {
         "lineNumber": 15,
@@ -20038,7 +20769,7 @@
         "author": {
           "gitId": "IlyaRin"
         },
-        "content": "import seedu.address.model.person.Entry;"
+        "content": "import seedu.address.model.entry.Entry;"
       },
       {
         "lineNumber": 8,
@@ -20517,7 +21248,7 @@
         "author": {
           "gitId": "IlyaRin"
         },
-        "content": "import seedu.address.model.person.Entry;"
+        "content": "import seedu.address.model.entry.Entry;"
       },
       {
         "lineNumber": 12,
@@ -22859,7 +23590,7 @@
         "author": {
           "gitId": "IlyaRin"
         },
-        "content": "import seedu.address.model.person.Entry;"
+        "content": "import seedu.address.model.entry.Entry;"
       },
       {
         "lineNumber": 28,
@@ -23884,7 +24615,7 @@
         "author": {
           "gitId": "IlyaRin"
         },
-        "content": "import seedu.address.model.person.Entry;"
+        "content": "import seedu.address.model.entry.Entry;"
       },
       {
         "lineNumber": 14,
@@ -24279,7 +25010,7 @@
         "author": {
           "gitId": "IlyaRin"
         },
-        "content": "import seedu.address.model.person.Entry;"
+        "content": "import seedu.address.model.entry.Entry;"
       },
       {
         "lineNumber": 24,
@@ -25839,14 +26570,14 @@
         "author": {
           "gitId": "IlyaRin"
         },
-        "content": "import seedu.address.model.person.Entry;"
+        "content": "import seedu.address.model.entry.Entry;"
       },
       {
         "lineNumber": 18,
         "author": {
           "gitId": "IlyaRin"
         },
-        "content": "import seedu.address.model.person.WordContainsKeywordsPredicate;"
+        "content": "import seedu.address.model.entry.WordContainsKeywordsPredicate;"
       },
       {
         "lineNumber": 19,
@@ -26647,7 +27378,7 @@
         "author": {
           "gitId": "IlyaRin"
         },
-        "content": "import seedu.address.model.person.Entry;"
+        "content": "import seedu.address.model.entry.Entry;"
       },
       {
         "lineNumber": 20,
@@ -27455,7 +28186,7 @@
         "author": {
           "gitId": "IlyaRin"
         },
-        "content": "import seedu.address.model.person.Entry;"
+        "content": "import seedu.address.model.entry.Entry;"
       },
       {
         "lineNumber": 25,
@@ -28945,7 +29676,7 @@
         "author": {
           "gitId": "IlyaRin"
         },
-        "content": "import seedu.address.model.person.WordContainsKeywordsPredicate;"
+        "content": "import seedu.address.model.entry.WordContainsKeywordsPredicate;"
       },
       {
         "lineNumber": 22,
@@ -29840,21 +30571,21 @@
         "author": {
           "gitId": "IlyaRin"
         },
-        "content": "import seedu.address.model.person.Entry;"
+        "content": "import seedu.address.model.entry.Entry;"
       },
       {
         "lineNumber": 25,
         "author": {
           "gitId": "IlyaRin"
         },
-        "content": "import seedu.address.model.person.Translation;"
+        "content": "import seedu.address.model.entry.Translation;"
       },
       {
         "lineNumber": 26,
         "author": {
           "gitId": "IlyaRin"
         },
-        "content": "import seedu.address.model.person.Word;"
+        "content": "import seedu.address.model.entry.Word;"
       },
       {
         "lineNumber": 27,
@@ -30522,14 +31253,14 @@
         "author": {
           "gitId": "IlyaRin"
         },
-        "content": "import seedu.address.model.person.Entry;"
+        "content": "import seedu.address.model.entry.Entry;"
       },
       {
         "lineNumber": 27,
         "author": {
           "gitId": "IlyaRin"
         },
-        "content": "import seedu.address.model.person.WordContainsKeywordsPredicate;"
+        "content": "import seedu.address.model.entry.WordContainsKeywordsPredicate;"
       },
       {
         "lineNumber": 28,
@@ -31466,14 +32197,14 @@
         "author": {
           "gitId": "IlyaRin"
         },
-        "content": "import seedu.address.model.person.Translation;"
+        "content": "import seedu.address.model.entry.Translation;"
       },
       {
         "lineNumber": 26,
         "author": {
           "gitId": "IlyaRin"
         },
-        "content": "import seedu.address.model.person.Word;"
+        "content": "import seedu.address.model.entry.Word;"
       },
       {
         "lineNumber": 27,
@@ -32274,7 +33005,7 @@
         "author": {
           "gitId": "IlyaRin"
         },
-        "content": "import seedu.address.model.person.WordContainsKeywordsPredicate;"
+        "content": "import seedu.address.model.entry.WordContainsKeywordsPredicate;"
       },
       {
         "lineNumber": 13,
@@ -32515,14 +33246,14 @@
         "author": {
           "gitId": "IlyaRin"
         },
-        "content": "import seedu.address.model.person.Translation;"
+        "content": "import seedu.address.model.entry.Translation;"
       },
       {
         "lineNumber": 12,
         "author": {
           "gitId": "IlyaRin"
         },
-        "content": "import seedu.address.model.person.Word;"
+        "content": "import seedu.address.model.entry.Word;"
       },
       {
         "lineNumber": 13,
@@ -33197,14 +33928,14 @@
         "author": {
           "gitId": "IlyaRin"
         },
-        "content": "import seedu.address.model.person.Entry;"
+        "content": "import seedu.address.model.entry.Entry;"
       },
       {
         "lineNumber": 20,
         "author": {
           "gitId": "IlyaRin"
         },
-        "content": "import seedu.address.model.person.exceptions.DuplicateEntryException;"
+        "content": "import seedu.address.model.entry.exceptions.DuplicateEntryException;"
       },
       {
         "lineNumber": 21,
@@ -33886,7 +34617,7 @@
         "author": {
           "gitId": "IlyaRin"
         },
-        "content": "import seedu.address.model.person.WordContainsKeywordsPredicate;"
+        "content": "import seedu.address.model.entry.WordContainsKeywordsPredicate;"
       },
       {
         "lineNumber": 19,
@@ -34693,15 +35424,15 @@
     }
   },
   {
-    "path": "src/test/java/seedu/address/model/person/EntryTest.java",
+    "path": "src/test/java/seedu/address/model/entry/EntryTest.java",
     "fileType": "test-code",
     "lines": [
       {
         "lineNumber": 1,
         "author": {
-          "gitId": "-"
+          "gitId": "IlyaRin"
         },
-        "content": "package seedu.address.model.person;"
+        "content": "package seedu.address.model.entry;"
       },
       {
         "lineNumber": 2,
@@ -35132,12 +35863,12 @@
       }
     ],
     "authorContributionMap": {
-      "IlyaRin": 22,
-      "-": 40
+      "IlyaRin": 23,
+      "-": 39
     }
   },
   {
-    "path": "src/test/java/seedu/address/model/person/TranslationTest.java",
+    "path": "src/test/java/seedu/address/model/entry/TranslationTest.java",
     "fileType": "test-code",
     "lines": [
       {
@@ -35145,7 +35876,7 @@
         "author": {
           "gitId": "IlyaRin"
         },
-        "content": "package seedu.address.model.person;"
+        "content": "package seedu.address.model.entry;"
       },
       {
         "lineNumber": 2,
@@ -35447,7 +36178,7 @@
     }
   },
   {
-    "path": "src/test/java/seedu/address/model/person/UniqueEntryListTest.java",
+    "path": "src/test/java/seedu/address/model/entry/UniqueEntryListTest.java",
     "fileType": "test-code",
     "lines": [
       {
@@ -35455,7 +36186,7 @@
         "author": {
           "gitId": "IlyaRin"
         },
-        "content": "package seedu.address.model.person;"
+        "content": "package seedu.address.model.entry;"
       },
       {
         "lineNumber": 2,
@@ -35560,14 +36291,14 @@
         "author": {
           "gitId": "IlyaRin"
         },
-        "content": "import seedu.address.model.person.exceptions.DuplicateEntryException;"
+        "content": "import seedu.address.model.entry.exceptions.DuplicateEntryException;"
       },
       {
         "lineNumber": 17,
         "author": {
           "gitId": "IlyaRin"
         },
-        "content": "import seedu.address.model.person.exceptions.EntryNotFoundException;"
+        "content": "import seedu.address.model.entry.exceptions.EntryNotFoundException;"
       },
       {
         "lineNumber": 18,
@@ -36618,15 +37349,15 @@
     }
   },
   {
-    "path": "src/test/java/seedu/address/model/person/WordContainsKeywordsPredicateTest.java",
+    "path": "src/test/java/seedu/address/model/entry/WordContainsKeywordsPredicateTest.java",
     "fileType": "test-code",
     "lines": [
       {
         "lineNumber": 1,
         "author": {
-          "gitId": "-"
+          "gitId": "IlyaRin"
         },
-        "content": "package seedu.address.model.person;"
+        "content": "package seedu.address.model.entry;"
       },
       {
         "lineNumber": 2,
@@ -37148,12 +37879,12 @@
       }
     ],
     "authorContributionMap": {
-      "IlyaRin": 24,
-      "-": 51
+      "IlyaRin": 25,
+      "-": 50
     }
   },
   {
-    "path": "src/test/java/seedu/address/model/person/WordTest.java",
+    "path": "src/test/java/seedu/address/model/entry/WordTest.java",
     "fileType": "test-code",
     "lines": [
       {
@@ -37161,7 +37892,7 @@
         "author": {
           "gitId": "IlyaRin"
         },
-        "content": "package seedu.address.model.person;"
+        "content": "package seedu.address.model.entry;"
       },
       {
         "lineNumber": 2,
@@ -37520,14 +38251,14 @@
         "author": {
           "gitId": "IlyaRin"
         },
-        "content": "import seedu.address.model.person.Translation;"
+        "content": "import seedu.address.model.entry.Translation;"
       },
       {
         "lineNumber": 12,
         "author": {
           "gitId": "IlyaRin"
         },
-        "content": "import seedu.address.model.person.Word;"
+        "content": "import seedu.address.model.entry.Word;"
       },
       {
         "lineNumber": 13,
@@ -39443,7 +40174,7 @@
         "author": {
           "gitId": "IlyaRin"
         },
-        "content": "import seedu.address.model.person.Entry;"
+        "content": "import seedu.address.model.entry.Entry;"
       },
       {
         "lineNumber": 5,
@@ -39691,21 +40422,21 @@
         "author": {
           "gitId": "IlyaRin"
         },
-        "content": "import seedu.address.model.person.Entry;"
+        "content": "import seedu.address.model.entry.Entry;"
       },
       {
         "lineNumber": 5,
         "author": {
           "gitId": "IlyaRin"
         },
-        "content": "import seedu.address.model.person.Translation;"
+        "content": "import seedu.address.model.entry.Translation;"
       },
       {
         "lineNumber": 6,
         "author": {
           "gitId": "IlyaRin"
         },
-        "content": "import seedu.address.model.person.Word;"
+        "content": "import seedu.address.model.entry.Word;"
       },
       {
         "lineNumber": 7,
@@ -40050,21 +40781,21 @@
         "author": {
           "gitId": "IlyaRin"
         },
-        "content": "import seedu.address.model.person.Entry;"
+        "content": "import seedu.address.model.entry.Entry;"
       },
       {
         "lineNumber": 4,
         "author": {
           "gitId": "IlyaRin"
         },
-        "content": "import seedu.address.model.person.Translation;"
+        "content": "import seedu.address.model.entry.Translation;"
       },
       {
         "lineNumber": 5,
         "author": {
           "gitId": "IlyaRin"
         },
-        "content": "import seedu.address.model.person.Word;"
+        "content": "import seedu.address.model.entry.Word;"
       },
       {
         "lineNumber": 6,
@@ -40465,7 +41196,7 @@
         "author": {
           "gitId": "IlyaRin"
         },
-        "content": "import seedu.address.model.person.Entry;"
+        "content": "import seedu.address.model.entry.Entry;"
       },
       {
         "lineNumber": 9,
@@ -40782,7 +41513,7 @@
         "author": {
           "gitId": "IlyaRin"
         },
-        "content": "import seedu.address.model.person.Entry;"
+        "content": "import seedu.address.model.entry.Entry;"
       },
       {
         "lineNumber": 11,
@@ -41198,7 +41929,7 @@
         "author": {
           "gitId": "IlyaRin"
         },
-        "content": "import seedu.address.model.person.Entry;"
+        "content": "import seedu.address.model.entry.Entry;"
       },
       {
         "lineNumber": 14,
@@ -41247,14 +41978,14 @@
         "author": {
           "gitId": "IlyaRin"
         },
-        "content": "    public static final Entry ALICE \u003d new EntryBuilder().withWord(\"Alice Pauline\")"
+        "content": "    public static final Entry ALICE \u003d new EntryBuilder().withWord(\"Time\")"
       },
       {
         "lineNumber": 21,
         "author": {
           "gitId": "IlyaRin"
         },
-        "content": "            .withTranslation(\"alice@example.com\").build();"
+        "content": "            .withTranslation(\"時間\").build();"
       },
       {
         "lineNumber": 22,
