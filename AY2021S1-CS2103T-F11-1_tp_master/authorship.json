@@ -16342,6 +16342,1730 @@
     }
   },
   {
+    "path": "src/main/java/seedu/address/logic/parser/AddCommandParser.java",
+    "fileType": "functional-code",
+    "lines": [
+      {
+        "lineNumber": 1,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "package seedu.address.logic.parser;"
+      },
+      {
+        "lineNumber": 2,
+        "author": {
+          "gitId": "-"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 3,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;"
+      },
+      {
+        "lineNumber": 4,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "import static seedu.address.logic.parser.CliSyntax.PREFIX_ADDRESS;"
+      },
+      {
+        "lineNumber": 5,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "import static seedu.address.logic.parser.CliSyntax.PREFIX_EMAIL;"
+      },
+      {
+        "lineNumber": 6,
+        "author": {
+          "gitId": "kwannoel"
+        },
+        "content": "import static seedu.address.logic.parser.CliSyntax.PREFIX_TELEGRAM;"
+      },
+      {
+        "lineNumber": 7,
+        "author": {
+          "gitId": "kwannoel"
+        },
+        "content": "import static seedu.address.logic.parser.CliSyntax.PREFIX_MATRIC_NUMBER;"
+      },
+      {
+        "lineNumber": 8,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;"
+      },
+      {
+        "lineNumber": 9,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "import static seedu.address.logic.parser.CliSyntax.PREFIX_PHONE;"
+      },
+      {
+        "lineNumber": 10,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG;"
+      },
+      {
+        "lineNumber": 11,
+        "author": {
+          "gitId": "-"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 12,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "import java.util.Set;"
+      },
+      {
+        "lineNumber": 13,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "import java.util.stream.Stream;"
+      },
+      {
+        "lineNumber": 14,
+        "author": {
+          "gitId": "-"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 15,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "import seedu.address.logic.commands.AddCommand;"
+      },
+      {
+        "lineNumber": 16,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "import seedu.address.logic.parser.exceptions.ParseException;"
+      },
+      {
+        "lineNumber": 17,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "import seedu.address.model.person.Address;"
+      },
+      {
+        "lineNumber": 18,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "import seedu.address.model.person.Email;"
+      },
+      {
+        "lineNumber": 19,
+        "author": {
+          "gitId": "kwannoel"
+        },
+        "content": "import seedu.address.model.person.MatricNumber;"
+      },
+      {
+        "lineNumber": 20,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "import seedu.address.model.person.Name;"
+      },
+      {
+        "lineNumber": 21,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "import seedu.address.model.person.Person;"
+      },
+      {
+        "lineNumber": 22,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "import seedu.address.model.person.Phone;"
+      },
+      {
+        "lineNumber": 23,
+        "author": {
+          "gitId": "kwannoel"
+        },
+        "content": "import seedu.address.model.person.Telegram;"
+      },
+      {
+        "lineNumber": 24,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "import seedu.address.model.tag.Tag;"
+      },
+      {
+        "lineNumber": 25,
+        "author": {
+          "gitId": "-"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 26,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "/**"
+      },
+      {
+        "lineNumber": 27,
+        "author": {
+          "gitId": "-"
+        },
+        "content": " * Parses input arguments and creates a new AddCommand object"
+      },
+      {
+        "lineNumber": 28,
+        "author": {
+          "gitId": "-"
+        },
+        "content": " */"
+      },
+      {
+        "lineNumber": 29,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "public class AddCommandParser implements Parser\u003cAddCommand\u003e {"
+      },
+      {
+        "lineNumber": 30,
+        "author": {
+          "gitId": "-"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 31,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "    /**"
+      },
+      {
+        "lineNumber": 32,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "     * Parses the given {@code String} of arguments in the context of the AddCommand"
+      },
+      {
+        "lineNumber": 33,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "     * and returns an AddCommand object for execution."
+      },
+      {
+        "lineNumber": 34,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "     * @throws ParseException if the user input does not conform the expected format"
+      },
+      {
+        "lineNumber": 35,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "     */"
+      },
+      {
+        "lineNumber": 36,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "    public AddCommand parse(String args) throws ParseException {"
+      },
+      {
+        "lineNumber": 37,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "        ArgumentMultimap argMultimap \u003d"
+      },
+      {
+        "lineNumber": 38,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "                ArgumentTokenizer.tokenize(args, PREFIX_NAME, PREFIX_PHONE, PREFIX_EMAIL, PREFIX_ADDRESS, PREFIX_TAG);"
+      },
+      {
+        "lineNumber": 39,
+        "author": {
+          "gitId": "-"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 40,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "        if (!arePrefixesPresent(argMultimap, PREFIX_NAME, PREFIX_ADDRESS, PREFIX_PHONE, PREFIX_EMAIL)"
+      },
+      {
+        "lineNumber": 41,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "                || !argMultimap.getPreamble().isEmpty()) {"
+      },
+      {
+        "lineNumber": 42,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddCommand.MESSAGE_USAGE));"
+      },
+      {
+        "lineNumber": 43,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "        }"
+      },
+      {
+        "lineNumber": 44,
+        "author": {
+          "gitId": "-"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 45,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "        Name name \u003d ParserUtil.parseName(argMultimap.getValue(PREFIX_NAME).get());"
+      },
+      {
+        "lineNumber": 46,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "        Phone phone \u003d ParserUtil.parsePhone(argMultimap.getValue(PREFIX_PHONE).get());"
+      },
+      {
+        "lineNumber": 47,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "        Email email \u003d ParserUtil.parseEmail(argMultimap.getValue(PREFIX_EMAIL).get());"
+      },
+      {
+        "lineNumber": 48,
+        "author": {
+          "gitId": "kwannoel"
+        },
+        "content": "        Telegram telegram \u003d ParserUtil.parseTelegram(argMultimap.getValue(PREFIX_TELEGRAM).get());"
+      },
+      {
+        "lineNumber": 49,
+        "author": {
+          "gitId": "kwannoel"
+        },
+        "content": "        MatricNumber matricNumber \u003d ParserUtil.parseMatricNumber("
+      },
+      {
+        "lineNumber": 50,
+        "author": {
+          "gitId": "kwannoel"
+        },
+        "content": "                argMultimap.getValue(PREFIX_MATRIC_NUMBER).get()"
+      },
+      {
+        "lineNumber": 51,
+        "author": {
+          "gitId": "kwannoel"
+        },
+        "content": "        );"
+      },
+      {
+        "lineNumber": 52,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "        Address address \u003d ParserUtil.parseAddress(argMultimap.getValue(PREFIX_ADDRESS).get());"
+      },
+      {
+        "lineNumber": 53,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "        Set\u003cTag\u003e tagList \u003d ParserUtil.parseTags(argMultimap.getAllValues(PREFIX_TAG));"
+      },
+      {
+        "lineNumber": 54,
+        "author": {
+          "gitId": "-"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 55,
+        "author": {
+          "gitId": "kwannoel"
+        },
+        "content": "        Person person \u003d new Person(name, phone, email, telegram, matricNumber, address, tagList);"
+      },
+      {
+        "lineNumber": 56,
+        "author": {
+          "gitId": "-"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 57,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "        return new AddCommand(person);"
+      },
+      {
+        "lineNumber": 58,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "    }"
+      },
+      {
+        "lineNumber": 59,
+        "author": {
+          "gitId": "-"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 60,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "    /**"
+      },
+      {
+        "lineNumber": 61,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "     * Returns true if none of the prefixes contains empty {@code Optional} values in the given"
+      },
+      {
+        "lineNumber": 62,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "     * {@code ArgumentMultimap}."
+      },
+      {
+        "lineNumber": 63,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "     */"
+      },
+      {
+        "lineNumber": 64,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "    private static boolean arePrefixesPresent(ArgumentMultimap argumentMultimap, Prefix... prefixes) {"
+      },
+      {
+        "lineNumber": 65,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "        return Stream.of(prefixes).allMatch(prefix -\u003e argumentMultimap.getValue(prefix).isPresent());"
+      },
+      {
+        "lineNumber": 66,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "    }"
+      },
+      {
+        "lineNumber": 67,
+        "author": {
+          "gitId": "-"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 68,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "}"
+      }
+    ],
+    "authorContributionMap": {
+      "kwannoel": 9,
+      "-": 59
+    }
+  },
+  {
+    "path": "src/main/java/seedu/address/logic/parser/CliSyntax.java",
+    "fileType": "functional-code",
+    "lines": [
+      {
+        "lineNumber": 1,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "package seedu.address.logic.parser;"
+      },
+      {
+        "lineNumber": 2,
+        "author": {
+          "gitId": "-"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 3,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "/**"
+      },
+      {
+        "lineNumber": 4,
+        "author": {
+          "gitId": "-"
+        },
+        "content": " * Contains Command Line Interface (CLI) syntax definitions common to multiple commands"
+      },
+      {
+        "lineNumber": 5,
+        "author": {
+          "gitId": "-"
+        },
+        "content": " */"
+      },
+      {
+        "lineNumber": 6,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "public class CliSyntax {"
+      },
+      {
+        "lineNumber": 7,
+        "author": {
+          "gitId": "-"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 8,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "    /* Prefix definitions */"
+      },
+      {
+        "lineNumber": 9,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "    public static final Prefix PREFIX_NAME \u003d new Prefix(\"n/\");"
+      },
+      {
+        "lineNumber": 10,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "    public static final Prefix PREFIX_PHONE \u003d new Prefix(\"p/\");"
+      },
+      {
+        "lineNumber": 11,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "    public static final Prefix PREFIX_EMAIL \u003d new Prefix(\"e/\");"
+      },
+      {
+        "lineNumber": 12,
+        "author": {
+          "gitId": "kwannoel"
+        },
+        "content": "    public static final Prefix PREFIX_TELEGRAM \u003d new Prefix(\"t/\");"
+      },
+      {
+        "lineNumber": 13,
+        "author": {
+          "gitId": "kwannoel"
+        },
+        "content": "    public static final Prefix PREFIX_MATRIC_NUMBER \u003d new Prefix(\"m/\");"
+      },
+      {
+        "lineNumber": 14,
+        "author": {
+          "gitId": "kwannoel"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 15,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "    public static final Prefix PREFIX_ADDRESS \u003d new Prefix(\"a/\");"
+      },
+      {
+        "lineNumber": 16,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "    public static final Prefix PREFIX_TAG \u003d new Prefix(\"t/\");"
+      },
+      {
+        "lineNumber": 17,
+        "author": {
+          "gitId": "-"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 18,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "}"
+      }
+    ],
+    "authorContributionMap": {
+      "kwannoel": 3,
+      "-": 15
+    }
+  },
+  {
+    "path": "src/main/java/seedu/address/logic/parser/ParserUtil.java",
+    "fileType": "functional-code",
+    "lines": [
+      {
+        "lineNumber": 1,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "package seedu.address.logic.parser;"
+      },
+      {
+        "lineNumber": 2,
+        "author": {
+          "gitId": "-"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 3,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "import static java.util.Objects.requireNonNull;"
+      },
+      {
+        "lineNumber": 4,
+        "author": {
+          "gitId": "-"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 5,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "import java.util.Collection;"
+      },
+      {
+        "lineNumber": 6,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "import java.util.HashSet;"
+      },
+      {
+        "lineNumber": 7,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "import java.util.Set;"
+      },
+      {
+        "lineNumber": 8,
+        "author": {
+          "gitId": "-"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 9,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "import seedu.address.commons.core.index.Index;"
+      },
+      {
+        "lineNumber": 10,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "import seedu.address.commons.util.StringUtil;"
+      },
+      {
+        "lineNumber": 11,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "import seedu.address.logic.parser.exceptions.ParseException;"
+      },
+      {
+        "lineNumber": 12,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "import seedu.address.model.person.Address;"
+      },
+      {
+        "lineNumber": 13,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "import seedu.address.model.person.Email;"
+      },
+      {
+        "lineNumber": 14,
+        "author": {
+          "gitId": "kwannoel"
+        },
+        "content": "import seedu.address.model.person.MatricNumber;"
+      },
+      {
+        "lineNumber": 15,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "import seedu.address.model.person.Name;"
+      },
+      {
+        "lineNumber": 16,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "import seedu.address.model.person.Phone;"
+      },
+      {
+        "lineNumber": 17,
+        "author": {
+          "gitId": "kwannoel"
+        },
+        "content": "import seedu.address.model.person.Telegram;"
+      },
+      {
+        "lineNumber": 18,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "import seedu.address.model.tag.Tag;"
+      },
+      {
+        "lineNumber": 19,
+        "author": {
+          "gitId": "-"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 20,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "/**"
+      },
+      {
+        "lineNumber": 21,
+        "author": {
+          "gitId": "-"
+        },
+        "content": " * Contains utility methods used for parsing strings in the various *Parser classes."
+      },
+      {
+        "lineNumber": 22,
+        "author": {
+          "gitId": "-"
+        },
+        "content": " */"
+      },
+      {
+        "lineNumber": 23,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "public class ParserUtil {"
+      },
+      {
+        "lineNumber": 24,
+        "author": {
+          "gitId": "-"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 25,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "    public static final String MESSAGE_INVALID_INDEX \u003d \"Index is not a non-zero unsigned integer.\";"
+      },
+      {
+        "lineNumber": 26,
+        "author": {
+          "gitId": "-"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 27,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "    /**"
+      },
+      {
+        "lineNumber": 28,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "     * Parses {@code oneBasedIndex} into an {@code Index} and returns it. Leading and trailing whitespaces will be"
+      },
+      {
+        "lineNumber": 29,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "     * trimmed."
+      },
+      {
+        "lineNumber": 30,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "     * @throws ParseException if the specified index is invalid (not non-zero unsigned integer)."
+      },
+      {
+        "lineNumber": 31,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "     */"
+      },
+      {
+        "lineNumber": 32,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "    public static Index parseIndex(String oneBasedIndex) throws ParseException {"
+      },
+      {
+        "lineNumber": 33,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "        String trimmedIndex \u003d oneBasedIndex.trim();"
+      },
+      {
+        "lineNumber": 34,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "        if (!StringUtil.isNonZeroUnsignedInteger(trimmedIndex)) {"
+      },
+      {
+        "lineNumber": 35,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "            throw new ParseException(MESSAGE_INVALID_INDEX);"
+      },
+      {
+        "lineNumber": 36,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "        }"
+      },
+      {
+        "lineNumber": 37,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "        return Index.fromOneBased(Integer.parseInt(trimmedIndex));"
+      },
+      {
+        "lineNumber": 38,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "    }"
+      },
+      {
+        "lineNumber": 39,
+        "author": {
+          "gitId": "-"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 40,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "    /**"
+      },
+      {
+        "lineNumber": 41,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "     * Parses a {@code String name} into a {@code Name}."
+      },
+      {
+        "lineNumber": 42,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "     * Leading and trailing whitespaces will be trimmed."
+      },
+      {
+        "lineNumber": 43,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "     *"
+      },
+      {
+        "lineNumber": 44,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "     * @throws ParseException if the given {@code name} is invalid."
+      },
+      {
+        "lineNumber": 45,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "     */"
+      },
+      {
+        "lineNumber": 46,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "    public static Name parseName(String name) throws ParseException {"
+      },
+      {
+        "lineNumber": 47,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "        requireNonNull(name);"
+      },
+      {
+        "lineNumber": 48,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "        String trimmedName \u003d name.trim();"
+      },
+      {
+        "lineNumber": 49,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "        if (!Name.isValidName(trimmedName)) {"
+      },
+      {
+        "lineNumber": 50,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "            throw new ParseException(Name.MESSAGE_CONSTRAINTS);"
+      },
+      {
+        "lineNumber": 51,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "        }"
+      },
+      {
+        "lineNumber": 52,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "        return new Name(trimmedName);"
+      },
+      {
+        "lineNumber": 53,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "    }"
+      },
+      {
+        "lineNumber": 54,
+        "author": {
+          "gitId": "-"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 55,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "    /**"
+      },
+      {
+        "lineNumber": 56,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "     * Parses a {@code String phone} into a {@code Phone}."
+      },
+      {
+        "lineNumber": 57,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "     * Leading and trailing whitespaces will be trimmed."
+      },
+      {
+        "lineNumber": 58,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "     *"
+      },
+      {
+        "lineNumber": 59,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "     * @throws ParseException if the given {@code phone} is invalid."
+      },
+      {
+        "lineNumber": 60,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "     */"
+      },
+      {
+        "lineNumber": 61,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "    public static Phone parsePhone(String phone) throws ParseException {"
+      },
+      {
+        "lineNumber": 62,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "        requireNonNull(phone);"
+      },
+      {
+        "lineNumber": 63,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "        String trimmedPhone \u003d phone.trim();"
+      },
+      {
+        "lineNumber": 64,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "        if (!Phone.isValidPhone(trimmedPhone)) {"
+      },
+      {
+        "lineNumber": 65,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "            throw new ParseException(Phone.MESSAGE_CONSTRAINTS);"
+      },
+      {
+        "lineNumber": 66,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "        }"
+      },
+      {
+        "lineNumber": 67,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "        return new Phone(trimmedPhone);"
+      },
+      {
+        "lineNumber": 68,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "    }"
+      },
+      {
+        "lineNumber": 69,
+        "author": {
+          "gitId": "-"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 70,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "    /**"
+      },
+      {
+        "lineNumber": 71,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "     * Parses a {@code String address} into an {@code Address}."
+      },
+      {
+        "lineNumber": 72,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "     * Leading and trailing whitespaces will be trimmed."
+      },
+      {
+        "lineNumber": 73,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "     *"
+      },
+      {
+        "lineNumber": 74,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "     * @throws ParseException if the given {@code address} is invalid."
+      },
+      {
+        "lineNumber": 75,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "     */"
+      },
+      {
+        "lineNumber": 76,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "    public static Address parseAddress(String address) throws ParseException {"
+      },
+      {
+        "lineNumber": 77,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "        requireNonNull(address);"
+      },
+      {
+        "lineNumber": 78,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "        String trimmedAddress \u003d address.trim();"
+      },
+      {
+        "lineNumber": 79,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "        if (!Address.isValidAddress(trimmedAddress)) {"
+      },
+      {
+        "lineNumber": 80,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "            throw new ParseException(Address.MESSAGE_CONSTRAINTS);"
+      },
+      {
+        "lineNumber": 81,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "        }"
+      },
+      {
+        "lineNumber": 82,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "        return new Address(trimmedAddress);"
+      },
+      {
+        "lineNumber": 83,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "    }"
+      },
+      {
+        "lineNumber": 84,
+        "author": {
+          "gitId": "-"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 85,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "    /**"
+      },
+      {
+        "lineNumber": 86,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "     * Parses a {@code String email} into an {@code Email}."
+      },
+      {
+        "lineNumber": 87,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "     * Leading and trailing whitespaces will be trimmed."
+      },
+      {
+        "lineNumber": 88,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "     *"
+      },
+      {
+        "lineNumber": 89,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "     * @throws ParseException if the given {@code email} is invalid."
+      },
+      {
+        "lineNumber": 90,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "     */"
+      },
+      {
+        "lineNumber": 91,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "    public static Email parseEmail(String email) throws ParseException {"
+      },
+      {
+        "lineNumber": 92,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "        requireNonNull(email);"
+      },
+      {
+        "lineNumber": 93,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "        String trimmedEmail \u003d email.trim();"
+      },
+      {
+        "lineNumber": 94,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "        if (!Email.isValidEmail(trimmedEmail)) {"
+      },
+      {
+        "lineNumber": 95,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "            throw new ParseException(Email.MESSAGE_CONSTRAINTS);"
+      },
+      {
+        "lineNumber": 96,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "        }"
+      },
+      {
+        "lineNumber": 97,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "        return new Email(trimmedEmail);"
+      },
+      {
+        "lineNumber": 98,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "    }"
+      },
+      {
+        "lineNumber": 99,
+        "author": {
+          "gitId": "-"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 100,
+        "author": {
+          "gitId": "kwannoel"
+        },
+        "content": "    /**"
+      },
+      {
+        "lineNumber": 101,
+        "author": {
+          "gitId": "kwannoel"
+        },
+        "content": "     * Parses a {@code String telegram} into an {@code Telegram}."
+      },
+      {
+        "lineNumber": 102,
+        "author": {
+          "gitId": "kwannoel"
+        },
+        "content": "     * Leading and trailing whitespaces will be trimmed."
+      },
+      {
+        "lineNumber": 103,
+        "author": {
+          "gitId": "kwannoel"
+        },
+        "content": "     *"
+      },
+      {
+        "lineNumber": 104,
+        "author": {
+          "gitId": "kwannoel"
+        },
+        "content": "     * @throws ParseException if the given {@code telegram} is invalid."
+      },
+      {
+        "lineNumber": 105,
+        "author": {
+          "gitId": "kwannoel"
+        },
+        "content": "     */"
+      },
+      {
+        "lineNumber": 106,
+        "author": {
+          "gitId": "kwannoel"
+        },
+        "content": "    public static Telegram parseTelegram(String telegram) throws ParseException {"
+      },
+      {
+        "lineNumber": 107,
+        "author": {
+          "gitId": "kwannoel"
+        },
+        "content": "        requireNonNull(telegram);"
+      },
+      {
+        "lineNumber": 108,
+        "author": {
+          "gitId": "kwannoel"
+        },
+        "content": "        String trimmedTelegram \u003d telegram.trim();"
+      },
+      {
+        "lineNumber": 109,
+        "author": {
+          "gitId": "kwannoel"
+        },
+        "content": "        if (!Telegram.isValidTelegram(telegram)) {"
+      },
+      {
+        "lineNumber": 110,
+        "author": {
+          "gitId": "kwannoel"
+        },
+        "content": "            throw new ParseException(Email.MESSAGE_CONSTRAINTS);"
+      },
+      {
+        "lineNumber": 111,
+        "author": {
+          "gitId": "kwannoel"
+        },
+        "content": "        }"
+      },
+      {
+        "lineNumber": 112,
+        "author": {
+          "gitId": "kwannoel"
+        },
+        "content": "        return new Telegram(trimmedTelegram);"
+      },
+      {
+        "lineNumber": 113,
+        "author": {
+          "gitId": "kwannoel"
+        },
+        "content": "    }"
+      },
+      {
+        "lineNumber": 114,
+        "author": {
+          "gitId": "kwannoel"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 115,
+        "author": {
+          "gitId": "kwannoel"
+        },
+        "content": "    /**"
+      },
+      {
+        "lineNumber": 116,
+        "author": {
+          "gitId": "kwannoel"
+        },
+        "content": "     * Parses a {@code String matricNumber} into an {@code MatricNumber}."
+      },
+      {
+        "lineNumber": 117,
+        "author": {
+          "gitId": "kwannoel"
+        },
+        "content": "     * Leading and trailing whitespaces will be trimmed."
+      },
+      {
+        "lineNumber": 118,
+        "author": {
+          "gitId": "kwannoel"
+        },
+        "content": "     *"
+      },
+      {
+        "lineNumber": 119,
+        "author": {
+          "gitId": "kwannoel"
+        },
+        "content": "     * @throws ParseException if the given {@code matricNumber} is invalid."
+      },
+      {
+        "lineNumber": 120,
+        "author": {
+          "gitId": "kwannoel"
+        },
+        "content": "     */"
+      },
+      {
+        "lineNumber": 121,
+        "author": {
+          "gitId": "kwannoel"
+        },
+        "content": "    public static MatricNumber parseMatricNumber(String matricNumber) throws ParseException {"
+      },
+      {
+        "lineNumber": 122,
+        "author": {
+          "gitId": "kwannoel"
+        },
+        "content": "        requireNonNull(matricNumber);"
+      },
+      {
+        "lineNumber": 123,
+        "author": {
+          "gitId": "kwannoel"
+        },
+        "content": "        String trimmedMatricNumber \u003d matricNumber.trim();"
+      },
+      {
+        "lineNumber": 124,
+        "author": {
+          "gitId": "kwannoel"
+        },
+        "content": "        if (!MatricNumber.isValidMatricNumber(trimmedMatricNumber)) {"
+      },
+      {
+        "lineNumber": 125,
+        "author": {
+          "gitId": "kwannoel"
+        },
+        "content": "            throw new ParseException(MatricNumber.MESSAGE_CONSTRAINTS);"
+      },
+      {
+        "lineNumber": 126,
+        "author": {
+          "gitId": "kwannoel"
+        },
+        "content": "        }"
+      },
+      {
+        "lineNumber": 127,
+        "author": {
+          "gitId": "kwannoel"
+        },
+        "content": "        return new MatricNumber(trimmedMatricNumber);"
+      },
+      {
+        "lineNumber": 128,
+        "author": {
+          "gitId": "kwannoel"
+        },
+        "content": "    }"
+      },
+      {
+        "lineNumber": 129,
+        "author": {
+          "gitId": "kwannoel"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 130,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "    /**"
+      },
+      {
+        "lineNumber": 131,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "     * Parses a {@code String tag} into a {@code Tag}."
+      },
+      {
+        "lineNumber": 132,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "     * Leading and trailing whitespaces will be trimmed."
+      },
+      {
+        "lineNumber": 133,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "     *"
+      },
+      {
+        "lineNumber": 134,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "     * @throws ParseException if the given {@code tag} is invalid."
+      },
+      {
+        "lineNumber": 135,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "     */"
+      },
+      {
+        "lineNumber": 136,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "    public static Tag parseTag(String tag) throws ParseException {"
+      },
+      {
+        "lineNumber": 137,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "        requireNonNull(tag);"
+      },
+      {
+        "lineNumber": 138,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "        String trimmedTag \u003d tag.trim();"
+      },
+      {
+        "lineNumber": 139,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "        if (!Tag.isValidTagName(trimmedTag)) {"
+      },
+      {
+        "lineNumber": 140,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "            throw new ParseException(Tag.MESSAGE_CONSTRAINTS);"
+      },
+      {
+        "lineNumber": 141,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "        }"
+      },
+      {
+        "lineNumber": 142,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "        return new Tag(trimmedTag);"
+      },
+      {
+        "lineNumber": 143,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "    }"
+      },
+      {
+        "lineNumber": 144,
+        "author": {
+          "gitId": "-"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 145,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "    /**"
+      },
+      {
+        "lineNumber": 146,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "     * Parses {@code Collection\u003cString\u003e tags} into a {@code Set\u003cTag\u003e}."
+      },
+      {
+        "lineNumber": 147,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "     */"
+      },
+      {
+        "lineNumber": 148,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "    public static Set\u003cTag\u003e parseTags(Collection\u003cString\u003e tags) throws ParseException {"
+      },
+      {
+        "lineNumber": 149,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "        requireNonNull(tags);"
+      },
+      {
+        "lineNumber": 150,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "        final Set\u003cTag\u003e tagSet \u003d new HashSet\u003c\u003e();"
+      },
+      {
+        "lineNumber": 151,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "        for (String tagName : tags) {"
+      },
+      {
+        "lineNumber": 152,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "            tagSet.add(parseTag(tagName));"
+      },
+      {
+        "lineNumber": 153,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "        }"
+      },
+      {
+        "lineNumber": 154,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "        return tagSet;"
+      },
+      {
+        "lineNumber": 155,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "    }"
+      },
+      {
+        "lineNumber": 156,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "}"
+      }
+    ],
+    "authorContributionMap": {
+      "kwannoel": 32,
+      "-": 124
+    }
+  },
+  {
     "path": "src/main/java/seedu/address/model/Model.java",
     "fileType": "functional-code",
     "lines": [
@@ -19497,6 +21221,1798 @@
     }
   },
   {
+    "path": "src/main/java/seedu/address/model/person/MatricNumber.java",
+    "fileType": "functional-code",
+    "lines": [
+      {
+        "lineNumber": 1,
+        "author": {
+          "gitId": "kwannoel"
+        },
+        "content": "package seedu.address.model.person;"
+      },
+      {
+        "lineNumber": 2,
+        "author": {
+          "gitId": "kwannoel"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 3,
+        "author": {
+          "gitId": "kwannoel"
+        },
+        "content": "import static java.util.Objects.requireNonNull;"
+      },
+      {
+        "lineNumber": 4,
+        "author": {
+          "gitId": "kwannoel"
+        },
+        "content": "import static seedu.address.commons.util.AppUtil.checkArgument;"
+      },
+      {
+        "lineNumber": 5,
+        "author": {
+          "gitId": "kwannoel"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 6,
+        "author": {
+          "gitId": "kwannoel"
+        },
+        "content": "/**"
+      },
+      {
+        "lineNumber": 7,
+        "author": {
+          "gitId": "kwannoel"
+        },
+        "content": " * Represents a Person\u0027s Matric number in the address book."
+      },
+      {
+        "lineNumber": 8,
+        "author": {
+          "gitId": "kwannoel"
+        },
+        "content": " * Guarantees: immutable; is valid as declared in {@link #isValidMatricNumber(String)}"
+      },
+      {
+        "lineNumber": 9,
+        "author": {
+          "gitId": "kwannoel"
+        },
+        "content": " */"
+      },
+      {
+        "lineNumber": 10,
+        "author": {
+          "gitId": "kwannoel"
+        },
+        "content": "public class MatricNumber {"
+      },
+      {
+        "lineNumber": 11,
+        "author": {
+          "gitId": "kwannoel"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 12,
+        "author": {
+          "gitId": "kwannoel"
+        },
+        "content": "    public static final String MESSAGE_CONSTRAINTS \u003d"
+      },
+      {
+        "lineNumber": 13,
+        "author": {
+          "gitId": "kwannoel"
+        },
+        "content": "            \"Matric numbers should only contain numbers, and it should be in the form A\u003c7 digits\u003e\u003c1 uppercase alphabet\u003e.\";"
+      },
+      {
+        "lineNumber": 14,
+        "author": {
+          "gitId": "kwannoel"
+        },
+        "content": "    public static final String VALIDATION_REGEX \u003d \"^A\\\\d{7}[A-Z]$\"; // TODO implement this"
+      },
+      {
+        "lineNumber": 15,
+        "author": {
+          "gitId": "kwannoel"
+        },
+        "content": "    public final String value;"
+      },
+      {
+        "lineNumber": 16,
+        "author": {
+          "gitId": "kwannoel"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 17,
+        "author": {
+          "gitId": "kwannoel"
+        },
+        "content": "    /**"
+      },
+      {
+        "lineNumber": 18,
+        "author": {
+          "gitId": "kwannoel"
+        },
+        "content": "     * Constructs a {@code MatricNumber}."
+      },
+      {
+        "lineNumber": 19,
+        "author": {
+          "gitId": "kwannoel"
+        },
+        "content": "     *"
+      },
+      {
+        "lineNumber": 20,
+        "author": {
+          "gitId": "kwannoel"
+        },
+        "content": "     * @param matricNumber A valid matric number."
+      },
+      {
+        "lineNumber": 21,
+        "author": {
+          "gitId": "kwannoel"
+        },
+        "content": "     */"
+      },
+      {
+        "lineNumber": 22,
+        "author": {
+          "gitId": "kwannoel"
+        },
+        "content": "    public MatricNumber(String matricNumber) {"
+      },
+      {
+        "lineNumber": 23,
+        "author": {
+          "gitId": "kwannoel"
+        },
+        "content": "        requireNonNull(matricNumber);"
+      },
+      {
+        "lineNumber": 24,
+        "author": {
+          "gitId": "kwannoel"
+        },
+        "content": "        checkArgument(isValidMatricNumber(matricNumber), MESSAGE_CONSTRAINTS);"
+      },
+      {
+        "lineNumber": 25,
+        "author": {
+          "gitId": "kwannoel"
+        },
+        "content": "        value \u003d matricNumber;"
+      },
+      {
+        "lineNumber": 26,
+        "author": {
+          "gitId": "kwannoel"
+        },
+        "content": "    }"
+      },
+      {
+        "lineNumber": 27,
+        "author": {
+          "gitId": "kwannoel"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 28,
+        "author": {
+          "gitId": "kwannoel"
+        },
+        "content": "    /**"
+      },
+      {
+        "lineNumber": 29,
+        "author": {
+          "gitId": "kwannoel"
+        },
+        "content": "     * Returns true if a given string is a valid matric number."
+      },
+      {
+        "lineNumber": 30,
+        "author": {
+          "gitId": "kwannoel"
+        },
+        "content": "     */"
+      },
+      {
+        "lineNumber": 31,
+        "author": {
+          "gitId": "kwannoel"
+        },
+        "content": "    public static boolean isValidMatricNumber(String test) {"
+      },
+      {
+        "lineNumber": 32,
+        "author": {
+          "gitId": "kwannoel"
+        },
+        "content": "        return test.matches(VALIDATION_REGEX);"
+      },
+      {
+        "lineNumber": 33,
+        "author": {
+          "gitId": "kwannoel"
+        },
+        "content": "    }"
+      },
+      {
+        "lineNumber": 34,
+        "author": {
+          "gitId": "kwannoel"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 35,
+        "author": {
+          "gitId": "kwannoel"
+        },
+        "content": "    @Override"
+      },
+      {
+        "lineNumber": 36,
+        "author": {
+          "gitId": "kwannoel"
+        },
+        "content": "    public String toString() {"
+      },
+      {
+        "lineNumber": 37,
+        "author": {
+          "gitId": "kwannoel"
+        },
+        "content": "        return value;"
+      },
+      {
+        "lineNumber": 38,
+        "author": {
+          "gitId": "kwannoel"
+        },
+        "content": "    }"
+      },
+      {
+        "lineNumber": 39,
+        "author": {
+          "gitId": "kwannoel"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 40,
+        "author": {
+          "gitId": "kwannoel"
+        },
+        "content": "    @Override"
+      },
+      {
+        "lineNumber": 41,
+        "author": {
+          "gitId": "kwannoel"
+        },
+        "content": "    public boolean equals(Object other) {"
+      },
+      {
+        "lineNumber": 42,
+        "author": {
+          "gitId": "kwannoel"
+        },
+        "content": "        return other \u003d\u003d this // short circuit if same object"
+      },
+      {
+        "lineNumber": 43,
+        "author": {
+          "gitId": "kwannoel"
+        },
+        "content": "                || (other instanceof MatricNumber // instanceof handles nulls"
+      },
+      {
+        "lineNumber": 44,
+        "author": {
+          "gitId": "kwannoel"
+        },
+        "content": "                \u0026\u0026 value.equals(((MatricNumber) other).value)); // state check"
+      },
+      {
+        "lineNumber": 45,
+        "author": {
+          "gitId": "kwannoel"
+        },
+        "content": "    }"
+      },
+      {
+        "lineNumber": 46,
+        "author": {
+          "gitId": "kwannoel"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 47,
+        "author": {
+          "gitId": "kwannoel"
+        },
+        "content": "    @Override"
+      },
+      {
+        "lineNumber": 48,
+        "author": {
+          "gitId": "kwannoel"
+        },
+        "content": "    public int hashCode() {"
+      },
+      {
+        "lineNumber": 49,
+        "author": {
+          "gitId": "kwannoel"
+        },
+        "content": "        return value.hashCode();"
+      },
+      {
+        "lineNumber": 50,
+        "author": {
+          "gitId": "kwannoel"
+        },
+        "content": "    }"
+      },
+      {
+        "lineNumber": 51,
+        "author": {
+          "gitId": "kwannoel"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 52,
+        "author": {
+          "gitId": "kwannoel"
+        },
+        "content": "}"
+      }
+    ],
+    "authorContributionMap": {
+      "kwannoel": 52
+    }
+  },
+  {
+    "path": "src/main/java/seedu/address/model/person/Person.java",
+    "fileType": "functional-code",
+    "lines": [
+      {
+        "lineNumber": 1,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "package seedu.address.model.person;"
+      },
+      {
+        "lineNumber": 2,
+        "author": {
+          "gitId": "-"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 3,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;"
+      },
+      {
+        "lineNumber": 4,
+        "author": {
+          "gitId": "-"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 5,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "import java.util.Collections;"
+      },
+      {
+        "lineNumber": 6,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "import java.util.HashSet;"
+      },
+      {
+        "lineNumber": 7,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "import java.util.Objects;"
+      },
+      {
+        "lineNumber": 8,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "import java.util.Set;"
+      },
+      {
+        "lineNumber": 9,
+        "author": {
+          "gitId": "-"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 10,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "import seedu.address.model.tag.Tag;"
+      },
+      {
+        "lineNumber": 11,
+        "author": {
+          "gitId": "-"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 12,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "/**"
+      },
+      {
+        "lineNumber": 13,
+        "author": {
+          "gitId": "-"
+        },
+        "content": " * Represents a Person in the address book."
+      },
+      {
+        "lineNumber": 14,
+        "author": {
+          "gitId": "-"
+        },
+        "content": " * Guarantees: details are present and not null, field values are validated, immutable."
+      },
+      {
+        "lineNumber": 15,
+        "author": {
+          "gitId": "-"
+        },
+        "content": " */"
+      },
+      {
+        "lineNumber": 16,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "public class Person {"
+      },
+      {
+        "lineNumber": 17,
+        "author": {
+          "gitId": "-"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 18,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "    // Identity fields"
+      },
+      {
+        "lineNumber": 19,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "    private final Name name;"
+      },
+      {
+        "lineNumber": 20,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "    private final Phone phone;"
+      },
+      {
+        "lineNumber": 21,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "    private final Email email;"
+      },
+      {
+        "lineNumber": 22,
+        "author": {
+          "gitId": "kwannoel"
+        },
+        "content": "    private final Telegram telegram;"
+      },
+      {
+        "lineNumber": 23,
+        "author": {
+          "gitId": "kwannoel"
+        },
+        "content": "    private final MatricNumber matricNumber;"
+      },
+      {
+        "lineNumber": 24,
+        "author": {
+          "gitId": "-"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 25,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "    // Data fields"
+      },
+      {
+        "lineNumber": 26,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "    private final Address address;"
+      },
+      {
+        "lineNumber": 27,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "    private final Set\u003cTag\u003e tags \u003d new HashSet\u003c\u003e();"
+      },
+      {
+        "lineNumber": 28,
+        "author": {
+          "gitId": "-"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 29,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "    /**"
+      },
+      {
+        "lineNumber": 30,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "     * Every field must be present and not null."
+      },
+      {
+        "lineNumber": 31,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "     */"
+      },
+      {
+        "lineNumber": 32,
+        "author": {
+          "gitId": "kwannoel"
+        },
+        "content": "    public Person(Name name,"
+      },
+      {
+        "lineNumber": 33,
+        "author": {
+          "gitId": "kwannoel"
+        },
+        "content": "                  Phone phone,"
+      },
+      {
+        "lineNumber": 34,
+        "author": {
+          "gitId": "kwannoel"
+        },
+        "content": "                  Email email,"
+      },
+      {
+        "lineNumber": 35,
+        "author": {
+          "gitId": "kwannoel"
+        },
+        "content": "                  Telegram telegram,"
+      },
+      {
+        "lineNumber": 36,
+        "author": {
+          "gitId": "kwannoel"
+        },
+        "content": "                  MatricNumber matricNumber,"
+      },
+      {
+        "lineNumber": 37,
+        "author": {
+          "gitId": "kwannoel"
+        },
+        "content": "                  Address address,"
+      },
+      {
+        "lineNumber": 38,
+        "author": {
+          "gitId": "kwannoel"
+        },
+        "content": "                  Set\u003cTag\u003e tags) {"
+      },
+      {
+        "lineNumber": 39,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "        requireAllNonNull(name, phone, email, address, tags);"
+      },
+      {
+        "lineNumber": 40,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "        this.name \u003d name;"
+      },
+      {
+        "lineNumber": 41,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "        this.phone \u003d phone;"
+      },
+      {
+        "lineNumber": 42,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "        this.email \u003d email;"
+      },
+      {
+        "lineNumber": 43,
+        "author": {
+          "gitId": "kwannoel"
+        },
+        "content": "        this.telegram \u003d telegram;"
+      },
+      {
+        "lineNumber": 44,
+        "author": {
+          "gitId": "kwannoel"
+        },
+        "content": "        this.matricNumber \u003d matricNumber;"
+      },
+      {
+        "lineNumber": 45,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "        this.address \u003d address;"
+      },
+      {
+        "lineNumber": 46,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "        this.tags.addAll(tags);"
+      },
+      {
+        "lineNumber": 47,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "    }"
+      },
+      {
+        "lineNumber": 48,
+        "author": {
+          "gitId": "-"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 49,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "    public Name getName() {"
+      },
+      {
+        "lineNumber": 50,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "        return name;"
+      },
+      {
+        "lineNumber": 51,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "    }"
+      },
+      {
+        "lineNumber": 52,
+        "author": {
+          "gitId": "-"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 53,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "    public Phone getPhone() {"
+      },
+      {
+        "lineNumber": 54,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "        return phone;"
+      },
+      {
+        "lineNumber": 55,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "    }"
+      },
+      {
+        "lineNumber": 56,
+        "author": {
+          "gitId": "-"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 57,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "    public Email getEmail() {"
+      },
+      {
+        "lineNumber": 58,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "        return email;"
+      },
+      {
+        "lineNumber": 59,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "    }"
+      },
+      {
+        "lineNumber": 60,
+        "author": {
+          "gitId": "-"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 61,
+        "author": {
+          "gitId": "kwannoel"
+        },
+        "content": "    public Telegram getTelegram() { return telegram; }"
+      },
+      {
+        "lineNumber": 62,
+        "author": {
+          "gitId": "kwannoel"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 63,
+        "author": {
+          "gitId": "kwannoel"
+        },
+        "content": "    public MatricNumber getMatricNumber() {"
+      },
+      {
+        "lineNumber": 64,
+        "author": {
+          "gitId": "kwannoel"
+        },
+        "content": "        return matricNumber;"
+      },
+      {
+        "lineNumber": 65,
+        "author": {
+          "gitId": "kwannoel"
+        },
+        "content": "    }"
+      },
+      {
+        "lineNumber": 66,
+        "author": {
+          "gitId": "kwannoel"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 67,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "    public Address getAddress() {"
+      },
+      {
+        "lineNumber": 68,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "        return address;"
+      },
+      {
+        "lineNumber": 69,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "    }"
+      },
+      {
+        "lineNumber": 70,
+        "author": {
+          "gitId": "-"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 71,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "    /**"
+      },
+      {
+        "lineNumber": 72,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "     * Returns an immutable tag set, which throws {@code UnsupportedOperationException}"
+      },
+      {
+        "lineNumber": 73,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "     * if modification is attempted."
+      },
+      {
+        "lineNumber": 74,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "     */"
+      },
+      {
+        "lineNumber": 75,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "    public Set\u003cTag\u003e getTags() {"
+      },
+      {
+        "lineNumber": 76,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "        return Collections.unmodifiableSet(tags);"
+      },
+      {
+        "lineNumber": 77,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "    }"
+      },
+      {
+        "lineNumber": 78,
+        "author": {
+          "gitId": "-"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 79,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "    /**"
+      },
+      {
+        "lineNumber": 80,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "     * Returns true if both persons of the same name have at least one other identity field that is the same."
+      },
+      {
+        "lineNumber": 81,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "     * This defines a weaker notion of equality between two persons."
+      },
+      {
+        "lineNumber": 82,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "     */"
+      },
+      {
+        "lineNumber": 83,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "    public boolean isSamePerson(Person otherPerson) {"
+      },
+      {
+        "lineNumber": 84,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "        if (otherPerson \u003d\u003d this) {"
+      },
+      {
+        "lineNumber": 85,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "            return true;"
+      },
+      {
+        "lineNumber": 86,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "        }"
+      },
+      {
+        "lineNumber": 87,
+        "author": {
+          "gitId": "-"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 88,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "        return otherPerson !\u003d null"
+      },
+      {
+        "lineNumber": 89,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "                \u0026\u0026 otherPerson.getName().equals(getName())"
+      },
+      {
+        "lineNumber": 90,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "                \u0026\u0026 (otherPerson.getPhone().equals(getPhone()) || otherPerson.getEmail().equals(getEmail()));"
+      },
+      {
+        "lineNumber": 91,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "    }"
+      },
+      {
+        "lineNumber": 92,
+        "author": {
+          "gitId": "-"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 93,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "    /**"
+      },
+      {
+        "lineNumber": 94,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "     * Returns true if both persons have the same identity and data fields."
+      },
+      {
+        "lineNumber": 95,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "     * This defines a stronger notion of equality between two persons."
+      },
+      {
+        "lineNumber": 96,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "     */"
+      },
+      {
+        "lineNumber": 97,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "    @Override"
+      },
+      {
+        "lineNumber": 98,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "    public boolean equals(Object other) {"
+      },
+      {
+        "lineNumber": 99,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "        if (other \u003d\u003d this) {"
+      },
+      {
+        "lineNumber": 100,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "            return true;"
+      },
+      {
+        "lineNumber": 101,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "        }"
+      },
+      {
+        "lineNumber": 102,
+        "author": {
+          "gitId": "-"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 103,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "        if (!(other instanceof Person)) {"
+      },
+      {
+        "lineNumber": 104,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "            return false;"
+      },
+      {
+        "lineNumber": 105,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "        }"
+      },
+      {
+        "lineNumber": 106,
+        "author": {
+          "gitId": "-"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 107,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "        Person otherPerson \u003d (Person) other;"
+      },
+      {
+        "lineNumber": 108,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "        return otherPerson.getName().equals(getName())"
+      },
+      {
+        "lineNumber": 109,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "                \u0026\u0026 otherPerson.getPhone().equals(getPhone())"
+      },
+      {
+        "lineNumber": 110,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "                \u0026\u0026 otherPerson.getEmail().equals(getEmail())"
+      },
+      {
+        "lineNumber": 111,
+        "author": {
+          "gitId": "kwannoel"
+        },
+        "content": "                \u0026\u0026 otherPerson.getTelegram().equals(getTelegram())"
+      },
+      {
+        "lineNumber": 112,
+        "author": {
+          "gitId": "kwannoel"
+        },
+        "content": "                \u0026\u0026 otherPerson.getMatricNumber().equals(getMatricNumber())"
+      },
+      {
+        "lineNumber": 113,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "                \u0026\u0026 otherPerson.getAddress().equals(getAddress())"
+      },
+      {
+        "lineNumber": 114,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "                \u0026\u0026 otherPerson.getTags().equals(getTags());"
+      },
+      {
+        "lineNumber": 115,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "    }"
+      },
+      {
+        "lineNumber": 116,
+        "author": {
+          "gitId": "-"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 117,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "    @Override"
+      },
+      {
+        "lineNumber": 118,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "    public int hashCode() {"
+      },
+      {
+        "lineNumber": 119,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "        // use this method for custom fields hashing instead of implementing your own"
+      },
+      {
+        "lineNumber": 120,
+        "author": {
+          "gitId": "kwannoel"
+        },
+        "content": "        return Objects.hash(name, phone, email, telegram, matricNumber, address, tags);"
+      },
+      {
+        "lineNumber": 121,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "    }"
+      },
+      {
+        "lineNumber": 122,
+        "author": {
+          "gitId": "-"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 123,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "    @Override"
+      },
+      {
+        "lineNumber": 124,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "    public String toString() {"
+      },
+      {
+        "lineNumber": 125,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "        final StringBuilder builder \u003d new StringBuilder();"
+      },
+      {
+        "lineNumber": 126,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "        builder.append(getName())"
+      },
+      {
+        "lineNumber": 127,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "                .append(\" Phone: \")"
+      },
+      {
+        "lineNumber": 128,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "                .append(getPhone())"
+      },
+      {
+        "lineNumber": 129,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "                .append(\" Email: \")"
+      },
+      {
+        "lineNumber": 130,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "                .append(getEmail())"
+      },
+      {
+        "lineNumber": 131,
+        "author": {
+          "gitId": "kwannoel"
+        },
+        "content": "                .append(\" Telegram: \")"
+      },
+      {
+        "lineNumber": 132,
+        "author": {
+          "gitId": "kwannoel"
+        },
+        "content": "                .append(getTelegram())"
+      },
+      {
+        "lineNumber": 133,
+        "author": {
+          "gitId": "kwannoel"
+        },
+        "content": "                .append(\" Matric Number: \")"
+      },
+      {
+        "lineNumber": 134,
+        "author": {
+          "gitId": "kwannoel"
+        },
+        "content": "                .append(getMatricNumber())"
+      },
+      {
+        "lineNumber": 135,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "                .append(\" Address: \")"
+      },
+      {
+        "lineNumber": 136,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "                .append(getAddress())"
+      },
+      {
+        "lineNumber": 137,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "                .append(\" Tags: \");"
+      },
+      {
+        "lineNumber": 138,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "        getTags().forEach(builder::append);"
+      },
+      {
+        "lineNumber": 139,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "        return builder.toString();"
+      },
+      {
+        "lineNumber": 140,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "    }"
+      },
+      {
+        "lineNumber": 141,
+        "author": {
+          "gitId": "-"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 142,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "}"
+      }
+    ],
+    "authorContributionMap": {
+      "kwannoel": 24,
+      "-": 118
+    }
+  },
+  {
+    "path": "src/main/java/seedu/address/model/person/Telegram.java",
+    "fileType": "functional-code",
+    "lines": [
+      {
+        "lineNumber": 1,
+        "author": {
+          "gitId": "kwannoel"
+        },
+        "content": "package seedu.address.model.person;"
+      },
+      {
+        "lineNumber": 2,
+        "author": {
+          "gitId": "kwannoel"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 3,
+        "author": {
+          "gitId": "kwannoel"
+        },
+        "content": "import static java.util.Objects.requireNonNull;"
+      },
+      {
+        "lineNumber": 4,
+        "author": {
+          "gitId": "kwannoel"
+        },
+        "content": "import static seedu.address.commons.util.AppUtil.checkArgument;"
+      },
+      {
+        "lineNumber": 5,
+        "author": {
+          "gitId": "kwannoel"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 6,
+        "author": {
+          "gitId": "kwannoel"
+        },
+        "content": "/**"
+      },
+      {
+        "lineNumber": 7,
+        "author": {
+          "gitId": "kwannoel"
+        },
+        "content": " * Represents a Person\u0027s telegram in the address book."
+      },
+      {
+        "lineNumber": 8,
+        "author": {
+          "gitId": "kwannoel"
+        },
+        "content": " * Guarantees: immutable; is valid as declared in {@link #isValidTelegram(String)}"
+      },
+      {
+        "lineNumber": 9,
+        "author": {
+          "gitId": "kwannoel"
+        },
+        "content": " */"
+      },
+      {
+        "lineNumber": 10,
+        "author": {
+          "gitId": "kwannoel"
+        },
+        "content": "public class Telegram {"
+      },
+      {
+        "lineNumber": 11,
+        "author": {
+          "gitId": "kwannoel"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 12,
+        "author": {
+          "gitId": "kwannoel"
+        },
+        "content": "    public static final String MESSAGE_CONSTRAINTS \u003d"
+      },
+      {
+        "lineNumber": 13,
+        "author": {
+          "gitId": "kwannoel"
+        },
+        "content": "            \"Accepted characters: A-z (case-insensitive), 0-9 and underscores. Length: 5-32 characters.\";"
+      },
+      {
+        "lineNumber": 14,
+        "author": {
+          "gitId": "kwannoel"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 15,
+        "author": {
+          "gitId": "kwannoel"
+        },
+        "content": "    /*"
+      },
+      {
+        "lineNumber": 16,
+        "author": {
+          "gitId": "kwannoel"
+        },
+        "content": "     * TODO: update regex"
+      },
+      {
+        "lineNumber": 17,
+        "author": {
+          "gitId": "kwannoel"
+        },
+        "content": "     */"
+      },
+      {
+        "lineNumber": 18,
+        "author": {
+          "gitId": "kwannoel"
+        },
+        "content": "    public static final String VALIDATION_REGEX \u003d \"^[a-zA-Z0-9_-]{5,32}$\";"
+      },
+      {
+        "lineNumber": 19,
+        "author": {
+          "gitId": "kwannoel"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 20,
+        "author": {
+          "gitId": "kwannoel"
+        },
+        "content": "    public final String telegram;"
+      },
+      {
+        "lineNumber": 21,
+        "author": {
+          "gitId": "kwannoel"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 22,
+        "author": {
+          "gitId": "kwannoel"
+        },
+        "content": "    /**"
+      },
+      {
+        "lineNumber": 23,
+        "author": {
+          "gitId": "kwannoel"
+        },
+        "content": "     * Constructs a {@code Telegram}."
+      },
+      {
+        "lineNumber": 24,
+        "author": {
+          "gitId": "kwannoel"
+        },
+        "content": "     *"
+      },
+      {
+        "lineNumber": 25,
+        "author": {
+          "gitId": "kwannoel"
+        },
+        "content": "     * @param telegram A valid telegram."
+      },
+      {
+        "lineNumber": 26,
+        "author": {
+          "gitId": "kwannoel"
+        },
+        "content": "     */"
+      },
+      {
+        "lineNumber": 27,
+        "author": {
+          "gitId": "kwannoel"
+        },
+        "content": "    public Telegram(String telegram) {"
+      },
+      {
+        "lineNumber": 28,
+        "author": {
+          "gitId": "kwannoel"
+        },
+        "content": "        requireNonNull(telegram);"
+      },
+      {
+        "lineNumber": 29,
+        "author": {
+          "gitId": "kwannoel"
+        },
+        "content": "        checkArgument(isValidTelegram(telegram), MESSAGE_CONSTRAINTS);"
+      },
+      {
+        "lineNumber": 30,
+        "author": {
+          "gitId": "kwannoel"
+        },
+        "content": "        this.telegram \u003d telegram;"
+      },
+      {
+        "lineNumber": 31,
+        "author": {
+          "gitId": "kwannoel"
+        },
+        "content": "    }"
+      },
+      {
+        "lineNumber": 32,
+        "author": {
+          "gitId": "kwannoel"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 33,
+        "author": {
+          "gitId": "kwannoel"
+        },
+        "content": "    /**"
+      },
+      {
+        "lineNumber": 34,
+        "author": {
+          "gitId": "kwannoel"
+        },
+        "content": "     * Returns true if a given string is a valid telegram."
+      },
+      {
+        "lineNumber": 35,
+        "author": {
+          "gitId": "kwannoel"
+        },
+        "content": "     */"
+      },
+      {
+        "lineNumber": 36,
+        "author": {
+          "gitId": "kwannoel"
+        },
+        "content": "    public static boolean isValidTelegram(String test) {"
+      },
+      {
+        "lineNumber": 37,
+        "author": {
+          "gitId": "kwannoel"
+        },
+        "content": "        return test.matches(VALIDATION_REGEX);"
+      },
+      {
+        "lineNumber": 38,
+        "author": {
+          "gitId": "kwannoel"
+        },
+        "content": "    }"
+      },
+      {
+        "lineNumber": 39,
+        "author": {
+          "gitId": "kwannoel"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 40,
+        "author": {
+          "gitId": "kwannoel"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 41,
+        "author": {
+          "gitId": "kwannoel"
+        },
+        "content": "    @Override"
+      },
+      {
+        "lineNumber": 42,
+        "author": {
+          "gitId": "kwannoel"
+        },
+        "content": "    public String toString() {"
+      },
+      {
+        "lineNumber": 43,
+        "author": {
+          "gitId": "kwannoel"
+        },
+        "content": "        return \"@\" + telegram;"
+      },
+      {
+        "lineNumber": 44,
+        "author": {
+          "gitId": "kwannoel"
+        },
+        "content": "    }"
+      },
+      {
+        "lineNumber": 45,
+        "author": {
+          "gitId": "kwannoel"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 46,
+        "author": {
+          "gitId": "kwannoel"
+        },
+        "content": "    @Override"
+      },
+      {
+        "lineNumber": 47,
+        "author": {
+          "gitId": "kwannoel"
+        },
+        "content": "    public boolean equals(Object other) {"
+      },
+      {
+        "lineNumber": 48,
+        "author": {
+          "gitId": "kwannoel"
+        },
+        "content": "        return other \u003d\u003d this // short circuit if same object"
+      },
+      {
+        "lineNumber": 49,
+        "author": {
+          "gitId": "kwannoel"
+        },
+        "content": "                || (other instanceof Telegram // instanceof handles nulls"
+      },
+      {
+        "lineNumber": 50,
+        "author": {
+          "gitId": "kwannoel"
+        },
+        "content": "                \u0026\u0026 telegram.equals(((Telegram) other).telegram)); // state check"
+      },
+      {
+        "lineNumber": 51,
+        "author": {
+          "gitId": "kwannoel"
+        },
+        "content": "    }"
+      },
+      {
+        "lineNumber": 52,
+        "author": {
+          "gitId": "kwannoel"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 53,
+        "author": {
+          "gitId": "kwannoel"
+        },
+        "content": "    @Override"
+      },
+      {
+        "lineNumber": 54,
+        "author": {
+          "gitId": "kwannoel"
+        },
+        "content": "    public int hashCode() {"
+      },
+      {
+        "lineNumber": 55,
+        "author": {
+          "gitId": "kwannoel"
+        },
+        "content": "        return telegram.hashCode();"
+      },
+      {
+        "lineNumber": 56,
+        "author": {
+          "gitId": "kwannoel"
+        },
+        "content": "    }"
+      },
+      {
+        "lineNumber": 57,
+        "author": {
+          "gitId": "kwannoel"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 58,
+        "author": {
+          "gitId": "kwannoel"
+        },
+        "content": "}"
+      }
+    ],
+    "authorContributionMap": {
+      "kwannoel": 58
+    }
+  },
+  {
     "path": "src/main/java/seedu/address/model/util/SampleDataUtil.java",
     "fileType": "functional-code",
     "lines": [
@@ -19573,348 +23089,446 @@
       {
         "lineNumber": 11,
         "author": {
-          "gitId": "-"
+          "gitId": "kwannoel"
         },
-        "content": "import seedu.address.model.person.Name;"
+        "content": "import seedu.address.model.person.MatricNumber;"
       },
       {
         "lineNumber": 12,
         "author": {
           "gitId": "-"
         },
-        "content": "import seedu.address.model.person.Person;"
+        "content": "import seedu.address.model.person.Name;"
       },
       {
         "lineNumber": 13,
         "author": {
           "gitId": "-"
         },
-        "content": "import seedu.address.model.person.Phone;"
+        "content": "import seedu.address.model.person.Person;"
       },
       {
         "lineNumber": 14,
         "author": {
           "gitId": "-"
         },
-        "content": "import seedu.address.model.tag.Tag;"
+        "content": "import seedu.address.model.person.Phone;"
       },
       {
         "lineNumber": 15,
         "author": {
-          "gitId": "-"
+          "gitId": "kwannoel"
         },
-        "content": ""
+        "content": "import seedu.address.model.person.Telegram;"
       },
       {
         "lineNumber": 16,
         "author": {
           "gitId": "-"
         },
-        "content": "/**"
+        "content": "import seedu.address.model.tag.Tag;"
       },
       {
         "lineNumber": 17,
         "author": {
-          "gitId": "chrisgzf"
+          "gitId": "-"
         },
-        "content": " * Contains utility methods for populating {@code Tasker} with sample data."
+        "content": ""
       },
       {
         "lineNumber": 18,
         "author": {
           "gitId": "-"
         },
-        "content": " */"
+        "content": "/**"
       },
       {
         "lineNumber": 19,
         "author": {
-          "gitId": "-"
+          "gitId": "chrisgzf"
         },
-        "content": "public class SampleDataUtil {"
+        "content": " * Contains utility methods for populating {@code Tasker} with sample data."
       },
       {
         "lineNumber": 20,
         "author": {
           "gitId": "-"
         },
-        "content": "    public static Person[] getSamplePersons() {"
+        "content": " */"
       },
       {
         "lineNumber": 21,
         "author": {
           "gitId": "-"
         },
-        "content": "        return new Person[] {"
+        "content": "public class SampleDataUtil {"
       },
       {
         "lineNumber": 22,
         "author": {
           "gitId": "-"
         },
-        "content": "            new Person(new Name(\"Alex Yeoh\"), new Phone(\"87438807\"), new Email(\"alexyeoh@example.com\"),"
+        "content": "    public static Person[] getSamplePersons() {"
       },
       {
         "lineNumber": 23,
         "author": {
           "gitId": "-"
         },
-        "content": "                new Address(\"Blk 30 Geylang Street 29, #06-40\"),"
+        "content": "        return new Person[] {"
       },
       {
         "lineNumber": 24,
         "author": {
           "gitId": "-"
         },
-        "content": "                getTagSet(\"friends\")),"
+        "content": "            new Person(new Name(\"Alex Yeoh\"), new Phone(\"87438807\"), new Email(\"alexyeoh@example.com\"),"
       },
       {
         "lineNumber": 25,
         "author": {
-          "gitId": "-"
+          "gitId": "kwannoel"
         },
-        "content": "            new Person(new Name(\"Bernice Yu\"), new Phone(\"99272758\"), new Email(\"berniceyu@example.com\"),"
+        "content": "                new Telegram(\"alexyeoh\"),"
       },
       {
         "lineNumber": 26,
         "author": {
-          "gitId": "-"
+          "gitId": "kwannoel"
         },
-        "content": "                new Address(\"Blk 30 Lorong 3 Serangoon Gardens, #07-18\"),"
+        "content": "                new MatricNumber(\"A1234567A\"),"
       },
       {
         "lineNumber": 27,
         "author": {
           "gitId": "-"
         },
-        "content": "                getTagSet(\"colleagues\", \"friends\")),"
+        "content": "                new Address(\"Blk 30 Geylang Street 29, #06-40\"),"
       },
       {
         "lineNumber": 28,
         "author": {
           "gitId": "-"
         },
-        "content": "            new Person(new Name(\"Charlotte Oliveiro\"), new Phone(\"93210283\"), new Email(\"charlotte@example.com\"),"
+        "content": "                getTagSet(\"friends\")),"
       },
       {
         "lineNumber": 29,
         "author": {
           "gitId": "-"
         },
-        "content": "                new Address(\"Blk 11 Ang Mo Kio Street 74, #11-04\"),"
+        "content": "            new Person(new Name(\"Bernice Yu\"), new Phone(\"99272758\"), new Email(\"berniceyu@example.com\"),"
       },
       {
         "lineNumber": 30,
         "author": {
-          "gitId": "-"
+          "gitId": "kwannoel"
         },
-        "content": "                getTagSet(\"neighbours\")),"
+        "content": "                new Telegram(\"berniceyu\"),"
       },
       {
         "lineNumber": 31,
         "author": {
-          "gitId": "-"
+          "gitId": "kwannoel"
         },
-        "content": "            new Person(new Name(\"David Li\"), new Phone(\"91031282\"), new Email(\"lidavid@example.com\"),"
+        "content": "                new MatricNumber(\"A0001111B\"),"
       },
       {
         "lineNumber": 32,
         "author": {
           "gitId": "-"
         },
-        "content": "                new Address(\"Blk 436 Serangoon Gardens Street 26, #16-43\"),"
+        "content": "                new Address(\"Blk 30 Lorong 3 Serangoon Gardens, #07-18\"),"
       },
       {
         "lineNumber": 33,
         "author": {
           "gitId": "-"
         },
-        "content": "                getTagSet(\"family\")),"
+        "content": "                getTagSet(\"colleagues\", \"friends\")),"
       },
       {
         "lineNumber": 34,
         "author": {
           "gitId": "-"
         },
-        "content": "            new Person(new Name(\"Irfan Ibrahim\"), new Phone(\"92492021\"), new Email(\"irfan@example.com\"),"
+        "content": "            new Person(new Name(\"Charlotte Oliveiro\"), new Phone(\"93210283\"), new Email(\"charlotte@example.com\"),"
       },
       {
         "lineNumber": 35,
         "author": {
-          "gitId": "-"
+          "gitId": "kwannoel"
         },
-        "content": "                new Address(\"Blk 47 Tampines Street 20, #17-35\"),"
+        "content": "                new Telegram(\"charlotte\"),"
       },
       {
         "lineNumber": 36,
         "author": {
-          "gitId": "-"
+          "gitId": "kwannoel"
         },
-        "content": "                getTagSet(\"classmates\")),"
+        "content": "                new MatricNumber(\"A1111000C\"),"
       },
       {
         "lineNumber": 37,
         "author": {
           "gitId": "-"
         },
-        "content": "            new Person(new Name(\"Roy Balakrishnan\"), new Phone(\"92624417\"), new Email(\"royb@example.com\"),"
+        "content": "                new Address(\"Blk 11 Ang Mo Kio Street 74, #11-04\"),"
       },
       {
         "lineNumber": 38,
         "author": {
           "gitId": "-"
         },
-        "content": "                new Address(\"Blk 45 Aljunied Street 85, #11-31\"),"
+        "content": "                getTagSet(\"neighbours\")),"
       },
       {
         "lineNumber": 39,
         "author": {
           "gitId": "-"
         },
-        "content": "                getTagSet(\"colleagues\"))"
+        "content": "            new Person(new Name(\"David Li\"), new Phone(\"91031282\"), new Email(\"lidavid@example.com\"),"
       },
       {
         "lineNumber": 40,
         "author": {
-          "gitId": "-"
+          "gitId": "kwannoel"
         },
-        "content": "        };"
+        "content": "                new Telegram(\"david\"),"
       },
       {
         "lineNumber": 41,
         "author": {
-          "gitId": "-"
+          "gitId": "kwannoel"
         },
-        "content": "    }"
+        "content": "                new MatricNumber(\"A7654321D\"),"
       },
       {
         "lineNumber": 42,
         "author": {
           "gitId": "-"
         },
-        "content": ""
+        "content": "                new Address(\"Blk 436 Serangoon Gardens Street 26, #16-43\"),"
       },
       {
         "lineNumber": 43,
         "author": {
           "gitId": "-"
         },
-        "content": "    public static ReadOnlyAddressBook getSampleAddressBook() {"
+        "content": "                getTagSet(\"family\")),"
       },
       {
         "lineNumber": 44,
         "author": {
-          "gitId": "chrisgzf"
+          "gitId": "-"
         },
-        "content": "        Tasker sampleAb \u003d new Tasker();"
+        "content": "            new Person(new Name(\"Irfan Ibrahim\"), new Phone(\"92492021\"), new Email(\"irfan@example.com\"),"
       },
       {
         "lineNumber": 45,
         "author": {
-          "gitId": "-"
+          "gitId": "kwannoel"
         },
-        "content": "        for (Person samplePerson : getSamplePersons()) {"
+        "content": "                new Telegram(\"irfan\"),"
       },
       {
         "lineNumber": 46,
         "author": {
-          "gitId": "-"
+          "gitId": "kwannoel"
         },
-        "content": "            sampleAb.addPerson(samplePerson);"
+        "content": "                new MatricNumber(\"A7654321E\"),"
       },
       {
         "lineNumber": 47,
         "author": {
           "gitId": "-"
         },
-        "content": "        }"
+        "content": "                new Address(\"Blk 47 Tampines Street 20, #17-35\"),"
       },
       {
         "lineNumber": 48,
         "author": {
           "gitId": "-"
         },
-        "content": "        return sampleAb;"
+        "content": "                getTagSet(\"classmates\")),"
       },
       {
         "lineNumber": 49,
         "author": {
           "gitId": "-"
         },
-        "content": "    }"
+        "content": "            new Person(new Name(\"Roy Balakrishnan\"), new Phone(\"92624417\"), new Email(\"royb@example.com\"),"
       },
       {
         "lineNumber": 50,
         "author": {
-          "gitId": "-"
+          "gitId": "kwannoel"
         },
-        "content": ""
+        "content": "                new Telegram(\"royb\"),"
       },
       {
         "lineNumber": 51,
         "author": {
-          "gitId": "-"
+          "gitId": "kwannoel"
         },
-        "content": "    /**"
+        "content": "                new MatricNumber(\"A1234123F\"),"
       },
       {
         "lineNumber": 52,
         "author": {
           "gitId": "-"
         },
-        "content": "     * Returns a tag set containing the list of strings given."
+        "content": "                new Address(\"Blk 45 Aljunied Street 85, #11-31\"),"
       },
       {
         "lineNumber": 53,
         "author": {
           "gitId": "-"
         },
-        "content": "     */"
+        "content": "                getTagSet(\"colleagues\"))"
       },
       {
         "lineNumber": 54,
         "author": {
           "gitId": "-"
         },
-        "content": "    public static Set\u003cTag\u003e getTagSet(String... strings) {"
+        "content": "        };"
       },
       {
         "lineNumber": 55,
         "author": {
           "gitId": "-"
         },
-        "content": "        return Arrays.stream(strings)"
+        "content": "    }"
       },
       {
         "lineNumber": 56,
         "author": {
           "gitId": "-"
         },
-        "content": "                .map(Tag::new)"
+        "content": ""
       },
       {
         "lineNumber": 57,
         "author": {
           "gitId": "-"
         },
-        "content": "                .collect(Collectors.toSet());"
+        "content": "    public static ReadOnlyAddressBook getSampleAddressBook() {"
       },
       {
         "lineNumber": 58,
         "author": {
-          "gitId": "-"
+          "gitId": "chrisgzf"
         },
-        "content": "    }"
+        "content": "        Tasker sampleAb \u003d new Tasker();"
       },
       {
         "lineNumber": 59,
         "author": {
           "gitId": "-"
         },
-        "content": ""
+        "content": "        for (Person samplePerson : getSamplePersons()) {"
       },
       {
         "lineNumber": 60,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "            sampleAb.addPerson(samplePerson);"
+      },
+      {
+        "lineNumber": 61,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "        }"
+      },
+      {
+        "lineNumber": 62,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "        return sampleAb;"
+      },
+      {
+        "lineNumber": 63,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "    }"
+      },
+      {
+        "lineNumber": 64,
+        "author": {
+          "gitId": "-"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 65,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "    /**"
+      },
+      {
+        "lineNumber": 66,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "     * Returns a tag set containing the list of strings given."
+      },
+      {
+        "lineNumber": 67,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "     */"
+      },
+      {
+        "lineNumber": 68,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "    public static Set\u003cTag\u003e getTagSet(String... strings) {"
+      },
+      {
+        "lineNumber": 69,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "        return Arrays.stream(strings)"
+      },
+      {
+        "lineNumber": 70,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "                .map(Tag::new)"
+      },
+      {
+        "lineNumber": 71,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "                .collect(Collectors.toSet());"
+      },
+      {
+        "lineNumber": 72,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "    }"
+      },
+      {
+        "lineNumber": 73,
+        "author": {
+          "gitId": "-"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 74,
         "author": {
           "gitId": "-"
         },
@@ -19922,6 +23536,7 @@
       }
     ],
     "authorContributionMap": {
+      "kwannoel": 14,
       "-": 57,
       "chrisgzf": 3
     }
@@ -32574,6 +36189,856 @@
     "authorContributionMap": {
       "-": 24,
       "chrisgzf": 10
+    }
+  },
+  {
+    "path": "src/test/java/seedu/address/testutil/PersonBuilder.java",
+    "fileType": "test-code",
+    "lines": [
+      {
+        "lineNumber": 1,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "package seedu.address.testutil;"
+      },
+      {
+        "lineNumber": 2,
+        "author": {
+          "gitId": "-"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 3,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "import java.util.HashSet;"
+      },
+      {
+        "lineNumber": 4,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "import java.util.Set;"
+      },
+      {
+        "lineNumber": 5,
+        "author": {
+          "gitId": "-"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 6,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "import seedu.address.model.person.Address;"
+      },
+      {
+        "lineNumber": 7,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "import seedu.address.model.person.Email;"
+      },
+      {
+        "lineNumber": 8,
+        "author": {
+          "gitId": "kwannoel"
+        },
+        "content": "import seedu.address.model.person.Telegram;"
+      },
+      {
+        "lineNumber": 9,
+        "author": {
+          "gitId": "kwannoel"
+        },
+        "content": "import seedu.address.model.person.MatricNumber;"
+      },
+      {
+        "lineNumber": 10,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "import seedu.address.model.person.Name;"
+      },
+      {
+        "lineNumber": 11,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "import seedu.address.model.person.Person;"
+      },
+      {
+        "lineNumber": 12,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "import seedu.address.model.person.Phone;"
+      },
+      {
+        "lineNumber": 13,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "import seedu.address.model.tag.Tag;"
+      },
+      {
+        "lineNumber": 14,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "import seedu.address.model.util.SampleDataUtil;"
+      },
+      {
+        "lineNumber": 15,
+        "author": {
+          "gitId": "-"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 16,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "/**"
+      },
+      {
+        "lineNumber": 17,
+        "author": {
+          "gitId": "-"
+        },
+        "content": " * A utility class to help with building Person objects."
+      },
+      {
+        "lineNumber": 18,
+        "author": {
+          "gitId": "-"
+        },
+        "content": " */"
+      },
+      {
+        "lineNumber": 19,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "public class PersonBuilder {"
+      },
+      {
+        "lineNumber": 20,
+        "author": {
+          "gitId": "-"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 21,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "    public static final String DEFAULT_NAME \u003d \"Alice Pauline\";"
+      },
+      {
+        "lineNumber": 22,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "    public static final String DEFAULT_PHONE \u003d \"85355255\";"
+      },
+      {
+        "lineNumber": 23,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "    public static final String DEFAULT_EMAIL \u003d \"alice@gmail.com\";"
+      },
+      {
+        "lineNumber": 24,
+        "author": {
+          "gitId": "kwannoel"
+        },
+        "content": "    public static final String DEFAULT_TELEGRAM \u003d \"alice\";"
+      },
+      {
+        "lineNumber": 25,
+        "author": {
+          "gitId": "kwannoel"
+        },
+        "content": "    public static final String DEFAULT_MATRIC_NUMBER \u003d \"A1234567H\";"
+      },
+      {
+        "lineNumber": 26,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "    public static final String DEFAULT_ADDRESS \u003d \"123, Jurong West Ave 6, #08-111\";"
+      },
+      {
+        "lineNumber": 27,
+        "author": {
+          "gitId": "-"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 28,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "    private Name name;"
+      },
+      {
+        "lineNumber": 29,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "    private Phone phone;"
+      },
+      {
+        "lineNumber": 30,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "    private Email email;"
+      },
+      {
+        "lineNumber": 31,
+        "author": {
+          "gitId": "kwannoel"
+        },
+        "content": "    private Telegram telegram;"
+      },
+      {
+        "lineNumber": 32,
+        "author": {
+          "gitId": "kwannoel"
+        },
+        "content": "    private MatricNumber matricNumber;"
+      },
+      {
+        "lineNumber": 33,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "    private Address address;"
+      },
+      {
+        "lineNumber": 34,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "    private Set\u003cTag\u003e tags;"
+      },
+      {
+        "lineNumber": 35,
+        "author": {
+          "gitId": "-"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 36,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "    /**"
+      },
+      {
+        "lineNumber": 37,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "     * Creates a {@code PersonBuilder} with the default details."
+      },
+      {
+        "lineNumber": 38,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "     */"
+      },
+      {
+        "lineNumber": 39,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "    public PersonBuilder() {"
+      },
+      {
+        "lineNumber": 40,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "        name \u003d new Name(DEFAULT_NAME);"
+      },
+      {
+        "lineNumber": 41,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "        phone \u003d new Phone(DEFAULT_PHONE);"
+      },
+      {
+        "lineNumber": 42,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "        email \u003d new Email(DEFAULT_EMAIL);"
+      },
+      {
+        "lineNumber": 43,
+        "author": {
+          "gitId": "kwannoel"
+        },
+        "content": "        telegram \u003d new Telegram(DEFAULT_TELEGRAM);"
+      },
+      {
+        "lineNumber": 44,
+        "author": {
+          "gitId": "kwannoel"
+        },
+        "content": "        matricNumber \u003d new MatricNumber(DEFAULT_MATRIC_NUMBER);"
+      },
+      {
+        "lineNumber": 45,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "        address \u003d new Address(DEFAULT_ADDRESS);"
+      },
+      {
+        "lineNumber": 46,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "        tags \u003d new HashSet\u003c\u003e();"
+      },
+      {
+        "lineNumber": 47,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "    }"
+      },
+      {
+        "lineNumber": 48,
+        "author": {
+          "gitId": "-"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 49,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "    /**"
+      },
+      {
+        "lineNumber": 50,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "     * Initializes the PersonBuilder with the data of {@code personToCopy}."
+      },
+      {
+        "lineNumber": 51,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "     */"
+      },
+      {
+        "lineNumber": 52,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "    public PersonBuilder(Person personToCopy) {"
+      },
+      {
+        "lineNumber": 53,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "        name \u003d personToCopy.getName();"
+      },
+      {
+        "lineNumber": 54,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "        phone \u003d personToCopy.getPhone();"
+      },
+      {
+        "lineNumber": 55,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "        email \u003d personToCopy.getEmail();"
+      },
+      {
+        "lineNumber": 56,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "        address \u003d personToCopy.getAddress();"
+      },
+      {
+        "lineNumber": 57,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "        tags \u003d new HashSet\u003c\u003e(personToCopy.getTags());"
+      },
+      {
+        "lineNumber": 58,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "    }"
+      },
+      {
+        "lineNumber": 59,
+        "author": {
+          "gitId": "-"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 60,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "    /**"
+      },
+      {
+        "lineNumber": 61,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "     * Sets the {@code Name} of the {@code Person} that we are building."
+      },
+      {
+        "lineNumber": 62,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "     */"
+      },
+      {
+        "lineNumber": 63,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "    public PersonBuilder withName(String name) {"
+      },
+      {
+        "lineNumber": 64,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "        this.name \u003d new Name(name);"
+      },
+      {
+        "lineNumber": 65,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "        return this;"
+      },
+      {
+        "lineNumber": 66,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "    }"
+      },
+      {
+        "lineNumber": 67,
+        "author": {
+          "gitId": "-"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 68,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "    /**"
+      },
+      {
+        "lineNumber": 69,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "     * Parses the {@code tags} into a {@code Set\u003cTag\u003e} and set it to the {@code Person} that we are building."
+      },
+      {
+        "lineNumber": 70,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "     */"
+      },
+      {
+        "lineNumber": 71,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "    public PersonBuilder withTags(String ... tags) {"
+      },
+      {
+        "lineNumber": 72,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "        this.tags \u003d SampleDataUtil.getTagSet(tags);"
+      },
+      {
+        "lineNumber": 73,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "        return this;"
+      },
+      {
+        "lineNumber": 74,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "    }"
+      },
+      {
+        "lineNumber": 75,
+        "author": {
+          "gitId": "-"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 76,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "    /**"
+      },
+      {
+        "lineNumber": 77,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "     * Sets the {@code Address} of the {@code Person} that we are building."
+      },
+      {
+        "lineNumber": 78,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "     */"
+      },
+      {
+        "lineNumber": 79,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "    public PersonBuilder withAddress(String address) {"
+      },
+      {
+        "lineNumber": 80,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "        this.address \u003d new Address(address);"
+      },
+      {
+        "lineNumber": 81,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "        return this;"
+      },
+      {
+        "lineNumber": 82,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "    }"
+      },
+      {
+        "lineNumber": 83,
+        "author": {
+          "gitId": "-"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 84,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "    /**"
+      },
+      {
+        "lineNumber": 85,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "     * Sets the {@code Phone} of the {@code Person} that we are building."
+      },
+      {
+        "lineNumber": 86,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "     */"
+      },
+      {
+        "lineNumber": 87,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "    public PersonBuilder withPhone(String phone) {"
+      },
+      {
+        "lineNumber": 88,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "        this.phone \u003d new Phone(phone);"
+      },
+      {
+        "lineNumber": 89,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "        return this;"
+      },
+      {
+        "lineNumber": 90,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "    }"
+      },
+      {
+        "lineNumber": 91,
+        "author": {
+          "gitId": "-"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 92,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "    /**"
+      },
+      {
+        "lineNumber": 93,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "     * Sets the {@code Email} of the {@code Person} that we are building."
+      },
+      {
+        "lineNumber": 94,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "     */"
+      },
+      {
+        "lineNumber": 95,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "    public PersonBuilder withEmail(String email) {"
+      },
+      {
+        "lineNumber": 96,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "        this.email \u003d new Email(email);"
+      },
+      {
+        "lineNumber": 97,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "        return this;"
+      },
+      {
+        "lineNumber": 98,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "    }"
+      },
+      {
+        "lineNumber": 99,
+        "author": {
+          "gitId": "-"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 100,
+        "author": {
+          "gitId": "kwannoel"
+        },
+        "content": "    /**"
+      },
+      {
+        "lineNumber": 101,
+        "author": {
+          "gitId": "kwannoel"
+        },
+        "content": "     * Sets the {@code Telegram} of the {@code Person} that we are building."
+      },
+      {
+        "lineNumber": 102,
+        "author": {
+          "gitId": "kwannoel"
+        },
+        "content": "     */"
+      },
+      {
+        "lineNumber": 103,
+        "author": {
+          "gitId": "kwannoel"
+        },
+        "content": "    public PersonBuilder withTelegram(String telegram) {"
+      },
+      {
+        "lineNumber": 104,
+        "author": {
+          "gitId": "kwannoel"
+        },
+        "content": "        this.telegram \u003d new Telegram(telegram);"
+      },
+      {
+        "lineNumber": 105,
+        "author": {
+          "gitId": "kwannoel"
+        },
+        "content": "        return this;"
+      },
+      {
+        "lineNumber": 106,
+        "author": {
+          "gitId": "kwannoel"
+        },
+        "content": "    }"
+      },
+      {
+        "lineNumber": 107,
+        "author": {
+          "gitId": "kwannoel"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 108,
+        "author": {
+          "gitId": "kwannoel"
+        },
+        "content": "    /**"
+      },
+      {
+        "lineNumber": 109,
+        "author": {
+          "gitId": "kwannoel"
+        },
+        "content": "     * Sets the {@code MatricNumber} of the {@code Person} that we are building."
+      },
+      {
+        "lineNumber": 110,
+        "author": {
+          "gitId": "kwannoel"
+        },
+        "content": "     */"
+      },
+      {
+        "lineNumber": 111,
+        "author": {
+          "gitId": "kwannoel"
+        },
+        "content": "    public PersonBuilder withMatricNumber(String matricNumber) {"
+      },
+      {
+        "lineNumber": 112,
+        "author": {
+          "gitId": "kwannoel"
+        },
+        "content": "        this.matricNumber \u003d new MatricNumber(matricNumber);"
+      },
+      {
+        "lineNumber": 113,
+        "author": {
+          "gitId": "kwannoel"
+        },
+        "content": "        return this;"
+      },
+      {
+        "lineNumber": 114,
+        "author": {
+          "gitId": "kwannoel"
+        },
+        "content": "    }"
+      },
+      {
+        "lineNumber": 115,
+        "author": {
+          "gitId": "kwannoel"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 116,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "    public Person build() {"
+      },
+      {
+        "lineNumber": 117,
+        "author": {
+          "gitId": "kwannoel"
+        },
+        "content": "        return new Person(name, phone, email, telegram, matricNumber, address, tags);"
+      },
+      {
+        "lineNumber": 118,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "    }"
+      },
+      {
+        "lineNumber": 119,
+        "author": {
+          "gitId": "-"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 120,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "}"
+      }
+    ],
+    "authorContributionMap": {
+      "kwannoel": 25,
+      "-": 95
     }
   },
   {
