@@ -22820,9 +22820,9 @@
       {
         "lineNumber": 28,
         "author": {
-          "gitId": "cwenling"
+          "gitId": "hanweic53"
         },
-        "content": "            + PREFIX_DEADLINE + \"2020-10-10 1010 \""
+        "content": "            + PREFIX_DEADLINE + \"10-Oct-2021 1010 \""
       },
       {
         "lineNumber": 29,
@@ -23086,8 +23086,8 @@
     ],
     "authorContributionMap": {
       "ruilingk": 21,
-      "hanweic53": 4,
-      "cwenling": 3,
+      "hanweic53": 5,
+      "cwenling": 2,
       "-": 37
     }
   },
@@ -24315,6 +24315,827 @@
     }
   },
   {
+    "path": "src/main/java/seedu/tr4cker/logic/commands/DoneCommand.java",
+    "fileType": "functional-code",
+    "lines": [
+      {
+        "lineNumber": 1,
+        "author": {
+          "gitId": "cwenling"
+        },
+        "content": "package seedu.tr4cker.logic.commands;"
+      },
+      {
+        "lineNumber": 2,
+        "author": {
+          "gitId": "cwenling"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 3,
+        "author": {
+          "gitId": "cwenling"
+        },
+        "content": "import static java.util.Objects.requireNonNull;"
+      },
+      {
+        "lineNumber": 4,
+        "author": {
+          "gitId": "cwenling"
+        },
+        "content": "import static seedu.tr4cker.logic.parser.CliSyntax.PREFIX_COMPLETION_STATUS;"
+      },
+      {
+        "lineNumber": 5,
+        "author": {
+          "gitId": "cwenling"
+        },
+        "content": "import static seedu.tr4cker.model.Model.PREDICATE_SHOW_ALL_TASKS;"
+      },
+      {
+        "lineNumber": 6,
+        "author": {
+          "gitId": "cwenling"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 7,
+        "author": {
+          "gitId": "cwenling"
+        },
+        "content": "import java.util.List;"
+      },
+      {
+        "lineNumber": 8,
+        "author": {
+          "gitId": "cwenling"
+        },
+        "content": "import java.util.Set;"
+      },
+      {
+        "lineNumber": 9,
+        "author": {
+          "gitId": "cwenling"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 10,
+        "author": {
+          "gitId": "cwenling"
+        },
+        "content": "import seedu.tr4cker.commons.core.Messages;"
+      },
+      {
+        "lineNumber": 11,
+        "author": {
+          "gitId": "cwenling"
+        },
+        "content": "import seedu.tr4cker.commons.core.index.Index;"
+      },
+      {
+        "lineNumber": 12,
+        "author": {
+          "gitId": "cwenling"
+        },
+        "content": "import seedu.tr4cker.logic.commands.exceptions.CommandException;"
+      },
+      {
+        "lineNumber": 13,
+        "author": {
+          "gitId": "cwenling"
+        },
+        "content": "import seedu.tr4cker.model.Model;"
+      },
+      {
+        "lineNumber": 14,
+        "author": {
+          "gitId": "cwenling"
+        },
+        "content": "import seedu.tr4cker.model.tag.Tag;"
+      },
+      {
+        "lineNumber": 15,
+        "author": {
+          "gitId": "cwenling"
+        },
+        "content": "import seedu.tr4cker.model.task.CompletionStatus;"
+      },
+      {
+        "lineNumber": 16,
+        "author": {
+          "gitId": "cwenling"
+        },
+        "content": "import seedu.tr4cker.model.task.Deadline;"
+      },
+      {
+        "lineNumber": 17,
+        "author": {
+          "gitId": "cwenling"
+        },
+        "content": "import seedu.tr4cker.model.task.Name;"
+      },
+      {
+        "lineNumber": 18,
+        "author": {
+          "gitId": "cwenling"
+        },
+        "content": "import seedu.tr4cker.model.task.Task;"
+      },
+      {
+        "lineNumber": 19,
+        "author": {
+          "gitId": "cwenling"
+        },
+        "content": "import seedu.tr4cker.model.task.TaskDescription;"
+      },
+      {
+        "lineNumber": 20,
+        "author": {
+          "gitId": "cwenling"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 21,
+        "author": {
+          "gitId": "cwenling"
+        },
+        "content": "/**"
+      },
+      {
+        "lineNumber": 22,
+        "author": {
+          "gitId": "cwenling"
+        },
+        "content": " * Marks the completion status of an existing task in TR4CKER."
+      },
+      {
+        "lineNumber": 23,
+        "author": {
+          "gitId": "cwenling"
+        },
+        "content": " */"
+      },
+      {
+        "lineNumber": 24,
+        "author": {
+          "gitId": "cwenling"
+        },
+        "content": "public class DoneCommand extends Command {"
+      },
+      {
+        "lineNumber": 25,
+        "author": {
+          "gitId": "cwenling"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 26,
+        "author": {
+          "gitId": "cwenling"
+        },
+        "content": "    public static final String COMMAND_WORD \u003d \"done\";"
+      },
+      {
+        "lineNumber": 27,
+        "author": {
+          "gitId": "cwenling"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 28,
+        "author": {
+          "gitId": "cwenling"
+        },
+        "content": "    public static final String MESSAGE_USAGE \u003d COMMAND_WORD + \": Marks the Completion Status of the task identified \""
+      },
+      {
+        "lineNumber": 29,
+        "author": {
+          "gitId": "cwenling"
+        },
+        "content": "            + \"by the index number used in the displayed task list. \""
+      },
+      {
+        "lineNumber": 30,
+        "author": {
+          "gitId": "cwenling"
+        },
+        "content": "            + \"Existing completion progress will be overwritten by the input value.\\n\""
+      },
+      {
+        "lineNumber": 31,
+        "author": {
+          "gitId": "cwenling"
+        },
+        "content": "            + \"Parameters: INDEX (must be a positive integer) \""
+      },
+      {
+        "lineNumber": 32,
+        "author": {
+          "gitId": "cwenling"
+        },
+        "content": "            + PREFIX_COMPLETION_STATUS + \"COMPLETION_STATUS (must be different from current and not exceed 100)\\n\""
+      },
+      {
+        "lineNumber": 33,
+        "author": {
+          "gitId": "cwenling"
+        },
+        "content": "            + \"Example: \" + COMMAND_WORD + \" 1 \""
+      },
+      {
+        "lineNumber": 34,
+        "author": {
+          "gitId": "cwenling"
+        },
+        "content": "            + PREFIX_COMPLETION_STATUS + \"50 \";"
+      },
+      {
+        "lineNumber": 35,
+        "author": {
+          "gitId": "cwenling"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 36,
+        "author": {
+          "gitId": "cwenling"
+        },
+        "content": "    public static final String MESSAGE_DONE_TASK_SUCCESS_DECREASE \u003d \"Decreased Completion Percentage of Task: %1$s\";"
+      },
+      {
+        "lineNumber": 37,
+        "author": {
+          "gitId": "cwenling"
+        },
+        "content": "    public static final String MESSAGE_DONE_TASK_SUCCESS_INCREASE \u003d \"Increased Completion Percentage of Task: %1$s\";"
+      },
+      {
+        "lineNumber": 38,
+        "author": {
+          "gitId": "cwenling"
+        },
+        "content": "    public static final String MESSAGE_COMPLETION_SAME \u003d \"Percentage must be different from current value.\";"
+      },
+      {
+        "lineNumber": 39,
+        "author": {
+          "gitId": "cwenling"
+        },
+        "content": "    public static final String MESSAGE_EXCEEDS_RANGE \u003d \"Percentage should not exceed 100.\";"
+      },
+      {
+        "lineNumber": 40,
+        "author": {
+          "gitId": "cwenling"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 41,
+        "author": {
+          "gitId": "cwenling"
+        },
+        "content": "    private final Index index;"
+      },
+      {
+        "lineNumber": 42,
+        "author": {
+          "gitId": "cwenling"
+        },
+        "content": "    private final CompletionStatus completionStatus;"
+      },
+      {
+        "lineNumber": 43,
+        "author": {
+          "gitId": "cwenling"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 44,
+        "author": {
+          "gitId": "cwenling"
+        },
+        "content": "    /**"
+      },
+      {
+        "lineNumber": 45,
+        "author": {
+          "gitId": "cwenling"
+        },
+        "content": "     * @param index of the task in the filtered task list to edit"
+      },
+      {
+        "lineNumber": 46,
+        "author": {
+          "gitId": "cwenling"
+        },
+        "content": "     * @param completionStatus details to edit the task with"
+      },
+      {
+        "lineNumber": 47,
+        "author": {
+          "gitId": "cwenling"
+        },
+        "content": "     */"
+      },
+      {
+        "lineNumber": 48,
+        "author": {
+          "gitId": "cwenling"
+        },
+        "content": "    public DoneCommand(Index index, CompletionStatus completionStatus) {"
+      },
+      {
+        "lineNumber": 49,
+        "author": {
+          "gitId": "cwenling"
+        },
+        "content": "        requireNonNull(index);"
+      },
+      {
+        "lineNumber": 50,
+        "author": {
+          "gitId": "cwenling"
+        },
+        "content": "        requireNonNull(completionStatus);"
+      },
+      {
+        "lineNumber": 51,
+        "author": {
+          "gitId": "cwenling"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 52,
+        "author": {
+          "gitId": "cwenling"
+        },
+        "content": "        this.index \u003d index;"
+      },
+      {
+        "lineNumber": 53,
+        "author": {
+          "gitId": "cwenling"
+        },
+        "content": "        this.completionStatus \u003d completionStatus;"
+      },
+      {
+        "lineNumber": 54,
+        "author": {
+          "gitId": "cwenling"
+        },
+        "content": "    }"
+      },
+      {
+        "lineNumber": 55,
+        "author": {
+          "gitId": "cwenling"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 56,
+        "author": {
+          "gitId": "cwenling"
+        },
+        "content": "    @Override"
+      },
+      {
+        "lineNumber": 57,
+        "author": {
+          "gitId": "cwenling"
+        },
+        "content": "    public CommandResult execute(Model model) throws CommandException {"
+      },
+      {
+        "lineNumber": 58,
+        "author": {
+          "gitId": "cwenling"
+        },
+        "content": "        requireNonNull(model);"
+      },
+      {
+        "lineNumber": 59,
+        "author": {
+          "gitId": "cwenling"
+        },
+        "content": "        List\u003cTask\u003e lastShownList \u003d model.getFilteredTaskList();"
+      },
+      {
+        "lineNumber": 60,
+        "author": {
+          "gitId": "cwenling"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 61,
+        "author": {
+          "gitId": "cwenling"
+        },
+        "content": "        if (index.getZeroBased() \u003e\u003d lastShownList.size()) {"
+      },
+      {
+        "lineNumber": 62,
+        "author": {
+          "gitId": "cwenling"
+        },
+        "content": "            throw new CommandException(Messages.MESSAGE_INVALID_TASK_DISPLAYED_INDEX);"
+      },
+      {
+        "lineNumber": 63,
+        "author": {
+          "gitId": "cwenling"
+        },
+        "content": "        }"
+      },
+      {
+        "lineNumber": 64,
+        "author": {
+          "gitId": "cwenling"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 65,
+        "author": {
+          "gitId": "cwenling"
+        },
+        "content": "        Task taskToComplete \u003d lastShownList.get(index.getZeroBased());"
+      },
+      {
+        "lineNumber": 66,
+        "author": {
+          "gitId": "cwenling"
+        },
+        "content": "        Task completedTask \u003d createCompletedTask(taskToComplete, completionStatus);"
+      },
+      {
+        "lineNumber": 67,
+        "author": {
+          "gitId": "cwenling"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 68,
+        "author": {
+          "gitId": "cwenling"
+        },
+        "content": "        model.setTask(taskToComplete, completedTask);"
+      },
+      {
+        "lineNumber": 69,
+        "author": {
+          "gitId": "cwenling"
+        },
+        "content": "        model.updateFilteredTaskList(PREDICATE_SHOW_ALL_TASKS);"
+      },
+      {
+        "lineNumber": 70,
+        "author": {
+          "gitId": "cwenling"
+        },
+        "content": "        if (completedTask.getCompletionStatus()"
+      },
+      {
+        "lineNumber": 71,
+        "author": {
+          "gitId": "cwenling"
+        },
+        "content": "                .compareTo(taskToComplete.getCompletionStatus()) \u003e 0) {"
+      },
+      {
+        "lineNumber": 72,
+        "author": {
+          "gitId": "cwenling"
+        },
+        "content": "            return new CommandResult(String.format(MESSAGE_DONE_TASK_SUCCESS_INCREASE, completedTask));"
+      },
+      {
+        "lineNumber": 73,
+        "author": {
+          "gitId": "cwenling"
+        },
+        "content": "        } else {"
+      },
+      {
+        "lineNumber": 74,
+        "author": {
+          "gitId": "cwenling"
+        },
+        "content": "            return new CommandResult(String.format(MESSAGE_DONE_TASK_SUCCESS_DECREASE, completedTask));"
+      },
+      {
+        "lineNumber": 75,
+        "author": {
+          "gitId": "cwenling"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 76,
+        "author": {
+          "gitId": "cwenling"
+        },
+        "content": "        }"
+      },
+      {
+        "lineNumber": 77,
+        "author": {
+          "gitId": "cwenling"
+        },
+        "content": "    }"
+      },
+      {
+        "lineNumber": 78,
+        "author": {
+          "gitId": "cwenling"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 79,
+        "author": {
+          "gitId": "cwenling"
+        },
+        "content": "    /**"
+      },
+      {
+        "lineNumber": 80,
+        "author": {
+          "gitId": "cwenling"
+        },
+        "content": "     * Creates and returns a {@code Task} with the details of {@code taskToComplete}"
+      },
+      {
+        "lineNumber": 81,
+        "author": {
+          "gitId": "cwenling"
+        },
+        "content": "     * and new percentage with {@code completionStatus}."
+      },
+      {
+        "lineNumber": 82,
+        "author": {
+          "gitId": "cwenling"
+        },
+        "content": "     */"
+      },
+      {
+        "lineNumber": 83,
+        "author": {
+          "gitId": "cwenling"
+        },
+        "content": "    private static Task createCompletedTask(Task taskToComplete, CompletionStatus completionStatus)"
+      },
+      {
+        "lineNumber": 84,
+        "author": {
+          "gitId": "cwenling"
+        },
+        "content": "            throws CommandException {"
+      },
+      {
+        "lineNumber": 85,
+        "author": {
+          "gitId": "cwenling"
+        },
+        "content": "        assert taskToComplete !\u003d null;"
+      },
+      {
+        "lineNumber": 86,
+        "author": {
+          "gitId": "cwenling"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 87,
+        "author": {
+          "gitId": "cwenling"
+        },
+        "content": "        Name initialName \u003d taskToComplete.getName();"
+      },
+      {
+        "lineNumber": 88,
+        "author": {
+          "gitId": "cwenling"
+        },
+        "content": "        Deadline initialDeadline \u003d taskToComplete.getDeadline();"
+      },
+      {
+        "lineNumber": 89,
+        "author": {
+          "gitId": "cwenling"
+        },
+        "content": "        CompletionStatus initialCompletionStatus \u003d taskToComplete.getCompletionStatus();"
+      },
+      {
+        "lineNumber": 90,
+        "author": {
+          "gitId": "cwenling"
+        },
+        "content": "        TaskDescription initialTaskDescription \u003d taskToComplete.getTaskDescription();"
+      },
+      {
+        "lineNumber": 91,
+        "author": {
+          "gitId": "cwenling"
+        },
+        "content": "        Set\u003cTag\u003e initialTags \u003d taskToComplete.getTags();"
+      },
+      {
+        "lineNumber": 92,
+        "author": {
+          "gitId": "cwenling"
+        },
+        "content": "        if (completionStatus.equals(initialCompletionStatus)) {"
+      },
+      {
+        "lineNumber": 93,
+        "author": {
+          "gitId": "cwenling"
+        },
+        "content": "            throw new CommandException(MESSAGE_COMPLETION_SAME);"
+      },
+      {
+        "lineNumber": 94,
+        "author": {
+          "gitId": "cwenling"
+        },
+        "content": "        }"
+      },
+      {
+        "lineNumber": 95,
+        "author": {
+          "gitId": "cwenling"
+        },
+        "content": "        return new Task(initialName, initialDeadline, completionStatus,"
+      },
+      {
+        "lineNumber": 96,
+        "author": {
+          "gitId": "cwenling"
+        },
+        "content": "                initialTaskDescription, initialTags);"
+      },
+      {
+        "lineNumber": 97,
+        "author": {
+          "gitId": "cwenling"
+        },
+        "content": "    }"
+      },
+      {
+        "lineNumber": 98,
+        "author": {
+          "gitId": "cwenling"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 99,
+        "author": {
+          "gitId": "cwenling"
+        },
+        "content": "    @Override"
+      },
+      {
+        "lineNumber": 100,
+        "author": {
+          "gitId": "cwenling"
+        },
+        "content": "    public boolean equals(Object other) {"
+      },
+      {
+        "lineNumber": 101,
+        "author": {
+          "gitId": "cwenling"
+        },
+        "content": "        // short circuit if same object"
+      },
+      {
+        "lineNumber": 102,
+        "author": {
+          "gitId": "cwenling"
+        },
+        "content": "        if (other \u003d\u003d this) {"
+      },
+      {
+        "lineNumber": 103,
+        "author": {
+          "gitId": "cwenling"
+        },
+        "content": "            return true;"
+      },
+      {
+        "lineNumber": 104,
+        "author": {
+          "gitId": "cwenling"
+        },
+        "content": "        }"
+      },
+      {
+        "lineNumber": 105,
+        "author": {
+          "gitId": "cwenling"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 106,
+        "author": {
+          "gitId": "cwenling"
+        },
+        "content": "        // instanceof handles nulls"
+      },
+      {
+        "lineNumber": 107,
+        "author": {
+          "gitId": "cwenling"
+        },
+        "content": "        if (!(other instanceof DoneCommand)) {"
+      },
+      {
+        "lineNumber": 108,
+        "author": {
+          "gitId": "cwenling"
+        },
+        "content": "            return false;"
+      },
+      {
+        "lineNumber": 109,
+        "author": {
+          "gitId": "cwenling"
+        },
+        "content": "        }"
+      },
+      {
+        "lineNumber": 110,
+        "author": {
+          "gitId": "cwenling"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 111,
+        "author": {
+          "gitId": "cwenling"
+        },
+        "content": "        // state check"
+      },
+      {
+        "lineNumber": 112,
+        "author": {
+          "gitId": "cwenling"
+        },
+        "content": "        DoneCommand e \u003d (DoneCommand) other;"
+      },
+      {
+        "lineNumber": 113,
+        "author": {
+          "gitId": "cwenling"
+        },
+        "content": "        return index.equals(e.index)"
+      },
+      {
+        "lineNumber": 114,
+        "author": {
+          "gitId": "cwenling"
+        },
+        "content": "                \u0026\u0026 completionStatus.equals(e.completionStatus);"
+      },
+      {
+        "lineNumber": 115,
+        "author": {
+          "gitId": "cwenling"
+        },
+        "content": "    }"
+      },
+      {
+        "lineNumber": 116,
+        "author": {
+          "gitId": "cwenling"
+        },
+        "content": "}"
+      }
+    ],
+    "authorContributionMap": {
+      "cwenling": 116
+    }
+  },
+  {
     "path": "src/main/java/seedu/tr4cker/logic/commands/EditCommand.java",
     "fileType": "functional-code",
     "lines": [
@@ -24608,9 +25429,9 @@
       {
         "lineNumber": 42,
         "author": {
-          "gitId": "ethan-l-m-e"
+          "gitId": "hanweic53"
         },
-        "content": "            + PREFIX_DEADLINE + \"2020-10-10 1010 \";"
+        "content": "            + PREFIX_DEADLINE + \"10-Oct-2021 1010 \";"
       },
       {
         "lineNumber": 43,
@@ -25799,9 +26620,10 @@
     "authorContributionMap": {
       "ruilingk": 53,
       "yingqi0607": 9,
+      "hanweic53": 1,
       "cwenling": 11,
       "-": 135,
-      "ethan-l-m-e": 3
+      "ethan-l-m-e": 2
     }
   },
   {
@@ -29426,9 +30248,9 @@
       {
         "lineNumber": 10,
         "author": {
-          "gitId": "yingqi0607"
+          "gitId": "hanweic53"
         },
-        "content": "    public static final Prefix PREFIX_DEADLINE \u003d new Prefix(\"dl/\");"
+        "content": "    public static final Prefix PREFIX_DEADLINE \u003d new Prefix(\"dt/\");"
       },
       {
         "lineNumber": 11,
@@ -29447,26 +30269,33 @@
       {
         "lineNumber": 13,
         "author": {
-          "gitId": "ruilingk"
+          "gitId": "cwenling"
         },
-        "content": "    public static final Prefix PREFIX_DELETE_TAG \u003d new Prefix(\"del/\");"
+        "content": "    public static final Prefix PREFIX_COMPLETION_STATUS \u003d new Prefix(\"p/\");"
       },
       {
         "lineNumber": 14,
         "author": {
           "gitId": "ruilingk"
         },
-        "content": "    public static final Prefix PREFIX_NEW_TAG \u003d new Prefix(\"new/\");"
+        "content": "    public static final Prefix PREFIX_DELETE_TAG \u003d new Prefix(\"del/\");"
       },
       {
         "lineNumber": 15,
+        "author": {
+          "gitId": "ruilingk"
+        },
+        "content": "    public static final Prefix PREFIX_NEW_TAG \u003d new Prefix(\"new/\");"
+      },
+      {
+        "lineNumber": 16,
         "author": {
           "gitId": "-"
         },
         "content": ""
       },
       {
-        "lineNumber": 16,
+        "lineNumber": 17,
         "author": {
           "gitId": "-"
         },
@@ -29475,7 +30304,8 @@
     ],
     "authorContributionMap": {
       "ruilingk": 4,
-      "yingqi0607": 1,
+      "hanweic53": 1,
+      "cwenling": 1,
       "-": 11
     }
   },
@@ -29690,6 +30520,260 @@
     "authorContributionMap": {
       "ruilingk": 5,
       "-": 24
+    }
+  },
+  {
+    "path": "src/main/java/seedu/tr4cker/logic/parser/DoneCommandParser.java",
+    "fileType": "functional-code",
+    "lines": [
+      {
+        "lineNumber": 1,
+        "author": {
+          "gitId": "cwenling"
+        },
+        "content": "package seedu.tr4cker.logic.parser;"
+      },
+      {
+        "lineNumber": 2,
+        "author": {
+          "gitId": "cwenling"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 3,
+        "author": {
+          "gitId": "cwenling"
+        },
+        "content": "import static java.util.Objects.requireNonNull;"
+      },
+      {
+        "lineNumber": 4,
+        "author": {
+          "gitId": "cwenling"
+        },
+        "content": "import static seedu.tr4cker.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;"
+      },
+      {
+        "lineNumber": 5,
+        "author": {
+          "gitId": "cwenling"
+        },
+        "content": "import static seedu.tr4cker.logic.parser.CliSyntax.PREFIX_COMPLETION_STATUS;"
+      },
+      {
+        "lineNumber": 6,
+        "author": {
+          "gitId": "cwenling"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 7,
+        "author": {
+          "gitId": "cwenling"
+        },
+        "content": "import seedu.tr4cker.commons.core.index.Index;"
+      },
+      {
+        "lineNumber": 8,
+        "author": {
+          "gitId": "cwenling"
+        },
+        "content": "import seedu.tr4cker.logic.commands.DoneCommand;"
+      },
+      {
+        "lineNumber": 9,
+        "author": {
+          "gitId": "cwenling"
+        },
+        "content": "import seedu.tr4cker.logic.parser.exceptions.ParseException;"
+      },
+      {
+        "lineNumber": 10,
+        "author": {
+          "gitId": "cwenling"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 11,
+        "author": {
+          "gitId": "cwenling"
+        },
+        "content": "/**"
+      },
+      {
+        "lineNumber": 12,
+        "author": {
+          "gitId": "cwenling"
+        },
+        "content": " * Parses input arguments and creates a new DoneCommand object"
+      },
+      {
+        "lineNumber": 13,
+        "author": {
+          "gitId": "cwenling"
+        },
+        "content": " */"
+      },
+      {
+        "lineNumber": 14,
+        "author": {
+          "gitId": "cwenling"
+        },
+        "content": "public class DoneCommandParser implements Parser\u003cDoneCommand\u003e {"
+      },
+      {
+        "lineNumber": 15,
+        "author": {
+          "gitId": "cwenling"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 16,
+        "author": {
+          "gitId": "cwenling"
+        },
+        "content": "    /**"
+      },
+      {
+        "lineNumber": 17,
+        "author": {
+          "gitId": "cwenling"
+        },
+        "content": "     * Parses the given {@code String} of arguments in the context of the DoneCommand"
+      },
+      {
+        "lineNumber": 18,
+        "author": {
+          "gitId": "cwenling"
+        },
+        "content": "     * and returns a DoneCommand object for execution."
+      },
+      {
+        "lineNumber": 19,
+        "author": {
+          "gitId": "cwenling"
+        },
+        "content": "     * @throws ParseException if the user input does not conform the expected format"
+      },
+      {
+        "lineNumber": 20,
+        "author": {
+          "gitId": "cwenling"
+        },
+        "content": "     */"
+      },
+      {
+        "lineNumber": 21,
+        "author": {
+          "gitId": "cwenling"
+        },
+        "content": "    public DoneCommand parse(String args) throws ParseException {"
+      },
+      {
+        "lineNumber": 22,
+        "author": {
+          "gitId": "cwenling"
+        },
+        "content": "        requireNonNull(args);"
+      },
+      {
+        "lineNumber": 23,
+        "author": {
+          "gitId": "cwenling"
+        },
+        "content": "        ArgumentMultimap argMultimap \u003d ArgumentTokenizer.tokenize(args, PREFIX_COMPLETION_STATUS);"
+      },
+      {
+        "lineNumber": 24,
+        "author": {
+          "gitId": "cwenling"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 25,
+        "author": {
+          "gitId": "cwenling"
+        },
+        "content": "        try {"
+      },
+      {
+        "lineNumber": 26,
+        "author": {
+          "gitId": "cwenling"
+        },
+        "content": "            Index index \u003d ParserUtil.parseIndex(argMultimap.getPreamble());"
+      },
+      {
+        "lineNumber": 27,
+        "author": {
+          "gitId": "cwenling"
+        },
+        "content": "            return new DoneCommand(index,"
+      },
+      {
+        "lineNumber": 28,
+        "author": {
+          "gitId": "cwenling"
+        },
+        "content": "                    ParserUtil.parseCompletionStatus(argMultimap.getValue(PREFIX_COMPLETION_STATUS).get()));"
+      },
+      {
+        "lineNumber": 29,
+        "author": {
+          "gitId": "cwenling"
+        },
+        "content": "        } catch (ParseException pe) {"
+      },
+      {
+        "lineNumber": 30,
+        "author": {
+          "gitId": "cwenling"
+        },
+        "content": "            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT,"
+      },
+      {
+        "lineNumber": 31,
+        "author": {
+          "gitId": "cwenling"
+        },
+        "content": "                    DoneCommand.MESSAGE_USAGE), pe);"
+      },
+      {
+        "lineNumber": 32,
+        "author": {
+          "gitId": "cwenling"
+        },
+        "content": "        }"
+      },
+      {
+        "lineNumber": 33,
+        "author": {
+          "gitId": "cwenling"
+        },
+        "content": "    }"
+      },
+      {
+        "lineNumber": 34,
+        "author": {
+          "gitId": "cwenling"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 35,
+        "author": {
+          "gitId": "cwenling"
+        },
+        "content": "}"
+      }
+    ],
+    "authorContributionMap": {
+      "cwenling": 35
     }
   },
   {
@@ -30553,70 +31637,70 @@
         "author": {
           "gitId": "cwenling"
         },
-        "content": "import seedu.tr4cker.model.task.Deadline;"
+        "content": "import seedu.tr4cker.model.task.CompletionStatus;"
       },
       {
         "lineNumber": 14,
+        "author": {
+          "gitId": "cwenling"
+        },
+        "content": "import seedu.tr4cker.model.task.Deadline;"
+      },
+      {
+        "lineNumber": 15,
         "author": {
           "gitId": "ruilingk"
         },
         "content": "import seedu.tr4cker.model.task.Name;"
       },
       {
-        "lineNumber": 15,
+        "lineNumber": 16,
         "author": {
           "gitId": "yingqi0607"
         },
         "content": "import seedu.tr4cker.model.task.TaskDescription;"
       },
       {
-        "lineNumber": 16,
-        "author": {
-          "gitId": "-"
-        },
-        "content": ""
-      },
-      {
         "lineNumber": 17,
         "author": {
-          "gitId": "-"
+          "gitId": "hanweic53"
         },
-        "content": "/**"
+        "content": "import seedu.tr4cker.model.util.NaturalDateUtil;"
       },
       {
         "lineNumber": 18,
         "author": {
           "gitId": "-"
         },
-        "content": " * Contains utility methods used for parsing strings in the various *Parser classes."
+        "content": ""
       },
       {
         "lineNumber": 19,
         "author": {
           "gitId": "-"
         },
-        "content": " */"
+        "content": "/**"
       },
       {
         "lineNumber": 20,
         "author": {
           "gitId": "-"
         },
-        "content": "public class ParserUtil {"
+        "content": " * Contains utility methods used for parsing strings in the various *Parser classes."
       },
       {
         "lineNumber": 21,
         "author": {
           "gitId": "-"
         },
-        "content": ""
+        "content": " */"
       },
       {
         "lineNumber": 22,
         "author": {
           "gitId": "-"
         },
-        "content": "    public static final String MESSAGE_INVALID_INDEX \u003d \"Index is not a non-zero unsigned integer.\";"
+        "content": "public class ParserUtil {"
       },
       {
         "lineNumber": 23,
@@ -30630,299 +31714,299 @@
         "author": {
           "gitId": "-"
         },
-        "content": "    /**"
+        "content": "    public static final String MESSAGE_INVALID_INDEX \u003d \"Index is not a non-zero unsigned integer.\";"
       },
       {
         "lineNumber": 25,
         "author": {
           "gitId": "-"
         },
-        "content": "     * Parses {@code oneBasedIndex} into an {@code Index} and returns it. Leading and trailing whitespaces will be"
+        "content": ""
       },
       {
         "lineNumber": 26,
         "author": {
           "gitId": "-"
         },
-        "content": "     * trimmed."
+        "content": "    /**"
       },
       {
         "lineNumber": 27,
         "author": {
           "gitId": "-"
         },
-        "content": "     * @throws ParseException if the specified index is invalid (not non-zero unsigned integer)."
+        "content": "     * Parses {@code oneBasedIndex} into an {@code Index} and returns it. Leading and trailing whitespaces will be"
       },
       {
         "lineNumber": 28,
         "author": {
           "gitId": "-"
         },
-        "content": "     */"
+        "content": "     * trimmed."
       },
       {
         "lineNumber": 29,
         "author": {
           "gitId": "-"
         },
-        "content": "    public static Index parseIndex(String oneBasedIndex) throws ParseException {"
+        "content": "     * @throws ParseException if the specified index is invalid (not non-zero unsigned integer)."
       },
       {
         "lineNumber": 30,
         "author": {
           "gitId": "-"
         },
-        "content": "        String trimmedIndex \u003d oneBasedIndex.trim();"
+        "content": "     */"
       },
       {
         "lineNumber": 31,
         "author": {
           "gitId": "-"
         },
-        "content": "        if (!StringUtil.isNonZeroUnsignedInteger(trimmedIndex)) {"
+        "content": "    public static Index parseIndex(String oneBasedIndex) throws ParseException {"
       },
       {
         "lineNumber": 32,
         "author": {
           "gitId": "-"
         },
-        "content": "            throw new ParseException(MESSAGE_INVALID_INDEX);"
+        "content": "        String trimmedIndex \u003d oneBasedIndex.trim();"
       },
       {
         "lineNumber": 33,
         "author": {
           "gitId": "-"
         },
-        "content": "        }"
+        "content": "        if (!StringUtil.isNonZeroUnsignedInteger(trimmedIndex)) {"
       },
       {
         "lineNumber": 34,
         "author": {
           "gitId": "-"
         },
-        "content": "        return Index.fromOneBased(Integer.parseInt(trimmedIndex));"
+        "content": "            throw new ParseException(MESSAGE_INVALID_INDEX);"
       },
       {
         "lineNumber": 35,
         "author": {
           "gitId": "-"
         },
-        "content": "    }"
+        "content": "        }"
       },
       {
         "lineNumber": 36,
         "author": {
           "gitId": "-"
         },
-        "content": ""
+        "content": "        return Index.fromOneBased(Integer.parseInt(trimmedIndex));"
       },
       {
         "lineNumber": 37,
         "author": {
           "gitId": "-"
         },
-        "content": "    /**"
+        "content": "    }"
       },
       {
         "lineNumber": 38,
         "author": {
           "gitId": "-"
         },
-        "content": "     * Parses a {@code String name} into a {@code Name}."
+        "content": ""
       },
       {
         "lineNumber": 39,
         "author": {
           "gitId": "-"
         },
-        "content": "     * Leading and trailing whitespaces will be trimmed."
+        "content": "    /**"
       },
       {
         "lineNumber": 40,
         "author": {
           "gitId": "-"
         },
-        "content": "     *"
+        "content": "     * Parses a {@code String name} into a {@code Name}."
       },
       {
         "lineNumber": 41,
         "author": {
           "gitId": "-"
         },
-        "content": "     * @throws ParseException if the given {@code name} is invalid."
+        "content": "     * Leading and trailing whitespaces will be trimmed."
       },
       {
         "lineNumber": 42,
         "author": {
           "gitId": "-"
         },
-        "content": "     */"
+        "content": "     *"
       },
       {
         "lineNumber": 43,
         "author": {
           "gitId": "-"
         },
-        "content": "    public static Name parseName(String name) throws ParseException {"
+        "content": "     * @throws ParseException if the given {@code name} is invalid."
       },
       {
         "lineNumber": 44,
         "author": {
           "gitId": "-"
         },
-        "content": "        requireNonNull(name);"
+        "content": "     */"
       },
       {
         "lineNumber": 45,
         "author": {
           "gitId": "-"
         },
-        "content": "        String trimmedName \u003d name.trim();"
+        "content": "    public static Name parseName(String name) throws ParseException {"
       },
       {
         "lineNumber": 46,
         "author": {
           "gitId": "-"
         },
-        "content": "        if (!Name.isValidName(trimmedName)) {"
+        "content": "        requireNonNull(name);"
       },
       {
         "lineNumber": 47,
         "author": {
           "gitId": "-"
         },
-        "content": "            throw new ParseException(Name.MESSAGE_CONSTRAINTS);"
+        "content": "        String trimmedName \u003d name.trim();"
       },
       {
         "lineNumber": 48,
         "author": {
           "gitId": "-"
         },
-        "content": "        }"
+        "content": "        if (!Name.isValidName(trimmedName)) {"
       },
       {
         "lineNumber": 49,
         "author": {
           "gitId": "-"
         },
-        "content": "        return new Name(trimmedName);"
+        "content": "            throw new ParseException(Name.MESSAGE_CONSTRAINTS);"
       },
       {
         "lineNumber": 50,
         "author": {
           "gitId": "-"
         },
-        "content": "    }"
+        "content": "        }"
       },
       {
         "lineNumber": 51,
         "author": {
           "gitId": "-"
         },
-        "content": ""
+        "content": "        return new Name(trimmedName);"
       },
       {
         "lineNumber": 52,
         "author": {
           "gitId": "-"
         },
-        "content": "    /**"
+        "content": "    }"
       },
       {
         "lineNumber": 53,
         "author": {
-          "gitId": "cwenling"
+          "gitId": "-"
         },
-        "content": "     * Parses a {@code String deadline} into a {@code Deadline}."
+        "content": ""
       },
       {
         "lineNumber": 54,
         "author": {
           "gitId": "-"
         },
-        "content": "     * Leading and trailing whitespaces will be trimmed."
+        "content": "    /**"
       },
       {
         "lineNumber": 55,
         "author": {
-          "gitId": "-"
+          "gitId": "cwenling"
         },
-        "content": "     *"
+        "content": "     * Parses a {@code String deadline} into a {@code Deadline}."
       },
       {
         "lineNumber": 56,
         "author": {
-          "gitId": "cwenling"
+          "gitId": "-"
         },
-        "content": "     * @throws ParseException if the given {@code deadline} is invalid."
+        "content": "     * Leading and trailing whitespaces will be trimmed."
       },
       {
         "lineNumber": 57,
         "author": {
           "gitId": "-"
         },
-        "content": "     */"
+        "content": "     *"
       },
       {
         "lineNumber": 58,
         "author": {
           "gitId": "cwenling"
         },
-        "content": "    public static Deadline parseDeadline(String deadline) throws ParseException {"
+        "content": "     * @throws ParseException if the given {@code deadline} is invalid."
       },
       {
         "lineNumber": 59,
         "author": {
-          "gitId": "cwenling"
+          "gitId": "-"
         },
-        "content": "        requireNonNull(deadline);"
+        "content": "     */"
       },
       {
         "lineNumber": 60,
         "author": {
           "gitId": "cwenling"
         },
-        "content": "        String trimmedDeadline \u003d deadline.trim();"
+        "content": "    public static Deadline parseDeadline(String deadline) throws ParseException {"
       },
       {
         "lineNumber": 61,
         "author": {
-          "gitId": "hanweic53"
+          "gitId": "cwenling"
         },
-        "content": "        if (!Deadline.isDeadlineWithTime(trimmedDeadline)) {"
+        "content": "        requireNonNull(deadline);"
       },
       {
         "lineNumber": 62,
         "author": {
-          "gitId": "hanweic53"
+          "gitId": "cwenling"
         },
-        "content": "            trimmedDeadline +\u003d Deadline.DEFAULT_TIME;"
+        "content": "        String trimmedDeadline \u003d deadline.trim();"
       },
       {
         "lineNumber": 63,
         "author": {
-          "gitId": "-"
+          "gitId": "hanweic53"
         },
-        "content": "        }"
+        "content": ""
       },
       {
         "lineNumber": 64,
         "author": {
-          "gitId": "cwenling"
+          "gitId": "hanweic53"
         },
-        "content": "        if (!Deadline.isValidDeadline(trimmedDeadline)) {"
+        "content": "        if (NaturalDateUtil.isNaturalDeadline(trimmedDeadline)) {"
       },
       {
         "lineNumber": 65,
         "author": {
-          "gitId": "cwenling"
+          "gitId": "hanweic53"
         },
-        "content": "            throw new ParseException(Deadline.MESSAGE_CONSTRAINTS);"
+        "content": "            trimmedDeadline \u003d NaturalDateUtil.convertToDateTime(trimmedDeadline);"
       },
       {
         "lineNumber": 66,
         "author": {
-          "gitId": "-"
+          "gitId": "hanweic53"
         },
         "content": "        }"
       },
@@ -30931,19 +32015,19 @@
         "author": {
           "gitId": "hanweic53"
         },
-        "content": "        if (!Deadline.isFutureDeadline(trimmedDeadline)) {"
+        "content": "        if (!Deadline.isDeadlineWithTime(trimmedDeadline)) {"
       },
       {
         "lineNumber": 68,
         "author": {
           "gitId": "hanweic53"
         },
-        "content": "            throw new ParseException(Deadline.MESSAGE_FUTURE_CONSTRAINT);"
+        "content": "            trimmedDeadline +\u003d Deadline.DEFAULT_TIME;"
       },
       {
         "lineNumber": 69,
         "author": {
-          "gitId": "-"
+          "gitId": "hanweic53"
         },
         "content": "        }"
       },
@@ -30952,311 +32036,500 @@
         "author": {
           "gitId": "cwenling"
         },
-        "content": "        return new Deadline(trimmedDeadline);"
+        "content": "        if (!Deadline.isValidDeadline(trimmedDeadline)) {"
       },
       {
         "lineNumber": 71,
         "author": {
-          "gitId": "-"
+          "gitId": "cwenling"
         },
-        "content": "    }"
+        "content": "            throw new ParseException(Deadline.MESSAGE_CONSTRAINTS);"
       },
       {
         "lineNumber": 72,
         "author": {
           "gitId": "-"
         },
-        "content": ""
+        "content": "        }"
       },
       {
         "lineNumber": 73,
         "author": {
-          "gitId": "-"
+          "gitId": "hanweic53"
         },
-        "content": "    /**"
+        "content": "        if (!Deadline.isFutureDeadline(trimmedDeadline)) {"
       },
       {
         "lineNumber": 74,
         "author": {
-          "gitId": "yingqi0607"
+          "gitId": "hanweic53"
         },
-        "content": "     * Parses a {@code String tr4cker} into an {@code description}."
+        "content": "            throw new ParseException(Deadline.MESSAGE_FUTURE_CONSTRAINT);"
       },
       {
         "lineNumber": 75,
         "author": {
-          "gitId": "-"
+          "gitId": "hanweic53"
         },
-        "content": "     * Leading and trailing whitespaces will be trimmed."
+        "content": "        }"
       },
       {
         "lineNumber": 76,
         "author": {
-          "gitId": "-"
+          "gitId": "cwenling"
         },
-        "content": "     *"
+        "content": "        return new Deadline(trimmedDeadline);"
       },
       {
         "lineNumber": 77,
         "author": {
-          "gitId": "ruilingk"
+          "gitId": "-"
         },
-        "content": "     * @throws ParseException if the given {@code tr4cker} is invalid."
+        "content": "    }"
       },
       {
         "lineNumber": 78,
         "author": {
           "gitId": "-"
         },
-        "content": "     */"
+        "content": ""
       },
       {
         "lineNumber": 79,
         "author": {
-          "gitId": "yingqi0607"
+          "gitId": "-"
         },
-        "content": "    public static TaskDescription parseDescription(String description) throws ParseException {"
+        "content": "    /**"
       },
       {
         "lineNumber": 80,
         "author": {
           "gitId": "yingqi0607"
         },
-        "content": "        requireNonNull(description);"
+        "content": "     * Parses a {@code String tr4cker} into an {@code description}."
       },
       {
         "lineNumber": 81,
-        "author": {
-          "gitId": "yingqi0607"
-        },
-        "content": "        String trimmedDescription \u003d description.trim();"
-      },
-      {
-        "lineNumber": 82,
-        "author": {
-          "gitId": "yingqi0607"
-        },
-        "content": "        if (!TaskDescription.isValidTaskDescription(trimmedDescription)) {"
-      },
-      {
-        "lineNumber": 83,
-        "author": {
-          "gitId": "yingqi0607"
-        },
-        "content": "            throw new ParseException(TaskDescription.MESSAGE_CONSTRAINTS);"
-      },
-      {
-        "lineNumber": 84,
-        "author": {
-          "gitId": "-"
-        },
-        "content": "        }"
-      },
-      {
-        "lineNumber": 85,
-        "author": {
-          "gitId": "yingqi0607"
-        },
-        "content": "        return new TaskDescription(trimmedDescription);"
-      },
-      {
-        "lineNumber": 86,
-        "author": {
-          "gitId": "-"
-        },
-        "content": "    }"
-      },
-      {
-        "lineNumber": 87,
-        "author": {
-          "gitId": "-"
-        },
-        "content": ""
-      },
-      {
-        "lineNumber": 88,
-        "author": {
-          "gitId": "-"
-        },
-        "content": "    /**"
-      },
-      {
-        "lineNumber": 89,
-        "author": {
-          "gitId": "-"
-        },
-        "content": "     * Parses a {@code String tag} into a {@code Tag}."
-      },
-      {
-        "lineNumber": 90,
         "author": {
           "gitId": "-"
         },
         "content": "     * Leading and trailing whitespaces will be trimmed."
       },
       {
-        "lineNumber": 91,
+        "lineNumber": 82,
         "author": {
           "gitId": "-"
         },
         "content": "     *"
       },
       {
+        "lineNumber": 83,
+        "author": {
+          "gitId": "ruilingk"
+        },
+        "content": "     * @throws ParseException if the given {@code tr4cker} is invalid."
+      },
+      {
+        "lineNumber": 84,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "     */"
+      },
+      {
+        "lineNumber": 85,
+        "author": {
+          "gitId": "yingqi0607"
+        },
+        "content": "    public static TaskDescription parseDescription(String description) throws ParseException {"
+      },
+      {
+        "lineNumber": 86,
+        "author": {
+          "gitId": "yingqi0607"
+        },
+        "content": "        requireNonNull(description);"
+      },
+      {
+        "lineNumber": 87,
+        "author": {
+          "gitId": "yingqi0607"
+        },
+        "content": "        String trimmedDescription \u003d description.trim();"
+      },
+      {
+        "lineNumber": 88,
+        "author": {
+          "gitId": "yingqi0607"
+        },
+        "content": "        if (!TaskDescription.isValidTaskDescription(trimmedDescription)) {"
+      },
+      {
+        "lineNumber": 89,
+        "author": {
+          "gitId": "yingqi0607"
+        },
+        "content": "            throw new ParseException(TaskDescription.MESSAGE_CONSTRAINTS);"
+      },
+      {
+        "lineNumber": 90,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "        }"
+      },
+      {
+        "lineNumber": 91,
+        "author": {
+          "gitId": "yingqi0607"
+        },
+        "content": "        return new TaskDescription(trimmedDescription);"
+      },
+      {
         "lineNumber": 92,
         "author": {
           "gitId": "-"
         },
-        "content": "     * @throws ParseException if the given {@code tag} is invalid."
+        "content": "    }"
       },
       {
         "lineNumber": 93,
         "author": {
           "gitId": "-"
         },
-        "content": "     */"
+        "content": ""
       },
       {
         "lineNumber": 94,
         "author": {
-          "gitId": "-"
-        },
-        "content": "    public static Tag parseTag(String tag) throws ParseException {"
-      },
-      {
-        "lineNumber": 95,
-        "author": {
-          "gitId": "-"
-        },
-        "content": "        requireNonNull(tag);"
-      },
-      {
-        "lineNumber": 96,
-        "author": {
-          "gitId": "-"
-        },
-        "content": "        String trimmedTag \u003d tag.trim();"
-      },
-      {
-        "lineNumber": 97,
-        "author": {
-          "gitId": "-"
-        },
-        "content": "        if (!Tag.isValidTagName(trimmedTag)) {"
-      },
-      {
-        "lineNumber": 98,
-        "author": {
-          "gitId": "-"
-        },
-        "content": "            throw new ParseException(Tag.MESSAGE_CONSTRAINTS);"
-      },
-      {
-        "lineNumber": 99,
-        "author": {
-          "gitId": "-"
-        },
-        "content": "        }"
-      },
-      {
-        "lineNumber": 100,
-        "author": {
-          "gitId": "-"
-        },
-        "content": "        return new Tag(trimmedTag);"
-      },
-      {
-        "lineNumber": 101,
-        "author": {
-          "gitId": "-"
-        },
-        "content": "    }"
-      },
-      {
-        "lineNumber": 102,
-        "author": {
-          "gitId": "-"
-        },
-        "content": ""
-      },
-      {
-        "lineNumber": 103,
-        "author": {
-          "gitId": "-"
+          "gitId": "cwenling"
         },
         "content": "    /**"
       },
       {
-        "lineNumber": 104,
+        "lineNumber": 95,
         "author": {
-          "gitId": "-"
+          "gitId": "cwenling"
         },
-        "content": "     * Parses {@code Collection\u003cString\u003e tags} into a {@code Set\u003cTag\u003e}."
+        "content": "     * Parses a {@code String completionStatus} into an {@code CompletionStatus}."
       },
       {
-        "lineNumber": 105,
+        "lineNumber": 96,
         "author": {
-          "gitId": "-"
+          "gitId": "cwenling"
+        },
+        "content": "     * Leading and trailing whitespaces will be trimmed."
+      },
+      {
+        "lineNumber": 97,
+        "author": {
+          "gitId": "cwenling"
+        },
+        "content": "     *"
+      },
+      {
+        "lineNumber": 98,
+        "author": {
+          "gitId": "cwenling"
+        },
+        "content": "     * @throws ParseException if the given {@code completionStatus} is invalid."
+      },
+      {
+        "lineNumber": 99,
+        "author": {
+          "gitId": "cwenling"
         },
         "content": "     */"
       },
       {
+        "lineNumber": 100,
+        "author": {
+          "gitId": "cwenling"
+        },
+        "content": "    public static CompletionStatus parseCompletionStatus(String completionStatus) throws ParseException {"
+      },
+      {
+        "lineNumber": 101,
+        "author": {
+          "gitId": "cwenling"
+        },
+        "content": "        requireNonNull(completionStatus);"
+      },
+      {
+        "lineNumber": 102,
+        "author": {
+          "gitId": "cwenling"
+        },
+        "content": "        String trimmedCompletionStatus \u003d completionStatus.trim();"
+      },
+      {
+        "lineNumber": 103,
+        "author": {
+          "gitId": "cwenling"
+        },
+        "content": "        int trimmedCompletionStatusInt;"
+      },
+      {
+        "lineNumber": 104,
+        "author": {
+          "gitId": "cwenling"
+        },
+        "content": "        try {"
+      },
+      {
+        "lineNumber": 105,
+        "author": {
+          "gitId": "cwenling"
+        },
+        "content": "            trimmedCompletionStatusInt \u003d Integer.parseInt(trimmedCompletionStatus);"
+      },
+      {
         "lineNumber": 106,
         "author": {
-          "gitId": "-"
+          "gitId": "cwenling"
         },
-        "content": "    public static Set\u003cTag\u003e parseTags(Collection\u003cString\u003e tags) throws ParseException {"
+        "content": "        } catch (NumberFormatException numberFormatException) {"
       },
       {
         "lineNumber": 107,
         "author": {
-          "gitId": "-"
+          "gitId": "cwenling"
         },
-        "content": "        requireNonNull(tags);"
+        "content": "            throw new ParseException(CompletionStatus.MESSAGE_CONSTRAINTS);"
       },
       {
         "lineNumber": 108,
         "author": {
-          "gitId": "-"
+          "gitId": "cwenling"
         },
-        "content": "        final Set\u003cTag\u003e tagSet \u003d new HashSet\u003c\u003e();"
+        "content": "        }"
       },
       {
         "lineNumber": 109,
         "author": {
-          "gitId": "-"
+          "gitId": "cwenling"
         },
-        "content": "        for (String tagName : tags) {"
+        "content": "        if (!CompletionStatus.isValidCompletionStatus(trimmedCompletionStatusInt)) {"
       },
       {
         "lineNumber": 110,
         "author": {
-          "gitId": "-"
+          "gitId": "cwenling"
         },
-        "content": "            tagSet.add(parseTag(tagName));"
+        "content": "            throw new ParseException(CompletionStatus.MESSAGE_CONSTRAINTS);"
       },
       {
         "lineNumber": 111,
         "author": {
-          "gitId": "-"
+          "gitId": "cwenling"
         },
         "content": "        }"
       },
       {
         "lineNumber": 112,
         "author": {
-          "gitId": "-"
+          "gitId": "cwenling"
         },
-        "content": "        return tagSet;"
+        "content": "        return new CompletionStatus(trimmedCompletionStatusInt);"
       },
       {
         "lineNumber": 113,
+        "author": {
+          "gitId": "cwenling"
+        },
+        "content": "    }"
+      },
+      {
+        "lineNumber": 114,
+        "author": {
+          "gitId": "cwenling"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 115,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "    /**"
+      },
+      {
+        "lineNumber": 116,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "     * Parses a {@code String tag} into a {@code Tag}."
+      },
+      {
+        "lineNumber": 117,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "     * Leading and trailing whitespaces will be trimmed."
+      },
+      {
+        "lineNumber": 118,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "     *"
+      },
+      {
+        "lineNumber": 119,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "     * @throws ParseException if the given {@code tag} is invalid."
+      },
+      {
+        "lineNumber": 120,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "     */"
+      },
+      {
+        "lineNumber": 121,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "    public static Tag parseTag(String tag) throws ParseException {"
+      },
+      {
+        "lineNumber": 122,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "        requireNonNull(tag);"
+      },
+      {
+        "lineNumber": 123,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "        String trimmedTag \u003d tag.trim();"
+      },
+      {
+        "lineNumber": 124,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "        if (!Tag.isValidTagName(trimmedTag)) {"
+      },
+      {
+        "lineNumber": 125,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "            throw new ParseException(Tag.MESSAGE_CONSTRAINTS);"
+      },
+      {
+        "lineNumber": 126,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "        }"
+      },
+      {
+        "lineNumber": 127,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "        return new Tag(trimmedTag);"
+      },
+      {
+        "lineNumber": 128,
         "author": {
           "gitId": "-"
         },
         "content": "    }"
       },
       {
-        "lineNumber": 114,
+        "lineNumber": 129,
+        "author": {
+          "gitId": "-"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 130,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "    /**"
+      },
+      {
+        "lineNumber": 131,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "     * Parses {@code Collection\u003cString\u003e tags} into a {@code Set\u003cTag\u003e}."
+      },
+      {
+        "lineNumber": 132,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "     */"
+      },
+      {
+        "lineNumber": 133,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "    public static Set\u003cTag\u003e parseTags(Collection\u003cString\u003e tags) throws ParseException {"
+      },
+      {
+        "lineNumber": 134,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "        requireNonNull(tags);"
+      },
+      {
+        "lineNumber": 135,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "        final Set\u003cTag\u003e tagSet \u003d new HashSet\u003c\u003e();"
+      },
+      {
+        "lineNumber": 136,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "        for (String tagName : tags) {"
+      },
+      {
+        "lineNumber": 137,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "            tagSet.add(parseTag(tagName));"
+      },
+      {
+        "lineNumber": 138,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "        }"
+      },
+      {
+        "lineNumber": 139,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "        return tagSet;"
+      },
+      {
+        "lineNumber": 140,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "    }"
+      },
+      {
+        "lineNumber": 141,
         "author": {
           "gitId": "-"
         },
@@ -31266,9 +32539,9 @@
     "authorContributionMap": {
       "ruilingk": 7,
       "yingqi0607": 8,
-      "hanweic53": 4,
-      "cwenling": 9,
-      "-": 86
+      "hanweic53": 11,
+      "cwenling": 31,
+      "-": 84
     }
   },
   {
@@ -32032,474 +33305,502 @@
       {
         "lineNumber": 13,
         "author": {
-          "gitId": "ruilingk"
+          "gitId": "cwenling"
         },
-        "content": "import seedu.tr4cker.logic.commands.EditCommand;"
+        "content": "import seedu.tr4cker.logic.commands.DoneCommand;"
       },
       {
         "lineNumber": 14,
         "author": {
           "gitId": "ruilingk"
         },
-        "content": "import seedu.tr4cker.logic.commands.ExitCommand;"
+        "content": "import seedu.tr4cker.logic.commands.EditCommand;"
       },
       {
         "lineNumber": 15,
         "author": {
           "gitId": "ruilingk"
         },
-        "content": "import seedu.tr4cker.logic.commands.FindCommand;"
+        "content": "import seedu.tr4cker.logic.commands.ExitCommand;"
       },
       {
         "lineNumber": 16,
         "author": {
           "gitId": "ruilingk"
         },
-        "content": "import seedu.tr4cker.logic.commands.HelpCommand;"
+        "content": "import seedu.tr4cker.logic.commands.FindCommand;"
       },
       {
         "lineNumber": 17,
         "author": {
           "gitId": "ruilingk"
         },
-        "content": "import seedu.tr4cker.logic.commands.ListCommand;"
+        "content": "import seedu.tr4cker.logic.commands.HelpCommand;"
       },
       {
         "lineNumber": 18,
         "author": {
           "gitId": "ruilingk"
         },
-        "content": "import seedu.tr4cker.logic.commands.TagCommand;"
+        "content": "import seedu.tr4cker.logic.commands.ListCommand;"
       },
       {
         "lineNumber": 19,
         "author": {
           "gitId": "ruilingk"
         },
-        "content": "import seedu.tr4cker.logic.parser.exceptions.ParseException;"
+        "content": "import seedu.tr4cker.logic.commands.TagCommand;"
       },
       {
         "lineNumber": 20,
         "author": {
-          "gitId": "-"
+          "gitId": "ruilingk"
         },
-        "content": ""
+        "content": "import seedu.tr4cker.logic.parser.exceptions.ParseException;"
       },
       {
         "lineNumber": 21,
         "author": {
           "gitId": "-"
         },
-        "content": "/**"
+        "content": ""
       },
       {
         "lineNumber": 22,
         "author": {
           "gitId": "-"
         },
-        "content": " * Parses user input."
+        "content": "/**"
       },
       {
         "lineNumber": 23,
         "author": {
           "gitId": "-"
         },
-        "content": " */"
+        "content": " * Parses user input."
       },
       {
         "lineNumber": 24,
+        "author": {
+          "gitId": "-"
+        },
+        "content": " */"
+      },
+      {
+        "lineNumber": 25,
         "author": {
           "gitId": "ruilingk"
         },
         "content": "public class Tr4ckerParser {"
       },
       {
-        "lineNumber": 25,
-        "author": {
-          "gitId": "-"
-        },
-        "content": ""
-      },
-      {
         "lineNumber": 26,
         "author": {
           "gitId": "-"
         },
-        "content": "    /**"
+        "content": ""
       },
       {
         "lineNumber": 27,
         "author": {
           "gitId": "-"
         },
-        "content": "     * Used for initial separation of command word and args."
+        "content": "    /**"
       },
       {
         "lineNumber": 28,
         "author": {
           "gitId": "-"
         },
-        "content": "     */"
+        "content": "     * Used for initial separation of command word and args."
       },
       {
         "lineNumber": 29,
         "author": {
           "gitId": "-"
         },
-        "content": "    private static final Pattern BASIC_COMMAND_FORMAT \u003d Pattern.compile(\"(?\u003ccommandWord\u003e\\\\S+)(?\u003carguments\u003e.*)\");"
+        "content": "     */"
       },
       {
         "lineNumber": 30,
         "author": {
           "gitId": "-"
         },
-        "content": ""
+        "content": "    private static final Pattern BASIC_COMMAND_FORMAT \u003d Pattern.compile(\"(?\u003ccommandWord\u003e\\\\S+)(?\u003carguments\u003e.*)\");"
       },
       {
         "lineNumber": 31,
         "author": {
           "gitId": "-"
         },
-        "content": "    /**"
+        "content": ""
       },
       {
         "lineNumber": 32,
         "author": {
           "gitId": "-"
         },
-        "content": "     * Parses user input into command for execution."
+        "content": "    /**"
       },
       {
         "lineNumber": 33,
         "author": {
           "gitId": "-"
         },
-        "content": "     *"
+        "content": "     * Parses user input into command for execution."
       },
       {
         "lineNumber": 34,
         "author": {
           "gitId": "-"
         },
-        "content": "     * @param userInput full user input string"
+        "content": "     *"
       },
       {
         "lineNumber": 35,
         "author": {
           "gitId": "-"
         },
-        "content": "     * @return the command based on the user input"
+        "content": "     * @param userInput full user input string"
       },
       {
         "lineNumber": 36,
         "author": {
           "gitId": "-"
         },
-        "content": "     * @throws ParseException if the user input does not conform the expected format"
+        "content": "     * @return the command based on the user input"
       },
       {
         "lineNumber": 37,
         "author": {
           "gitId": "-"
         },
-        "content": "     */"
+        "content": "     * @throws ParseException if the user input does not conform the expected format"
       },
       {
         "lineNumber": 38,
         "author": {
           "gitId": "-"
         },
-        "content": "    public Command parseCommand(String userInput) throws ParseException {"
+        "content": "     */"
       },
       {
         "lineNumber": 39,
         "author": {
           "gitId": "-"
         },
-        "content": "        final Matcher matcher \u003d BASIC_COMMAND_FORMAT.matcher(userInput.trim());"
+        "content": "    public Command parseCommand(String userInput) throws ParseException {"
       },
       {
         "lineNumber": 40,
         "author": {
           "gitId": "-"
         },
-        "content": "        if (!matcher.matches()) {"
+        "content": "        final Matcher matcher \u003d BASIC_COMMAND_FORMAT.matcher(userInput.trim());"
       },
       {
         "lineNumber": 41,
         "author": {
           "gitId": "-"
         },
-        "content": "            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, HelpCommand.MESSAGE_USAGE));"
+        "content": "        if (!matcher.matches()) {"
       },
       {
         "lineNumber": 42,
         "author": {
           "gitId": "-"
         },
-        "content": "        }"
+        "content": "            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, HelpCommand.MESSAGE_USAGE));"
       },
       {
         "lineNumber": 43,
         "author": {
           "gitId": "-"
         },
-        "content": ""
+        "content": "        }"
       },
       {
         "lineNumber": 44,
         "author": {
           "gitId": "-"
         },
-        "content": "        final String commandWord \u003d matcher.group(\"commandWord\");"
+        "content": ""
       },
       {
         "lineNumber": 45,
         "author": {
           "gitId": "-"
         },
-        "content": "        final String arguments \u003d matcher.group(\"arguments\");"
+        "content": "        final String commandWord \u003d matcher.group(\"commandWord\");"
       },
       {
         "lineNumber": 46,
         "author": {
           "gitId": "-"
         },
-        "content": "        switch (commandWord) {"
+        "content": "        final String arguments \u003d matcher.group(\"arguments\");"
       },
       {
         "lineNumber": 47,
         "author": {
           "gitId": "-"
         },
-        "content": ""
+        "content": "        switch (commandWord) {"
       },
       {
         "lineNumber": 48,
         "author": {
           "gitId": "-"
         },
-        "content": "        case AddCommand.COMMAND_WORD:"
+        "content": ""
       },
       {
         "lineNumber": 49,
         "author": {
           "gitId": "-"
         },
-        "content": "            return new AddCommandParser().parse(arguments);"
+        "content": "        case AddCommand.COMMAND_WORD:"
       },
       {
         "lineNumber": 50,
         "author": {
           "gitId": "-"
         },
-        "content": ""
+        "content": "            return new AddCommandParser().parse(arguments);"
       },
       {
         "lineNumber": 51,
         "author": {
           "gitId": "-"
         },
-        "content": "        case EditCommand.COMMAND_WORD:"
+        "content": ""
       },
       {
         "lineNumber": 52,
         "author": {
           "gitId": "-"
         },
-        "content": "            return new EditCommandParser().parse(arguments);"
+        "content": "        case EditCommand.COMMAND_WORD:"
       },
       {
         "lineNumber": 53,
         "author": {
           "gitId": "-"
         },
-        "content": ""
+        "content": "            return new EditCommandParser().parse(arguments);"
       },
       {
         "lineNumber": 54,
         "author": {
-          "gitId": "ruilingk"
+          "gitId": "-"
         },
-        "content": "        case TagCommand.COMMAND_WORD:"
+        "content": ""
       },
       {
         "lineNumber": 55,
         "author": {
           "gitId": "ruilingk"
         },
-        "content": "            return new TagCommandParser().parse(arguments);"
+        "content": "        case TagCommand.COMMAND_WORD:"
       },
       {
         "lineNumber": 56,
         "author": {
           "gitId": "ruilingk"
         },
-        "content": ""
+        "content": "            return new TagCommandParser().parse(arguments);"
       },
       {
         "lineNumber": 57,
         "author": {
-          "gitId": "-"
+          "gitId": "ruilingk"
         },
-        "content": "        case DeleteCommand.COMMAND_WORD:"
+        "content": ""
       },
       {
         "lineNumber": 58,
         "author": {
           "gitId": "-"
         },
-        "content": "            return new DeleteCommandParser().parse(arguments);"
+        "content": "        case DeleteCommand.COMMAND_WORD:"
       },
       {
         "lineNumber": 59,
         "author": {
           "gitId": "-"
         },
-        "content": ""
+        "content": "            return new DeleteCommandParser().parse(arguments);"
       },
       {
         "lineNumber": 60,
         "author": {
           "gitId": "-"
         },
-        "content": "        case ClearCommand.COMMAND_WORD:"
+        "content": ""
       },
       {
         "lineNumber": 61,
         "author": {
-          "gitId": "-"
+          "gitId": "cwenling"
         },
-        "content": "            return new ClearCommand();"
+        "content": "        case DoneCommand.COMMAND_WORD:"
       },
       {
         "lineNumber": 62,
         "author": {
-          "gitId": "-"
+          "gitId": "cwenling"
         },
-        "content": ""
+        "content": "            return new DoneCommandParser().parse(arguments);"
       },
       {
         "lineNumber": 63,
         "author": {
-          "gitId": "-"
+          "gitId": "cwenling"
         },
-        "content": "        case FindCommand.COMMAND_WORD:"
+        "content": ""
       },
       {
         "lineNumber": 64,
         "author": {
           "gitId": "-"
         },
-        "content": "            return new FindCommandParser().parse(arguments);"
+        "content": "        case ClearCommand.COMMAND_WORD:"
       },
       {
         "lineNumber": 65,
         "author": {
           "gitId": "-"
         },
-        "content": ""
+        "content": "            return new ClearCommand();"
       },
       {
         "lineNumber": 66,
         "author": {
           "gitId": "-"
         },
-        "content": "        case ListCommand.COMMAND_WORD:"
+        "content": ""
       },
       {
         "lineNumber": 67,
         "author": {
           "gitId": "-"
         },
-        "content": "            return new ListCommand();"
+        "content": "        case FindCommand.COMMAND_WORD:"
       },
       {
         "lineNumber": 68,
         "author": {
           "gitId": "-"
         },
-        "content": ""
+        "content": "            return new FindCommandParser().parse(arguments);"
       },
       {
         "lineNumber": 69,
         "author": {
           "gitId": "-"
         },
-        "content": "        case ExitCommand.COMMAND_WORD:"
+        "content": ""
       },
       {
         "lineNumber": 70,
         "author": {
           "gitId": "-"
         },
-        "content": "            return new ExitCommand();"
+        "content": "        case ListCommand.COMMAND_WORD:"
       },
       {
         "lineNumber": 71,
         "author": {
           "gitId": "-"
         },
-        "content": ""
+        "content": "            return new ListCommand();"
       },
       {
         "lineNumber": 72,
         "author": {
           "gitId": "-"
         },
-        "content": "        case HelpCommand.COMMAND_WORD:"
+        "content": ""
       },
       {
         "lineNumber": 73,
         "author": {
           "gitId": "-"
         },
-        "content": "            return new HelpCommand();"
+        "content": "        case ExitCommand.COMMAND_WORD:"
       },
       {
         "lineNumber": 74,
         "author": {
           "gitId": "-"
         },
-        "content": ""
+        "content": "            return new ExitCommand();"
       },
       {
         "lineNumber": 75,
         "author": {
           "gitId": "-"
         },
-        "content": "        default:"
+        "content": ""
       },
       {
         "lineNumber": 76,
         "author": {
           "gitId": "-"
         },
-        "content": "            throw new ParseException(MESSAGE_UNKNOWN_COMMAND);"
+        "content": "        case HelpCommand.COMMAND_WORD:"
       },
       {
         "lineNumber": 77,
         "author": {
           "gitId": "-"
         },
-        "content": "        }"
+        "content": "            return new HelpCommand();"
       },
       {
         "lineNumber": 78,
         "author": {
           "gitId": "-"
         },
-        "content": "    }"
+        "content": ""
       },
       {
         "lineNumber": 79,
         "author": {
           "gitId": "-"
         },
-        "content": ""
+        "content": "        default:"
       },
       {
         "lineNumber": 80,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "            throw new ParseException(MESSAGE_UNKNOWN_COMMAND);"
+      },
+      {
+        "lineNumber": 81,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "        }"
+      },
+      {
+        "lineNumber": 82,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "    }"
+      },
+      {
+        "lineNumber": 83,
+        "author": {
+          "gitId": "-"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 84,
         "author": {
           "gitId": "-"
         },
@@ -32508,6 +33809,7 @@
     ],
     "authorContributionMap": {
       "ruilingk": 18,
+      "cwenling": 4,
       "-": 62
     }
   },
@@ -36792,12 +38094,34 @@
       {
         "lineNumber": 51,
         "author": {
+          "gitId": "cwenling"
+        },
+        "content": "    public int compareTo(CompletionStatus other) {"
+      },
+      {
+        "lineNumber": 52,
+        "author": {
+          "gitId": "cwenling"
+        },
+        "content": "        return Integer.compare(value, other.value);"
+      },
+      {
+        "lineNumber": 53,
+        "author": {
+          "gitId": "cwenling"
+        },
+        "content": "    }"
+      },
+      {
+        "lineNumber": 54,
+        "author": {
           "gitId": "ethan-l-m-e"
         },
         "content": "}"
       }
     ],
     "authorContributionMap": {
+      "cwenling": 3,
       "ethan-l-m-e": 51
     }
   },
@@ -36922,348 +38246,348 @@
         "author": {
           "gitId": "hanweic53"
         },
-        "content": "            \"Deadline should be a valid date, and it should follow the format yyyy-MM-dd \""
+        "content": "            \"Invalid format to input Deadline. Please ensure the following:\\n\""
       },
       {
         "lineNumber": 18,
         "author": {
           "gitId": "hanweic53"
         },
-        "content": "                    + \"or yyyy-MM-dd HHmm\";"
+        "content": "                    + \"1. Enter a valid date\\n\""
       },
       {
         "lineNumber": 19,
         "author": {
           "gitId": "hanweic53"
         },
-        "content": "    public static final String MESSAGE_FUTURE_CONSTRAINT \u003d"
+        "content": "                    + \"2. Formats accepted: dd-MM-yyyy HHmm and dd-MMM-yyyy HHmm\\n\""
       },
       {
         "lineNumber": 20,
         "author": {
           "gitId": "hanweic53"
         },
-        "content": "            \"Deadline should be a time in the future\";"
+        "content": "                    + \"(e.g. 25-01-2021 1800 or 25-Jan-2021 1800)\\n\""
       },
       {
         "lineNumber": 21,
         "author": {
-          "gitId": "cwenling"
+          "gitId": "hanweic53"
         },
-        "content": "    public static final String VALIDATION_REGEX \u003d \"\\\\d{4}-\\\\d{2}-\\\\d{2} \\\\d{4}\";"
+        "content": "                    + \"3. If deadline time is not entered, it will be set to 2359 by default\";"
       },
       {
         "lineNumber": 22,
         "author": {
-          "gitId": "cwenling"
+          "gitId": "hanweic53"
         },
-        "content": "    public static final DateTimeFormatter DATE_TIME_FORMAT \u003d DateTimeFormatter.ofPattern(\"yyyy-MM-dd HHmm\");"
+        "content": "    public static final String MESSAGE_FUTURE_CONSTRAINT \u003d"
       },
       {
         "lineNumber": 23,
         "author": {
           "gitId": "hanweic53"
         },
-        "content": "    public static final String DEFAULT_TIME \u003d \" 2359\";"
+        "content": "            \"Deadline should be a time in the future\";"
       },
       {
         "lineNumber": 24,
         "author": {
-          "gitId": "cwenling"
+          "gitId": "hanweic53"
         },
-        "content": "    public final LocalDateTime dateTime;"
+        "content": "    public static final String VALIDATION_REGEX_MM \u003d \"\\\\d{2}-\\\\d{2}-\\\\d{4} \\\\d{4}\";"
       },
       {
         "lineNumber": 25,
         "author": {
-          "gitId": "-"
+          "gitId": "hanweic53"
         },
-        "content": ""
+        "content": "    public static final String VALIDATION_REGEX_MMM \u003d \"\\\\d{2}-[a-zA-Z]{3}-\\\\d{4} \\\\d{4}\";"
       },
       {
         "lineNumber": 26,
         "author": {
-          "gitId": "-"
+          "gitId": "hanweic53"
         },
-        "content": "    /**"
+        "content": ""
       },
       {
         "lineNumber": 27,
         "author": {
-          "gitId": "cwenling"
+          "gitId": "hanweic53"
         },
-        "content": "     * Constructs a {@code Deadline}."
+        "content": "    public static final DateTimeFormatter DATE_TIME_FORMAT \u003d DateTimeFormatter.ofPattern(\"dd-[MM][MMM]-yyyy HHmm\");"
       },
       {
         "lineNumber": 28,
         "author": {
-          "gitId": "-"
+          "gitId": "hanweic53"
         },
-        "content": "     *"
+        "content": "    public static final String DEFAULT_TIME \u003d \" 2359\";"
       },
       {
         "lineNumber": 29,
         "author": {
           "gitId": "cwenling"
         },
-        "content": "     * @param deadline A valid deadline time."
+        "content": "    public final LocalDateTime dateTime;"
       },
       {
         "lineNumber": 30,
         "author": {
           "gitId": "-"
         },
-        "content": "     */"
+        "content": ""
       },
       {
         "lineNumber": 31,
         "author": {
-          "gitId": "cwenling"
+          "gitId": "-"
         },
-        "content": "    public Deadline(String deadline) {"
+        "content": "    /**"
       },
       {
         "lineNumber": 32,
         "author": {
           "gitId": "cwenling"
         },
-        "content": "        requireNonNull(deadline);"
+        "content": "     * Constructs a {@code Deadline}."
       },
       {
         "lineNumber": 33,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "     *"
+      },
+      {
+        "lineNumber": 34,
+        "author": {
+          "gitId": "cwenling"
+        },
+        "content": "     * @param deadline A valid deadline time."
+      },
+      {
+        "lineNumber": 35,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "     */"
+      },
+      {
+        "lineNumber": 36,
+        "author": {
+          "gitId": "cwenling"
+        },
+        "content": "    public Deadline(String deadline) {"
+      },
+      {
+        "lineNumber": 37,
+        "author": {
+          "gitId": "cwenling"
+        },
+        "content": "        requireNonNull(deadline);"
+      },
+      {
+        "lineNumber": 38,
         "author": {
           "gitId": "cwenling"
         },
         "content": "        checkArgument(isValidDeadline(deadline), MESSAGE_CONSTRAINTS);"
       },
       {
-        "lineNumber": 34,
+        "lineNumber": 39,
         "author": {
           "gitId": "hanweic53"
         },
         "content": "        checkArgument(isFutureDeadline(deadline), MESSAGE_FUTURE_CONSTRAINT);"
       },
       {
-        "lineNumber": 35,
+        "lineNumber": 40,
         "author": {
           "gitId": "hanweic53"
         },
         "content": "        dateTime \u003d LocalDateTime.parse(deadline, DATE_TIME_FORMAT);"
       },
       {
-        "lineNumber": 36,
+        "lineNumber": 41,
         "author": {
           "gitId": "hanweic53"
         },
         "content": "    }"
       },
       {
-        "lineNumber": 37,
+        "lineNumber": 42,
         "author": {
           "gitId": "-"
         },
         "content": ""
       },
       {
-        "lineNumber": 38,
+        "lineNumber": 43,
         "author": {
           "gitId": "-"
         },
         "content": "    /**"
-      },
-      {
-        "lineNumber": 39,
-        "author": {
-          "gitId": "cwenling"
-        },
-        "content": "     * Returns true if a given string is a valid deadline time."
-      },
-      {
-        "lineNumber": 40,
-        "author": {
-          "gitId": "-"
-        },
-        "content": "     */"
-      },
-      {
-        "lineNumber": 41,
-        "author": {
-          "gitId": "cwenling"
-        },
-        "content": "    public static boolean isValidDeadline(String test) {"
-      },
-      {
-        "lineNumber": 42,
-        "author": {
-          "gitId": "cwenling"
-        },
-        "content": "        try {"
-      },
-      {
-        "lineNumber": 43,
-        "author": {
-          "gitId": "cwenling"
-        },
-        "content": "            LocalDateTime.parse(test, DATE_TIME_FORMAT);"
       },
       {
         "lineNumber": 44,
         "author": {
           "gitId": "cwenling"
         },
-        "content": "        } catch (DateTimeParseException ex) {"
+        "content": "     * Returns true if a given string is a valid deadline time."
       },
       {
         "lineNumber": 45,
         "author": {
-          "gitId": "cwenling"
+          "gitId": "-"
         },
-        "content": "            return false;"
+        "content": "     */"
       },
       {
         "lineNumber": 46,
         "author": {
           "gitId": "cwenling"
         },
-        "content": "        }"
+        "content": "    public static boolean isValidDeadline(String test) {"
       },
       {
         "lineNumber": 47,
+        "author": {
+          "gitId": "cwenling"
+        },
+        "content": "        try {"
+      },
+      {
+        "lineNumber": 48,
+        "author": {
+          "gitId": "cwenling"
+        },
+        "content": "            LocalDateTime.parse(test, DATE_TIME_FORMAT);"
+      },
+      {
+        "lineNumber": 49,
+        "author": {
+          "gitId": "cwenling"
+        },
+        "content": "        } catch (DateTimeParseException ex) {"
+      },
+      {
+        "lineNumber": 50,
+        "author": {
+          "gitId": "cwenling"
+        },
+        "content": "            return false;"
+      },
+      {
+        "lineNumber": 51,
+        "author": {
+          "gitId": "cwenling"
+        },
+        "content": "        }"
+      },
+      {
+        "lineNumber": 52,
         "author": {
           "gitId": "hanweic53"
         },
         "content": "        return true;"
       },
       {
-        "lineNumber": 48,
-        "author": {
-          "gitId": "hanweic53"
-        },
-        "content": "    }"
-      },
-      {
-        "lineNumber": 49,
-        "author": {
-          "gitId": "hanweic53"
-        },
-        "content": ""
-      },
-      {
-        "lineNumber": 50,
-        "author": {
-          "gitId": "hanweic53"
-        },
-        "content": "    public static boolean isDeadlineWithTime(String test) {"
-      },
-      {
-        "lineNumber": 51,
-        "author": {
-          "gitId": "-"
-        },
-        "content": "        return test.matches(VALIDATION_REGEX);"
-      },
-      {
-        "lineNumber": 52,
-        "author": {
-          "gitId": "-"
-        },
-        "content": "    }"
-      },
-      {
         "lineNumber": 53,
         "author": {
-          "gitId": "-"
+          "gitId": "hanweic53"
         },
-        "content": ""
+        "content": "    }"
       },
       {
         "lineNumber": 54,
         "author": {
           "gitId": "hanweic53"
         },
-        "content": "    /**"
+        "content": ""
       },
       {
         "lineNumber": 55,
         "author": {
           "gitId": "hanweic53"
         },
-        "content": "     * Returns true if a given string is a future time."
+        "content": "    public static boolean isDeadlineWithTime(String test) {"
       },
       {
         "lineNumber": 56,
         "author": {
           "gitId": "hanweic53"
         },
-        "content": "     */"
+        "content": "        return test.matches(VALIDATION_REGEX_MM) || test.matches(VALIDATION_REGEX_MMM);"
       },
       {
         "lineNumber": 57,
         "author": {
-          "gitId": "hanweic53"
+          "gitId": "-"
         },
-        "content": "    public static boolean isFutureDeadline(String test) {"
+        "content": "    }"
       },
       {
         "lineNumber": 58,
         "author": {
-          "gitId": "hanweic53"
+          "gitId": "-"
         },
-        "content": "        LocalDateTime now \u003d LocalDateTime.now();"
+        "content": ""
       },
       {
         "lineNumber": 59,
         "author": {
           "gitId": "hanweic53"
         },
-        "content": "        return LocalDateTime.parse(test, DATE_TIME_FORMAT).isAfter(now);"
+        "content": "    /**"
       },
       {
         "lineNumber": 60,
         "author": {
           "gitId": "hanweic53"
         },
-        "content": "    }"
+        "content": "     * Returns true if a given string is a future time."
       },
       {
         "lineNumber": 61,
         "author": {
           "gitId": "hanweic53"
         },
-        "content": ""
+        "content": "     */"
       },
       {
         "lineNumber": 62,
         "author": {
-          "gitId": "-"
+          "gitId": "hanweic53"
         },
-        "content": "    @Override"
+        "content": "    public static boolean isFutureDeadline(String test) {"
       },
       {
         "lineNumber": 63,
         "author": {
-          "gitId": "-"
+          "gitId": "hanweic53"
         },
-        "content": "    public String toString() {"
+        "content": "        LocalDateTime now \u003d LocalDateTime.now();"
       },
       {
         "lineNumber": 64,
         "author": {
           "gitId": "hanweic53"
         },
-        "content": "        return dateTime.format(DateTimeFormatter.ofPattern(\"yyyy-MM-dd HHmm\"));"
+        "content": "        return LocalDateTime.parse(test, DATE_TIME_FORMAT).isAfter(now);"
       },
       {
         "lineNumber": 65,
         "author": {
-          "gitId": "-"
+          "gitId": "hanweic53"
         },
         "content": "    }"
       },
       {
         "lineNumber": 66,
         "author": {
-          "gitId": "-"
+          "gitId": "hanweic53"
         },
         "content": ""
       },
@@ -37279,63 +38603,63 @@
         "author": {
           "gitId": "-"
         },
-        "content": "    public boolean equals(Object other) {"
+        "content": "    public String toString() {"
       },
       {
         "lineNumber": 69,
         "author": {
-          "gitId": "-"
+          "gitId": "hanweic53"
         },
-        "content": "        return other \u003d\u003d this // short circuit if same object"
+        "content": "        return dateTime.format(DateTimeFormatter.ofPattern(\"dd-MMM-yyyy HHmm\"));"
       },
       {
         "lineNumber": 70,
-        "author": {
-          "gitId": "cwenling"
-        },
-        "content": "                || (other instanceof Deadline // instanceof handles nulls"
-      },
-      {
-        "lineNumber": 71,
-        "author": {
-          "gitId": "hanweic53"
-        },
-        "content": "                \u0026\u0026 dateTime.equals(((Deadline) other).dateTime)); // state check"
-      },
-      {
-        "lineNumber": 72,
         "author": {
           "gitId": "-"
         },
         "content": "    }"
       },
       {
-        "lineNumber": 73,
+        "lineNumber": 71,
         "author": {
           "gitId": "-"
         },
         "content": ""
       },
       {
-        "lineNumber": 74,
+        "lineNumber": 72,
         "author": {
           "gitId": "-"
         },
         "content": "    @Override"
       },
       {
-        "lineNumber": 75,
+        "lineNumber": 73,
         "author": {
           "gitId": "-"
         },
-        "content": "    public int hashCode() {"
+        "content": "    public boolean equals(Object other) {"
+      },
+      {
+        "lineNumber": 74,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "        return other \u003d\u003d this // short circuit if same object"
+      },
+      {
+        "lineNumber": 75,
+        "author": {
+          "gitId": "cwenling"
+        },
+        "content": "                || (other instanceof Deadline // instanceof handles nulls"
       },
       {
         "lineNumber": 76,
         "author": {
           "gitId": "hanweic53"
         },
-        "content": "        return dateTime.hashCode();"
+        "content": "                \u0026\u0026 dateTime.equals(((Deadline) other).dateTime)); // state check"
       },
       {
         "lineNumber": 77,
@@ -37356,14 +38680,49 @@
         "author": {
           "gitId": "-"
         },
+        "content": "    @Override"
+      },
+      {
+        "lineNumber": 80,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "    public int hashCode() {"
+      },
+      {
+        "lineNumber": 81,
+        "author": {
+          "gitId": "hanweic53"
+        },
+        "content": "        return dateTime.hashCode();"
+      },
+      {
+        "lineNumber": 82,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "    }"
+      },
+      {
+        "lineNumber": 83,
+        "author": {
+          "gitId": "-"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 84,
+        "author": {
+          "gitId": "-"
+        },
         "content": "}"
       }
     ],
     "authorContributionMap": {
       "ruilingk": 2,
-      "hanweic53": 23,
-      "cwenling": 23,
-      "-": 31
+      "hanweic53": 31,
+      "cwenling": 21,
+      "-": 30
     }
   },
   {
@@ -40535,6 +41894,638 @@
     }
   },
   {
+    "path": "src/main/java/seedu/tr4cker/model/util/NaturalDateUtil.java",
+    "fileType": "functional-code",
+    "lines": [
+      {
+        "lineNumber": 1,
+        "author": {
+          "gitId": "hanweic53"
+        },
+        "content": "package seedu.tr4cker.model.util;"
+      },
+      {
+        "lineNumber": 2,
+        "author": {
+          "gitId": "hanweic53"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 3,
+        "author": {
+          "gitId": "hanweic53"
+        },
+        "content": "import static java.time.DayOfWeek.FRIDAY;"
+      },
+      {
+        "lineNumber": 4,
+        "author": {
+          "gitId": "hanweic53"
+        },
+        "content": "import static java.time.DayOfWeek.MONDAY;"
+      },
+      {
+        "lineNumber": 5,
+        "author": {
+          "gitId": "hanweic53"
+        },
+        "content": "import static java.time.DayOfWeek.SATURDAY;"
+      },
+      {
+        "lineNumber": 6,
+        "author": {
+          "gitId": "hanweic53"
+        },
+        "content": "import static java.time.DayOfWeek.SUNDAY;"
+      },
+      {
+        "lineNumber": 7,
+        "author": {
+          "gitId": "hanweic53"
+        },
+        "content": "import static java.time.DayOfWeek.THURSDAY;"
+      },
+      {
+        "lineNumber": 8,
+        "author": {
+          "gitId": "hanweic53"
+        },
+        "content": "import static java.time.DayOfWeek.TUESDAY;"
+      },
+      {
+        "lineNumber": 9,
+        "author": {
+          "gitId": "hanweic53"
+        },
+        "content": "import static java.time.DayOfWeek.WEDNESDAY;"
+      },
+      {
+        "lineNumber": 10,
+        "author": {
+          "gitId": "hanweic53"
+        },
+        "content": "import static java.time.temporal.TemporalAdjusters.next;"
+      },
+      {
+        "lineNumber": 11,
+        "author": {
+          "gitId": "hanweic53"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 12,
+        "author": {
+          "gitId": "hanweic53"
+        },
+        "content": "import java.time.DayOfWeek;"
+      },
+      {
+        "lineNumber": 13,
+        "author": {
+          "gitId": "hanweic53"
+        },
+        "content": "import java.time.LocalDate;"
+      },
+      {
+        "lineNumber": 14,
+        "author": {
+          "gitId": "hanweic53"
+        },
+        "content": "import java.time.LocalTime;"
+      },
+      {
+        "lineNumber": 15,
+        "author": {
+          "gitId": "hanweic53"
+        },
+        "content": "import java.time.format.DateTimeFormatter;"
+      },
+      {
+        "lineNumber": 16,
+        "author": {
+          "gitId": "hanweic53"
+        },
+        "content": "import java.time.format.DateTimeParseException;"
+      },
+      {
+        "lineNumber": 17,
+        "author": {
+          "gitId": "hanweic53"
+        },
+        "content": "import java.util.HashMap;"
+      },
+      {
+        "lineNumber": 18,
+        "author": {
+          "gitId": "hanweic53"
+        },
+        "content": "import java.util.Map;"
+      },
+      {
+        "lineNumber": 19,
+        "author": {
+          "gitId": "hanweic53"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 20,
+        "author": {
+          "gitId": "hanweic53"
+        },
+        "content": "import seedu.tr4cker.logic.parser.exceptions.ParseException;"
+      },
+      {
+        "lineNumber": 21,
+        "author": {
+          "gitId": "hanweic53"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 22,
+        "author": {
+          "gitId": "hanweic53"
+        },
+        "content": "public class NaturalDateUtil {"
+      },
+      {
+        "lineNumber": 23,
+        "author": {
+          "gitId": "hanweic53"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 24,
+        "author": {
+          "gitId": "hanweic53"
+        },
+        "content": "    public static final String MESSAGE_DAY \u003d \"Please enter a valid day of the week in full, e.g. Saturday\";"
+      },
+      {
+        "lineNumber": 25,
+        "author": {
+          "gitId": "hanweic53"
+        },
+        "content": "    public static final String MESSAGE_TIME \u003d \"Please enter a valid time in 24Hr format\";"
+      },
+      {
+        "lineNumber": 26,
+        "author": {
+          "gitId": "hanweic53"
+        },
+        "content": "    public static final String VALIDATION_REGEX \u003d \"[a-zA-Z]{5,}\";"
+      },
+      {
+        "lineNumber": 27,
+        "author": {
+          "gitId": "hanweic53"
+        },
+        "content": "    public static final String VALIDATION_REGEX_TIME \u003d \"[a-zA-Z]{5,} \\\\d{4}\";"
+      },
+      {
+        "lineNumber": 28,
+        "author": {
+          "gitId": "hanweic53"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 29,
+        "author": {
+          "gitId": "hanweic53"
+        },
+        "content": "    public static final DateTimeFormatter DATE_TIME_FORMATTER \u003d DateTimeFormatter.ofPattern(\"dd-MMM-yyyy\");"
+      },
+      {
+        "lineNumber": 30,
+        "author": {
+          "gitId": "hanweic53"
+        },
+        "content": "    private static final Map\u003cString, DayOfWeek\u003e DAYS_OF_WEEK;"
+      },
+      {
+        "lineNumber": 31,
+        "author": {
+          "gitId": "hanweic53"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 32,
+        "author": {
+          "gitId": "hanweic53"
+        },
+        "content": "    static {"
+      },
+      {
+        "lineNumber": 33,
+        "author": {
+          "gitId": "hanweic53"
+        },
+        "content": "        DAYS_OF_WEEK \u003d new HashMap\u003c\u003e();"
+      },
+      {
+        "lineNumber": 34,
+        "author": {
+          "gitId": "hanweic53"
+        },
+        "content": "        DAYS_OF_WEEK.put(\"MONDAY\", MONDAY);"
+      },
+      {
+        "lineNumber": 35,
+        "author": {
+          "gitId": "hanweic53"
+        },
+        "content": "        DAYS_OF_WEEK.put(\"TUESDAY\", TUESDAY);"
+      },
+      {
+        "lineNumber": 36,
+        "author": {
+          "gitId": "hanweic53"
+        },
+        "content": "        DAYS_OF_WEEK.put(\"WEDNESDAY\", WEDNESDAY);"
+      },
+      {
+        "lineNumber": 37,
+        "author": {
+          "gitId": "hanweic53"
+        },
+        "content": "        DAYS_OF_WEEK.put(\"THURSDAY\", THURSDAY);"
+      },
+      {
+        "lineNumber": 38,
+        "author": {
+          "gitId": "hanweic53"
+        },
+        "content": "        DAYS_OF_WEEK.put(\"FRIDAY\", FRIDAY);"
+      },
+      {
+        "lineNumber": 39,
+        "author": {
+          "gitId": "hanweic53"
+        },
+        "content": "        DAYS_OF_WEEK.put(\"SATURDAY\", SATURDAY);"
+      },
+      {
+        "lineNumber": 40,
+        "author": {
+          "gitId": "hanweic53"
+        },
+        "content": "        DAYS_OF_WEEK.put(\"SUNDAY\", SUNDAY);"
+      },
+      {
+        "lineNumber": 41,
+        "author": {
+          "gitId": "hanweic53"
+        },
+        "content": "    }"
+      },
+      {
+        "lineNumber": 42,
+        "author": {
+          "gitId": "hanweic53"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 43,
+        "author": {
+          "gitId": "hanweic53"
+        },
+        "content": "    /**"
+      },
+      {
+        "lineNumber": 44,
+        "author": {
+          "gitId": "hanweic53"
+        },
+        "content": "     * Returns true if a given string is a Natural Deadline."
+      },
+      {
+        "lineNumber": 45,
+        "author": {
+          "gitId": "hanweic53"
+        },
+        "content": "     */"
+      },
+      {
+        "lineNumber": 46,
+        "author": {
+          "gitId": "hanweic53"
+        },
+        "content": "    public static boolean isNaturalDeadline(String test) {"
+      },
+      {
+        "lineNumber": 47,
+        "author": {
+          "gitId": "hanweic53"
+        },
+        "content": "        return test.matches(VALIDATION_REGEX) || test.matches(VALIDATION_REGEX_TIME);"
+      },
+      {
+        "lineNumber": 48,
+        "author": {
+          "gitId": "hanweic53"
+        },
+        "content": "    }"
+      },
+      {
+        "lineNumber": 49,
+        "author": {
+          "gitId": "hanweic53"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 50,
+        "author": {
+          "gitId": "hanweic53"
+        },
+        "content": "    /**"
+      },
+      {
+        "lineNumber": 51,
+        "author": {
+          "gitId": "hanweic53"
+        },
+        "content": "     * Converts a natural date-time input into a formatted DateTime String."
+      },
+      {
+        "lineNumber": 52,
+        "author": {
+          "gitId": "hanweic53"
+        },
+        "content": "     *"
+      },
+      {
+        "lineNumber": 53,
+        "author": {
+          "gitId": "hanweic53"
+        },
+        "content": "     * @param naturalDateTime natural date-time input"
+      },
+      {
+        "lineNumber": 54,
+        "author": {
+          "gitId": "hanweic53"
+        },
+        "content": "     * @return formatted DateTime String"
+      },
+      {
+        "lineNumber": 55,
+        "author": {
+          "gitId": "hanweic53"
+        },
+        "content": "     */"
+      },
+      {
+        "lineNumber": 56,
+        "author": {
+          "gitId": "hanweic53"
+        },
+        "content": "    public static String convertToDateTime(String naturalDateTime) throws ParseException {"
+      },
+      {
+        "lineNumber": 57,
+        "author": {
+          "gitId": "hanweic53"
+        },
+        "content": "        assert isNaturalDeadline(naturalDateTime);"
+      },
+      {
+        "lineNumber": 58,
+        "author": {
+          "gitId": "hanweic53"
+        },
+        "content": "        String [] deadlineTokens \u003d naturalDateTime.split(\" \");"
+      },
+      {
+        "lineNumber": 59,
+        "author": {
+          "gitId": "hanweic53"
+        },
+        "content": "        int unitsOfDeadline \u003d deadlineTokens.length;"
+      },
+      {
+        "lineNumber": 60,
+        "author": {
+          "gitId": "hanweic53"
+        },
+        "content": "        assert unitsOfDeadline \u003d\u003d 1 || unitsOfDeadline \u003d\u003d 2;"
+      },
+      {
+        "lineNumber": 61,
+        "author": {
+          "gitId": "hanweic53"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 62,
+        "author": {
+          "gitId": "hanweic53"
+        },
+        "content": "        return parse(deadlineTokens, unitsOfDeadline \u003d\u003d 2);"
+      },
+      {
+        "lineNumber": 63,
+        "author": {
+          "gitId": "hanweic53"
+        },
+        "content": "    }"
+      },
+      {
+        "lineNumber": 64,
+        "author": {
+          "gitId": "hanweic53"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 65,
+        "author": {
+          "gitId": "hanweic53"
+        },
+        "content": "    private static String parse(String[] deadlineTokens, boolean hasTime) throws ParseException {"
+      },
+      {
+        "lineNumber": 66,
+        "author": {
+          "gitId": "hanweic53"
+        },
+        "content": "        String dateTime;"
+      },
+      {
+        "lineNumber": 67,
+        "author": {
+          "gitId": "hanweic53"
+        },
+        "content": "        String dayOfDeadline \u003d deadlineTokens[0].toUpperCase();"
+      },
+      {
+        "lineNumber": 68,
+        "author": {
+          "gitId": "hanweic53"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 69,
+        "author": {
+          "gitId": "hanweic53"
+        },
+        "content": "        if (dayOfDeadline.equals(\"TODAY\")) {"
+      },
+      {
+        "lineNumber": 70,
+        "author": {
+          "gitId": "hanweic53"
+        },
+        "content": "            dateTime \u003d LocalDate.now().format(DATE_TIME_FORMATTER);"
+      },
+      {
+        "lineNumber": 71,
+        "author": {
+          "gitId": "hanweic53"
+        },
+        "content": "        } else {"
+      },
+      {
+        "lineNumber": 72,
+        "author": {
+          "gitId": "hanweic53"
+        },
+        "content": "            if (!DAYS_OF_WEEK.containsKey(dayOfDeadline)) {"
+      },
+      {
+        "lineNumber": 73,
+        "author": {
+          "gitId": "hanweic53"
+        },
+        "content": "                throw new ParseException(MESSAGE_DAY);"
+      },
+      {
+        "lineNumber": 74,
+        "author": {
+          "gitId": "hanweic53"
+        },
+        "content": "            }"
+      },
+      {
+        "lineNumber": 75,
+        "author": {
+          "gitId": "hanweic53"
+        },
+        "content": "            dateTime \u003d LocalDate.now().with(next(DAYS_OF_WEEK.get(dayOfDeadline)))"
+      },
+      {
+        "lineNumber": 76,
+        "author": {
+          "gitId": "hanweic53"
+        },
+        "content": "                    .format(DATE_TIME_FORMATTER);"
+      },
+      {
+        "lineNumber": 77,
+        "author": {
+          "gitId": "hanweic53"
+        },
+        "content": "        }"
+      },
+      {
+        "lineNumber": 78,
+        "author": {
+          "gitId": "hanweic53"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 79,
+        "author": {
+          "gitId": "hanweic53"
+        },
+        "content": "        if (hasTime) {"
+      },
+      {
+        "lineNumber": 80,
+        "author": {
+          "gitId": "hanweic53"
+        },
+        "content": "            try {"
+      },
+      {
+        "lineNumber": 81,
+        "author": {
+          "gitId": "hanweic53"
+        },
+        "content": "                LocalTime.parse(deadlineTokens[1], DateTimeFormatter.ofPattern(\"HHmm\"));"
+      },
+      {
+        "lineNumber": 82,
+        "author": {
+          "gitId": "hanweic53"
+        },
+        "content": "                dateTime +\u003d \" \" + deadlineTokens[1];"
+      },
+      {
+        "lineNumber": 83,
+        "author": {
+          "gitId": "hanweic53"
+        },
+        "content": "            } catch (DateTimeParseException e) {"
+      },
+      {
+        "lineNumber": 84,
+        "author": {
+          "gitId": "hanweic53"
+        },
+        "content": "                throw new ParseException(MESSAGE_TIME);"
+      },
+      {
+        "lineNumber": 85,
+        "author": {
+          "gitId": "hanweic53"
+        },
+        "content": "            }"
+      },
+      {
+        "lineNumber": 86,
+        "author": {
+          "gitId": "hanweic53"
+        },
+        "content": "        }"
+      },
+      {
+        "lineNumber": 87,
+        "author": {
+          "gitId": "hanweic53"
+        },
+        "content": "        return dateTime;"
+      },
+      {
+        "lineNumber": 88,
+        "author": {
+          "gitId": "hanweic53"
+        },
+        "content": "    }"
+      },
+      {
+        "lineNumber": 89,
+        "author": {
+          "gitId": "hanweic53"
+        },
+        "content": "}"
+      }
+    ],
+    "authorContributionMap": {
+      "hanweic53": 89
+    }
+  },
+  {
     "path": "src/main/java/seedu/tr4cker/model/util/SampleDataUtil.java",
     "fileType": "functional-code",
     "lines": [
@@ -40690,7 +42681,7 @@
         "author": {
           "gitId": "hanweic53"
         },
-        "content": "            new Task(new Name(\"CS1101S Mission\"), new Deadline(\"2021-10-20 1800\"), new CompletionStatus(100),"
+        "content": "            new Task(new Name(\"CS1101S Mission\"), new Deadline(\"10-Oct-2021 1800\"), new CompletionStatus(100),"
       },
       {
         "lineNumber": 23,
@@ -40711,7 +42702,7 @@
         "author": {
           "gitId": "hanweic53"
         },
-        "content": "            new Task(new Name(\"CS1101S Quiz\"), new Deadline(\"2021-09-30 2359\"), new CompletionStatus(0),"
+        "content": "            new Task(new Name(\"CS1101S Quiz\"), new Deadline(\"11-Sep-2021 2359\"), new CompletionStatus(0),"
       },
       {
         "lineNumber": 26,
@@ -40732,7 +42723,7 @@
         "author": {
           "gitId": "hanweic53"
         },
-        "content": "            new Task(new Name(\"CS2100 MidTerms\"), new Deadline(\"2021-10-03 1200\"), new CompletionStatus(20),"
+        "content": "            new Task(new Name(\"CS2100 MidTerms\"), new Deadline(\"12-Oct-2021 1200\"), new CompletionStatus(20),"
       },
       {
         "lineNumber": 29,
@@ -40753,7 +42744,7 @@
         "author": {
           "gitId": "hanweic53"
         },
-        "content": "            new Task(new Name(\"CS2103T Project\"), new Deadline(\"2021-09-21 1500\"), new CompletionStatus(50),"
+        "content": "            new Task(new Name(\"CS2103T Project\"), new Deadline(\"13-Sep-2021 1500\"), new CompletionStatus(50),"
       },
       {
         "lineNumber": 32,
@@ -40774,7 +42765,7 @@
         "author": {
           "gitId": "hanweic53"
         },
-        "content": "            new Task(new Name(\"CS2101 OP2\"), new Deadline(\"2021-10-10 1010\"), new CompletionStatus(0),"
+        "content": "            new Task(new Name(\"CS2101 OP2\"), new Deadline(\"14-Apr-2021 1010\"), new CompletionStatus(0),"
       },
       {
         "lineNumber": 35,
@@ -40795,7 +42786,7 @@
         "author": {
           "gitId": "hanweic53"
         },
-        "content": "            new Task(new Name(\"CS1231S Graded Assignment\"), new Deadline(\"2021-12-25 0000\"), new CompletionStatus(1),"
+        "content": "            new Task(new Name(\"CS1231S Graded Assignment\"), new Deadline(\"25-Dec-2021 0000\"), new CompletionStatus(1),"
       },
       {
         "lineNumber": 38,
@@ -59991,14 +61982,14 @@
         "author": {
           "gitId": "hanweic53"
         },
-        "content": "    public static final String VALID_DEADLINE_1 \u003d \"2021-10-20 1800\";"
+        "content": "    public static final String VALID_DEADLINE_1 \u003d \"20-Oct-2021 1800\";"
       },
       {
         "lineNumber": 33,
         "author": {
           "gitId": "hanweic53"
         },
-        "content": "    public static final String VALID_DEADLINE_2 \u003d \"2021-09-30 2359\";"
+        "content": "    public static final String VALID_DEADLINE_2 \u003d \"24-Sep-2021 2359\";"
       },
       {
         "lineNumber": 34,
@@ -68975,527 +70966,527 @@
       {
         "lineNumber": 3,
         "author": {
+          "gitId": "hanweic53"
+        },
+        "content": "import static java.time.DayOfWeek.FRIDAY;"
+      },
+      {
+        "lineNumber": 4,
+        "author": {
+          "gitId": "hanweic53"
+        },
+        "content": "import static java.time.temporal.TemporalAdjusters.next;"
+      },
+      {
+        "lineNumber": 5,
+        "author": {
           "gitId": "-"
         },
         "content": "import static org.junit.jupiter.api.Assertions.assertEquals;"
       },
       {
-        "lineNumber": 4,
+        "lineNumber": 6,
         "author": {
           "gitId": "-"
         },
         "content": "import static org.junit.jupiter.api.Assertions.assertTrue;"
       },
       {
-        "lineNumber": 5,
+        "lineNumber": 7,
         "author": {
           "gitId": "ruilingk"
         },
         "content": "import static seedu.tr4cker.logic.parser.ParserUtil.MESSAGE_INVALID_INDEX;"
       },
       {
-        "lineNumber": 6,
+        "lineNumber": 8,
         "author": {
           "gitId": "ruilingk"
         },
         "content": "import static seedu.tr4cker.testutil.Assert.assertThrows;"
       },
       {
-        "lineNumber": 7,
+        "lineNumber": 9,
         "author": {
           "gitId": "ruilingk"
         },
         "content": "import static seedu.tr4cker.testutil.TypicalIndexes.INDEX_FIRST_TASK;"
       },
       {
-        "lineNumber": 8,
+        "lineNumber": 10,
         "author": {
           "gitId": "-"
         },
         "content": ""
       },
       {
-        "lineNumber": 9,
-        "author": {
-          "gitId": "-"
-        },
-        "content": "import java.util.Arrays;"
-      },
-      {
-        "lineNumber": 10,
-        "author": {
-          "gitId": "-"
-        },
-        "content": "import java.util.Collections;"
-      },
-      {
         "lineNumber": 11,
         "author": {
-          "gitId": "-"
+          "gitId": "hanweic53"
         },
-        "content": "import java.util.HashSet;"
+        "content": "import java.time.LocalDate;"
       },
       {
         "lineNumber": 12,
         "author": {
           "gitId": "-"
         },
-        "content": "import java.util.Set;"
+        "content": "import java.util.Arrays;"
       },
       {
         "lineNumber": 13,
         "author": {
           "gitId": "-"
         },
-        "content": ""
+        "content": "import java.util.Collections;"
       },
       {
         "lineNumber": 14,
         "author": {
           "gitId": "-"
         },
-        "content": "import org.junit.jupiter.api.Test;"
+        "content": "import java.util.HashSet;"
       },
       {
         "lineNumber": 15,
         "author": {
           "gitId": "-"
         },
-        "content": ""
+        "content": "import java.util.Set;"
       },
       {
         "lineNumber": 16,
         "author": {
-          "gitId": "ruilingk"
+          "gitId": "-"
         },
-        "content": "import seedu.tr4cker.logic.parser.exceptions.ParseException;"
+        "content": ""
       },
       {
         "lineNumber": 17,
         "author": {
-          "gitId": "ruilingk"
+          "gitId": "-"
         },
-        "content": "import seedu.tr4cker.model.tag.Tag;"
+        "content": "import org.junit.jupiter.api.Test;"
       },
       {
         "lineNumber": 18,
         "author": {
-          "gitId": "cwenling"
+          "gitId": "-"
         },
-        "content": "import seedu.tr4cker.model.task.Deadline;"
+        "content": ""
       },
       {
         "lineNumber": 19,
         "author": {
           "gitId": "ruilingk"
         },
-        "content": "import seedu.tr4cker.model.task.Name;"
+        "content": "import seedu.tr4cker.logic.parser.exceptions.ParseException;"
       },
       {
         "lineNumber": 20,
+        "author": {
+          "gitId": "ruilingk"
+        },
+        "content": "import seedu.tr4cker.model.tag.Tag;"
+      },
+      {
+        "lineNumber": 21,
+        "author": {
+          "gitId": "cwenling"
+        },
+        "content": "import seedu.tr4cker.model.task.Deadline;"
+      },
+      {
+        "lineNumber": 22,
+        "author": {
+          "gitId": "ruilingk"
+        },
+        "content": "import seedu.tr4cker.model.task.Name;"
+      },
+      {
+        "lineNumber": 23,
         "author": {
           "gitId": "yingqi0607"
         },
         "content": "import seedu.tr4cker.model.task.TaskDescription;"
       },
       {
-        "lineNumber": 21,
+        "lineNumber": 24,
+        "author": {
+          "gitId": "hanweic53"
+        },
+        "content": "import seedu.tr4cker.model.util.NaturalDateUtil;"
+      },
+      {
+        "lineNumber": 25,
         "author": {
           "gitId": "-"
         },
         "content": ""
       },
       {
-        "lineNumber": 22,
+        "lineNumber": 26,
         "author": {
           "gitId": "-"
         },
         "content": "public class ParserUtilTest {"
       },
       {
-        "lineNumber": 23,
+        "lineNumber": 27,
         "author": {
           "gitId": "-"
         },
         "content": "    private static final String INVALID_NAME \u003d \"R@chel\";"
       },
       {
-        "lineNumber": 24,
-        "author": {
-          "gitId": "cwenling"
-        },
-        "content": "    private static final String INVALID_DEADLINE \u003d \"2020-90-90 9999\";"
-      },
-      {
-        "lineNumber": 25,
+        "lineNumber": 28,
         "author": {
           "gitId": "hanweic53"
         },
-        "content": "    private static final String INVALID_EXPIRED_DEADLINE \u003d \"2020-01-01 2359\";"
-      },
-      {
-        "lineNumber": 26,
-        "author": {
-          "gitId": "yingqi0607"
-        },
-        "content": "    private static final String INVALID_DESCRIPTION \u003d \" \";"
-      },
-      {
-        "lineNumber": 27,
-        "author": {
-          "gitId": "-"
-        },
-        "content": "    private static final String INVALID_TAG \u003d \"#friend\";"
-      },
-      {
-        "lineNumber": 28,
-        "author": {
-          "gitId": "-"
-        },
-        "content": ""
+        "content": "    private static final String INVALID_DEADLINE \u003d \"90-90-2021 9999\";"
       },
       {
         "lineNumber": 29,
         "author": {
-          "gitId": "-"
+          "gitId": "hanweic53"
         },
-        "content": "    private static final String VALID_NAME \u003d \"Rachel Walker\";"
+        "content": "    private static final String INVALID_EXPIRED_DEADLINE \u003d \"01-01-2020 2359\";"
       },
       {
         "lineNumber": 30,
         "author": {
           "gitId": "hanweic53"
         },
-        "content": "    private static final String VALID_DEADLINE \u003d \"2021-12-25 2359\";"
+        "content": "    private static final String INVALID_NATURAL_DEADLINE_1 \u003d \"Tuesdday\";"
       },
       {
         "lineNumber": 31,
         "author": {
           "gitId": "hanweic53"
         },
-        "content": "    private static final String VALID_DEADLINE_NO_TIME \u003d \"2021-12-25\";"
+        "content": "    private static final String INVALID_NATURAL_DEADLINE_2 \u003d \"Tuesday 2500\";"
       },
       {
         "lineNumber": 32,
         "author": {
           "gitId": "yingqi0607"
         },
-        "content": "    private static final String VALID_DESCRIPTION \u003d \"description\";"
+        "content": "    private static final String INVALID_DESCRIPTION \u003d \" \";"
       },
       {
         "lineNumber": 33,
         "author": {
           "gitId": "-"
         },
-        "content": "    private static final String VALID_TAG_1 \u003d \"friend\";"
+        "content": "    private static final String INVALID_TAG \u003d \"#friend\";"
       },
       {
         "lineNumber": 34,
         "author": {
           "gitId": "-"
         },
-        "content": "    private static final String VALID_TAG_2 \u003d \"neighbour\";"
+        "content": ""
       },
       {
         "lineNumber": 35,
         "author": {
           "gitId": "-"
         },
-        "content": ""
+        "content": "    private static final String VALID_NAME \u003d \"Rachel Walker\";"
       },
       {
         "lineNumber": 36,
         "author": {
-          "gitId": "-"
+          "gitId": "hanweic53"
         },
-        "content": "    private static final String WHITESPACE \u003d \" \\t\\r\\n\";"
+        "content": "    private static final String VALID_DEADLINE_MM \u003d \"25-12-2021 2359\";"
       },
       {
         "lineNumber": 37,
         "author": {
-          "gitId": "-"
+          "gitId": "hanweic53"
         },
-        "content": ""
+        "content": "    private static final String VALID_DEADLINE_MMM \u003d \"25-Dec-2021 2359\";"
       },
       {
         "lineNumber": 38,
         "author": {
-          "gitId": "-"
+          "gitId": "hanweic53"
         },
-        "content": "    @Test"
+        "content": "    private static final String VALID_DEADLINE_NO_TIME_MM \u003d \"25-12-2021\";"
       },
       {
         "lineNumber": 39,
         "author": {
-          "gitId": "-"
+          "gitId": "hanweic53"
         },
-        "content": "    public void parseIndex_invalidInput_throwsParseException() {"
+        "content": "    private static final String VALID_DEADLINE_NO_TIME_MMM \u003d \"25-Dec-2021\";"
       },
       {
         "lineNumber": 40,
         "author": {
-          "gitId": "-"
+          "gitId": "yingqi0607"
         },
-        "content": "        assertThrows(ParseException.class, () -\u003e ParserUtil.parseIndex(\"10 a\"));"
+        "content": "    private static final String VALID_DESCRIPTION \u003d \"description\";"
       },
       {
         "lineNumber": 41,
         "author": {
           "gitId": "-"
         },
-        "content": "    }"
+        "content": "    private static final String VALID_TAG_1 \u003d \"friend\";"
       },
       {
         "lineNumber": 42,
         "author": {
           "gitId": "-"
         },
-        "content": ""
+        "content": "    private static final String VALID_TAG_2 \u003d \"neighbour\";"
       },
       {
         "lineNumber": 43,
         "author": {
           "gitId": "-"
         },
-        "content": "    @Test"
+        "content": ""
       },
       {
         "lineNumber": 44,
         "author": {
           "gitId": "-"
         },
-        "content": "    public void parseIndex_outOfRangeInput_throwsParseException() {"
+        "content": "    private static final String WHITESPACE \u003d \" \\t\\r\\n\";"
       },
       {
         "lineNumber": 45,
         "author": {
           "gitId": "-"
         },
-        "content": "        assertThrows(ParseException.class, MESSAGE_INVALID_INDEX, ()"
+        "content": ""
       },
       {
         "lineNumber": 46,
         "author": {
           "gitId": "-"
         },
-        "content": "            -\u003e ParserUtil.parseIndex(Long.toString(Integer.MAX_VALUE + 1)));"
+        "content": "    @Test"
       },
       {
         "lineNumber": 47,
         "author": {
           "gitId": "-"
         },
-        "content": "    }"
+        "content": "    public void parseIndex_invalidInput_throwsParseException() {"
       },
       {
         "lineNumber": 48,
         "author": {
           "gitId": "-"
         },
-        "content": ""
+        "content": "        assertThrows(ParseException.class, () -\u003e ParserUtil.parseIndex(\"10 a\"));"
       },
       {
         "lineNumber": 49,
         "author": {
           "gitId": "-"
         },
-        "content": "    @Test"
+        "content": "    }"
       },
       {
         "lineNumber": 50,
         "author": {
           "gitId": "-"
         },
-        "content": "    public void parseIndex_validInput_success() throws Exception {"
+        "content": ""
       },
       {
         "lineNumber": 51,
         "author": {
           "gitId": "-"
         },
-        "content": "        // No whitespaces"
+        "content": "    @Test"
       },
       {
         "lineNumber": 52,
         "author": {
-          "gitId": "ruilingk"
+          "gitId": "-"
         },
-        "content": "        assertEquals(INDEX_FIRST_TASK, ParserUtil.parseIndex(\"1\"));"
+        "content": "    public void parseIndex_outOfRangeInput_throwsParseException() {"
       },
       {
         "lineNumber": 53,
         "author": {
           "gitId": "-"
         },
-        "content": ""
+        "content": "        assertThrows(ParseException.class, MESSAGE_INVALID_INDEX, ()"
       },
       {
         "lineNumber": 54,
         "author": {
           "gitId": "-"
         },
-        "content": "        // Leading and trailing whitespaces"
+        "content": "            -\u003e ParserUtil.parseIndex(Long.toString(Integer.MAX_VALUE + 1)));"
       },
       {
         "lineNumber": 55,
         "author": {
-          "gitId": "ruilingk"
+          "gitId": "-"
         },
-        "content": "        assertEquals(INDEX_FIRST_TASK, ParserUtil.parseIndex(\"  1  \"));"
+        "content": "    }"
       },
       {
         "lineNumber": 56,
         "author": {
           "gitId": "-"
         },
-        "content": "    }"
+        "content": ""
       },
       {
         "lineNumber": 57,
         "author": {
           "gitId": "-"
         },
-        "content": ""
+        "content": "    @Test"
       },
       {
         "lineNumber": 58,
         "author": {
           "gitId": "-"
         },
-        "content": "    @Test"
+        "content": "    public void parseIndex_validInput_success() throws Exception {"
       },
       {
         "lineNumber": 59,
         "author": {
           "gitId": "-"
         },
-        "content": "    public void parseName_null_throwsNullPointerException() {"
+        "content": "        // No whitespaces"
       },
       {
         "lineNumber": 60,
         "author": {
-          "gitId": "-"
+          "gitId": "ruilingk"
         },
-        "content": "        assertThrows(NullPointerException.class, () -\u003e ParserUtil.parseName((String) null));"
+        "content": "        assertEquals(INDEX_FIRST_TASK, ParserUtil.parseIndex(\"1\"));"
       },
       {
         "lineNumber": 61,
         "author": {
           "gitId": "-"
         },
-        "content": "    }"
+        "content": ""
       },
       {
         "lineNumber": 62,
         "author": {
           "gitId": "-"
         },
-        "content": ""
+        "content": "        // Leading and trailing whitespaces"
       },
       {
         "lineNumber": 63,
         "author": {
-          "gitId": "-"
+          "gitId": "ruilingk"
         },
-        "content": "    @Test"
+        "content": "        assertEquals(INDEX_FIRST_TASK, ParserUtil.parseIndex(\"  1  \"));"
       },
       {
         "lineNumber": 64,
         "author": {
           "gitId": "-"
         },
-        "content": "    public void parseName_invalidValue_throwsParseException() {"
+        "content": "    }"
       },
       {
         "lineNumber": 65,
         "author": {
           "gitId": "-"
         },
-        "content": "        assertThrows(ParseException.class, () -\u003e ParserUtil.parseName(INVALID_NAME));"
+        "content": ""
       },
       {
         "lineNumber": 66,
         "author": {
           "gitId": "-"
         },
-        "content": "    }"
+        "content": "    @Test"
       },
       {
         "lineNumber": 67,
         "author": {
           "gitId": "-"
         },
-        "content": ""
+        "content": "    public void parseName_null_throwsNullPointerException() {"
       },
       {
         "lineNumber": 68,
         "author": {
           "gitId": "-"
         },
-        "content": "    @Test"
+        "content": "        assertThrows(NullPointerException.class, () -\u003e ParserUtil.parseName((String) null));"
       },
       {
         "lineNumber": 69,
         "author": {
           "gitId": "-"
         },
-        "content": "    public void parseName_validValueWithoutWhitespace_returnsName() throws Exception {"
+        "content": "    }"
       },
       {
         "lineNumber": 70,
         "author": {
           "gitId": "-"
         },
-        "content": "        Name expectedName \u003d new Name(VALID_NAME);"
+        "content": ""
       },
       {
         "lineNumber": 71,
         "author": {
           "gitId": "-"
         },
-        "content": "        assertEquals(expectedName, ParserUtil.parseName(VALID_NAME));"
+        "content": "    @Test"
       },
       {
         "lineNumber": 72,
         "author": {
-          "gitId": "hanweic53"
+          "gitId": "-"
         },
-        "content": ""
+        "content": "    public void parseName_invalidValue_throwsParseException() {"
       },
       {
         "lineNumber": 73,
         "author": {
           "gitId": "-"
         },
-        "content": "    }"
+        "content": "        assertThrows(ParseException.class, () -\u003e ParserUtil.parseName(INVALID_NAME));"
       },
       {
         "lineNumber": 74,
         "author": {
           "gitId": "-"
         },
-        "content": ""
+        "content": "    }"
       },
       {
         "lineNumber": 75,
         "author": {
           "gitId": "-"
         },
-        "content": "    @Test"
+        "content": ""
       },
       {
         "lineNumber": 76,
         "author": {
           "gitId": "-"
         },
-        "content": "    public void parseName_validValueWithWhitespace_returnsTrimmedName() throws Exception {"
+        "content": "    @Test"
       },
       {
         "lineNumber": 77,
         "author": {
           "gitId": "-"
         },
-        "content": "        String nameWithWhitespace \u003d WHITESPACE + VALID_NAME + WHITESPACE;"
+        "content": "    public void parseName_validValueWithoutWhitespace_returnsName() throws Exception {"
       },
       {
         "lineNumber": 78,
@@ -69509,294 +71500,294 @@
         "author": {
           "gitId": "-"
         },
-        "content": "        assertEquals(expectedName, ParserUtil.parseName(nameWithWhitespace));"
+        "content": "        assertEquals(expectedName, ParserUtil.parseName(VALID_NAME));"
       },
       {
         "lineNumber": 80,
         "author": {
-          "gitId": "-"
+          "gitId": "hanweic53"
         },
-        "content": "    }"
+        "content": ""
       },
       {
         "lineNumber": 81,
         "author": {
           "gitId": "-"
         },
-        "content": ""
+        "content": "    }"
       },
       {
         "lineNumber": 82,
         "author": {
           "gitId": "-"
         },
-        "content": "    @Test"
+        "content": ""
       },
       {
         "lineNumber": 83,
         "author": {
-          "gitId": "cwenling"
+          "gitId": "-"
         },
-        "content": "    public void parseDeadline_null_throwsNullPointerException() {"
+        "content": "    @Test"
       },
       {
         "lineNumber": 84,
         "author": {
-          "gitId": "cwenling"
+          "gitId": "-"
         },
-        "content": "        assertThrows(NullPointerException.class, () -\u003e ParserUtil.parseDeadline((String) null));"
+        "content": "    public void parseName_validValueWithWhitespace_returnsTrimmedName() throws Exception {"
       },
       {
         "lineNumber": 85,
         "author": {
           "gitId": "-"
         },
-        "content": "    }"
+        "content": "        String nameWithWhitespace \u003d WHITESPACE + VALID_NAME + WHITESPACE;"
       },
       {
         "lineNumber": 86,
         "author": {
           "gitId": "-"
         },
-        "content": ""
+        "content": "        Name expectedName \u003d new Name(VALID_NAME);"
       },
       {
         "lineNumber": 87,
         "author": {
           "gitId": "-"
         },
-        "content": "    @Test"
+        "content": "        assertEquals(expectedName, ParserUtil.parseName(nameWithWhitespace));"
       },
       {
         "lineNumber": 88,
-        "author": {
-          "gitId": "cwenling"
-        },
-        "content": "    public void parseDeadline_invalidValue_throwsParseException() {"
-      },
-      {
-        "lineNumber": 89,
-        "author": {
-          "gitId": "cwenling"
-        },
-        "content": "        assertThrows(ParseException.class, () -\u003e ParserUtil.parseDeadline(INVALID_DEADLINE));"
-      },
-      {
-        "lineNumber": 90,
-        "author": {
-          "gitId": "hanweic53"
-        },
-        "content": "        assertThrows(ParseException.class, () -\u003e ParserUtil.parseDeadline(INVALID_EXPIRED_DEADLINE));"
-      },
-      {
-        "lineNumber": 91,
         "author": {
           "gitId": "-"
         },
         "content": "    }"
       },
       {
-        "lineNumber": 92,
+        "lineNumber": 89,
         "author": {
           "gitId": "-"
         },
         "content": ""
+      },
+      {
+        "lineNumber": 90,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "    @Test"
+      },
+      {
+        "lineNumber": 91,
+        "author": {
+          "gitId": "cwenling"
+        },
+        "content": "    public void parseDeadline_null_throwsNullPointerException() {"
+      },
+      {
+        "lineNumber": 92,
+        "author": {
+          "gitId": "cwenling"
+        },
+        "content": "        assertThrows(NullPointerException.class, () -\u003e ParserUtil.parseDeadline((String) null));"
       },
       {
         "lineNumber": 93,
         "author": {
           "gitId": "-"
         },
-        "content": "    @Test"
+        "content": "    }"
       },
       {
         "lineNumber": 94,
         "author": {
-          "gitId": "cwenling"
+          "gitId": "-"
         },
-        "content": "    public void parseDeadline_validValueWithoutWhitespace_returnsDeadline() throws Exception {"
+        "content": ""
       },
       {
         "lineNumber": 95,
         "author": {
-          "gitId": "cwenling"
+          "gitId": "-"
         },
-        "content": "        Deadline expectedDeadline \u003d new Deadline(VALID_DEADLINE);"
+        "content": "    @Test"
       },
       {
         "lineNumber": 96,
         "author": {
           "gitId": "cwenling"
         },
-        "content": "        assertEquals(expectedDeadline, ParserUtil.parseDeadline(VALID_DEADLINE));"
+        "content": "    public void parseDeadline_invalidValue_throwsParseException() {"
       },
       {
         "lineNumber": 97,
         "author": {
-          "gitId": "hanweic53"
+          "gitId": "cwenling"
         },
-        "content": "        assertEquals(expectedDeadline, ParserUtil.parseDeadline(VALID_DEADLINE_NO_TIME));"
+        "content": "        assertThrows(ParseException.class, () -\u003e ParserUtil.parseDeadline(INVALID_DEADLINE));"
       },
       {
         "lineNumber": 98,
+        "author": {
+          "gitId": "hanweic53"
+        },
+        "content": "        assertThrows(ParseException.class, () -\u003e ParserUtil.parseDeadline(INVALID_EXPIRED_DEADLINE));"
+      },
+      {
+        "lineNumber": 99,
+        "author": {
+          "gitId": "hanweic53"
+        },
+        "content": "        assertThrows(ParseException.class, () -\u003e ParserUtil.parseDeadline(INVALID_NATURAL_DEADLINE_1));"
+      },
+      {
+        "lineNumber": 100,
+        "author": {
+          "gitId": "hanweic53"
+        },
+        "content": "        assertThrows(ParseException.class, () -\u003e ParserUtil.parseDeadline(INVALID_NATURAL_DEADLINE_2));"
+      },
+      {
+        "lineNumber": 101,
         "author": {
           "gitId": "-"
         },
         "content": "    }"
       },
       {
-        "lineNumber": 99,
+        "lineNumber": 102,
         "author": {
           "gitId": "-"
         },
         "content": ""
       },
       {
-        "lineNumber": 100,
+        "lineNumber": 103,
         "author": {
           "gitId": "-"
         },
         "content": "    @Test"
-      },
-      {
-        "lineNumber": 101,
-        "author": {
-          "gitId": "cwenling"
-        },
-        "content": "    public void parseDeadline_validValueWithWhitespace_returnsTrimmedDeadline() throws Exception {"
-      },
-      {
-        "lineNumber": 102,
-        "author": {
-          "gitId": "cwenling"
-        },
-        "content": "        String deadlineWithWhitespace \u003d WHITESPACE + VALID_DEADLINE + WHITESPACE;"
-      },
-      {
-        "lineNumber": 103,
-        "author": {
-          "gitId": "cwenling"
-        },
-        "content": "        Deadline expectedDeadline \u003d new Deadline(VALID_DEADLINE);"
       },
       {
         "lineNumber": 104,
         "author": {
           "gitId": "cwenling"
         },
-        "content": "        assertEquals(expectedDeadline, ParserUtil.parseDeadline(deadlineWithWhitespace));"
+        "content": "    public void parseDeadline_validValueWithoutWhitespace_returnsDeadline() throws Exception {"
       },
       {
         "lineNumber": 105,
         "author": {
-          "gitId": "-"
+          "gitId": "hanweic53"
         },
-        "content": "    }"
+        "content": "        Deadline expectedDeadline \u003d new Deadline(VALID_DEADLINE_MM);"
       },
       {
         "lineNumber": 106,
         "author": {
-          "gitId": "-"
+          "gitId": "hanweic53"
         },
-        "content": ""
+        "content": "        assertEquals(expectedDeadline, ParserUtil.parseDeadline(VALID_DEADLINE_MM));"
       },
       {
         "lineNumber": 107,
         "author": {
-          "gitId": "-"
+          "gitId": "hanweic53"
         },
-        "content": "    @Test"
+        "content": "        assertEquals(expectedDeadline, ParserUtil.parseDeadline(VALID_DEADLINE_MMM));"
       },
       {
         "lineNumber": 108,
         "author": {
-          "gitId": "yingqi0607"
+          "gitId": "hanweic53"
         },
-        "content": "    public void parseDescription_null_throwsNullPointerException() {"
+        "content": "        assertEquals(expectedDeadline, ParserUtil.parseDeadline(VALID_DEADLINE_NO_TIME_MM));"
       },
       {
         "lineNumber": 109,
         "author": {
-          "gitId": "yingqi0607"
+          "gitId": "hanweic53"
         },
-        "content": "        assertThrows(NullPointerException.class, () -\u003e ParserUtil.parseDescription((String) null));"
+        "content": "        assertEquals(expectedDeadline, ParserUtil.parseDeadline(VALID_DEADLINE_NO_TIME_MMM));"
       },
       {
         "lineNumber": 110,
         "author": {
           "gitId": "-"
         },
-        "content": "    }"
+        "content": ""
       },
       {
         "lineNumber": 111,
         "author": {
-          "gitId": "-"
+          "gitId": "hanweic53"
         },
-        "content": ""
+        "content": "        String expectedDate \u003d LocalDate.now().with(next(FRIDAY))"
       },
       {
         "lineNumber": 112,
         "author": {
-          "gitId": "-"
+          "gitId": "hanweic53"
         },
-        "content": "    @Test"
+        "content": "                .format(NaturalDateUtil.DATE_TIME_FORMATTER);"
       },
       {
         "lineNumber": 113,
         "author": {
-          "gitId": "yingqi0607"
+          "gitId": "hanweic53"
         },
-        "content": "    public void parseDescription_invalidValue_throwsParseException() {"
+        "content": "        expectedDeadline \u003d new Deadline(expectedDate + \" 2200\");"
       },
       {
         "lineNumber": 114,
         "author": {
-          "gitId": "yingqi0607"
+          "gitId": "hanweic53"
         },
-        "content": "        assertThrows(ParseException.class, () -\u003e ParserUtil.parseDescription(INVALID_DESCRIPTION));"
+        "content": "        assertEquals(expectedDeadline, ParserUtil.parseDeadline(\"friday 2200\"));"
       },
       {
         "lineNumber": 115,
         "author": {
-          "gitId": "-"
+          "gitId": "hanweic53"
         },
-        "content": "    }"
+        "content": "        expectedDeadline \u003d new Deadline(expectedDate + \" 2359\");"
       },
       {
         "lineNumber": 116,
         "author": {
-          "gitId": "-"
+          "gitId": "hanweic53"
         },
-        "content": ""
+        "content": "        assertEquals(expectedDeadline, ParserUtil.parseDeadline(\"friday\"));"
       },
       {
         "lineNumber": 117,
         "author": {
           "gitId": "-"
         },
-        "content": "    @Test"
+        "content": ""
       },
       {
         "lineNumber": 118,
         "author": {
-          "gitId": "yingqi0607"
+          "gitId": "hanweic53"
         },
-        "content": "    public void parseDescription_validValueWithoutWhitespace_returnsAddress() throws Exception {"
+        "content": "        expectedDeadline \u003d new Deadline(LocalDate.now().format(NaturalDateUtil.DATE_TIME_FORMATTER)"
       },
       {
         "lineNumber": 119,
         "author": {
-          "gitId": "yingqi0607"
+          "gitId": "hanweic53"
         },
-        "content": "        TaskDescription expectedTaskDescription \u003d new TaskDescription(VALID_DESCRIPTION);"
+        "content": "                + \" 2359\");"
       },
       {
         "lineNumber": 120,
         "author": {
-          "gitId": "yingqi0607"
+          "gitId": "hanweic53"
         },
-        "content": "        assertEquals(expectedTaskDescription, ParserUtil.parseDescription(VALID_DESCRIPTION));"
+        "content": "        assertEquals(expectedDeadline, ParserUtil.parseDeadline(\"today\"));"
       },
       {
         "lineNumber": 121,
@@ -69822,30 +71813,30 @@
       {
         "lineNumber": 124,
         "author": {
-          "gitId": "yingqi0607"
+          "gitId": "cwenling"
         },
-        "content": "    public void parseDescription_validValueWithWhitespace_returnsTrimmedAddress() throws Exception {"
+        "content": "    public void parseDeadline_validValueWithWhitespace_returnsTrimmedDeadline() throws Exception {"
       },
       {
         "lineNumber": 125,
         "author": {
-          "gitId": "yingqi0607"
+          "gitId": "hanweic53"
         },
-        "content": "        String addressWithWhitespace \u003d WHITESPACE + VALID_DESCRIPTION + WHITESPACE;"
+        "content": "        String deadlineWithWhitespace \u003d WHITESPACE + VALID_DEADLINE_MM + WHITESPACE;"
       },
       {
         "lineNumber": 126,
         "author": {
-          "gitId": "yingqi0607"
+          "gitId": "hanweic53"
         },
-        "content": "        TaskDescription expectedTaskDescription \u003d new TaskDescription(VALID_DESCRIPTION);"
+        "content": "        Deadline expectedDeadline \u003d new Deadline(VALID_DEADLINE_MM);"
       },
       {
         "lineNumber": 127,
         "author": {
-          "gitId": "yingqi0607"
+          "gitId": "cwenling"
         },
-        "content": "        assertEquals(expectedTaskDescription, ParserUtil.parseDescription(addressWithWhitespace));"
+        "content": "        assertEquals(expectedDeadline, ParserUtil.parseDeadline(deadlineWithWhitespace));"
       },
       {
         "lineNumber": 128,
@@ -69871,16 +71862,16 @@
       {
         "lineNumber": 131,
         "author": {
-          "gitId": "-"
+          "gitId": "yingqi0607"
         },
-        "content": "    public void parseTag_null_throwsNullPointerException() {"
+        "content": "    public void parseDescription_null_throwsNullPointerException() {"
       },
       {
         "lineNumber": 132,
         "author": {
-          "gitId": "-"
+          "gitId": "yingqi0607"
         },
-        "content": "        assertThrows(NullPointerException.class, () -\u003e ParserUtil.parseTag(null));"
+        "content": "        assertThrows(NullPointerException.class, () -\u003e ParserUtil.parseDescription((String) null));"
       },
       {
         "lineNumber": 133,
@@ -69906,16 +71897,16 @@
       {
         "lineNumber": 136,
         "author": {
-          "gitId": "-"
+          "gitId": "yingqi0607"
         },
-        "content": "    public void parseTag_invalidValue_throwsParseException() {"
+        "content": "    public void parseDescription_invalidValue_throwsParseException() {"
       },
       {
         "lineNumber": 137,
         "author": {
-          "gitId": "-"
+          "gitId": "yingqi0607"
         },
-        "content": "        assertThrows(ParseException.class, () -\u003e ParserUtil.parseTag(INVALID_TAG));"
+        "content": "        assertThrows(ParseException.class, () -\u003e ParserUtil.parseDescription(INVALID_DESCRIPTION));"
       },
       {
         "lineNumber": 138,
@@ -69941,23 +71932,23 @@
       {
         "lineNumber": 141,
         "author": {
-          "gitId": "-"
+          "gitId": "yingqi0607"
         },
-        "content": "    public void parseTag_validValueWithoutWhitespace_returnsTag() throws Exception {"
+        "content": "    public void parseDescription_validValueWithoutWhitespace_returnsAddress() throws Exception {"
       },
       {
         "lineNumber": 142,
         "author": {
-          "gitId": "-"
+          "gitId": "yingqi0607"
         },
-        "content": "        Tag expectedTag \u003d new Tag(VALID_TAG_1);"
+        "content": "        TaskDescription expectedTaskDescription \u003d new TaskDescription(VALID_DESCRIPTION);"
       },
       {
         "lineNumber": 143,
         "author": {
-          "gitId": "-"
+          "gitId": "yingqi0607"
         },
-        "content": "        assertEquals(expectedTag, ParserUtil.parseTag(VALID_TAG_1));"
+        "content": "        assertEquals(expectedTaskDescription, ParserUtil.parseDescription(VALID_DESCRIPTION));"
       },
       {
         "lineNumber": 144,
@@ -69983,30 +71974,30 @@
       {
         "lineNumber": 147,
         "author": {
-          "gitId": "-"
+          "gitId": "yingqi0607"
         },
-        "content": "    public void parseTag_validValueWithWhitespace_returnsTrimmedTag() throws Exception {"
+        "content": "    public void parseDescription_validValueWithWhitespace_returnsTrimmedAddress() throws Exception {"
       },
       {
         "lineNumber": 148,
         "author": {
-          "gitId": "-"
+          "gitId": "yingqi0607"
         },
-        "content": "        String tagWithWhitespace \u003d WHITESPACE + VALID_TAG_1 + WHITESPACE;"
+        "content": "        String addressWithWhitespace \u003d WHITESPACE + VALID_DESCRIPTION + WHITESPACE;"
       },
       {
         "lineNumber": 149,
         "author": {
-          "gitId": "-"
+          "gitId": "yingqi0607"
         },
-        "content": "        Tag expectedTag \u003d new Tag(VALID_TAG_1);"
+        "content": "        TaskDescription expectedTaskDescription \u003d new TaskDescription(VALID_DESCRIPTION);"
       },
       {
         "lineNumber": 150,
         "author": {
-          "gitId": "-"
+          "gitId": "yingqi0607"
         },
-        "content": "        assertEquals(expectedTag, ParserUtil.parseTag(tagWithWhitespace));"
+        "content": "        assertEquals(expectedTaskDescription, ParserUtil.parseDescription(addressWithWhitespace));"
       },
       {
         "lineNumber": 151,
@@ -70034,14 +72025,14 @@
         "author": {
           "gitId": "-"
         },
-        "content": "    public void parseTags_null_throwsNullPointerException() {"
+        "content": "    public void parseTag_null_throwsNullPointerException() {"
       },
       {
         "lineNumber": 155,
         "author": {
           "gitId": "-"
         },
-        "content": "        assertThrows(NullPointerException.class, () -\u003e ParserUtil.parseTags(null));"
+        "content": "        assertThrows(NullPointerException.class, () -\u003e ParserUtil.parseTag(null));"
       },
       {
         "lineNumber": 156,
@@ -70069,14 +72060,14 @@
         "author": {
           "gitId": "-"
         },
-        "content": "    public void parseTags_collectionWithInvalidTags_throwsParseException() {"
+        "content": "    public void parseTag_invalidValue_throwsParseException() {"
       },
       {
         "lineNumber": 160,
         "author": {
           "gitId": "-"
         },
-        "content": "        assertThrows(ParseException.class, () -\u003e ParserUtil.parseTags(Arrays.asList(VALID_TAG_1, INVALID_TAG)));"
+        "content": "        assertThrows(ParseException.class, () -\u003e ParserUtil.parseTag(INVALID_TAG));"
       },
       {
         "lineNumber": 161,
@@ -70104,70 +72095,70 @@
         "author": {
           "gitId": "-"
         },
-        "content": "    public void parseTags_emptyCollection_returnsEmptySet() throws Exception {"
+        "content": "    public void parseTag_validValueWithoutWhitespace_returnsTag() throws Exception {"
       },
       {
         "lineNumber": 165,
         "author": {
           "gitId": "-"
         },
-        "content": "        assertTrue(ParserUtil.parseTags(Collections.emptyList()).isEmpty());"
+        "content": "        Tag expectedTag \u003d new Tag(VALID_TAG_1);"
       },
       {
         "lineNumber": 166,
         "author": {
           "gitId": "-"
         },
-        "content": "    }"
+        "content": "        assertEquals(expectedTag, ParserUtil.parseTag(VALID_TAG_1));"
       },
       {
         "lineNumber": 167,
         "author": {
           "gitId": "-"
         },
-        "content": ""
+        "content": "    }"
       },
       {
         "lineNumber": 168,
         "author": {
           "gitId": "-"
         },
-        "content": "    @Test"
+        "content": ""
       },
       {
         "lineNumber": 169,
         "author": {
           "gitId": "-"
         },
-        "content": "    public void parseTags_collectionWithValidTags_returnsTagSet() throws Exception {"
+        "content": "    @Test"
       },
       {
         "lineNumber": 170,
         "author": {
           "gitId": "-"
         },
-        "content": "        Set\u003cTag\u003e actualTagSet \u003d ParserUtil.parseTags(Arrays.asList(VALID_TAG_1, VALID_TAG_2));"
+        "content": "    public void parseTag_validValueWithWhitespace_returnsTrimmedTag() throws Exception {"
       },
       {
         "lineNumber": 171,
         "author": {
           "gitId": "-"
         },
-        "content": "        Set\u003cTag\u003e expectedTagSet \u003d new HashSet\u003cTag\u003e(Arrays.asList(new Tag(VALID_TAG_1), new Tag(VALID_TAG_2)));"
+        "content": "        String tagWithWhitespace \u003d WHITESPACE + VALID_TAG_1 + WHITESPACE;"
       },
       {
         "lineNumber": 172,
         "author": {
           "gitId": "-"
         },
-        "content": ""
+        "content": "        Tag expectedTag \u003d new Tag(VALID_TAG_1);"
       },
       {
         "lineNumber": 173,
         "author": {
           "gitId": "-"
         },
-        "content": "        assertEquals(expectedTagSet, actualTagSet);"
+        "content": "        assertEquals(expectedTag, ParserUtil.parseTag(tagWithWhitespace));"
       },
       {
         "lineNumber": 174,
@@ -70181,15 +72172,176 @@
         "author": {
           "gitId": "-"
         },
+        "content": ""
+      },
+      {
+        "lineNumber": 176,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "    @Test"
+      },
+      {
+        "lineNumber": 177,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "    public void parseTags_null_throwsNullPointerException() {"
+      },
+      {
+        "lineNumber": 178,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "        assertThrows(NullPointerException.class, () -\u003e ParserUtil.parseTags(null));"
+      },
+      {
+        "lineNumber": 179,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "    }"
+      },
+      {
+        "lineNumber": 180,
+        "author": {
+          "gitId": "-"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 181,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "    @Test"
+      },
+      {
+        "lineNumber": 182,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "    public void parseTags_collectionWithInvalidTags_throwsParseException() {"
+      },
+      {
+        "lineNumber": 183,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "        assertThrows(ParseException.class, () -\u003e ParserUtil.parseTags(Arrays.asList(VALID_TAG_1, INVALID_TAG)));"
+      },
+      {
+        "lineNumber": 184,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "    }"
+      },
+      {
+        "lineNumber": 185,
+        "author": {
+          "gitId": "-"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 186,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "    @Test"
+      },
+      {
+        "lineNumber": 187,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "    public void parseTags_emptyCollection_returnsEmptySet() throws Exception {"
+      },
+      {
+        "lineNumber": 188,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "        assertTrue(ParserUtil.parseTags(Collections.emptyList()).isEmpty());"
+      },
+      {
+        "lineNumber": 189,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "    }"
+      },
+      {
+        "lineNumber": 190,
+        "author": {
+          "gitId": "-"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 191,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "    @Test"
+      },
+      {
+        "lineNumber": 192,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "    public void parseTags_collectionWithValidTags_returnsTagSet() throws Exception {"
+      },
+      {
+        "lineNumber": 193,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "        Set\u003cTag\u003e actualTagSet \u003d ParserUtil.parseTags(Arrays.asList(VALID_TAG_1, VALID_TAG_2));"
+      },
+      {
+        "lineNumber": 194,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "        Set\u003cTag\u003e expectedTagSet \u003d new HashSet\u003cTag\u003e(Arrays.asList(new Tag(VALID_TAG_1), new Tag(VALID_TAG_2)));"
+      },
+      {
+        "lineNumber": 195,
+        "author": {
+          "gitId": "-"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 196,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "        assertEquals(expectedTagSet, actualTagSet);"
+      },
+      {
+        "lineNumber": 197,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "    }"
+      },
+      {
+        "lineNumber": 198,
+        "author": {
+          "gitId": "-"
+        },
         "content": "}"
       }
     ],
     "authorContributionMap": {
       "ruilingk": 9,
       "yingqi0607": 14,
-      "hanweic53": 6,
-      "cwenling": 13,
-      "-": 133
+      "hanweic53": 32,
+      "cwenling": 8,
+      "-": 135
     }
   },
   {
@@ -73044,6 +75196,491 @@
     }
   },
   {
+    "path": "src/test/java/seedu/tr4cker/model/NaturalDateTest.java",
+    "fileType": "test-code",
+    "lines": [
+      {
+        "lineNumber": 1,
+        "author": {
+          "gitId": "hanweic53"
+        },
+        "content": "package seedu.tr4cker.model;"
+      },
+      {
+        "lineNumber": 2,
+        "author": {
+          "gitId": "hanweic53"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 3,
+        "author": {
+          "gitId": "hanweic53"
+        },
+        "content": "import static java.time.DayOfWeek.FRIDAY;"
+      },
+      {
+        "lineNumber": 4,
+        "author": {
+          "gitId": "hanweic53"
+        },
+        "content": "import static java.time.temporal.TemporalAdjusters.next;"
+      },
+      {
+        "lineNumber": 5,
+        "author": {
+          "gitId": "hanweic53"
+        },
+        "content": "import static org.junit.jupiter.api.Assertions.assertEquals;"
+      },
+      {
+        "lineNumber": 6,
+        "author": {
+          "gitId": "hanweic53"
+        },
+        "content": "import static org.junit.jupiter.api.Assertions.assertFalse;"
+      },
+      {
+        "lineNumber": 7,
+        "author": {
+          "gitId": "hanweic53"
+        },
+        "content": "import static org.junit.jupiter.api.Assertions.assertTrue;"
+      },
+      {
+        "lineNumber": 8,
+        "author": {
+          "gitId": "hanweic53"
+        },
+        "content": "import static seedu.tr4cker.testutil.Assert.assertThrows;"
+      },
+      {
+        "lineNumber": 9,
+        "author": {
+          "gitId": "hanweic53"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 10,
+        "author": {
+          "gitId": "hanweic53"
+        },
+        "content": "import java.time.LocalDate;"
+      },
+      {
+        "lineNumber": 11,
+        "author": {
+          "gitId": "hanweic53"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 12,
+        "author": {
+          "gitId": "hanweic53"
+        },
+        "content": "import org.junit.jupiter.api.Test;"
+      },
+      {
+        "lineNumber": 13,
+        "author": {
+          "gitId": "hanweic53"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 14,
+        "author": {
+          "gitId": "hanweic53"
+        },
+        "content": "import seedu.tr4cker.logic.parser.exceptions.ParseException;"
+      },
+      {
+        "lineNumber": 15,
+        "author": {
+          "gitId": "hanweic53"
+        },
+        "content": "import seedu.tr4cker.model.util.NaturalDateUtil;"
+      },
+      {
+        "lineNumber": 16,
+        "author": {
+          "gitId": "hanweic53"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 17,
+        "author": {
+          "gitId": "hanweic53"
+        },
+        "content": "public class NaturalDateTest {"
+      },
+      {
+        "lineNumber": 18,
+        "author": {
+          "gitId": "hanweic53"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 19,
+        "author": {
+          "gitId": "hanweic53"
+        },
+        "content": "    @Test"
+      },
+      {
+        "lineNumber": 20,
+        "author": {
+          "gitId": "hanweic53"
+        },
+        "content": "    public void isNaturalDeadline() {"
+      },
+      {
+        "lineNumber": 21,
+        "author": {
+          "gitId": "hanweic53"
+        },
+        "content": "        // invalid natural date-time"
+      },
+      {
+        "lineNumber": 22,
+        "author": {
+          "gitId": "hanweic53"
+        },
+        "content": "        assertFalse(NaturalDateUtil.isNaturalDeadline(\"\")); // empty string"
+      },
+      {
+        "lineNumber": 23,
+        "author": {
+          "gitId": "hanweic53"
+        },
+        "content": "        assertFalse(NaturalDateUtil.isNaturalDeadline(\" \")); // spaces only"
+      },
+      {
+        "lineNumber": 24,
+        "author": {
+          "gitId": "hanweic53"
+        },
+        "content": "        assertFalse(NaturalDateUtil.isNaturalDeadline(\"02-12-2021 1900\")); // not a natural date-time"
+      },
+      {
+        "lineNumber": 25,
+        "author": {
+          "gitId": "hanweic53"
+        },
+        "content": "        assertFalse(NaturalDateUtil.isNaturalDeadline(\"02-12-2021\")); // not a natural date-time"
+      },
+      {
+        "lineNumber": 26,
+        "author": {
+          "gitId": "hanweic53"
+        },
+        "content": "        assertFalse(NaturalDateUtil.isNaturalDeadline(\"SGKK\")); // less than 5 alphabets"
+      },
+      {
+        "lineNumber": 27,
+        "author": {
+          "gitId": "hanweic53"
+        },
+        "content": "        assertFalse(NaturalDateUtil.isNaturalDeadline(\"SGKK PLJJ\")); // not a natural date-time"
+      },
+      {
+        "lineNumber": 28,
+        "author": {
+          "gitId": "hanweic53"
+        },
+        "content": "        assertFalse(NaturalDateUtil.isNaturalDeadline(\"TODAY!\")); // contains symbols"
+      },
+      {
+        "lineNumber": 29,
+        "author": {
+          "gitId": "hanweic53"
+        },
+        "content": "        assertFalse(NaturalDateUtil.isNaturalDeadline(\"Tues 1900\")); // wrong day format"
+      },
+      {
+        "lineNumber": 30,
+        "author": {
+          "gitId": "hanweic53"
+        },
+        "content": "        assertFalse(NaturalDateUtil.isNaturalDeadline(\"Tuesday 19000\")); // wrong time format"
+      },
+      {
+        "lineNumber": 31,
+        "author": {
+          "gitId": "hanweic53"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 32,
+        "author": {
+          "gitId": "hanweic53"
+        },
+        "content": "        // valid natural date-time"
+      },
+      {
+        "lineNumber": 33,
+        "author": {
+          "gitId": "hanweic53"
+        },
+        "content": "        assertTrue(NaturalDateUtil.isNaturalDeadline(\"Tuesday\"));"
+      },
+      {
+        "lineNumber": 34,
+        "author": {
+          "gitId": "hanweic53"
+        },
+        "content": "        assertTrue(NaturalDateUtil.isNaturalDeadline(\"TODAY\"));"
+      },
+      {
+        "lineNumber": 35,
+        "author": {
+          "gitId": "hanweic53"
+        },
+        "content": "        assertTrue(NaturalDateUtil.isNaturalDeadline(\"TuEsdAy\"));"
+      },
+      {
+        "lineNumber": 36,
+        "author": {
+          "gitId": "hanweic53"
+        },
+        "content": "        assertTrue(NaturalDateUtil.isNaturalDeadline(\"Tuesday 1900\"));"
+      },
+      {
+        "lineNumber": 37,
+        "author": {
+          "gitId": "hanweic53"
+        },
+        "content": "        assertTrue(NaturalDateUtil.isNaturalDeadline(\"TUESDAY 1900\"));"
+      },
+      {
+        "lineNumber": 38,
+        "author": {
+          "gitId": "hanweic53"
+        },
+        "content": "    }"
+      },
+      {
+        "lineNumber": 39,
+        "author": {
+          "gitId": "hanweic53"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 40,
+        "author": {
+          "gitId": "hanweic53"
+        },
+        "content": "    @Test"
+      },
+      {
+        "lineNumber": 41,
+        "author": {
+          "gitId": "hanweic53"
+        },
+        "content": "    public void convertToDateTime_throwsParseException() {"
+      },
+      {
+        "lineNumber": 42,
+        "author": {
+          "gitId": "hanweic53"
+        },
+        "content": "        assertThrows(ParseException.class, () -\u003e NaturalDateUtil.convertToDateTime("
+      },
+      {
+        "lineNumber": 43,
+        "author": {
+          "gitId": "hanweic53"
+        },
+        "content": "                \"Tuesday 2500\"));"
+      },
+      {
+        "lineNumber": 44,
+        "author": {
+          "gitId": "hanweic53"
+        },
+        "content": "        assertThrows(ParseException.class, () -\u003e NaturalDateUtil.convertToDateTime("
+      },
+      {
+        "lineNumber": 45,
+        "author": {
+          "gitId": "hanweic53"
+        },
+        "content": "                \"SunnyDay 2300\"));"
+      },
+      {
+        "lineNumber": 46,
+        "author": {
+          "gitId": "hanweic53"
+        },
+        "content": "        assertThrows(ParseException.class, () -\u003e NaturalDateUtil.convertToDateTime("
+      },
+      {
+        "lineNumber": 47,
+        "author": {
+          "gitId": "hanweic53"
+        },
+        "content": "                \"SunnyDay\"));"
+      },
+      {
+        "lineNumber": 48,
+        "author": {
+          "gitId": "hanweic53"
+        },
+        "content": "    }"
+      },
+      {
+        "lineNumber": 49,
+        "author": {
+          "gitId": "hanweic53"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 50,
+        "author": {
+          "gitId": "hanweic53"
+        },
+        "content": "    @Test"
+      },
+      {
+        "lineNumber": 51,
+        "author": {
+          "gitId": "hanweic53"
+        },
+        "content": "    public void convertToDateTime_returnsDateTimeString() throws ParseException {"
+      },
+      {
+        "lineNumber": 52,
+        "author": {
+          "gitId": "hanweic53"
+        },
+        "content": "        String expectedTime \u003d \" 2200\";"
+      },
+      {
+        "lineNumber": 53,
+        "author": {
+          "gitId": "hanweic53"
+        },
+        "content": "        String expectedDate \u003d LocalDate.now().with(next(FRIDAY))"
+      },
+      {
+        "lineNumber": 54,
+        "author": {
+          "gitId": "hanweic53"
+        },
+        "content": "                .format(NaturalDateUtil.DATE_TIME_FORMATTER);"
+      },
+      {
+        "lineNumber": 55,
+        "author": {
+          "gitId": "hanweic53"
+        },
+        "content": "        String expectedDateTime \u003d expectedDate + expectedTime;"
+      },
+      {
+        "lineNumber": 56,
+        "author": {
+          "gitId": "hanweic53"
+        },
+        "content": "        assertEquals(expectedDate, NaturalDateUtil.convertToDateTime(\"Friday\"));"
+      },
+      {
+        "lineNumber": 57,
+        "author": {
+          "gitId": "hanweic53"
+        },
+        "content": "        assertEquals(expectedDate, NaturalDateUtil.convertToDateTime(\"FrIDay\"));"
+      },
+      {
+        "lineNumber": 58,
+        "author": {
+          "gitId": "hanweic53"
+        },
+        "content": "        assertEquals(expectedDateTime, NaturalDateUtil.convertToDateTime(\"Friday 2200\"));"
+      },
+      {
+        "lineNumber": 59,
+        "author": {
+          "gitId": "hanweic53"
+        },
+        "content": "        assertEquals(expectedDateTime, NaturalDateUtil.convertToDateTime(\"FRIDAY 2200\"));"
+      },
+      {
+        "lineNumber": 60,
+        "author": {
+          "gitId": "hanweic53"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 61,
+        "author": {
+          "gitId": "hanweic53"
+        },
+        "content": "        expectedDate \u003d LocalDate.now().format(NaturalDateUtil.DATE_TIME_FORMATTER);"
+      },
+      {
+        "lineNumber": 62,
+        "author": {
+          "gitId": "hanweic53"
+        },
+        "content": "        expectedDateTime \u003d expectedDate + expectedTime;"
+      },
+      {
+        "lineNumber": 63,
+        "author": {
+          "gitId": "hanweic53"
+        },
+        "content": "        assertEquals(expectedDate, NaturalDateUtil.convertToDateTime(\"Today\"));"
+      },
+      {
+        "lineNumber": 64,
+        "author": {
+          "gitId": "hanweic53"
+        },
+        "content": "        assertEquals(expectedDate, NaturalDateUtil.convertToDateTime(\"ToDaY\"));"
+      },
+      {
+        "lineNumber": 65,
+        "author": {
+          "gitId": "hanweic53"
+        },
+        "content": "        assertEquals(expectedDateTime, NaturalDateUtil.convertToDateTime(\"Today 2200\"));"
+      },
+      {
+        "lineNumber": 66,
+        "author": {
+          "gitId": "hanweic53"
+        },
+        "content": "        assertEquals(expectedDateTime, NaturalDateUtil.convertToDateTime(\"ToDAY 2200\"));"
+      },
+      {
+        "lineNumber": 67,
+        "author": {
+          "gitId": "hanweic53"
+        },
+        "content": "    }"
+      },
+      {
+        "lineNumber": 68,
+        "author": {
+          "gitId": "hanweic53"
+        },
+        "content": "}"
+      }
+    ],
+    "authorContributionMap": {
+      "hanweic53": 68
+    }
+  },
+  {
     "path": "src/test/java/seedu/tr4cker/model/Tr4ckerTest.java",
     "fileType": "test-code",
     "lines": [
@@ -74539,9 +77176,9 @@
       {
         "lineNumber": 30,
         "author": {
-          "gitId": "cwenling"
+          "gitId": "hanweic53"
         },
-        "content": "        assertFalse(Deadline.isValidDeadline(\"2020-10-10\")); // only has date"
+        "content": "        assertFalse(Deadline.isValidDeadline(\"02-12-2021\")); // only has date"
       },
       {
         "lineNumber": 31,
@@ -74553,16 +77190,16 @@
       {
         "lineNumber": 32,
         "author": {
-          "gitId": "cwenling"
+          "gitId": "hanweic53"
         },
-        "content": "        assertFalse(Deadline.isValidDeadline(\"2020-Oct-10 2359\")); // alphabets within digits"
+        "content": "        assertFalse(Deadline.isValidDeadline(\"02-12-2021   0000\")); // additional spaces within digits"
       },
       {
         "lineNumber": 33,
         "author": {
-          "gitId": "cwenling"
+          "gitId": "hanweic53"
         },
-        "content": "        assertFalse(Deadline.isValidDeadline(\"2020-10-10   2359\")); // additional spaces within digits"
+        "content": "        assertFalse(Deadline.isValidDeadline(\"10/10/2021 2359\")); // wrong format"
       },
       {
         "lineNumber": 34,
@@ -74581,33 +77218,187 @@
       {
         "lineNumber": 36,
         "author": {
-          "gitId": "cwenling"
+          "gitId": "hanweic53"
         },
-        "content": "        assertTrue(Deadline.isValidDeadline(\"2020-02-02 0000\"));"
+        "content": "        assertTrue(Deadline.isValidDeadline(\"02-12-2021 0000\"));"
       },
       {
         "lineNumber": 37,
         "author": {
-          "gitId": "cwenling"
+          "gitId": "hanweic53"
         },
-        "content": "        assertTrue(Deadline.isValidDeadline(\"2020-10-10 2359\"));"
+        "content": "        assertTrue(Deadline.isValidDeadline(\"10-Oct-2021 2359\"));"
       },
       {
         "lineNumber": 38,
         "author": {
-          "gitId": "cwenling"
+          "gitId": "hanweic53"
         },
-        "content": "        assertTrue(Deadline.isValidDeadline(\"2020-09-23 1800\"));"
+        "content": "        assertTrue(Deadline.isValidDeadline(\"20-Sep-2021 1800\"));"
       },
       {
         "lineNumber": 39,
+        "author": {
+          "gitId": "hanweic53"
+        },
+        "content": "    }"
+      },
+      {
+        "lineNumber": 40,
+        "author": {
+          "gitId": "hanweic53"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 41,
+        "author": {
+          "gitId": "hanweic53"
+        },
+        "content": "    @Test"
+      },
+      {
+        "lineNumber": 42,
+        "author": {
+          "gitId": "hanweic53"
+        },
+        "content": "    public void isDeadlineWithTime() {"
+      },
+      {
+        "lineNumber": 43,
+        "author": {
+          "gitId": "hanweic53"
+        },
+        "content": "        // invalid deadline times"
+      },
+      {
+        "lineNumber": 44,
+        "author": {
+          "gitId": "hanweic53"
+        },
+        "content": "        assertFalse(Deadline.isDeadlineWithTime(\"20-Sept-2021 1900\")); // additional alphabets"
+      },
+      {
+        "lineNumber": 45,
+        "author": {
+          "gitId": "hanweic53"
+        },
+        "content": "        assertFalse(Deadline.isDeadlineWithTime(\"201-091-20211\")); // additional numbers"
+      },
+      {
+        "lineNumber": 46,
+        "author": {
+          "gitId": "hanweic53"
+        },
+        "content": "        assertFalse(Deadline.isDeadlineWithTime(\"20-Sep-2021\")); // no time"
+      },
+      {
+        "lineNumber": 47,
+        "author": {
+          "gitId": "hanweic53"
+        },
+        "content": "        assertFalse(Deadline.isDeadlineWithTime(\"20-09-2021\")); // no time"
+      },
+      {
+        "lineNumber": 48,
+        "author": {
+          "gitId": "hanweic53"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 49,
+        "author": {
+          "gitId": "hanweic53"
+        },
+        "content": "        // valid deadline times"
+      },
+      {
+        "lineNumber": 50,
+        "author": {
+          "gitId": "hanweic53"
+        },
+        "content": "        assertTrue(Deadline.isDeadlineWithTime(\"02-12-2021 0000\"));"
+      },
+      {
+        "lineNumber": 51,
+        "author": {
+          "gitId": "hanweic53"
+        },
+        "content": "        assertTrue(Deadline.isDeadlineWithTime(\"02-Dec-2021 0000\"));"
+      },
+      {
+        "lineNumber": 52,
+        "author": {
+          "gitId": "hanweic53"
+        },
+        "content": "    }"
+      },
+      {
+        "lineNumber": 53,
+        "author": {
+          "gitId": "hanweic53"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 54,
+        "author": {
+          "gitId": "hanweic53"
+        },
+        "content": "    @Test"
+      },
+      {
+        "lineNumber": 55,
+        "author": {
+          "gitId": "hanweic53"
+        },
+        "content": "    public void isFutureDeadline() {"
+      },
+      {
+        "lineNumber": 56,
+        "author": {
+          "gitId": "hanweic53"
+        },
+        "content": "        // invalid deadline times"
+      },
+      {
+        "lineNumber": 57,
+        "author": {
+          "gitId": "hanweic53"
+        },
+        "content": "        assertFalse(Deadline.isFutureDeadline(\"20-Sep-2020 1900\")); // time has passed"
+      },
+      {
+        "lineNumber": 58,
+        "author": {
+          "gitId": "hanweic53"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 59,
+        "author": {
+          "gitId": "hanweic53"
+        },
+        "content": "        // valid deadline times"
+      },
+      {
+        "lineNumber": 60,
+        "author": {
+          "gitId": "hanweic53"
+        },
+        "content": "        assertTrue(Deadline.isDeadlineWithTime(\"02-12-2030 0000\"));"
+      },
+      {
+        "lineNumber": 61,
         "author": {
           "gitId": "cwenling"
         },
         "content": "    }"
       },
       {
-        "lineNumber": 40,
+        "lineNumber": 62,
         "author": {
           "gitId": "cwenling"
         },
@@ -74615,7 +77406,8 @@
       }
     ],
     "authorContributionMap": {
-      "cwenling": 40
+      "hanweic53": 28,
+      "cwenling": 34
     }
   },
   {
@@ -75122,9 +77914,9 @@
       {
         "lineNumber": 72,
         "author": {
-          "gitId": "ethan-l-m-e"
+          "gitId": "hanweic53"
         },
-        "content": "        predicate \u003d new NameContainsKeywordsPredicate(Arrays.asList(\"2020-12-31\", \"2359\","
+        "content": "        predicate \u003d new NameContainsKeywordsPredicate(Arrays.asList(\"31-12-2021\", \"2359\","
       },
       {
         "lineNumber": 73,
@@ -75138,7 +77930,7 @@
         "author": {
           "gitId": "hanweic53"
         },
-        "content": "        assertFalse(predicate.test(new TaskBuilder().withName(\"My Homework Assignment\").withDeadline(\"2020-12-31 2359\")"
+        "content": "        assertFalse(predicate.test(new TaskBuilder().withName(\"My Homework Assignment\").withDeadline(\"31-12-2021 2359\")"
       },
       {
         "lineNumber": 75,
@@ -75165,9 +77957,8 @@
     "authorContributionMap": {
       "ruilingk": 3,
       "yingqi0607": 3,
-      "hanweic53": 13,
-      "-": 57,
-      "ethan-l-m-e": 1
+      "hanweic53": 14,
+      "-": 57
     }
   },
   {
@@ -82539,9 +85330,9 @@
       {
         "lineNumber": 20,
         "author": {
-          "gitId": "cwenling"
+          "gitId": "hanweic53"
         },
-        "content": "    public static final String DEFAULT_DEADLINE \u003d \"2020-12-31 2359\";"
+        "content": "    public static final String DEFAULT_DEADLINE \u003d \"01-Dec-2021 2359\";"
       },
       {
         "lineNumber": 21,
@@ -83086,7 +85877,8 @@
     "authorContributionMap": {
       "ruilingk": 72,
       "yingqi0607": 8,
-      "cwenling": 8,
+      "hanweic53": 1,
+      "cwenling": 7,
       "ethan-l-m-e": 9
     }
   },
@@ -84399,9 +87191,9 @@
       {
         "lineNumber": 28,
         "author": {
-          "gitId": "ruilingk"
+          "gitId": "hanweic53"
         },
-        "content": "            .withDeadline(\"2021-10-20 1800\").build();"
+        "content": "            .withDeadline(\"20-Oct-2021 1800\").build();"
       },
       {
         "lineNumber": 29,
@@ -84420,9 +87212,9 @@
       {
         "lineNumber": 31,
         "author": {
-          "gitId": "ruilingk"
+          "gitId": "hanweic53"
         },
-        "content": "            .withDeadline(\"2021-10-20 1800\")"
+        "content": "            .withDeadline(\"20-Oct-2021 1800\")"
       },
       {
         "lineNumber": 32,
@@ -84448,9 +87240,9 @@
       {
         "lineNumber": 35,
         "author": {
-          "gitId": "ruilingk"
+          "gitId": "hanweic53"
         },
-        "content": "            .withDeadline(\"2021-10-20 1800\").build();"
+        "content": "            .withDeadline(\"20-Oct-2021 1800\").build();"
       },
       {
         "lineNumber": 36,
@@ -84471,7 +87263,7 @@
         "author": {
           "gitId": "hanweic53"
         },
-        "content": "            .withDeadline(\"2021-09-30 2359\")"
+        "content": "            .withDeadline(\"30-09-2021 2359\")"
       },
       {
         "lineNumber": 39,
@@ -84492,7 +87284,7 @@
         "author": {
           "gitId": "hanweic53"
         },
-        "content": "            .withDeadline(\"2021-10-03 1200\")"
+        "content": "            .withDeadline(\"10-03-2021 1200\")"
       },
       {
         "lineNumber": 42,
@@ -84513,7 +87305,7 @@
         "author": {
           "gitId": "hanweic53"
         },
-        "content": "            .withDeadline(\"2021-09-21 1500\")"
+        "content": "            .withDeadline(\"21-09-2021 1500\")"
       },
       {
         "lineNumber": 45,
@@ -84534,7 +87326,7 @@
         "author": {
           "gitId": "hanweic53"
         },
-        "content": "            .withDeadline(\"2021-10-10 1010\")"
+        "content": "            .withDeadline(\"10-10-2021 1010\")"
       },
       {
         "lineNumber": 48,
@@ -84555,7 +87347,7 @@
         "author": {
           "gitId": "hanweic53"
         },
-        "content": "            .withDeadline(\"2021-12-25 0000\")"
+        "content": "            .withDeadline(\"25-12-2021 0000\")"
       },
       {
         "lineNumber": 51,
@@ -84576,7 +87368,7 @@
         "author": {
           "gitId": "hanweic53"
         },
-        "content": "            .withDeadline(\"2021-01-01 0000\")"
+        "content": "            .withDeadline(\"01-01-2021 0000\")"
       },
       {
         "lineNumber": 54,
@@ -84604,7 +87396,7 @@
         "author": {
           "gitId": "hanweic53"
         },
-        "content": "    public static final Task TASK_H \u003d new TaskBuilder().withName(\"TASK H\").withDeadline(\"2021-12-07 0600\")"
+        "content": "    public static final Task TASK_H \u003d new TaskBuilder().withName(\"TASK H\").withDeadline(\"12-Jul-2021 0600\")"
       },
       {
         "lineNumber": 58,
@@ -84618,7 +87410,7 @@
         "author": {
           "gitId": "hanweic53"
         },
-        "content": "    public static final Task TASK_I \u003d new TaskBuilder().withName(\"TASK I\").withDeadline(\"2021-09-27 2359\")"
+        "content": "    public static final Task TASK_I \u003d new TaskBuilder().withName(\"TASK I\").withDeadline(\"27-Sep-2021 2359\")"
       },
       {
         "lineNumber": 60,
@@ -84742,9 +87534,9 @@
       {
         "lineNumber": 77,
         "author": {
-          "gitId": "ruilingk"
+          "gitId": "hanweic53"
         },
-        "content": "        Tr4cker ab \u003d new Tr4cker();"
+        "content": "        Tr4cker tr4cker \u003d new Tr4cker();"
       },
       {
         "lineNumber": 78,
@@ -84756,9 +87548,9 @@
       {
         "lineNumber": 79,
         "author": {
-          "gitId": "ruilingk"
+          "gitId": "hanweic53"
         },
-        "content": "            ab.addTask(task);"
+        "content": "            tr4cker.addTask(task);"
       },
       {
         "lineNumber": 80,
@@ -84770,9 +87562,9 @@
       {
         "lineNumber": 81,
         "author": {
-          "gitId": "-"
+          "gitId": "hanweic53"
         },
-        "content": "        return ab;"
+        "content": "        return tr4cker;"
       },
       {
         "lineNumber": 82,
@@ -84818,10 +87610,10 @@
       }
     ],
     "authorContributionMap": {
-      "ruilingk": 32,
+      "ruilingk": 27,
       "yingqi0607": 10,
-      "hanweic53": 21,
-      "-": 24
+      "hanweic53": 27,
+      "-": 23
     }
   },
   {
