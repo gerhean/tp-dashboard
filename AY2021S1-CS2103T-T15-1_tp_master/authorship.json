@@ -27742,6 +27742,1380 @@
     }
   },
   {
+    "path": "src/main/java/seedu/address/model/appointment/UniqueAppointmentList.java",
+    "fileType": "functional-code",
+    "lines": [
+      {
+        "lineNumber": 1,
+        "author": {
+          "gitId": "nicktohzyu"
+        },
+        "content": "package seedu.address.model.appointment;"
+      },
+      {
+        "lineNumber": 2,
+        "author": {
+          "gitId": "nicktohzyu"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 3,
+        "author": {
+          "gitId": "nicktohzyu"
+        },
+        "content": "import static java.util.Objects.requireNonNull;"
+      },
+      {
+        "lineNumber": 4,
+        "author": {
+          "gitId": "nicktohzyu"
+        },
+        "content": "import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;"
+      },
+      {
+        "lineNumber": 5,
+        "author": {
+          "gitId": "nicktohzyu"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 6,
+        "author": {
+          "gitId": "nicktohzyu"
+        },
+        "content": "import java.util.Iterator;"
+      },
+      {
+        "lineNumber": 7,
+        "author": {
+          "gitId": "nicktohzyu"
+        },
+        "content": "import java.util.List;"
+      },
+      {
+        "lineNumber": 8,
+        "author": {
+          "gitId": "nicktohzyu"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 9,
+        "author": {
+          "gitId": "nicktohzyu"
+        },
+        "content": "import javafx.collections.FXCollections;"
+      },
+      {
+        "lineNumber": 10,
+        "author": {
+          "gitId": "nicktohzyu"
+        },
+        "content": "import javafx.collections.ObservableList;"
+      },
+      {
+        "lineNumber": 11,
+        "author": {
+          "gitId": "nicktohzyu"
+        },
+        "content": "import seedu.address.model.appointment.exceptions.AppointmentNotFoundException;"
+      },
+      {
+        "lineNumber": 12,
+        "author": {
+          "gitId": "nicktohzyu"
+        },
+        "content": "import seedu.address.model.appointment.exceptions.DuplicateAppointmentException;"
+      },
+      {
+        "lineNumber": 13,
+        "author": {
+          "gitId": "nicktohzyu"
+        },
+        "content": "import seedu.address.model.person.PersonId;"
+      },
+      {
+        "lineNumber": 14,
+        "author": {
+          "gitId": "nicktohzyu"
+        },
+        "content": "import seedu.address.model.person.client.Client;"
+      },
+      {
+        "lineNumber": 15,
+        "author": {
+          "gitId": "nicktohzyu"
+        },
+        "content": "import seedu.address.model.person.hairdresser.Hairdresser;"
+      },
+      {
+        "lineNumber": 16,
+        "author": {
+          "gitId": "nicktohzyu"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 17,
+        "author": {
+          "gitId": "nicktohzyu"
+        },
+        "content": "/**"
+      },
+      {
+        "lineNumber": 18,
+        "author": {
+          "gitId": "nicktohzyu"
+        },
+        "content": " * Supports a minimal set of list operations."
+      },
+      {
+        "lineNumber": 19,
+        "author": {
+          "gitId": "nicktohzyu"
+        },
+        "content": " *"
+      },
+      {
+        "lineNumber": 20,
+        "author": {
+          "gitId": "nicktohzyu"
+        },
+        "content": " * @see Appointment#isSameAppointment(Appointment)"
+      },
+      {
+        "lineNumber": 21,
+        "author": {
+          "gitId": "nicktohzyu"
+        },
+        "content": " */"
+      },
+      {
+        "lineNumber": 22,
+        "author": {
+          "gitId": "nicktohzyu"
+        },
+        "content": "public class UniqueAppointmentList implements Iterable\u003cAppointment\u003e {"
+      },
+      {
+        "lineNumber": 23,
+        "author": {
+          "gitId": "nicktohzyu"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 24,
+        "author": {
+          "gitId": "nicktohzyu"
+        },
+        "content": "    private final ObservableList\u003cAppointment\u003e internalList \u003d FXCollections.observableArrayList();"
+      },
+      {
+        "lineNumber": 25,
+        "author": {
+          "gitId": "nicktohzyu"
+        },
+        "content": "    private final ObservableList\u003cAppointment\u003e internalUnmodifiableList \u003d"
+      },
+      {
+        "lineNumber": 26,
+        "author": {
+          "gitId": "nicktohzyu"
+        },
+        "content": "        FXCollections.unmodifiableObservableList(internalList);"
+      },
+      {
+        "lineNumber": 27,
+        "author": {
+          "gitId": "nicktohzyu"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 28,
+        "author": {
+          "gitId": "nicktohzyu"
+        },
+        "content": "    /**"
+      },
+      {
+        "lineNumber": 29,
+        "author": {
+          "gitId": "nicktohzyu"
+        },
+        "content": "     * Returns true if the list contains an equivalent appointment as the given argument."
+      },
+      {
+        "lineNumber": 30,
+        "author": {
+          "gitId": "nicktohzyu"
+        },
+        "content": "     */"
+      },
+      {
+        "lineNumber": 31,
+        "author": {
+          "gitId": "nicktohzyu"
+        },
+        "content": "    public boolean contains(Appointment toCheck) {"
+      },
+      {
+        "lineNumber": 32,
+        "author": {
+          "gitId": "nicktohzyu"
+        },
+        "content": "        requireNonNull(toCheck);"
+      },
+      {
+        "lineNumber": 33,
+        "author": {
+          "gitId": "nicktohzyu"
+        },
+        "content": "        return internalList.stream().anyMatch(toCheck::isSameAppointment);"
+      },
+      {
+        "lineNumber": 34,
+        "author": {
+          "gitId": "nicktohzyu"
+        },
+        "content": "    }"
+      },
+      {
+        "lineNumber": 35,
+        "author": {
+          "gitId": "nicktohzyu"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 36,
+        "author": {
+          "gitId": "nicktohzyu"
+        },
+        "content": "    /**"
+      },
+      {
+        "lineNumber": 37,
+        "author": {
+          "gitId": "nicktohzyu"
+        },
+        "content": "     * Adds an appointment to the list."
+      },
+      {
+        "lineNumber": 38,
+        "author": {
+          "gitId": "nicktohzyu"
+        },
+        "content": "     * The appointment must not already exist in the list."
+      },
+      {
+        "lineNumber": 39,
+        "author": {
+          "gitId": "nicktohzyu"
+        },
+        "content": "     */"
+      },
+      {
+        "lineNumber": 40,
+        "author": {
+          "gitId": "nicktohzyu"
+        },
+        "content": "    public void add(Appointment toAdd) {"
+      },
+      {
+        "lineNumber": 41,
+        "author": {
+          "gitId": "nicktohzyu"
+        },
+        "content": "        requireNonNull(toAdd);"
+      },
+      {
+        "lineNumber": 42,
+        "author": {
+          "gitId": "nicktohzyu"
+        },
+        "content": "        if (contains(toAdd)) {"
+      },
+      {
+        "lineNumber": 43,
+        "author": {
+          "gitId": "nicktohzyu"
+        },
+        "content": "            throw new DuplicateAppointmentException();"
+      },
+      {
+        "lineNumber": 44,
+        "author": {
+          "gitId": "nicktohzyu"
+        },
+        "content": "        }"
+      },
+      {
+        "lineNumber": 45,
+        "author": {
+          "gitId": "nicktohzyu"
+        },
+        "content": "        internalList.add(toAdd);"
+      },
+      {
+        "lineNumber": 46,
+        "author": {
+          "gitId": "nicktohzyu"
+        },
+        "content": "    }"
+      },
+      {
+        "lineNumber": 47,
+        "author": {
+          "gitId": "nicktohzyu"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 48,
+        "author": {
+          "gitId": "nicktohzyu"
+        },
+        "content": "    /**"
+      },
+      {
+        "lineNumber": 49,
+        "author": {
+          "gitId": "nicktohzyu"
+        },
+        "content": "     * Replaces the appointment {@code target} in the list with {@code changedAppointment}."
+      },
+      {
+        "lineNumber": 50,
+        "author": {
+          "gitId": "nicktohzyu"
+        },
+        "content": "     * {@code target} must exist in the list."
+      },
+      {
+        "lineNumber": 51,
+        "author": {
+          "gitId": "nicktohzyu"
+        },
+        "content": "     * The appointment details of {@code changedAppointment} must not be"
+      },
+      {
+        "lineNumber": 52,
+        "author": {
+          "gitId": "nicktohzyu"
+        },
+        "content": "     * the same as another existing appointment in the list."
+      },
+      {
+        "lineNumber": 53,
+        "author": {
+          "gitId": "nicktohzyu"
+        },
+        "content": "     */"
+      },
+      {
+        "lineNumber": 54,
+        "author": {
+          "gitId": "nicktohzyu"
+        },
+        "content": "    public void setAppointment(Appointment target, Appointment changedAppointment) {"
+      },
+      {
+        "lineNumber": 55,
+        "author": {
+          "gitId": "nicktohzyu"
+        },
+        "content": "        requireAllNonNull(target, changedAppointment);"
+      },
+      {
+        "lineNumber": 56,
+        "author": {
+          "gitId": "nicktohzyu"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 57,
+        "author": {
+          "gitId": "nicktohzyu"
+        },
+        "content": "        int index \u003d internalList.indexOf(target);"
+      },
+      {
+        "lineNumber": 58,
+        "author": {
+          "gitId": "nicktohzyu"
+        },
+        "content": "        if (index \u003d\u003d -1) {"
+      },
+      {
+        "lineNumber": 59,
+        "author": {
+          "gitId": "nicktohzyu"
+        },
+        "content": "            throw new AppointmentNotFoundException();"
+      },
+      {
+        "lineNumber": 60,
+        "author": {
+          "gitId": "nicktohzyu"
+        },
+        "content": "        }"
+      },
+      {
+        "lineNumber": 61,
+        "author": {
+          "gitId": "nicktohzyu"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 62,
+        "author": {
+          "gitId": "nicktohzyu"
+        },
+        "content": "        if (!target.isSameAppointment(changedAppointment) \u0026\u0026 contains(changedAppointment)) {"
+      },
+      {
+        "lineNumber": 63,
+        "author": {
+          "gitId": "nicktohzyu"
+        },
+        "content": "            throw new DuplicateAppointmentException();"
+      },
+      {
+        "lineNumber": 64,
+        "author": {
+          "gitId": "nicktohzyu"
+        },
+        "content": "        }"
+      },
+      {
+        "lineNumber": 65,
+        "author": {
+          "gitId": "nicktohzyu"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 66,
+        "author": {
+          "gitId": "nicktohzyu"
+        },
+        "content": "        internalList.set(index, changedAppointment);"
+      },
+      {
+        "lineNumber": 67,
+        "author": {
+          "gitId": "nicktohzyu"
+        },
+        "content": "    }"
+      },
+      {
+        "lineNumber": 68,
+        "author": {
+          "gitId": "nicktohzyu"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 69,
+        "author": {
+          "gitId": "nicktohzyu"
+        },
+        "content": "    /**"
+      },
+      {
+        "lineNumber": 70,
+        "author": {
+          "gitId": "nicktohzyu"
+        },
+        "content": "     * Replace the content of the list with another list."
+      },
+      {
+        "lineNumber": 71,
+        "author": {
+          "gitId": "nicktohzyu"
+        },
+        "content": "     *"
+      },
+      {
+        "lineNumber": 72,
+        "author": {
+          "gitId": "nicktohzyu"
+        },
+        "content": "     * @param replacement the new list to replace the current list"
+      },
+      {
+        "lineNumber": 73,
+        "author": {
+          "gitId": "nicktohzyu"
+        },
+        "content": "     */"
+      },
+      {
+        "lineNumber": 74,
+        "author": {
+          "gitId": "nicktohzyu"
+        },
+        "content": "    public void setAppointments(UniqueAppointmentList replacement) {"
+      },
+      {
+        "lineNumber": 75,
+        "author": {
+          "gitId": "nicktohzyu"
+        },
+        "content": "        requireNonNull(replacement);"
+      },
+      {
+        "lineNumber": 76,
+        "author": {
+          "gitId": "nicktohzyu"
+        },
+        "content": "        internalList.setAll(replacement.internalList);"
+      },
+      {
+        "lineNumber": 77,
+        "author": {
+          "gitId": "nicktohzyu"
+        },
+        "content": "    }"
+      },
+      {
+        "lineNumber": 78,
+        "author": {
+          "gitId": "nicktohzyu"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 79,
+        "author": {
+          "gitId": "nicktohzyu"
+        },
+        "content": "    /**"
+      },
+      {
+        "lineNumber": 80,
+        "author": {
+          "gitId": "nicktohzyu"
+        },
+        "content": "     * Replaces the contents of this list with {@code appointments}."
+      },
+      {
+        "lineNumber": 81,
+        "author": {
+          "gitId": "nicktohzyu"
+        },
+        "content": "     * {@code appointments} must not contain duplicate appointments."
+      },
+      {
+        "lineNumber": 82,
+        "author": {
+          "gitId": "nicktohzyu"
+        },
+        "content": "     */"
+      },
+      {
+        "lineNumber": 83,
+        "author": {
+          "gitId": "nicktohzyu"
+        },
+        "content": "    public void setAppointments(List\u003cAppointment\u003e appointments) {"
+      },
+      {
+        "lineNumber": 84,
+        "author": {
+          "gitId": "nicktohzyu"
+        },
+        "content": "        requireAllNonNull(appointments);"
+      },
+      {
+        "lineNumber": 85,
+        "author": {
+          "gitId": "nicktohzyu"
+        },
+        "content": "        if (!appointmentsAreUnique(appointments)) {"
+      },
+      {
+        "lineNumber": 86,
+        "author": {
+          "gitId": "nicktohzyu"
+        },
+        "content": "            throw new DuplicateAppointmentException();"
+      },
+      {
+        "lineNumber": 87,
+        "author": {
+          "gitId": "nicktohzyu"
+        },
+        "content": "        }"
+      },
+      {
+        "lineNumber": 88,
+        "author": {
+          "gitId": "nicktohzyu"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 89,
+        "author": {
+          "gitId": "nicktohzyu"
+        },
+        "content": "        internalList.setAll(appointments);"
+      },
+      {
+        "lineNumber": 90,
+        "author": {
+          "gitId": "nicktohzyu"
+        },
+        "content": "    }"
+      },
+      {
+        "lineNumber": 91,
+        "author": {
+          "gitId": "nicktohzyu"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 92,
+        "author": {
+          "gitId": "nicktohzyu"
+        },
+        "content": "    /**"
+      },
+      {
+        "lineNumber": 93,
+        "author": {
+          "gitId": "nicktohzyu"
+        },
+        "content": "     * Update all appointments where a client is involved."
+      },
+      {
+        "lineNumber": 94,
+        "author": {
+          "gitId": "nicktohzyu"
+        },
+        "content": "     *"
+      },
+      {
+        "lineNumber": 95,
+        "author": {
+          "gitId": "nicktohzyu"
+        },
+        "content": "     * @param toEdit       The Id of the client to be replaced."
+      },
+      {
+        "lineNumber": 96,
+        "author": {
+          "gitId": "nicktohzyu"
+        },
+        "content": "     * @param editedClient The object representing the new client."
+      },
+      {
+        "lineNumber": 97,
+        "author": {
+          "gitId": "nicktohzyu"
+        },
+        "content": "     */"
+      },
+      {
+        "lineNumber": 98,
+        "author": {
+          "gitId": "nicktohzyu"
+        },
+        "content": "    public void updateClient(PersonId toEdit, Client editedClient) {"
+      },
+      {
+        "lineNumber": 99,
+        "author": {
+          "gitId": "nicktohzyu"
+        },
+        "content": "        requireAllNonNull(toEdit, editedClient);"
+      },
+      {
+        "lineNumber": 100,
+        "author": {
+          "gitId": "nicktohzyu"
+        },
+        "content": "        for (int i \u003d 0; i \u003c internalList.size(); i++) {"
+      },
+      {
+        "lineNumber": 101,
+        "author": {
+          "gitId": "nicktohzyu"
+        },
+        "content": "            Appointment currentAppointment \u003d internalList.get(i);"
+      },
+      {
+        "lineNumber": 102,
+        "author": {
+          "gitId": "nicktohzyu"
+        },
+        "content": "            if (currentAppointment.getClientId().equals(toEdit)) {"
+      },
+      {
+        "lineNumber": 103,
+        "author": {
+          "gitId": "nicktohzyu"
+        },
+        "content": "                Appointment newAppointment \u003d currentAppointment.replaceClient(editedClient);"
+      },
+      {
+        "lineNumber": 104,
+        "author": {
+          "gitId": "nicktohzyu"
+        },
+        "content": "                internalList.set(i, newAppointment);"
+      },
+      {
+        "lineNumber": 105,
+        "author": {
+          "gitId": "nicktohzyu"
+        },
+        "content": "            }"
+      },
+      {
+        "lineNumber": 106,
+        "author": {
+          "gitId": "nicktohzyu"
+        },
+        "content": "        }"
+      },
+      {
+        "lineNumber": 107,
+        "author": {
+          "gitId": "nicktohzyu"
+        },
+        "content": "    }"
+      },
+      {
+        "lineNumber": 108,
+        "author": {
+          "gitId": "nicktohzyu"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 109,
+        "author": {
+          "gitId": "nicktohzyu"
+        },
+        "content": "    /**"
+      },
+      {
+        "lineNumber": 110,
+        "author": {
+          "gitId": "nicktohzyu"
+        },
+        "content": "     * Update all appointments where a hairdresser is involved."
+      },
+      {
+        "lineNumber": 111,
+        "author": {
+          "gitId": "nicktohzyu"
+        },
+        "content": "     *"
+      },
+      {
+        "lineNumber": 112,
+        "author": {
+          "gitId": "nicktohzyu"
+        },
+        "content": "     * @param toEdit            The Id of the hairdresser to be replaced."
+      },
+      {
+        "lineNumber": 113,
+        "author": {
+          "gitId": "nicktohzyu"
+        },
+        "content": "     * @param editedHairdresser The object representing the new hairdresser."
+      },
+      {
+        "lineNumber": 114,
+        "author": {
+          "gitId": "nicktohzyu"
+        },
+        "content": "     */"
+      },
+      {
+        "lineNumber": 115,
+        "author": {
+          "gitId": "nicktohzyu"
+        },
+        "content": "    public void updateHairdresser(PersonId toEdit, Hairdresser editedHairdresser) {"
+      },
+      {
+        "lineNumber": 116,
+        "author": {
+          "gitId": "nicktohzyu"
+        },
+        "content": "        requireAllNonNull(toEdit, editedHairdresser);"
+      },
+      {
+        "lineNumber": 117,
+        "author": {
+          "gitId": "nicktohzyu"
+        },
+        "content": "        for (int i \u003d 0; i \u003c internalList.size(); i++) {"
+      },
+      {
+        "lineNumber": 118,
+        "author": {
+          "gitId": "nicktohzyu"
+        },
+        "content": "            Appointment currentAppointment \u003d internalList.get(i);"
+      },
+      {
+        "lineNumber": 119,
+        "author": {
+          "gitId": "nicktohzyu"
+        },
+        "content": "            if (currentAppointment.getClientId().equals(toEdit)) {"
+      },
+      {
+        "lineNumber": 120,
+        "author": {
+          "gitId": "nicktohzyu"
+        },
+        "content": "                Appointment newAppointment \u003d currentAppointment.replaceHairdresser(editedHairdresser);"
+      },
+      {
+        "lineNumber": 121,
+        "author": {
+          "gitId": "nicktohzyu"
+        },
+        "content": "                internalList.set(i, newAppointment);"
+      },
+      {
+        "lineNumber": 122,
+        "author": {
+          "gitId": "nicktohzyu"
+        },
+        "content": "            }"
+      },
+      {
+        "lineNumber": 123,
+        "author": {
+          "gitId": "nicktohzyu"
+        },
+        "content": "        }"
+      },
+      {
+        "lineNumber": 124,
+        "author": {
+          "gitId": "nicktohzyu"
+        },
+        "content": "    }"
+      },
+      {
+        "lineNumber": 125,
+        "author": {
+          "gitId": "nicktohzyu"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 126,
+        "author": {
+          "gitId": "nicktohzyu"
+        },
+        "content": "    /**"
+      },
+      {
+        "lineNumber": 127,
+        "author": {
+          "gitId": "nicktohzyu"
+        },
+        "content": "     * Update all appointments to reflect a deleted client."
+      },
+      {
+        "lineNumber": 128,
+        "author": {
+          "gitId": "nicktohzyu"
+        },
+        "content": "     *"
+      },
+      {
+        "lineNumber": 129,
+        "author": {
+          "gitId": "nicktohzyu"
+        },
+        "content": "     * @param deleted id of the deleted client"
+      },
+      {
+        "lineNumber": 130,
+        "author": {
+          "gitId": "nicktohzyu"
+        },
+        "content": "     */"
+      },
+      {
+        "lineNumber": 131,
+        "author": {
+          "gitId": "nicktohzyu"
+        },
+        "content": "    public void setClientToNull(PersonId deleted) {"
+      },
+      {
+        "lineNumber": 132,
+        "author": {
+          "gitId": "nicktohzyu"
+        },
+        "content": "        requireAllNonNull(deleted);"
+      },
+      {
+        "lineNumber": 133,
+        "author": {
+          "gitId": "nicktohzyu"
+        },
+        "content": "        for (int i \u003d 0; i \u003c internalList.size(); i++) {"
+      },
+      {
+        "lineNumber": 134,
+        "author": {
+          "gitId": "nicktohzyu"
+        },
+        "content": "            Appointment currentAppointment \u003d internalList.get(i);"
+      },
+      {
+        "lineNumber": 135,
+        "author": {
+          "gitId": "nicktohzyu"
+        },
+        "content": "            if (currentAppointment.getClientId().equals(deleted)) {"
+      },
+      {
+        "lineNumber": 136,
+        "author": {
+          "gitId": "nicktohzyu"
+        },
+        "content": "                Appointment newAppointment \u003d currentAppointment.deleteClient();"
+      },
+      {
+        "lineNumber": 137,
+        "author": {
+          "gitId": "nicktohzyu"
+        },
+        "content": "                internalList.set(i, newAppointment);"
+      },
+      {
+        "lineNumber": 138,
+        "author": {
+          "gitId": "nicktohzyu"
+        },
+        "content": "            }"
+      },
+      {
+        "lineNumber": 139,
+        "author": {
+          "gitId": "nicktohzyu"
+        },
+        "content": "        }"
+      },
+      {
+        "lineNumber": 140,
+        "author": {
+          "gitId": "nicktohzyu"
+        },
+        "content": "    }"
+      },
+      {
+        "lineNumber": 141,
+        "author": {
+          "gitId": "nicktohzyu"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 142,
+        "author": {
+          "gitId": "nicktohzyu"
+        },
+        "content": "    /**"
+      },
+      {
+        "lineNumber": 143,
+        "author": {
+          "gitId": "nicktohzyu"
+        },
+        "content": "     * Update all appointments to reflect a deleted hairdresser."
+      },
+      {
+        "lineNumber": 144,
+        "author": {
+          "gitId": "nicktohzyu"
+        },
+        "content": "     *"
+      },
+      {
+        "lineNumber": 145,
+        "author": {
+          "gitId": "nicktohzyu"
+        },
+        "content": "     * @param deleted id of the deleted client"
+      },
+      {
+        "lineNumber": 146,
+        "author": {
+          "gitId": "nicktohzyu"
+        },
+        "content": "     */"
+      },
+      {
+        "lineNumber": 147,
+        "author": {
+          "gitId": "nicktohzyu"
+        },
+        "content": "    public void setHairdresserToNull(PersonId deleted) {"
+      },
+      {
+        "lineNumber": 148,
+        "author": {
+          "gitId": "nicktohzyu"
+        },
+        "content": "        requireAllNonNull(deleted);"
+      },
+      {
+        "lineNumber": 149,
+        "author": {
+          "gitId": "nicktohzyu"
+        },
+        "content": "        for (int i \u003d 0; i \u003c internalList.size(); i++) {"
+      },
+      {
+        "lineNumber": 150,
+        "author": {
+          "gitId": "nicktohzyu"
+        },
+        "content": "            Appointment currentAppointment \u003d internalList.get(i);"
+      },
+      {
+        "lineNumber": 151,
+        "author": {
+          "gitId": "nicktohzyu"
+        },
+        "content": "            if (currentAppointment.getHairdresserId().equals(deleted)) {"
+      },
+      {
+        "lineNumber": 152,
+        "author": {
+          "gitId": "nicktohzyu"
+        },
+        "content": "                Appointment newAppointment \u003d currentAppointment.deleteHairdresser();"
+      },
+      {
+        "lineNumber": 153,
+        "author": {
+          "gitId": "nicktohzyu"
+        },
+        "content": "                internalList.set(i, newAppointment);"
+      },
+      {
+        "lineNumber": 154,
+        "author": {
+          "gitId": "nicktohzyu"
+        },
+        "content": "            }"
+      },
+      {
+        "lineNumber": 155,
+        "author": {
+          "gitId": "nicktohzyu"
+        },
+        "content": "        }"
+      },
+      {
+        "lineNumber": 156,
+        "author": {
+          "gitId": "nicktohzyu"
+        },
+        "content": "    }"
+      },
+      {
+        "lineNumber": 157,
+        "author": {
+          "gitId": "nicktohzyu"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 158,
+        "author": {
+          "gitId": "nicktohzyu"
+        },
+        "content": "    /**"
+      },
+      {
+        "lineNumber": 159,
+        "author": {
+          "gitId": "nicktohzyu"
+        },
+        "content": "     * Returns the backing list as an unmodifiable {@code ObservableList}."
+      },
+      {
+        "lineNumber": 160,
+        "author": {
+          "gitId": "nicktohzyu"
+        },
+        "content": "     */"
+      },
+      {
+        "lineNumber": 161,
+        "author": {
+          "gitId": "nicktohzyu"
+        },
+        "content": "    public ObservableList\u003cAppointment\u003e asUnmodifiableObservableList() {"
+      },
+      {
+        "lineNumber": 162,
+        "author": {
+          "gitId": "nicktohzyu"
+        },
+        "content": "        return internalUnmodifiableList;"
+      },
+      {
+        "lineNumber": 163,
+        "author": {
+          "gitId": "nicktohzyu"
+        },
+        "content": "    }"
+      },
+      {
+        "lineNumber": 164,
+        "author": {
+          "gitId": "nicktohzyu"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 165,
+        "author": {
+          "gitId": "nicktohzyu"
+        },
+        "content": "    @Override"
+      },
+      {
+        "lineNumber": 166,
+        "author": {
+          "gitId": "nicktohzyu"
+        },
+        "content": "    public Iterator\u003cAppointment\u003e iterator() {"
+      },
+      {
+        "lineNumber": 167,
+        "author": {
+          "gitId": "nicktohzyu"
+        },
+        "content": "        return internalList.iterator();"
+      },
+      {
+        "lineNumber": 168,
+        "author": {
+          "gitId": "nicktohzyu"
+        },
+        "content": "    }"
+      },
+      {
+        "lineNumber": 169,
+        "author": {
+          "gitId": "nicktohzyu"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 170,
+        "author": {
+          "gitId": "nicktohzyu"
+        },
+        "content": "    @Override"
+      },
+      {
+        "lineNumber": 171,
+        "author": {
+          "gitId": "nicktohzyu"
+        },
+        "content": "    public boolean equals(Object other) {"
+      },
+      {
+        "lineNumber": 172,
+        "author": {
+          "gitId": "nicktohzyu"
+        },
+        "content": "        return other \u003d\u003d this // short circuit if same object"
+      },
+      {
+        "lineNumber": 173,
+        "author": {
+          "gitId": "nicktohzyu"
+        },
+        "content": "            || (other instanceof UniqueAppointmentList // instanceof handles nulls"
+      },
+      {
+        "lineNumber": 174,
+        "author": {
+          "gitId": "nicktohzyu"
+        },
+        "content": "            \u0026\u0026 internalList.equals(((UniqueAppointmentList) other).internalList));"
+      },
+      {
+        "lineNumber": 175,
+        "author": {
+          "gitId": "nicktohzyu"
+        },
+        "content": "    }"
+      },
+      {
+        "lineNumber": 176,
+        "author": {
+          "gitId": "nicktohzyu"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 177,
+        "author": {
+          "gitId": "nicktohzyu"
+        },
+        "content": "    @Override"
+      },
+      {
+        "lineNumber": 178,
+        "author": {
+          "gitId": "nicktohzyu"
+        },
+        "content": "    public int hashCode() {"
+      },
+      {
+        "lineNumber": 179,
+        "author": {
+          "gitId": "nicktohzyu"
+        },
+        "content": "        return internalList.hashCode();"
+      },
+      {
+        "lineNumber": 180,
+        "author": {
+          "gitId": "nicktohzyu"
+        },
+        "content": "    }"
+      },
+      {
+        "lineNumber": 181,
+        "author": {
+          "gitId": "nicktohzyu"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 182,
+        "author": {
+          "gitId": "nicktohzyu"
+        },
+        "content": "    /**"
+      },
+      {
+        "lineNumber": 183,
+        "author": {
+          "gitId": "nicktohzyu"
+        },
+        "content": "     * Returns true if {@code appointments} contains only unique appointments."
+      },
+      {
+        "lineNumber": 184,
+        "author": {
+          "gitId": "nicktohzyu"
+        },
+        "content": "     */"
+      },
+      {
+        "lineNumber": 185,
+        "author": {
+          "gitId": "nicktohzyu"
+        },
+        "content": "    private boolean appointmentsAreUnique(List\u003cAppointment\u003e appointments) {"
+      },
+      {
+        "lineNumber": 186,
+        "author": {
+          "gitId": "nicktohzyu"
+        },
+        "content": "        for (int i \u003d 0; i \u003c appointments.size() - 1; i++) {"
+      },
+      {
+        "lineNumber": 187,
+        "author": {
+          "gitId": "nicktohzyu"
+        },
+        "content": "            for (int j \u003d i + 1; j \u003c appointments.size(); j++) {"
+      },
+      {
+        "lineNumber": 188,
+        "author": {
+          "gitId": "nicktohzyu"
+        },
+        "content": "                if (appointments.get(i).isSameAppointment(appointments.get(j))) {"
+      },
+      {
+        "lineNumber": 189,
+        "author": {
+          "gitId": "nicktohzyu"
+        },
+        "content": "                    return false;"
+      },
+      {
+        "lineNumber": 190,
+        "author": {
+          "gitId": "nicktohzyu"
+        },
+        "content": "                }"
+      },
+      {
+        "lineNumber": 191,
+        "author": {
+          "gitId": "nicktohzyu"
+        },
+        "content": "            }"
+      },
+      {
+        "lineNumber": 192,
+        "author": {
+          "gitId": "nicktohzyu"
+        },
+        "content": "        }"
+      },
+      {
+        "lineNumber": 193,
+        "author": {
+          "gitId": "nicktohzyu"
+        },
+        "content": "        return true;"
+      },
+      {
+        "lineNumber": 194,
+        "author": {
+          "gitId": "nicktohzyu"
+        },
+        "content": "    }"
+      },
+      {
+        "lineNumber": 195,
+        "author": {
+          "gitId": "nicktohzyu"
+        },
+        "content": "}"
+      }
+    ],
+    "authorContributionMap": {
+      "nicktohzyu": 195
+    }
+  },
+  {
     "path": "src/main/java/seedu/address/model/appointment/exceptions/AppointmentNotFoundException.java",
     "fileType": "functional-code",
     "lines": [
@@ -37410,6 +38784,2892 @@
     }
   },
   {
+    "path": "src/main/java/seedu/address/ui/ClientCard.java",
+    "fileType": "functional-code",
+    "lines": [
+      {
+        "lineNumber": 1,
+        "author": {
+          "gitId": "ya0-yuan"
+        },
+        "content": "//package seedu.address.ui;"
+      },
+      {
+        "lineNumber": 2,
+        "author": {
+          "gitId": "ya0-yuan"
+        },
+        "content": "//import javafx.fxml.FXML;"
+      },
+      {
+        "lineNumber": 3,
+        "author": {
+          "gitId": "ya0-yuan"
+        },
+        "content": "//import javafx.scene.control.Label;"
+      },
+      {
+        "lineNumber": 4,
+        "author": {
+          "gitId": "ya0-yuan"
+        },
+        "content": "//import javafx.scene.layout.FlowPane;"
+      },
+      {
+        "lineNumber": 5,
+        "author": {
+          "gitId": "ya0-yuan"
+        },
+        "content": "//import javafx.scene.layout.HBox;"
+      },
+      {
+        "lineNumber": 6,
+        "author": {
+          "gitId": "ya0-yuan"
+        },
+        "content": "//import javafx.scene.layout.Region;"
+      },
+      {
+        "lineNumber": 7,
+        "author": {
+          "gitId": "ya0-yuan"
+        },
+        "content": "//import seedu.address.model.person.client.Client;"
+      },
+      {
+        "lineNumber": 8,
+        "author": {
+          "gitId": "ya0-yuan"
+        },
+        "content": "//import seedu.address.ui.UiPart;"
+      },
+      {
+        "lineNumber": 9,
+        "author": {
+          "gitId": "ya0-yuan"
+        },
+        "content": "//"
+      },
+      {
+        "lineNumber": 10,
+        "author": {
+          "gitId": "ya0-yuan"
+        },
+        "content": "///**"
+      },
+      {
+        "lineNumber": 11,
+        "author": {
+          "gitId": "ya0-yuan"
+        },
+        "content": "// * An UI component that displays information of a {@code Client}."
+      },
+      {
+        "lineNumber": 12,
+        "author": {
+          "gitId": "ya0-yuan"
+        },
+        "content": "// */"
+      },
+      {
+        "lineNumber": 13,
+        "author": {
+          "gitId": "ya0-yuan"
+        },
+        "content": "//public class ClientCard extends UiPart\u003cRegion\u003e {"
+      },
+      {
+        "lineNumber": 14,
+        "author": {
+          "gitId": "ya0-yuan"
+        },
+        "content": "//"
+      },
+      {
+        "lineNumber": 15,
+        "author": {
+          "gitId": "ya0-yuan"
+        },
+        "content": "//    private static final String FXML \u003d \"ClientListCard.fxml\";"
+      },
+      {
+        "lineNumber": 16,
+        "author": {
+          "gitId": "ya0-yuan"
+        },
+        "content": "//"
+      },
+      {
+        "lineNumber": 17,
+        "author": {
+          "gitId": "ya0-yuan"
+        },
+        "content": "//    /**"
+      },
+      {
+        "lineNumber": 18,
+        "author": {
+          "gitId": "ya0-yuan"
+        },
+        "content": "//     * Note: Certain keywords such as \"location\" and \"resources\" are reserved keywords in JavaFX."
+      },
+      {
+        "lineNumber": 19,
+        "author": {
+          "gitId": "ya0-yuan"
+        },
+        "content": "//     * As a consequence, UI elements\u0027 variable names cannot be set to such keywords"
+      },
+      {
+        "lineNumber": 20,
+        "author": {
+          "gitId": "ya0-yuan"
+        },
+        "content": "//     * or an exception will be thrown by JavaFX during runtime."
+      },
+      {
+        "lineNumber": 21,
+        "author": {
+          "gitId": "ya0-yuan"
+        },
+        "content": "//     *"
+      },
+      {
+        "lineNumber": 22,
+        "author": {
+          "gitId": "ya0-yuan"
+        },
+        "content": "//     * @see \u003ca href\u003d\"https://github.com/se-edu/addressbook-level4/issues/336\"\u003eThe issue on DocX level 4\u003c/a\u003e"
+      },
+      {
+        "lineNumber": 23,
+        "author": {
+          "gitId": "ya0-yuan"
+        },
+        "content": "//     */"
+      },
+      {
+        "lineNumber": 24,
+        "author": {
+          "gitId": "ya0-yuan"
+        },
+        "content": "//"
+      },
+      {
+        "lineNumber": 25,
+        "author": {
+          "gitId": "ya0-yuan"
+        },
+        "content": "//    public final Client client;"
+      },
+      {
+        "lineNumber": 26,
+        "author": {
+          "gitId": "ya0-yuan"
+        },
+        "content": "//"
+      },
+      {
+        "lineNumber": 27,
+        "author": {
+          "gitId": "ya0-yuan"
+        },
+        "content": "//    @FXML"
+      },
+      {
+        "lineNumber": 28,
+        "author": {
+          "gitId": "ya0-yuan"
+        },
+        "content": "//    private HBox cardPane;"
+      },
+      {
+        "lineNumber": 29,
+        "author": {
+          "gitId": "ya0-yuan"
+        },
+        "content": "//    @FXML"
+      },
+      {
+        "lineNumber": 30,
+        "author": {
+          "gitId": "ya0-yuan"
+        },
+        "content": "//    private Label id;"
+      },
+      {
+        "lineNumber": 31,
+        "author": {
+          "gitId": "ya0-yuan"
+        },
+        "content": "//    @FXML"
+      },
+      {
+        "lineNumber": 32,
+        "author": {
+          "gitId": "ya0-yuan"
+        },
+        "content": "//    private Label name;"
+      },
+      {
+        "lineNumber": 33,
+        "author": {
+          "gitId": "ya0-yuan"
+        },
+        "content": "//    @FXML"
+      },
+      {
+        "lineNumber": 34,
+        "author": {
+          "gitId": "ya0-yuan"
+        },
+        "content": "//    private Label pid;"
+      },
+      {
+        "lineNumber": 35,
+        "author": {
+          "gitId": "ya0-yuan"
+        },
+        "content": "//    @FXML"
+      },
+      {
+        "lineNumber": 36,
+        "author": {
+          "gitId": "ya0-yuan"
+        },
+        "content": "//    private Label gender;"
+      },
+      {
+        "lineNumber": 37,
+        "author": {
+          "gitId": "ya0-yuan"
+        },
+        "content": "//    @FXML"
+      },
+      {
+        "lineNumber": 38,
+        "author": {
+          "gitId": "ya0-yuan"
+        },
+        "content": "//    private Label age;"
+      },
+      {
+        "lineNumber": 39,
+        "author": {
+          "gitId": "ya0-yuan"
+        },
+        "content": "//    @FXML"
+      },
+      {
+        "lineNumber": 40,
+        "author": {
+          "gitId": "ya0-yuan"
+        },
+        "content": "//    private Label phone;"
+      },
+      {
+        "lineNumber": 41,
+        "author": {
+          "gitId": "ya0-yuan"
+        },
+        "content": "//    @FXML"
+      },
+      {
+        "lineNumber": 42,
+        "author": {
+          "gitId": "ya0-yuan"
+        },
+        "content": "//    private Label address;"
+      },
+      {
+        "lineNumber": 43,
+        "author": {
+          "gitId": "ya0-yuan"
+        },
+        "content": "//    @FXML"
+      },
+      {
+        "lineNumber": 44,
+        "author": {
+          "gitId": "ya0-yuan"
+        },
+        "content": "//    private FlowPane tags;"
+      },
+      {
+        "lineNumber": 45,
+        "author": {
+          "gitId": "ya0-yuan"
+        },
+        "content": "//    @FXML"
+      },
+      {
+        "lineNumber": 46,
+        "author": {
+          "gitId": "ya0-yuan"
+        },
+        "content": "//    private Label appointmentStatus;"
+      },
+      {
+        "lineNumber": 47,
+        "author": {
+          "gitId": "ya0-yuan"
+        },
+        "content": "//"
+      },
+      {
+        "lineNumber": 48,
+        "author": {
+          "gitId": "ya0-yuan"
+        },
+        "content": "//    public ClientCard(Client client, int displayedIndex) {"
+      },
+      {
+        "lineNumber": 49,
+        "author": {
+          "gitId": "ya0-yuan"
+        },
+        "content": "//        super(FXML);"
+      },
+      {
+        "lineNumber": 50,
+        "author": {
+          "gitId": "ya0-yuan"
+        },
+        "content": "//        this.client \u003d client;"
+      },
+      {
+        "lineNumber": 51,
+        "author": {
+          "gitId": "ya0-yuan"
+        },
+        "content": "//        id.setText(displayedIndex + \". \");"
+      },
+      {
+        "lineNumber": 52,
+        "author": {
+          "gitId": "ya0-yuan"
+        },
+        "content": "//        name.setText(client.getName().fullName);"
+      },
+      {
+        "lineNumber": 53,
+        "author": {
+          "gitId": "ya0-yuan"
+        },
+        "content": "//        pid.setText(\"| pid: \" + client.getIdToString());"
+      },
+      {
+        "lineNumber": 54,
+        "author": {
+          "gitId": "ya0-yuan"
+        },
+        "content": "//        gender.setText(client.getGender().value);"
+      },
+      {
+        "lineNumber": 55,
+        "author": {
+          "gitId": "ya0-yuan"
+        },
+        "content": "//        phone.setText(client.getPhone().value);"
+      },
+      {
+        "lineNumber": 56,
+        "author": {
+          "gitId": "ya0-yuan"
+        },
+        "content": "//        address.setText(client.getAddress().value);"
+      },
+      {
+        "lineNumber": 57,
+        "author": {
+          "gitId": "ya0-yuan"
+        },
+        "content": "//"
+      },
+      {
+        "lineNumber": 58,
+        "author": {
+          "gitId": "ya0-yuan"
+        },
+        "content": "//        client.getTags().forEach(tag -\u003e tags.getChildren().add(new Label(tag.tagName)));"
+      },
+      {
+        "lineNumber": 59,
+        "author": {
+          "gitId": "ya0-yuan"
+        },
+        "content": "//"
+      },
+      {
+        "lineNumber": 60,
+        "author": {
+          "gitId": "ya0-yuan"
+        },
+        "content": "//        //String appointmentStatusString \u003d client.getAppointmentStatus().toString();"
+      },
+      {
+        "lineNumber": 61,
+        "author": {
+          "gitId": "ya0-yuan"
+        },
+        "content": "//        //appointmentStatus.setText(appointmentStatusString);"
+      },
+      {
+        "lineNumber": 62,
+        "author": {
+          "gitId": "ya0-yuan"
+        },
+        "content": "//"
+      },
+      {
+        "lineNumber": 63,
+        "author": {
+          "gitId": "ya0-yuan"
+        },
+        "content": "//    }"
+      },
+      {
+        "lineNumber": 64,
+        "author": {
+          "gitId": "ya0-yuan"
+        },
+        "content": "//"
+      },
+      {
+        "lineNumber": 65,
+        "author": {
+          "gitId": "ya0-yuan"
+        },
+        "content": "//    @Override"
+      },
+      {
+        "lineNumber": 66,
+        "author": {
+          "gitId": "ya0-yuan"
+        },
+        "content": "//    public boolean equals(Object other) {"
+      },
+      {
+        "lineNumber": 67,
+        "author": {
+          "gitId": "ya0-yuan"
+        },
+        "content": "//        // short circuit if same object"
+      },
+      {
+        "lineNumber": 68,
+        "author": {
+          "gitId": "ya0-yuan"
+        },
+        "content": "//        if (other \u003d\u003d this) {"
+      },
+      {
+        "lineNumber": 69,
+        "author": {
+          "gitId": "ya0-yuan"
+        },
+        "content": "//            return true;"
+      },
+      {
+        "lineNumber": 70,
+        "author": {
+          "gitId": "ya0-yuan"
+        },
+        "content": "//        }"
+      },
+      {
+        "lineNumber": 71,
+        "author": {
+          "gitId": "ya0-yuan"
+        },
+        "content": "//"
+      },
+      {
+        "lineNumber": 72,
+        "author": {
+          "gitId": "ya0-yuan"
+        },
+        "content": "//        // instanceof handles nulls"
+      },
+      {
+        "lineNumber": 73,
+        "author": {
+          "gitId": "ya0-yuan"
+        },
+        "content": "//        if (!(other instanceof ClientCard)) {"
+      },
+      {
+        "lineNumber": 74,
+        "author": {
+          "gitId": "ya0-yuan"
+        },
+        "content": "//            return false;"
+      },
+      {
+        "lineNumber": 75,
+        "author": {
+          "gitId": "ya0-yuan"
+        },
+        "content": "//        }"
+      },
+      {
+        "lineNumber": 76,
+        "author": {
+          "gitId": "ya0-yuan"
+        },
+        "content": "//"
+      },
+      {
+        "lineNumber": 77,
+        "author": {
+          "gitId": "ya0-yuan"
+        },
+        "content": "//        // state check"
+      },
+      {
+        "lineNumber": 78,
+        "author": {
+          "gitId": "ya0-yuan"
+        },
+        "content": "//        ClientCard card \u003d (ClientCard) other;"
+      },
+      {
+        "lineNumber": 79,
+        "author": {
+          "gitId": "ya0-yuan"
+        },
+        "content": "//        return id.getText().equals(card.id.getText())"
+      },
+      {
+        "lineNumber": 80,
+        "author": {
+          "gitId": "ya0-yuan"
+        },
+        "content": "//                \u0026\u0026 client.equals(card.client);"
+      },
+      {
+        "lineNumber": 81,
+        "author": {
+          "gitId": "ya0-yuan"
+        },
+        "content": "//    }"
+      },
+      {
+        "lineNumber": 82,
+        "author": {
+          "gitId": "ya0-yuan"
+        },
+        "content": "//}"
+      }
+    ],
+    "authorContributionMap": {
+      "ya0-yuan": 82
+    }
+  },
+  {
+    "path": "src/main/java/seedu/address/ui/ClientListPanel.java",
+    "fileType": "functional-code",
+    "lines": [
+      {
+        "lineNumber": 1,
+        "author": {
+          "gitId": "ya0-yuan"
+        },
+        "content": "////package seedu.address.ui;"
+      },
+      {
+        "lineNumber": 2,
+        "author": {
+          "gitId": "ya0-yuan"
+        },
+        "content": "////"
+      },
+      {
+        "lineNumber": 3,
+        "author": {
+          "gitId": "ya0-yuan"
+        },
+        "content": "////import java.util.logging.Logger;"
+      },
+      {
+        "lineNumber": 4,
+        "author": {
+          "gitId": "ya0-yuan"
+        },
+        "content": "////"
+      },
+      {
+        "lineNumber": 5,
+        "author": {
+          "gitId": "ya0-yuan"
+        },
+        "content": "////import javafx.collections.ObservableList;"
+      },
+      {
+        "lineNumber": 6,
+        "author": {
+          "gitId": "ya0-yuan"
+        },
+        "content": "////import javafx.fxml.FXML;"
+      },
+      {
+        "lineNumber": 7,
+        "author": {
+          "gitId": "ya0-yuan"
+        },
+        "content": "////import javafx.scene.control.ListCell;"
+      },
+      {
+        "lineNumber": 8,
+        "author": {
+          "gitId": "ya0-yuan"
+        },
+        "content": "////import javafx.scene.control.ListView;"
+      },
+      {
+        "lineNumber": 9,
+        "author": {
+          "gitId": "ya0-yuan"
+        },
+        "content": "////import javafx.scene.layout.Region;"
+      },
+      {
+        "lineNumber": 10,
+        "author": {
+          "gitId": "ya0-yuan"
+        },
+        "content": "////import seedu.address.commons.core.LogsCenter;"
+      },
+      {
+        "lineNumber": 11,
+        "author": {
+          "gitId": "ya0-yuan"
+        },
+        "content": "////import seedu.address.model.person.Person;"
+      },
+      {
+        "lineNumber": 12,
+        "author": {
+          "gitId": "ya0-yuan"
+        },
+        "content": "////import seedu.address.model.person.client.Client;"
+      },
+      {
+        "lineNumber": 13,
+        "author": {
+          "gitId": "ya0-yuan"
+        },
+        "content": "////"
+      },
+      {
+        "lineNumber": 14,
+        "author": {
+          "gitId": "ya0-yuan"
+        },
+        "content": "/////**"
+      },
+      {
+        "lineNumber": 15,
+        "author": {
+          "gitId": "ya0-yuan"
+        },
+        "content": "//// * Panel containing the list of persons."
+      },
+      {
+        "lineNumber": 16,
+        "author": {
+          "gitId": "ya0-yuan"
+        },
+        "content": "//// */"
+      },
+      {
+        "lineNumber": 17,
+        "author": {
+          "gitId": "ya0-yuan"
+        },
+        "content": "////public class ClientListPanel extends UiPart\u003cRegion\u003e {"
+      },
+      {
+        "lineNumber": 18,
+        "author": {
+          "gitId": "ya0-yuan"
+        },
+        "content": "////    private static final String FXML \u003d \"ClientListPanel.fxml\";"
+      },
+      {
+        "lineNumber": 19,
+        "author": {
+          "gitId": "ya0-yuan"
+        },
+        "content": "////    private final Logger logger \u003d LogsCenter.getLogger(ClientListPanel.class);"
+      },
+      {
+        "lineNumber": 20,
+        "author": {
+          "gitId": "ya0-yuan"
+        },
+        "content": "////"
+      },
+      {
+        "lineNumber": 21,
+        "author": {
+          "gitId": "ya0-yuan"
+        },
+        "content": "////    @FXML"
+      },
+      {
+        "lineNumber": 22,
+        "author": {
+          "gitId": "ya0-yuan"
+        },
+        "content": "////    private ListView\u003cClient\u003e clientListView;"
+      },
+      {
+        "lineNumber": 23,
+        "author": {
+          "gitId": "ya0-yuan"
+        },
+        "content": "////"
+      },
+      {
+        "lineNumber": 24,
+        "author": {
+          "gitId": "ya0-yuan"
+        },
+        "content": "////    /**"
+      },
+      {
+        "lineNumber": 25,
+        "author": {
+          "gitId": "ya0-yuan"
+        },
+        "content": "////     * Creates a {@code ClientListPanel} with the given {@code ObservableList}."
+      },
+      {
+        "lineNumber": 26,
+        "author": {
+          "gitId": "ya0-yuan"
+        },
+        "content": "////     */"
+      },
+      {
+        "lineNumber": 27,
+        "author": {
+          "gitId": "ya0-yuan"
+        },
+        "content": "////    public ClientListPanel(ObservableList\u003cClient\u003e clientList) {"
+      },
+      {
+        "lineNumber": 28,
+        "author": {
+          "gitId": "ya0-yuan"
+        },
+        "content": "////        super(FXML);"
+      },
+      {
+        "lineNumber": 29,
+        "author": {
+          "gitId": "ya0-yuan"
+        },
+        "content": "////        clientListView.setItems(clientList);"
+      },
+      {
+        "lineNumber": 30,
+        "author": {
+          "gitId": "ya0-yuan"
+        },
+        "content": "////        clientListView.setCellFactory(listView -\u003e new ClientListViewCell());"
+      },
+      {
+        "lineNumber": 31,
+        "author": {
+          "gitId": "ya0-yuan"
+        },
+        "content": "////    }"
+      },
+      {
+        "lineNumber": 32,
+        "author": {
+          "gitId": "ya0-yuan"
+        },
+        "content": "////"
+      },
+      {
+        "lineNumber": 33,
+        "author": {
+          "gitId": "ya0-yuan"
+        },
+        "content": "////    /**"
+      },
+      {
+        "lineNumber": 34,
+        "author": {
+          "gitId": "ya0-yuan"
+        },
+        "content": "////     * Custom {@code ListCell} that displays the graphics of a {@code Client} using a {@code ClientCard}."
+      },
+      {
+        "lineNumber": 35,
+        "author": {
+          "gitId": "ya0-yuan"
+        },
+        "content": "////     */"
+      },
+      {
+        "lineNumber": 36,
+        "author": {
+          "gitId": "ya0-yuan"
+        },
+        "content": "////    class ClientListViewCell extends ListCell\u003cClient\u003e {"
+      },
+      {
+        "lineNumber": 37,
+        "author": {
+          "gitId": "ya0-yuan"
+        },
+        "content": "////        @Override"
+      },
+      {
+        "lineNumber": 38,
+        "author": {
+          "gitId": "ya0-yuan"
+        },
+        "content": "////        protected void updateItem(Client client, boolean empty) {"
+      },
+      {
+        "lineNumber": 39,
+        "author": {
+          "gitId": "ya0-yuan"
+        },
+        "content": "////            super.updateItem(client, empty);"
+      },
+      {
+        "lineNumber": 40,
+        "author": {
+          "gitId": "ya0-yuan"
+        },
+        "content": "////"
+      },
+      {
+        "lineNumber": 41,
+        "author": {
+          "gitId": "ya0-yuan"
+        },
+        "content": "////            if (empty || client \u003d\u003d null) {"
+      },
+      {
+        "lineNumber": 42,
+        "author": {
+          "gitId": "ya0-yuan"
+        },
+        "content": "////                setGraphic(null);"
+      },
+      {
+        "lineNumber": 43,
+        "author": {
+          "gitId": "ya0-yuan"
+        },
+        "content": "////                setText(null);"
+      },
+      {
+        "lineNumber": 44,
+        "author": {
+          "gitId": "ya0-yuan"
+        },
+        "content": "////            } else {"
+      },
+      {
+        "lineNumber": 45,
+        "author": {
+          "gitId": "ya0-yuan"
+        },
+        "content": "////                setGraphic(new ClientCard(client, getIndex() + 1).getRoot());"
+      },
+      {
+        "lineNumber": 46,
+        "author": {
+          "gitId": "ya0-yuan"
+        },
+        "content": "////            }"
+      },
+      {
+        "lineNumber": 47,
+        "author": {
+          "gitId": "ya0-yuan"
+        },
+        "content": "////        }"
+      },
+      {
+        "lineNumber": 48,
+        "author": {
+          "gitId": "ya0-yuan"
+        },
+        "content": "////    }"
+      },
+      {
+        "lineNumber": 49,
+        "author": {
+          "gitId": "ya0-yuan"
+        },
+        "content": "////"
+      },
+      {
+        "lineNumber": 50,
+        "author": {
+          "gitId": "ya0-yuan"
+        },
+        "content": "////}"
+      },
+      {
+        "lineNumber": 51,
+        "author": {
+          "gitId": "ya0-yuan"
+        },
+        "content": "//"
+      },
+      {
+        "lineNumber": 52,
+        "author": {
+          "gitId": "ya0-yuan"
+        },
+        "content": "//"
+      },
+      {
+        "lineNumber": 53,
+        "author": {
+          "gitId": "ya0-yuan"
+        },
+        "content": "//import java.util.Objects;"
+      },
+      {
+        "lineNumber": 54,
+        "author": {
+          "gitId": "ya0-yuan"
+        },
+        "content": "//import java.util.function.Consumer;"
+      },
+      {
+        "lineNumber": 55,
+        "author": {
+          "gitId": "ya0-yuan"
+        },
+        "content": "//import java.util.logging.Logger;"
+      },
+      {
+        "lineNumber": 56,
+        "author": {
+          "gitId": "ya0-yuan"
+        },
+        "content": "//"
+      },
+      {
+        "lineNumber": 57,
+        "author": {
+          "gitId": "ya0-yuan"
+        },
+        "content": "//import javafx.beans.value.ObservableValue;"
+      },
+      {
+        "lineNumber": 58,
+        "author": {
+          "gitId": "ya0-yuan"
+        },
+        "content": "//import javafx.collections.ObservableList;"
+      },
+      {
+        "lineNumber": 59,
+        "author": {
+          "gitId": "ya0-yuan"
+        },
+        "content": "//import javafx.fxml.FXML;"
+      },
+      {
+        "lineNumber": 60,
+        "author": {
+          "gitId": "ya0-yuan"
+        },
+        "content": "//import javafx.scene.control.ListCell;"
+      },
+      {
+        "lineNumber": 61,
+        "author": {
+          "gitId": "ya0-yuan"
+        },
+        "content": "//import javafx.scene.control.ListView;"
+      },
+      {
+        "lineNumber": 62,
+        "author": {
+          "gitId": "ya0-yuan"
+        },
+        "content": "//import javafx.scene.layout.Region;"
+      },
+      {
+        "lineNumber": 63,
+        "author": {
+          "gitId": "ya0-yuan"
+        },
+        "content": "//import seedu.address.commons.core.LogsCenter;"
+      },
+      {
+        "lineNumber": 64,
+        "author": {
+          "gitId": "ya0-yuan"
+        },
+        "content": "//import seedu.address.model.person.client.Client;"
+      },
+      {
+        "lineNumber": 65,
+        "author": {
+          "gitId": "ya0-yuan"
+        },
+        "content": "//import seedu.address.model.person.patient.Patient;"
+      },
+      {
+        "lineNumber": 66,
+        "author": {
+          "gitId": "ya0-yuan"
+        },
+        "content": "//import seedu.address.ui.UiPart;"
+      },
+      {
+        "lineNumber": 67,
+        "author": {
+          "gitId": "ya0-yuan"
+        },
+        "content": "//"
+      },
+      {
+        "lineNumber": 68,
+        "author": {
+          "gitId": "ya0-yuan"
+        },
+        "content": "///**"
+      },
+      {
+        "lineNumber": 69,
+        "author": {
+          "gitId": "ya0-yuan"
+        },
+        "content": "// * Panel containing the list of patients."
+      },
+      {
+        "lineNumber": 70,
+        "author": {
+          "gitId": "ya0-yuan"
+        },
+        "content": "// */"
+      },
+      {
+        "lineNumber": 71,
+        "author": {
+          "gitId": "ya0-yuan"
+        },
+        "content": "//public class ClientListPanel extends UiPart\u003cRegion\u003e {"
+      },
+      {
+        "lineNumber": 72,
+        "author": {
+          "gitId": "ya0-yuan"
+        },
+        "content": "//    private static final String FXML \u003d \"ClientListPanel.fxml\";"
+      },
+      {
+        "lineNumber": 73,
+        "author": {
+          "gitId": "ya0-yuan"
+        },
+        "content": "//    private final Logger logger \u003d LogsCenter.getLogger(ClientListPanel.class);"
+      },
+      {
+        "lineNumber": 74,
+        "author": {
+          "gitId": "ya0-yuan"
+        },
+        "content": "//"
+      },
+      {
+        "lineNumber": 75,
+        "author": {
+          "gitId": "ya0-yuan"
+        },
+        "content": "//    @FXML"
+      },
+      {
+        "lineNumber": 76,
+        "author": {
+          "gitId": "ya0-yuan"
+        },
+        "content": "//    private ListView\u003cClient\u003e patientListView;"
+      },
+      {
+        "lineNumber": 77,
+        "author": {
+          "gitId": "ya0-yuan"
+        },
+        "content": "//"
+      },
+      {
+        "lineNumber": 78,
+        "author": {
+          "gitId": "ya0-yuan"
+        },
+        "content": "//    public ClientListPanel(ObservableList\u003cClient\u003e patientList, ObservableValue\u003cClient\u003e selectedPatient,"
+      },
+      {
+        "lineNumber": 79,
+        "author": {
+          "gitId": "ya0-yuan"
+        },
+        "content": "//                            Consumer\u003cClient\u003e onSelectedClientChange) {"
+      },
+      {
+        "lineNumber": 80,
+        "author": {
+          "gitId": "ya0-yuan"
+        },
+        "content": "//        super(FXML);"
+      },
+      {
+        "lineNumber": 81,
+        "author": {
+          "gitId": "ya0-yuan"
+        },
+        "content": "//        patientListView.setItems(patientList);"
+      },
+      {
+        "lineNumber": 82,
+        "author": {
+          "gitId": "ya0-yuan"
+        },
+        "content": "//        patientListView.setCellFactory(listView -\u003e new ClientListViewCell());"
+      },
+      {
+        "lineNumber": 83,
+        "author": {
+          "gitId": "ya0-yuan"
+        },
+        "content": "//        patientListView.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -\u003e {"
+      },
+      {
+        "lineNumber": 84,
+        "author": {
+          "gitId": "ya0-yuan"
+        },
+        "content": "//            logger.fine(\"Selection in patient list panel changed to : \u0027\" + newValue + \"\u0027\");"
+      },
+      {
+        "lineNumber": 85,
+        "author": {
+          "gitId": "ya0-yuan"
+        },
+        "content": "//            onSelectedPatientChange.accept(newValue);"
+      },
+      {
+        "lineNumber": 86,
+        "author": {
+          "gitId": "ya0-yuan"
+        },
+        "content": "//        });"
+      },
+      {
+        "lineNumber": 87,
+        "author": {
+          "gitId": "ya0-yuan"
+        },
+        "content": "//        selectedPatient.addListener((observable, oldValue, newValue) -\u003e {"
+      },
+      {
+        "lineNumber": 88,
+        "author": {
+          "gitId": "ya0-yuan"
+        },
+        "content": "//            logger.fine(\"Selected patient changed to: \" + newValue);"
+      },
+      {
+        "lineNumber": 89,
+        "author": {
+          "gitId": "ya0-yuan"
+        },
+        "content": "//"
+      },
+      {
+        "lineNumber": 90,
+        "author": {
+          "gitId": "ya0-yuan"
+        },
+        "content": "//            // Don\u0027t modify selection if we are already selecting the selected patient,"
+      },
+      {
+        "lineNumber": 91,
+        "author": {
+          "gitId": "ya0-yuan"
+        },
+        "content": "//            // otherwise we would have an infinite loop."
+      },
+      {
+        "lineNumber": 92,
+        "author": {
+          "gitId": "ya0-yuan"
+        },
+        "content": "//            if (Objects.equals(patientListView.getSelectionModel().getSelectedItem(), newValue)) {"
+      },
+      {
+        "lineNumber": 93,
+        "author": {
+          "gitId": "ya0-yuan"
+        },
+        "content": "//                return;"
+      },
+      {
+        "lineNumber": 94,
+        "author": {
+          "gitId": "ya0-yuan"
+        },
+        "content": "//            }"
+      },
+      {
+        "lineNumber": 95,
+        "author": {
+          "gitId": "ya0-yuan"
+        },
+        "content": "//"
+      },
+      {
+        "lineNumber": 96,
+        "author": {
+          "gitId": "ya0-yuan"
+        },
+        "content": "//            if (newValue \u003d\u003d null) {"
+      },
+      {
+        "lineNumber": 97,
+        "author": {
+          "gitId": "ya0-yuan"
+        },
+        "content": "//                patientListView.getSelectionModel().clearSelection();"
+      },
+      {
+        "lineNumber": 98,
+        "author": {
+          "gitId": "ya0-yuan"
+        },
+        "content": "//            } else {"
+      },
+      {
+        "lineNumber": 99,
+        "author": {
+          "gitId": "ya0-yuan"
+        },
+        "content": "//                int index \u003d patientListView.getItems().indexOf(newValue);"
+      },
+      {
+        "lineNumber": 100,
+        "author": {
+          "gitId": "ya0-yuan"
+        },
+        "content": "//                patientListView.scrollTo(index);"
+      },
+      {
+        "lineNumber": 101,
+        "author": {
+          "gitId": "ya0-yuan"
+        },
+        "content": "//                patientListView.getSelectionModel().clearAndSelect(index);"
+      },
+      {
+        "lineNumber": 102,
+        "author": {
+          "gitId": "ya0-yuan"
+        },
+        "content": "//            }"
+      },
+      {
+        "lineNumber": 103,
+        "author": {
+          "gitId": "ya0-yuan"
+        },
+        "content": "//        });"
+      },
+      {
+        "lineNumber": 104,
+        "author": {
+          "gitId": "ya0-yuan"
+        },
+        "content": "//    }"
+      },
+      {
+        "lineNumber": 105,
+        "author": {
+          "gitId": "ya0-yuan"
+        },
+        "content": "//"
+      },
+      {
+        "lineNumber": 106,
+        "author": {
+          "gitId": "ya0-yuan"
+        },
+        "content": "//    /**"
+      },
+      {
+        "lineNumber": 107,
+        "author": {
+          "gitId": "ya0-yuan"
+        },
+        "content": "//     * Custom {@code ListCell} that displays the graphics of a {@code Patient} using a {@code PatientCard}."
+      },
+      {
+        "lineNumber": 108,
+        "author": {
+          "gitId": "ya0-yuan"
+        },
+        "content": "//     */"
+      },
+      {
+        "lineNumber": 109,
+        "author": {
+          "gitId": "ya0-yuan"
+        },
+        "content": "//    class PatientListViewCell extends ListCell\u003cPatient\u003e {"
+      },
+      {
+        "lineNumber": 110,
+        "author": {
+          "gitId": "ya0-yuan"
+        },
+        "content": "//        @Override"
+      },
+      {
+        "lineNumber": 111,
+        "author": {
+          "gitId": "ya0-yuan"
+        },
+        "content": "//        protected void updateItem(Patient patient, boolean empty) {"
+      },
+      {
+        "lineNumber": 112,
+        "author": {
+          "gitId": "ya0-yuan"
+        },
+        "content": "//            super.updateItem(patient, empty);"
+      },
+      {
+        "lineNumber": 113,
+        "author": {
+          "gitId": "ya0-yuan"
+        },
+        "content": "//"
+      },
+      {
+        "lineNumber": 114,
+        "author": {
+          "gitId": "ya0-yuan"
+        },
+        "content": "//            if (empty || patient \u003d\u003d null) {"
+      },
+      {
+        "lineNumber": 115,
+        "author": {
+          "gitId": "ya0-yuan"
+        },
+        "content": "//                setGraphic(null);"
+      },
+      {
+        "lineNumber": 116,
+        "author": {
+          "gitId": "ya0-yuan"
+        },
+        "content": "//                setText(null);"
+      },
+      {
+        "lineNumber": 117,
+        "author": {
+          "gitId": "ya0-yuan"
+        },
+        "content": "//            } else {"
+      },
+      {
+        "lineNumber": 118,
+        "author": {
+          "gitId": "ya0-yuan"
+        },
+        "content": "//                setGraphic(new PatientCard(patient, getIndex() + 1).getRoot());"
+      },
+      {
+        "lineNumber": 119,
+        "author": {
+          "gitId": "ya0-yuan"
+        },
+        "content": "//            }"
+      },
+      {
+        "lineNumber": 120,
+        "author": {
+          "gitId": "ya0-yuan"
+        },
+        "content": "//        }"
+      },
+      {
+        "lineNumber": 121,
+        "author": {
+          "gitId": "ya0-yuan"
+        },
+        "content": "//    }"
+      },
+      {
+        "lineNumber": 122,
+        "author": {
+          "gitId": "ya0-yuan"
+        },
+        "content": "//"
+      },
+      {
+        "lineNumber": 123,
+        "author": {
+          "gitId": "ya0-yuan"
+        },
+        "content": "//}"
+      }
+    ],
+    "authorContributionMap": {
+      "ya0-yuan": 123
+    }
+  },
+  {
+    "path": "src/main/java/seedu/address/ui/HairdresserListPanel.java",
+    "fileType": "functional-code",
+    "lines": [
+      {
+        "lineNumber": 1,
+        "author": {
+          "gitId": "ya0-yuan"
+        },
+        "content": "package seedu.address.ui;"
+      },
+      {
+        "lineNumber": 2,
+        "author": {
+          "gitId": "ya0-yuan"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 3,
+        "author": {
+          "gitId": "ya0-yuan"
+        },
+        "content": "public class HairdresserListPanel {"
+      },
+      {
+        "lineNumber": 4,
+        "author": {
+          "gitId": "ya0-yuan"
+        },
+        "content": "}"
+      }
+    ],
+    "authorContributionMap": {
+      "ya0-yuan": 4
+    }
+  },
+  {
+    "path": "src/main/java/seedu/address/ui/MainWindow.java",
+    "fileType": "functional-code",
+    "lines": [
+      {
+        "lineNumber": 1,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "package seedu.address.ui;"
+      },
+      {
+        "lineNumber": 2,
+        "author": {
+          "gitId": "-"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 3,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "import java.util.logging.Logger;"
+      },
+      {
+        "lineNumber": 4,
+        "author": {
+          "gitId": "-"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 5,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "import javafx.event.ActionEvent;"
+      },
+      {
+        "lineNumber": 6,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "import javafx.fxml.FXML;"
+      },
+      {
+        "lineNumber": 7,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "import javafx.scene.control.MenuItem;"
+      },
+      {
+        "lineNumber": 8,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "import javafx.scene.control.TextInputControl;"
+      },
+      {
+        "lineNumber": 9,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "import javafx.scene.input.KeyCombination;"
+      },
+      {
+        "lineNumber": 10,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "import javafx.scene.input.KeyEvent;"
+      },
+      {
+        "lineNumber": 11,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "import javafx.scene.layout.StackPane;"
+      },
+      {
+        "lineNumber": 12,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "import javafx.stage.Stage;"
+      },
+      {
+        "lineNumber": 13,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "import seedu.address.commons.core.GuiSettings;"
+      },
+      {
+        "lineNumber": 14,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "import seedu.address.commons.core.LogsCenter;"
+      },
+      {
+        "lineNumber": 15,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "import seedu.address.logic.Logic;"
+      },
+      {
+        "lineNumber": 16,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "import seedu.address.logic.commands.CommandResult;"
+      },
+      {
+        "lineNumber": 17,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "import seedu.address.logic.commands.exceptions.CommandException;"
+      },
+      {
+        "lineNumber": 18,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "import seedu.address.logic.parser.exceptions.ParseException;"
+      },
+      {
+        "lineNumber": 19,
+        "author": {
+          "gitId": "-"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 20,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "/**"
+      },
+      {
+        "lineNumber": 21,
+        "author": {
+          "gitId": "-"
+        },
+        "content": " * The Main Window. Provides the basic application layout containing"
+      },
+      {
+        "lineNumber": 22,
+        "author": {
+          "gitId": "-"
+        },
+        "content": " * a menu bar and space where other JavaFX elements can be placed."
+      },
+      {
+        "lineNumber": 23,
+        "author": {
+          "gitId": "-"
+        },
+        "content": " */"
+      },
+      {
+        "lineNumber": 24,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "public class MainWindow extends UiPart\u003cStage\u003e {"
+      },
+      {
+        "lineNumber": 25,
+        "author": {
+          "gitId": "-"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 26,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "    private static final String FXML \u003d \"MainWindow.fxml\";"
+      },
+      {
+        "lineNumber": 27,
+        "author": {
+          "gitId": "-"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 28,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "    private final Logger logger \u003d LogsCenter.getLogger(getClass());"
+      },
+      {
+        "lineNumber": 29,
+        "author": {
+          "gitId": "-"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 30,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "    private Stage primaryStage;"
+      },
+      {
+        "lineNumber": 31,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "    private Logic logic;"
+      },
+      {
+        "lineNumber": 32,
+        "author": {
+          "gitId": "-"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 33,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "    // Independent Ui parts residing in this Ui container"
+      },
+      {
+        "lineNumber": 34,
+        "author": {
+          "gitId": "ya0-yuan"
+        },
+        "content": "    //private HairdresserListPanel hairdresserListPanel;"
+      },
+      {
+        "lineNumber": 35,
+        "author": {
+          "gitId": "ya0-yuan"
+        },
+        "content": "    //private ClientListPanel clientListPanel;"
+      },
+      {
+        "lineNumber": 36,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "    private PersonListPanel personListPanel;"
+      },
+      {
+        "lineNumber": 37,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "    private ResultDisplay resultDisplay;"
+      },
+      {
+        "lineNumber": 38,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "    private HelpWindow helpWindow;"
+      },
+      {
+        "lineNumber": 39,
+        "author": {
+          "gitId": "-"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 40,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "    @FXML"
+      },
+      {
+        "lineNumber": 41,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "    private StackPane commandBoxPlaceholder;"
+      },
+      {
+        "lineNumber": 42,
+        "author": {
+          "gitId": "-"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 43,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "    @FXML"
+      },
+      {
+        "lineNumber": 44,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "    private MenuItem helpMenuItem;"
+      },
+      {
+        "lineNumber": 45,
+        "author": {
+          "gitId": "-"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 46,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "    @FXML"
+      },
+      {
+        "lineNumber": 47,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "    private StackPane personListPanelPlaceholder;"
+      },
+      {
+        "lineNumber": 48,
+        "author": {
+          "gitId": "-"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 49,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "    @FXML"
+      },
+      {
+        "lineNumber": 50,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "    private StackPane resultDisplayPlaceholder;"
+      },
+      {
+        "lineNumber": 51,
+        "author": {
+          "gitId": "-"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 52,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "    @FXML"
+      },
+      {
+        "lineNumber": 53,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "    private StackPane statusbarPlaceholder;"
+      },
+      {
+        "lineNumber": 54,
+        "author": {
+          "gitId": "-"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 55,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "    /**"
+      },
+      {
+        "lineNumber": 56,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "     * Creates a {@code MainWindow} with the given {@code Stage} and {@code Logic}."
+      },
+      {
+        "lineNumber": 57,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "     */"
+      },
+      {
+        "lineNumber": 58,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "    public MainWindow(Stage primaryStage, Logic logic) {"
+      },
+      {
+        "lineNumber": 59,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "        super(FXML, primaryStage);"
+      },
+      {
+        "lineNumber": 60,
+        "author": {
+          "gitId": "-"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 61,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "        // Set dependencies"
+      },
+      {
+        "lineNumber": 62,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "        this.primaryStage \u003d primaryStage;"
+      },
+      {
+        "lineNumber": 63,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "        this.logic \u003d logic;"
+      },
+      {
+        "lineNumber": 64,
+        "author": {
+          "gitId": "-"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 65,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "        // Configure the UI"
+      },
+      {
+        "lineNumber": 66,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "        setWindowDefaultSize(logic.getGuiSettings());"
+      },
+      {
+        "lineNumber": 67,
+        "author": {
+          "gitId": "-"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 68,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "        setAccelerators();"
+      },
+      {
+        "lineNumber": 69,
+        "author": {
+          "gitId": "-"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 70,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "        helpWindow \u003d new HelpWindow();"
+      },
+      {
+        "lineNumber": 71,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "    }"
+      },
+      {
+        "lineNumber": 72,
+        "author": {
+          "gitId": "-"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 73,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "    public Stage getPrimaryStage() {"
+      },
+      {
+        "lineNumber": 74,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "        return primaryStage;"
+      },
+      {
+        "lineNumber": 75,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "    }"
+      },
+      {
+        "lineNumber": 76,
+        "author": {
+          "gitId": "-"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 77,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "    private void setAccelerators() {"
+      },
+      {
+        "lineNumber": 78,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "        setAccelerator(helpMenuItem, KeyCombination.valueOf(\"F1\"));"
+      },
+      {
+        "lineNumber": 79,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "    }"
+      },
+      {
+        "lineNumber": 80,
+        "author": {
+          "gitId": "-"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 81,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "    /**"
+      },
+      {
+        "lineNumber": 82,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "     * Sets the accelerator of a MenuItem."
+      },
+      {
+        "lineNumber": 83,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "     * @param keyCombination the KeyCombination value of the accelerator"
+      },
+      {
+        "lineNumber": 84,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "     */"
+      },
+      {
+        "lineNumber": 85,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "    private void setAccelerator(MenuItem menuItem, KeyCombination keyCombination) {"
+      },
+      {
+        "lineNumber": 86,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "        menuItem.setAccelerator(keyCombination);"
+      },
+      {
+        "lineNumber": 87,
+        "author": {
+          "gitId": "-"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 88,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "        /*"
+      },
+      {
+        "lineNumber": 89,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "         * TODO: the code below can be removed once the bug reported here"
+      },
+      {
+        "lineNumber": 90,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "         * https://bugs.openjdk.java.net/browse/JDK-8131666"
+      },
+      {
+        "lineNumber": 91,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "         * is fixed in later version of SDK."
+      },
+      {
+        "lineNumber": 92,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "         *"
+      },
+      {
+        "lineNumber": 93,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "         * According to the bug report, TextInputControl (TextField, TextArea) will"
+      },
+      {
+        "lineNumber": 94,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "         * consume function-key events. Because CommandBox contains a TextField, and"
+      },
+      {
+        "lineNumber": 95,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "         * ResultDisplay contains a TextArea, thus some accelerators (e.g F1) will"
+      },
+      {
+        "lineNumber": 96,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "         * not work when the focus is in them because the key event is consumed by"
+      },
+      {
+        "lineNumber": 97,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "         * the TextInputControl(s)."
+      },
+      {
+        "lineNumber": 98,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "         *"
+      },
+      {
+        "lineNumber": 99,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "         * For now, we add following event filter to capture such key events and open"
+      },
+      {
+        "lineNumber": 100,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "         * help window purposely so to support accelerators even when focus is"
+      },
+      {
+        "lineNumber": 101,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "         * in CommandBox or ResultDisplay."
+      },
+      {
+        "lineNumber": 102,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "         */"
+      },
+      {
+        "lineNumber": 103,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "        getRoot().addEventFilter(KeyEvent.KEY_PRESSED, event -\u003e {"
+      },
+      {
+        "lineNumber": 104,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "            if (event.getTarget() instanceof TextInputControl \u0026\u0026 keyCombination.match(event)) {"
+      },
+      {
+        "lineNumber": 105,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "                menuItem.getOnAction().handle(new ActionEvent());"
+      },
+      {
+        "lineNumber": 106,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "                event.consume();"
+      },
+      {
+        "lineNumber": 107,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "            }"
+      },
+      {
+        "lineNumber": 108,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "        });"
+      },
+      {
+        "lineNumber": 109,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "    }"
+      },
+      {
+        "lineNumber": 110,
+        "author": {
+          "gitId": "-"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 111,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "    /**"
+      },
+      {
+        "lineNumber": 112,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "     * Fills up all the placeholders of this window."
+      },
+      {
+        "lineNumber": 113,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "     */"
+      },
+      {
+        "lineNumber": 114,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "    void fillInnerParts() {"
+      },
+      {
+        "lineNumber": 115,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "        personListPanel \u003d new PersonListPanel(logic.getFilteredPersonList());"
+      },
+      {
+        "lineNumber": 116,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "        personListPanelPlaceholder.getChildren().add(personListPanel.getRoot());"
+      },
+      {
+        "lineNumber": 117,
+        "author": {
+          "gitId": "-"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 118,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "        resultDisplay \u003d new ResultDisplay();"
+      },
+      {
+        "lineNumber": 119,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "        resultDisplayPlaceholder.getChildren().add(resultDisplay.getRoot());"
+      },
+      {
+        "lineNumber": 120,
+        "author": {
+          "gitId": "-"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 121,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "        StatusBarFooter statusBarFooter \u003d new StatusBarFooter(logic.getAddressBookFilePath());"
+      },
+      {
+        "lineNumber": 122,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "        statusbarPlaceholder.getChildren().add(statusBarFooter.getRoot());"
+      },
+      {
+        "lineNumber": 123,
+        "author": {
+          "gitId": "-"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 124,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "        CommandBox commandBox \u003d new CommandBox(this::executeCommand);"
+      },
+      {
+        "lineNumber": 125,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "        commandBoxPlaceholder.getChildren().add(commandBox.getRoot());"
+      },
+      {
+        "lineNumber": 126,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "    }"
+      },
+      {
+        "lineNumber": 127,
+        "author": {
+          "gitId": "-"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 128,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "    /**"
+      },
+      {
+        "lineNumber": 129,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "     * Sets the default size based on {@code guiSettings}."
+      },
+      {
+        "lineNumber": 130,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "     */"
+      },
+      {
+        "lineNumber": 131,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "    private void setWindowDefaultSize(GuiSettings guiSettings) {"
+      },
+      {
+        "lineNumber": 132,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "        primaryStage.setHeight(guiSettings.getWindowHeight());"
+      },
+      {
+        "lineNumber": 133,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "        primaryStage.setWidth(guiSettings.getWindowWidth());"
+      },
+      {
+        "lineNumber": 134,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "        if (guiSettings.getWindowCoordinates() !\u003d null) {"
+      },
+      {
+        "lineNumber": 135,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "            primaryStage.setX(guiSettings.getWindowCoordinates().getX());"
+      },
+      {
+        "lineNumber": 136,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "            primaryStage.setY(guiSettings.getWindowCoordinates().getY());"
+      },
+      {
+        "lineNumber": 137,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "        }"
+      },
+      {
+        "lineNumber": 138,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "    }"
+      },
+      {
+        "lineNumber": 139,
+        "author": {
+          "gitId": "-"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 140,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "    /**"
+      },
+      {
+        "lineNumber": 141,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "     * Opens the help window or focuses on it if it\u0027s already opened."
+      },
+      {
+        "lineNumber": 142,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "     */"
+      },
+      {
+        "lineNumber": 143,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "    @FXML"
+      },
+      {
+        "lineNumber": 144,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "    public void handleHelp() {"
+      },
+      {
+        "lineNumber": 145,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "        if (!helpWindow.isShowing()) {"
+      },
+      {
+        "lineNumber": 146,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "            helpWindow.show();"
+      },
+      {
+        "lineNumber": 147,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "        } else {"
+      },
+      {
+        "lineNumber": 148,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "            helpWindow.focus();"
+      },
+      {
+        "lineNumber": 149,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "        }"
+      },
+      {
+        "lineNumber": 150,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "    }"
+      },
+      {
+        "lineNumber": 151,
+        "author": {
+          "gitId": "-"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 152,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "    void show() {"
+      },
+      {
+        "lineNumber": 153,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "        primaryStage.show();"
+      },
+      {
+        "lineNumber": 154,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "    }"
+      },
+      {
+        "lineNumber": 155,
+        "author": {
+          "gitId": "-"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 156,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "    /**"
+      },
+      {
+        "lineNumber": 157,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "     * Closes the application."
+      },
+      {
+        "lineNumber": 158,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "     */"
+      },
+      {
+        "lineNumber": 159,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "    @FXML"
+      },
+      {
+        "lineNumber": 160,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "    private void handleExit() {"
+      },
+      {
+        "lineNumber": 161,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "        GuiSettings guiSettings \u003d new GuiSettings(primaryStage.getWidth(), primaryStage.getHeight(),"
+      },
+      {
+        "lineNumber": 162,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "                (int) primaryStage.getX(), (int) primaryStage.getY());"
+      },
+      {
+        "lineNumber": 163,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "        logic.setGuiSettings(guiSettings);"
+      },
+      {
+        "lineNumber": 164,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "        helpWindow.hide();"
+      },
+      {
+        "lineNumber": 165,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "        primaryStage.hide();"
+      },
+      {
+        "lineNumber": 166,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "    }"
+      },
+      {
+        "lineNumber": 167,
+        "author": {
+          "gitId": "-"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 168,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "    public PersonListPanel getPersonListPanel() {"
+      },
+      {
+        "lineNumber": 169,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "        return personListPanel;"
+      },
+      {
+        "lineNumber": 170,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "    }"
+      },
+      {
+        "lineNumber": 171,
+        "author": {
+          "gitId": "-"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 172,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "    /**"
+      },
+      {
+        "lineNumber": 173,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "     * Executes the command and returns the result."
+      },
+      {
+        "lineNumber": 174,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "     *"
+      },
+      {
+        "lineNumber": 175,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "     * @see seedu.address.logic.Logic#execute(String)"
+      },
+      {
+        "lineNumber": 176,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "     */"
+      },
+      {
+        "lineNumber": 177,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "    private CommandResult executeCommand(String commandText) throws CommandException, ParseException {"
+      },
+      {
+        "lineNumber": 178,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "        try {"
+      },
+      {
+        "lineNumber": 179,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "            CommandResult commandResult \u003d logic.execute(commandText);"
+      },
+      {
+        "lineNumber": 180,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "            logger.info(\"Result: \" + commandResult.getFeedbackToUser());"
+      },
+      {
+        "lineNumber": 181,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "            resultDisplay.setFeedbackToUser(commandResult.getFeedbackToUser());"
+      },
+      {
+        "lineNumber": 182,
+        "author": {
+          "gitId": "-"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 183,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "            if (commandResult.isShowHelp()) {"
+      },
+      {
+        "lineNumber": 184,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "                handleHelp();"
+      },
+      {
+        "lineNumber": 185,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "            }"
+      },
+      {
+        "lineNumber": 186,
+        "author": {
+          "gitId": "-"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 187,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "            if (commandResult.isExit()) {"
+      },
+      {
+        "lineNumber": 188,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "                handleExit();"
+      },
+      {
+        "lineNumber": 189,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "            }"
+      },
+      {
+        "lineNumber": 190,
+        "author": {
+          "gitId": "-"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 191,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "            return commandResult;"
+      },
+      {
+        "lineNumber": 192,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "        } catch (CommandException | ParseException e) {"
+      },
+      {
+        "lineNumber": 193,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "            logger.info(\"Invalid command: \" + commandText);"
+      },
+      {
+        "lineNumber": 194,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "            resultDisplay.setFeedbackToUser(e.getMessage());"
+      },
+      {
+        "lineNumber": 195,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "            throw e;"
+      },
+      {
+        "lineNumber": 196,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "        }"
+      },
+      {
+        "lineNumber": 197,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "    }"
+      },
+      {
+        "lineNumber": 198,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "}"
+      }
+    ],
+    "authorContributionMap": {
+      "ya0-yuan": 2,
+      "-": 196
+    }
+  },
+  {
     "path": "src/main/java/seedu/address/ui/PersonCard.java",
     "fileType": "functional-code",
     "lines": [
@@ -37924,6 +42184,1387 @@
     }
   },
   {
+    "path": "src/main/resources/view/ClientListCard.fxml",
+    "fileType": "functional-code",
+    "lines": [
+      {
+        "lineNumber": 1,
+        "author": {
+          "gitId": "ya0-yuan"
+        },
+        "content": "\u003c?xml version\u003d\"1.0\" encoding\u003d\"UTF-8\"?\u003e"
+      },
+      {
+        "lineNumber": 2,
+        "author": {
+          "gitId": "ya0-yuan"
+        },
+        "content": "\u003c!--\u003c?xml version\u003d\"1.0\" encoding\u003d\"UTF-8\"?\u003e--\u003e"
+      },
+      {
+        "lineNumber": 3,
+        "author": {
+          "gitId": "ya0-yuan"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 4,
+        "author": {
+          "gitId": "ya0-yuan"
+        },
+        "content": "\u003c!--\u003c?import java.lang.*?\u003e--\u003e"
+      },
+      {
+        "lineNumber": 5,
+        "author": {
+          "gitId": "ya0-yuan"
+        },
+        "content": "\u003c!--\u003c?import java.util.*?\u003e--\u003e"
+      },
+      {
+        "lineNumber": 6,
+        "author": {
+          "gitId": "ya0-yuan"
+        },
+        "content": "\u003c!--\u003c?import javafx.scene.*?\u003e--\u003e"
+      },
+      {
+        "lineNumber": 7,
+        "author": {
+          "gitId": "ya0-yuan"
+        },
+        "content": "\u003c!--\u003c?import javafx.scene.control.*?\u003e--\u003e"
+      },
+      {
+        "lineNumber": 8,
+        "author": {
+          "gitId": "ya0-yuan"
+        },
+        "content": "\u003c!--\u003c?import javafx.scene.layout.*?\u003e--\u003e"
+      },
+      {
+        "lineNumber": 9,
+        "author": {
+          "gitId": "ya0-yuan"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 10,
+        "author": {
+          "gitId": "ya0-yuan"
+        },
+        "content": "\u003c!--\u003cAnchorPane xmlns\u003d\"http://javafx.com/javafx\"--\u003e"
+      },
+      {
+        "lineNumber": 11,
+        "author": {
+          "gitId": "ya0-yuan"
+        },
+        "content": "\u003c!--            xmlns:fx\u003d\"http://javafx.com/fxml\"--\u003e"
+      },
+      {
+        "lineNumber": 12,
+        "author": {
+          "gitId": "ya0-yuan"
+        },
+        "content": "\u003c!--            fx:controller\u003d\"view.ClientListCard\"--\u003e"
+      },
+      {
+        "lineNumber": 13,
+        "author": {
+          "gitId": "ya0-yuan"
+        },
+        "content": "\u003c!--            prefHeight\u003d\"400.0\" prefWidth\u003d\"600.0\"\u003e--\u003e"
+      },
+      {
+        "lineNumber": 14,
+        "author": {
+          "gitId": "ya0-yuan"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 15,
+        "author": {
+          "gitId": "ya0-yuan"
+        },
+        "content": "\u003c!--\u003c/AnchorPane\u003e--\u003e"
+      },
+      {
+        "lineNumber": 16,
+        "author": {
+          "gitId": "ya0-yuan"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 17,
+        "author": {
+          "gitId": "ya0-yuan"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 18,
+        "author": {
+          "gitId": "ya0-yuan"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 19,
+        "author": {
+          "gitId": "ya0-yuan"
+        },
+        "content": "\u003c!--\u003c?import javafx.scene.control.ListView?\u003e--\u003e"
+      },
+      {
+        "lineNumber": 20,
+        "author": {
+          "gitId": "ya0-yuan"
+        },
+        "content": "\u003c!--\u003c?import javafx.scene.layout.VBox?\u003e--\u003e"
+      },
+      {
+        "lineNumber": 21,
+        "author": {
+          "gitId": "ya0-yuan"
+        },
+        "content": "\u003c!--\u003cVBox xmlns\u003d\"http://javafx.com/javafx/8\" xmlns:fx\u003d\"http://javafx.com/fxml/1\"\u003e--\u003e"
+      },
+      {
+        "lineNumber": 22,
+        "author": {
+          "gitId": "ya0-yuan"
+        },
+        "content": "\u003c!--    \u003cListView fx:id\u003d\"clientListView\" VBox.vgrow\u003d\"ALWAYS\" /\u003e--\u003e"
+      },
+      {
+        "lineNumber": 23,
+        "author": {
+          "gitId": "ya0-yuan"
+        },
+        "content": "\u003c!--\u003c/VBox\u003e--\u003e"
+      },
+      {
+        "lineNumber": 24,
+        "author": {
+          "gitId": "ya0-yuan"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 25,
+        "author": {
+          "gitId": "ya0-yuan"
+        },
+        "content": "\u003c?import javafx.geometry.Insets?\u003e"
+      },
+      {
+        "lineNumber": 26,
+        "author": {
+          "gitId": "ya0-yuan"
+        },
+        "content": "\u003c?import javafx.scene.control.Label?\u003e"
+      },
+      {
+        "lineNumber": 27,
+        "author": {
+          "gitId": "ya0-yuan"
+        },
+        "content": "\u003c?import javafx.scene.layout.ColumnConstraints?\u003e"
+      },
+      {
+        "lineNumber": 28,
+        "author": {
+          "gitId": "ya0-yuan"
+        },
+        "content": "\u003c?import javafx.scene.layout.FlowPane?\u003e"
+      },
+      {
+        "lineNumber": 29,
+        "author": {
+          "gitId": "ya0-yuan"
+        },
+        "content": "\u003c?import javafx.scene.layout.GridPane?\u003e"
+      },
+      {
+        "lineNumber": 30,
+        "author": {
+          "gitId": "ya0-yuan"
+        },
+        "content": "\u003c?import javafx.scene.layout.HBox?\u003e"
+      },
+      {
+        "lineNumber": 31,
+        "author": {
+          "gitId": "ya0-yuan"
+        },
+        "content": "\u003c?import javafx.scene.layout.Region?\u003e"
+      },
+      {
+        "lineNumber": 32,
+        "author": {
+          "gitId": "ya0-yuan"
+        },
+        "content": "\u003c?import javafx.scene.layout.VBox?\u003e"
+      },
+      {
+        "lineNumber": 33,
+        "author": {
+          "gitId": "ya0-yuan"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 34,
+        "author": {
+          "gitId": "ya0-yuan"
+        },
+        "content": "\u003cHBox id\u003d\"cardPane\" fx:id\u003d\"cardPane\" xmlns\u003d\"http://javafx.com/javafx/8\" xmlns:fx\u003d\"http://javafx.com/fxml/1\"\u003e"
+      },
+      {
+        "lineNumber": 35,
+        "author": {
+          "gitId": "ya0-yuan"
+        },
+        "content": "    \u003cGridPane HBox.hgrow\u003d\"ALWAYS\"\u003e"
+      },
+      {
+        "lineNumber": 36,
+        "author": {
+          "gitId": "ya0-yuan"
+        },
+        "content": "        \u003ccolumnConstraints\u003e"
+      },
+      {
+        "lineNumber": 37,
+        "author": {
+          "gitId": "ya0-yuan"
+        },
+        "content": "            \u003cColumnConstraints hgrow\u003d\"SOMETIMES\" minWidth\u003d\"10\" prefWidth\u003d\"150\" /\u003e"
+      },
+      {
+        "lineNumber": 38,
+        "author": {
+          "gitId": "ya0-yuan"
+        },
+        "content": "        \u003c/columnConstraints\u003e"
+      },
+      {
+        "lineNumber": 39,
+        "author": {
+          "gitId": "ya0-yuan"
+        },
+        "content": "        \u003cVBox alignment\u003d\"CENTER_LEFT\" minHeight\u003d\"105\" GridPane.columnIndex\u003d\"0\"\u003e"
+      },
+      {
+        "lineNumber": 40,
+        "author": {
+          "gitId": "ya0-yuan"
+        },
+        "content": "            \u003cpadding\u003e"
+      },
+      {
+        "lineNumber": 41,
+        "author": {
+          "gitId": "ya0-yuan"
+        },
+        "content": "                \u003cInsets top\u003d\"5\" right\u003d\"5\" bottom\u003d\"5\" left\u003d\"15\" /\u003e"
+      },
+      {
+        "lineNumber": 42,
+        "author": {
+          "gitId": "ya0-yuan"
+        },
+        "content": "            \u003c/padding\u003e"
+      },
+      {
+        "lineNumber": 43,
+        "author": {
+          "gitId": "ya0-yuan"
+        },
+        "content": "            \u003cHBox spacing\u003d\"5\" alignment\u003d\"CENTER_LEFT\"\u003e"
+      },
+      {
+        "lineNumber": 44,
+        "author": {
+          "gitId": "ya0-yuan"
+        },
+        "content": "                \u003cLabel fx:id\u003d\"id\" styleClass\u003d\"cell_big_label\"\u003e"
+      },
+      {
+        "lineNumber": 45,
+        "author": {
+          "gitId": "ya0-yuan"
+        },
+        "content": "                    \u003cminWidth\u003e"
+      },
+      {
+        "lineNumber": 46,
+        "author": {
+          "gitId": "ya0-yuan"
+        },
+        "content": "                        \u003c!-- Ensures that the label text is never truncated --\u003e"
+      },
+      {
+        "lineNumber": 47,
+        "author": {
+          "gitId": "ya0-yuan"
+        },
+        "content": "                        \u003cRegion fx:constant\u003d\"USE_PREF_SIZE\" /\u003e"
+      },
+      {
+        "lineNumber": 48,
+        "author": {
+          "gitId": "ya0-yuan"
+        },
+        "content": "                    \u003c/minWidth\u003e"
+      },
+      {
+        "lineNumber": 49,
+        "author": {
+          "gitId": "ya0-yuan"
+        },
+        "content": "                \u003c/Label\u003e"
+      },
+      {
+        "lineNumber": 50,
+        "author": {
+          "gitId": "ya0-yuan"
+        },
+        "content": "                \u003cLabel fx:id\u003d\"name\" text\u003d\"\\$first\" styleClass\u003d\"cell_big_label\" /\u003e"
+      },
+      {
+        "lineNumber": 51,
+        "author": {
+          "gitId": "ya0-yuan"
+        },
+        "content": "            \u003c/HBox\u003e"
+      },
+      {
+        "lineNumber": 52,
+        "author": {
+          "gitId": "ya0-yuan"
+        },
+        "content": "            \u003cLabel fx:id\u003d\"phone\" styleClass\u003d\"cell_small_label\" text\u003d\"\\$phone\" /\u003e"
+      },
+      {
+        "lineNumber": 53,
+        "author": {
+          "gitId": "ya0-yuan"
+        },
+        "content": "            \u003cLabel fx:id\u003d\"gender\" styleClass\u003d\"cell_small_label\" text\u003d\"\\$gender\" /\u003e"
+      },
+      {
+        "lineNumber": 54,
+        "author": {
+          "gitId": "ya0-yuan"
+        },
+        "content": "            \u003cLabel fx:id\u003d\"email\" styleClass\u003d\"cell_small_label\" text\u003d\"\\$email\" /\u003e"
+      },
+      {
+        "lineNumber": 55,
+        "author": {
+          "gitId": "ya0-yuan"
+        },
+        "content": "        \u003c/VBox\u003e"
+      },
+      {
+        "lineNumber": 56,
+        "author": {
+          "gitId": "ya0-yuan"
+        },
+        "content": "    \u003c/GridPane\u003e"
+      },
+      {
+        "lineNumber": 57,
+        "author": {
+          "gitId": "ya0-yuan"
+        },
+        "content": "\u003c/HBox\u003e"
+      }
+    ],
+    "authorContributionMap": {
+      "ya0-yuan": 57
+    }
+  },
+  {
+    "path": "src/main/resources/view/ClientListPanel.fxml",
+    "fileType": "functional-code",
+    "lines": [
+      {
+        "lineNumber": 1,
+        "author": {
+          "gitId": "ya0-yuan"
+        },
+        "content": "\u003c?xml version\u003d\"1.0\" encoding\u003d\"UTF-8\"?\u003e"
+      },
+      {
+        "lineNumber": 2,
+        "author": {
+          "gitId": "ya0-yuan"
+        },
+        "content": "\u003c!--\u003c?xml version\u003d\"1.0\" encoding\u003d\"UTF-8\"?\u003e--\u003e"
+      },
+      {
+        "lineNumber": 3,
+        "author": {
+          "gitId": "ya0-yuan"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 4,
+        "author": {
+          "gitId": "ya0-yuan"
+        },
+        "content": "\u003c!--\u003c?import java.lang.*?\u003e--\u003e"
+      },
+      {
+        "lineNumber": 5,
+        "author": {
+          "gitId": "ya0-yuan"
+        },
+        "content": "\u003c!--\u003c?import java.util.*?\u003e--\u003e"
+      },
+      {
+        "lineNumber": 6,
+        "author": {
+          "gitId": "ya0-yuan"
+        },
+        "content": "\u003c!--\u003c?import javafx.scene.*?\u003e--\u003e"
+      },
+      {
+        "lineNumber": 7,
+        "author": {
+          "gitId": "ya0-yuan"
+        },
+        "content": "\u003c!--\u003c?import javafx.scene.control.*?\u003e--\u003e"
+      },
+      {
+        "lineNumber": 8,
+        "author": {
+          "gitId": "ya0-yuan"
+        },
+        "content": "\u003c!--\u003c?import javafx.scene.layout.*?\u003e--\u003e"
+      },
+      {
+        "lineNumber": 9,
+        "author": {
+          "gitId": "ya0-yuan"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 10,
+        "author": {
+          "gitId": "ya0-yuan"
+        },
+        "content": "\u003c!--\u003cAnchorPane xmlns\u003d\"http://javafx.com/javafx\"--\u003e"
+      },
+      {
+        "lineNumber": 11,
+        "author": {
+          "gitId": "ya0-yuan"
+        },
+        "content": "\u003c!--            xmlns:fx\u003d\"http://javafx.com/fxml\"--\u003e"
+      },
+      {
+        "lineNumber": 12,
+        "author": {
+          "gitId": "ya0-yuan"
+        },
+        "content": "\u003c!--            fx:controller\u003d\"view.PatientListPanel\"--\u003e"
+      },
+      {
+        "lineNumber": 13,
+        "author": {
+          "gitId": "ya0-yuan"
+        },
+        "content": "\u003c!--            prefHeight\u003d\"400.0\" prefWidth\u003d\"600.0\"\u003e--\u003e"
+      },
+      {
+        "lineNumber": 14,
+        "author": {
+          "gitId": "ya0-yuan"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 15,
+        "author": {
+          "gitId": "ya0-yuan"
+        },
+        "content": "\u003c!--\u003c/AnchorPane\u003e--\u003e"
+      },
+      {
+        "lineNumber": 16,
+        "author": {
+          "gitId": "ya0-yuan"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 17,
+        "author": {
+          "gitId": "ya0-yuan"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 18,
+        "author": {
+          "gitId": "ya0-yuan"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 19,
+        "author": {
+          "gitId": "ya0-yuan"
+        },
+        "content": "\u003c?import javafx.geometry.Insets?\u003e"
+      },
+      {
+        "lineNumber": 20,
+        "author": {
+          "gitId": "ya0-yuan"
+        },
+        "content": "\u003c?import javafx.scene.control.Label?\u003e"
+      },
+      {
+        "lineNumber": 21,
+        "author": {
+          "gitId": "ya0-yuan"
+        },
+        "content": "\u003c?import javafx.scene.control.ListView?\u003e"
+      },
+      {
+        "lineNumber": 22,
+        "author": {
+          "gitId": "ya0-yuan"
+        },
+        "content": "\u003c?import javafx.scene.layout.HBox?\u003e"
+      },
+      {
+        "lineNumber": 23,
+        "author": {
+          "gitId": "ya0-yuan"
+        },
+        "content": "\u003c?import javafx.scene.layout.VBox?\u003e"
+      },
+      {
+        "lineNumber": 24,
+        "author": {
+          "gitId": "ya0-yuan"
+        },
+        "content": "\u003cVBox xmlns\u003d\"http://javafx.com/javafx/8\" xmlns:fx\u003d\"http://javafx.com/fxml/1\"\u003e"
+      },
+      {
+        "lineNumber": 25,
+        "author": {
+          "gitId": "ya0-yuan"
+        },
+        "content": "    \u003cHBox alignment\u003d\"CENTER\"\u003e"
+      },
+      {
+        "lineNumber": 26,
+        "author": {
+          "gitId": "ya0-yuan"
+        },
+        "content": "        \u003cpadding\u003e"
+      },
+      {
+        "lineNumber": 27,
+        "author": {
+          "gitId": "ya0-yuan"
+        },
+        "content": "            \u003cInsets bottom\u003d\"5\" /\u003e"
+      },
+      {
+        "lineNumber": 28,
+        "author": {
+          "gitId": "ya0-yuan"
+        },
+        "content": "        \u003c/padding\u003e"
+      },
+      {
+        "lineNumber": 29,
+        "author": {
+          "gitId": "ya0-yuan"
+        },
+        "content": "        \u003cLabel styleClass\u003d\"label-bright\"\u003eClients\u003c/Label\u003e"
+      },
+      {
+        "lineNumber": 30,
+        "author": {
+          "gitId": "ya0-yuan"
+        },
+        "content": "    \u003c/HBox\u003e"
+      },
+      {
+        "lineNumber": 31,
+        "author": {
+          "gitId": "ya0-yuan"
+        },
+        "content": "    \u003cListView fx:id\u003d\"clientListView\" VBox.vgrow\u003d\"ALWAYS\" /\u003e"
+      },
+      {
+        "lineNumber": 32,
+        "author": {
+          "gitId": "ya0-yuan"
+        },
+        "content": "\u003c/VBox\u003e"
+      }
+    ],
+    "authorContributionMap": {
+      "ya0-yuan": 32
+    }
+  },
+  {
+    "path": "src/main/resources/view/HairdresserListPanel.fxml",
+    "fileType": "functional-code",
+    "lines": [
+      {
+        "lineNumber": 1,
+        "author": {
+          "gitId": "ya0-yuan"
+        },
+        "content": "\u003c?xml version\u003d\"1.0\" encoding\u003d\"UTF-8\"?\u003e"
+      },
+      {
+        "lineNumber": 2,
+        "author": {
+          "gitId": "ya0-yuan"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 3,
+        "author": {
+          "gitId": "ya0-yuan"
+        },
+        "content": "\u003c?import javafx.geometry.Insets?\u003e"
+      },
+      {
+        "lineNumber": 4,
+        "author": {
+          "gitId": "ya0-yuan"
+        },
+        "content": "\u003c?import javafx.scene.control.Label?\u003e"
+      },
+      {
+        "lineNumber": 5,
+        "author": {
+          "gitId": "ya0-yuan"
+        },
+        "content": "\u003c?import javafx.scene.control.ListView?\u003e"
+      },
+      {
+        "lineNumber": 6,
+        "author": {
+          "gitId": "ya0-yuan"
+        },
+        "content": "\u003c?import javafx.scene.layout.HBox?\u003e"
+      },
+      {
+        "lineNumber": 7,
+        "author": {
+          "gitId": "ya0-yuan"
+        },
+        "content": "\u003c?import javafx.scene.layout.VBox?\u003e"
+      },
+      {
+        "lineNumber": 8,
+        "author": {
+          "gitId": "ya0-yuan"
+        },
+        "content": "\u003cVBox xmlns\u003d\"http://javafx.com/javafx/8\" xmlns:fx\u003d\"http://javafx.com/fxml/1\"\u003e"
+      },
+      {
+        "lineNumber": 9,
+        "author": {
+          "gitId": "ya0-yuan"
+        },
+        "content": "    \u003cHBox alignment\u003d\"CENTER\"\u003e"
+      },
+      {
+        "lineNumber": 10,
+        "author": {
+          "gitId": "ya0-yuan"
+        },
+        "content": "        \u003cpadding\u003e"
+      },
+      {
+        "lineNumber": 11,
+        "author": {
+          "gitId": "ya0-yuan"
+        },
+        "content": "            \u003cInsets bottom\u003d\"5\" /\u003e"
+      },
+      {
+        "lineNumber": 12,
+        "author": {
+          "gitId": "ya0-yuan"
+        },
+        "content": "        \u003c/padding\u003e"
+      },
+      {
+        "lineNumber": 13,
+        "author": {
+          "gitId": "ya0-yuan"
+        },
+        "content": "        \u003cLabel styleClass\u003d\"label-bright\"\u003eDoctors\u003c/Label\u003e"
+      },
+      {
+        "lineNumber": 14,
+        "author": {
+          "gitId": "ya0-yuan"
+        },
+        "content": "    \u003c/HBox\u003e"
+      },
+      {
+        "lineNumber": 15,
+        "author": {
+          "gitId": "ya0-yuan"
+        },
+        "content": "    \u003cListView fx:id\u003d\"hairdresserListView\" VBox.vgrow\u003d\"ALWAYS\" /\u003e"
+      },
+      {
+        "lineNumber": 16,
+        "author": {
+          "gitId": "ya0-yuan"
+        },
+        "content": "\u003c/VBox\u003e"
+      }
+    ],
+    "authorContributionMap": {
+      "ya0-yuan": 16
+    }
+  },
+  {
+    "path": "src/main/resources/view/MainWindow.fxml",
+    "fileType": "functional-code",
+    "lines": [
+      {
+        "lineNumber": 1,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "\u003c?xml version\u003d\"1.0\" encoding\u003d\"UTF-8\"?\u003e"
+      },
+      {
+        "lineNumber": 2,
+        "author": {
+          "gitId": "-"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 3,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "\u003c?import java.net.URL?\u003e"
+      },
+      {
+        "lineNumber": 4,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "\u003c?import javafx.geometry.Insets?\u003e"
+      },
+      {
+        "lineNumber": 5,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "\u003c?import javafx.scene.Scene?\u003e"
+      },
+      {
+        "lineNumber": 6,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "\u003c?import javafx.scene.control.Menu?\u003e"
+      },
+      {
+        "lineNumber": 7,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "\u003c?import javafx.scene.control.MenuBar?\u003e"
+      },
+      {
+        "lineNumber": 8,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "\u003c?import javafx.scene.control.MenuItem?\u003e"
+      },
+      {
+        "lineNumber": 9,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "\u003c?import javafx.scene.control.SplitPane?\u003e"
+      },
+      {
+        "lineNumber": 10,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "\u003c?import javafx.scene.image.Image?\u003e"
+      },
+      {
+        "lineNumber": 11,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "\u003c?import javafx.scene.layout.StackPane?\u003e"
+      },
+      {
+        "lineNumber": 12,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "\u003c?import javafx.scene.layout.VBox?\u003e"
+      },
+      {
+        "lineNumber": 13,
+        "author": {
+          "gitId": "-"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 14,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "\u003cfx:root type\u003d\"javafx.stage.Stage\" xmlns\u003d\"http://javafx.com/javafx/8\" xmlns:fx\u003d\"http://javafx.com/fxml/1\""
+      },
+      {
+        "lineNumber": 15,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "         title\u003d\"Address App\" minWidth\u003d\"450\" minHeight\u003d\"600\" onCloseRequest\u003d\"#handleExit\"\u003e"
+      },
+      {
+        "lineNumber": 16,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "  \u003cicons\u003e"
+      },
+      {
+        "lineNumber": 17,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "    \u003cImage url\u003d\"@/images/address_book_32.png\" /\u003e"
+      },
+      {
+        "lineNumber": 18,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "  \u003c/icons\u003e"
+      },
+      {
+        "lineNumber": 19,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "  \u003cscene\u003e"
+      },
+      {
+        "lineNumber": 20,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "    \u003cScene\u003e"
+      },
+      {
+        "lineNumber": 21,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "      \u003cstylesheets\u003e"
+      },
+      {
+        "lineNumber": 22,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "        \u003cURL value\u003d\"@DarkTheme.css\" /\u003e"
+      },
+      {
+        "lineNumber": 23,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "        \u003cURL value\u003d\"@Extensions.css\" /\u003e"
+      },
+      {
+        "lineNumber": 24,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "      \u003c/stylesheets\u003e"
+      },
+      {
+        "lineNumber": 25,
+        "author": {
+          "gitId": "-"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 26,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "      \u003cVBox\u003e"
+      },
+      {
+        "lineNumber": 27,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "        \u003cMenuBar fx:id\u003d\"menuBar\" VBox.vgrow\u003d\"NEVER\"\u003e"
+      },
+      {
+        "lineNumber": 28,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "          \u003cMenu mnemonicParsing\u003d\"false\" text\u003d\"File\"\u003e"
+      },
+      {
+        "lineNumber": 29,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "            \u003cMenuItem mnemonicParsing\u003d\"false\" onAction\u003d\"#handleExit\" text\u003d\"Exit\" /\u003e"
+      },
+      {
+        "lineNumber": 30,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "          \u003c/Menu\u003e"
+      },
+      {
+        "lineNumber": 31,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "          \u003cMenu mnemonicParsing\u003d\"false\" text\u003d\"Help\"\u003e"
+      },
+      {
+        "lineNumber": 32,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "            \u003cMenuItem fx:id\u003d\"helpMenuItem\" mnemonicParsing\u003d\"false\" onAction\u003d\"#handleHelp\" text\u003d\"Help\" /\u003e"
+      },
+      {
+        "lineNumber": 33,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "          \u003c/Menu\u003e"
+      },
+      {
+        "lineNumber": 34,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "        \u003c/MenuBar\u003e"
+      },
+      {
+        "lineNumber": 35,
+        "author": {
+          "gitId": "-"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 36,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "        \u003cStackPane VBox.vgrow\u003d\"NEVER\" fx:id\u003d\"commandBoxPlaceholder\" styleClass\u003d\"pane-with-border\"\u003e"
+      },
+      {
+        "lineNumber": 37,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "          \u003cpadding\u003e"
+      },
+      {
+        "lineNumber": 38,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "            \u003cInsets top\u003d\"5\" right\u003d\"10\" bottom\u003d\"5\" left\u003d\"10\" /\u003e"
+      },
+      {
+        "lineNumber": 39,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "          \u003c/padding\u003e"
+      },
+      {
+        "lineNumber": 40,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "        \u003c/StackPane\u003e"
+      },
+      {
+        "lineNumber": 41,
+        "author": {
+          "gitId": "-"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 42,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "        \u003cStackPane VBox.vgrow\u003d\"NEVER\" fx:id\u003d\"resultDisplayPlaceholder\" styleClass\u003d\"pane-with-border\""
+      },
+      {
+        "lineNumber": 43,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "                   minHeight\u003d\"100\" prefHeight\u003d\"100\" maxHeight\u003d\"100\"\u003e"
+      },
+      {
+        "lineNumber": 44,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "          \u003cpadding\u003e"
+      },
+      {
+        "lineNumber": 45,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "            \u003cInsets top\u003d\"5\" right\u003d\"10\" bottom\u003d\"5\" left\u003d\"10\" /\u003e"
+      },
+      {
+        "lineNumber": 46,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "          \u003c/padding\u003e"
+      },
+      {
+        "lineNumber": 47,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "        \u003c/StackPane\u003e"
+      },
+      {
+        "lineNumber": 48,
+        "author": {
+          "gitId": "-"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 49,
+        "author": {
+          "gitId": "ya0-yuan"
+        },
+        "content": "\u003c!--        \u003cVBox fx:id\u003d\"personList\" styleClass\u003d\"pane-with-border\" minWidth\u003d\"340\" prefWidth\u003d\"340\" VBox.vgrow\u003d\"ALWAYS\"\u003e--\u003e"
+      },
+      {
+        "lineNumber": 50,
+        "author": {
+          "gitId": "ya0-yuan"
+        },
+        "content": "\u003c!--          \u003cpadding\u003e--\u003e"
+      },
+      {
+        "lineNumber": 51,
+        "author": {
+          "gitId": "ya0-yuan"
+        },
+        "content": "\u003c!--            \u003cInsets top\u003d\"10\" right\u003d\"10\" bottom\u003d\"10\" left\u003d\"10\" /\u003e--\u003e"
+      },
+      {
+        "lineNumber": 52,
+        "author": {
+          "gitId": "ya0-yuan"
+        },
+        "content": "\u003c!--          \u003c/padding\u003e--\u003e"
+      },
+      {
+        "lineNumber": 53,
+        "author": {
+          "gitId": "ya0-yuan"
+        },
+        "content": "\u003c!--          \u003cStackPane fx:id\u003d\"personListPanelPlaceholder\" VBox.vgrow\u003d\"ALWAYS\"/\u003e--\u003e"
+      },
+      {
+        "lineNumber": 54,
+        "author": {
+          "gitId": "ya0-yuan"
+        },
+        "content": "\u003c!--        \u003c/VBox\u003e--\u003e"
+      },
+      {
+        "lineNumber": 55,
+        "author": {
+          "gitId": "ya0-yuan"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 56,
+        "author": {
+          "gitId": "ya0-yuan"
+        },
+        "content": "        \u003cSplitPane id\u003d\"splitPane\" fx:id\u003d\"splitPane\" dividerPositions\u003d\"0.4\" VBox.vgrow\u003d\"ALWAYS\"\u003e"
+      },
+      {
+        "lineNumber": 57,
+        "author": {
+          "gitId": "ya0-yuan"
+        },
+        "content": "          \u003cVBox fx:id\u003d\"personList\" minWidth\u003d\"300\" prefWidth\u003d\"300\" SplitPane.resizableWithParent\u003d\"false\"\u003e"
+      },
+      {
+        "lineNumber": 58,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "            \u003cpadding\u003e"
+      },
+      {
+        "lineNumber": 59,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "              \u003cInsets top\u003d\"10\" right\u003d\"10\" bottom\u003d\"10\" left\u003d\"10\" /\u003e"
+      },
+      {
+        "lineNumber": 60,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "            \u003c/padding\u003e"
+      },
+      {
+        "lineNumber": 61,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "            \u003cStackPane fx:id\u003d\"personListPanelPlaceholder\" VBox.vgrow\u003d\"ALWAYS\"/\u003e"
+      },
+      {
+        "lineNumber": 62,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "          \u003c/VBox\u003e"
+      },
+      {
+        "lineNumber": 63,
+        "author": {
+          "gitId": "ya0-yuan"
+        },
+        "content": "          \u003cVBox fx:id\u003d\"medHistList\" minWidth\u003d\"250\" prefWidth\u003d\"250\" SplitPane.resizableWithParent\u003d\"false\"\u003e"
+      },
+      {
+        "lineNumber": 64,
+        "author": {
+          "gitId": "ya0-yuan"
+        },
+        "content": "            \u003cpadding\u003e"
+      },
+      {
+        "lineNumber": 65,
+        "author": {
+          "gitId": "ya0-yuan"
+        },
+        "content": "              \u003cInsets top\u003d\"10\" right\u003d\"10\" bottom\u003d\"10\"/\u003e"
+      },
+      {
+        "lineNumber": 66,
+        "author": {
+          "gitId": "ya0-yuan"
+        },
+        "content": "            \u003c/padding\u003e"
+      },
+      {
+        "lineNumber": 67,
+        "author": {
+          "gitId": "ya0-yuan"
+        },
+        "content": "            \u003cStackPane fx:id\u003d\"middleListPanelPlaceholder\" VBox.vgrow\u003d\"ALWAYS\"/\u003e"
+      },
+      {
+        "lineNumber": 68,
+        "author": {
+          "gitId": "ya0-yuan"
+        },
+        "content": "          \u003c/VBox\u003e"
+      },
+      {
+        "lineNumber": 69,
+        "author": {
+          "gitId": "ya0-yuan"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 70,
+        "author": {
+          "gitId": "ya0-yuan"
+        },
+        "content": "\u003c!--          \u003cStackPane fx:id\u003d\"browserPlaceholder\" minWidth\u003d\"320\" prefWidth\u003d\"340\"\u003e--\u003e"
+      },
+      {
+        "lineNumber": 71,
+        "author": {
+          "gitId": "ya0-yuan"
+        },
+        "content": "\u003c!--            \u003cpadding\u003e--\u003e"
+      },
+      {
+        "lineNumber": 72,
+        "author": {
+          "gitId": "ya0-yuan"
+        },
+        "content": "\u003c!--              \u003cInsets top\u003d\"10\" right\u003d\"10\" bottom\u003d\"10\" left\u003d\"10\"/\u003e--\u003e"
+      },
+      {
+        "lineNumber": 73,
+        "author": {
+          "gitId": "ya0-yuan"
+        },
+        "content": "\u003c!--            \u003c/padding\u003e--\u003e"
+      },
+      {
+        "lineNumber": 74,
+        "author": {
+          "gitId": "ya0-yuan"
+        },
+        "content": "\u003c!--          \u003c/StackPane\u003e--\u003e"
+      },
+      {
+        "lineNumber": 75,
+        "author": {
+          "gitId": "ya0-yuan"
+        },
+        "content": "\u003c!--          \u003cVBox fx:id\u003d\"hairdresserList\" minWidth\u003d\"300\" prefWidth\u003d\"300\" SplitPane.resizableWithParent\u003d\"false\"\u003e--\u003e"
+      },
+      {
+        "lineNumber": 76,
+        "author": {
+          "gitId": "ya0-yuan"
+        },
+        "content": "\u003c!--            \u003cpadding\u003e--\u003e"
+      },
+      {
+        "lineNumber": 77,
+        "author": {
+          "gitId": "ya0-yuan"
+        },
+        "content": "\u003c!--              \u003cInsets top\u003d\"10\" right\u003d\"10\" bottom\u003d\"10\" left\u003d\"10\" /\u003e--\u003e"
+      },
+      {
+        "lineNumber": 78,
+        "author": {
+          "gitId": "ya0-yuan"
+        },
+        "content": "\u003c!--            \u003c/padding\u003e--\u003e"
+      },
+      {
+        "lineNumber": 79,
+        "author": {
+          "gitId": "ya0-yuan"
+        },
+        "content": "\u003c!--            \u003cStackPane fx:id\u003d\"hairdresserListPanelPlaceholder\" VBox.vgrow\u003d\"ALWAYS\"/\u003e--\u003e"
+      },
+      {
+        "lineNumber": 80,
+        "author": {
+          "gitId": "ya0-yuan"
+        },
+        "content": "\u003c!--          \u003c/VBox\u003e--\u003e"
+      },
+      {
+        "lineNumber": 81,
+        "author": {
+          "gitId": "ya0-yuan"
+        },
+        "content": "        \u003c/SplitPane\u003e"
+      },
+      {
+        "lineNumber": 82,
+        "author": {
+          "gitId": "-"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 83,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "        \u003cStackPane fx:id\u003d\"statusbarPlaceholder\" VBox.vgrow\u003d\"NEVER\" /\u003e"
+      },
+      {
+        "lineNumber": 84,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "      \u003c/VBox\u003e"
+      },
+      {
+        "lineNumber": 85,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "    \u003c/Scene\u003e"
+      },
+      {
+        "lineNumber": 86,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "  \u003c/scene\u003e"
+      },
+      {
+        "lineNumber": 87,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "\u003c/fx:root\u003e"
+      }
+    ],
+    "authorContributionMap": {
+      "ya0-yuan": 28,
+      "-": 59
+    }
+  },
+  {
     "path": "src/main/resources/view/PersonListCard.fxml",
     "fileType": "functional-code",
     "lines": [
@@ -38176,6 +43817,260 @@
     "authorContributionMap": {
       "iamjamestan": 1,
       "-": 34
+    }
+  },
+  {
+    "path": "src/main/resources/view/hairdresserListCard.fxml",
+    "fileType": "functional-code",
+    "lines": [
+      {
+        "lineNumber": 1,
+        "author": {
+          "gitId": "ya0-yuan"
+        },
+        "content": "\u003c?xml version\u003d\"1.0\" encoding\u003d\"UTF-8\"?\u003e"
+      },
+      {
+        "lineNumber": 2,
+        "author": {
+          "gitId": "ya0-yuan"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 3,
+        "author": {
+          "gitId": "ya0-yuan"
+        },
+        "content": "\u003c?import javafx.geometry.Insets?\u003e"
+      },
+      {
+        "lineNumber": 4,
+        "author": {
+          "gitId": "ya0-yuan"
+        },
+        "content": "\u003c?import javafx.scene.control.Label?\u003e"
+      },
+      {
+        "lineNumber": 5,
+        "author": {
+          "gitId": "ya0-yuan"
+        },
+        "content": "\u003c?import javafx.scene.layout.ColumnConstraints?\u003e"
+      },
+      {
+        "lineNumber": 6,
+        "author": {
+          "gitId": "ya0-yuan"
+        },
+        "content": "\u003c?import javafx.scene.layout.FlowPane?\u003e"
+      },
+      {
+        "lineNumber": 7,
+        "author": {
+          "gitId": "ya0-yuan"
+        },
+        "content": "\u003c?import javafx.scene.layout.GridPane?\u003e"
+      },
+      {
+        "lineNumber": 8,
+        "author": {
+          "gitId": "ya0-yuan"
+        },
+        "content": "\u003c?import javafx.scene.layout.HBox?\u003e"
+      },
+      {
+        "lineNumber": 9,
+        "author": {
+          "gitId": "ya0-yuan"
+        },
+        "content": "\u003c?import javafx.scene.layout.Region?\u003e"
+      },
+      {
+        "lineNumber": 10,
+        "author": {
+          "gitId": "ya0-yuan"
+        },
+        "content": "\u003c?import javafx.scene.layout.VBox?\u003e"
+      },
+      {
+        "lineNumber": 11,
+        "author": {
+          "gitId": "ya0-yuan"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 12,
+        "author": {
+          "gitId": "ya0-yuan"
+        },
+        "content": "\u003cHBox id\u003d\"cardPane\" fx:id\u003d\"cardPane\" xmlns\u003d\"http://javafx.com/javafx/8\" xmlns:fx\u003d\"http://javafx.com/fxml/1\"\u003e"
+      },
+      {
+        "lineNumber": 13,
+        "author": {
+          "gitId": "ya0-yuan"
+        },
+        "content": "    \u003cGridPane HBox.hgrow\u003d\"ALWAYS\"\u003e"
+      },
+      {
+        "lineNumber": 14,
+        "author": {
+          "gitId": "ya0-yuan"
+        },
+        "content": "        \u003ccolumnConstraints\u003e"
+      },
+      {
+        "lineNumber": 15,
+        "author": {
+          "gitId": "ya0-yuan"
+        },
+        "content": "            \u003cColumnConstraints hgrow\u003d\"SOMETIMES\" minWidth\u003d\"10\" prefWidth\u003d\"150\" /\u003e"
+      },
+      {
+        "lineNumber": 16,
+        "author": {
+          "gitId": "ya0-yuan"
+        },
+        "content": "        \u003c/columnConstraints\u003e"
+      },
+      {
+        "lineNumber": 17,
+        "author": {
+          "gitId": "ya0-yuan"
+        },
+        "content": "        \u003cVBox alignment\u003d\"CENTER_LEFT\" minHeight\u003d\"105\" GridPane.columnIndex\u003d\"0\"\u003e"
+      },
+      {
+        "lineNumber": 18,
+        "author": {
+          "gitId": "ya0-yuan"
+        },
+        "content": "            \u003cpadding\u003e"
+      },
+      {
+        "lineNumber": 19,
+        "author": {
+          "gitId": "ya0-yuan"
+        },
+        "content": "                \u003cInsets top\u003d\"5\" right\u003d\"5\" bottom\u003d\"5\" left\u003d\"15\" /\u003e"
+      },
+      {
+        "lineNumber": 20,
+        "author": {
+          "gitId": "ya0-yuan"
+        },
+        "content": "            \u003c/padding\u003e"
+      },
+      {
+        "lineNumber": 21,
+        "author": {
+          "gitId": "ya0-yuan"
+        },
+        "content": "            \u003cHBox spacing\u003d\"5\" alignment\u003d\"CENTER_LEFT\"\u003e"
+      },
+      {
+        "lineNumber": 22,
+        "author": {
+          "gitId": "ya0-yuan"
+        },
+        "content": "                \u003cLabel fx:id\u003d\"id\" styleClass\u003d\"cell_big_label\"\u003e"
+      },
+      {
+        "lineNumber": 23,
+        "author": {
+          "gitId": "ya0-yuan"
+        },
+        "content": "                    \u003cminWidth\u003e"
+      },
+      {
+        "lineNumber": 24,
+        "author": {
+          "gitId": "ya0-yuan"
+        },
+        "content": "                        \u003c!-- Ensures that the label text is never truncated --\u003e"
+      },
+      {
+        "lineNumber": 25,
+        "author": {
+          "gitId": "ya0-yuan"
+        },
+        "content": "                        \u003cRegion fx:constant\u003d\"USE_PREF_SIZE\" /\u003e"
+      },
+      {
+        "lineNumber": 26,
+        "author": {
+          "gitId": "ya0-yuan"
+        },
+        "content": "                    \u003c/minWidth\u003e"
+      },
+      {
+        "lineNumber": 27,
+        "author": {
+          "gitId": "ya0-yuan"
+        },
+        "content": "                \u003c/Label\u003e"
+      },
+      {
+        "lineNumber": 28,
+        "author": {
+          "gitId": "ya0-yuan"
+        },
+        "content": "                \u003cLabel fx:id\u003d\"name\" text\u003d\"\\$first\" styleClass\u003d\"cell_big_label\" /\u003e"
+      },
+      {
+        "lineNumber": 29,
+        "author": {
+          "gitId": "ya0-yuan"
+        },
+        "content": "            \u003c/HBox\u003e"
+      },
+      {
+        "lineNumber": 30,
+        "author": {
+          "gitId": "ya0-yuan"
+        },
+        "content": "            \u003cLabel fx:id\u003d\"phone\" styleClass\u003d\"cell_small_label\" text\u003d\"\\$phone\" /\u003e"
+      },
+      {
+        "lineNumber": 31,
+        "author": {
+          "gitId": "ya0-yuan"
+        },
+        "content": "            \u003cLabel fx:id\u003d\"gender\" styleClass\u003d\"cell_small_label\" text\u003d\"\\$gender\" /\u003e"
+      },
+      {
+        "lineNumber": 32,
+        "author": {
+          "gitId": "ya0-yuan"
+        },
+        "content": "            \u003cLabel fx:id\u003d\"email\" styleClass\u003d\"cell_small_label\" text\u003d\"\\$email\" /\u003e"
+      },
+      {
+        "lineNumber": 33,
+        "author": {
+          "gitId": "ya0-yuan"
+        },
+        "content": "        \u003c/VBox\u003e"
+      },
+      {
+        "lineNumber": 34,
+        "author": {
+          "gitId": "ya0-yuan"
+        },
+        "content": "    \u003c/GridPane\u003e"
+      },
+      {
+        "lineNumber": 35,
+        "author": {
+          "gitId": "ya0-yuan"
+        },
+        "content": "\u003c/HBox\u003e"
+      }
+    ],
+    "authorContributionMap": {
+      "ya0-yuan": 35
     }
   },
   {

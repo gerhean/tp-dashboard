@@ -36117,7 +36117,7 @@
         "author": {
           "gitId": "kimberlyohq"
         },
-        "content": "import static seedu.address.testutil.TypicalFlashcards.getTypicalAddressBook;"
+        "content": "import static seedu.address.testutil.TypicalFlashcards.getTypicalFlashcardDeck;"
       },
       {
         "lineNumber": 7,
@@ -36243,7 +36243,7 @@
         "author": {
           "gitId": "kimberlyohq"
         },
-        "content": "        model \u003d new ModelManager(getTypicalAddressBook(), new UserPrefs());"
+        "content": "        model \u003d new ModelManager(getTypicalFlashcardDeck(), new UserPrefs());"
       },
       {
         "lineNumber": 25,
@@ -42767,59 +42767,192 @@
         "author": {
           "gitId": "tanzhuoyao-nus"
         },
-        "content": "    /**"
+        "content": "    @Test"
       },
       {
         "lineNumber": 98,
         "author": {
           "gitId": "tanzhuoyao-nus"
         },
-        "content": "     * Parses {@code userInput} into a {@code CategoryEqualsKeywordsPredicate}."
+        "content": "    public void execute_multipleKeywordsUppercaseKeyword_success() {"
       },
       {
         "lineNumber": 99,
         "author": {
           "gitId": "tanzhuoyao-nus"
         },
-        "content": "     */"
+        "content": "        String expectedMessage \u003d String.format(MESSAGE_FLASHCARDS_LISTED_OVERVIEW, 2);"
       },
       {
         "lineNumber": 100,
         "author": {
           "gitId": "tanzhuoyao-nus"
         },
-        "content": "    private CategoryEqualsKeywordsPredicate preparePredicate(String userInput) {"
+        "content": "        CategoryEqualsKeywordsPredicate predicate \u003d preparePredicate(\"c/SDLC c/REVISION HISTORY\");"
       },
       {
         "lineNumber": 101,
         "author": {
           "gitId": "tanzhuoyao-nus"
         },
-        "content": "        String[] categoryKeywords \u003d userInput.split(\"c/\");"
+        "content": "        FilterCommand command \u003d new FilterCommand(predicate);"
       },
       {
         "lineNumber": 102,
         "author": {
           "gitId": "tanzhuoyao-nus"
         },
-        "content": "        categoryKeywords \u003d Arrays.copyOfRange(categoryKeywords, 1, categoryKeywords.length);"
+        "content": "        expectedModel.updateFilteredFlashcardList(predicate);"
       },
       {
         "lineNumber": 103,
         "author": {
           "gitId": "tanzhuoyao-nus"
         },
-        "content": "        return new CategoryEqualsKeywordsPredicate(Arrays.asList(categoryKeywords));"
+        "content": "        assertCommandSuccess(command, model, expectedMessage, expectedModel);"
       },
       {
         "lineNumber": 104,
         "author": {
           "gitId": "tanzhuoyao-nus"
         },
-        "content": "    }"
+        "content": "        assertEquals(Arrays.asList(FLASHCARD_1, FLASHCARD_2), model.getFilteredFlashcardList());"
       },
       {
         "lineNumber": 105,
+        "author": {
+          "gitId": "tanzhuoyao-nus"
+        },
+        "content": "    }"
+      },
+      {
+        "lineNumber": 106,
+        "author": {
+          "gitId": "tanzhuoyao-nus"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 107,
+        "author": {
+          "gitId": "tanzhuoyao-nus"
+        },
+        "content": "    @Test"
+      },
+      {
+        "lineNumber": 108,
+        "author": {
+          "gitId": "tanzhuoyao-nus"
+        },
+        "content": "    public void execute_multipleKeywordsmixedOrder_success() {"
+      },
+      {
+        "lineNumber": 109,
+        "author": {
+          "gitId": "tanzhuoyao-nus"
+        },
+        "content": "        String expectedMessage \u003d String.format(MESSAGE_FLASHCARDS_LISTED_OVERVIEW, 2);"
+      },
+      {
+        "lineNumber": 110,
+        "author": {
+          "gitId": "tanzhuoyao-nus"
+        },
+        "content": "        CategoryEqualsKeywordsPredicate predicate \u003d preparePredicate(\"c/REVISION HISTORY c/SDLC\");"
+      },
+      {
+        "lineNumber": 111,
+        "author": {
+          "gitId": "tanzhuoyao-nus"
+        },
+        "content": "        FilterCommand command \u003d new FilterCommand(predicate);"
+      },
+      {
+        "lineNumber": 112,
+        "author": {
+          "gitId": "tanzhuoyao-nus"
+        },
+        "content": "        expectedModel.updateFilteredFlashcardList(predicate);"
+      },
+      {
+        "lineNumber": 113,
+        "author": {
+          "gitId": "tanzhuoyao-nus"
+        },
+        "content": "        assertCommandSuccess(command, model, expectedMessage, expectedModel);"
+      },
+      {
+        "lineNumber": 114,
+        "author": {
+          "gitId": "tanzhuoyao-nus"
+        },
+        "content": "        assertEquals(Arrays.asList(FLASHCARD_1, FLASHCARD_2), model.getFilteredFlashcardList());"
+      },
+      {
+        "lineNumber": 115,
+        "author": {
+          "gitId": "tanzhuoyao-nus"
+        },
+        "content": "    }"
+      },
+      {
+        "lineNumber": 116,
+        "author": {
+          "gitId": "tanzhuoyao-nus"
+        },
+        "content": "    /**"
+      },
+      {
+        "lineNumber": 117,
+        "author": {
+          "gitId": "tanzhuoyao-nus"
+        },
+        "content": "     * Parses {@code userInput} into a {@code CategoryEqualsKeywordsPredicate}."
+      },
+      {
+        "lineNumber": 118,
+        "author": {
+          "gitId": "tanzhuoyao-nus"
+        },
+        "content": "     */"
+      },
+      {
+        "lineNumber": 119,
+        "author": {
+          "gitId": "tanzhuoyao-nus"
+        },
+        "content": "    private CategoryEqualsKeywordsPredicate preparePredicate(String userInput) {"
+      },
+      {
+        "lineNumber": 120,
+        "author": {
+          "gitId": "tanzhuoyao-nus"
+        },
+        "content": "        String[] categoryKeywords \u003d userInput.split(\"c/\");"
+      },
+      {
+        "lineNumber": 121,
+        "author": {
+          "gitId": "tanzhuoyao-nus"
+        },
+        "content": "        categoryKeywords \u003d Arrays.copyOfRange(categoryKeywords, 1, categoryKeywords.length);"
+      },
+      {
+        "lineNumber": 122,
+        "author": {
+          "gitId": "tanzhuoyao-nus"
+        },
+        "content": "        return new CategoryEqualsKeywordsPredicate(Arrays.asList(categoryKeywords));"
+      },
+      {
+        "lineNumber": 123,
+        "author": {
+          "gitId": "tanzhuoyao-nus"
+        },
+        "content": "    }"
+      },
+      {
+        "lineNumber": 124,
         "author": {
           "gitId": "tanzhuoyao-nus"
         },
@@ -42827,7 +42960,7 @@
       }
     ],
     "authorContributionMap": {
-      "tanzhuoyao-nus": 105
+      "tanzhuoyao-nus": 124
     }
   },
   {
@@ -43759,7 +43892,7 @@
         "author": {
           "gitId": "kimberlyohq"
         },
-        "content": "import static seedu.address.testutil.TypicalFlashcards.getTypicalAddressBook;"
+        "content": "import static seedu.address.testutil.TypicalFlashcards.getTypicalFlashcardDeck;"
       },
       {
         "lineNumber": 7,
@@ -43822,14 +43955,14 @@
         "author": {
           "gitId": "kimberlyohq"
         },
-        "content": "    private Model model \u003d new ModelManager(getTypicalAddressBook(), new UserPrefs());"
+        "content": "    private Model model \u003d new ModelManager(getTypicalFlashcardDeck(), new UserPrefs());"
       },
       {
         "lineNumber": 16,
         "author": {
           "gitId": "kimberlyohq"
         },
-        "content": "    private Model expectedModel \u003d new ModelManager(getTypicalAddressBook(), new UserPrefs());"
+        "content": "    private Model expectedModel \u003d new ModelManager(getTypicalFlashcardDeck(), new UserPrefs());"
       },
       {
         "lineNumber": 17,
