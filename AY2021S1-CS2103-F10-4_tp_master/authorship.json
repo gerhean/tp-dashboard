@@ -5567,7 +5567,7 @@
         "author": {
           "gitId": "plosslaw"
         },
-        "content": "Format: `shift add d/DAY t/TIME [r/ROLE-NUMBER_NEEDED]...`"
+        "content": "Format: `shift add d/DAY t/TIME [r/ROLE \u003cSPACE\u003e NUMBER_NEEDED]...`"
       },
       {
         "lineNumber": 145,
@@ -5623,7 +5623,7 @@
         "author": {
           "gitId": "plosslaw"
         },
-        "content": "* `shift add d/Wed t/AM r/Cashier-2 r/Cleaner-3` Adds a shift on Wednesday morning, which requires 2 workers to fill the cashier role and 3 workers to fill the cleaner role."
+        "content": "* `shift add d/Wed t/AM r/Cashier 2 r/Cleaner 3` Adds a shift on Wednesday morning, which requires 2 workers to fill the cashier role and 3 workers to fill the cleaner role."
       },
       {
         "lineNumber": 153,
@@ -5721,7 +5721,7 @@
         "author": {
           "gitId": "plosslaw"
         },
-        "content": "Format: `shift edit SHIFT_INDEX [d/DAY] [t/TIME] [r/ROLE-NUMBER_NEEDED]...`"
+        "content": "Format: `shift edit SHIFT_INDEX [d/DAY] [t/TIME] [r/ROLE \u003cSPACE\u003e NUMBER_NEEDED]...`"
       },
       {
         "lineNumber": 167,
@@ -5791,14 +5791,14 @@
         "author": {
           "gitId": "plosslaw"
         },
-        "content": "* `shift edit 3 r/Cashier-3 r/Cleaner-2` Edits the 3rd shift on the list such that it now has 3 cashier roles and 2 cleaner roles."
+        "content": "* `shift edit 3 r/Cashier 3 r/Cleaner 2` Edits the 3rd shift on the list such that it now has 3 cashier roles and 2 cleaner roles."
       },
       {
         "lineNumber": 177,
         "author": {
           "gitId": "plosslaw"
         },
-        "content": "* `shift edit 1 d/Mon t/PM r/Cleaner-1` Edits the 1st shift such that it is now on Monday afternoon, with 1 cleaner role"
+        "content": "* `shift edit 1 d/Mon t/PM r/Cleaner 1` Edits the 1st shift such that it is now on Monday afternoon, with 1 cleaner role"
       },
       {
         "lineNumber": 178,
@@ -11427,6 +11427,822 @@
     }
   },
   {
+    "path": "src/main/java/seedu/address/logic/commands/ShiftAddCommand.java",
+    "fileType": "functional-code",
+    "lines": [
+      {
+        "lineNumber": 1,
+        "author": {
+          "gitId": "plosslaw"
+        },
+        "content": "package seedu.address.logic.commands;"
+      },
+      {
+        "lineNumber": 2,
+        "author": {
+          "gitId": "plosslaw"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 3,
+        "author": {
+          "gitId": "plosslaw"
+        },
+        "content": "import static java.util.Objects.requireNonNull;"
+      },
+      {
+        "lineNumber": 4,
+        "author": {
+          "gitId": "plosslaw"
+        },
+        "content": "import static seedu.address.logic.parser.CliSyntax.PREFIX_ROLE_REQUIREMENT;"
+      },
+      {
+        "lineNumber": 5,
+        "author": {
+          "gitId": "plosslaw"
+        },
+        "content": "import static seedu.address.logic.parser.CliSyntax.PREFIX_SHIFT_DAY;"
+      },
+      {
+        "lineNumber": 6,
+        "author": {
+          "gitId": "plosslaw"
+        },
+        "content": "import static seedu.address.logic.parser.CliSyntax.PREFIX_SHIFT_TIME;"
+      },
+      {
+        "lineNumber": 7,
+        "author": {
+          "gitId": "plosslaw"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 8,
+        "author": {
+          "gitId": "plosslaw"
+        },
+        "content": "import seedu.address.logic.commands.exceptions.CommandException;"
+      },
+      {
+        "lineNumber": 9,
+        "author": {
+          "gitId": "plosslaw"
+        },
+        "content": "import seedu.address.model.Model;"
+      },
+      {
+        "lineNumber": 10,
+        "author": {
+          "gitId": "plosslaw"
+        },
+        "content": "import seedu.address.model.shift.Shift;"
+      },
+      {
+        "lineNumber": 11,
+        "author": {
+          "gitId": "plosslaw"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 12,
+        "author": {
+          "gitId": "plosslaw"
+        },
+        "content": "/**"
+      },
+      {
+        "lineNumber": 13,
+        "author": {
+          "gitId": "plosslaw"
+        },
+        "content": " * Adds a shift to the McScheduler."
+      },
+      {
+        "lineNumber": 14,
+        "author": {
+          "gitId": "plosslaw"
+        },
+        "content": " */"
+      },
+      {
+        "lineNumber": 15,
+        "author": {
+          "gitId": "plosslaw"
+        },
+        "content": "public class ShiftAddCommand extends Command {"
+      },
+      {
+        "lineNumber": 16,
+        "author": {
+          "gitId": "plosslaw"
+        },
+        "content": "    public static final String COMMAND_WORD \u003d \"shift-add\";"
+      },
+      {
+        "lineNumber": 17,
+        "author": {
+          "gitId": "plosslaw"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 18,
+        "author": {
+          "gitId": "plosslaw"
+        },
+        "content": "    public static final String MESSAGE_USAGE \u003d COMMAND_WORD + \": Adds a shift to the McScheduler. \""
+      },
+      {
+        "lineNumber": 19,
+        "author": {
+          "gitId": "plosslaw"
+        },
+        "content": "            + \"Parameters: \""
+      },
+      {
+        "lineNumber": 20,
+        "author": {
+          "gitId": "plosslaw"
+        },
+        "content": "            + PREFIX_SHIFT_DAY + \"DAY \""
+      },
+      {
+        "lineNumber": 21,
+        "author": {
+          "gitId": "plosslaw"
+        },
+        "content": "            + PREFIX_SHIFT_TIME + \"TIME \""
+      },
+      {
+        "lineNumber": 22,
+        "author": {
+          "gitId": "plosslaw"
+        },
+        "content": "            + \"[\" + PREFIX_ROLE_REQUIREMENT + \"ROLE \u003cSPACE\u003e NUMBER_NEEDED]...\\n\""
+      },
+      {
+        "lineNumber": 23,
+        "author": {
+          "gitId": "plosslaw"
+        },
+        "content": "            + \"Example: \" + COMMAND_WORD + \" \""
+      },
+      {
+        "lineNumber": 24,
+        "author": {
+          "gitId": "plosslaw"
+        },
+        "content": "            + PREFIX_SHIFT_DAY + \"MON \""
+      },
+      {
+        "lineNumber": 25,
+        "author": {
+          "gitId": "plosslaw"
+        },
+        "content": "            + PREFIX_SHIFT_TIME + \"AM \""
+      },
+      {
+        "lineNumber": 26,
+        "author": {
+          "gitId": "plosslaw"
+        },
+        "content": "            + PREFIX_ROLE_REQUIREMENT + \"Cleaner 2 \""
+      },
+      {
+        "lineNumber": 27,
+        "author": {
+          "gitId": "plosslaw"
+        },
+        "content": "            + PREFIX_ROLE_REQUIREMENT + \"Cashier 1\";"
+      },
+      {
+        "lineNumber": 28,
+        "author": {
+          "gitId": "plosslaw"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 29,
+        "author": {
+          "gitId": "plosslaw"
+        },
+        "content": "    public static final String MESSAGE_SUCCESS \u003d \"New shift added: %1$s\";"
+      },
+      {
+        "lineNumber": 30,
+        "author": {
+          "gitId": "plosslaw"
+        },
+        "content": "    public static final String MESSAGE_DUPLICATE_SHIFT \u003d \"This shift already exists in the McScheduler\";"
+      },
+      {
+        "lineNumber": 31,
+        "author": {
+          "gitId": "plosslaw"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 32,
+        "author": {
+          "gitId": "plosslaw"
+        },
+        "content": "    private final Shift shiftToAdd;"
+      },
+      {
+        "lineNumber": 33,
+        "author": {
+          "gitId": "plosslaw"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 34,
+        "author": {
+          "gitId": "plosslaw"
+        },
+        "content": "    /**"
+      },
+      {
+        "lineNumber": 35,
+        "author": {
+          "gitId": "plosslaw"
+        },
+        "content": "     * Creates a ShiftAddCommand to add the specified {@code Shift}"
+      },
+      {
+        "lineNumber": 36,
+        "author": {
+          "gitId": "plosslaw"
+        },
+        "content": "     */"
+      },
+      {
+        "lineNumber": 37,
+        "author": {
+          "gitId": "plosslaw"
+        },
+        "content": "    public ShiftAddCommand(Shift shift) {"
+      },
+      {
+        "lineNumber": 38,
+        "author": {
+          "gitId": "plosslaw"
+        },
+        "content": "        requireNonNull(shift);"
+      },
+      {
+        "lineNumber": 39,
+        "author": {
+          "gitId": "plosslaw"
+        },
+        "content": "        shiftToAdd \u003d shift;"
+      },
+      {
+        "lineNumber": 40,
+        "author": {
+          "gitId": "plosslaw"
+        },
+        "content": "    }"
+      },
+      {
+        "lineNumber": 41,
+        "author": {
+          "gitId": "plosslaw"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 42,
+        "author": {
+          "gitId": "plosslaw"
+        },
+        "content": "    @Override"
+      },
+      {
+        "lineNumber": 43,
+        "author": {
+          "gitId": "plosslaw"
+        },
+        "content": "    public CommandResult execute(Model model) throws CommandException {"
+      },
+      {
+        "lineNumber": 44,
+        "author": {
+          "gitId": "plosslaw"
+        },
+        "content": "        requireNonNull(model);"
+      },
+      {
+        "lineNumber": 45,
+        "author": {
+          "gitId": "plosslaw"
+        },
+        "content": "        if (model.hasShift(shiftToAdd)) {"
+      },
+      {
+        "lineNumber": 46,
+        "author": {
+          "gitId": "plosslaw"
+        },
+        "content": "            throw new CommandException(MESSAGE_DUPLICATE_SHIFT);"
+      },
+      {
+        "lineNumber": 47,
+        "author": {
+          "gitId": "plosslaw"
+        },
+        "content": "        }"
+      },
+      {
+        "lineNumber": 48,
+        "author": {
+          "gitId": "plosslaw"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 49,
+        "author": {
+          "gitId": "plosslaw"
+        },
+        "content": "        model.addShift(shiftToAdd);"
+      },
+      {
+        "lineNumber": 50,
+        "author": {
+          "gitId": "plosslaw"
+        },
+        "content": "        return new CommandResult(String.format(MESSAGE_SUCCESS, shiftToAdd));"
+      },
+      {
+        "lineNumber": 51,
+        "author": {
+          "gitId": "plosslaw"
+        },
+        "content": "    }"
+      },
+      {
+        "lineNumber": 52,
+        "author": {
+          "gitId": "plosslaw"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 53,
+        "author": {
+          "gitId": "plosslaw"
+        },
+        "content": "    @Override"
+      },
+      {
+        "lineNumber": 54,
+        "author": {
+          "gitId": "plosslaw"
+        },
+        "content": "    public boolean equals(Object other) {"
+      },
+      {
+        "lineNumber": 55,
+        "author": {
+          "gitId": "plosslaw"
+        },
+        "content": "        return other \u003d\u003d this // short circuit if same object"
+      },
+      {
+        "lineNumber": 56,
+        "author": {
+          "gitId": "plosslaw"
+        },
+        "content": "                || (other instanceof ShiftAddCommand // instanceof handles nulls"
+      },
+      {
+        "lineNumber": 57,
+        "author": {
+          "gitId": "plosslaw"
+        },
+        "content": "                \u0026\u0026 shiftToAdd.equals(((ShiftAddCommand) other).shiftToAdd));"
+      },
+      {
+        "lineNumber": 58,
+        "author": {
+          "gitId": "plosslaw"
+        },
+        "content": "    }"
+      },
+      {
+        "lineNumber": 59,
+        "author": {
+          "gitId": "plosslaw"
+        },
+        "content": "}"
+      }
+    ],
+    "authorContributionMap": {
+      "plosslaw": 59
+    }
+  },
+  {
+    "path": "src/main/java/seedu/address/logic/commands/ShiftDeleteCommand.java",
+    "fileType": "functional-code",
+    "lines": [
+      {
+        "lineNumber": 1,
+        "author": {
+          "gitId": "plosslaw"
+        },
+        "content": "package seedu.address.logic.commands;"
+      },
+      {
+        "lineNumber": 2,
+        "author": {
+          "gitId": "plosslaw"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 3,
+        "author": {
+          "gitId": "plosslaw"
+        },
+        "content": "import static java.util.Objects.requireNonNull;"
+      },
+      {
+        "lineNumber": 4,
+        "author": {
+          "gitId": "plosslaw"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 5,
+        "author": {
+          "gitId": "plosslaw"
+        },
+        "content": "import java.util.List;"
+      },
+      {
+        "lineNumber": 6,
+        "author": {
+          "gitId": "plosslaw"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 7,
+        "author": {
+          "gitId": "plosslaw"
+        },
+        "content": "import seedu.address.commons.core.Messages;"
+      },
+      {
+        "lineNumber": 8,
+        "author": {
+          "gitId": "plosslaw"
+        },
+        "content": "import seedu.address.commons.core.index.Index;"
+      },
+      {
+        "lineNumber": 9,
+        "author": {
+          "gitId": "plosslaw"
+        },
+        "content": "import seedu.address.logic.commands.exceptions.CommandException;"
+      },
+      {
+        "lineNumber": 10,
+        "author": {
+          "gitId": "plosslaw"
+        },
+        "content": "import seedu.address.model.Model;"
+      },
+      {
+        "lineNumber": 11,
+        "author": {
+          "gitId": "plosslaw"
+        },
+        "content": "import seedu.address.model.shift.Shift;"
+      },
+      {
+        "lineNumber": 12,
+        "author": {
+          "gitId": "plosslaw"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 13,
+        "author": {
+          "gitId": "plosslaw"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 14,
+        "author": {
+          "gitId": "plosslaw"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 15,
+        "author": {
+          "gitId": "plosslaw"
+        },
+        "content": "/**"
+      },
+      {
+        "lineNumber": 16,
+        "author": {
+          "gitId": "plosslaw"
+        },
+        "content": " * Deletes a shift identified using its displayed index from the McScheduler."
+      },
+      {
+        "lineNumber": 17,
+        "author": {
+          "gitId": "plosslaw"
+        },
+        "content": " */"
+      },
+      {
+        "lineNumber": 18,
+        "author": {
+          "gitId": "plosslaw"
+        },
+        "content": "public class ShiftDeleteCommand extends Command {"
+      },
+      {
+        "lineNumber": 19,
+        "author": {
+          "gitId": "plosslaw"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 20,
+        "author": {
+          "gitId": "plosslaw"
+        },
+        "content": "    public static final String COMMAND_WORD \u003d \"shift-delete\";"
+      },
+      {
+        "lineNumber": 21,
+        "author": {
+          "gitId": "plosslaw"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 22,
+        "author": {
+          "gitId": "plosslaw"
+        },
+        "content": "    public static final String MESSAGE_USAGE \u003d COMMAND_WORD"
+      },
+      {
+        "lineNumber": 23,
+        "author": {
+          "gitId": "plosslaw"
+        },
+        "content": "            + \": Deletes the shift identified by the index number used in the displayed shift list.\\n\""
+      },
+      {
+        "lineNumber": 24,
+        "author": {
+          "gitId": "plosslaw"
+        },
+        "content": "            + \"Parameters: INDEX (must be a positive integer)\\n\""
+      },
+      {
+        "lineNumber": 25,
+        "author": {
+          "gitId": "plosslaw"
+        },
+        "content": "            + \"Example: \" + COMMAND_WORD + \" 1\";"
+      },
+      {
+        "lineNumber": 26,
+        "author": {
+          "gitId": "plosslaw"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 27,
+        "author": {
+          "gitId": "plosslaw"
+        },
+        "content": "    public static final String MESSAGE_DELETE_SHIFT_SUCCESS \u003d \"Deleted Shift: %1$s\";"
+      },
+      {
+        "lineNumber": 28,
+        "author": {
+          "gitId": "plosslaw"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 29,
+        "author": {
+          "gitId": "plosslaw"
+        },
+        "content": "    private final Index targetIndex;"
+      },
+      {
+        "lineNumber": 30,
+        "author": {
+          "gitId": "plosslaw"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 31,
+        "author": {
+          "gitId": "plosslaw"
+        },
+        "content": "    public ShiftDeleteCommand(Index targetIndex) {"
+      },
+      {
+        "lineNumber": 32,
+        "author": {
+          "gitId": "plosslaw"
+        },
+        "content": "        this.targetIndex \u003d targetIndex;"
+      },
+      {
+        "lineNumber": 33,
+        "author": {
+          "gitId": "plosslaw"
+        },
+        "content": "    }"
+      },
+      {
+        "lineNumber": 34,
+        "author": {
+          "gitId": "plosslaw"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 35,
+        "author": {
+          "gitId": "plosslaw"
+        },
+        "content": "    @Override"
+      },
+      {
+        "lineNumber": 36,
+        "author": {
+          "gitId": "plosslaw"
+        },
+        "content": "    public CommandResult execute(Model model) throws CommandException {"
+      },
+      {
+        "lineNumber": 37,
+        "author": {
+          "gitId": "plosslaw"
+        },
+        "content": "        requireNonNull(model);"
+      },
+      {
+        "lineNumber": 38,
+        "author": {
+          "gitId": "plosslaw"
+        },
+        "content": "        List\u003cShift\u003e lastShownList \u003d model.getFilteredShiftList();"
+      },
+      {
+        "lineNumber": 39,
+        "author": {
+          "gitId": "plosslaw"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 40,
+        "author": {
+          "gitId": "plosslaw"
+        },
+        "content": "        if (targetIndex.getZeroBased() \u003e\u003d lastShownList.size()) {"
+      },
+      {
+        "lineNumber": 41,
+        "author": {
+          "gitId": "plosslaw"
+        },
+        "content": "            throw new CommandException(Messages.MESSAGE_INVALID_SHIFT_DISPLAYED_INDEX);"
+      },
+      {
+        "lineNumber": 42,
+        "author": {
+          "gitId": "plosslaw"
+        },
+        "content": "        }"
+      },
+      {
+        "lineNumber": 43,
+        "author": {
+          "gitId": "plosslaw"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 44,
+        "author": {
+          "gitId": "plosslaw"
+        },
+        "content": "        Shift shiftToDelete \u003d lastShownList.get(targetIndex.getZeroBased());"
+      },
+      {
+        "lineNumber": 45,
+        "author": {
+          "gitId": "plosslaw"
+        },
+        "content": "        model.deleteShift(shiftToDelete);"
+      },
+      {
+        "lineNumber": 46,
+        "author": {
+          "gitId": "plosslaw"
+        },
+        "content": "        return new CommandResult(String.format(MESSAGE_DELETE_SHIFT_SUCCESS, shiftToDelete));"
+      },
+      {
+        "lineNumber": 47,
+        "author": {
+          "gitId": "plosslaw"
+        },
+        "content": "    }"
+      },
+      {
+        "lineNumber": 48,
+        "author": {
+          "gitId": "plosslaw"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 49,
+        "author": {
+          "gitId": "plosslaw"
+        },
+        "content": "    @Override"
+      },
+      {
+        "lineNumber": 50,
+        "author": {
+          "gitId": "plosslaw"
+        },
+        "content": "    public boolean equals(Object other) {"
+      },
+      {
+        "lineNumber": 51,
+        "author": {
+          "gitId": "plosslaw"
+        },
+        "content": "        return other \u003d\u003d this // short circuit if same object"
+      },
+      {
+        "lineNumber": 52,
+        "author": {
+          "gitId": "plosslaw"
+        },
+        "content": "                || (other instanceof ShiftDeleteCommand // instanceof handles nulls"
+      },
+      {
+        "lineNumber": 53,
+        "author": {
+          "gitId": "plosslaw"
+        },
+        "content": "                \u0026\u0026 targetIndex.equals(((ShiftDeleteCommand) other).targetIndex)); // state check"
+      },
+      {
+        "lineNumber": 54,
+        "author": {
+          "gitId": "plosslaw"
+        },
+        "content": "    }"
+      },
+      {
+        "lineNumber": 55,
+        "author": {
+          "gitId": "plosslaw"
+        },
+        "content": "}"
+      }
+    ],
+    "authorContributionMap": {
+      "plosslaw": 55
+    }
+  },
+  {
     "path": "src/main/java/seedu/address/logic/commands/ShiftEditCommand.java",
     "fileType": "functional-code",
     "lines": [
@@ -13485,474 +14301,530 @@
       {
         "lineNumber": 18,
         "author": {
-          "gitId": "WangZijun97"
+          "gitId": "plosslaw"
         },
-        "content": "import seedu.address.logic.commands.ShiftEditCommand;"
+        "content": "import seedu.address.logic.commands.ShiftAddCommand;"
       },
       {
         "lineNumber": 19,
         "author": {
-          "gitId": "WangZijun97"
+          "gitId": "plosslaw"
         },
-        "content": "import seedu.address.logic.commands.ShiftListCommand;"
+        "content": "import seedu.address.logic.commands.ShiftDeleteCommand;"
       },
       {
         "lineNumber": 20,
         "author": {
-          "gitId": "-"
+          "gitId": "plosslaw"
         },
-        "content": "import seedu.address.logic.parser.exceptions.ParseException;"
+        "content": "import seedu.address.logic.commands.ShiftEditCommand;"
       },
       {
         "lineNumber": 21,
         "author": {
-          "gitId": "-"
+          "gitId": "plosslaw"
         },
-        "content": ""
+        "content": "import seedu.address.logic.commands.ShiftListCommand;"
       },
       {
         "lineNumber": 22,
         "author": {
           "gitId": "-"
         },
-        "content": ""
+        "content": "import seedu.address.logic.parser.exceptions.ParseException;"
       },
       {
         "lineNumber": 23,
         "author": {
           "gitId": "-"
         },
-        "content": "/**"
+        "content": ""
       },
       {
         "lineNumber": 24,
         "author": {
           "gitId": "-"
         },
-        "content": " * Parses user input."
+        "content": ""
       },
       {
         "lineNumber": 25,
         "author": {
           "gitId": "-"
         },
-        "content": " */"
+        "content": "/**"
       },
       {
         "lineNumber": 26,
         "author": {
           "gitId": "-"
         },
-        "content": "public class AddressBookParser {"
+        "content": " * Parses user input."
       },
       {
         "lineNumber": 27,
         "author": {
           "gitId": "-"
         },
-        "content": ""
+        "content": " */"
       },
       {
         "lineNumber": 28,
         "author": {
           "gitId": "-"
         },
-        "content": "    /**"
+        "content": "public class AddressBookParser {"
       },
       {
         "lineNumber": 29,
         "author": {
           "gitId": "-"
         },
-        "content": "     * Used for initial separation of command word and args."
+        "content": ""
       },
       {
         "lineNumber": 30,
         "author": {
           "gitId": "-"
         },
-        "content": "     */"
+        "content": "    /**"
       },
       {
         "lineNumber": 31,
         "author": {
           "gitId": "-"
         },
-        "content": "    private static final Pattern BASIC_COMMAND_FORMAT \u003d Pattern.compile(\"(?\u003ccommandWord\u003e\\\\S+)(?\u003carguments\u003e.*)\");"
+        "content": "     * Used for initial separation of command word and args."
       },
       {
         "lineNumber": 32,
         "author": {
           "gitId": "-"
         },
-        "content": ""
+        "content": "     */"
       },
       {
         "lineNumber": 33,
         "author": {
           "gitId": "-"
         },
-        "content": "    /**"
+        "content": "    private static final Pattern BASIC_COMMAND_FORMAT \u003d Pattern.compile(\"(?\u003ccommandWord\u003e\\\\S+)(?\u003carguments\u003e.*)\");"
       },
       {
         "lineNumber": 34,
         "author": {
           "gitId": "-"
         },
-        "content": "     * Parses user input into command for execution."
+        "content": ""
       },
       {
         "lineNumber": 35,
         "author": {
           "gitId": "-"
         },
-        "content": "     *"
+        "content": "    /**"
       },
       {
         "lineNumber": 36,
         "author": {
           "gitId": "-"
         },
-        "content": "     * @param userInput full user input string"
+        "content": "     * Parses user input into command for execution."
       },
       {
         "lineNumber": 37,
         "author": {
           "gitId": "-"
         },
-        "content": "     * @return the command based on the user input"
+        "content": "     *"
       },
       {
         "lineNumber": 38,
         "author": {
           "gitId": "-"
         },
-        "content": "     * @throws ParseException if the user input does not conform the expected format"
+        "content": "     * @param userInput full user input string"
       },
       {
         "lineNumber": 39,
         "author": {
           "gitId": "-"
         },
-        "content": "     */"
+        "content": "     * @return the command based on the user input"
       },
       {
         "lineNumber": 40,
         "author": {
           "gitId": "-"
         },
-        "content": "    public Command parseCommand(String userInput) throws ParseException {"
+        "content": "     * @throws ParseException if the user input does not conform the expected format"
       },
       {
         "lineNumber": 41,
         "author": {
           "gitId": "-"
         },
-        "content": "        final Matcher matcher \u003d BASIC_COMMAND_FORMAT.matcher(userInput.trim());"
+        "content": "     */"
       },
       {
         "lineNumber": 42,
         "author": {
           "gitId": "-"
         },
-        "content": "        if (!matcher.matches()) {"
+        "content": "    public Command parseCommand(String userInput) throws ParseException {"
       },
       {
         "lineNumber": 43,
         "author": {
           "gitId": "-"
         },
-        "content": "            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, HelpCommand.MESSAGE_USAGE));"
+        "content": "        final Matcher matcher \u003d BASIC_COMMAND_FORMAT.matcher(userInput.trim());"
       },
       {
         "lineNumber": 44,
         "author": {
           "gitId": "-"
         },
-        "content": "        }"
+        "content": "        if (!matcher.matches()) {"
       },
       {
         "lineNumber": 45,
         "author": {
           "gitId": "-"
         },
-        "content": ""
+        "content": "            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, HelpCommand.MESSAGE_USAGE));"
       },
       {
         "lineNumber": 46,
         "author": {
           "gitId": "-"
         },
-        "content": "        final String commandWord \u003d matcher.group(\"commandWord\");"
+        "content": "        }"
       },
       {
         "lineNumber": 47,
         "author": {
           "gitId": "-"
         },
-        "content": "        final String arguments \u003d matcher.group(\"arguments\");"
+        "content": ""
       },
       {
         "lineNumber": 48,
         "author": {
           "gitId": "-"
         },
-        "content": "        switch (commandWord) {"
+        "content": "        final String commandWord \u003d matcher.group(\"commandWord\");"
       },
       {
         "lineNumber": 49,
         "author": {
           "gitId": "-"
         },
-        "content": ""
+        "content": "        final String arguments \u003d matcher.group(\"arguments\");"
       },
       {
         "lineNumber": 50,
         "author": {
-          "gitId": "-"
+          "gitId": "plosslaw"
         },
-        "content": "        case AddCommand.COMMAND_WORD:"
+        "content": "        switch (commandWord.toLowerCase()) {"
       },
       {
         "lineNumber": 51,
         "author": {
           "gitId": "-"
         },
-        "content": "            return new AddCommandParser().parse(arguments);"
+        "content": ""
       },
       {
         "lineNumber": 52,
         "author": {
           "gitId": "-"
         },
-        "content": ""
+        "content": "        case AddCommand.COMMAND_WORD:"
       },
       {
         "lineNumber": 53,
         "author": {
           "gitId": "-"
         },
-        "content": "        case EditCommand.COMMAND_WORD:"
+        "content": "            return new AddCommandParser().parse(arguments);"
       },
       {
         "lineNumber": 54,
         "author": {
           "gitId": "-"
         },
-        "content": "            return new EditCommandParser().parse(arguments);"
+        "content": ""
       },
       {
         "lineNumber": 55,
         "author": {
           "gitId": "-"
         },
-        "content": ""
+        "content": "        case EditCommand.COMMAND_WORD:"
       },
       {
         "lineNumber": 56,
         "author": {
           "gitId": "-"
         },
-        "content": "        case DeleteCommand.COMMAND_WORD:"
+        "content": "            return new EditCommandParser().parse(arguments);"
       },
       {
         "lineNumber": 57,
         "author": {
           "gitId": "-"
         },
-        "content": "            return new DeleteCommandParser().parse(arguments);"
+        "content": ""
       },
       {
         "lineNumber": 58,
         "author": {
           "gitId": "-"
         },
-        "content": ""
+        "content": "        case DeleteCommand.COMMAND_WORD:"
       },
       {
         "lineNumber": 59,
         "author": {
           "gitId": "-"
         },
-        "content": "        case ClearCommand.COMMAND_WORD:"
+        "content": "            return new DeleteCommandParser().parse(arguments);"
       },
       {
         "lineNumber": 60,
         "author": {
           "gitId": "-"
         },
-        "content": "            return new ClearCommand();"
+        "content": ""
       },
       {
         "lineNumber": 61,
         "author": {
           "gitId": "-"
         },
-        "content": ""
+        "content": "        case ClearCommand.COMMAND_WORD:"
       },
       {
         "lineNumber": 62,
         "author": {
           "gitId": "-"
         },
-        "content": "        case FindCommand.COMMAND_WORD:"
+        "content": "            return new ClearCommand();"
       },
       {
         "lineNumber": 63,
         "author": {
           "gitId": "-"
         },
-        "content": "            return new FindCommandParser().parse(arguments);"
+        "content": ""
       },
       {
         "lineNumber": 64,
         "author": {
           "gitId": "-"
         },
-        "content": ""
+        "content": "        case FindCommand.COMMAND_WORD:"
       },
       {
         "lineNumber": 65,
         "author": {
           "gitId": "-"
         },
-        "content": "        case ListCommand.COMMAND_WORD:"
+        "content": "            return new FindCommandParser().parse(arguments);"
       },
       {
         "lineNumber": 66,
         "author": {
           "gitId": "-"
         },
-        "content": "            return new ListCommand();"
+        "content": ""
       },
       {
         "lineNumber": 67,
         "author": {
           "gitId": "-"
         },
-        "content": ""
+        "content": "        case ListCommand.COMMAND_WORD:"
       },
       {
         "lineNumber": 68,
         "author": {
           "gitId": "-"
         },
-        "content": "        case ExitCommand.COMMAND_WORD:"
+        "content": "            return new ListCommand();"
       },
       {
         "lineNumber": 69,
         "author": {
           "gitId": "-"
         },
-        "content": "            return new ExitCommand();"
+        "content": ""
       },
       {
         "lineNumber": 70,
         "author": {
           "gitId": "-"
         },
-        "content": ""
+        "content": "        case ExitCommand.COMMAND_WORD:"
       },
       {
         "lineNumber": 71,
         "author": {
           "gitId": "-"
         },
-        "content": "        case HelpCommand.COMMAND_WORD:"
+        "content": "            return new ExitCommand();"
       },
       {
         "lineNumber": 72,
         "author": {
           "gitId": "-"
         },
-        "content": "            return new HelpCommand();"
+        "content": ""
       },
       {
         "lineNumber": 73,
         "author": {
           "gitId": "-"
         },
-        "content": ""
+        "content": "        case HelpCommand.COMMAND_WORD:"
       },
       {
         "lineNumber": 74,
         "author": {
-          "gitId": "WangZijun97"
+          "gitId": "-"
         },
-        "content": "        case ShiftEditCommand.COMMAND_WORD:"
+        "content": "            return new HelpCommand();"
       },
       {
         "lineNumber": 75,
         "author": {
-          "gitId": "WangZijun97"
-        },
-        "content": "            return new ShiftEditCommandParser().parse(arguments);"
-      },
-      {
-        "lineNumber": 76,
-        "author": {
-          "gitId": "WangZijun97"
+          "gitId": "-"
         },
         "content": ""
       },
       {
+        "lineNumber": 76,
+        "author": {
+          "gitId": "plosslaw"
+        },
+        "content": "        case ShiftAddCommand.COMMAND_WORD:"
+      },
+      {
         "lineNumber": 77,
         "author": {
-          "gitId": "WangZijun97"
+          "gitId": "plosslaw"
         },
-        "content": "        case ShiftListCommand.COMMAND_WORD:"
+        "content": "            return new ShiftAddCommandParser().parse(arguments);"
       },
       {
         "lineNumber": 78,
         "author": {
-          "gitId": "WangZijun97"
+          "gitId": "plosslaw"
         },
-        "content": "            return new ShiftListCommand();"
+        "content": ""
       },
       {
         "lineNumber": 79,
         "author": {
           "gitId": "WangZijun97"
         },
-        "content": ""
+        "content": "        case ShiftEditCommand.COMMAND_WORD:"
       },
       {
         "lineNumber": 80,
+        "author": {
+          "gitId": "WangZijun97"
+        },
+        "content": "            return new ShiftEditCommandParser().parse(arguments);"
+      },
+      {
+        "lineNumber": 81,
+        "author": {
+          "gitId": "WangZijun97"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 82,
+        "author": {
+          "gitId": "plosslaw"
+        },
+        "content": "        case ShiftDeleteCommand.COMMAND_WORD:"
+      },
+      {
+        "lineNumber": 83,
+        "author": {
+          "gitId": "plosslaw"
+        },
+        "content": "            return new ShiftDeleteCommandParser().parse(arguments);"
+      },
+      {
+        "lineNumber": 84,
+        "author": {
+          "gitId": "plosslaw"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 85,
+        "author": {
+          "gitId": "WangZijun97"
+        },
+        "content": "        case ShiftListCommand.COMMAND_WORD:"
+      },
+      {
+        "lineNumber": 86,
+        "author": {
+          "gitId": "WangZijun97"
+        },
+        "content": "            return new ShiftListCommand();"
+      },
+      {
+        "lineNumber": 87,
+        "author": {
+          "gitId": "WangZijun97"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 88,
         "author": {
           "gitId": "-"
         },
         "content": "        default:"
       },
       {
-        "lineNumber": 81,
+        "lineNumber": 89,
         "author": {
           "gitId": "-"
         },
         "content": "            throw new ParseException(MESSAGE_UNKNOWN_COMMAND);"
       },
       {
-        "lineNumber": 82,
+        "lineNumber": 90,
         "author": {
           "gitId": "-"
         },
         "content": "        }"
       },
       {
-        "lineNumber": 83,
+        "lineNumber": 91,
         "author": {
           "gitId": "-"
         },
         "content": "    }"
       },
       {
-        "lineNumber": 84,
+        "lineNumber": 92,
         "author": {
           "gitId": "-"
         },
         "content": ""
       },
       {
-        "lineNumber": 85,
+        "lineNumber": 93,
         "author": {
           "gitId": "-"
         },
@@ -13960,8 +14832,9 @@
       }
     ],
     "authorContributionMap": {
-      "WangZijun97": 8,
-      "-": 77
+      "plosslaw": 11,
+      "WangZijun97": 6,
+      "-": 76
     }
   },
   {
@@ -16384,6 +17257,605 @@
       "sigmund-c": 16,
       "WangZijun97": 77,
       "-": 124
+    }
+  },
+  {
+    "path": "src/main/java/seedu/address/logic/parser/ShiftAddCommandParser.java",
+    "fileType": "functional-code",
+    "lines": [
+      {
+        "lineNumber": 1,
+        "author": {
+          "gitId": "plosslaw"
+        },
+        "content": "package seedu.address.logic.parser;"
+      },
+      {
+        "lineNumber": 2,
+        "author": {
+          "gitId": "plosslaw"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 3,
+        "author": {
+          "gitId": "plosslaw"
+        },
+        "content": "import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;"
+      },
+      {
+        "lineNumber": 4,
+        "author": {
+          "gitId": "plosslaw"
+        },
+        "content": "import static seedu.address.logic.parser.CliSyntax.PREFIX_ROLE_REQUIREMENT;"
+      },
+      {
+        "lineNumber": 5,
+        "author": {
+          "gitId": "plosslaw"
+        },
+        "content": "import static seedu.address.logic.parser.CliSyntax.PREFIX_SHIFT_DAY;"
+      },
+      {
+        "lineNumber": 6,
+        "author": {
+          "gitId": "plosslaw"
+        },
+        "content": "import static seedu.address.logic.parser.CliSyntax.PREFIX_SHIFT_TIME;"
+      },
+      {
+        "lineNumber": 7,
+        "author": {
+          "gitId": "plosslaw"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 8,
+        "author": {
+          "gitId": "plosslaw"
+        },
+        "content": "import java.util.Set;"
+      },
+      {
+        "lineNumber": 9,
+        "author": {
+          "gitId": "plosslaw"
+        },
+        "content": "import java.util.stream.Stream;"
+      },
+      {
+        "lineNumber": 10,
+        "author": {
+          "gitId": "plosslaw"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 11,
+        "author": {
+          "gitId": "plosslaw"
+        },
+        "content": "import seedu.address.logic.commands.ShiftAddCommand;"
+      },
+      {
+        "lineNumber": 12,
+        "author": {
+          "gitId": "plosslaw"
+        },
+        "content": "import seedu.address.logic.parser.exceptions.ParseException;"
+      },
+      {
+        "lineNumber": 13,
+        "author": {
+          "gitId": "plosslaw"
+        },
+        "content": "import seedu.address.model.shift.RoleRequirement;"
+      },
+      {
+        "lineNumber": 14,
+        "author": {
+          "gitId": "plosslaw"
+        },
+        "content": "import seedu.address.model.shift.Shift;"
+      },
+      {
+        "lineNumber": 15,
+        "author": {
+          "gitId": "plosslaw"
+        },
+        "content": "import seedu.address.model.shift.ShiftDay;"
+      },
+      {
+        "lineNumber": 16,
+        "author": {
+          "gitId": "plosslaw"
+        },
+        "content": "import seedu.address.model.shift.ShiftTime;"
+      },
+      {
+        "lineNumber": 17,
+        "author": {
+          "gitId": "plosslaw"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 18,
+        "author": {
+          "gitId": "plosslaw"
+        },
+        "content": "/**"
+      },
+      {
+        "lineNumber": 19,
+        "author": {
+          "gitId": "plosslaw"
+        },
+        "content": " * Parses input arguments and creates a new ShiftAddCommand object"
+      },
+      {
+        "lineNumber": 20,
+        "author": {
+          "gitId": "plosslaw"
+        },
+        "content": " */"
+      },
+      {
+        "lineNumber": 21,
+        "author": {
+          "gitId": "plosslaw"
+        },
+        "content": "public class ShiftAddCommandParser implements Parser\u003cShiftAddCommand\u003e {"
+      },
+      {
+        "lineNumber": 22,
+        "author": {
+          "gitId": "plosslaw"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 23,
+        "author": {
+          "gitId": "plosslaw"
+        },
+        "content": "    /**"
+      },
+      {
+        "lineNumber": 24,
+        "author": {
+          "gitId": "plosslaw"
+        },
+        "content": "     * Parses the given {@code String} of arguments in the context of the AddCommand"
+      },
+      {
+        "lineNumber": 25,
+        "author": {
+          "gitId": "plosslaw"
+        },
+        "content": "     * and returns an AddCommand object for execution."
+      },
+      {
+        "lineNumber": 26,
+        "author": {
+          "gitId": "plosslaw"
+        },
+        "content": "     * @throws ParseException if the user input does not conform the expected format"
+      },
+      {
+        "lineNumber": 27,
+        "author": {
+          "gitId": "plosslaw"
+        },
+        "content": "     */"
+      },
+      {
+        "lineNumber": 28,
+        "author": {
+          "gitId": "plosslaw"
+        },
+        "content": "    public ShiftAddCommand parse(String args) throws ParseException {"
+      },
+      {
+        "lineNumber": 29,
+        "author": {
+          "gitId": "plosslaw"
+        },
+        "content": "        ArgumentMultimap argMultimap \u003d"
+      },
+      {
+        "lineNumber": 30,
+        "author": {
+          "gitId": "plosslaw"
+        },
+        "content": "                ArgumentTokenizer.tokenize(args, PREFIX_SHIFT_DAY, PREFIX_SHIFT_TIME, PREFIX_ROLE_REQUIREMENT);"
+      },
+      {
+        "lineNumber": 31,
+        "author": {
+          "gitId": "plosslaw"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 32,
+        "author": {
+          "gitId": "plosslaw"
+        },
+        "content": "        if (!arePrefixesPresent(argMultimap, PREFIX_SHIFT_DAY, PREFIX_SHIFT_TIME)"
+      },
+      {
+        "lineNumber": 33,
+        "author": {
+          "gitId": "plosslaw"
+        },
+        "content": "                || !argMultimap.getPreamble().isEmpty()) {"
+      },
+      {
+        "lineNumber": 34,
+        "author": {
+          "gitId": "plosslaw"
+        },
+        "content": "            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, ShiftAddCommand.MESSAGE_USAGE));"
+      },
+      {
+        "lineNumber": 35,
+        "author": {
+          "gitId": "plosslaw"
+        },
+        "content": "        }"
+      },
+      {
+        "lineNumber": 36,
+        "author": {
+          "gitId": "plosslaw"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 37,
+        "author": {
+          "gitId": "plosslaw"
+        },
+        "content": "        ShiftDay shiftDay \u003d ParserUtil.parseShiftDay(argMultimap.getValue(PREFIX_SHIFT_DAY).get());"
+      },
+      {
+        "lineNumber": 38,
+        "author": {
+          "gitId": "plosslaw"
+        },
+        "content": "        ShiftTime shiftTime \u003d ParserUtil.parseShiftTime(argMultimap.getValue(PREFIX_SHIFT_TIME).get());"
+      },
+      {
+        "lineNumber": 39,
+        "author": {
+          "gitId": "plosslaw"
+        },
+        "content": "        Set\u003cRoleRequirement\u003e roleReqList \u003d"
+      },
+      {
+        "lineNumber": 40,
+        "author": {
+          "gitId": "plosslaw"
+        },
+        "content": "                ParserUtil.parseRoleRequirements(argMultimap.getAllValues(PREFIX_ROLE_REQUIREMENT));"
+      },
+      {
+        "lineNumber": 41,
+        "author": {
+          "gitId": "plosslaw"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 42,
+        "author": {
+          "gitId": "plosslaw"
+        },
+        "content": "        Shift shift \u003d new Shift(shiftDay, shiftTime, roleReqList);"
+      },
+      {
+        "lineNumber": 43,
+        "author": {
+          "gitId": "plosslaw"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 44,
+        "author": {
+          "gitId": "plosslaw"
+        },
+        "content": "        return new ShiftAddCommand(shift);"
+      },
+      {
+        "lineNumber": 45,
+        "author": {
+          "gitId": "plosslaw"
+        },
+        "content": "    }"
+      },
+      {
+        "lineNumber": 46,
+        "author": {
+          "gitId": "plosslaw"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 47,
+        "author": {
+          "gitId": "plosslaw"
+        },
+        "content": "    /**"
+      },
+      {
+        "lineNumber": 48,
+        "author": {
+          "gitId": "plosslaw"
+        },
+        "content": "     * Returns true if none of the prefixes contains empty {@code Optional} values in the given"
+      },
+      {
+        "lineNumber": 49,
+        "author": {
+          "gitId": "plosslaw"
+        },
+        "content": "     * {@code ArgumentMultimap}."
+      },
+      {
+        "lineNumber": 50,
+        "author": {
+          "gitId": "plosslaw"
+        },
+        "content": "     */"
+      },
+      {
+        "lineNumber": 51,
+        "author": {
+          "gitId": "plosslaw"
+        },
+        "content": "    private static boolean arePrefixesPresent(ArgumentMultimap argumentMultimap, Prefix... prefixes) {"
+      },
+      {
+        "lineNumber": 52,
+        "author": {
+          "gitId": "plosslaw"
+        },
+        "content": "        return Stream.of(prefixes).allMatch(prefix -\u003e argumentMultimap.getValue(prefix).isPresent());"
+      },
+      {
+        "lineNumber": 53,
+        "author": {
+          "gitId": "plosslaw"
+        },
+        "content": "    }"
+      },
+      {
+        "lineNumber": 54,
+        "author": {
+          "gitId": "plosslaw"
+        },
+        "content": "}"
+      }
+    ],
+    "authorContributionMap": {
+      "plosslaw": 54
+    }
+  },
+  {
+    "path": "src/main/java/seedu/address/logic/parser/ShiftDeleteCommandParser.java",
+    "fileType": "functional-code",
+    "lines": [
+      {
+        "lineNumber": 1,
+        "author": {
+          "gitId": "plosslaw"
+        },
+        "content": "package seedu.address.logic.parser;"
+      },
+      {
+        "lineNumber": 2,
+        "author": {
+          "gitId": "plosslaw"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 3,
+        "author": {
+          "gitId": "plosslaw"
+        },
+        "content": "import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;"
+      },
+      {
+        "lineNumber": 4,
+        "author": {
+          "gitId": "plosslaw"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 5,
+        "author": {
+          "gitId": "plosslaw"
+        },
+        "content": "import seedu.address.commons.core.index.Index;"
+      },
+      {
+        "lineNumber": 6,
+        "author": {
+          "gitId": "plosslaw"
+        },
+        "content": "import seedu.address.logic.commands.ShiftDeleteCommand;"
+      },
+      {
+        "lineNumber": 7,
+        "author": {
+          "gitId": "plosslaw"
+        },
+        "content": "import seedu.address.logic.parser.exceptions.ParseException;"
+      },
+      {
+        "lineNumber": 8,
+        "author": {
+          "gitId": "plosslaw"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 9,
+        "author": {
+          "gitId": "plosslaw"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 10,
+        "author": {
+          "gitId": "plosslaw"
+        },
+        "content": "/**"
+      },
+      {
+        "lineNumber": 11,
+        "author": {
+          "gitId": "plosslaw"
+        },
+        "content": " * Parses input arguments and creates a new ShiftDeleteCommand object"
+      },
+      {
+        "lineNumber": 12,
+        "author": {
+          "gitId": "plosslaw"
+        },
+        "content": " */"
+      },
+      {
+        "lineNumber": 13,
+        "author": {
+          "gitId": "plosslaw"
+        },
+        "content": "public class ShiftDeleteCommandParser implements Parser\u003cShiftDeleteCommand\u003e {"
+      },
+      {
+        "lineNumber": 14,
+        "author": {
+          "gitId": "plosslaw"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 15,
+        "author": {
+          "gitId": "plosslaw"
+        },
+        "content": "    /**"
+      },
+      {
+        "lineNumber": 16,
+        "author": {
+          "gitId": "plosslaw"
+        },
+        "content": "     * Parses the given {@code String} of arguments in the context of the DeleteCommand"
+      },
+      {
+        "lineNumber": 17,
+        "author": {
+          "gitId": "plosslaw"
+        },
+        "content": "     * and returns a DeleteCommand object for execution."
+      },
+      {
+        "lineNumber": 18,
+        "author": {
+          "gitId": "plosslaw"
+        },
+        "content": "     * @throws ParseException if the user input does not conform the expected format"
+      },
+      {
+        "lineNumber": 19,
+        "author": {
+          "gitId": "plosslaw"
+        },
+        "content": "     */"
+      },
+      {
+        "lineNumber": 20,
+        "author": {
+          "gitId": "plosslaw"
+        },
+        "content": "    public ShiftDeleteCommand parse(String args) throws ParseException {"
+      },
+      {
+        "lineNumber": 21,
+        "author": {
+          "gitId": "plosslaw"
+        },
+        "content": "        try {"
+      },
+      {
+        "lineNumber": 22,
+        "author": {
+          "gitId": "plosslaw"
+        },
+        "content": "            Index index \u003d ParserUtil.parseIndex(args);"
+      },
+      {
+        "lineNumber": 23,
+        "author": {
+          "gitId": "plosslaw"
+        },
+        "content": "            return new ShiftDeleteCommand(index);"
+      },
+      {
+        "lineNumber": 24,
+        "author": {
+          "gitId": "plosslaw"
+        },
+        "content": "        } catch (ParseException pe) {"
+      },
+      {
+        "lineNumber": 25,
+        "author": {
+          "gitId": "plosslaw"
+        },
+        "content": "            throw new ParseException("
+      },
+      {
+        "lineNumber": 26,
+        "author": {
+          "gitId": "plosslaw"
+        },
+        "content": "                    String.format(MESSAGE_INVALID_COMMAND_FORMAT, ShiftDeleteCommand.MESSAGE_USAGE), pe);"
+      },
+      {
+        "lineNumber": 27,
+        "author": {
+          "gitId": "plosslaw"
+        },
+        "content": "        }"
+      },
+      {
+        "lineNumber": 28,
+        "author": {
+          "gitId": "plosslaw"
+        },
+        "content": "    }"
+      },
+      {
+        "lineNumber": 29,
+        "author": {
+          "gitId": "plosslaw"
+        },
+        "content": "}"
+      }
+    ],
+    "authorContributionMap": {
+      "plosslaw": 29
     }
   },
   {
