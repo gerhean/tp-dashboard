@@ -20074,37 +20074,37 @@
       {
         "lineNumber": 3,
         "author": {
-          "gitId": "-"
+          "gitId": "marcus2k"
         },
-        "content": "import static java.util.Objects.requireNonNull;"
+        "content": "import static seedu.address.logic.parser.CliSyntax.PREFIX_DATE;"
       },
       {
         "lineNumber": 4,
         "author": {
-          "gitId": "-"
+          "gitId": "marcus2k"
         },
-        "content": ""
+        "content": "import static seedu.address.logic.parser.CliSyntax.PREFIX_DESCRIPTION;"
       },
       {
         "lineNumber": 5,
         "author": {
-          "gitId": "-"
+          "gitId": "marcus2k"
         },
-        "content": "import seedu.address.commons.core.Messages;"
+        "content": "import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG;"
       },
       {
         "lineNumber": 6,
         "author": {
           "gitId": "-"
         },
-        "content": "import seedu.address.model.Model;"
+        "content": ""
       },
       {
         "lineNumber": 7,
         "author": {
-          "gitId": "Jaylenlee"
+          "gitId": "marcus2k"
         },
-        "content": "import seedu.address.model.expense.NameContainsKeywordsPredicate;"
+        "content": "import java.util.function.Predicate;"
       },
       {
         "lineNumber": 8,
@@ -20118,84 +20118,84 @@
         "author": {
           "gitId": "-"
         },
-        "content": "/**"
+        "content": "import seedu.address.commons.core.Messages;"
       },
       {
         "lineNumber": 10,
         "author": {
-          "gitId": "Jaylenlee"
+          "gitId": "-"
         },
-        "content": " * Finds and lists all expenses in address book whose name contains any of the argument keywords."
+        "content": "import seedu.address.model.Model;"
       },
       {
         "lineNumber": 11,
         "author": {
-          "gitId": "-"
+          "gitId": "marcus2k"
         },
-        "content": " * Keyword matching is case insensitive."
+        "content": "import seedu.address.model.expense.DateMatchesPredicate;"
       },
       {
         "lineNumber": 12,
         "author": {
-          "gitId": "-"
+          "gitId": "marcus2k"
         },
-        "content": " */"
+        "content": "import seedu.address.model.expense.Expense;"
       },
       {
         "lineNumber": 13,
         "author": {
-          "gitId": "-"
+          "gitId": "Jaylenlee"
         },
-        "content": "public class FindCommand extends Command {"
+        "content": "import seedu.address.model.expense.NameContainsKeywordsPredicate;"
       },
       {
         "lineNumber": 14,
         "author": {
-          "gitId": "-"
+          "gitId": "marcus2k"
         },
-        "content": ""
+        "content": "import seedu.address.model.expense.TagsMatchesPredicate;"
       },
       {
         "lineNumber": 15,
         "author": {
           "gitId": "-"
         },
-        "content": "    public static final String COMMAND_WORD \u003d \"find\";"
+        "content": ""
       },
       {
         "lineNumber": 16,
         "author": {
           "gitId": "-"
         },
-        "content": ""
+        "content": "/**"
       },
       {
         "lineNumber": 17,
         "author": {
           "gitId": "Jaylenlee"
         },
-        "content": "    public static final String MESSAGE_USAGE \u003d COMMAND_WORD + \": Finds all expenses whose names contain any of \""
+        "content": " * Finds and lists all expenses in address book whose name contains any of the argument keywords."
       },
       {
         "lineNumber": 18,
         "author": {
           "gitId": "-"
         },
-        "content": "            + \"the specified keywords (case-insensitive) and displays them as a list with index numbers.\\n\""
+        "content": " * Keyword matching is case insensitive."
       },
       {
         "lineNumber": 19,
         "author": {
           "gitId": "-"
         },
-        "content": "            + \"Parameters: KEYWORD [MORE_KEYWORDS]...\\n\""
+        "content": " */"
       },
       {
         "lineNumber": 20,
         "author": {
           "gitId": "-"
         },
-        "content": "            + \"Example: \" + COMMAND_WORD + \" alice bob charlie\";"
+        "content": "public class FindCommand extends Command {"
       },
       {
         "lineNumber": 21,
@@ -20209,7 +20209,7 @@
         "author": {
           "gitId": "-"
         },
-        "content": "    private final NameContainsKeywordsPredicate predicate;"
+        "content": "    public static final String COMMAND_WORD \u003d \"find\";"
       },
       {
         "lineNumber": 23,
@@ -20221,131 +20221,411 @@
       {
         "lineNumber": 24,
         "author": {
-          "gitId": "-"
+          "gitId": "marcus2k"
         },
-        "content": "    public FindCommand(NameContainsKeywordsPredicate predicate) {"
+        "content": "    public static final String MESSAGE_USAGE \u003d COMMAND_WORD + \": Finds all the expenses with details \""
       },
       {
         "lineNumber": 25,
         "author": {
-          "gitId": "-"
+          "gitId": "marcus2k"
         },
-        "content": "        this.predicate \u003d predicate;"
+        "content": "            + \"that match the arguments (keywords, date, tags). \""
       },
       {
         "lineNumber": 26,
         "author": {
-          "gitId": "-"
+          "gitId": "marcus2k"
         },
-        "content": "    }"
+        "content": "            + \"Parameters: \""
       },
       {
         "lineNumber": 27,
         "author": {
-          "gitId": "-"
+          "gitId": "marcus2k"
         },
-        "content": ""
+        "content": "            + \"[\" + PREFIX_DESCRIPTION + \"KEYWORD] \""
       },
       {
         "lineNumber": 28,
         "author": {
-          "gitId": "-"
+          "gitId": "marcus2k"
         },
-        "content": "    @Override"
+        "content": "            + \"[\" + PREFIX_DATE + \"DD-MM-YYYY] \""
       },
       {
         "lineNumber": 29,
         "author": {
-          "gitId": "-"
+          "gitId": "marcus2k"
         },
-        "content": "    public CommandResult execute(Model model) {"
+        "content": "            + \"[\" + PREFIX_TAG + \"TAG]...\\n\""
       },
       {
         "lineNumber": 30,
         "author": {
-          "gitId": "-"
+          "gitId": "marcus2k"
         },
-        "content": "        requireNonNull(model);"
+        "content": "            + \"Example: \" + COMMAND_WORD + \"  \""
       },
       {
         "lineNumber": 31,
         "author": {
-          "gitId": "Jaylenlee"
+          "gitId": "marcus2k"
         },
-        "content": "        model.updateFilteredExpenseList(predicate);"
+        "content": "            + PREFIX_DATE + \"18-02-2020 \""
       },
       {
         "lineNumber": 32,
         "author": {
-          "gitId": "-"
+          "gitId": "marcus2k"
         },
-        "content": "        return new CommandResult("
+        "content": "            + PREFIX_DESCRIPTION + \"Lunch at YIH\""
       },
       {
         "lineNumber": 33,
         "author": {
-          "gitId": "Jaylenlee"
+          "gitId": "marcus2k"
         },
-        "content": "                String.format(Messages.MESSAGE_EXPENSES_LISTED_OVERVIEW, model.getFilteredExpenseList().size()));"
+        "content": "            + PREFIX_TAG + \"food\";"
       },
       {
         "lineNumber": 34,
         "author": {
           "gitId": "-"
         },
-        "content": "    }"
+        "content": ""
       },
       {
         "lineNumber": 35,
         "author": {
-          "gitId": "-"
+          "gitId": "marcus2k"
         },
-        "content": ""
+        "content": "    private final NameContainsKeywordsPredicate namePredicate;"
       },
       {
         "lineNumber": 36,
         "author": {
-          "gitId": "-"
+          "gitId": "marcus2k"
         },
-        "content": "    @Override"
+        "content": "    private final DateMatchesPredicate datePredicate;"
       },
       {
         "lineNumber": 37,
         "author": {
-          "gitId": "-"
+          "gitId": "marcus2k"
         },
-        "content": "    public boolean equals(Object other) {"
+        "content": "    private final TagsMatchesPredicate tagsPredicate;"
       },
       {
         "lineNumber": 38,
         "author": {
           "gitId": "-"
         },
-        "content": "        return other \u003d\u003d this // short circuit if same object"
+        "content": ""
       },
       {
         "lineNumber": 39,
         "author": {
-          "gitId": "-"
+          "gitId": "marcus2k"
         },
-        "content": "                || (other instanceof FindCommand // instanceof handles nulls"
+        "content": "    /**"
       },
       {
         "lineNumber": 40,
         "author": {
-          "gitId": "-"
+          "gitId": "marcus2k"
         },
-        "content": "                \u0026\u0026 predicate.equals(((FindCommand) other).predicate)); // state check"
+        "content": "     * Constructor that takes in the predicates used to filter through"
       },
       {
         "lineNumber": 41,
+        "author": {
+          "gitId": "marcus2k"
+        },
+        "content": "     * the expenses list and find matching expenses. It matches based on keywords,"
+      },
+      {
+        "lineNumber": 42,
+        "author": {
+          "gitId": "marcus2k"
+        },
+        "content": "     * date, and tags."
+      },
+      {
+        "lineNumber": 43,
+        "author": {
+          "gitId": "marcus2k"
+        },
+        "content": "     */"
+      },
+      {
+        "lineNumber": 44,
+        "author": {
+          "gitId": "marcus2k"
+        },
+        "content": "    public FindCommand(NameContainsKeywordsPredicate namePredicate,"
+      },
+      {
+        "lineNumber": 45,
+        "author": {
+          "gitId": "marcus2k"
+        },
+        "content": "                       DateMatchesPredicate datePredicate,"
+      },
+      {
+        "lineNumber": 46,
+        "author": {
+          "gitId": "marcus2k"
+        },
+        "content": "                       TagsMatchesPredicate tagsPredicate) {"
+      },
+      {
+        "lineNumber": 47,
+        "author": {
+          "gitId": "marcus2k"
+        },
+        "content": "        this.namePredicate \u003d namePredicate;"
+      },
+      {
+        "lineNumber": 48,
+        "author": {
+          "gitId": "marcus2k"
+        },
+        "content": "        this.datePredicate \u003d datePredicate;"
+      },
+      {
+        "lineNumber": 49,
+        "author": {
+          "gitId": "marcus2k"
+        },
+        "content": "        this.tagsPredicate \u003d tagsPredicate;"
+      },
+      {
+        "lineNumber": 50,
         "author": {
           "gitId": "-"
         },
         "content": "    }"
       },
       {
-        "lineNumber": 42,
+        "lineNumber": 51,
+        "author": {
+          "gitId": "-"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 52,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "    @Override"
+      },
+      {
+        "lineNumber": 53,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "    public CommandResult execute(Model model) {"
+      },
+      {
+        "lineNumber": 54,
+        "author": {
+          "gitId": "marcus2k"
+        },
+        "content": "        if (this.namePredicate.isEmpty() \u0026\u0026 this.datePredicate.isEmpty()"
+      },
+      {
+        "lineNumber": 55,
+        "author": {
+          "gitId": "marcus2k"
+        },
+        "content": "                \u0026\u0026 this.tagsPredicate.isEmpty()) {"
+      },
+      {
+        "lineNumber": 56,
+        "author": {
+          "gitId": "marcus2k"
+        },
+        "content": "            model.updateFilteredExpenseList(x -\u003e false);"
+      },
+      {
+        "lineNumber": 57,
+        "author": {
+          "gitId": "marcus2k"
+        },
+        "content": "        }"
+      },
+      {
+        "lineNumber": 58,
+        "author": {
+          "gitId": "marcus2k"
+        },
+        "content": "        Predicate\u003cExpense\u003e predicate \u003d x -\u003e true;"
+      },
+      {
+        "lineNumber": 59,
+        "author": {
+          "gitId": "marcus2k"
+        },
+        "content": "        if (!namePredicate.isEmpty()) {"
+      },
+      {
+        "lineNumber": 60,
+        "author": {
+          "gitId": "marcus2k"
+        },
+        "content": "            predicate \u003d predicate.and(namePredicate);"
+      },
+      {
+        "lineNumber": 61,
+        "author": {
+          "gitId": "marcus2k"
+        },
+        "content": "        }"
+      },
+      {
+        "lineNumber": 62,
+        "author": {
+          "gitId": "marcus2k"
+        },
+        "content": "        if (!datePredicate.isEmpty()) {"
+      },
+      {
+        "lineNumber": 63,
+        "author": {
+          "gitId": "marcus2k"
+        },
+        "content": "            predicate \u003d predicate.and(datePredicate);"
+      },
+      {
+        "lineNumber": 64,
+        "author": {
+          "gitId": "marcus2k"
+        },
+        "content": "        }"
+      },
+      {
+        "lineNumber": 65,
+        "author": {
+          "gitId": "marcus2k"
+        },
+        "content": "        if (!tagsPredicate.isEmpty()) {"
+      },
+      {
+        "lineNumber": 66,
+        "author": {
+          "gitId": "marcus2k"
+        },
+        "content": "            predicate \u003d predicate.and(tagsPredicate);"
+      },
+      {
+        "lineNumber": 67,
+        "author": {
+          "gitId": "marcus2k"
+        },
+        "content": "        }"
+      },
+      {
+        "lineNumber": 68,
+        "author": {
+          "gitId": "Jaylenlee"
+        },
+        "content": "        model.updateFilteredExpenseList(predicate);"
+      },
+      {
+        "lineNumber": 69,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "        return new CommandResult("
+      },
+      {
+        "lineNumber": 70,
+        "author": {
+          "gitId": "marcus2k"
+        },
+        "content": "                String.format(Messages.MESSAGE_EXPENSES_LISTED_OVERVIEW,"
+      },
+      {
+        "lineNumber": 71,
+        "author": {
+          "gitId": "marcus2k"
+        },
+        "content": "                        model.getFilteredExpenseList().size()));"
+      },
+      {
+        "lineNumber": 72,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "    }"
+      },
+      {
+        "lineNumber": 73,
+        "author": {
+          "gitId": "-"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 74,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "    @Override"
+      },
+      {
+        "lineNumber": 75,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "    public boolean equals(Object other) {"
+      },
+      {
+        "lineNumber": 76,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "        return other \u003d\u003d this // short circuit if same object"
+      },
+      {
+        "lineNumber": 77,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "                || (other instanceof FindCommand // instanceof handles nulls"
+      },
+      {
+        "lineNumber": 78,
+        "author": {
+          "gitId": "marcus2k"
+        },
+        "content": "                \u0026\u0026 namePredicate.equals(((FindCommand) other).namePredicate)"
+      },
+      {
+        "lineNumber": 79,
+        "author": {
+          "gitId": "marcus2k"
+        },
+        "content": "                \u0026\u0026 datePredicate.equals(((FindCommand) other).datePredicate)"
+      },
+      {
+        "lineNumber": 80,
+        "author": {
+          "gitId": "marcus2k"
+        },
+        "content": "                \u0026\u0026 tagsPredicate.equals(((FindCommand) other).tagsPredicate)); // state check"
+      },
+      {
+        "lineNumber": 81,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "    }"
+      },
+      {
+        "lineNumber": 82,
         "author": {
           "gitId": "-"
         },
@@ -20353,8 +20633,9 @@
       }
     ],
     "authorContributionMap": {
-      "Jaylenlee": 5,
-      "-": 37
+      "Jaylenlee": 3,
+      "marcus2k": 50,
+      "-": 29
     }
   },
   {
@@ -25046,44 +25327,44 @@
       {
         "lineNumber": 4,
         "author": {
-          "gitId": "-"
+          "gitId": "marcus2k"
         },
-        "content": ""
+        "content": "import static seedu.address.logic.parser.CliSyntax.PREFIX_DATE;"
       },
       {
         "lineNumber": 5,
         "author": {
-          "gitId": "-"
+          "gitId": "marcus2k"
         },
-        "content": "import java.util.Arrays;"
+        "content": "import static seedu.address.logic.parser.CliSyntax.PREFIX_DESCRIPTION;"
       },
       {
         "lineNumber": 6,
         "author": {
-          "gitId": "-"
+          "gitId": "marcus2k"
         },
-        "content": ""
+        "content": "import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG;"
       },
       {
         "lineNumber": 7,
         "author": {
           "gitId": "-"
         },
-        "content": "import seedu.address.logic.commands.FindCommand;"
+        "content": ""
       },
       {
         "lineNumber": 8,
         "author": {
           "gitId": "-"
         },
-        "content": "import seedu.address.logic.parser.exceptions.ParseException;"
+        "content": "import java.util.Arrays;"
       },
       {
         "lineNumber": 9,
         "author": {
-          "gitId": "Jaylenlee"
+          "gitId": "marcus2k"
         },
-        "content": "import seedu.address.model.expense.NameContainsKeywordsPredicate;"
+        "content": "import java.util.List;"
       },
       {
         "lineNumber": 10,
@@ -25097,164 +25378,423 @@
         "author": {
           "gitId": "-"
         },
-        "content": "/**"
+        "content": "import seedu.address.logic.commands.FindCommand;"
       },
       {
         "lineNumber": 12,
         "author": {
           "gitId": "-"
         },
-        "content": " * Parses input arguments and creates a new FindCommand object"
+        "content": "import seedu.address.logic.parser.exceptions.ParseException;"
       },
       {
         "lineNumber": 13,
         "author": {
-          "gitId": "-"
+          "gitId": "marcus2k"
         },
-        "content": " */"
+        "content": "import seedu.address.model.expense.Date;"
       },
       {
         "lineNumber": 14,
         "author": {
-          "gitId": "-"
+          "gitId": "marcus2k"
         },
-        "content": "public class FindCommandParser implements Parser\u003cFindCommand\u003e {"
+        "content": "import seedu.address.model.expense.DateMatchesPredicate;"
       },
       {
         "lineNumber": 15,
         "author": {
-          "gitId": "-"
+          "gitId": "Jaylenlee"
         },
-        "content": ""
+        "content": "import seedu.address.model.expense.NameContainsKeywordsPredicate;"
       },
       {
         "lineNumber": 16,
         "author": {
-          "gitId": "-"
+          "gitId": "marcus2k"
         },
-        "content": "    /**"
+        "content": "import seedu.address.model.expense.TagsMatchesPredicate;"
       },
       {
         "lineNumber": 17,
         "author": {
           "gitId": "-"
         },
-        "content": "     * Parses the given {@code String} of arguments in the context of the FindCommand"
+        "content": ""
       },
       {
         "lineNumber": 18,
         "author": {
           "gitId": "-"
         },
-        "content": "     * and returns a FindCommand object for execution."
+        "content": "/**"
       },
       {
         "lineNumber": 19,
         "author": {
-          "gitId": "maxxyh"
+          "gitId": "-"
         },
-        "content": "     *"
+        "content": " * Parses input arguments and creates a new FindCommand object"
       },
       {
         "lineNumber": 20,
         "author": {
           "gitId": "-"
         },
-        "content": "     * @throws ParseException if the user input does not conform the expected format"
+        "content": " */"
       },
       {
         "lineNumber": 21,
         "author": {
           "gitId": "-"
         },
-        "content": "     */"
+        "content": "public class FindCommandParser implements Parser\u003cFindCommand\u003e {"
       },
       {
         "lineNumber": 22,
         "author": {
-          "gitId": "-"
+          "gitId": "marcus2k"
         },
-        "content": "    public FindCommand parse(String args) throws ParseException {"
+        "content": "    public static final String MISSING_ARGUMENTS \u003d \"You cannot leave arguments empty.\";"
       },
       {
         "lineNumber": 23,
         "author": {
           "gitId": "-"
         },
-        "content": "        String trimmedArgs \u003d args.trim();"
+        "content": ""
       },
       {
         "lineNumber": 24,
         "author": {
           "gitId": "-"
         },
-        "content": "        if (trimmedArgs.isEmpty()) {"
+        "content": "    /**"
       },
       {
         "lineNumber": 25,
         "author": {
           "gitId": "-"
         },
-        "content": "            throw new ParseException("
+        "content": "     * Parses the given {@code String} of arguments in the context of the FindCommand"
       },
       {
         "lineNumber": 26,
         "author": {
           "gitId": "-"
         },
-        "content": "                    String.format(MESSAGE_INVALID_COMMAND_FORMAT, FindCommand.MESSAGE_USAGE));"
+        "content": "     * and returns a FindCommand object for execution."
       },
       {
         "lineNumber": 27,
         "author": {
-          "gitId": "-"
+          "gitId": "maxxyh"
         },
-        "content": "        }"
+        "content": "     *"
       },
       {
         "lineNumber": 28,
         "author": {
           "gitId": "-"
         },
-        "content": ""
+        "content": "     * @throws ParseException if the user input does not conform the expected format"
       },
       {
         "lineNumber": 29,
         "author": {
           "gitId": "-"
         },
-        "content": "        String[] nameKeywords \u003d trimmedArgs.split(\"\\\\s+\");"
+        "content": "     */"
       },
       {
         "lineNumber": 30,
         "author": {
           "gitId": "-"
         },
-        "content": ""
+        "content": "    public FindCommand parse(String args) throws ParseException {"
       },
       {
         "lineNumber": 31,
         "author": {
           "gitId": "-"
         },
-        "content": "        return new FindCommand(new NameContainsKeywordsPredicate(Arrays.asList(nameKeywords)));"
+        "content": "        String trimmedArgs \u003d args.trim();"
       },
       {
         "lineNumber": 32,
         "author": {
           "gitId": "-"
         },
-        "content": "    }"
+        "content": "        if (trimmedArgs.isEmpty()) {"
       },
       {
         "lineNumber": 33,
         "author": {
           "gitId": "-"
         },
-        "content": ""
+        "content": "            throw new ParseException("
       },
       {
         "lineNumber": 34,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "                    String.format(MESSAGE_INVALID_COMMAND_FORMAT, FindCommand.MESSAGE_USAGE));"
+      },
+      {
+        "lineNumber": 35,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "        }"
+      },
+      {
+        "lineNumber": 36,
+        "author": {
+          "gitId": "marcus2k"
+        },
+        "content": "        ArgumentMultimap argMultimap \u003d"
+      },
+      {
+        "lineNumber": 37,
+        "author": {
+          "gitId": "marcus2k"
+        },
+        "content": "                ArgumentTokenizer.tokenize(args, PREFIX_DESCRIPTION, //PREFIX_AMOUNT,"
+      },
+      {
+        "lineNumber": 38,
+        "author": {
+          "gitId": "marcus2k"
+        },
+        "content": "                        PREFIX_DATE, PREFIX_TAG);"
+      },
+      {
+        "lineNumber": 39,
+        "author": {
+          "gitId": "-"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 40,
+        "author": {
+          "gitId": "marcus2k"
+        },
+        "content": "        String keywords \u003d \"\";"
+      },
+      {
+        "lineNumber": 41,
+        "author": {
+          "gitId": "marcus2k"
+        },
+        "content": "        List\u003cString\u003e dates \u003d argMultimap.getAllValues(PREFIX_DATE);"
+      },
+      {
+        "lineNumber": 42,
+        "author": {
+          "gitId": "marcus2k"
+        },
+        "content": "        List\u003cString\u003e tags \u003d argMultimap.getAllValues(PREFIX_TAG);"
+      },
+      {
+        "lineNumber": 43,
+        "author": {
+          "gitId": "marcus2k"
+        },
+        "content": "        if (argMultimap.getValue(PREFIX_DESCRIPTION).isPresent()) {"
+      },
+      {
+        "lineNumber": 44,
+        "author": {
+          "gitId": "marcus2k"
+        },
+        "content": "            keywords \u003d argMultimap.getValue(PREFIX_DESCRIPTION).get();"
+      },
+      {
+        "lineNumber": 45,
+        "author": {
+          "gitId": "marcus2k"
+        },
+        "content": "            if (keywords.isEmpty()) {"
+      },
+      {
+        "lineNumber": 46,
+        "author": {
+          "gitId": "marcus2k"
+        },
+        "content": "                throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, MISSING_ARGUMENTS));"
+      },
+      {
+        "lineNumber": 47,
+        "author": {
+          "gitId": "marcus2k"
+        },
+        "content": "            }"
+      },
+      {
+        "lineNumber": 48,
+        "author": {
+          "gitId": "marcus2k"
+        },
+        "content": "        }"
+      },
+      {
+        "lineNumber": 49,
+        "author": {
+          "gitId": "marcus2k"
+        },
+        "content": "        if (dates.size() \u003d\u003d 1 \u0026\u0026 dates.get(0).isEmpty()) {"
+      },
+      {
+        "lineNumber": 50,
+        "author": {
+          "gitId": "marcus2k"
+        },
+        "content": "            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, MISSING_ARGUMENTS));"
+      },
+      {
+        "lineNumber": 51,
+        "author": {
+          "gitId": "marcus2k"
+        },
+        "content": "        }"
+      },
+      {
+        "lineNumber": 52,
+        "author": {
+          "gitId": "marcus2k"
+        },
+        "content": "        for (String date: dates) {"
+      },
+      {
+        "lineNumber": 53,
+        "author": {
+          "gitId": "marcus2k"
+        },
+        "content": "            if (!Date.isValidDate(date)) {"
+      },
+      {
+        "lineNumber": 54,
+        "author": {
+          "gitId": "marcus2k"
+        },
+        "content": "                throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, Date.MESSAGE_CONSTRAINTS));"
+      },
+      {
+        "lineNumber": 55,
+        "author": {
+          "gitId": "marcus2k"
+        },
+        "content": "            }"
+      },
+      {
+        "lineNumber": 56,
+        "author": {
+          "gitId": "marcus2k"
+        },
+        "content": "        }"
+      },
+      {
+        "lineNumber": 57,
+        "author": {
+          "gitId": "marcus2k"
+        },
+        "content": "        if (tags.size() \u003d\u003d 1 \u0026\u0026 tags.get(0).isEmpty()) {"
+      },
+      {
+        "lineNumber": 58,
+        "author": {
+          "gitId": "marcus2k"
+        },
+        "content": "            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, MISSING_ARGUMENTS));"
+      },
+      {
+        "lineNumber": 59,
+        "author": {
+          "gitId": "marcus2k"
+        },
+        "content": "        }"
+      },
+      {
+        "lineNumber": 60,
+        "author": {
+          "gitId": "marcus2k"
+        },
+        "content": "        if (keywords.isEmpty() \u0026\u0026 dates.isEmpty() \u0026\u0026 tags.isEmpty()) {"
+      },
+      {
+        "lineNumber": 61,
+        "author": {
+          "gitId": "marcus2k"
+        },
+        "content": "            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, FindCommand.MESSAGE_USAGE));"
+      },
+      {
+        "lineNumber": 62,
+        "author": {
+          "gitId": "marcus2k"
+        },
+        "content": "        }"
+      },
+      {
+        "lineNumber": 63,
+        "author": {
+          "gitId": "-"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 64,
+        "author": {
+          "gitId": "marcus2k"
+        },
+        "content": "        return new FindCommand("
+      },
+      {
+        "lineNumber": 65,
+        "author": {
+          "gitId": "marcus2k"
+        },
+        "content": "                new NameContainsKeywordsPredicate(Arrays.asList(keywords.trim().split(\"\\\\s+\"))),"
+      },
+      {
+        "lineNumber": 66,
+        "author": {
+          "gitId": "marcus2k"
+        },
+        "content": "                new DateMatchesPredicate(dates),"
+      },
+      {
+        "lineNumber": 67,
+        "author": {
+          "gitId": "marcus2k"
+        },
+        "content": "                new TagsMatchesPredicate(tags)"
+      },
+      {
+        "lineNumber": 68,
+        "author": {
+          "gitId": "marcus2k"
+        },
+        "content": "        );"
+      },
+      {
+        "lineNumber": 69,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "    }"
+      },
+      {
+        "lineNumber": 70,
+        "author": {
+          "gitId": "-"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 71,
         "author": {
           "gitId": "-"
         },
@@ -25263,8 +25803,9 @@
     ],
     "authorContributionMap": {
       "Jaylenlee": 1,
+      "marcus2k": 39,
       "maxxyh": 1,
-      "-": 32
+      "-": 30
     }
   },
   {
@@ -31286,9 +31827,9 @@
       {
         "lineNumber": 17,
         "author": {
-          "gitId": "maxxyh"
+          "gitId": "marcus2k"
         },
-        "content": "            + \"and it should adhere to the following constraints: \""
+        "content": "            + \"and it should adhere to the following constraints:\\n\""
       },
       {
         "lineNumber": 18,
@@ -31769,7 +32310,360 @@
     ],
     "authorContributionMap": {
       "Jaylenlee": 1,
-      "maxxyh": 84
+      "marcus2k": 1,
+      "maxxyh": 83
+    }
+  },
+  {
+    "path": "src/main/java/seedu/address/model/expense/DateMatchesPredicate.java",
+    "fileType": "functional-code",
+    "lines": [
+      {
+        "lineNumber": 1,
+        "author": {
+          "gitId": "marcus2k"
+        },
+        "content": "package seedu.address.model.expense;"
+      },
+      {
+        "lineNumber": 2,
+        "author": {
+          "gitId": "marcus2k"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 3,
+        "author": {
+          "gitId": "marcus2k"
+        },
+        "content": "import java.util.HashSet;"
+      },
+      {
+        "lineNumber": 4,
+        "author": {
+          "gitId": "marcus2k"
+        },
+        "content": "import java.util.List;"
+      },
+      {
+        "lineNumber": 5,
+        "author": {
+          "gitId": "marcus2k"
+        },
+        "content": "import java.util.Set;"
+      },
+      {
+        "lineNumber": 6,
+        "author": {
+          "gitId": "marcus2k"
+        },
+        "content": "import java.util.function.Predicate;"
+      },
+      {
+        "lineNumber": 7,
+        "author": {
+          "gitId": "marcus2k"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 8,
+        "author": {
+          "gitId": "marcus2k"
+        },
+        "content": "/**"
+      },
+      {
+        "lineNumber": 9,
+        "author": {
+          "gitId": "marcus2k"
+        },
+        "content": " * Tests that any of an {@code Expense}\u0027s {@code Dates} matches any of the keywords given."
+      },
+      {
+        "lineNumber": 10,
+        "author": {
+          "gitId": "marcus2k"
+        },
+        "content": " */"
+      },
+      {
+        "lineNumber": 11,
+        "author": {
+          "gitId": "marcus2k"
+        },
+        "content": "public class DateMatchesPredicate implements Predicate\u003cExpense\u003e {"
+      },
+      {
+        "lineNumber": 12,
+        "author": {
+          "gitId": "marcus2k"
+        },
+        "content": "    private final Set\u003cDate\u003e dates;"
+      },
+      {
+        "lineNumber": 13,
+        "author": {
+          "gitId": "marcus2k"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 14,
+        "author": {
+          "gitId": "marcus2k"
+        },
+        "content": "    /**"
+      },
+      {
+        "lineNumber": 15,
+        "author": {
+          "gitId": "marcus2k"
+        },
+        "content": "     * Constructor that takes in a list of strings representing dates."
+      },
+      {
+        "lineNumber": 16,
+        "author": {
+          "gitId": "marcus2k"
+        },
+        "content": "     * It stores parsable strings into the dates HashSet."
+      },
+      {
+        "lineNumber": 17,
+        "author": {
+          "gitId": "marcus2k"
+        },
+        "content": "     */"
+      },
+      {
+        "lineNumber": 18,
+        "author": {
+          "gitId": "marcus2k"
+        },
+        "content": "    public DateMatchesPredicate(List\u003cString\u003e dateStrings) {"
+      },
+      {
+        "lineNumber": 19,
+        "author": {
+          "gitId": "marcus2k"
+        },
+        "content": "        Set\u003cDate\u003e temp \u003d new HashSet\u003c\u003e();"
+      },
+      {
+        "lineNumber": 20,
+        "author": {
+          "gitId": "marcus2k"
+        },
+        "content": "        for (String s: dateStrings) {"
+      },
+      {
+        "lineNumber": 21,
+        "author": {
+          "gitId": "marcus2k"
+        },
+        "content": "            if (Date.isValidDate(s)) {"
+      },
+      {
+        "lineNumber": 22,
+        "author": {
+          "gitId": "marcus2k"
+        },
+        "content": "                temp.add(new Date(s));"
+      },
+      {
+        "lineNumber": 23,
+        "author": {
+          "gitId": "marcus2k"
+        },
+        "content": "            }"
+      },
+      {
+        "lineNumber": 24,
+        "author": {
+          "gitId": "marcus2k"
+        },
+        "content": "        }"
+      },
+      {
+        "lineNumber": 25,
+        "author": {
+          "gitId": "marcus2k"
+        },
+        "content": "        this.dates \u003d temp;"
+      },
+      {
+        "lineNumber": 26,
+        "author": {
+          "gitId": "marcus2k"
+        },
+        "content": "    }"
+      },
+      {
+        "lineNumber": 27,
+        "author": {
+          "gitId": "marcus2k"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 28,
+        "author": {
+          "gitId": "marcus2k"
+        },
+        "content": "    @Override"
+      },
+      {
+        "lineNumber": 29,
+        "author": {
+          "gitId": "marcus2k"
+        },
+        "content": "    public boolean test(Expense expense) {"
+      },
+      {
+        "lineNumber": 30,
+        "author": {
+          "gitId": "marcus2k"
+        },
+        "content": "        if (this.isEmpty()) {"
+      },
+      {
+        "lineNumber": 31,
+        "author": {
+          "gitId": "marcus2k"
+        },
+        "content": "            return false;"
+      },
+      {
+        "lineNumber": 32,
+        "author": {
+          "gitId": "marcus2k"
+        },
+        "content": "        }"
+      },
+      {
+        "lineNumber": 33,
+        "author": {
+          "gitId": "marcus2k"
+        },
+        "content": "        return this.dates.contains(expense.getDate());"
+      },
+      {
+        "lineNumber": 34,
+        "author": {
+          "gitId": "marcus2k"
+        },
+        "content": "    }"
+      },
+      {
+        "lineNumber": 35,
+        "author": {
+          "gitId": "marcus2k"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 36,
+        "author": {
+          "gitId": "marcus2k"
+        },
+        "content": "    /**"
+      },
+      {
+        "lineNumber": 37,
+        "author": {
+          "gitId": "marcus2k"
+        },
+        "content": "     * Returns true if there are no dates to match in this predicate. Otherwise, return false."
+      },
+      {
+        "lineNumber": 38,
+        "author": {
+          "gitId": "marcus2k"
+        },
+        "content": "     */"
+      },
+      {
+        "lineNumber": 39,
+        "author": {
+          "gitId": "marcus2k"
+        },
+        "content": "    public boolean isEmpty() {"
+      },
+      {
+        "lineNumber": 40,
+        "author": {
+          "gitId": "marcus2k"
+        },
+        "content": "        return this.dates.isEmpty();"
+      },
+      {
+        "lineNumber": 41,
+        "author": {
+          "gitId": "marcus2k"
+        },
+        "content": "    }"
+      },
+      {
+        "lineNumber": 42,
+        "author": {
+          "gitId": "marcus2k"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 43,
+        "author": {
+          "gitId": "marcus2k"
+        },
+        "content": "    @Override"
+      },
+      {
+        "lineNumber": 44,
+        "author": {
+          "gitId": "marcus2k"
+        },
+        "content": "    public boolean equals(Object other) {"
+      },
+      {
+        "lineNumber": 45,
+        "author": {
+          "gitId": "marcus2k"
+        },
+        "content": "        return other \u003d\u003d this // short circuit if same object"
+      },
+      {
+        "lineNumber": 46,
+        "author": {
+          "gitId": "marcus2k"
+        },
+        "content": "                || (other instanceof DateMatchesPredicate // instanceof handles nulls"
+      },
+      {
+        "lineNumber": 47,
+        "author": {
+          "gitId": "marcus2k"
+        },
+        "content": "                \u0026\u0026 dates.equals(((DateMatchesPredicate) other).dates)); // state check"
+      },
+      {
+        "lineNumber": 48,
+        "author": {
+          "gitId": "marcus2k"
+        },
+        "content": "    }"
+      },
+      {
+        "lineNumber": 49,
+        "author": {
+          "gitId": "marcus2k"
+        },
+        "content": "}"
+      }
+    ],
+    "authorContributionMap": {
+      "marcus2k": 49
     }
   },
   {
@@ -33061,30 +33955,30 @@
       {
         "lineNumber": 3,
         "author": {
-          "gitId": "-"
+          "gitId": "marcus2k"
         },
-        "content": "import java.util.List;"
+        "content": "import java.util.HashSet;"
       },
       {
         "lineNumber": 4,
         "author": {
           "gitId": "-"
         },
-        "content": "import java.util.function.Predicate;"
+        "content": "import java.util.List;"
       },
       {
         "lineNumber": 5,
         "author": {
-          "gitId": "-"
+          "gitId": "marcus2k"
         },
-        "content": ""
+        "content": "import java.util.Set;"
       },
       {
         "lineNumber": 6,
         "author": {
           "gitId": "-"
         },
-        "content": "import seedu.address.commons.util.StringUtil;"
+        "content": "import java.util.function.Predicate;"
       },
       {
         "lineNumber": 7,
@@ -33098,171 +33992,234 @@
         "author": {
           "gitId": "-"
         },
-        "content": "/**"
+        "content": "import seedu.address.commons.util.StringUtil;"
       },
       {
         "lineNumber": 9,
         "author": {
-          "gitId": "Jaylenlee"
+          "gitId": "-"
         },
-        "content": " * Tests that a {@code Expense}\u0027s {@code Description} matches any of the keywords given."
+        "content": ""
       },
       {
         "lineNumber": 10,
         "author": {
           "gitId": "-"
         },
-        "content": " */"
+        "content": "/**"
       },
       {
         "lineNumber": 11,
         "author": {
           "gitId": "Jaylenlee"
         },
-        "content": "public class NameContainsKeywordsPredicate implements Predicate\u003cExpense\u003e {"
+        "content": " * Tests that a {@code Expense}\u0027s {@code Description} matches any of the keywords given."
       },
       {
         "lineNumber": 12,
         "author": {
           "gitId": "-"
         },
-        "content": "    private final List\u003cString\u003e keywords;"
+        "content": " */"
       },
       {
         "lineNumber": 13,
         "author": {
-          "gitId": "-"
+          "gitId": "Jaylenlee"
         },
-        "content": ""
+        "content": "public class NameContainsKeywordsPredicate implements Predicate\u003cExpense\u003e {"
       },
       {
         "lineNumber": 14,
         "author": {
-          "gitId": "-"
+          "gitId": "marcus2k"
         },
-        "content": "    public NameContainsKeywordsPredicate(List\u003cString\u003e keywords) {"
+        "content": "    private final Set\u003cString\u003e keywords;"
       },
       {
         "lineNumber": 15,
         "author": {
           "gitId": "-"
         },
-        "content": "        this.keywords \u003d keywords;"
+        "content": ""
       },
       {
         "lineNumber": 16,
         "author": {
           "gitId": "-"
         },
-        "content": "    }"
+        "content": "    public NameContainsKeywordsPredicate(List\u003cString\u003e keywords) {"
       },
       {
         "lineNumber": 17,
         "author": {
-          "gitId": "-"
+          "gitId": "marcus2k"
         },
-        "content": ""
+        "content": "        this.keywords \u003d new HashSet\u003c\u003e(keywords);"
       },
       {
         "lineNumber": 18,
         "author": {
           "gitId": "-"
         },
-        "content": "    @Override"
+        "content": "    }"
       },
       {
         "lineNumber": 19,
         "author": {
-          "gitId": "Jaylenlee"
+          "gitId": "-"
         },
-        "content": "    public boolean test(Expense expense) {"
+        "content": ""
       },
       {
         "lineNumber": 20,
         "author": {
           "gitId": "-"
         },
-        "content": "        return keywords.stream()"
+        "content": "    @Override"
       },
       {
         "lineNumber": 21,
         "author": {
           "gitId": "Jaylenlee"
         },
-        "content": "                .anyMatch(keyword -\u003e StringUtil.containsWordIgnoreCase(expense.getDescription()"
+        "content": "    public boolean test(Expense expense) {"
       },
       {
         "lineNumber": 22,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "        return keywords.stream()"
+      },
+      {
+        "lineNumber": 23,
+        "author": {
+          "gitId": "Jaylenlee"
+        },
+        "content": "                .anyMatch(keyword -\u003e StringUtil.containsWordIgnoreCase(expense.getDescription()"
+      },
+      {
+        "lineNumber": 24,
         "author": {
           "gitId": "maxxyh"
         },
         "content": "                        .fullDescription, keyword));"
       },
       {
-        "lineNumber": 23,
-        "author": {
-          "gitId": "-"
-        },
-        "content": "    }"
-      },
-      {
-        "lineNumber": 24,
-        "author": {
-          "gitId": "-"
-        },
-        "content": ""
-      },
-      {
         "lineNumber": 25,
         "author": {
           "gitId": "-"
         },
-        "content": "    @Override"
+        "content": "    }"
       },
       {
         "lineNumber": 26,
         "author": {
           "gitId": "-"
         },
-        "content": "    public boolean equals(Object other) {"
+        "content": ""
       },
       {
         "lineNumber": 27,
         "author": {
           "gitId": "-"
         },
-        "content": "        return other \u003d\u003d this // short circuit if same object"
+        "content": "    @Override"
       },
       {
         "lineNumber": 28,
         "author": {
           "gitId": "-"
         },
-        "content": "                || (other instanceof NameContainsKeywordsPredicate // instanceof handles nulls"
+        "content": "    public boolean equals(Object other) {"
       },
       {
         "lineNumber": 29,
         "author": {
           "gitId": "-"
         },
-        "content": "                \u0026\u0026 keywords.equals(((NameContainsKeywordsPredicate) other).keywords)); // state check"
+        "content": "        return other \u003d\u003d this // short circuit if same object"
       },
       {
         "lineNumber": 30,
         "author": {
           "gitId": "-"
         },
-        "content": "    }"
+        "content": "                || (other instanceof NameContainsKeywordsPredicate // instanceof handles nulls"
       },
       {
         "lineNumber": 31,
         "author": {
           "gitId": "-"
         },
-        "content": ""
+        "content": "                \u0026\u0026 keywords.equals(((NameContainsKeywordsPredicate) other).keywords)); // state check"
       },
       {
         "lineNumber": 32,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "    }"
+      },
+      {
+        "lineNumber": 33,
+        "author": {
+          "gitId": "-"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 34,
+        "author": {
+          "gitId": "marcus2k"
+        },
+        "content": "    /**"
+      },
+      {
+        "lineNumber": 35,
+        "author": {
+          "gitId": "marcus2k"
+        },
+        "content": "     * Returns true if there are no valid keywords in this predicate. Otherwise, return false."
+      },
+      {
+        "lineNumber": 36,
+        "author": {
+          "gitId": "marcus2k"
+        },
+        "content": "     */"
+      },
+      {
+        "lineNumber": 37,
+        "author": {
+          "gitId": "marcus2k"
+        },
+        "content": "    public boolean isEmpty() {"
+      },
+      {
+        "lineNumber": 38,
+        "author": {
+          "gitId": "marcus2k"
+        },
+        "content": "        return this.keywords.isEmpty() || (this.keywords.size() \u003d\u003d 1 \u0026\u0026 this.keywords.contains(\"\"));"
+      },
+      {
+        "lineNumber": 39,
+        "author": {
+          "gitId": "marcus2k"
+        },
+        "content": "    }"
+      },
+      {
+        "lineNumber": 40,
+        "author": {
+          "gitId": "marcus2k"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 41,
         "author": {
           "gitId": "-"
         },
@@ -33271,8 +34228,9 @@
     ],
     "authorContributionMap": {
       "Jaylenlee": 5,
+      "marcus2k": 11,
       "maxxyh": 1,
-      "-": 26
+      "-": 24
     }
   },
   {
@@ -33556,6 +34514,358 @@
     "authorContributionMap": {
       "Jaylenlee": 2,
       "lebencwb": 37
+    }
+  },
+  {
+    "path": "src/main/java/seedu/address/model/expense/TagsMatchesPredicate.java",
+    "fileType": "functional-code",
+    "lines": [
+      {
+        "lineNumber": 1,
+        "author": {
+          "gitId": "marcus2k"
+        },
+        "content": "package seedu.address.model.expense;"
+      },
+      {
+        "lineNumber": 2,
+        "author": {
+          "gitId": "marcus2k"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 3,
+        "author": {
+          "gitId": "marcus2k"
+        },
+        "content": "import java.util.HashSet;"
+      },
+      {
+        "lineNumber": 4,
+        "author": {
+          "gitId": "marcus2k"
+        },
+        "content": "import java.util.List;"
+      },
+      {
+        "lineNumber": 5,
+        "author": {
+          "gitId": "marcus2k"
+        },
+        "content": "import java.util.function.Predicate;"
+      },
+      {
+        "lineNumber": 6,
+        "author": {
+          "gitId": "marcus2k"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 7,
+        "author": {
+          "gitId": "marcus2k"
+        },
+        "content": "import seedu.address.model.tag.Tag;"
+      },
+      {
+        "lineNumber": 8,
+        "author": {
+          "gitId": "marcus2k"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 9,
+        "author": {
+          "gitId": "marcus2k"
+        },
+        "content": "/**"
+      },
+      {
+        "lineNumber": 10,
+        "author": {
+          "gitId": "marcus2k"
+        },
+        "content": " * Tests that any of an {@code Expense}\u0027s {@code Tags} matches any of the tags given."
+      },
+      {
+        "lineNumber": 11,
+        "author": {
+          "gitId": "marcus2k"
+        },
+        "content": " */"
+      },
+      {
+        "lineNumber": 12,
+        "author": {
+          "gitId": "marcus2k"
+        },
+        "content": "public class TagsMatchesPredicate implements Predicate\u003cExpense\u003e {"
+      },
+      {
+        "lineNumber": 13,
+        "author": {
+          "gitId": "marcus2k"
+        },
+        "content": "    private final HashSet\u003cTag\u003e tags;"
+      },
+      {
+        "lineNumber": 14,
+        "author": {
+          "gitId": "marcus2k"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 15,
+        "author": {
+          "gitId": "marcus2k"
+        },
+        "content": "    /**"
+      },
+      {
+        "lineNumber": 16,
+        "author": {
+          "gitId": "marcus2k"
+        },
+        "content": "     * Constructor that takes in a list of strings to match."
+      },
+      {
+        "lineNumber": 17,
+        "author": {
+          "gitId": "marcus2k"
+        },
+        "content": "     */"
+      },
+      {
+        "lineNumber": 18,
+        "author": {
+          "gitId": "marcus2k"
+        },
+        "content": "    public TagsMatchesPredicate(List\u003cString\u003e tagStrings) {"
+      },
+      {
+        "lineNumber": 19,
+        "author": {
+          "gitId": "marcus2k"
+        },
+        "content": "        this.tags \u003d new HashSet\u003c\u003e();"
+      },
+      {
+        "lineNumber": 20,
+        "author": {
+          "gitId": "marcus2k"
+        },
+        "content": "        for (String i: tagStrings) {"
+      },
+      {
+        "lineNumber": 21,
+        "author": {
+          "gitId": "marcus2k"
+        },
+        "content": "            this.tags.add(new Tag(i));"
+      },
+      {
+        "lineNumber": 22,
+        "author": {
+          "gitId": "marcus2k"
+        },
+        "content": "        }"
+      },
+      {
+        "lineNumber": 23,
+        "author": {
+          "gitId": "marcus2k"
+        },
+        "content": "    }"
+      },
+      {
+        "lineNumber": 24,
+        "author": {
+          "gitId": "marcus2k"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 25,
+        "author": {
+          "gitId": "marcus2k"
+        },
+        "content": "    @Override"
+      },
+      {
+        "lineNumber": 26,
+        "author": {
+          "gitId": "marcus2k"
+        },
+        "content": "    public boolean test(Expense expense) {"
+      },
+      {
+        "lineNumber": 27,
+        "author": {
+          "gitId": "marcus2k"
+        },
+        "content": "        for (Tag t: this.tags) {"
+      },
+      {
+        "lineNumber": 28,
+        "author": {
+          "gitId": "marcus2k"
+        },
+        "content": "            if (expense.getTags().contains(t)) {"
+      },
+      {
+        "lineNumber": 29,
+        "author": {
+          "gitId": "marcus2k"
+        },
+        "content": "                return true;"
+      },
+      {
+        "lineNumber": 30,
+        "author": {
+          "gitId": "marcus2k"
+        },
+        "content": "            }"
+      },
+      {
+        "lineNumber": 31,
+        "author": {
+          "gitId": "marcus2k"
+        },
+        "content": "        }"
+      },
+      {
+        "lineNumber": 32,
+        "author": {
+          "gitId": "marcus2k"
+        },
+        "content": "        return false;"
+      },
+      {
+        "lineNumber": 33,
+        "author": {
+          "gitId": "marcus2k"
+        },
+        "content": "    }"
+      },
+      {
+        "lineNumber": 34,
+        "author": {
+          "gitId": "marcus2k"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 35,
+        "author": {
+          "gitId": "marcus2k"
+        },
+        "content": "    /**"
+      },
+      {
+        "lineNumber": 36,
+        "author": {
+          "gitId": "marcus2k"
+        },
+        "content": "     * Returns true if there are no tags to match in this predicate. Otherwise, return false."
+      },
+      {
+        "lineNumber": 37,
+        "author": {
+          "gitId": "marcus2k"
+        },
+        "content": "     */"
+      },
+      {
+        "lineNumber": 38,
+        "author": {
+          "gitId": "marcus2k"
+        },
+        "content": "    public boolean isEmpty() {"
+      },
+      {
+        "lineNumber": 39,
+        "author": {
+          "gitId": "marcus2k"
+        },
+        "content": "        return tags.isEmpty();"
+      },
+      {
+        "lineNumber": 40,
+        "author": {
+          "gitId": "marcus2k"
+        },
+        "content": "    }"
+      },
+      {
+        "lineNumber": 41,
+        "author": {
+          "gitId": "marcus2k"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 42,
+        "author": {
+          "gitId": "marcus2k"
+        },
+        "content": "    @Override"
+      },
+      {
+        "lineNumber": 43,
+        "author": {
+          "gitId": "marcus2k"
+        },
+        "content": "    public boolean equals(Object other) {"
+      },
+      {
+        "lineNumber": 44,
+        "author": {
+          "gitId": "marcus2k"
+        },
+        "content": "        return other \u003d\u003d this // short circuit if same object"
+      },
+      {
+        "lineNumber": 45,
+        "author": {
+          "gitId": "marcus2k"
+        },
+        "content": "                || (other instanceof TagsMatchesPredicate // instanceof handles nulls"
+      },
+      {
+        "lineNumber": 46,
+        "author": {
+          "gitId": "marcus2k"
+        },
+        "content": "                \u0026\u0026 tags.equals(((TagsMatchesPredicate) other).tags)); // state check"
+      },
+      {
+        "lineNumber": 47,
+        "author": {
+          "gitId": "marcus2k"
+        },
+        "content": "    }"
+      },
+      {
+        "lineNumber": 48,
+        "author": {
+          "gitId": "marcus2k"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 49,
+        "author": {
+          "gitId": "marcus2k"
+        },
+        "content": "}"
+      }
+    ],
+    "authorContributionMap": {
+      "marcus2k": 49
     }
   },
   {
@@ -50067,439 +51377,579 @@
       {
         "lineNumber": 21,
         "author": {
+          "gitId": "marcus2k"
+        },
+        "content": "import seedu.address.model.expense.DateMatchesPredicate;"
+      },
+      {
+        "lineNumber": 22,
+        "author": {
           "gitId": "Jaylenlee"
         },
         "content": "import seedu.address.model.expense.NameContainsKeywordsPredicate;"
       },
       {
-        "lineNumber": 22,
-        "author": {
-          "gitId": "-"
-        },
-        "content": ""
-      },
-      {
         "lineNumber": 23,
         "author": {
-          "gitId": "-"
+          "gitId": "marcus2k"
         },
-        "content": "/**"
+        "content": "import seedu.address.model.expense.TagsMatchesPredicate;"
       },
       {
         "lineNumber": 24,
         "author": {
           "gitId": "-"
         },
-        "content": " * Contains integration tests (interaction with the Model) for {@code FindCommand}."
+        "content": ""
       },
       {
         "lineNumber": 25,
         "author": {
           "gitId": "-"
         },
-        "content": " */"
+        "content": "/**"
       },
       {
         "lineNumber": 26,
         "author": {
           "gitId": "-"
         },
-        "content": "public class FindCommandTest {"
+        "content": " * Contains integration tests (interaction with the Model) for {@code FindCommand}."
       },
       {
         "lineNumber": 27,
         "author": {
           "gitId": "-"
         },
-        "content": "    private Model model \u003d new ModelManager(getTypicalAddressBook(), new UserPrefs());"
+        "content": " */"
       },
       {
         "lineNumber": 28,
         "author": {
           "gitId": "-"
         },
-        "content": "    private Model expectedModel \u003d new ModelManager(getTypicalAddressBook(), new UserPrefs());"
+        "content": "public class FindCommandTest {"
       },
       {
         "lineNumber": 29,
         "author": {
           "gitId": "-"
         },
-        "content": ""
+        "content": "    private Model model \u003d new ModelManager(getTypicalAddressBook(), new UserPrefs());"
       },
       {
         "lineNumber": 30,
         "author": {
           "gitId": "-"
         },
-        "content": "    @Test"
+        "content": "    private Model expectedModel \u003d new ModelManager(getTypicalAddressBook(), new UserPrefs());"
       },
       {
         "lineNumber": 31,
         "author": {
           "gitId": "-"
         },
-        "content": "    public void equals() {"
+        "content": ""
       },
       {
         "lineNumber": 32,
         "author": {
           "gitId": "-"
         },
-        "content": "        NameContainsKeywordsPredicate firstPredicate \u003d"
+        "content": "    @Test"
       },
       {
         "lineNumber": 33,
         "author": {
           "gitId": "-"
         },
-        "content": "                new NameContainsKeywordsPredicate(Collections.singletonList(\"first\"));"
+        "content": "    public void equals() {"
       },
       {
         "lineNumber": 34,
         "author": {
           "gitId": "-"
         },
-        "content": "        NameContainsKeywordsPredicate secondPredicate \u003d"
+        "content": "        NameContainsKeywordsPredicate firstPredicate \u003d"
       },
       {
         "lineNumber": 35,
         "author": {
           "gitId": "-"
         },
-        "content": "                new NameContainsKeywordsPredicate(Collections.singletonList(\"second\"));"
+        "content": "                new NameContainsKeywordsPredicate(Collections.singletonList(\"first\"));"
       },
       {
         "lineNumber": 36,
         "author": {
           "gitId": "-"
         },
-        "content": ""
+        "content": "        NameContainsKeywordsPredicate secondPredicate \u003d"
       },
       {
         "lineNumber": 37,
         "author": {
           "gitId": "-"
         },
-        "content": "        FindCommand findFirstCommand \u003d new FindCommand(firstPredicate);"
+        "content": "                new NameContainsKeywordsPredicate(Collections.singletonList(\"second\"));"
       },
       {
         "lineNumber": 38,
         "author": {
-          "gitId": "-"
+          "gitId": "marcus2k"
         },
-        "content": "        FindCommand findSecondCommand \u003d new FindCommand(secondPredicate);"
+        "content": "        DateMatchesPredicate firstDatePredicate \u003d"
       },
       {
         "lineNumber": 39,
         "author": {
-          "gitId": "-"
+          "gitId": "marcus2k"
         },
-        "content": ""
+        "content": "                new DateMatchesPredicate(Arrays.asList(\"09-08-2020\"));"
       },
       {
         "lineNumber": 40,
         "author": {
-          "gitId": "-"
+          "gitId": "marcus2k"
         },
-        "content": "        // same object -\u003e returns true"
+        "content": "        DateMatchesPredicate secondDatePredicate \u003d"
       },
       {
         "lineNumber": 41,
         "author": {
-          "gitId": "-"
+          "gitId": "marcus2k"
         },
-        "content": "        assertTrue(findFirstCommand.equals(findFirstCommand));"
+        "content": "                new DateMatchesPredicate(Arrays.asList(\"09-08-2020\"));"
       },
       {
         "lineNumber": 42,
         "author": {
-          "gitId": "-"
+          "gitId": "marcus2k"
         },
-        "content": ""
+        "content": "        TagsMatchesPredicate firstTagsPredicate \u003d"
       },
       {
         "lineNumber": 43,
         "author": {
-          "gitId": "-"
+          "gitId": "marcus2k"
         },
-        "content": "        // same values -\u003e returns true"
+        "content": "                new TagsMatchesPredicate(Arrays.asList(\"tagOne\", \"tagThree\", \"tagFour\"));"
       },
       {
         "lineNumber": 44,
         "author": {
-          "gitId": "-"
+          "gitId": "marcus2k"
         },
-        "content": "        FindCommand findFirstCommandCopy \u003d new FindCommand(firstPredicate);"
+        "content": "        TagsMatchesPredicate secondTagsPredicate \u003d"
       },
       {
         "lineNumber": 45,
         "author": {
-          "gitId": "-"
+          "gitId": "marcus2k"
         },
-        "content": "        assertTrue(findFirstCommand.equals(findFirstCommandCopy));"
+        "content": "                new TagsMatchesPredicate(Arrays.asList(\"tagTwo\", \"bye\"));"
       },
       {
         "lineNumber": 46,
         "author": {
-          "gitId": "-"
+          "gitId": "marcus2k"
         },
-        "content": ""
+        "content": "        FindCommand findFirstCommand \u003d new FindCommand("
       },
       {
         "lineNumber": 47,
         "author": {
-          "gitId": "-"
+          "gitId": "marcus2k"
         },
-        "content": "        // different types -\u003e returns false"
+        "content": "                firstPredicate, firstDatePredicate, firstTagsPredicate);"
       },
       {
         "lineNumber": 48,
         "author": {
-          "gitId": "-"
+          "gitId": "marcus2k"
         },
-        "content": "        assertFalse(findFirstCommand.equals(1));"
+        "content": "        FindCommand findSecondCommand \u003d new FindCommand("
       },
       {
         "lineNumber": 49,
         "author": {
-          "gitId": "-"
+          "gitId": "marcus2k"
         },
-        "content": ""
+        "content": "                secondPredicate, secondDatePredicate, secondTagsPredicate);"
       },
       {
         "lineNumber": 50,
         "author": {
           "gitId": "-"
         },
-        "content": "        // null -\u003e returns false"
+        "content": ""
       },
       {
         "lineNumber": 51,
         "author": {
           "gitId": "-"
         },
-        "content": "        assertFalse(findFirstCommand.equals(null));"
+        "content": "        // same object -\u003e returns true"
       },
       {
         "lineNumber": 52,
         "author": {
           "gitId": "-"
         },
-        "content": ""
+        "content": "        assertTrue(findFirstCommand.equals(findFirstCommand));"
       },
       {
         "lineNumber": 53,
         "author": {
-          "gitId": "Jaylenlee"
+          "gitId": "-"
         },
-        "content": "        // different expense -\u003e returns false"
+        "content": ""
       },
       {
         "lineNumber": 54,
         "author": {
           "gitId": "-"
         },
-        "content": "        assertFalse(findFirstCommand.equals(findSecondCommand));"
+        "content": "        // same values -\u003e returns true"
       },
       {
         "lineNumber": 55,
         "author": {
-          "gitId": "-"
+          "gitId": "marcus2k"
         },
-        "content": "    }"
+        "content": "        FindCommand findFirstCommandCopy \u003d new FindCommand("
       },
       {
         "lineNumber": 56,
         "author": {
-          "gitId": "-"
+          "gitId": "marcus2k"
         },
-        "content": ""
+        "content": "                firstPredicate, firstDatePredicate, firstTagsPredicate);"
       },
       {
         "lineNumber": 57,
         "author": {
           "gitId": "-"
         },
-        "content": "    @Test"
+        "content": "        assertTrue(findFirstCommand.equals(findFirstCommandCopy));"
       },
       {
         "lineNumber": 58,
         "author": {
-          "gitId": "Jaylenlee"
+          "gitId": "-"
         },
-        "content": "    public void execute_zeroKeywords_noExpenseFound() {"
+        "content": ""
       },
       {
         "lineNumber": 59,
         "author": {
-          "gitId": "Jaylenlee"
+          "gitId": "-"
         },
-        "content": "        String expectedMessage \u003d String.format(MESSAGE_EXPENSES_LISTED_OVERVIEW, 0);"
+        "content": "        // different types -\u003e returns false"
       },
       {
         "lineNumber": 60,
         "author": {
           "gitId": "-"
         },
-        "content": "        NameContainsKeywordsPredicate predicate \u003d preparePredicate(\" \");"
+        "content": "        assertFalse(findFirstCommand.equals(1));"
       },
       {
         "lineNumber": 61,
         "author": {
           "gitId": "-"
         },
-        "content": "        FindCommand command \u003d new FindCommand(predicate);"
+        "content": ""
       },
       {
         "lineNumber": 62,
         "author": {
-          "gitId": "Jaylenlee"
+          "gitId": "-"
         },
-        "content": "        expectedModel.updateFilteredExpenseList(predicate);"
+        "content": "        // null -\u003e returns false"
       },
       {
         "lineNumber": 63,
         "author": {
           "gitId": "-"
         },
-        "content": "        assertCommandSuccess(command, model, expectedMessage, expectedModel);"
+        "content": "        assertFalse(findFirstCommand.equals(null));"
       },
       {
         "lineNumber": 64,
         "author": {
-          "gitId": "Jaylenlee"
+          "gitId": "-"
         },
-        "content": "        assertEquals(Collections.emptyList(), model.getFilteredExpenseList());"
+        "content": ""
       },
       {
         "lineNumber": 65,
         "author": {
-          "gitId": "-"
+          "gitId": "Jaylenlee"
         },
-        "content": "    }"
+        "content": "        // different expense -\u003e returns false"
       },
       {
         "lineNumber": 66,
         "author": {
           "gitId": "-"
         },
-        "content": ""
+        "content": "        assertFalse(findFirstCommand.equals(findSecondCommand));"
       },
       {
         "lineNumber": 67,
         "author": {
           "gitId": "-"
         },
-        "content": "    @Test"
-      },
-      {
-        "lineNumber": 68,
-        "author": {
-          "gitId": "Jaylenlee"
-        },
-        "content": "    public void execute_multipleKeywords_multipleExpensesFound() {"
-      },
-      {
-        "lineNumber": 69,
-        "author": {
-          "gitId": "Jaylenlee"
-        },
-        "content": "        String expectedMessage \u003d String.format(MESSAGE_EXPENSES_LISTED_OVERVIEW, 3);"
-      },
-      {
-        "lineNumber": 70,
-        "author": {
-          "gitId": "-"
-        },
-        "content": "        NameContainsKeywordsPredicate predicate \u003d preparePredicate(\"Kurz Elle Kunz\");"
-      },
-      {
-        "lineNumber": 71,
-        "author": {
-          "gitId": "-"
-        },
-        "content": "        FindCommand command \u003d new FindCommand(predicate);"
-      },
-      {
-        "lineNumber": 72,
-        "author": {
-          "gitId": "Jaylenlee"
-        },
-        "content": "        expectedModel.updateFilteredExpenseList(predicate);"
-      },
-      {
-        "lineNumber": 73,
-        "author": {
-          "gitId": "-"
-        },
-        "content": "        assertCommandSuccess(command, model, expectedMessage, expectedModel);"
-      },
-      {
-        "lineNumber": 74,
-        "author": {
-          "gitId": "Jaylenlee"
-        },
-        "content": "        assertEquals(Arrays.asList(CARL, ELLE, FIONA), model.getFilteredExpenseList());"
-      },
-      {
-        "lineNumber": 75,
-        "author": {
-          "gitId": "-"
-        },
         "content": "    }"
       },
       {
-        "lineNumber": 76,
+        "lineNumber": 68,
         "author": {
           "gitId": "-"
         },
         "content": ""
       },
       {
-        "lineNumber": 77,
+        "lineNumber": 69,
         "author": {
           "gitId": "-"
         },
-        "content": "    /**"
+        "content": "    @Test"
+      },
+      {
+        "lineNumber": 70,
+        "author": {
+          "gitId": "marcus2k"
+        },
+        "content": "    public void execute_noMatchingKeywords_noExpenseFound() {"
+      },
+      {
+        "lineNumber": 71,
+        "author": {
+          "gitId": "Jaylenlee"
+        },
+        "content": "        String expectedMessage \u003d String.format(MESSAGE_EXPENSES_LISTED_OVERVIEW, 0);"
+      },
+      {
+        "lineNumber": 72,
+        "author": {
+          "gitId": "marcus2k"
+        },
+        "content": "        DateMatchesPredicate datePredicate \u003d"
+      },
+      {
+        "lineNumber": 73,
+        "author": {
+          "gitId": "marcus2k"
+        },
+        "content": "                new DateMatchesPredicate(Collections.emptyList());"
+      },
+      {
+        "lineNumber": 74,
+        "author": {
+          "gitId": "marcus2k"
+        },
+        "content": "        TagsMatchesPredicate tagsPredicate \u003d"
+      },
+      {
+        "lineNumber": 75,
+        "author": {
+          "gitId": "marcus2k"
+        },
+        "content": "                new TagsMatchesPredicate(Collections.emptyList());"
+      },
+      {
+        "lineNumber": 76,
+        "author": {
+          "gitId": "marcus2k"
+        },
+        "content": "        NameContainsKeywordsPredicate namePredicate \u003d preparePredicate(\"CannotBeNotFound\");"
+      },
+      {
+        "lineNumber": 77,
+        "author": {
+          "gitId": "marcus2k"
+        },
+        "content": "        FindCommand command \u003d new FindCommand(namePredicate, datePredicate, tagsPredicate);"
       },
       {
         "lineNumber": 78,
         "author": {
-          "gitId": "-"
+          "gitId": "marcus2k"
         },
-        "content": "     * Parses {@code userInput} into a {@code NameContainsKeywordsPredicate}."
+        "content": "        expectedModel.updateFilteredExpenseList(namePredicate);"
       },
       {
         "lineNumber": 79,
         "author": {
           "gitId": "-"
         },
-        "content": "     */"
+        "content": "        assertCommandSuccess(command, model, expectedMessage, expectedModel);"
       },
       {
         "lineNumber": 80,
         "author": {
-          "gitId": "-"
+          "gitId": "Jaylenlee"
         },
-        "content": "    private NameContainsKeywordsPredicate preparePredicate(String userInput) {"
+        "content": "        assertEquals(Collections.emptyList(), model.getFilteredExpenseList());"
       },
       {
         "lineNumber": 81,
         "author": {
           "gitId": "-"
         },
-        "content": "        return new NameContainsKeywordsPredicate(Arrays.asList(userInput.split(\"\\\\s+\")));"
+        "content": "    }"
       },
       {
         "lineNumber": 82,
         "author": {
           "gitId": "-"
         },
-        "content": "    }"
+        "content": ""
       },
       {
         "lineNumber": 83,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "    @Test"
+      },
+      {
+        "lineNumber": 84,
+        "author": {
+          "gitId": "Jaylenlee"
+        },
+        "content": "    public void execute_multipleKeywords_multipleExpensesFound() {"
+      },
+      {
+        "lineNumber": 85,
+        "author": {
+          "gitId": "Jaylenlee"
+        },
+        "content": "        String expectedMessage \u003d String.format(MESSAGE_EXPENSES_LISTED_OVERVIEW, 3);"
+      },
+      {
+        "lineNumber": 86,
+        "author": {
+          "gitId": "marcus2k"
+        },
+        "content": "        DateMatchesPredicate datePredicate \u003d"
+      },
+      {
+        "lineNumber": 87,
+        "author": {
+          "gitId": "marcus2k"
+        },
+        "content": "                new DateMatchesPredicate(Collections.emptyList());"
+      },
+      {
+        "lineNumber": 88,
+        "author": {
+          "gitId": "marcus2k"
+        },
+        "content": "        TagsMatchesPredicate tagsPredicate \u003d"
+      },
+      {
+        "lineNumber": 89,
+        "author": {
+          "gitId": "marcus2k"
+        },
+        "content": "                new TagsMatchesPredicate(Collections.emptyList());"
+      },
+      {
+        "lineNumber": 90,
+        "author": {
+          "gitId": "marcus2k"
+        },
+        "content": "        NameContainsKeywordsPredicate namePredicate \u003d preparePredicate(\"Kurz Elle Kunz\");"
+      },
+      {
+        "lineNumber": 91,
+        "author": {
+          "gitId": "marcus2k"
+        },
+        "content": "        FindCommand command \u003d new FindCommand(namePredicate, datePredicate, tagsPredicate);"
+      },
+      {
+        "lineNumber": 92,
+        "author": {
+          "gitId": "marcus2k"
+        },
+        "content": "        expectedModel.updateFilteredExpenseList(namePredicate);"
+      },
+      {
+        "lineNumber": 93,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "        assertCommandSuccess(command, model, expectedMessage, expectedModel);"
+      },
+      {
+        "lineNumber": 94,
+        "author": {
+          "gitId": "Jaylenlee"
+        },
+        "content": "        assertEquals(Arrays.asList(CARL, ELLE, FIONA), model.getFilteredExpenseList());"
+      },
+      {
+        "lineNumber": 95,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "    }"
+      },
+      {
+        "lineNumber": 96,
+        "author": {
+          "gitId": "-"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 97,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "    /**"
+      },
+      {
+        "lineNumber": 98,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "     * Parses {@code userInput} into a {@code NameContainsKeywordsPredicate}."
+      },
+      {
+        "lineNumber": 99,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "     */"
+      },
+      {
+        "lineNumber": 100,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "    private NameContainsKeywordsPredicate preparePredicate(String userInput) {"
+      },
+      {
+        "lineNumber": 101,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "        return new NameContainsKeywordsPredicate(Arrays.asList(userInput.split(\"\\\\s+\")));"
+      },
+      {
+        "lineNumber": 102,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "    }"
+      },
+      {
+        "lineNumber": 103,
         "author": {
           "gitId": "-"
         },
@@ -50507,8 +51957,9 @@
       }
     ],
     "authorContributionMap": {
-      "Jaylenlee": 15,
-      "-": 68
+      "Jaylenlee": 12,
+      "marcus2k": 31,
+      "-": 60
     }
   },
   {
@@ -53758,303 +55209,303 @@
       {
         "lineNumber": 7,
         "author": {
+          "gitId": "marcus2k"
+        },
+        "content": "import static seedu.address.logic.parser.CliSyntax.PREFIX_DATE;"
+      },
+      {
+        "lineNumber": 8,
+        "author": {
+          "gitId": "marcus2k"
+        },
+        "content": "import static seedu.address.logic.parser.CliSyntax.PREFIX_DESCRIPTION;"
+      },
+      {
+        "lineNumber": 9,
+        "author": {
           "gitId": "lebencwb"
         },
         "content": "import static seedu.address.logic.parser.CliSyntax.PREFIX_REMARK;"
       },
       {
-        "lineNumber": 8,
-        "author": {
-          "gitId": "-"
-        },
-        "content": "import static seedu.address.testutil.Assert.assertThrows;"
-      },
-      {
-        "lineNumber": 9,
-        "author": {
-          "gitId": "Jaylenlee"
-        },
-        "content": "import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_EXPENSE;"
-      },
-      {
         "lineNumber": 10,
         "author": {
-          "gitId": "-"
+          "gitId": "marcus2k"
         },
-        "content": ""
+        "content": "import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG;"
       },
       {
         "lineNumber": 11,
         "author": {
           "gitId": "-"
         },
-        "content": "import java.util.Arrays;"
+        "content": "import static seedu.address.testutil.Assert.assertThrows;"
       },
       {
         "lineNumber": 12,
         "author": {
-          "gitId": "-"
+          "gitId": "Jaylenlee"
         },
-        "content": "import java.util.List;"
+        "content": "import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_EXPENSE;"
       },
       {
         "lineNumber": 13,
         "author": {
           "gitId": "-"
         },
-        "content": "import java.util.stream.Collectors;"
+        "content": ""
       },
       {
         "lineNumber": 14,
         "author": {
-          "gitId": "-"
+          "gitId": "marcus2k"
         },
-        "content": ""
+        "content": "import java.util.ArrayList;"
       },
       {
         "lineNumber": 15,
         "author": {
           "gitId": "-"
         },
-        "content": "import org.junit.jupiter.api.Test;"
+        "content": "import java.util.Arrays;"
       },
       {
         "lineNumber": 16,
         "author": {
           "gitId": "-"
         },
-        "content": ""
+        "content": "import java.util.List;"
       },
       {
         "lineNumber": 17,
         "author": {
           "gitId": "-"
         },
-        "content": "import seedu.address.logic.commands.AddCommand;"
+        "content": "import java.util.stream.Collectors;"
       },
       {
         "lineNumber": 18,
         "author": {
           "gitId": "-"
         },
-        "content": "import seedu.address.logic.commands.ClearCommand;"
+        "content": ""
       },
       {
         "lineNumber": 19,
         "author": {
           "gitId": "-"
         },
-        "content": "import seedu.address.logic.commands.DeleteCommand;"
+        "content": "import org.junit.jupiter.api.Test;"
       },
       {
         "lineNumber": 20,
         "author": {
           "gitId": "-"
         },
-        "content": "import seedu.address.logic.commands.EditCommand;"
+        "content": ""
       },
       {
         "lineNumber": 21,
         "author": {
-          "gitId": "Jaylenlee"
+          "gitId": "-"
         },
-        "content": "import seedu.address.logic.commands.EditCommand.EditExpenseDescriptor;"
+        "content": "import seedu.address.logic.commands.AddCommand;"
       },
       {
         "lineNumber": 22,
         "author": {
           "gitId": "-"
         },
-        "content": "import seedu.address.logic.commands.ExitCommand;"
+        "content": "import seedu.address.logic.commands.ClearCommand;"
       },
       {
         "lineNumber": 23,
         "author": {
           "gitId": "-"
         },
-        "content": "import seedu.address.logic.commands.FindCommand;"
+        "content": "import seedu.address.logic.commands.DeleteCommand;"
       },
       {
         "lineNumber": 24,
         "author": {
           "gitId": "-"
         },
-        "content": "import seedu.address.logic.commands.HelpCommand;"
+        "content": "import seedu.address.logic.commands.EditCommand;"
       },
       {
         "lineNumber": 25,
         "author": {
-          "gitId": "-"
+          "gitId": "Jaylenlee"
         },
-        "content": "import seedu.address.logic.commands.ListCommand;"
+        "content": "import seedu.address.logic.commands.EditCommand.EditExpenseDescriptor;"
       },
       {
         "lineNumber": 26,
         "author": {
-          "gitId": "lebencwb"
+          "gitId": "-"
         },
-        "content": "import seedu.address.logic.commands.RemarkCommand;"
+        "content": "import seedu.address.logic.commands.ExitCommand;"
       },
       {
         "lineNumber": 27,
         "author": {
           "gitId": "-"
         },
-        "content": "import seedu.address.logic.parser.exceptions.ParseException;"
+        "content": "import seedu.address.logic.commands.FindCommand;"
       },
       {
         "lineNumber": 28,
         "author": {
-          "gitId": "Jaylenlee"
+          "gitId": "-"
         },
-        "content": "import seedu.address.model.expense.Expense;"
+        "content": "import seedu.address.logic.commands.HelpCommand;"
       },
       {
         "lineNumber": 29,
         "author": {
-          "gitId": "Jaylenlee"
+          "gitId": "-"
         },
-        "content": "import seedu.address.model.expense.NameContainsKeywordsPredicate;"
+        "content": "import seedu.address.logic.commands.ListCommand;"
       },
       {
         "lineNumber": 30,
         "author": {
-          "gitId": "Jaylenlee"
+          "gitId": "lebencwb"
+        },
+        "content": "import seedu.address.logic.commands.RemarkCommand;"
+      },
+      {
+        "lineNumber": 31,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "import seedu.address.logic.parser.exceptions.ParseException;"
+      },
+      {
+        "lineNumber": 32,
+        "author": {
+          "gitId": "marcus2k"
+        },
+        "content": "import seedu.address.model.expense.DateMatchesPredicate;"
+      },
+      {
+        "lineNumber": 33,
+        "author": {
+          "gitId": "marcus2k"
+        },
+        "content": "import seedu.address.model.expense.Expense;"
+      },
+      {
+        "lineNumber": 34,
+        "author": {
+          "gitId": "marcus2k"
+        },
+        "content": "import seedu.address.model.expense.NameContainsKeywordsPredicate;"
+      },
+      {
+        "lineNumber": 35,
+        "author": {
+          "gitId": "marcus2k"
         },
         "content": "import seedu.address.model.expense.Remark;"
       },
       {
-        "lineNumber": 31,
+        "lineNumber": 36,
+        "author": {
+          "gitId": "marcus2k"
+        },
+        "content": "import seedu.address.model.expense.TagsMatchesPredicate;"
+      },
+      {
+        "lineNumber": 37,
         "author": {
           "gitId": "Jaylenlee"
         },
         "content": "import seedu.address.testutil.EditExpenseDescriptorBuilder;"
       },
       {
-        "lineNumber": 32,
+        "lineNumber": 38,
         "author": {
           "gitId": "Jaylenlee"
         },
         "content": "import seedu.address.testutil.ExpenseBuilder;"
       },
       {
-        "lineNumber": 33,
+        "lineNumber": 39,
         "author": {
           "gitId": "Jaylenlee"
         },
         "content": "import seedu.address.testutil.ExpenseUtil;"
       },
       {
-        "lineNumber": 34,
+        "lineNumber": 40,
         "author": {
           "gitId": "-"
         },
         "content": ""
       },
       {
-        "lineNumber": 35,
+        "lineNumber": 41,
         "author": {
           "gitId": "-"
         },
         "content": "public class AddressBookParserTest {"
       },
       {
-        "lineNumber": 36,
+        "lineNumber": 42,
         "author": {
           "gitId": "-"
         },
         "content": ""
       },
       {
-        "lineNumber": 37,
+        "lineNumber": 43,
         "author": {
           "gitId": "-"
         },
         "content": "    private final AddressBookParser parser \u003d new AddressBookParser();"
       },
       {
-        "lineNumber": 38,
-        "author": {
-          "gitId": "-"
-        },
-        "content": ""
-      },
-      {
-        "lineNumber": 39,
-        "author": {
-          "gitId": "-"
-        },
-        "content": "    @Test"
-      },
-      {
-        "lineNumber": 40,
-        "author": {
-          "gitId": "-"
-        },
-        "content": "    public void parseCommand_add() throws Exception {"
-      },
-      {
-        "lineNumber": 41,
-        "author": {
-          "gitId": "Jaylenlee"
-        },
-        "content": "        Expense expense \u003d new ExpenseBuilder().build();"
-      },
-      {
-        "lineNumber": 42,
-        "author": {
-          "gitId": "Jaylenlee"
-        },
-        "content": "        AddCommand command \u003d (AddCommand) parser.parseCommand(ExpenseUtil.getAddCommand(expense));"
-      },
-      {
-        "lineNumber": 43,
-        "author": {
-          "gitId": "Jaylenlee"
-        },
-        "content": "        assertEquals(new AddCommand(expense), command);"
-      },
-      {
         "lineNumber": 44,
         "author": {
           "gitId": "-"
         },
-        "content": "    }"
+        "content": ""
       },
       {
         "lineNumber": 45,
         "author": {
           "gitId": "-"
         },
-        "content": ""
+        "content": "    @Test"
       },
       {
         "lineNumber": 46,
         "author": {
           "gitId": "-"
         },
-        "content": "    @Test"
+        "content": "    public void parseCommand_add() throws Exception {"
       },
       {
         "lineNumber": 47,
         "author": {
-          "gitId": "-"
+          "gitId": "Jaylenlee"
         },
-        "content": "    public void parseCommand_clear() throws Exception {"
+        "content": "        Expense expense \u003d new ExpenseBuilder().build();"
       },
       {
         "lineNumber": 48,
         "author": {
-          "gitId": "-"
+          "gitId": "Jaylenlee"
         },
-        "content": "        assertTrue(parser.parseCommand(ClearCommand.COMMAND_WORD) instanceof ClearCommand);"
+        "content": "        AddCommand command \u003d (AddCommand) parser.parseCommand(ExpenseUtil.getAddCommand(expense));"
       },
       {
         "lineNumber": 49,
         "author": {
-          "gitId": "-"
+          "gitId": "Jaylenlee"
         },
-        "content": "        assertTrue(parser.parseCommand(ClearCommand.COMMAND_WORD + \" 3\") instanceof ClearCommand);"
+        "content": "        assertEquals(new AddCommand(expense), command);"
       },
       {
         "lineNumber": 50,
@@ -54082,133 +55533,133 @@
         "author": {
           "gitId": "-"
         },
-        "content": "    public void parseCommand_delete() throws Exception {"
+        "content": "    public void parseCommand_clear() throws Exception {"
       },
       {
         "lineNumber": 54,
         "author": {
           "gitId": "-"
         },
-        "content": "        DeleteCommand command \u003d (DeleteCommand) parser.parseCommand("
+        "content": "        assertTrue(parser.parseCommand(ClearCommand.COMMAND_WORD) instanceof ClearCommand);"
       },
       {
         "lineNumber": 55,
         "author": {
-          "gitId": "Jaylenlee"
+          "gitId": "-"
         },
-        "content": "                DeleteCommand.COMMAND_WORD + \" \" + INDEX_FIRST_EXPENSE.getOneBased());"
+        "content": "        assertTrue(parser.parseCommand(ClearCommand.COMMAND_WORD + \" 3\") instanceof ClearCommand);"
       },
       {
         "lineNumber": 56,
         "author": {
-          "gitId": "Jaylenlee"
+          "gitId": "-"
         },
-        "content": "        assertEquals(new DeleteCommand(INDEX_FIRST_EXPENSE), command);"
+        "content": "    }"
       },
       {
         "lineNumber": 57,
         "author": {
           "gitId": "-"
         },
-        "content": "    }"
+        "content": ""
       },
       {
         "lineNumber": 58,
         "author": {
           "gitId": "-"
         },
-        "content": ""
+        "content": "    @Test"
       },
       {
         "lineNumber": 59,
         "author": {
           "gitId": "-"
         },
-        "content": "    @Test"
+        "content": "    public void parseCommand_delete() throws Exception {"
       },
       {
         "lineNumber": 60,
         "author": {
           "gitId": "-"
         },
-        "content": "    public void parseCommand_edit() throws Exception {"
+        "content": "        DeleteCommand command \u003d (DeleteCommand) parser.parseCommand("
       },
       {
         "lineNumber": 61,
         "author": {
           "gitId": "Jaylenlee"
         },
-        "content": "        Expense expense \u003d new ExpenseBuilder().build();"
+        "content": "                DeleteCommand.COMMAND_WORD + \" \" + INDEX_FIRST_EXPENSE.getOneBased());"
       },
       {
         "lineNumber": 62,
         "author": {
           "gitId": "Jaylenlee"
         },
-        "content": "        EditExpenseDescriptor descriptor \u003d new EditExpenseDescriptorBuilder(expense).build();"
+        "content": "        assertEquals(new DeleteCommand(INDEX_FIRST_EXPENSE), command);"
       },
       {
         "lineNumber": 63,
         "author": {
           "gitId": "-"
         },
-        "content": "        EditCommand command \u003d (EditCommand) parser.parseCommand(EditCommand.COMMAND_WORD + \" \""
-      },
-      {
-        "lineNumber": 64,
-        "author": {
-          "gitId": "Jaylenlee"
-        },
-        "content": "                + INDEX_FIRST_EXPENSE.getOneBased() + \" \" + ExpenseUtil.getEditExpenseDescriptorDetails(descriptor));"
-      },
-      {
-        "lineNumber": 65,
-        "author": {
-          "gitId": "Jaylenlee"
-        },
-        "content": "        assertEquals(new EditCommand(INDEX_FIRST_EXPENSE, descriptor), command);"
-      },
-      {
-        "lineNumber": 66,
-        "author": {
-          "gitId": "-"
-        },
         "content": "    }"
       },
       {
-        "lineNumber": 67,
+        "lineNumber": 64,
         "author": {
           "gitId": "-"
         },
         "content": ""
       },
       {
-        "lineNumber": 68,
+        "lineNumber": 65,
         "author": {
           "gitId": "-"
         },
         "content": "    @Test"
       },
       {
+        "lineNumber": 66,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "    public void parseCommand_edit() throws Exception {"
+      },
+      {
+        "lineNumber": 67,
+        "author": {
+          "gitId": "Jaylenlee"
+        },
+        "content": "        Expense expense \u003d new ExpenseBuilder().build();"
+      },
+      {
+        "lineNumber": 68,
+        "author": {
+          "gitId": "Jaylenlee"
+        },
+        "content": "        EditExpenseDescriptor descriptor \u003d new EditExpenseDescriptorBuilder(expense).build();"
+      },
+      {
         "lineNumber": 69,
         "author": {
           "gitId": "-"
         },
-        "content": "    public void parseCommand_exit() throws Exception {"
+        "content": "        EditCommand command \u003d (EditCommand) parser.parseCommand(EditCommand.COMMAND_WORD + \" \""
       },
       {
         "lineNumber": 70,
         "author": {
-          "gitId": "-"
+          "gitId": "Jaylenlee"
         },
-        "content": "        assertTrue(parser.parseCommand(ExitCommand.COMMAND_WORD) instanceof ExitCommand);"
+        "content": "                + INDEX_FIRST_EXPENSE.getOneBased() + \" \" + ExpenseUtil.getEditExpenseDescriptorDetails(descriptor));"
       },
       {
         "lineNumber": 71,
         "author": {
-          "gitId": "-"
+          "gitId": "Jaylenlee"
         },
-        "content": "        assertTrue(parser.parseCommand(ExitCommand.COMMAND_WORD + \" 3\") instanceof ExitCommand);"
+        "content": "        assertEquals(new EditCommand(INDEX_FIRST_EXPENSE, descriptor), command);"
       },
       {
         "lineNumber": 72,
@@ -54236,187 +55687,187 @@
         "author": {
           "gitId": "-"
         },
-        "content": "    public void parseCommand_find() throws Exception {"
+        "content": "    public void parseCommand_exit() throws Exception {"
       },
       {
         "lineNumber": 76,
         "author": {
           "gitId": "-"
         },
-        "content": "        List\u003cString\u003e keywords \u003d Arrays.asList(\"foo\", \"bar\", \"baz\");"
+        "content": "        assertTrue(parser.parseCommand(ExitCommand.COMMAND_WORD) instanceof ExitCommand);"
       },
       {
         "lineNumber": 77,
         "author": {
           "gitId": "-"
         },
-        "content": "        FindCommand command \u003d (FindCommand) parser.parseCommand("
+        "content": "        assertTrue(parser.parseCommand(ExitCommand.COMMAND_WORD + \" 3\") instanceof ExitCommand);"
       },
       {
         "lineNumber": 78,
         "author": {
           "gitId": "-"
         },
-        "content": "                FindCommand.COMMAND_WORD + \" \" + keywords.stream().collect(Collectors.joining(\" \")));"
+        "content": "    }"
       },
       {
         "lineNumber": 79,
         "author": {
           "gitId": "-"
         },
-        "content": "        assertEquals(new FindCommand(new NameContainsKeywordsPredicate(keywords)), command);"
+        "content": ""
       },
       {
         "lineNumber": 80,
         "author": {
           "gitId": "-"
         },
-        "content": "    }"
+        "content": "    @Test"
       },
       {
         "lineNumber": 81,
         "author": {
           "gitId": "-"
         },
-        "content": ""
+        "content": "    public void parseCommand_find() throws Exception {"
       },
       {
         "lineNumber": 82,
         "author": {
           "gitId": "-"
         },
-        "content": "    @Test"
+        "content": "        List\u003cString\u003e keywords \u003d Arrays.asList(\"foo\", \"bar\", \"baz\");"
       },
       {
         "lineNumber": 83,
         "author": {
-          "gitId": "-"
+          "gitId": "marcus2k"
         },
-        "content": "    public void parseCommand_help() throws Exception {"
+        "content": "        String dateString \u003d \"09-10-2020\";"
       },
       {
         "lineNumber": 84,
         "author": {
-          "gitId": "-"
+          "gitId": "marcus2k"
         },
-        "content": "        assertTrue(parser.parseCommand(HelpCommand.COMMAND_WORD) instanceof HelpCommand);"
+        "content": "        List\u003cString\u003e dateStrings \u003d Arrays.asList(dateString);"
       },
       {
         "lineNumber": 85,
         "author": {
-          "gitId": "-"
+          "gitId": "marcus2k"
         },
-        "content": "        assertTrue(parser.parseCommand(HelpCommand.COMMAND_WORD + \" 3\") instanceof HelpCommand);"
+        "content": "        List\u003cString\u003e hs \u003d new ArrayList\u003c\u003e();"
       },
       {
         "lineNumber": 86,
         "author": {
-          "gitId": "-"
+          "gitId": "marcus2k"
         },
-        "content": "    }"
+        "content": "        hs.add(\"CS\");"
       },
       {
         "lineNumber": 87,
         "author": {
-          "gitId": "-"
+          "gitId": "marcus2k"
         },
-        "content": ""
+        "content": "        hs.add(\"bee\");"
       },
       {
         "lineNumber": 88,
         "author": {
           "gitId": "-"
         },
-        "content": "    @Test"
+        "content": "        FindCommand command \u003d (FindCommand) parser.parseCommand("
       },
       {
         "lineNumber": 89,
         "author": {
-          "gitId": "-"
+          "gitId": "marcus2k"
         },
-        "content": "    public void parseCommand_list() throws Exception {"
+        "content": "                FindCommand.COMMAND_WORD + \" \" + PREFIX_DESCRIPTION + \" \""
       },
       {
         "lineNumber": 90,
         "author": {
-          "gitId": "-"
+          "gitId": "marcus2k"
         },
-        "content": "        assertTrue(parser.parseCommand(ListCommand.COMMAND_WORD) instanceof ListCommand);"
+        "content": "                        + keywords.stream().collect(Collectors.joining(\" \"))"
       },
       {
         "lineNumber": 91,
         "author": {
-          "gitId": "-"
+          "gitId": "marcus2k"
         },
-        "content": "        assertTrue(parser.parseCommand(ListCommand.COMMAND_WORD + \" 3\") instanceof ListCommand);"
+        "content": "                        + \" \" + PREFIX_DATE + dateString + \" \" + PREFIX_TAG"
       },
       {
         "lineNumber": 92,
         "author": {
-          "gitId": "-"
+          "gitId": "marcus2k"
         },
-        "content": "    }"
+        "content": "                        + \"CS \" + PREFIX_TAG + \"bee\""
       },
       {
         "lineNumber": 93,
         "author": {
-          "gitId": "-"
+          "gitId": "marcus2k"
         },
-        "content": ""
+        "content": "        );"
       },
       {
         "lineNumber": 94,
         "author": {
-          "gitId": "lebencwb"
+          "gitId": "marcus2k"
         },
-        "content": "    @Test"
+        "content": "        FindCommand findCommand \u003d new FindCommand("
       },
       {
         "lineNumber": 95,
         "author": {
-          "gitId": "lebencwb"
+          "gitId": "marcus2k"
         },
-        "content": "    public void parseCommand_remark() throws Exception {"
+        "content": "                new NameContainsKeywordsPredicate(keywords),"
       },
       {
         "lineNumber": 96,
         "author": {
-          "gitId": "lebencwb"
+          "gitId": "marcus2k"
         },
-        "content": "        final Remark remark \u003d new Remark(\"Some remark.\");"
+        "content": "                new DateMatchesPredicate(dateStrings),"
       },
       {
         "lineNumber": 97,
         "author": {
-          "gitId": "lebencwb"
+          "gitId": "marcus2k"
         },
-        "content": "        RemarkCommand command \u003d (RemarkCommand) parser.parseCommand(RemarkCommand.COMMAND_WORD + \" \""
+        "content": "                new TagsMatchesPredicate(hs)"
       },
       {
         "lineNumber": 98,
         "author": {
-          "gitId": "Jaylenlee"
+          "gitId": "marcus2k"
         },
-        "content": "                + INDEX_FIRST_EXPENSE.getOneBased() + \" \" + PREFIX_REMARK + remark.value);"
+        "content": "        );"
       },
       {
         "lineNumber": 99,
         "author": {
-          "gitId": "Jaylenlee"
+          "gitId": "marcus2k"
         },
-        "content": "        assertEquals(new RemarkCommand(INDEX_FIRST_EXPENSE, remark), command);"
+        "content": "        assertEquals(findCommand, command);"
       },
       {
         "lineNumber": 100,
         "author": {
-          "gitId": "lebencwb"
+          "gitId": "-"
         },
         "content": "    }"
       },
       {
         "lineNumber": 101,
         "author": {
-          "gitId": "lebencwb"
+          "gitId": "-"
         },
         "content": ""
       },
@@ -54432,21 +55883,21 @@
         "author": {
           "gitId": "-"
         },
-        "content": "    public void parseCommand_unrecognisedInput_throwsParseException() {"
+        "content": "    public void parseCommand_help() throws Exception {"
       },
       {
         "lineNumber": 104,
         "author": {
           "gitId": "-"
         },
-        "content": "        assertThrows(ParseException.class, String.format(MESSAGE_INVALID_COMMAND_FORMAT, HelpCommand.MESSAGE_USAGE), ()"
+        "content": "        assertTrue(parser.parseCommand(HelpCommand.COMMAND_WORD) instanceof HelpCommand);"
       },
       {
         "lineNumber": 105,
         "author": {
           "gitId": "-"
         },
-        "content": "            -\u003e parser.parseCommand(\"\"));"
+        "content": "        assertTrue(parser.parseCommand(HelpCommand.COMMAND_WORD + \" 3\") instanceof HelpCommand);"
       },
       {
         "lineNumber": 106,
@@ -54474,24 +55925,164 @@
         "author": {
           "gitId": "-"
         },
-        "content": "    public void parseCommand_unknownCommand_throwsParseException() {"
+        "content": "    public void parseCommand_list() throws Exception {"
       },
       {
         "lineNumber": 110,
         "author": {
           "gitId": "-"
         },
-        "content": "        assertThrows(ParseException.class, MESSAGE_UNKNOWN_COMMAND, () -\u003e parser.parseCommand(\"unknownCommand\"));"
+        "content": "        assertTrue(parser.parseCommand(ListCommand.COMMAND_WORD) instanceof ListCommand);"
       },
       {
         "lineNumber": 111,
         "author": {
           "gitId": "-"
         },
-        "content": "    }"
+        "content": "        assertTrue(parser.parseCommand(ListCommand.COMMAND_WORD + \" 3\") instanceof ListCommand);"
       },
       {
         "lineNumber": 112,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "    }"
+      },
+      {
+        "lineNumber": 113,
+        "author": {
+          "gitId": "-"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 114,
+        "author": {
+          "gitId": "lebencwb"
+        },
+        "content": "    @Test"
+      },
+      {
+        "lineNumber": 115,
+        "author": {
+          "gitId": "lebencwb"
+        },
+        "content": "    public void parseCommand_remark() throws Exception {"
+      },
+      {
+        "lineNumber": 116,
+        "author": {
+          "gitId": "lebencwb"
+        },
+        "content": "        final Remark remark \u003d new Remark(\"Some remark.\");"
+      },
+      {
+        "lineNumber": 117,
+        "author": {
+          "gitId": "lebencwb"
+        },
+        "content": "        RemarkCommand command \u003d (RemarkCommand) parser.parseCommand(RemarkCommand.COMMAND_WORD + \" \""
+      },
+      {
+        "lineNumber": 118,
+        "author": {
+          "gitId": "Jaylenlee"
+        },
+        "content": "                + INDEX_FIRST_EXPENSE.getOneBased() + \" \" + PREFIX_REMARK + remark.value);"
+      },
+      {
+        "lineNumber": 119,
+        "author": {
+          "gitId": "Jaylenlee"
+        },
+        "content": "        assertEquals(new RemarkCommand(INDEX_FIRST_EXPENSE, remark), command);"
+      },
+      {
+        "lineNumber": 120,
+        "author": {
+          "gitId": "lebencwb"
+        },
+        "content": "    }"
+      },
+      {
+        "lineNumber": 121,
+        "author": {
+          "gitId": "lebencwb"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 122,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "    @Test"
+      },
+      {
+        "lineNumber": 123,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "    public void parseCommand_unrecognisedInput_throwsParseException() {"
+      },
+      {
+        "lineNumber": 124,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "        assertThrows(ParseException.class, String.format(MESSAGE_INVALID_COMMAND_FORMAT, HelpCommand.MESSAGE_USAGE), ()"
+      },
+      {
+        "lineNumber": 125,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "            -\u003e parser.parseCommand(\"\"));"
+      },
+      {
+        "lineNumber": 126,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "    }"
+      },
+      {
+        "lineNumber": 127,
+        "author": {
+          "gitId": "-"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 128,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "    @Test"
+      },
+      {
+        "lineNumber": 129,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "    public void parseCommand_unknownCommand_throwsParseException() {"
+      },
+      {
+        "lineNumber": 130,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "        assertThrows(ParseException.class, MESSAGE_UNKNOWN_COMMAND, () -\u003e parser.parseCommand(\"unknownCommand\"));"
+      },
+      {
+        "lineNumber": 131,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "    }"
+      },
+      {
+        "lineNumber": 132,
         "author": {
           "gitId": "-"
         },
@@ -54499,8 +56090,9 @@
       }
     ],
     "authorContributionMap": {
-      "Jaylenlee": 19,
-      "-": 85,
+      "Jaylenlee": 16,
+      "marcus2k": 25,
+      "-": 83,
       "lebencwb": 8
     }
   },
@@ -55608,535 +57200,528 @@
         "author": {
           "gitId": "-"
         },
-        "content": ""
+        "content": "        assertParseSuccess(parser, userInput, expectedCommand);"
       },
       {
         "lineNumber": 125,
         "author": {
           "gitId": "-"
         },
-        "content": "        assertParseSuccess(parser, userInput, expectedCommand);"
+        "content": "    }"
       },
       {
         "lineNumber": 126,
         "author": {
           "gitId": "-"
         },
-        "content": "    }"
+        "content": ""
       },
       {
         "lineNumber": 127,
         "author": {
           "gitId": "-"
         },
-        "content": ""
+        "content": "    @Test"
       },
       {
         "lineNumber": 128,
         "author": {
           "gitId": "-"
         },
-        "content": "    @Test"
+        "content": "    public void parse_oneFieldSpecified_success() {"
       },
       {
         "lineNumber": 129,
         "author": {
           "gitId": "-"
         },
-        "content": "    public void parse_oneFieldSpecified_success() {"
-      },
-      {
-        "lineNumber": 130,
-        "author": {
-          "gitId": "-"
-        },
         "content": "        // name"
       },
       {
-        "lineNumber": 131,
+        "lineNumber": 130,
         "author": {
           "gitId": "Jaylenlee"
         },
         "content": "        Index targetIndex \u003d INDEX_THIRD_EXPENSE;"
       },
       {
-        "lineNumber": 132,
+        "lineNumber": 131,
         "author": {
           "gitId": "maxxyh"
         },
         "content": "        String userInput \u003d targetIndex.getOneBased() + DESCRIPTION_DESC_AMY;"
       },
       {
-        "lineNumber": 133,
+        "lineNumber": 132,
         "author": {
           "gitId": "Jaylenlee"
         },
         "content": "        EditExpenseDescriptor descriptor \u003d"
       },
       {
-        "lineNumber": 134,
+        "lineNumber": 133,
         "author": {
           "gitId": "Jaylenlee"
         },
         "content": "                new EditExpenseDescriptorBuilder().withDescription(VALID_DESCRIPTION_AMY).build();"
       },
       {
-        "lineNumber": 135,
+        "lineNumber": 134,
         "author": {
           "gitId": "-"
         },
         "content": "        EditCommand expectedCommand \u003d new EditCommand(targetIndex, descriptor);"
+      },
+      {
+        "lineNumber": 135,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "        assertParseSuccess(parser, userInput, expectedCommand);"
       },
       {
         "lineNumber": 136,
         "author": {
           "gitId": "-"
         },
-        "content": "        assertParseSuccess(parser, userInput, expectedCommand);"
+        "content": ""
       },
       {
         "lineNumber": 137,
         "author": {
           "gitId": "-"
         },
-        "content": ""
-      },
-      {
-        "lineNumber": 138,
-        "author": {
-          "gitId": "-"
-        },
         "content": "        // phone"
       },
       {
-        "lineNumber": 139,
+        "lineNumber": 138,
         "author": {
           "gitId": "maxxyh"
         },
         "content": "        userInput \u003d targetIndex.getOneBased() + AMOUNT_DESC_AMY;"
       },
       {
-        "lineNumber": 140,
+        "lineNumber": 139,
         "author": {
           "gitId": "Jaylenlee"
         },
         "content": "        descriptor \u003d new EditExpenseDescriptorBuilder().withAmount(VALID_AMOUNT_AMY).build();"
       },
       {
-        "lineNumber": 141,
+        "lineNumber": 140,
         "author": {
           "gitId": "-"
         },
         "content": "        expectedCommand \u003d new EditCommand(targetIndex, descriptor);"
+      },
+      {
+        "lineNumber": 141,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "        assertParseSuccess(parser, userInput, expectedCommand);"
       },
       {
         "lineNumber": 142,
         "author": {
           "gitId": "-"
         },
-        "content": "        assertParseSuccess(parser, userInput, expectedCommand);"
+        "content": ""
       },
       {
         "lineNumber": 143,
         "author": {
           "gitId": "-"
         },
-        "content": ""
-      },
-      {
-        "lineNumber": 144,
-        "author": {
-          "gitId": "-"
-        },
         "content": "        // email"
       },
       {
-        "lineNumber": 145,
+        "lineNumber": 144,
         "author": {
           "gitId": "maxxyh"
         },
         "content": "        userInput \u003d targetIndex.getOneBased() + DATE_DESC_AMY;"
       },
       {
-        "lineNumber": 146,
+        "lineNumber": 145,
         "author": {
           "gitId": "Jaylenlee"
         },
         "content": "        descriptor \u003d new EditExpenseDescriptorBuilder().withDate(VALID_DATE_AMY).build();"
       },
       {
-        "lineNumber": 147,
+        "lineNumber": 146,
         "author": {
           "gitId": "-"
         },
         "content": "        expectedCommand \u003d new EditCommand(targetIndex, descriptor);"
+      },
+      {
+        "lineNumber": 147,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "        assertParseSuccess(parser, userInput, expectedCommand);"
       },
       {
         "lineNumber": 148,
         "author": {
           "gitId": "-"
         },
-        "content": "        assertParseSuccess(parser, userInput, expectedCommand);"
+        "content": ""
       },
       {
         "lineNumber": 149,
         "author": {
           "gitId": "-"
         },
-        "content": ""
+        "content": "        // tags"
       },
       {
         "lineNumber": 150,
         "author": {
           "gitId": "-"
         },
-        "content": "        // tags"
-      },
-      {
-        "lineNumber": 151,
-        "author": {
-          "gitId": "-"
-        },
         "content": "        userInput \u003d targetIndex.getOneBased() + TAG_DESC_FRIEND;"
       },
       {
-        "lineNumber": 152,
+        "lineNumber": 151,
         "author": {
           "gitId": "Jaylenlee"
         },
         "content": "        descriptor \u003d new EditExpenseDescriptorBuilder().withTags(VALID_TAG_FRIEND).build();"
       },
       {
-        "lineNumber": 153,
+        "lineNumber": 152,
         "author": {
           "gitId": "-"
         },
         "content": "        expectedCommand \u003d new EditCommand(targetIndex, descriptor);"
+      },
+      {
+        "lineNumber": 153,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "        assertParseSuccess(parser, userInput, expectedCommand);"
       },
       {
         "lineNumber": 154,
         "author": {
           "gitId": "-"
         },
-        "content": "        assertParseSuccess(parser, userInput, expectedCommand);"
+        "content": "    }"
       },
       {
         "lineNumber": 155,
         "author": {
           "gitId": "-"
         },
-        "content": "    }"
+        "content": ""
       },
       {
         "lineNumber": 156,
         "author": {
           "gitId": "-"
         },
-        "content": ""
+        "content": "    @Test"
       },
       {
         "lineNumber": 157,
         "author": {
           "gitId": "-"
         },
-        "content": "    @Test"
-      },
-      {
-        "lineNumber": 158,
-        "author": {
-          "gitId": "-"
-        },
         "content": "    public void parse_multipleRepeatedFields_acceptsLast() {"
       },
       {
-        "lineNumber": 159,
+        "lineNumber": 158,
         "author": {
           "gitId": "Jaylenlee"
         },
         "content": "        Index targetIndex \u003d INDEX_FIRST_EXPENSE;"
       },
       {
-        "lineNumber": 160,
+        "lineNumber": 159,
         "author": {
           "gitId": "lebencwb"
         },
         "content": "        String userInput \u003d targetIndex.getOneBased() + AMOUNT_DESC_AMY + DATE_DESC_AMY"
       },
       {
-        "lineNumber": 161,
+        "lineNumber": 160,
         "author": {
           "gitId": "lebencwb"
         },
         "content": "                + TAG_DESC_FRIEND + AMOUNT_DESC_AMY + DATE_DESC_AMY + TAG_DESC_FRIEND"
       },
       {
-        "lineNumber": 162,
+        "lineNumber": 161,
         "author": {
           "gitId": "lebencwb"
         },
         "content": "                + AMOUNT_DESC_BOB + DATE_DESC_BOB + TAG_DESC_HUSBAND;"
       },
       {
-        "lineNumber": 163,
+        "lineNumber": 162,
         "author": {
           "gitId": "-"
         },
         "content": ""
       },
       {
-        "lineNumber": 164,
+        "lineNumber": 163,
         "author": {
           "gitId": "Jaylenlee"
         },
         "content": "        EditCommand.EditExpenseDescriptor descriptor \u003d new EditExpenseDescriptorBuilder().withAmount(VALID_AMOUNT_BOB)"
       },
       {
-        "lineNumber": 165,
+        "lineNumber": 164,
         "author": {
           "gitId": "lebencwb"
         },
         "content": "                .withDate(VALID_DATE_BOB).withTags(VALID_TAG_FRIEND, VALID_TAG_HUSBAND)"
       },
       {
-        "lineNumber": 166,
+        "lineNumber": 165,
         "author": {
           "gitId": "-"
         },
         "content": "                .build();"
+      },
+      {
+        "lineNumber": 166,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "        EditCommand expectedCommand \u003d new EditCommand(targetIndex, descriptor);"
       },
       {
         "lineNumber": 167,
         "author": {
           "gitId": "-"
         },
-        "content": "        EditCommand expectedCommand \u003d new EditCommand(targetIndex, descriptor);"
+        "content": ""
       },
       {
         "lineNumber": 168,
         "author": {
           "gitId": "-"
         },
-        "content": ""
+        "content": "        assertParseSuccess(parser, userInput, expectedCommand);"
       },
       {
         "lineNumber": 169,
         "author": {
           "gitId": "-"
         },
-        "content": "        assertParseSuccess(parser, userInput, expectedCommand);"
+        "content": "    }"
       },
       {
         "lineNumber": 170,
         "author": {
           "gitId": "-"
         },
-        "content": "    }"
+        "content": ""
       },
       {
         "lineNumber": 171,
         "author": {
           "gitId": "-"
         },
-        "content": ""
+        "content": "    @Test"
       },
       {
         "lineNumber": 172,
         "author": {
           "gitId": "-"
         },
-        "content": "    @Test"
+        "content": "    public void parse_invalidValueFollowedByValidValue_success() {"
       },
       {
         "lineNumber": 173,
         "author": {
           "gitId": "-"
         },
-        "content": "    public void parse_invalidValueFollowedByValidValue_success() {"
-      },
-      {
-        "lineNumber": 174,
-        "author": {
-          "gitId": "-"
-        },
         "content": "        // no other valid values specified"
       },
       {
-        "lineNumber": 175,
+        "lineNumber": 174,
         "author": {
           "gitId": "Jaylenlee"
         },
         "content": "        Index targetIndex \u003d INDEX_FIRST_EXPENSE;"
       },
       {
-        "lineNumber": 176,
+        "lineNumber": 175,
         "author": {
           "gitId": "maxxyh"
         },
         "content": "        String userInput \u003d targetIndex.getOneBased() + INVALID_AMOUNT_DESC + AMOUNT_DESC_BOB;"
       },
       {
-        "lineNumber": 177,
+        "lineNumber": 176,
         "author": {
           "gitId": "Jaylenlee"
         },
         "content": "        EditExpenseDescriptor descriptor \u003d new EditExpenseDescriptorBuilder().withAmount(VALID_AMOUNT_BOB).build();"
       },
       {
-        "lineNumber": 178,
+        "lineNumber": 177,
         "author": {
           "gitId": "-"
         },
         "content": "        EditCommand expectedCommand \u003d new EditCommand(targetIndex, descriptor);"
+      },
+      {
+        "lineNumber": 178,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "        assertParseSuccess(parser, userInput, expectedCommand);"
       },
       {
         "lineNumber": 179,
         "author": {
           "gitId": "-"
         },
-        "content": "        assertParseSuccess(parser, userInput, expectedCommand);"
+        "content": ""
       },
       {
         "lineNumber": 180,
         "author": {
           "gitId": "-"
         },
-        "content": ""
-      },
-      {
-        "lineNumber": 181,
-        "author": {
-          "gitId": "-"
-        },
         "content": "        // other valid values specified"
       },
       {
-        "lineNumber": 182,
+        "lineNumber": 181,
         "author": {
           "gitId": "lebencwb"
         },
         "content": "        userInput \u003d targetIndex.getOneBased() + DATE_DESC_BOB + INVALID_AMOUNT_DESC"
       },
       {
-        "lineNumber": 183,
+        "lineNumber": 182,
         "author": {
           "gitId": "maxxyh"
         },
         "content": "                + AMOUNT_DESC_BOB;"
       },
       {
-        "lineNumber": 184,
+        "lineNumber": 183,
         "author": {
           "gitId": "Jaylenlee"
         },
         "content": "        descriptor \u003d new EditExpenseDescriptorBuilder().withAmount(VALID_AMOUNT_BOB).withDate(VALID_DATE_BOB)"
       },
       {
-        "lineNumber": 185,
+        "lineNumber": 184,
         "author": {
           "gitId": "lebencwb"
         },
         "content": "                .build();"
       },
       {
-        "lineNumber": 186,
+        "lineNumber": 185,
         "author": {
           "gitId": "-"
         },
         "content": "        expectedCommand \u003d new EditCommand(targetIndex, descriptor);"
       },
       {
-        "lineNumber": 187,
+        "lineNumber": 186,
         "author": {
           "gitId": "-"
         },
         "content": "        assertParseSuccess(parser, userInput, expectedCommand);"
+      },
+      {
+        "lineNumber": 187,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "    }"
       },
       {
         "lineNumber": 188,
         "author": {
           "gitId": "-"
         },
-        "content": "    }"
+        "content": ""
       },
       {
         "lineNumber": 189,
         "author": {
           "gitId": "-"
         },
-        "content": ""
+        "content": "    @Test"
       },
       {
         "lineNumber": 190,
         "author": {
           "gitId": "-"
         },
-        "content": "    @Test"
-      },
-      {
-        "lineNumber": 191,
-        "author": {
-          "gitId": "-"
-        },
         "content": "    public void parse_resetTags_success() {"
       },
       {
-        "lineNumber": 192,
+        "lineNumber": 191,
         "author": {
           "gitId": "Jaylenlee"
         },
         "content": "        Index targetIndex \u003d INDEX_THIRD_EXPENSE;"
       },
       {
-        "lineNumber": 193,
+        "lineNumber": 192,
         "author": {
           "gitId": "-"
         },
         "content": "        String userInput \u003d targetIndex.getOneBased() + TAG_EMPTY;"
       },
       {
-        "lineNumber": 194,
+        "lineNumber": 193,
         "author": {
           "gitId": "-"
         },
         "content": ""
       },
       {
-        "lineNumber": 195,
+        "lineNumber": 194,
         "author": {
           "gitId": "Jaylenlee"
         },
         "content": "        EditExpenseDescriptor descriptor \u003d new EditExpenseDescriptorBuilder().withTags().build();"
       },
       {
-        "lineNumber": 196,
+        "lineNumber": 195,
         "author": {
           "gitId": "-"
         },
         "content": "        EditCommand expectedCommand \u003d new EditCommand(targetIndex, descriptor);"
       },
       {
-        "lineNumber": 197,
+        "lineNumber": 196,
         "author": {
           "gitId": "-"
         },
         "content": ""
       },
       {
-        "lineNumber": 198,
+        "lineNumber": 197,
         "author": {
           "gitId": "-"
         },
         "content": "        assertParseSuccess(parser, userInput, expectedCommand);"
       },
       {
-        "lineNumber": 199,
+        "lineNumber": 198,
         "author": {
           "gitId": "-"
         },
         "content": "    }"
       },
       {
-        "lineNumber": 200,
+        "lineNumber": 199,
         "author": {
           "gitId": "-"
         },
@@ -56146,7 +57731,7 @@
     "authorContributionMap": {
       "Jaylenlee": 26,
       "maxxyh": 32,
-      "-": 133,
+      "-": 132,
       "lebencwb": 9
     }
   },
@@ -56178,65 +57763,65 @@
       {
         "lineNumber": 4,
         "author": {
-          "gitId": "-"
+          "gitId": "marcus2k"
         },
-        "content": "import static seedu.address.logic.parser.CommandParserTestUtil.assertParseFailure;"
+        "content": "import static seedu.address.logic.parser.CliSyntax.PREFIX_DATE;"
       },
       {
         "lineNumber": 5,
         "author": {
-          "gitId": "-"
+          "gitId": "marcus2k"
         },
-        "content": "import static seedu.address.logic.parser.CommandParserTestUtil.assertParseSuccess;"
+        "content": "import static seedu.address.logic.parser.CliSyntax.PREFIX_DESCRIPTION;"
       },
       {
         "lineNumber": 6,
         "author": {
-          "gitId": "-"
+          "gitId": "marcus2k"
         },
-        "content": ""
+        "content": "import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG;"
       },
       {
         "lineNumber": 7,
         "author": {
           "gitId": "-"
         },
-        "content": "import java.util.Arrays;"
+        "content": "import static seedu.address.logic.parser.CommandParserTestUtil.assertParseFailure;"
       },
       {
         "lineNumber": 8,
         "author": {
           "gitId": "-"
         },
-        "content": ""
+        "content": "import static seedu.address.logic.parser.CommandParserTestUtil.assertParseSuccess;"
       },
       {
         "lineNumber": 9,
         "author": {
           "gitId": "-"
         },
-        "content": "import org.junit.jupiter.api.Test;"
+        "content": ""
       },
       {
         "lineNumber": 10,
         "author": {
           "gitId": "-"
         },
-        "content": ""
+        "content": "import java.util.Arrays;"
       },
       {
         "lineNumber": 11,
         "author": {
           "gitId": "-"
         },
-        "content": "import seedu.address.logic.commands.FindCommand;"
+        "content": ""
       },
       {
         "lineNumber": 12,
         "author": {
-          "gitId": "Jaylenlee"
+          "gitId": "-"
         },
-        "content": "import seedu.address.model.expense.NameContainsKeywordsPredicate;"
+        "content": "import org.junit.jupiter.api.Test;"
       },
       {
         "lineNumber": 13,
@@ -56250,56 +57835,56 @@
         "author": {
           "gitId": "-"
         },
-        "content": "public class FindCommandParserTest {"
+        "content": "import seedu.address.logic.commands.FindCommand;"
       },
       {
         "lineNumber": 15,
         "author": {
-          "gitId": "-"
+          "gitId": "marcus2k"
         },
-        "content": ""
+        "content": "import seedu.address.model.expense.DateMatchesPredicate;"
       },
       {
         "lineNumber": 16,
         "author": {
-          "gitId": "-"
+          "gitId": "Jaylenlee"
         },
-        "content": "    private FindCommandParser parser \u003d new FindCommandParser();"
+        "content": "import seedu.address.model.expense.NameContainsKeywordsPredicate;"
       },
       {
         "lineNumber": 17,
         "author": {
-          "gitId": "-"
+          "gitId": "marcus2k"
         },
-        "content": ""
+        "content": "import seedu.address.model.expense.TagsMatchesPredicate;"
       },
       {
         "lineNumber": 18,
         "author": {
           "gitId": "-"
         },
-        "content": "    @Test"
+        "content": ""
       },
       {
         "lineNumber": 19,
         "author": {
           "gitId": "-"
         },
-        "content": "    public void parse_emptyArg_throwsParseException() {"
+        "content": "public class FindCommandParserTest {"
       },
       {
         "lineNumber": 20,
         "author": {
           "gitId": "-"
         },
-        "content": "        assertParseFailure(parser, \"     \", String.format(MESSAGE_INVALID_COMMAND_FORMAT, FindCommand.MESSAGE_USAGE));"
+        "content": ""
       },
       {
         "lineNumber": 21,
         "author": {
           "gitId": "-"
         },
-        "content": "    }"
+        "content": "    private FindCommandParser parser \u003d new FindCommandParser();"
       },
       {
         "lineNumber": 22,
@@ -56320,73 +57905,241 @@
         "author": {
           "gitId": "-"
         },
-        "content": "    public void parse_validArgs_returnsFindCommand() {"
+        "content": "    public void parse_emptyArg_throwsParseException() {"
       },
       {
         "lineNumber": 25,
         "author": {
-          "gitId": "-"
+          "gitId": "marcus2k"
         },
-        "content": "        // no leading and trailing whitespaces"
+        "content": "        assertParseFailure(parser, \"     \", String.format(MESSAGE_INVALID_COMMAND_FORMAT,"
       },
       {
         "lineNumber": 26,
         "author": {
-          "gitId": "-"
+          "gitId": "marcus2k"
         },
-        "content": "        FindCommand expectedFindCommand \u003d"
+        "content": "                FindCommand.MESSAGE_USAGE));"
       },
       {
         "lineNumber": 27,
         "author": {
           "gitId": "-"
         },
-        "content": "                new FindCommand(new NameContainsKeywordsPredicate(Arrays.asList(\"Alice\", \"Bob\")));"
+        "content": "    }"
       },
       {
         "lineNumber": 28,
         "author": {
           "gitId": "-"
         },
-        "content": "        assertParseSuccess(parser, \"Alice Bob\", expectedFindCommand);"
+        "content": ""
       },
       {
         "lineNumber": 29,
         "author": {
           "gitId": "-"
         },
-        "content": ""
+        "content": "    @Test"
       },
       {
         "lineNumber": 30,
         "author": {
-          "gitId": "-"
+          "gitId": "marcus2k"
         },
-        "content": "        // multiple whitespaces between keywords"
+        "content": "    public void parse_emptyKeyword_throwsParseException() {"
       },
       {
         "lineNumber": 31,
         "author": {
-          "gitId": "-"
+          "gitId": "marcus2k"
         },
-        "content": "        assertParseSuccess(parser, \" \\n Alice \\n \\t Bob  \\t\", expectedFindCommand);"
+        "content": "        assertParseFailure(parser, \" \" + PREFIX_DESCRIPTION,"
       },
       {
         "lineNumber": 32,
+        "author": {
+          "gitId": "marcus2k"
+        },
+        "content": "                String.format(MESSAGE_INVALID_COMMAND_FORMAT, FindCommandParser.MISSING_ARGUMENTS));"
+      },
+      {
+        "lineNumber": 33,
+        "author": {
+          "gitId": "marcus2k"
+        },
+        "content": "    }"
+      },
+      {
+        "lineNumber": 34,
+        "author": {
+          "gitId": "-"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 35,
+        "author": {
+          "gitId": "marcus2k"
+        },
+        "content": "    @Test"
+      },
+      {
+        "lineNumber": 36,
+        "author": {
+          "gitId": "marcus2k"
+        },
+        "content": "    public void parse_emptyDate_throwsParseException() {"
+      },
+      {
+        "lineNumber": 37,
+        "author": {
+          "gitId": "marcus2k"
+        },
+        "content": "        assertParseFailure(parser, \" \" + PREFIX_DATE,"
+      },
+      {
+        "lineNumber": 38,
+        "author": {
+          "gitId": "marcus2k"
+        },
+        "content": "                String.format(MESSAGE_INVALID_COMMAND_FORMAT, FindCommandParser.MISSING_ARGUMENTS));"
+      },
+      {
+        "lineNumber": 39,
         "author": {
           "gitId": "-"
         },
         "content": "    }"
       },
       {
-        "lineNumber": 33,
+        "lineNumber": 40,
         "author": {
           "gitId": "-"
         },
         "content": ""
       },
       {
-        "lineNumber": 34,
+        "lineNumber": 41,
+        "author": {
+          "gitId": "marcus2k"
+        },
+        "content": "    @Test"
+      },
+      {
+        "lineNumber": 42,
+        "author": {
+          "gitId": "marcus2k"
+        },
+        "content": "    public void parse_emptyTag_throwsParseException() {"
+      },
+      {
+        "lineNumber": 43,
+        "author": {
+          "gitId": "marcus2k"
+        },
+        "content": "        assertParseFailure(parser, \" \" + PREFIX_TAG,"
+      },
+      {
+        "lineNumber": 44,
+        "author": {
+          "gitId": "marcus2k"
+        },
+        "content": "                String.format(MESSAGE_INVALID_COMMAND_FORMAT, FindCommandParser.MISSING_ARGUMENTS));"
+      },
+      {
+        "lineNumber": 45,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "    }"
+      },
+      {
+        "lineNumber": 46,
+        "author": {
+          "gitId": "-"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 47,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "    @Test"
+      },
+      {
+        "lineNumber": 48,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "    public void parse_validArgs_returnsFindCommand() {"
+      },
+      {
+        "lineNumber": 49,
+        "author": {
+          "gitId": "marcus2k"
+        },
+        "content": "        FindCommand expectedFindCommand \u003d new FindCommand("
+      },
+      {
+        "lineNumber": 50,
+        "author": {
+          "gitId": "marcus2k"
+        },
+        "content": "                new NameContainsKeywordsPredicate(Arrays.asList(\"Alice\", \"Bob\")),"
+      },
+      {
+        "lineNumber": 51,
+        "author": {
+          "gitId": "marcus2k"
+        },
+        "content": "                new DateMatchesPredicate(Arrays.asList(\"07-09-2020\")),"
+      },
+      {
+        "lineNumber": 52,
+        "author": {
+          "gitId": "marcus2k"
+        },
+        "content": "                new TagsMatchesPredicate(Arrays.asList(\"crypto\", \"cs\"))"
+      },
+      {
+        "lineNumber": 53,
+        "author": {
+          "gitId": "marcus2k"
+        },
+        "content": "        );"
+      },
+      {
+        "lineNumber": 54,
+        "author": {
+          "gitId": "marcus2k"
+        },
+        "content": "        String x \u003d \" \" + PREFIX_DESCRIPTION + \"Alice Bob \" + PREFIX_DATE + \" 07-09-2020 \" + PREFIX_TAG"
+      },
+      {
+        "lineNumber": 55,
+        "author": {
+          "gitId": "marcus2k"
+        },
+        "content": "                 + \" crypto \" + PREFIX_TAG + \" cs\";"
+      },
+      {
+        "lineNumber": 56,
+        "author": {
+          "gitId": "marcus2k"
+        },
+        "content": "        assertParseSuccess(parser, x, expectedFindCommand);"
+      },
+      {
+        "lineNumber": 57,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "    }"
+      },
+      {
+        "lineNumber": 58,
         "author": {
           "gitId": "-"
         },
@@ -56395,7 +58148,8 @@
     ],
     "authorContributionMap": {
       "Jaylenlee": 1,
-      "-": 33
+      "marcus2k": 27,
+      "-": 30
     }
   },
   {

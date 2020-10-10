@@ -1599,7 +1599,7 @@ function regExpEscape (s) {
 }
 
 },{"brace-expansion":3,"path":6}],6:[function(require,module,exports){
-(function (process){
+(function (process){(function (){
 // .dirname, .basename, and .extname methods are extracted from Node.js v8.11.1,
 // backported and transplited with Babel, with backwards-compat fixes
 
@@ -1903,7 +1903,7 @@ var substr = 'ab'.substr(-1) === 'b'
     }
 ;
 
-}).call(this,require('_process'))
+}).call(this)}).call(this,require('_process'))
 },{"_process":7}],7:[function(require,module,exports){
 // shim for using process in browser
 var process = module.exports = {};

@@ -24905,6 +24905,393 @@
     }
   },
   {
+    "path": "src/main/java/seedu/bookmark/logic/commands/ViewCommand.java",
+    "fileType": "functional-code",
+    "lines": [
+      {
+        "lineNumber": 1,
+        "author": {
+          "gitId": "mgiang2015"
+        },
+        "content": "package seedu.bookmark.logic.commands;"
+      },
+      {
+        "lineNumber": 2,
+        "author": {
+          "gitId": "mgiang2015"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 3,
+        "author": {
+          "gitId": "mgiang2015"
+        },
+        "content": "import static java.util.Objects.requireNonNull;"
+      },
+      {
+        "lineNumber": 4,
+        "author": {
+          "gitId": "mgiang2015"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 5,
+        "author": {
+          "gitId": "mgiang2015"
+        },
+        "content": "import java.util.List;"
+      },
+      {
+        "lineNumber": 6,
+        "author": {
+          "gitId": "mgiang2015"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 7,
+        "author": {
+          "gitId": "mgiang2015"
+        },
+        "content": "import seedu.bookmark.commons.core.Messages;"
+      },
+      {
+        "lineNumber": 8,
+        "author": {
+          "gitId": "mgiang2015"
+        },
+        "content": "import seedu.bookmark.commons.core.index.Index;"
+      },
+      {
+        "lineNumber": 9,
+        "author": {
+          "gitId": "mgiang2015"
+        },
+        "content": "import seedu.bookmark.logic.commands.exceptions.CommandException;"
+      },
+      {
+        "lineNumber": 10,
+        "author": {
+          "gitId": "mgiang2015"
+        },
+        "content": "import seedu.bookmark.model.Model;"
+      },
+      {
+        "lineNumber": 11,
+        "author": {
+          "gitId": "mgiang2015"
+        },
+        "content": "import seedu.bookmark.model.book.Book;"
+      },
+      {
+        "lineNumber": 12,
+        "author": {
+          "gitId": "mgiang2015"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 13,
+        "author": {
+          "gitId": "mgiang2015"
+        },
+        "content": "/**"
+      },
+      {
+        "lineNumber": 14,
+        "author": {
+          "gitId": "mgiang2015"
+        },
+        "content": " * Allows user to view a all details of a specific book"
+      },
+      {
+        "lineNumber": 15,
+        "author": {
+          "gitId": "mgiang2015"
+        },
+        "content": " */"
+      },
+      {
+        "lineNumber": 16,
+        "author": {
+          "gitId": "mgiang2015"
+        },
+        "content": "public class ViewCommand extends Command {"
+      },
+      {
+        "lineNumber": 17,
+        "author": {
+          "gitId": "mgiang2015"
+        },
+        "content": "    public static final String COMMAND_WORD \u003d \"view\";"
+      },
+      {
+        "lineNumber": 18,
+        "author": {
+          "gitId": "mgiang2015"
+        },
+        "content": "    public static final String MESSAGE_USAGE \u003d COMMAND_WORD"
+      },
+      {
+        "lineNumber": 19,
+        "author": {
+          "gitId": "mgiang2015"
+        },
+        "content": "            + \": View all details of the book identified by index number in book list.\\n\""
+      },
+      {
+        "lineNumber": 20,
+        "author": {
+          "gitId": "mgiang2015"
+        },
+        "content": "            + \"Parameters: INDEX (must be a positive integer)\\n\""
+      },
+      {
+        "lineNumber": 21,
+        "author": {
+          "gitId": "mgiang2015"
+        },
+        "content": "            + \"Example: \" + COMMAND_WORD + \" 1\";"
+      },
+      {
+        "lineNumber": 22,
+        "author": {
+          "gitId": "mgiang2015"
+        },
+        "content": "    public static final String MESSAGE_SUCCESS \u003d \"Viewing %1$d\";"
+      },
+      {
+        "lineNumber": 23,
+        "author": {
+          "gitId": "mgiang2015"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 24,
+        "author": {
+          "gitId": "mgiang2015"
+        },
+        "content": "    public final Index index;"
+      },
+      {
+        "lineNumber": 25,
+        "author": {
+          "gitId": "mgiang2015"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 26,
+        "author": {
+          "gitId": "mgiang2015"
+        },
+        "content": "    public ViewCommand(Index index) {"
+      },
+      {
+        "lineNumber": 27,
+        "author": {
+          "gitId": "mgiang2015"
+        },
+        "content": "        this.index \u003d index;"
+      },
+      {
+        "lineNumber": 28,
+        "author": {
+          "gitId": "mgiang2015"
+        },
+        "content": "    }"
+      },
+      {
+        "lineNumber": 29,
+        "author": {
+          "gitId": "mgiang2015"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 30,
+        "author": {
+          "gitId": "mgiang2015"
+        },
+        "content": "    @Override"
+      },
+      {
+        "lineNumber": 31,
+        "author": {
+          "gitId": "mgiang2015"
+        },
+        "content": "    public CommandResult execute(Model model) throws CommandException {"
+      },
+      {
+        "lineNumber": 32,
+        "author": {
+          "gitId": "mgiang2015"
+        },
+        "content": "        requireNonNull(model);"
+      },
+      {
+        "lineNumber": 33,
+        "author": {
+          "gitId": "mgiang2015"
+        },
+        "content": "        List\u003cBook\u003e lastShownList \u003d model.getFilteredBookList();"
+      },
+      {
+        "lineNumber": 34,
+        "author": {
+          "gitId": "mgiang2015"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 35,
+        "author": {
+          "gitId": "mgiang2015"
+        },
+        "content": "        if (index.getZeroBased() \u003e\u003d lastShownList.size()) {"
+      },
+      {
+        "lineNumber": 36,
+        "author": {
+          "gitId": "mgiang2015"
+        },
+        "content": "            throw new CommandException(Messages.MESSAGE_INVALID_BOOK_DISPLAYED_INDEX);"
+      },
+      {
+        "lineNumber": 37,
+        "author": {
+          "gitId": "mgiang2015"
+        },
+        "content": "        }"
+      },
+      {
+        "lineNumber": 38,
+        "author": {
+          "gitId": "mgiang2015"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 39,
+        "author": {
+          "gitId": "mgiang2015"
+        },
+        "content": "        Book bookToView \u003d lastShownList.get(index.getZeroBased());"
+      },
+      {
+        "lineNumber": 40,
+        "author": {
+          "gitId": "mgiang2015"
+        },
+        "content": "        model.updateFilteredBookList(b -\u003e b.equals(bookToView));"
+      },
+      {
+        "lineNumber": 41,
+        "author": {
+          "gitId": "mgiang2015"
+        },
+        "content": "        return new CommandResult(String.format(MESSAGE_SUCCESS, index.getOneBased()));"
+      },
+      {
+        "lineNumber": 42,
+        "author": {
+          "gitId": "mgiang2015"
+        },
+        "content": "    }"
+      },
+      {
+        "lineNumber": 43,
+        "author": {
+          "gitId": "mgiang2015"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 44,
+        "author": {
+          "gitId": "mgiang2015"
+        },
+        "content": "    @Override"
+      },
+      {
+        "lineNumber": 45,
+        "author": {
+          "gitId": "mgiang2015"
+        },
+        "content": "    public boolean equals(Object other) {"
+      },
+      {
+        "lineNumber": 46,
+        "author": {
+          "gitId": "mgiang2015"
+        },
+        "content": "        if (other \u003d\u003d this) {"
+      },
+      {
+        "lineNumber": 47,
+        "author": {
+          "gitId": "mgiang2015"
+        },
+        "content": "            return true;"
+      },
+      {
+        "lineNumber": 48,
+        "author": {
+          "gitId": "mgiang2015"
+        },
+        "content": "        } else if (other instanceof ViewCommand) {"
+      },
+      {
+        "lineNumber": 49,
+        "author": {
+          "gitId": "mgiang2015"
+        },
+        "content": "            return index.equals(((ViewCommand) other).index);"
+      },
+      {
+        "lineNumber": 50,
+        "author": {
+          "gitId": "mgiang2015"
+        },
+        "content": "        } else {"
+      },
+      {
+        "lineNumber": 51,
+        "author": {
+          "gitId": "mgiang2015"
+        },
+        "content": "            return false;"
+      },
+      {
+        "lineNumber": 52,
+        "author": {
+          "gitId": "mgiang2015"
+        },
+        "content": "        }"
+      },
+      {
+        "lineNumber": 53,
+        "author": {
+          "gitId": "mgiang2015"
+        },
+        "content": "    }"
+      },
+      {
+        "lineNumber": 54,
+        "author": {
+          "gitId": "mgiang2015"
+        },
+        "content": "}"
+      }
+    ],
+    "authorContributionMap": {
+      "mgiang2015": 54
+    }
+  },
+  {
     "path": "src/main/java/seedu/bookmark/logic/commands/exceptions/CommandException.java",
     "fileType": "functional-code",
     "lines": [
@@ -27153,469 +27540,469 @@
       {
         "lineNumber": 9,
         "author": {
-          "gitId": "TanLeYang"
+          "gitId": "mgiang2015"
         },
         "content": "import seedu.bookmark.logic.commands.AddCommand;"
       },
       {
         "lineNumber": 10,
         "author": {
-          "gitId": "TanLeYang"
+          "gitId": "mgiang2015"
         },
         "content": "import seedu.bookmark.logic.commands.ClearCommand;"
       },
       {
         "lineNumber": 11,
         "author": {
-          "gitId": "TanLeYang"
+          "gitId": "mgiang2015"
         },
         "content": "import seedu.bookmark.logic.commands.Command;"
       },
       {
         "lineNumber": 12,
         "author": {
-          "gitId": "TanLeYang"
+          "gitId": "mgiang2015"
         },
         "content": "import seedu.bookmark.logic.commands.DeleteCommand;"
       },
       {
         "lineNumber": 13,
         "author": {
-          "gitId": "TanLeYang"
+          "gitId": "mgiang2015"
         },
         "content": "import seedu.bookmark.logic.commands.EditCommand;"
       },
       {
         "lineNumber": 14,
         "author": {
-          "gitId": "TanLeYang"
+          "gitId": "mgiang2015"
         },
         "content": "import seedu.bookmark.logic.commands.ExitCommand;"
       },
       {
         "lineNumber": 15,
         "author": {
-          "gitId": "TanLeYang"
+          "gitId": "mgiang2015"
         },
         "content": "import seedu.bookmark.logic.commands.FindCommand;"
       },
       {
         "lineNumber": 16,
         "author": {
-          "gitId": "TanLeYang"
+          "gitId": "mgiang2015"
         },
         "content": "import seedu.bookmark.logic.commands.HelpCommand;"
       },
       {
         "lineNumber": 17,
         "author": {
-          "gitId": "TanLeYang"
+          "gitId": "mgiang2015"
         },
         "content": "import seedu.bookmark.logic.commands.ListCommand;"
       },
       {
         "lineNumber": 18,
         "author": {
-          "gitId": "TanLeYang"
+          "gitId": "mgiang2015"
         },
-        "content": "import seedu.bookmark.logic.parser.exceptions.ParseException;"
+        "content": "import seedu.bookmark.logic.commands.ViewCommand;"
       },
       {
         "lineNumber": 19,
         "author": {
-          "gitId": "-"
+          "gitId": "TanLeYang"
         },
-        "content": ""
+        "content": "import seedu.bookmark.logic.parser.exceptions.ParseException;"
       },
       {
         "lineNumber": 20,
         "author": {
           "gitId": "-"
         },
-        "content": "/**"
+        "content": ""
       },
       {
         "lineNumber": 21,
         "author": {
           "gitId": "-"
         },
-        "content": " * Parses user input."
+        "content": "/**"
       },
       {
         "lineNumber": 22,
         "author": {
           "gitId": "-"
         },
-        "content": " */"
+        "content": " * Parses user input."
       },
       {
         "lineNumber": 23,
+        "author": {
+          "gitId": "-"
+        },
+        "content": " */"
+      },
+      {
+        "lineNumber": 24,
         "author": {
           "gitId": "TanLeYang"
         },
         "content": "public class CommandParser {"
       },
       {
-        "lineNumber": 24,
-        "author": {
-          "gitId": "-"
-        },
-        "content": ""
-      },
-      {
         "lineNumber": 25,
         "author": {
           "gitId": "-"
         },
-        "content": "    /**"
+        "content": ""
       },
       {
         "lineNumber": 26,
         "author": {
           "gitId": "-"
         },
-        "content": "     * Used for initial separation of command word and args."
+        "content": "    /**"
       },
       {
         "lineNumber": 27,
         "author": {
           "gitId": "-"
         },
-        "content": "     */"
+        "content": "     * Used for initial separation of command word and args."
       },
       {
         "lineNumber": 28,
         "author": {
           "gitId": "-"
         },
-        "content": "    private static final Pattern BASIC_COMMAND_FORMAT \u003d Pattern.compile(\"(?\u003ccommandWord\u003e\\\\S+)(?\u003carguments\u003e.*)\");"
+        "content": "     */"
       },
       {
         "lineNumber": 29,
         "author": {
           "gitId": "-"
         },
-        "content": ""
+        "content": "    private static final Pattern BASIC_COMMAND_FORMAT \u003d Pattern.compile(\"(?\u003ccommandWord\u003e\\\\S+)(?\u003carguments\u003e.*)\");"
       },
       {
         "lineNumber": 30,
         "author": {
           "gitId": "-"
         },
-        "content": "    /**"
+        "content": ""
       },
       {
         "lineNumber": 31,
         "author": {
           "gitId": "-"
         },
-        "content": "     * Parses user input into command for execution."
+        "content": "    /**"
       },
       {
         "lineNumber": 32,
         "author": {
           "gitId": "-"
         },
-        "content": "     *"
+        "content": "     * Parses user input into command for execution."
       },
       {
         "lineNumber": 33,
         "author": {
           "gitId": "-"
         },
-        "content": "     * @param userInput full user input string"
+        "content": "     *"
       },
       {
         "lineNumber": 34,
         "author": {
           "gitId": "-"
         },
-        "content": "     * @return the command based on the user input"
+        "content": "     * @param userInput full user input string"
       },
       {
         "lineNumber": 35,
         "author": {
           "gitId": "-"
         },
-        "content": "     * @throws ParseException if the user input does not conform the expected format"
+        "content": "     * @return the command based on the user input"
       },
       {
         "lineNumber": 36,
         "author": {
           "gitId": "-"
         },
-        "content": "     */"
+        "content": "     * @throws ParseException if the user input does not conform the expected format"
       },
       {
         "lineNumber": 37,
         "author": {
           "gitId": "-"
         },
-        "content": "    public Command parseCommand(String userInput) throws ParseException {"
+        "content": "     */"
       },
       {
         "lineNumber": 38,
         "author": {
           "gitId": "-"
         },
-        "content": "        final Matcher matcher \u003d BASIC_COMMAND_FORMAT.matcher(userInput.trim());"
+        "content": "    public Command parseCommand(String userInput) throws ParseException {"
       },
       {
         "lineNumber": 39,
         "author": {
           "gitId": "-"
         },
-        "content": "        if (!matcher.matches()) {"
+        "content": "        final Matcher matcher \u003d BASIC_COMMAND_FORMAT.matcher(userInput.trim());"
       },
       {
         "lineNumber": 40,
         "author": {
           "gitId": "-"
         },
-        "content": "            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, HelpCommand.MESSAGE_USAGE));"
+        "content": "        if (!matcher.matches()) {"
       },
       {
         "lineNumber": 41,
         "author": {
           "gitId": "-"
         },
-        "content": "        }"
+        "content": "            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, HelpCommand.MESSAGE_USAGE));"
       },
       {
         "lineNumber": 42,
         "author": {
           "gitId": "-"
         },
-        "content": ""
+        "content": "        }"
       },
       {
         "lineNumber": 43,
         "author": {
           "gitId": "-"
         },
-        "content": "        final String commandWord \u003d matcher.group(\"commandWord\");"
+        "content": ""
       },
       {
         "lineNumber": 44,
         "author": {
           "gitId": "-"
         },
-        "content": "        final String arguments \u003d matcher.group(\"arguments\");"
+        "content": "        final String commandWord \u003d matcher.group(\"commandWord\");"
       },
       {
         "lineNumber": 45,
         "author": {
           "gitId": "-"
         },
-        "content": "        switch (commandWord) {"
+        "content": "        final String arguments \u003d matcher.group(\"arguments\");"
       },
       {
         "lineNumber": 46,
         "author": {
           "gitId": "-"
         },
-        "content": ""
+        "content": "        switch (commandWord) {"
       },
       {
         "lineNumber": 47,
         "author": {
           "gitId": "-"
         },
-        "content": "        case AddCommand.COMMAND_WORD:"
+        "content": ""
       },
       {
         "lineNumber": 48,
         "author": {
           "gitId": "-"
         },
-        "content": "            return new AddCommandParser().parse(arguments);"
+        "content": "        case AddCommand.COMMAND_WORD:"
       },
       {
         "lineNumber": 49,
         "author": {
           "gitId": "-"
         },
-        "content": ""
+        "content": "            return new AddCommandParser().parse(arguments);"
       },
       {
         "lineNumber": 50,
         "author": {
           "gitId": "-"
         },
-        "content": "        case EditCommand.COMMAND_WORD:"
+        "content": ""
       },
       {
         "lineNumber": 51,
         "author": {
           "gitId": "-"
         },
-        "content": "            return new EditCommandParser().parse(arguments);"
+        "content": "        case EditCommand.COMMAND_WORD:"
       },
       {
         "lineNumber": 52,
         "author": {
           "gitId": "-"
         },
-        "content": ""
+        "content": "            return new EditCommandParser().parse(arguments);"
       },
       {
         "lineNumber": 53,
         "author": {
           "gitId": "-"
         },
-        "content": "        case DeleteCommand.COMMAND_WORD:"
+        "content": ""
       },
       {
         "lineNumber": 54,
         "author": {
           "gitId": "-"
         },
-        "content": "            return new DeleteCommandParser().parse(arguments);"
+        "content": "        case DeleteCommand.COMMAND_WORD:"
       },
       {
         "lineNumber": 55,
         "author": {
           "gitId": "-"
         },
-        "content": ""
+        "content": "            return new DeleteCommandParser().parse(arguments);"
       },
       {
         "lineNumber": 56,
         "author": {
           "gitId": "-"
         },
-        "content": "        case ClearCommand.COMMAND_WORD:"
+        "content": ""
       },
       {
         "lineNumber": 57,
         "author": {
           "gitId": "-"
         },
-        "content": "            return new ClearCommand();"
+        "content": "        case ClearCommand.COMMAND_WORD:"
       },
       {
         "lineNumber": 58,
         "author": {
           "gitId": "-"
         },
-        "content": ""
+        "content": "            return new ClearCommand();"
       },
       {
         "lineNumber": 59,
         "author": {
           "gitId": "-"
         },
-        "content": "        case FindCommand.COMMAND_WORD:"
+        "content": ""
       },
       {
         "lineNumber": 60,
         "author": {
           "gitId": "-"
         },
-        "content": "            return new FindCommandParser().parse(arguments);"
+        "content": "        case FindCommand.COMMAND_WORD:"
       },
       {
         "lineNumber": 61,
         "author": {
           "gitId": "-"
         },
-        "content": ""
+        "content": "            return new FindCommandParser().parse(arguments);"
       },
       {
         "lineNumber": 62,
         "author": {
           "gitId": "-"
         },
-        "content": "        case ListCommand.COMMAND_WORD:"
+        "content": ""
       },
       {
         "lineNumber": 63,
         "author": {
           "gitId": "-"
         },
-        "content": "            return new ListCommand();"
+        "content": "        case ListCommand.COMMAND_WORD:"
       },
       {
         "lineNumber": 64,
         "author": {
           "gitId": "-"
         },
-        "content": ""
+        "content": "            return new ListCommand();"
       },
       {
         "lineNumber": 65,
         "author": {
           "gitId": "-"
         },
-        "content": "        case ExitCommand.COMMAND_WORD:"
+        "content": ""
       },
       {
         "lineNumber": 66,
         "author": {
           "gitId": "-"
         },
-        "content": "            return new ExitCommand();"
+        "content": "        case ExitCommand.COMMAND_WORD:"
       },
       {
         "lineNumber": 67,
         "author": {
           "gitId": "-"
         },
-        "content": ""
+        "content": "            return new ExitCommand();"
       },
       {
         "lineNumber": 68,
         "author": {
           "gitId": "-"
         },
-        "content": "        case HelpCommand.COMMAND_WORD:"
+        "content": ""
       },
       {
         "lineNumber": 69,
         "author": {
           "gitId": "-"
         },
-        "content": "            return new HelpCommand();"
+        "content": "        case HelpCommand.COMMAND_WORD:"
       },
       {
         "lineNumber": 70,
         "author": {
           "gitId": "-"
         },
-        "content": ""
+        "content": "            return new HelpCommand();"
       },
       {
         "lineNumber": 71,
         "author": {
           "gitId": "-"
         },
-        "content": "        default:"
+        "content": ""
       },
       {
         "lineNumber": 72,
         "author": {
-          "gitId": "-"
+          "gitId": "mgiang2015"
         },
-        "content": "            throw new ParseException(MESSAGE_UNKNOWN_COMMAND);"
+        "content": "        case ViewCommand.COMMAND_WORD:"
       },
       {
         "lineNumber": 73,
         "author": {
-          "gitId": "-"
+          "gitId": "mgiang2015"
         },
-        "content": "        }"
+        "content": "            return new ViewCommandParser().parse(arguments);"
       },
       {
         "lineNumber": 74,
         "author": {
-          "gitId": "-"
+          "gitId": "mgiang2015"
         },
-        "content": "    }"
+        "content": ""
       },
       {
         "lineNumber": 75,
         "author": {
-          "gitId": "-"
+          "gitId": "mgiang2015"
         },
         "content": ""
       },
@@ -27624,12 +28011,48 @@
         "author": {
           "gitId": "-"
         },
+        "content": "        default:"
+      },
+      {
+        "lineNumber": 77,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "            throw new ParseException(MESSAGE_UNKNOWN_COMMAND);"
+      },
+      {
+        "lineNumber": 78,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "        }"
+      },
+      {
+        "lineNumber": 79,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "    }"
+      },
+      {
+        "lineNumber": 80,
+        "author": {
+          "gitId": "-"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 81,
+        "author": {
+          "gitId": "-"
+        },
         "content": "}"
       }
     ],
     "authorContributionMap": {
+      "mgiang2015": 14,
       "-": 62,
-      "TanLeYang": 14
+      "TanLeYang": 5
     }
   },
   {
@@ -27725,115 +28148,108 @@
         "author": {
           "gitId": "-"
         },
-        "content": ""
+        "content": "    /**"
       },
       {
         "lineNumber": 14,
         "author": {
           "gitId": "-"
         },
-        "content": "    /**"
+        "content": "     * Parses the given {@code String} of arguments in the context of the DeleteCommand"
       },
       {
         "lineNumber": 15,
         "author": {
           "gitId": "-"
         },
-        "content": "     * Parses the given {@code String} of arguments in the context of the DeleteCommand"
+        "content": "     * and returns a DeleteCommand object for execution."
       },
       {
         "lineNumber": 16,
         "author": {
           "gitId": "-"
         },
-        "content": "     * and returns a DeleteCommand object for execution."
+        "content": "     * @throws ParseException if the user input does not conform the expected format"
       },
       {
         "lineNumber": 17,
         "author": {
           "gitId": "-"
         },
-        "content": "     * @throws ParseException if the user input does not conform the expected format"
+        "content": "     */"
       },
       {
         "lineNumber": 18,
         "author": {
           "gitId": "-"
         },
-        "content": "     */"
+        "content": "    public DeleteCommand parse(String args) throws ParseException {"
       },
       {
         "lineNumber": 19,
         "author": {
           "gitId": "-"
         },
-        "content": "    public DeleteCommand parse(String args) throws ParseException {"
+        "content": "        try {"
       },
       {
         "lineNumber": 20,
         "author": {
           "gitId": "-"
         },
-        "content": "        try {"
+        "content": "            Index index \u003d ParserUtil.parseIndex(args);"
       },
       {
         "lineNumber": 21,
         "author": {
           "gitId": "-"
         },
-        "content": "            Index index \u003d ParserUtil.parseIndex(args);"
+        "content": "            return new DeleteCommand(index);"
       },
       {
         "lineNumber": 22,
         "author": {
           "gitId": "-"
         },
-        "content": "            return new DeleteCommand(index);"
+        "content": "        } catch (ParseException pe) {"
       },
       {
         "lineNumber": 23,
         "author": {
           "gitId": "-"
         },
-        "content": "        } catch (ParseException pe) {"
+        "content": "            throw new ParseException("
       },
       {
         "lineNumber": 24,
         "author": {
           "gitId": "-"
         },
-        "content": "            throw new ParseException("
+        "content": "                    String.format(MESSAGE_INVALID_COMMAND_FORMAT, DeleteCommand.MESSAGE_USAGE), pe);"
       },
       {
         "lineNumber": 25,
         "author": {
           "gitId": "-"
         },
-        "content": "                    String.format(MESSAGE_INVALID_COMMAND_FORMAT, DeleteCommand.MESSAGE_USAGE), pe);"
+        "content": "        }"
       },
       {
         "lineNumber": 26,
         "author": {
           "gitId": "-"
         },
-        "content": "        }"
+        "content": "    }"
       },
       {
         "lineNumber": 27,
         "author": {
           "gitId": "-"
         },
-        "content": "    }"
-      },
-      {
-        "lineNumber": 28,
-        "author": {
-          "gitId": "-"
-        },
         "content": ""
       },
       {
-        "lineNumber": 29,
+        "lineNumber": 28,
         "author": {
           "gitId": "-"
         },
@@ -27841,7 +28257,7 @@
       }
     ],
     "authorContributionMap": {
-      "-": 24,
+      "-": 23,
       "TanLeYang": 5
     }
   },
@@ -29989,6 +30405,183 @@
     "authorContributionMap": {
       "-": 38,
       "TanLeYang": 1
+    }
+  },
+  {
+    "path": "src/main/java/seedu/bookmark/logic/parser/ViewCommandParser.java",
+    "fileType": "functional-code",
+    "lines": [
+      {
+        "lineNumber": 1,
+        "author": {
+          "gitId": "mgiang2015"
+        },
+        "content": "package seedu.bookmark.logic.parser;"
+      },
+      {
+        "lineNumber": 2,
+        "author": {
+          "gitId": "mgiang2015"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 3,
+        "author": {
+          "gitId": "mgiang2015"
+        },
+        "content": "import static seedu.bookmark.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;"
+      },
+      {
+        "lineNumber": 4,
+        "author": {
+          "gitId": "mgiang2015"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 5,
+        "author": {
+          "gitId": "mgiang2015"
+        },
+        "content": "import seedu.bookmark.commons.core.index.Index;"
+      },
+      {
+        "lineNumber": 6,
+        "author": {
+          "gitId": "mgiang2015"
+        },
+        "content": "import seedu.bookmark.logic.commands.ViewCommand;"
+      },
+      {
+        "lineNumber": 7,
+        "author": {
+          "gitId": "mgiang2015"
+        },
+        "content": "import seedu.bookmark.logic.parser.exceptions.ParseException;"
+      },
+      {
+        "lineNumber": 8,
+        "author": {
+          "gitId": "mgiang2015"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 9,
+        "author": {
+          "gitId": "mgiang2015"
+        },
+        "content": "public class ViewCommandParser implements Parser\u003cViewCommand\u003e {"
+      },
+      {
+        "lineNumber": 10,
+        "author": {
+          "gitId": "mgiang2015"
+        },
+        "content": "    /**"
+      },
+      {
+        "lineNumber": 11,
+        "author": {
+          "gitId": "mgiang2015"
+        },
+        "content": "     * Parses the given {@code String} of arguments in the context of the ViewCommand"
+      },
+      {
+        "lineNumber": 12,
+        "author": {
+          "gitId": "mgiang2015"
+        },
+        "content": "     * and returns a ViewCommand object for execution."
+      },
+      {
+        "lineNumber": 13,
+        "author": {
+          "gitId": "mgiang2015"
+        },
+        "content": "     * @throws ParseException if the user input does not conform the expected format"
+      },
+      {
+        "lineNumber": 14,
+        "author": {
+          "gitId": "mgiang2015"
+        },
+        "content": "     */"
+      },
+      {
+        "lineNumber": 15,
+        "author": {
+          "gitId": "mgiang2015"
+        },
+        "content": "    public ViewCommand parse(String input) throws ParseException {"
+      },
+      {
+        "lineNumber": 16,
+        "author": {
+          "gitId": "mgiang2015"
+        },
+        "content": "        try {"
+      },
+      {
+        "lineNumber": 17,
+        "author": {
+          "gitId": "mgiang2015"
+        },
+        "content": "            Index index \u003d ParserUtil.parseIndex(input);"
+      },
+      {
+        "lineNumber": 18,
+        "author": {
+          "gitId": "mgiang2015"
+        },
+        "content": "            return new ViewCommand(index);"
+      },
+      {
+        "lineNumber": 19,
+        "author": {
+          "gitId": "mgiang2015"
+        },
+        "content": "        } catch (ParseException pe) {"
+      },
+      {
+        "lineNumber": 20,
+        "author": {
+          "gitId": "mgiang2015"
+        },
+        "content": "            throw new ParseException("
+      },
+      {
+        "lineNumber": 21,
+        "author": {
+          "gitId": "mgiang2015"
+        },
+        "content": "                    String.format(MESSAGE_INVALID_COMMAND_FORMAT, ViewCommand.MESSAGE_USAGE), pe);"
+      },
+      {
+        "lineNumber": 22,
+        "author": {
+          "gitId": "mgiang2015"
+        },
+        "content": "        }"
+      },
+      {
+        "lineNumber": 23,
+        "author": {
+          "gitId": "mgiang2015"
+        },
+        "content": "    }"
+      },
+      {
+        "lineNumber": 24,
+        "author": {
+          "gitId": "mgiang2015"
+        },
+        "content": "}"
+      }
+    ],
+    "authorContributionMap": {
+      "mgiang2015": 24
     }
   },
   {
@@ -62031,6 +62624,477 @@
       "pangpuncake": 2,
       "-": 28,
       "TanLeYang": 9
+    }
+  },
+  {
+    "path": "src/test/java/seedu/bookmark/logic/commands/ViewCommandTest.java",
+    "fileType": "test-code",
+    "lines": [
+      {
+        "lineNumber": 1,
+        "author": {
+          "gitId": "mgiang2015"
+        },
+        "content": "package seedu.bookmark.logic.commands;"
+      },
+      {
+        "lineNumber": 2,
+        "author": {
+          "gitId": "mgiang2015"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 3,
+        "author": {
+          "gitId": "mgiang2015"
+        },
+        "content": "import static org.junit.jupiter.api.Assertions.assertFalse;"
+      },
+      {
+        "lineNumber": 4,
+        "author": {
+          "gitId": "mgiang2015"
+        },
+        "content": "import static org.junit.jupiter.api.Assertions.assertTrue;"
+      },
+      {
+        "lineNumber": 5,
+        "author": {
+          "gitId": "mgiang2015"
+        },
+        "content": "import static seedu.bookmark.logic.commands.CommandTestUtil.assertCommandFailure;"
+      },
+      {
+        "lineNumber": 6,
+        "author": {
+          "gitId": "mgiang2015"
+        },
+        "content": "import static seedu.bookmark.logic.commands.CommandTestUtil.assertCommandSuccess;"
+      },
+      {
+        "lineNumber": 7,
+        "author": {
+          "gitId": "mgiang2015"
+        },
+        "content": "import static seedu.bookmark.testutil.TypicalBooks.getTypicalLibrary;"
+      },
+      {
+        "lineNumber": 8,
+        "author": {
+          "gitId": "mgiang2015"
+        },
+        "content": "import static seedu.bookmark.testutil.TypicalIndexes.INDEX_FIRST_BOOK;"
+      },
+      {
+        "lineNumber": 9,
+        "author": {
+          "gitId": "mgiang2015"
+        },
+        "content": "import static seedu.bookmark.testutil.TypicalIndexes.INDEX_SECOND_BOOK;"
+      },
+      {
+        "lineNumber": 10,
+        "author": {
+          "gitId": "mgiang2015"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 11,
+        "author": {
+          "gitId": "mgiang2015"
+        },
+        "content": "import org.junit.jupiter.api.Test;"
+      },
+      {
+        "lineNumber": 12,
+        "author": {
+          "gitId": "mgiang2015"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 13,
+        "author": {
+          "gitId": "mgiang2015"
+        },
+        "content": "import seedu.bookmark.commons.core.Messages;"
+      },
+      {
+        "lineNumber": 14,
+        "author": {
+          "gitId": "mgiang2015"
+        },
+        "content": "import seedu.bookmark.commons.core.index.Index;"
+      },
+      {
+        "lineNumber": 15,
+        "author": {
+          "gitId": "mgiang2015"
+        },
+        "content": "import seedu.bookmark.model.Model;"
+      },
+      {
+        "lineNumber": 16,
+        "author": {
+          "gitId": "mgiang2015"
+        },
+        "content": "import seedu.bookmark.model.ModelManager;"
+      },
+      {
+        "lineNumber": 17,
+        "author": {
+          "gitId": "mgiang2015"
+        },
+        "content": "import seedu.bookmark.model.UserPrefs;"
+      },
+      {
+        "lineNumber": 18,
+        "author": {
+          "gitId": "mgiang2015"
+        },
+        "content": "import seedu.bookmark.model.book.Book;"
+      },
+      {
+        "lineNumber": 19,
+        "author": {
+          "gitId": "mgiang2015"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 20,
+        "author": {
+          "gitId": "mgiang2015"
+        },
+        "content": "public class ViewCommandTest {"
+      },
+      {
+        "lineNumber": 21,
+        "author": {
+          "gitId": "mgiang2015"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 22,
+        "author": {
+          "gitId": "mgiang2015"
+        },
+        "content": "    private Model model \u003d new ModelManager(getTypicalLibrary(), new UserPrefs());"
+      },
+      {
+        "lineNumber": 23,
+        "author": {
+          "gitId": "mgiang2015"
+        },
+        "content": "    private Model expectedModel \u003d new ModelManager(getTypicalLibrary(), new UserPrefs());"
+      },
+      {
+        "lineNumber": 24,
+        "author": {
+          "gitId": "mgiang2015"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 25,
+        "author": {
+          "gitId": "mgiang2015"
+        },
+        "content": "    @Test"
+      },
+      {
+        "lineNumber": 26,
+        "author": {
+          "gitId": "mgiang2015"
+        },
+        "content": "    public void execute_validIndex_success() {"
+      },
+      {
+        "lineNumber": 27,
+        "author": {
+          "gitId": "mgiang2015"
+        },
+        "content": "        ViewCommand command \u003d new ViewCommand(INDEX_FIRST_BOOK);"
+      },
+      {
+        "lineNumber": 28,
+        "author": {
+          "gitId": "mgiang2015"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 29,
+        "author": {
+          "gitId": "mgiang2015"
+        },
+        "content": "        String expectedMessage \u003d String.format(ViewCommand.MESSAGE_SUCCESS, INDEX_FIRST_BOOK.getOneBased());"
+      },
+      {
+        "lineNumber": 30,
+        "author": {
+          "gitId": "mgiang2015"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 31,
+        "author": {
+          "gitId": "mgiang2015"
+        },
+        "content": "        Book bookToView \u003d model.getFilteredBookList().get(INDEX_FIRST_BOOK.getZeroBased());"
+      },
+      {
+        "lineNumber": 32,
+        "author": {
+          "gitId": "mgiang2015"
+        },
+        "content": "        expectedModel.updateFilteredBookList(b -\u003e b.equals(bookToView));"
+      },
+      {
+        "lineNumber": 33,
+        "author": {
+          "gitId": "mgiang2015"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 34,
+        "author": {
+          "gitId": "mgiang2015"
+        },
+        "content": "        assertCommandSuccess(command, model, expectedMessage, expectedModel);"
+      },
+      {
+        "lineNumber": 35,
+        "author": {
+          "gitId": "mgiang2015"
+        },
+        "content": "    }"
+      },
+      {
+        "lineNumber": 36,
+        "author": {
+          "gitId": "mgiang2015"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 37,
+        "author": {
+          "gitId": "mgiang2015"
+        },
+        "content": "    @Test"
+      },
+      {
+        "lineNumber": 38,
+        "author": {
+          "gitId": "mgiang2015"
+        },
+        "content": "    public void execute_invalidIndex_throwsCommandException() {"
+      },
+      {
+        "lineNumber": 39,
+        "author": {
+          "gitId": "mgiang2015"
+        },
+        "content": "        Index outOfBoundIndex \u003d Index.fromOneBased(model.getFilteredBookList().size() + 1);"
+      },
+      {
+        "lineNumber": 40,
+        "author": {
+          "gitId": "mgiang2015"
+        },
+        "content": "        ViewCommand viewCommand \u003d new ViewCommand(outOfBoundIndex);"
+      },
+      {
+        "lineNumber": 41,
+        "author": {
+          "gitId": "mgiang2015"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 42,
+        "author": {
+          "gitId": "mgiang2015"
+        },
+        "content": "        assertCommandFailure(viewCommand, model, Messages.MESSAGE_INVALID_BOOK_DISPLAYED_INDEX);"
+      },
+      {
+        "lineNumber": 43,
+        "author": {
+          "gitId": "mgiang2015"
+        },
+        "content": "    }"
+      },
+      {
+        "lineNumber": 44,
+        "author": {
+          "gitId": "mgiang2015"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 45,
+        "author": {
+          "gitId": "mgiang2015"
+        },
+        "content": "    @Test"
+      },
+      {
+        "lineNumber": 46,
+        "author": {
+          "gitId": "mgiang2015"
+        },
+        "content": "    public void equals() {"
+      },
+      {
+        "lineNumber": 47,
+        "author": {
+          "gitId": "mgiang2015"
+        },
+        "content": "        ViewCommand viewFirstCommand \u003d new ViewCommand(INDEX_FIRST_BOOK);"
+      },
+      {
+        "lineNumber": 48,
+        "author": {
+          "gitId": "mgiang2015"
+        },
+        "content": "        ViewCommand viewSecondCommand \u003d new ViewCommand(INDEX_SECOND_BOOK);"
+      },
+      {
+        "lineNumber": 49,
+        "author": {
+          "gitId": "mgiang2015"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 50,
+        "author": {
+          "gitId": "mgiang2015"
+        },
+        "content": "        // same object -\u003e returns true"
+      },
+      {
+        "lineNumber": 51,
+        "author": {
+          "gitId": "mgiang2015"
+        },
+        "content": "        assertTrue(viewFirstCommand.equals(viewFirstCommand));"
+      },
+      {
+        "lineNumber": 52,
+        "author": {
+          "gitId": "mgiang2015"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 53,
+        "author": {
+          "gitId": "mgiang2015"
+        },
+        "content": "        // same values -\u003e returns true"
+      },
+      {
+        "lineNumber": 54,
+        "author": {
+          "gitId": "mgiang2015"
+        },
+        "content": "        ViewCommand viewFirstCommandCopy \u003d new ViewCommand(INDEX_FIRST_BOOK);"
+      },
+      {
+        "lineNumber": 55,
+        "author": {
+          "gitId": "mgiang2015"
+        },
+        "content": "        assertTrue(viewFirstCommand.equals(viewFirstCommandCopy));"
+      },
+      {
+        "lineNumber": 56,
+        "author": {
+          "gitId": "mgiang2015"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 57,
+        "author": {
+          "gitId": "mgiang2015"
+        },
+        "content": "        // different types -\u003e returns false"
+      },
+      {
+        "lineNumber": 58,
+        "author": {
+          "gitId": "mgiang2015"
+        },
+        "content": "        assertFalse(viewFirstCommand.equals(1));"
+      },
+      {
+        "lineNumber": 59,
+        "author": {
+          "gitId": "mgiang2015"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 60,
+        "author": {
+          "gitId": "mgiang2015"
+        },
+        "content": "        // null -\u003e returns false"
+      },
+      {
+        "lineNumber": 61,
+        "author": {
+          "gitId": "mgiang2015"
+        },
+        "content": "        assertFalse(viewFirstCommand.equals(null));"
+      },
+      {
+        "lineNumber": 62,
+        "author": {
+          "gitId": "mgiang2015"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 63,
+        "author": {
+          "gitId": "mgiang2015"
+        },
+        "content": "        // different book -\u003e returns false"
+      },
+      {
+        "lineNumber": 64,
+        "author": {
+          "gitId": "mgiang2015"
+        },
+        "content": "        assertFalse(viewFirstCommand.equals(viewSecondCommand));"
+      },
+      {
+        "lineNumber": 65,
+        "author": {
+          "gitId": "mgiang2015"
+        },
+        "content": "    }"
+      },
+      {
+        "lineNumber": 66,
+        "author": {
+          "gitId": "mgiang2015"
+        },
+        "content": "}"
+      }
+    ],
+    "authorContributionMap": {
+      "mgiang2015": 66
     }
   },
   {
