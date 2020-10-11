@@ -8341,6 +8341,590 @@
     }
   },
   {
+    "path": "src/main/java/seedu/address/logic/LogicManager.java",
+    "fileType": "functional-code",
+    "lines": [
+      {
+        "lineNumber": 1,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "package seedu.address.logic;"
+      },
+      {
+        "lineNumber": 2,
+        "author": {
+          "gitId": "-"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 3,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "import java.io.IOException;"
+      },
+      {
+        "lineNumber": 4,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "import java.nio.file.Path;"
+      },
+      {
+        "lineNumber": 5,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "import java.util.logging.Logger;"
+      },
+      {
+        "lineNumber": 6,
+        "author": {
+          "gitId": "-"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 7,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "import javafx.collections.ObservableList;"
+      },
+      {
+        "lineNumber": 8,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "import seedu.address.commons.core.GuiSettings;"
+      },
+      {
+        "lineNumber": 9,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "import seedu.address.commons.core.LogsCenter;"
+      },
+      {
+        "lineNumber": 10,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "import seedu.address.logic.commands.Command;"
+      },
+      {
+        "lineNumber": 11,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "import seedu.address.logic.commands.CommandResult;"
+      },
+      {
+        "lineNumber": 12,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "import seedu.address.logic.commands.exceptions.CommandException;"
+      },
+      {
+        "lineNumber": 13,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "import seedu.address.logic.parser.AddressBookParser;"
+      },
+      {
+        "lineNumber": 14,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "import seedu.address.logic.parser.exceptions.ParseException;"
+      },
+      {
+        "lineNumber": 15,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "import seedu.address.model.Model;"
+      },
+      {
+        "lineNumber": 16,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "import seedu.address.model.ReadOnlyAddressBook;"
+      },
+      {
+        "lineNumber": 17,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "import seedu.address.model.person.Person;"
+      },
+      {
+        "lineNumber": 18,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "import seedu.address.storage.Storage;"
+      },
+      {
+        "lineNumber": 19,
+        "author": {
+          "gitId": "-"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 20,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "/**"
+      },
+      {
+        "lineNumber": 21,
+        "author": {
+          "gitId": "-"
+        },
+        "content": " * The main LogicManager of the app."
+      },
+      {
+        "lineNumber": 22,
+        "author": {
+          "gitId": "-"
+        },
+        "content": " */"
+      },
+      {
+        "lineNumber": 23,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "public class LogicManager implements Logic {"
+      },
+      {
+        "lineNumber": 24,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "    public static final String FILE_OPS_ERROR_MESSAGE \u003d \"Could not save data to file: \";"
+      },
+      {
+        "lineNumber": 25,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "    private final Logger logger \u003d LogsCenter.getLogger(LogicManager.class);"
+      },
+      {
+        "lineNumber": 26,
+        "author": {
+          "gitId": "-"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 27,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "    private final Model model;"
+      },
+      {
+        "lineNumber": 28,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "    private final Storage storage;"
+      },
+      {
+        "lineNumber": 29,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "    private final AddressBookParser addressBookParser;"
+      },
+      {
+        "lineNumber": 30,
+        "author": {
+          "gitId": "-"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 31,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "    /**"
+      },
+      {
+        "lineNumber": 32,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "     * Constructs a {@code LogicManager} with the given {@code Model} and {@code Storage}."
+      },
+      {
+        "lineNumber": 33,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "     */"
+      },
+      {
+        "lineNumber": 34,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "    public LogicManager(Model model, Storage storage) {"
+      },
+      {
+        "lineNumber": 35,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "        this.model \u003d model;"
+      },
+      {
+        "lineNumber": 36,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "        this.storage \u003d storage;"
+      },
+      {
+        "lineNumber": 37,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "        addressBookParser \u003d new AddressBookParser();"
+      },
+      {
+        "lineNumber": 38,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "    }"
+      },
+      {
+        "lineNumber": 39,
+        "author": {
+          "gitId": "-"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 40,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "    @Override"
+      },
+      {
+        "lineNumber": 41,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "    public CommandResult execute(String commandText) throws CommandException, ParseException {"
+      },
+      {
+        "lineNumber": 42,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "        logger.info(\"----------------[USER COMMAND][\" + commandText + \"]\");"
+      },
+      {
+        "lineNumber": 43,
+        "author": {
+          "gitId": "-"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 44,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "        CommandResult commandResult;"
+      },
+      {
+        "lineNumber": 45,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "        Command command \u003d addressBookParser.parseCommand(commandText);"
+      },
+      {
+        "lineNumber": 46,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "        commandResult \u003d command.execute(model);"
+      },
+      {
+        "lineNumber": 47,
+        "author": {
+          "gitId": "-"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 48,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "        try {"
+      },
+      {
+        "lineNumber": 49,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "            storage.saveAddressBook(model.getAddressBook());"
+      },
+      {
+        "lineNumber": 50,
+        "author": {
+          "gitId": "shermz-lim"
+        },
+        "content": "            storage.saveBookingBook(model.getBookingBook());"
+      },
+      {
+        "lineNumber": 51,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "        } catch (IOException ioe) {"
+      },
+      {
+        "lineNumber": 52,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "            throw new CommandException(FILE_OPS_ERROR_MESSAGE + ioe, ioe);"
+      },
+      {
+        "lineNumber": 53,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "        }"
+      },
+      {
+        "lineNumber": 54,
+        "author": {
+          "gitId": "-"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 55,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "        return commandResult;"
+      },
+      {
+        "lineNumber": 56,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "    }"
+      },
+      {
+        "lineNumber": 57,
+        "author": {
+          "gitId": "-"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 58,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "    @Override"
+      },
+      {
+        "lineNumber": 59,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "    public ReadOnlyAddressBook getAddressBook() {"
+      },
+      {
+        "lineNumber": 60,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "        return model.getAddressBook();"
+      },
+      {
+        "lineNumber": 61,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "    }"
+      },
+      {
+        "lineNumber": 62,
+        "author": {
+          "gitId": "-"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 63,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "    @Override"
+      },
+      {
+        "lineNumber": 64,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "    public ObservableList\u003cPerson\u003e getFilteredPersonList() {"
+      },
+      {
+        "lineNumber": 65,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "        return model.getFilteredPersonList();"
+      },
+      {
+        "lineNumber": 66,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "    }"
+      },
+      {
+        "lineNumber": 67,
+        "author": {
+          "gitId": "-"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 68,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "    @Override"
+      },
+      {
+        "lineNumber": 69,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "    public Path getAddressBookFilePath() {"
+      },
+      {
+        "lineNumber": 70,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "        return model.getAddressBookFilePath();"
+      },
+      {
+        "lineNumber": 71,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "    }"
+      },
+      {
+        "lineNumber": 72,
+        "author": {
+          "gitId": "-"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 73,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "    @Override"
+      },
+      {
+        "lineNumber": 74,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "    public GuiSettings getGuiSettings() {"
+      },
+      {
+        "lineNumber": 75,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "        return model.getGuiSettings();"
+      },
+      {
+        "lineNumber": 76,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "    }"
+      },
+      {
+        "lineNumber": 77,
+        "author": {
+          "gitId": "-"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 78,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "    @Override"
+      },
+      {
+        "lineNumber": 79,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "    public void setGuiSettings(GuiSettings guiSettings) {"
+      },
+      {
+        "lineNumber": 80,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "        model.setGuiSettings(guiSettings);"
+      },
+      {
+        "lineNumber": 81,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "    }"
+      },
+      {
+        "lineNumber": 82,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "}"
+      }
+    ],
+    "authorContributionMap": {
+      "shermz-lim": 1,
+      "-": 81
+    }
+  },
+  {
     "path": "src/main/java/seedu/address/logic/commands/CheckInCommand.java",
     "fileType": "functional-code",
     "lines": [
@@ -8974,84 +9558,84 @@
         "author": {
           "gitId": "shermz-lim"
         },
-        "content": ""
+        "content": "import seedu.address.model.booking.Booking;"
       },
       {
         "lineNumber": 9,
         "author": {
           "gitId": "shermz-lim"
         },
-        "content": "/**"
+        "content": "import seedu.address.model.booking.exception.BookingNotFoundException;"
       },
       {
         "lineNumber": 10,
         "author": {
           "gitId": "shermz-lim"
         },
-        "content": " * Checks out guest with room id"
+        "content": ""
       },
       {
         "lineNumber": 11,
         "author": {
           "gitId": "shermz-lim"
         },
-        "content": " */"
+        "content": "/**"
       },
       {
         "lineNumber": 12,
         "author": {
           "gitId": "shermz-lim"
         },
-        "content": "public class CheckOutCommand extends Command {"
+        "content": " * Checks out guest with room id"
       },
       {
         "lineNumber": 13,
         "author": {
           "gitId": "shermz-lim"
         },
-        "content": ""
+        "content": " */"
       },
       {
         "lineNumber": 14,
         "author": {
           "gitId": "shermz-lim"
         },
-        "content": "    public static final String COMMAND_WORD \u003d \"checkOut\";"
+        "content": "public class CheckOutCommand extends Command {"
       },
       {
         "lineNumber": 15,
         "author": {
           "gitId": "shermz-lim"
         },
-        "content": "    public static final String MESSAGE_USAGE \u003d COMMAND_WORD + \": Checks out person from hotel. \""
+        "content": ""
       },
       {
         "lineNumber": 16,
         "author": {
           "gitId": "shermz-lim"
         },
-        "content": "            + \"Parameters: \" + PREFIX_ROOM_ID + \"[ROOM_ID] (must be a valid room number)\\n\""
+        "content": "    public static final String COMMAND_WORD \u003d \"checkOut\";"
       },
       {
         "lineNumber": 17,
         "author": {
           "gitId": "shermz-lim"
         },
-        "content": "            + \"Example: \" + COMMAND_WORD + \" \" + PREFIX_ROOM_ID + \"2100\";"
+        "content": "    public static final String MESSAGE_USAGE \u003d COMMAND_WORD + \": Checks out person from hotel. \""
       },
       {
         "lineNumber": 18,
         "author": {
           "gitId": "shermz-lim"
         },
-        "content": ""
+        "content": "            + \"Parameters: \" + PREFIX_ROOM_ID + \"[ROOM_ID] (must be a valid room number)\\n\""
       },
       {
         "lineNumber": 19,
         "author": {
           "gitId": "shermz-lim"
         },
-        "content": "    private final int roomId;"
+        "content": "            + \"Example: \" + COMMAND_WORD + \" \" + PREFIX_ROOM_ID + \"2100\";"
       },
       {
         "lineNumber": 20,
@@ -9065,84 +9649,84 @@
         "author": {
           "gitId": "shermz-lim"
         },
-        "content": "    /**"
+        "content": "    public static final String MESSAGE_SUCCESS \u003d \"Successfully booked out: %s\";"
       },
       {
         "lineNumber": 22,
         "author": {
           "gitId": "shermz-lim"
         },
-        "content": "     * Creates a CheckOutCommand"
+        "content": "    public static final String MESSAGE_BOOKING_MISSING \u003d \"No valid booking can be found.\";"
       },
       {
         "lineNumber": 23,
         "author": {
           "gitId": "shermz-lim"
         },
-        "content": "     * @param roomId id of room to check out person from"
+        "content": ""
       },
       {
         "lineNumber": 24,
         "author": {
           "gitId": "shermz-lim"
         },
-        "content": "     */"
+        "content": "    private final int roomId;"
       },
       {
         "lineNumber": 25,
         "author": {
           "gitId": "shermz-lim"
         },
-        "content": "    public CheckOutCommand(int roomId) {"
+        "content": ""
       },
       {
         "lineNumber": 26,
         "author": {
           "gitId": "shermz-lim"
         },
-        "content": "        requireAllNonNull(roomId);"
+        "content": "    /**"
       },
       {
         "lineNumber": 27,
         "author": {
           "gitId": "shermz-lim"
         },
-        "content": "        this.roomId \u003d roomId;"
+        "content": "     * Creates a CheckOutCommand"
       },
       {
         "lineNumber": 28,
         "author": {
           "gitId": "shermz-lim"
         },
-        "content": "    }"
+        "content": "     * @param roomId id of room to check out person from"
       },
       {
         "lineNumber": 29,
         "author": {
           "gitId": "shermz-lim"
         },
-        "content": ""
+        "content": "     */"
       },
       {
         "lineNumber": 30,
         "author": {
           "gitId": "shermz-lim"
         },
-        "content": "    @Override"
+        "content": "    public CheckOutCommand(int roomId) {"
       },
       {
         "lineNumber": 31,
         "author": {
           "gitId": "shermz-lim"
         },
-        "content": "    public CommandResult execute(Model model) throws CommandException {"
+        "content": "        requireAllNonNull(roomId);"
       },
       {
         "lineNumber": 32,
         "author": {
           "gitId": "shermz-lim"
         },
-        "content": "        throw new CommandException(String.format(\"%s\", this.roomId));"
+        "content": "        this.roomId \u003d roomId;"
       },
       {
         "lineNumber": 33,
@@ -9170,101 +9754,199 @@
         "author": {
           "gitId": "shermz-lim"
         },
-        "content": "    public boolean equals(Object other) {"
+        "content": "    public CommandResult execute(Model model) throws CommandException {"
       },
       {
         "lineNumber": 37,
         "author": {
           "gitId": "shermz-lim"
         },
-        "content": "        // short circuit if same object"
+        "content": "        Booking booking;"
       },
       {
         "lineNumber": 38,
         "author": {
           "gitId": "shermz-lim"
         },
-        "content": "        if (other \u003d\u003d this) {"
+        "content": ""
       },
       {
         "lineNumber": 39,
         "author": {
           "gitId": "shermz-lim"
         },
-        "content": "            return true;"
+        "content": "        try {"
       },
       {
         "lineNumber": 40,
         "author": {
           "gitId": "shermz-lim"
         },
-        "content": "        }"
+        "content": "            booking \u003d model.getBooking(roomId);"
       },
       {
         "lineNumber": 41,
         "author": {
           "gitId": "shermz-lim"
         },
-        "content": ""
+        "content": "        } catch (BookingNotFoundException e) {"
       },
       {
         "lineNumber": 42,
         "author": {
           "gitId": "shermz-lim"
         },
-        "content": "        // instanceof handles nulls"
+        "content": "            throw new CommandException(MESSAGE_BOOKING_MISSING);"
       },
       {
         "lineNumber": 43,
         "author": {
           "gitId": "shermz-lim"
         },
-        "content": "        if (!(other instanceof CheckOutCommand)) {"
+        "content": "        }"
       },
       {
         "lineNumber": 44,
         "author": {
           "gitId": "shermz-lim"
         },
-        "content": "            return false;"
+        "content": ""
       },
       {
         "lineNumber": 45,
         "author": {
           "gitId": "shermz-lim"
         },
-        "content": "        }"
+        "content": "        model.setBookingInactive(roomId);"
       },
       {
         "lineNumber": 46,
         "author": {
           "gitId": "shermz-lim"
         },
-        "content": ""
+        "content": "        return new CommandResult(String.format(MESSAGE_SUCCESS, booking));"
       },
       {
         "lineNumber": 47,
         "author": {
           "gitId": "shermz-lim"
         },
-        "content": "        CheckOutCommand o \u003d (CheckOutCommand) other;"
+        "content": "    }"
       },
       {
         "lineNumber": 48,
         "author": {
           "gitId": "shermz-lim"
         },
-        "content": "        return this.roomId \u003d\u003d o.roomId;"
+        "content": ""
       },
       {
         "lineNumber": 49,
         "author": {
           "gitId": "shermz-lim"
         },
-        "content": "    }"
+        "content": "    @Override"
       },
       {
         "lineNumber": 50,
+        "author": {
+          "gitId": "shermz-lim"
+        },
+        "content": "    public boolean equals(Object other) {"
+      },
+      {
+        "lineNumber": 51,
+        "author": {
+          "gitId": "shermz-lim"
+        },
+        "content": "        // short circuit if same object"
+      },
+      {
+        "lineNumber": 52,
+        "author": {
+          "gitId": "shermz-lim"
+        },
+        "content": "        if (other \u003d\u003d this) {"
+      },
+      {
+        "lineNumber": 53,
+        "author": {
+          "gitId": "shermz-lim"
+        },
+        "content": "            return true;"
+      },
+      {
+        "lineNumber": 54,
+        "author": {
+          "gitId": "shermz-lim"
+        },
+        "content": "        }"
+      },
+      {
+        "lineNumber": 55,
+        "author": {
+          "gitId": "shermz-lim"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 56,
+        "author": {
+          "gitId": "shermz-lim"
+        },
+        "content": "        // instanceof handles nulls"
+      },
+      {
+        "lineNumber": 57,
+        "author": {
+          "gitId": "shermz-lim"
+        },
+        "content": "        if (!(other instanceof CheckOutCommand)) {"
+      },
+      {
+        "lineNumber": 58,
+        "author": {
+          "gitId": "shermz-lim"
+        },
+        "content": "            return false;"
+      },
+      {
+        "lineNumber": 59,
+        "author": {
+          "gitId": "shermz-lim"
+        },
+        "content": "        }"
+      },
+      {
+        "lineNumber": 60,
+        "author": {
+          "gitId": "shermz-lim"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 61,
+        "author": {
+          "gitId": "shermz-lim"
+        },
+        "content": "        CheckOutCommand o \u003d (CheckOutCommand) other;"
+      },
+      {
+        "lineNumber": 62,
+        "author": {
+          "gitId": "shermz-lim"
+        },
+        "content": "        return this.roomId \u003d\u003d o.roomId;"
+      },
+      {
+        "lineNumber": 63,
+        "author": {
+          "gitId": "shermz-lim"
+        },
+        "content": "    }"
+      },
+      {
+        "lineNumber": 64,
         "author": {
           "gitId": "shermz-lim"
         },
@@ -9272,7 +9954,7 @@
       }
     ],
     "authorContributionMap": {
-      "shermz-lim": 50
+      "shermz-lim": 64
     }
   },
   {
@@ -20854,9 +21536,9 @@
       {
         "lineNumber": 74,
         "author": {
-          "gitId": "zeling595"
+          "gitId": "shermz-lim"
         },
-        "content": "                booking.getStartDate(), booking.getEndDate(), false);"
+        "content": "                booking.getStartDate(), booking.getEndDate(), false, booking.getId());"
       },
       {
         "lineNumber": 75,
@@ -21442,7 +22124,8 @@
     ],
     "authorContributionMap": {
       "SherryWu178": 16,
-      "zeling595": 141
+      "shermz-lim": 1,
+      "zeling595": 140
     }
   },
   {
@@ -34738,21 +35421,21 @@
         "author": {
           "gitId": "shermz-lim"
         },
-        "content": "import static org.junit.jupiter.api.Assertions.assertFalse;"
+        "content": "import static org.junit.jupiter.api.Assertions.*;"
       },
       {
         "lineNumber": 4,
         "author": {
           "gitId": "shermz-lim"
         },
-        "content": "import static org.junit.jupiter.api.Assertions.assertTrue;"
+        "content": "import static seedu.address.logic.commands.CommandTestUtil.VALID_ROOM_ID_DAN;"
       },
       {
         "lineNumber": 5,
         "author": {
-          "gitId": "zeling595"
+          "gitId": "shermz-lim"
         },
-        "content": "import static seedu.address.testutil.TypicalBookings.getTypicalBookingBook;"
+        "content": "import static seedu.address.testutil.TypicalBookings.*;"
       },
       {
         "lineNumber": 6,
@@ -34794,227 +35477,304 @@
         "author": {
           "gitId": "shermz-lim"
         },
-        "content": "import seedu.address.model.Model;"
+        "content": "import seedu.address.logic.commands.exceptions.CommandException;"
       },
       {
         "lineNumber": 12,
         "author": {
           "gitId": "shermz-lim"
         },
-        "content": "import seedu.address.model.ModelManager;"
+        "content": "import seedu.address.model.Model;"
       },
       {
         "lineNumber": 13,
         "author": {
           "gitId": "shermz-lim"
         },
-        "content": "import seedu.address.model.UserPrefs;"
+        "content": "import seedu.address.model.ModelManager;"
       },
       {
         "lineNumber": 14,
         "author": {
           "gitId": "shermz-lim"
         },
-        "content": ""
+        "content": "import seedu.address.model.UserPrefs;"
       },
       {
         "lineNumber": 15,
         "author": {
           "gitId": "shermz-lim"
         },
-        "content": "/**"
+        "content": "import seedu.address.model.booking.Booking;"
       },
       {
         "lineNumber": 16,
         "author": {
           "gitId": "shermz-lim"
         },
-        "content": " * Contains integration tests (interaction with the Model) and unit tests for CheckOutCommand."
+        "content": ""
       },
       {
         "lineNumber": 17,
         "author": {
           "gitId": "shermz-lim"
         },
-        "content": " */"
+        "content": "/**"
       },
       {
         "lineNumber": 18,
         "author": {
           "gitId": "shermz-lim"
         },
-        "content": "class CheckOutCommandTest {"
+        "content": " * Contains integration tests (interaction with the Model) and unit tests for CheckOutCommand."
       },
       {
         "lineNumber": 19,
+        "author": {
+          "gitId": "shermz-lim"
+        },
+        "content": " */"
+      },
+      {
+        "lineNumber": 20,
+        "author": {
+          "gitId": "shermz-lim"
+        },
+        "content": "class CheckOutCommandTest {"
+      },
+      {
+        "lineNumber": 21,
         "author": {
           "gitId": "zeling595"
         },
         "content": "    private Model model \u003d new ModelManager(getTypicalAddressBook(), new UserPrefs(),"
       },
       {
-        "lineNumber": 20,
+        "lineNumber": 22,
         "author": {
           "gitId": "zeling595"
         },
         "content": "            getTypicalRoomBook(), getTypicalBookingBook());"
       },
       {
-        "lineNumber": 21,
-        "author": {
-          "gitId": "shermz-lim"
-        },
-        "content": ""
-      },
-      {
-        "lineNumber": 22,
-        "author": {
-          "gitId": "shermz-lim"
-        },
-        "content": "    @Test"
-      },
-      {
         "lineNumber": 23,
         "author": {
           "gitId": "shermz-lim"
         },
-        "content": "    public void equals() {"
+        "content": ""
       },
       {
         "lineNumber": 24,
         "author": {
           "gitId": "shermz-lim"
         },
-        "content": "        int roomId \u003d 2103;"
+        "content": "    @Test"
       },
       {
         "lineNumber": 25,
         "author": {
           "gitId": "shermz-lim"
         },
-        "content": "        final CheckOutCommand standardCommand \u003d new CheckOutCommand(roomId);"
+        "content": "    public void execute_success() throws CommandException {"
       },
       {
         "lineNumber": 26,
         "author": {
           "gitId": "shermz-lim"
         },
-        "content": ""
+        "content": "        model.addBooking(ACTIVE_BOOKING_DAN);"
       },
       {
         "lineNumber": 27,
         "author": {
           "gitId": "shermz-lim"
         },
-        "content": "        // same values -\u003e returns true"
+        "content": "        Booking booking \u003d model.getBooking(VALID_ROOM_ID_DAN);"
       },
       {
         "lineNumber": 28,
         "author": {
           "gitId": "shermz-lim"
         },
-        "content": "        CheckOutCommand commandWithSameValues \u003d new CheckOutCommand(roomId);"
+        "content": "        CheckOutCommand command \u003d new CheckOutCommand(VALID_ROOM_ID_DAN);"
       },
       {
         "lineNumber": 29,
         "author": {
           "gitId": "shermz-lim"
         },
-        "content": "        assertTrue(standardCommand.equals(commandWithSameValues));"
+        "content": "        assertEquals(String.format(CheckOutCommand.MESSAGE_SUCCESS, booking),"
       },
       {
         "lineNumber": 30,
         "author": {
           "gitId": "shermz-lim"
         },
-        "content": ""
+        "content": "                command.execute(model).getFeedbackToUser());"
       },
       {
         "lineNumber": 31,
         "author": {
           "gitId": "shermz-lim"
         },
-        "content": "        // same object -\u003e returns true"
+        "content": "    }"
       },
       {
         "lineNumber": 32,
         "author": {
           "gitId": "shermz-lim"
         },
-        "content": "        assertTrue(standardCommand.equals(standardCommand));"
+        "content": ""
       },
       {
         "lineNumber": 33,
         "author": {
           "gitId": "shermz-lim"
         },
-        "content": ""
+        "content": "    @Test"
       },
       {
         "lineNumber": 34,
         "author": {
           "gitId": "shermz-lim"
         },
-        "content": "        // null -\u003e returns false"
+        "content": "    public void equals() {"
       },
       {
         "lineNumber": 35,
         "author": {
           "gitId": "shermz-lim"
         },
-        "content": "        assertFalse(standardCommand.equals(null));"
+        "content": "        int roomId \u003d 2103;"
       },
       {
         "lineNumber": 36,
         "author": {
           "gitId": "shermz-lim"
         },
-        "content": ""
+        "content": "        final CheckOutCommand standardCommand \u003d new CheckOutCommand(roomId);"
       },
       {
         "lineNumber": 37,
         "author": {
           "gitId": "shermz-lim"
         },
-        "content": "        // different types -\u003e returns false"
+        "content": ""
       },
       {
         "lineNumber": 38,
         "author": {
           "gitId": "shermz-lim"
         },
-        "content": "        assertFalse(standardCommand.equals(new ClearCommand()));"
+        "content": "        // same values -\u003e returns true"
       },
       {
         "lineNumber": 39,
         "author": {
           "gitId": "shermz-lim"
         },
-        "content": ""
+        "content": "        CheckOutCommand commandWithSameValues \u003d new CheckOutCommand(roomId);"
       },
       {
         "lineNumber": 40,
         "author": {
           "gitId": "shermz-lim"
         },
-        "content": "        // different Room Id -\u003e return false"
+        "content": "        assertTrue(standardCommand.equals(commandWithSameValues));"
       },
       {
         "lineNumber": 41,
         "author": {
           "gitId": "shermz-lim"
         },
-        "content": "        assertFalse(standardCommand.equals(new CheckOutCommand(roomId + 1)));"
+        "content": ""
       },
       {
         "lineNumber": 42,
         "author": {
           "gitId": "shermz-lim"
         },
-        "content": "    }"
+        "content": "        // same object -\u003e returns true"
       },
       {
         "lineNumber": 43,
+        "author": {
+          "gitId": "shermz-lim"
+        },
+        "content": "        assertTrue(standardCommand.equals(standardCommand));"
+      },
+      {
+        "lineNumber": 44,
+        "author": {
+          "gitId": "shermz-lim"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 45,
+        "author": {
+          "gitId": "shermz-lim"
+        },
+        "content": "        // null -\u003e returns false"
+      },
+      {
+        "lineNumber": 46,
+        "author": {
+          "gitId": "shermz-lim"
+        },
+        "content": "        assertFalse(standardCommand.equals(null));"
+      },
+      {
+        "lineNumber": 47,
+        "author": {
+          "gitId": "shermz-lim"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 48,
+        "author": {
+          "gitId": "shermz-lim"
+        },
+        "content": "        // different types -\u003e returns false"
+      },
+      {
+        "lineNumber": 49,
+        "author": {
+          "gitId": "shermz-lim"
+        },
+        "content": "        assertFalse(standardCommand.equals(new ClearCommand()));"
+      },
+      {
+        "lineNumber": 50,
+        "author": {
+          "gitId": "shermz-lim"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 51,
+        "author": {
+          "gitId": "shermz-lim"
+        },
+        "content": "        // different Room Id -\u003e return false"
+      },
+      {
+        "lineNumber": 52,
+        "author": {
+          "gitId": "shermz-lim"
+        },
+        "content": "        assertFalse(standardCommand.equals(new CheckOutCommand(roomId + 1)));"
+      },
+      {
+        "lineNumber": 53,
+        "author": {
+          "gitId": "shermz-lim"
+        },
+        "content": "    }"
+      },
+      {
+        "lineNumber": 54,
         "author": {
           "gitId": "shermz-lim"
         },
@@ -35022,8 +35782,8 @@
       }
     ],
     "authorContributionMap": {
-      "shermz-lim": 40,
-      "zeling595": 3
+      "shermz-lim": 52,
+      "zeling595": 2
     }
   },
   {
@@ -45509,86 +46269,86 @@
       {
         "lineNumber": 6,
         "author": {
-          "gitId": "zeling595"
+          "gitId": "shermz-lim"
         },
-        "content": "import static seedu.address.logic.commands.CommandTestUtil.*;"
+        "content": "import static seedu.address.logic.commands.CommandTestUtil.INVALID_ROOM_ID;"
       },
       {
         "lineNumber": 7,
         "author": {
-          "gitId": "zeling595"
+          "gitId": "shermz-lim"
         },
-        "content": "import static seedu.address.testutil.Assert.assertThrows;"
+        "content": "import static seedu.address.logic.commands.CommandTestUtil.VALID_ROOM_ID_BOB;"
       },
       {
         "lineNumber": 8,
         "author": {
-          "gitId": "zeling595"
+          "gitId": "shermz-lim"
         },
-        "content": "import static seedu.address.testutil.TypicalBookings.*;"
+        "content": "import static seedu.address.logic.commands.CommandTestUtil.VALID_ROOM_ID_DAN;"
       },
       {
         "lineNumber": 9,
         "author": {
           "gitId": "zeling595"
         },
-        "content": "import static seedu.address.testutil.TypicalPersons.ALICE;"
+        "content": "import static seedu.address.testutil.Assert.assertThrows;"
       },
       {
         "lineNumber": 10,
         "author": {
-          "gitId": "zeling595"
+          "gitId": "shermz-lim"
         },
-        "content": "import static seedu.address.testutil.TypicalPersons.BOB;"
+        "content": "import static seedu.address.testutil.TypicalBookings.ACTIVE_BOOKING_DAN;"
       },
       {
         "lineNumber": 11,
         "author": {
-          "gitId": "zeling595"
+          "gitId": "shermz-lim"
         },
-        "content": ""
+        "content": "import static seedu.address.testutil.TypicalBookings.BOOKING_AMY;"
       },
       {
         "lineNumber": 12,
         "author": {
-          "gitId": "zeling595"
+          "gitId": "shermz-lim"
         },
-        "content": "import java.security.PublicKey;"
+        "content": "import static seedu.address.testutil.TypicalBookings.BOOKING_BOB;"
       },
       {
         "lineNumber": 13,
         "author": {
-          "gitId": "zeling595"
+          "gitId": "shermz-lim"
         },
-        "content": "import java.util.Arrays;"
+        "content": "import static seedu.address.testutil.TypicalBookings.CONFLICT_AMY_BOOKING_CHLOE;"
       },
       {
         "lineNumber": 14,
         "author": {
           "gitId": "zeling595"
         },
-        "content": "import java.util.Collections;"
+        "content": ""
       },
       {
         "lineNumber": 15,
         "author": {
           "gitId": "zeling595"
         },
-        "content": "import java.util.List;"
+        "content": "import java.util.Arrays;"
       },
       {
         "lineNumber": 16,
         "author": {
           "gitId": "zeling595"
         },
-        "content": ""
+        "content": "import java.util.Collections;"
       },
       {
         "lineNumber": 17,
         "author": {
           "gitId": "zeling595"
         },
-        "content": "import org.junit.jupiter.api.Test;"
+        "content": "import java.util.List;"
       },
       {
         "lineNumber": 18,
@@ -45602,49 +46362,49 @@
         "author": {
           "gitId": "zeling595"
         },
-        "content": "import seedu.address.model.booking.exception.BookingNotFoundException;"
+        "content": "import org.junit.jupiter.api.Test;"
       },
       {
         "lineNumber": 20,
         "author": {
           "gitId": "zeling595"
         },
-        "content": "import seedu.address.model.booking.exception.ConflictingBookingException;"
+        "content": ""
       },
       {
         "lineNumber": 21,
         "author": {
           "gitId": "zeling595"
         },
-        "content": "import seedu.address.model.booking.exception.DuplicateBookingException;"
+        "content": "import seedu.address.model.booking.exception.BookingNotFoundException;"
       },
       {
         "lineNumber": 22,
         "author": {
           "gitId": "zeling595"
         },
-        "content": "import seedu.address.model.person.Person;"
+        "content": "import seedu.address.model.booking.exception.ConflictingBookingException;"
       },
       {
         "lineNumber": 23,
         "author": {
           "gitId": "zeling595"
         },
-        "content": "import seedu.address.model.person.UniquePersonList;"
+        "content": "import seedu.address.model.booking.exception.DuplicateBookingException;"
       },
       {
         "lineNumber": 24,
         "author": {
           "gitId": "zeling595"
         },
-        "content": "import seedu.address.model.person.exceptions.DuplicatePersonException;"
+        "content": "import seedu.address.testutil.BookingBuilder;"
       },
       {
         "lineNumber": 25,
         "author": {
           "gitId": "zeling595"
         },
-        "content": "import seedu.address.testutil.BookingBuilder;"
+        "content": ""
       },
       {
         "lineNumber": 26,
@@ -45658,581 +46418,581 @@
         "author": {
           "gitId": "zeling595"
         },
-        "content": ""
+        "content": "public class UniqueBookingListTest {"
       },
       {
         "lineNumber": 28,
         "author": {
           "gitId": "zeling595"
         },
-        "content": "public class UniqueBookingListTest {"
+        "content": "    private final UniqueBookingList uniqueBookingList \u003d new UniqueBookingList();"
       },
       {
         "lineNumber": 29,
         "author": {
           "gitId": "zeling595"
         },
-        "content": "    private final UniqueBookingList uniqueBookingList \u003d new UniqueBookingList();"
+        "content": ""
       },
       {
         "lineNumber": 30,
         "author": {
           "gitId": "zeling595"
         },
-        "content": ""
+        "content": "    @Test"
       },
       {
         "lineNumber": 31,
         "author": {
           "gitId": "zeling595"
         },
-        "content": "    @Test"
+        "content": "    public void contains_nullBooking_throwsNullPointerException() {"
       },
       {
         "lineNumber": 32,
         "author": {
           "gitId": "zeling595"
         },
-        "content": "    public void contains_nullBooking_throwsNullPointerException() {"
+        "content": "        assertThrows(NullPointerException.class, () -\u003e uniqueBookingList.contains(null));"
       },
       {
         "lineNumber": 33,
         "author": {
           "gitId": "zeling595"
         },
-        "content": "        assertThrows(NullPointerException.class, () -\u003e uniqueBookingList.contains(null));"
+        "content": "    }"
       },
       {
         "lineNumber": 34,
         "author": {
           "gitId": "zeling595"
         },
-        "content": "    }"
+        "content": ""
       },
       {
         "lineNumber": 35,
         "author": {
           "gitId": "zeling595"
         },
-        "content": ""
+        "content": "    @Test"
       },
       {
         "lineNumber": 36,
         "author": {
           "gitId": "zeling595"
         },
-        "content": "    @Test"
+        "content": "    public void contains_bookingNotInList_returnsFalse() {"
       },
       {
         "lineNumber": 37,
         "author": {
           "gitId": "zeling595"
         },
-        "content": "    public void contains_bookingNotInList_returnsFalse() {"
+        "content": "        assertFalse(uniqueBookingList.contains(BOOKING_BOB));"
       },
       {
         "lineNumber": 38,
         "author": {
           "gitId": "zeling595"
         },
-        "content": "        assertFalse(uniqueBookingList.contains(BOOKING_BOB));"
+        "content": "    }"
       },
       {
         "lineNumber": 39,
         "author": {
           "gitId": "zeling595"
         },
-        "content": "    }"
+        "content": ""
       },
       {
         "lineNumber": 40,
         "author": {
           "gitId": "zeling595"
         },
-        "content": ""
+        "content": "    @Test"
       },
       {
         "lineNumber": 41,
         "author": {
           "gitId": "zeling595"
         },
-        "content": "    @Test"
+        "content": "    public void contains_bookingInList_returnsTrue() {"
       },
       {
         "lineNumber": 42,
         "author": {
           "gitId": "zeling595"
         },
-        "content": "    public void contains_bookingInList_returnsTrue() {"
+        "content": "        uniqueBookingList.add(BOOKING_BOB);"
       },
       {
         "lineNumber": 43,
         "author": {
           "gitId": "zeling595"
         },
-        "content": "        uniqueBookingList.add(BOOKING_BOB);"
+        "content": "        assertTrue(uniqueBookingList.contains(BOOKING_BOB));"
       },
       {
         "lineNumber": 44,
         "author": {
           "gitId": "zeling595"
         },
-        "content": "        assertTrue(uniqueBookingList.contains(BOOKING_BOB));"
+        "content": "    }"
       },
       {
         "lineNumber": 45,
         "author": {
           "gitId": "zeling595"
         },
-        "content": "    }"
+        "content": ""
       },
       {
         "lineNumber": 46,
         "author": {
           "gitId": "zeling595"
         },
-        "content": ""
+        "content": "    @Test"
       },
       {
         "lineNumber": 47,
         "author": {
           "gitId": "zeling595"
         },
-        "content": "    @Test"
+        "content": "    public void add_nullBooking_throwsNullPointerException() {"
       },
       {
         "lineNumber": 48,
         "author": {
           "gitId": "zeling595"
         },
-        "content": "    public void add_nullBooking_throwsNullPointerException() {"
+        "content": "        assertThrows(NullPointerException.class, () -\u003e uniqueBookingList.add(null));"
       },
       {
         "lineNumber": 49,
         "author": {
           "gitId": "zeling595"
         },
-        "content": "        assertThrows(NullPointerException.class, () -\u003e uniqueBookingList.add(null));"
+        "content": "    }"
       },
       {
         "lineNumber": 50,
         "author": {
           "gitId": "zeling595"
         },
-        "content": "    }"
+        "content": ""
       },
       {
         "lineNumber": 51,
         "author": {
           "gitId": "zeling595"
         },
-        "content": ""
+        "content": "    @Test"
       },
       {
         "lineNumber": 52,
         "author": {
           "gitId": "zeling595"
         },
-        "content": "    @Test"
+        "content": "    public void add_duplicateBooking_throwsDuplicateBookingException() {"
       },
       {
         "lineNumber": 53,
         "author": {
           "gitId": "zeling595"
         },
-        "content": "    public void add_duplicateBooking_throwsDuplicateBookingException() {"
+        "content": "        uniqueBookingList.add(BOOKING_BOB);"
       },
       {
         "lineNumber": 54,
         "author": {
           "gitId": "zeling595"
         },
-        "content": "        uniqueBookingList.add(BOOKING_BOB);"
+        "content": "        assertThrows(DuplicateBookingException.class, () -\u003e uniqueBookingList.add(BOOKING_BOB));"
       },
       {
         "lineNumber": 55,
         "author": {
           "gitId": "zeling595"
         },
-        "content": "        assertThrows(DuplicateBookingException.class, () -\u003e uniqueBookingList.add(BOOKING_BOB));"
+        "content": "    }"
       },
       {
         "lineNumber": 56,
         "author": {
           "gitId": "zeling595"
         },
-        "content": "    }"
+        "content": ""
       },
       {
         "lineNumber": 57,
         "author": {
           "gitId": "zeling595"
         },
-        "content": ""
+        "content": "    @Test"
       },
       {
         "lineNumber": 58,
         "author": {
           "gitId": "zeling595"
         },
-        "content": "    @Test"
+        "content": "    public void add_conflictingBooking_throwsConflictingBookingException() {"
       },
       {
         "lineNumber": 59,
         "author": {
           "gitId": "zeling595"
         },
-        "content": "    public void add_conflictingBooking_throwsConflictingBookingException() {"
+        "content": "        uniqueBookingList.add(BOOKING_AMY);"
       },
       {
         "lineNumber": 60,
         "author": {
           "gitId": "zeling595"
         },
-        "content": "        uniqueBookingList.add(BOOKING_AMY);"
+        "content": "        assertThrows(ConflictingBookingException.class, () -\u003e uniqueBookingList.add(CONFLICT_AMY_BOOKING_CHLOE));"
       },
       {
         "lineNumber": 61,
         "author": {
           "gitId": "zeling595"
         },
-        "content": "        assertThrows(ConflictingBookingException.class, () -\u003e uniqueBookingList.add(CONFLICT_AMY_BOOKING_CHLOE));"
+        "content": "    }"
       },
       {
         "lineNumber": 62,
         "author": {
           "gitId": "zeling595"
         },
-        "content": "    }"
+        "content": ""
       },
       {
         "lineNumber": 63,
         "author": {
           "gitId": "zeling595"
         },
-        "content": ""
+        "content": "    @Test"
       },
       {
         "lineNumber": 64,
         "author": {
           "gitId": "zeling595"
         },
-        "content": "    @Test"
+        "content": "    public void setBooking_nullTargetBooking_throwsNullPointerException() {"
       },
       {
         "lineNumber": 65,
         "author": {
           "gitId": "zeling595"
         },
-        "content": "    public void setBooking_nullTargetBooking_throwsNullPointerException() {"
+        "content": "        assertThrows(NullPointerException.class, () -\u003e uniqueBookingList.setBooking(null, BOOKING_AMY));"
       },
       {
         "lineNumber": 66,
         "author": {
           "gitId": "zeling595"
         },
-        "content": "        assertThrows(NullPointerException.class, () -\u003e uniqueBookingList.setBooking(null, BOOKING_AMY));"
+        "content": "    }"
       },
       {
         "lineNumber": 67,
         "author": {
           "gitId": "zeling595"
         },
-        "content": "    }"
+        "content": ""
       },
       {
         "lineNumber": 68,
         "author": {
           "gitId": "zeling595"
         },
-        "content": ""
+        "content": "    @Test"
       },
       {
         "lineNumber": 69,
         "author": {
           "gitId": "zeling595"
         },
-        "content": "    @Test"
+        "content": "    public void setBooking_nullEditedBooking_throwsNullPointerException() {"
       },
       {
         "lineNumber": 70,
         "author": {
           "gitId": "zeling595"
         },
-        "content": "    public void setBooking_nullEditedBooking_throwsNullPointerException() {"
+        "content": "        assertThrows(NullPointerException.class, () -\u003e uniqueBookingList.setBooking(BOOKING_AMY, null));"
       },
       {
         "lineNumber": 71,
         "author": {
           "gitId": "zeling595"
         },
-        "content": "        assertThrows(NullPointerException.class, () -\u003e uniqueBookingList.setBooking(BOOKING_AMY, null));"
+        "content": "    }"
       },
       {
         "lineNumber": 72,
         "author": {
           "gitId": "zeling595"
         },
-        "content": "    }"
+        "content": ""
       },
       {
         "lineNumber": 73,
         "author": {
           "gitId": "zeling595"
         },
-        "content": ""
+        "content": "    @Test"
       },
       {
         "lineNumber": 74,
         "author": {
           "gitId": "zeling595"
         },
-        "content": "    @Test"
+        "content": "    public void setBooking_targetBookingNotInList_throwsBookingNotFoundException() {"
       },
       {
         "lineNumber": 75,
         "author": {
           "gitId": "zeling595"
         },
-        "content": "    public void setBooking_targetBookingNotInList_throwsBookingNotFoundException() {"
+        "content": "        assertThrows(BookingNotFoundException.class, () -\u003e uniqueBookingList.setBooking(BOOKING_AMY, BOOKING_AMY));"
       },
       {
         "lineNumber": 76,
         "author": {
           "gitId": "zeling595"
         },
-        "content": "        assertThrows(BookingNotFoundException.class, () -\u003e uniqueBookingList.setBooking(BOOKING_AMY, BOOKING_AMY));"
+        "content": "    }"
       },
       {
         "lineNumber": 77,
         "author": {
           "gitId": "zeling595"
         },
-        "content": "    }"
+        "content": ""
       },
       {
         "lineNumber": 78,
         "author": {
           "gitId": "zeling595"
         },
-        "content": ""
+        "content": "    @Test"
       },
       {
         "lineNumber": 79,
         "author": {
           "gitId": "zeling595"
         },
-        "content": "    @Test"
+        "content": "    public void setBooking_editedBookingIsSameBooking_success() {"
       },
       {
         "lineNumber": 80,
         "author": {
           "gitId": "zeling595"
         },
-        "content": "    public void setBooking_editedBookingIsSameBooking_success() {"
+        "content": "        uniqueBookingList.add(BOOKING_AMY);"
       },
       {
         "lineNumber": 81,
         "author": {
           "gitId": "zeling595"
         },
-        "content": "        uniqueBookingList.add(BOOKING_AMY);"
+        "content": "        uniqueBookingList.setBooking(BOOKING_AMY, BOOKING_AMY);"
       },
       {
         "lineNumber": 82,
         "author": {
           "gitId": "zeling595"
         },
-        "content": "        uniqueBookingList.setBooking(BOOKING_AMY, BOOKING_AMY);"
+        "content": "        UniqueBookingList expectedUniqueBookingList \u003d new UniqueBookingList();"
       },
       {
         "lineNumber": 83,
         "author": {
           "gitId": "zeling595"
         },
-        "content": "        UniqueBookingList expectedUniqueBookingList \u003d new UniqueBookingList();"
+        "content": "        expectedUniqueBookingList.add(BOOKING_AMY);"
       },
       {
         "lineNumber": 84,
         "author": {
           "gitId": "zeling595"
         },
-        "content": "        expectedUniqueBookingList.add(BOOKING_AMY);"
+        "content": "        assertEquals(expectedUniqueBookingList, uniqueBookingList);"
       },
       {
         "lineNumber": 85,
         "author": {
           "gitId": "zeling595"
         },
-        "content": "        assertEquals(expectedUniqueBookingList, uniqueBookingList);"
+        "content": "    }"
       },
       {
         "lineNumber": 86,
         "author": {
           "gitId": "zeling595"
         },
-        "content": "    }"
+        "content": ""
       },
       {
         "lineNumber": 87,
         "author": {
           "gitId": "zeling595"
         },
-        "content": ""
+        "content": "    @Test"
       },
       {
         "lineNumber": 88,
         "author": {
           "gitId": "zeling595"
         },
-        "content": "    @Test"
+        "content": "    public void setBooking_editedBookingIsDifferentBooking_success() {"
       },
       {
         "lineNumber": 89,
         "author": {
           "gitId": "zeling595"
         },
-        "content": "    public void setBooking_editedBookingIsDifferentBooking_success() {"
+        "content": "        uniqueBookingList.add(BOOKING_AMY);"
       },
       {
         "lineNumber": 90,
         "author": {
           "gitId": "zeling595"
         },
-        "content": "        uniqueBookingList.add(BOOKING_AMY);"
+        "content": "        Booking editedBookingAmy \u003d new BookingBuilder(BOOKING_AMY).withRoomId(VALID_ROOM_ID_BOB).build();"
       },
       {
         "lineNumber": 91,
         "author": {
           "gitId": "zeling595"
         },
-        "content": "        Booking editedBookingAmy \u003d new BookingBuilder(BOOKING_AMY).withRoomId(VALID_ROOM_ID_BOB).build();"
+        "content": "        uniqueBookingList.setBooking(BOOKING_AMY, editedBookingAmy);"
       },
       {
         "lineNumber": 92,
         "author": {
           "gitId": "zeling595"
         },
-        "content": "        uniqueBookingList.setBooking(BOOKING_AMY, editedBookingAmy);"
+        "content": "        UniqueBookingList expectedUniqueBookingList \u003d new UniqueBookingList();"
       },
       {
         "lineNumber": 93,
         "author": {
           "gitId": "zeling595"
         },
-        "content": "        UniqueBookingList expectedUniqueBookingList \u003d new UniqueBookingList();"
+        "content": "        expectedUniqueBookingList.add(editedBookingAmy);"
       },
       {
         "lineNumber": 94,
         "author": {
           "gitId": "zeling595"
         },
-        "content": "        expectedUniqueBookingList.add(editedBookingAmy);"
+        "content": "        assertEquals(expectedUniqueBookingList, uniqueBookingList);"
       },
       {
         "lineNumber": 95,
         "author": {
           "gitId": "zeling595"
         },
-        "content": "        assertEquals(expectedUniqueBookingList, uniqueBookingList);"
+        "content": "    }"
       },
       {
         "lineNumber": 96,
         "author": {
           "gitId": "zeling595"
         },
-        "content": "    }"
+        "content": ""
       },
       {
         "lineNumber": 97,
         "author": {
           "gitId": "zeling595"
         },
-        "content": ""
+        "content": "    @Test"
       },
       {
         "lineNumber": 98,
         "author": {
           "gitId": "zeling595"
         },
-        "content": "    @Test"
+        "content": "    public void setBooking_editedBookingsSameBooking_throwsDuplicateBookingException() {"
       },
       {
         "lineNumber": 99,
         "author": {
           "gitId": "zeling595"
         },
-        "content": "    public void setBooking_editedBookingsSameBooking_throwsDuplicateBookingException() {"
+        "content": "        uniqueBookingList.add(BOOKING_BOB);"
       },
       {
         "lineNumber": 100,
         "author": {
           "gitId": "zeling595"
         },
-        "content": "        uniqueBookingList.add(BOOKING_BOB);"
+        "content": "        uniqueBookingList.add(BOOKING_AMY);"
       },
       {
         "lineNumber": 101,
         "author": {
           "gitId": "zeling595"
         },
-        "content": "        uniqueBookingList.add(BOOKING_AMY);"
+        "content": "        assertThrows(DuplicateBookingException.class, () -\u003e uniqueBookingList.setBooking(BOOKING_AMY, BOOKING_BOB));"
       },
       {
         "lineNumber": 102,
         "author": {
           "gitId": "zeling595"
         },
-        "content": "        assertThrows(DuplicateBookingException.class, () -\u003e uniqueBookingList.setBooking(BOOKING_AMY, BOOKING_BOB));"
+        "content": "    }"
       },
       {
         "lineNumber": 103,
         "author": {
           "gitId": "zeling595"
         },
-        "content": "    }"
+        "content": ""
       },
       {
         "lineNumber": 104,
         "author": {
           "gitId": "zeling595"
         },
-        "content": ""
+        "content": "    @Test"
       },
       {
         "lineNumber": 105,
         "author": {
           "gitId": "zeling595"
         },
-        "content": "    @Test"
+        "content": "    public void setBooking_editedBookingConflictWithBooking_throwsConflictBookingException() {"
       },
       {
         "lineNumber": 106,
         "author": {
           "gitId": "zeling595"
         },
-        "content": "    public void setBooking_editedBookingConflictWithBooking_throwsConflictBookingException() {"
+        "content": "        uniqueBookingList.add(BOOKING_AMY);"
       },
       {
         "lineNumber": 107,
         "author": {
           "gitId": "zeling595"
         },
-        "content": "        uniqueBookingList.add(BOOKING_AMY);"
+        "content": "        uniqueBookingList.add(BOOKING_BOB);"
       },
       {
         "lineNumber": 108,
         "author": {
-          "gitId": "zeling595"
+          "gitId": "shermz-lim"
         },
-        "content": "        uniqueBookingList.add(BOOKING_BOB);"
+        "content": "        assertThrows(ConflictingBookingException.class, () -\u003e uniqueBookingList.setBooking("
       },
       {
         "lineNumber": 109,
         "author": {
-          "gitId": "zeling595"
+          "gitId": "shermz-lim"
         },
-        "content": "        assertThrows(ConflictingBookingException.class, () -\u003e uniqueBookingList.setBooking(BOOKING_BOB, CONFLICT_AMY_BOOKING_CHLOE));"
+        "content": "                BOOKING_BOB, CONFLICT_AMY_BOOKING_CHLOE));"
       },
       {
         "lineNumber": 110,
@@ -46638,7 +47398,7 @@
         "author": {
           "gitId": "zeling595"
         },
-        "content": "                -\u003e uniqueBookingList.asUnmodifiableObservableList().remove(0));"
+        "content": "            -\u003e uniqueBookingList.asUnmodifiableObservableList().remove(0));"
       },
       {
         "lineNumber": 168,
@@ -46663,7 +47423,8 @@
       }
     ],
     "authorContributionMap": {
-      "zeling595": 170
+      "shermz-lim": 9,
+      "zeling595": 161
     }
   },
   {
