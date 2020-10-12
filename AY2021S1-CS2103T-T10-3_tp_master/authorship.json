@@ -9711,16 +9711,16 @@
       {
         "lineNumber": 14,
         "author": {
-          "gitId": "Trav1sT"
+          "gitId": "hjl99"
         },
-        "content": "    public static final String MESSAGE_INVALID_PERSON_DISPLAYED_INDEX \u003d \"The person index provided is invalid\";"
+        "content": "    public static final String MESSAGE_INVALID_INGREDIENT_DISPLAYED_INDEX \u003d \"The ingredient index provided is invalid\";"
       },
       {
         "lineNumber": 15,
         "author": {
           "gitId": "Trav1sT"
         },
-        "content": "    public static final String MESSAGE_PERSONS_LISTED_OVERVIEW \u003d \"%1$d persons listed!\";"
+        "content": "    public static final String MESSAGE_INGREDIENTS_LISTED_OVERVIEW \u003d \"%1$d ingredients listed!\";"
       },
       {
         "lineNumber": 16,
@@ -9734,33 +9734,12 @@
         "author": {
           "gitId": "hjl99"
         },
-        "content": "    public static final String MESSAGE_INVALID_INGREDIENT_DISPLAYED_INDEX \u003d \"The ingredient index provided is invalid\";"
-      },
-      {
-        "lineNumber": 18,
-        "author": {
-          "gitId": "hjl99"
-        },
-        "content": "    public static final String MESSAGE_INGREDIENT_LISTED_OVERVIEW \u003d \"%1$d ingredients listed!\";"
-      },
-      {
-        "lineNumber": 19,
-        "author": {
-          "gitId": "hjl99"
-        },
-        "content": ""
-      },
-      {
-        "lineNumber": 20,
-        "author": {
-          "gitId": "hjl99"
-        },
         "content": "}"
       }
     ],
     "authorContributionMap": {
-      "hjl99": 18,
-      "Trav1sT": 2
+      "hjl99": 16,
+      "Trav1sT": 1
     }
   },
   {
@@ -14026,362 +14005,1148 @@
     }
   },
   {
-    "path": "src/main/java/chopchop/logic/Logic.java",
+    "path": "src/main/java/chopchop/logic/CommandDispatcher.java",
     "fileType": "functional-code",
     "lines": [
       {
         "lineNumber": 1,
         "author": {
-          "gitId": "hjl99"
+          "gitId": "fall9x"
         },
         "content": "package chopchop.logic;"
       },
       {
         "lineNumber": 2,
         "author": {
-          "gitId": "hjl99"
+          "gitId": "fall9x"
         },
         "content": ""
       },
       {
         "lineNumber": 3,
         "author": {
-          "gitId": "hjl99"
+          "gitId": "fall9x"
         },
-        "content": "import java.nio.file.Path;"
+        "content": "// import java.io.IOException;"
       },
       {
         "lineNumber": 4,
         "author": {
-          "gitId": "hjl99"
+          "gitId": "fall9x"
         },
-        "content": ""
+        "content": "import java.nio.file.Path;"
       },
       {
         "lineNumber": 5,
         "author": {
-          "gitId": "hjl99"
+          "gitId": "fall9x"
         },
-        "content": "import javafx.collections.ObservableList;"
+        "content": "import java.util.logging.Logger;"
       },
       {
         "lineNumber": 6,
         "author": {
-          "gitId": "hjl99"
+          "gitId": "fall9x"
         },
-        "content": "import seedu.address.commons.core.GuiSettings;"
+        "content": ""
       },
       {
         "lineNumber": 7,
         "author": {
-          "gitId": "hjl99"
+          "gitId": "fall9x"
         },
-        "content": "import seedu.address.logic.commands.CommandResult;"
+        "content": "import chopchop.commons.core.GuiSettings;"
       },
       {
         "lineNumber": 8,
         "author": {
-          "gitId": "hjl99"
+          "gitId": "fall9x"
         },
-        "content": "import seedu.address.logic.commands.exceptions.CommandException;"
+        "content": "import chopchop.commons.core.LogsCenter;"
       },
       {
         "lineNumber": 9,
         "author": {
-          "gitId": "hjl99"
+          "gitId": "fall9x"
         },
-        "content": "import seedu.address.logic.parser.exceptions.ParseException;"
+        "content": "// import chopchop.logic.commands.Command;"
       },
       {
         "lineNumber": 10,
         "author": {
-          "gitId": "hjl99"
+          "gitId": "fall9x"
         },
-        "content": "import seedu.address.model.ReadOnlyAddressBook;"
+        "content": "import chopchop.logic.commands.CommandResult;"
       },
       {
         "lineNumber": 11,
         "author": {
-          "gitId": "hjl99"
+          "gitId": "fall9x"
         },
-        "content": "import seedu.address.model.person.Person;"
+        "content": "import chopchop.logic.commands.exceptions.CommandException;"
       },
       {
         "lineNumber": 12,
         "author": {
-          "gitId": "hjl99"
+          "gitId": "fall9x"
         },
-        "content": ""
+        "content": "import chopchop.model.Model;"
       },
       {
         "lineNumber": 13,
         "author": {
-          "gitId": "hjl99"
+          "gitId": "fall9x"
         },
-        "content": "/**"
+        "content": "import chopchop.model.ingredient.Ingredient;"
       },
       {
         "lineNumber": 14,
         "author": {
-          "gitId": "hjl99"
+          "gitId": "fall9x"
         },
-        "content": " * API of the Logic component"
+        "content": "import chopchop.model.ingredient.ReadOnlyIngredientBook;"
       },
       {
         "lineNumber": 15,
         "author": {
-          "gitId": "hjl99"
+          "gitId": "fall9x"
         },
-        "content": " */"
+        "content": "import chopchop.model.recipe.ReadOnlyRecipeBook;"
       },
       {
         "lineNumber": 16,
         "author": {
-          "gitId": "hjl99"
+          "gitId": "fall9x"
         },
-        "content": "public interface Logic {"
+        "content": "import chopchop.model.recipe.Recipe;"
       },
       {
         "lineNumber": 17,
         "author": {
-          "gitId": "hjl99"
+          "gitId": "fall9x"
         },
-        "content": "    /**"
+        "content": "import javafx.collections.ObservableList;"
       },
       {
         "lineNumber": 18,
         "author": {
-          "gitId": "hjl99"
+          "gitId": "fall9x"
         },
-        "content": "     * Executes the command and returns the result."
+        "content": "import seedu.address.logic.parser.AddressBookParser;"
       },
       {
         "lineNumber": 19,
         "author": {
-          "gitId": "hjl99"
+          "gitId": "fall9x"
         },
-        "content": "     * @param commandText The command as entered by the user."
+        "content": "import seedu.address.logic.parser.exceptions.ParseException;"
       },
       {
         "lineNumber": 20,
         "author": {
-          "gitId": "hjl99"
+          "gitId": "fall9x"
         },
-        "content": "     * @return the result of the command execution."
+        "content": "import seedu.address.storage.Storage;"
       },
       {
         "lineNumber": 21,
         "author": {
-          "gitId": "hjl99"
-        },
-        "content": "     * @throws CommandException If an error occurs during command execution."
-      },
-      {
-        "lineNumber": 22,
-        "author": {
-          "gitId": "hjl99"
-        },
-        "content": "     * @throws ParseException If an error occurs during parsing."
-      },
-      {
-        "lineNumber": 23,
-        "author": {
-          "gitId": "hjl99"
-        },
-        "content": "     */"
-      },
-      {
-        "lineNumber": 24,
-        "author": {
-          "gitId": "hjl99"
-        },
-        "content": "    CommandResult execute(String commandText) throws CommandException, ParseException;"
-      },
-      {
-        "lineNumber": 25,
-        "author": {
-          "gitId": "hjl99"
+          "gitId": "fall9x"
         },
         "content": ""
       },
       {
+        "lineNumber": 22,
+        "author": {
+          "gitId": "fall9x"
+        },
+        "content": "/**"
+      },
+      {
+        "lineNumber": 23,
+        "author": {
+          "gitId": "fall9x"
+        },
+        "content": " * The main CommandDispatcher governing the logic in the app."
+      },
+      {
+        "lineNumber": 24,
+        "author": {
+          "gitId": "fall9x"
+        },
+        "content": " */"
+      },
+      {
+        "lineNumber": 25,
+        "author": {
+          "gitId": "fall9x"
+        },
+        "content": "public class CommandDispatcher implements Logic {"
+      },
+      {
         "lineNumber": 26,
         "author": {
-          "gitId": "hjl99"
+          "gitId": "fall9x"
         },
-        "content": "    /**"
+        "content": "    public static final String FILE_OPS_ERROR_MESSAGE \u003d \"Could not save data to file: \";"
       },
       {
         "lineNumber": 27,
         "author": {
-          "gitId": "hjl99"
+          "gitId": "fall9x"
         },
-        "content": "     * Returns the AddressBook."
+        "content": "    private final Logger logger \u003d LogsCenter.getLogger(CommandDispatcher.class);"
       },
       {
         "lineNumber": 28,
         "author": {
-          "gitId": "hjl99"
+          "gitId": "fall9x"
         },
-        "content": "     *"
+        "content": ""
       },
       {
         "lineNumber": 29,
         "author": {
-          "gitId": "hjl99"
+          "gitId": "fall9x"
         },
-        "content": "     * @see seedu.address.model.Model#getAddressBook()"
+        "content": "    private final Model model;"
       },
       {
         "lineNumber": 30,
         "author": {
-          "gitId": "hjl99"
+          "gitId": "fall9x"
         },
-        "content": "     */"
+        "content": "    private final Storage storage;"
       },
       {
         "lineNumber": 31,
         "author": {
-          "gitId": "hjl99"
+          "gitId": "fall9x"
         },
-        "content": "    ReadOnlyAddressBook getAddressBook();"
+        "content": "    private final AddressBookParser addressBookParser;"
       },
       {
         "lineNumber": 32,
         "author": {
-          "gitId": "hjl99"
+          "gitId": "fall9x"
         },
         "content": ""
       },
       {
         "lineNumber": 33,
         "author": {
-          "gitId": "hjl99"
+          "gitId": "fall9x"
         },
-        "content": "    /** Returns an unmodifiable view of the filtered list of persons */"
+        "content": "    /**"
       },
       {
         "lineNumber": 34,
         "author": {
-          "gitId": "hjl99"
+          "gitId": "fall9x"
         },
-        "content": "    ObservableList\u003cPerson\u003e getFilteredPersonList();"
+        "content": "     * Constructs a {@code CommandDispatcher} with the given {@code Model} and {@code Storage}."
       },
       {
         "lineNumber": 35,
         "author": {
-          "gitId": "hjl99"
+          "gitId": "fall9x"
         },
-        "content": ""
+        "content": "     */"
       },
       {
         "lineNumber": 36,
         "author": {
-          "gitId": "hjl99"
+          "gitId": "fall9x"
         },
-        "content": "    /**"
+        "content": "    public CommandDispatcher(Model model, Storage storage) {"
       },
       {
         "lineNumber": 37,
         "author": {
-          "gitId": "hjl99"
+          "gitId": "fall9x"
         },
-        "content": "     * Returns the user prefs\u0027 address book file path."
+        "content": "        this.model \u003d model;"
       },
       {
         "lineNumber": 38,
         "author": {
-          "gitId": "hjl99"
+          "gitId": "fall9x"
         },
-        "content": "     */"
+        "content": "        this.storage \u003d storage;"
       },
       {
         "lineNumber": 39,
         "author": {
-          "gitId": "hjl99"
+          "gitId": "fall9x"
         },
-        "content": "    Path getAddressBookFilePath();"
+        "content": "        addressBookParser \u003d new AddressBookParser();"
       },
       {
         "lineNumber": 40,
         "author": {
-          "gitId": "hjl99"
+          "gitId": "fall9x"
         },
-        "content": ""
+        "content": "    }"
       },
       {
         "lineNumber": 41,
         "author": {
-          "gitId": "hjl99"
-        },
-        "content": "    /**"
-      },
-      {
-        "lineNumber": 42,
-        "author": {
-          "gitId": "hjl99"
-        },
-        "content": "     * Returns the user prefs\u0027 GUI settings."
-      },
-      {
-        "lineNumber": 43,
-        "author": {
-          "gitId": "hjl99"
-        },
-        "content": "     */"
-      },
-      {
-        "lineNumber": 44,
-        "author": {
-          "gitId": "hjl99"
-        },
-        "content": "    GuiSettings getGuiSettings();"
-      },
-      {
-        "lineNumber": 45,
-        "author": {
-          "gitId": "hjl99"
+          "gitId": "fall9x"
         },
         "content": ""
       },
       {
-        "lineNumber": 46,
+        "lineNumber": 42,
         "author": {
-          "gitId": "hjl99"
+          "gitId": "fall9x"
         },
         "content": "    /**"
       },
       {
-        "lineNumber": 47,
+        "lineNumber": 43,
         "author": {
-          "gitId": "hjl99"
+          "gitId": "fall9x"
         },
-        "content": "     * Set the user prefs\u0027 GUI settings."
+        "content": "     * Executes the specified command based on the commandText."
       },
       {
-        "lineNumber": 48,
+        "lineNumber": 44,
         "author": {
-          "gitId": "hjl99"
+          "gitId": "fall9x"
+        },
+        "content": "     *"
+      },
+      {
+        "lineNumber": 45,
+        "author": {
+          "gitId": "fall9x"
+        },
+        "content": "     * @param commandText The command as entered by the user."
+      },
+      {
+        "lineNumber": 46,
+        "author": {
+          "gitId": "fall9x"
         },
         "content": "     */"
       },
       {
+        "lineNumber": 47,
+        "author": {
+          "gitId": "fall9x"
+        },
+        "content": "    @Override"
+      },
+      {
+        "lineNumber": 48,
+        "author": {
+          "gitId": "fall9x"
+        },
+        "content": "    public CommandResult execute(String commandText) throws CommandException, ParseException {"
+      },
+      {
         "lineNumber": 49,
         "author": {
-          "gitId": "hjl99"
+          "gitId": "fall9x"
         },
-        "content": "    void setGuiSettings(GuiSettings guiSettings);"
+        "content": "        logger.info(\"----------------[USER COMMAND][\" + commandText + \"]\");"
       },
       {
         "lineNumber": 50,
         "author": {
-          "gitId": "hjl99"
+          "gitId": "fall9x"
+        },
+        "content": "        /*"
+      },
+      {
+        "lineNumber": 51,
+        "author": {
+          "gitId": "fall9x"
+        },
+        "content": "        Command command \u003d addressBookParser.parseCommand(commandText);"
+      },
+      {
+        "lineNumber": 52,
+        "author": {
+          "gitId": "fall9x"
+        },
+        "content": "        CommandResult commandResult \u003d command.execute(model);"
+      },
+      {
+        "lineNumber": 53,
+        "author": {
+          "gitId": "fall9x"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 54,
+        "author": {
+          "gitId": "fall9x"
+        },
+        "content": "        try {"
+      },
+      {
+        "lineNumber": 55,
+        "author": {
+          "gitId": "fall9x"
+        },
+        "content": "            storage.saveAddressBook(model.getAddressBook());"
+      },
+      {
+        "lineNumber": 56,
+        "author": {
+          "gitId": "fall9x"
+        },
+        "content": "        } catch (IOException ioe) {"
+      },
+      {
+        "lineNumber": 57,
+        "author": {
+          "gitId": "fall9x"
+        },
+        "content": "            throw new CommandException(FILE_OPS_ERROR_MESSAGE + ioe, ioe);"
+      },
+      {
+        "lineNumber": 58,
+        "author": {
+          "gitId": "fall9x"
+        },
+        "content": "        }"
+      },
+      {
+        "lineNumber": 59,
+        "author": {
+          "gitId": "fall9x"
+        },
+        "content": "        */"
+      },
+      {
+        "lineNumber": 60,
+        "author": {
+          "gitId": "fall9x"
+        },
+        "content": "        CommandResult commandResult \u003d new CommandResult(\"stub\");"
+      },
+      {
+        "lineNumber": 61,
+        "author": {
+          "gitId": "fall9x"
+        },
+        "content": "        return commandResult;"
+      },
+      {
+        "lineNumber": 62,
+        "author": {
+          "gitId": "fall9x"
+        },
+        "content": "    }"
+      },
+      {
+        "lineNumber": 63,
+        "author": {
+          "gitId": "fall9x"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 64,
+        "author": {
+          "gitId": "fall9x"
+        },
+        "content": "    @Override"
+      },
+      {
+        "lineNumber": 65,
+        "author": {
+          "gitId": "fall9x"
+        },
+        "content": "    public ReadOnlyRecipeBook getRecipeBook() {"
+      },
+      {
+        "lineNumber": 66,
+        "author": {
+          "gitId": "fall9x"
+        },
+        "content": "        return model.getRecipeBook();"
+      },
+      {
+        "lineNumber": 67,
+        "author": {
+          "gitId": "fall9x"
+        },
+        "content": "    }"
+      },
+      {
+        "lineNumber": 68,
+        "author": {
+          "gitId": "fall9x"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 69,
+        "author": {
+          "gitId": "fall9x"
+        },
+        "content": "    @Override"
+      },
+      {
+        "lineNumber": 70,
+        "author": {
+          "gitId": "fall9x"
+        },
+        "content": "    public ObservableList\u003cRecipe\u003e getFilteredRecipeList() {"
+      },
+      {
+        "lineNumber": 71,
+        "author": {
+          "gitId": "fall9x"
+        },
+        "content": "        return model.getFilteredRecipeList();"
+      },
+      {
+        "lineNumber": 72,
+        "author": {
+          "gitId": "fall9x"
+        },
+        "content": "    }"
+      },
+      {
+        "lineNumber": 73,
+        "author": {
+          "gitId": "fall9x"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 74,
+        "author": {
+          "gitId": "fall9x"
+        },
+        "content": "    @Override"
+      },
+      {
+        "lineNumber": 75,
+        "author": {
+          "gitId": "fall9x"
+        },
+        "content": "    public Path getRecipeBookFilePath() {"
+      },
+      {
+        "lineNumber": 76,
+        "author": {
+          "gitId": "fall9x"
+        },
+        "content": "        return model.getRecipeBookFilePath();"
+      },
+      {
+        "lineNumber": 77,
+        "author": {
+          "gitId": "fall9x"
+        },
+        "content": "    }"
+      },
+      {
+        "lineNumber": 78,
+        "author": {
+          "gitId": "fall9x"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 79,
+        "author": {
+          "gitId": "fall9x"
+        },
+        "content": "    @Override"
+      },
+      {
+        "lineNumber": 80,
+        "author": {
+          "gitId": "fall9x"
+        },
+        "content": "    public ReadOnlyIngredientBook getIngredientBook() {"
+      },
+      {
+        "lineNumber": 81,
+        "author": {
+          "gitId": "fall9x"
+        },
+        "content": "        return model.getIngredientBook();"
+      },
+      {
+        "lineNumber": 82,
+        "author": {
+          "gitId": "fall9x"
+        },
+        "content": "    }"
+      },
+      {
+        "lineNumber": 83,
+        "author": {
+          "gitId": "fall9x"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 84,
+        "author": {
+          "gitId": "fall9x"
+        },
+        "content": "    @Override"
+      },
+      {
+        "lineNumber": 85,
+        "author": {
+          "gitId": "fall9x"
+        },
+        "content": "    public ObservableList\u003cIngredient\u003e getFilteredIngredientList() {"
+      },
+      {
+        "lineNumber": 86,
+        "author": {
+          "gitId": "fall9x"
+        },
+        "content": "        return model.getFilteredIngredientList();"
+      },
+      {
+        "lineNumber": 87,
+        "author": {
+          "gitId": "fall9x"
+        },
+        "content": "    }"
+      },
+      {
+        "lineNumber": 88,
+        "author": {
+          "gitId": "fall9x"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 89,
+        "author": {
+          "gitId": "fall9x"
+        },
+        "content": "    @Override"
+      },
+      {
+        "lineNumber": 90,
+        "author": {
+          "gitId": "fall9x"
+        },
+        "content": "    public GuiSettings getGuiSettings() {"
+      },
+      {
+        "lineNumber": 91,
+        "author": {
+          "gitId": "fall9x"
+        },
+        "content": "        return model.getGuiSettings();"
+      },
+      {
+        "lineNumber": 92,
+        "author": {
+          "gitId": "fall9x"
+        },
+        "content": "    }"
+      },
+      {
+        "lineNumber": 93,
+        "author": {
+          "gitId": "fall9x"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 94,
+        "author": {
+          "gitId": "fall9x"
+        },
+        "content": "    @Override"
+      },
+      {
+        "lineNumber": 95,
+        "author": {
+          "gitId": "fall9x"
+        },
+        "content": "    public void setGuiSettings(GuiSettings guiSettings) {"
+      },
+      {
+        "lineNumber": 96,
+        "author": {
+          "gitId": "fall9x"
+        },
+        "content": "        model.setGuiSettings(guiSettings);"
+      },
+      {
+        "lineNumber": 97,
+        "author": {
+          "gitId": "fall9x"
+        },
+        "content": "    }"
+      },
+      {
+        "lineNumber": 98,
+        "author": {
+          "gitId": "fall9x"
         },
         "content": "}"
       }
     ],
     "authorContributionMap": {
-      "hjl99": 50
+      "fall9x": 98
+    }
+  },
+  {
+    "path": "src/main/java/chopchop/logic/Logic.java",
+    "fileType": "functional-code",
+    "lines": [
+      {
+        "lineNumber": 1,
+        "author": {
+          "gitId": "fall9x"
+        },
+        "content": "package chopchop.logic;"
+      },
+      {
+        "lineNumber": 2,
+        "author": {
+          "gitId": "fall9x"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 3,
+        "author": {
+          "gitId": "fall9x"
+        },
+        "content": "import java.nio.file.Path;"
+      },
+      {
+        "lineNumber": 4,
+        "author": {
+          "gitId": "fall9x"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 5,
+        "author": {
+          "gitId": "fall9x"
+        },
+        "content": "import chopchop.commons.core.GuiSettings;"
+      },
+      {
+        "lineNumber": 6,
+        "author": {
+          "gitId": "fall9x"
+        },
+        "content": "import chopchop.logic.commands.exceptions.CommandException;"
+      },
+      {
+        "lineNumber": 7,
+        "author": {
+          "gitId": "fall9x"
+        },
+        "content": "import chopchop.logic.commands.CommandResult;"
+      },
+      {
+        "lineNumber": 8,
+        "author": {
+          "gitId": "fall9x"
+        },
+        "content": "import chopchop.model.ingredient.Ingredient;"
+      },
+      {
+        "lineNumber": 9,
+        "author": {
+          "gitId": "fall9x"
+        },
+        "content": "import chopchop.model.ingredient.ReadOnlyIngredientBook;"
+      },
+      {
+        "lineNumber": 10,
+        "author": {
+          "gitId": "fall9x"
+        },
+        "content": "import chopchop.model.recipe.ReadOnlyRecipeBook;"
+      },
+      {
+        "lineNumber": 11,
+        "author": {
+          "gitId": "fall9x"
+        },
+        "content": "import chopchop.model.recipe.Recipe;"
+      },
+      {
+        "lineNumber": 12,
+        "author": {
+          "gitId": "fall9x"
+        },
+        "content": "import javafx.collections.ObservableList;"
+      },
+      {
+        "lineNumber": 13,
+        "author": {
+          "gitId": "fall9x"
+        },
+        "content": "import seedu.address.logic.parser.exceptions.ParseException;"
+      },
+      {
+        "lineNumber": 14,
+        "author": {
+          "gitId": "fall9x"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 15,
+        "author": {
+          "gitId": "fall9x"
+        },
+        "content": "/**"
+      },
+      {
+        "lineNumber": 16,
+        "author": {
+          "gitId": "fall9x"
+        },
+        "content": " * API of the Logic component"
+      },
+      {
+        "lineNumber": 17,
+        "author": {
+          "gitId": "fall9x"
+        },
+        "content": " */"
+      },
+      {
+        "lineNumber": 18,
+        "author": {
+          "gitId": "fall9x"
+        },
+        "content": "public interface Logic {"
+      },
+      {
+        "lineNumber": 19,
+        "author": {
+          "gitId": "fall9x"
+        },
+        "content": "    /**"
+      },
+      {
+        "lineNumber": 20,
+        "author": {
+          "gitId": "fall9x"
+        },
+        "content": "     * Executes the command and returns the result."
+      },
+      {
+        "lineNumber": 21,
+        "author": {
+          "gitId": "fall9x"
+        },
+        "content": "     *"
+      },
+      {
+        "lineNumber": 22,
+        "author": {
+          "gitId": "fall9x"
+        },
+        "content": "     * @param commandText The command as entered by the user."
+      },
+      {
+        "lineNumber": 23,
+        "author": {
+          "gitId": "fall9x"
+        },
+        "content": "     * @return the result of the command execution."
+      },
+      {
+        "lineNumber": 24,
+        "author": {
+          "gitId": "fall9x"
+        },
+        "content": "     * @throws CommandException If an error occurs during command execution."
+      },
+      {
+        "lineNumber": 25,
+        "author": {
+          "gitId": "fall9x"
+        },
+        "content": "     * @throws ParseException If an error occurs during parsing."
+      },
+      {
+        "lineNumber": 26,
+        "author": {
+          "gitId": "fall9x"
+        },
+        "content": "     */"
+      },
+      {
+        "lineNumber": 27,
+        "author": {
+          "gitId": "fall9x"
+        },
+        "content": "    CommandResult execute(String commandText) throws CommandException, ParseException;"
+      },
+      {
+        "lineNumber": 28,
+        "author": {
+          "gitId": "fall9x"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 29,
+        "author": {
+          "gitId": "fall9x"
+        },
+        "content": "    /**"
+      },
+      {
+        "lineNumber": 30,
+        "author": {
+          "gitId": "fall9x"
+        },
+        "content": "     * Returns the RecipeBook."
+      },
+      {
+        "lineNumber": 31,
+        "author": {
+          "gitId": "fall9x"
+        },
+        "content": "     */"
+      },
+      {
+        "lineNumber": 32,
+        "author": {
+          "gitId": "fall9x"
+        },
+        "content": "    ReadOnlyRecipeBook getRecipeBook();"
+      },
+      {
+        "lineNumber": 33,
+        "author": {
+          "gitId": "fall9x"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 34,
+        "author": {
+          "gitId": "fall9x"
+        },
+        "content": "    /**"
+      },
+      {
+        "lineNumber": 35,
+        "author": {
+          "gitId": "fall9x"
+        },
+        "content": "     * Returns the IngredientBook."
+      },
+      {
+        "lineNumber": 36,
+        "author": {
+          "gitId": "fall9x"
+        },
+        "content": "     */"
+      },
+      {
+        "lineNumber": 37,
+        "author": {
+          "gitId": "fall9x"
+        },
+        "content": "    ReadOnlyIngredientBook getIngredientBook();"
+      },
+      {
+        "lineNumber": 38,
+        "author": {
+          "gitId": "fall9x"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 39,
+        "author": {
+          "gitId": "fall9x"
+        },
+        "content": "    /**"
+      },
+      {
+        "lineNumber": 40,
+        "author": {
+          "gitId": "fall9x"
+        },
+        "content": "     * Returns an unmodifiable view of the filtered list of recipes."
+      },
+      {
+        "lineNumber": 41,
+        "author": {
+          "gitId": "fall9x"
+        },
+        "content": "     */"
+      },
+      {
+        "lineNumber": 42,
+        "author": {
+          "gitId": "fall9x"
+        },
+        "content": "    ObservableList\u003cRecipe\u003e getFilteredRecipeList();"
+      },
+      {
+        "lineNumber": 43,
+        "author": {
+          "gitId": "fall9x"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 44,
+        "author": {
+          "gitId": "fall9x"
+        },
+        "content": "    /**"
+      },
+      {
+        "lineNumber": 45,
+        "author": {
+          "gitId": "fall9x"
+        },
+        "content": "     * Returns an unmodifiable view of the filtered ingredient list."
+      },
+      {
+        "lineNumber": 46,
+        "author": {
+          "gitId": "fall9x"
+        },
+        "content": "     */"
+      },
+      {
+        "lineNumber": 47,
+        "author": {
+          "gitId": "fall9x"
+        },
+        "content": "    ObservableList\u003cIngredient\u003e getFilteredIngredientList();"
+      },
+      {
+        "lineNumber": 48,
+        "author": {
+          "gitId": "fall9x"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 49,
+        "author": {
+          "gitId": "fall9x"
+        },
+        "content": "    /**"
+      },
+      {
+        "lineNumber": 50,
+        "author": {
+          "gitId": "fall9x"
+        },
+        "content": "     * Returns the user prefs\u0027 recipe book file path."
+      },
+      {
+        "lineNumber": 51,
+        "author": {
+          "gitId": "fall9x"
+        },
+        "content": "     */"
+      },
+      {
+        "lineNumber": 52,
+        "author": {
+          "gitId": "fall9x"
+        },
+        "content": "    Path getRecipeBookFilePath();"
+      },
+      {
+        "lineNumber": 53,
+        "author": {
+          "gitId": "fall9x"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 54,
+        "author": {
+          "gitId": "fall9x"
+        },
+        "content": "    /**"
+      },
+      {
+        "lineNumber": 55,
+        "author": {
+          "gitId": "fall9x"
+        },
+        "content": "     * Returns the user prefs\u0027 GUI settings."
+      },
+      {
+        "lineNumber": 56,
+        "author": {
+          "gitId": "fall9x"
+        },
+        "content": "     */"
+      },
+      {
+        "lineNumber": 57,
+        "author": {
+          "gitId": "fall9x"
+        },
+        "content": "    GuiSettings getGuiSettings();"
+      },
+      {
+        "lineNumber": 58,
+        "author": {
+          "gitId": "fall9x"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 59,
+        "author": {
+          "gitId": "fall9x"
+        },
+        "content": "    /**"
+      },
+      {
+        "lineNumber": 60,
+        "author": {
+          "gitId": "fall9x"
+        },
+        "content": "     * Set the user prefs\u0027 GUI settings."
+      },
+      {
+        "lineNumber": 61,
+        "author": {
+          "gitId": "fall9x"
+        },
+        "content": "     */"
+      },
+      {
+        "lineNumber": 62,
+        "author": {
+          "gitId": "fall9x"
+        },
+        "content": "    void setGuiSettings(GuiSettings guiSettings);"
+      },
+      {
+        "lineNumber": 63,
+        "author": {
+          "gitId": "fall9x"
+        },
+        "content": "}"
+      }
+    ],
+    "authorContributionMap": {
+      "fall9x": 63
     }
   },
   {
@@ -17396,138 +18161,145 @@
       {
         "lineNumber": 22,
         "author": {
-          "gitId": "hjl99"
+          "gitId": "Trav1sT"
         },
-        "content": "    public FindIngredientCommand(NameContainsKeywordsPredicate predicate) {"
+        "content": ""
       },
       {
         "lineNumber": 23,
         "author": {
           "gitId": "hjl99"
         },
-        "content": "        super(predicate);"
+        "content": "    public FindIngredientCommand(NameContainsKeywordsPredicate predicate) {"
       },
       {
         "lineNumber": 24,
         "author": {
           "gitId": "hjl99"
         },
-        "content": "    }"
+        "content": "        super(predicate);"
       },
       {
         "lineNumber": 25,
         "author": {
           "gitId": "hjl99"
         },
-        "content": ""
+        "content": "    }"
       },
       {
         "lineNumber": 26,
         "author": {
           "gitId": "hjl99"
         },
-        "content": "    @Override"
+        "content": ""
       },
       {
         "lineNumber": 27,
         "author": {
           "gitId": "hjl99"
         },
-        "content": "    public CommandResult execute(Model model) {"
+        "content": "    @Override"
       },
       {
         "lineNumber": 28,
         "author": {
           "gitId": "hjl99"
         },
-        "content": "        requireNonNull(model);"
+        "content": "    public CommandResult execute(Model model) {"
       },
       {
         "lineNumber": 29,
         "author": {
           "gitId": "hjl99"
         },
-        "content": "        model.updateFilteredIngredientList(predicate);"
+        "content": "        requireNonNull(model);"
       },
       {
         "lineNumber": 30,
+        "author": {
+          "gitId": "Trav1sT"
+        },
+        "content": "        model.updateFilteredIngredientList(predicate);"
+      },
+      {
+        "lineNumber": 31,
         "author": {
           "gitId": "hjl99"
         },
         "content": "        return new CommandResult("
       },
       {
-        "lineNumber": 31,
+        "lineNumber": 32,
         "author": {
           "gitId": "Trav1sT"
         },
-        "content": "                String.format(Messages.MESSAGE_INGREDIENT_LISTED_OVERVIEW, model.getFilteredIngredientList().size()));"
-      },
-      {
-        "lineNumber": 32,
-        "author": {
-          "gitId": "hjl99"
-        },
-        "content": "    }"
+        "content": "                String.format(Messages.MESSAGE_INGREDIENTS_LISTED_OVERVIEW, model.getFilteredIngredientList().size()));"
       },
       {
         "lineNumber": 33,
         "author": {
           "gitId": "hjl99"
         },
-        "content": ""
+        "content": "    }"
       },
       {
         "lineNumber": 34,
         "author": {
           "gitId": "hjl99"
         },
-        "content": "    @Override"
+        "content": ""
       },
       {
         "lineNumber": 35,
         "author": {
           "gitId": "hjl99"
         },
-        "content": "    public boolean equals(Object other) {"
+        "content": "    @Override"
       },
       {
         "lineNumber": 36,
         "author": {
           "gitId": "hjl99"
         },
-        "content": "        return other \u003d\u003d this // short circuit if same object"
+        "content": "    public boolean equals(Object other) {"
       },
       {
         "lineNumber": 37,
         "author": {
           "gitId": "hjl99"
         },
-        "content": "                || (other instanceof FindIngredientCommand // instanceof handles nulls"
+        "content": "        return other \u003d\u003d this // short circuit if same object"
       },
       {
         "lineNumber": 38,
         "author": {
           "gitId": "hjl99"
         },
-        "content": "                \u0026\u0026 predicate.equals(((FindIngredientCommand) other).predicate)); // state check"
+        "content": "                || (other instanceof FindIngredientCommand // instanceof handles nulls"
       },
       {
         "lineNumber": 39,
         "author": {
           "gitId": "hjl99"
         },
-        "content": "    }"
+        "content": "                \u0026\u0026 predicate.equals(((FindIngredientCommand) other).predicate)); // state check"
       },
       {
         "lineNumber": 40,
         "author": {
           "gitId": "hjl99"
         },
-        "content": ""
+        "content": "    }"
       },
       {
         "lineNumber": 41,
+        "author": {
+          "gitId": "hjl99"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 42,
         "author": {
           "gitId": "hjl99"
         },
@@ -17535,8 +18307,8 @@
       }
     ],
     "authorContributionMap": {
-      "hjl99": 37,
-      "Trav1sT": 4
+      "hjl99": 36,
+      "Trav1sT": 6
     }
   },
   {
@@ -17833,6 +18605,176 @@
     ],
     "authorContributionMap": {
       "hjl99": 41
+    }
+  },
+  {
+    "path": "src/main/java/chopchop/logic/commands/HelpCommand.java",
+    "fileType": "functional-code",
+    "lines": [
+      {
+        "lineNumber": 1,
+        "author": {
+          "gitId": "fall9x"
+        },
+        "content": "package chopchop.logic.commands;"
+      },
+      {
+        "lineNumber": 2,
+        "author": {
+          "gitId": "fall9x"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 3,
+        "author": {
+          "gitId": "fall9x"
+        },
+        "content": "import seedu.address.logic.commands.Command;"
+      },
+      {
+        "lineNumber": 4,
+        "author": {
+          "gitId": "fall9x"
+        },
+        "content": "import seedu.address.logic.commands.CommandResult;"
+      },
+      {
+        "lineNumber": 5,
+        "author": {
+          "gitId": "fall9x"
+        },
+        "content": "import seedu.address.model.Model;"
+      },
+      {
+        "lineNumber": 6,
+        "author": {
+          "gitId": "fall9x"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 7,
+        "author": {
+          "gitId": "fall9x"
+        },
+        "content": "/**"
+      },
+      {
+        "lineNumber": 8,
+        "author": {
+          "gitId": "fall9x"
+        },
+        "content": " * Format full help instructions for every command for display."
+      },
+      {
+        "lineNumber": 9,
+        "author": {
+          "gitId": "fall9x"
+        },
+        "content": " */"
+      },
+      {
+        "lineNumber": 10,
+        "author": {
+          "gitId": "fall9x"
+        },
+        "content": "public class HelpCommand extends Command {"
+      },
+      {
+        "lineNumber": 11,
+        "author": {
+          "gitId": "fall9x"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 12,
+        "author": {
+          "gitId": "fall9x"
+        },
+        "content": "    public static final String COMMAND_WORD \u003d \"help\";"
+      },
+      {
+        "lineNumber": 13,
+        "author": {
+          "gitId": "fall9x"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 14,
+        "author": {
+          "gitId": "fall9x"
+        },
+        "content": "    public static final String MESSAGE_USAGE \u003d COMMAND_WORD + \": Shows program usage instructions.\\n\""
+      },
+      {
+        "lineNumber": 15,
+        "author": {
+          "gitId": "fall9x"
+        },
+        "content": "            + \"Example: \" + COMMAND_WORD;"
+      },
+      {
+        "lineNumber": 16,
+        "author": {
+          "gitId": "fall9x"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 17,
+        "author": {
+          "gitId": "fall9x"
+        },
+        "content": "    public static final String SHOWING_HELP_MESSAGE \u003d \"Opened help window.\";"
+      },
+      {
+        "lineNumber": 18,
+        "author": {
+          "gitId": "fall9x"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 19,
+        "author": {
+          "gitId": "fall9x"
+        },
+        "content": "    @Override"
+      },
+      {
+        "lineNumber": 20,
+        "author": {
+          "gitId": "fall9x"
+        },
+        "content": "    public CommandResult execute(Model model) {"
+      },
+      {
+        "lineNumber": 21,
+        "author": {
+          "gitId": "fall9x"
+        },
+        "content": "        return new CommandResult(SHOWING_HELP_MESSAGE, /* showHelp: */ true, /* exit: */ false);"
+      },
+      {
+        "lineNumber": 22,
+        "author": {
+          "gitId": "fall9x"
+        },
+        "content": "    }"
+      },
+      {
+        "lineNumber": 23,
+        "author": {
+          "gitId": "fall9x"
+        },
+        "content": "}"
+      }
+    ],
+    "authorContributionMap": {
+      "fall9x": 23
     }
   },
   {
@@ -20305,7 +21247,7 @@
         "author": {
           "gitId": "Trav1sT"
         },
-        "content": "     * Sets the user prefs\u0027 address book file path."
+        "content": "     * Returns the user prefs\u0027 ingredient book file path."
       },
       {
         "lineNumber": 95,
@@ -20319,7 +21261,7 @@
         "author": {
           "gitId": "Trav1sT"
         },
-        "content": "    void setIngredientBookFilePath(Path addressBookFilePath);"
+        "content": "    Path getIngredientBookFilePath();"
       },
       {
         "lineNumber": 97,
@@ -20340,7 +21282,7 @@
         "author": {
           "gitId": "Trav1sT"
         },
-        "content": "     * Replaces address book data with the data in {@code addressBook}."
+        "content": "     * Sets the user prefs\u0027 ingredient book file path."
       },
       {
         "lineNumber": 100,
@@ -20354,7 +21296,7 @@
         "author": {
           "gitId": "Trav1sT"
         },
-        "content": "    void setAddressBook(ReadOnlyFoodEntryBook addressBook);"
+        "content": "    void setIngredientBookFilePath(Path indBookFilePath);"
       },
       {
         "lineNumber": 102,
@@ -20368,49 +21310,49 @@
         "author": {
           "gitId": "Trav1sT"
         },
-        "content": "    /** Returns the AddressBook */"
+        "content": "    /**"
       },
       {
         "lineNumber": 104,
         "author": {
           "gitId": "Trav1sT"
         },
-        "content": "    ReadOnlyIngredientBook getIngredientBook();"
+        "content": "     * Replaces address book data with the data in {@code addressBook}."
       },
       {
         "lineNumber": 105,
         "author": {
           "gitId": "Trav1sT"
         },
-        "content": ""
+        "content": "     */"
       },
       {
         "lineNumber": 106,
         "author": {
           "gitId": "Trav1sT"
         },
-        "content": "    /**"
+        "content": "    void setIngredientBook(ReadOnlyIngredientBook book);"
       },
       {
         "lineNumber": 107,
         "author": {
           "gitId": "Trav1sT"
         },
-        "content": "     * Returns true if a person with the same identity as {@code person} exists in the address book."
+        "content": ""
       },
       {
         "lineNumber": 108,
         "author": {
           "gitId": "Trav1sT"
         },
-        "content": "     */"
+        "content": "    /** Returns the AddressBook */"
       },
       {
         "lineNumber": 109,
         "author": {
           "gitId": "Trav1sT"
         },
-        "content": "    boolean hasIngredient(Ingredient ind);"
+        "content": "    ReadOnlyIngredientBook getIngredientBook();"
       },
       {
         "lineNumber": 110,
@@ -20431,199 +21373,234 @@
         "author": {
           "gitId": "Trav1sT"
         },
-        "content": "     * Deletes the given person."
+        "content": "     * Returns true if a person with the same identity as {@code person} exists in the address book."
       },
       {
         "lineNumber": 113,
         "author": {
           "gitId": "Trav1sT"
         },
-        "content": "     * The person must exist in the address book."
+        "content": "     */"
       },
       {
         "lineNumber": 114,
         "author": {
           "gitId": "Trav1sT"
         },
-        "content": "     */"
+        "content": "    boolean hasIngredient(Ingredient ind);"
       },
       {
         "lineNumber": 115,
         "author": {
           "gitId": "Trav1sT"
         },
-        "content": "    void deleteIngredient(Ingredient ind);"
+        "content": ""
       },
       {
         "lineNumber": 116,
         "author": {
           "gitId": "Trav1sT"
         },
-        "content": ""
+        "content": "    /**"
       },
       {
         "lineNumber": 117,
         "author": {
           "gitId": "Trav1sT"
         },
-        "content": "    /**"
+        "content": "     * Deletes the given person."
       },
       {
         "lineNumber": 118,
         "author": {
           "gitId": "Trav1sT"
         },
-        "content": "     * Adds the given person."
+        "content": "     * The person must exist in the address book."
       },
       {
         "lineNumber": 119,
         "author": {
           "gitId": "Trav1sT"
         },
-        "content": "     * {@code person} must not already exist in the address book."
+        "content": "     */"
       },
       {
         "lineNumber": 120,
         "author": {
           "gitId": "Trav1sT"
         },
-        "content": "     */"
+        "content": "    void deleteIngredient(Ingredient ind);"
       },
       {
         "lineNumber": 121,
         "author": {
           "gitId": "Trav1sT"
         },
-        "content": "    void addIngredient(Ingredient ind);"
+        "content": ""
       },
       {
         "lineNumber": 122,
         "author": {
           "gitId": "Trav1sT"
         },
-        "content": ""
+        "content": "    /**"
       },
       {
         "lineNumber": 123,
         "author": {
           "gitId": "Trav1sT"
         },
-        "content": "    /**"
+        "content": "     * Adds the given person."
       },
       {
         "lineNumber": 124,
         "author": {
           "gitId": "Trav1sT"
         },
-        "content": "     * Replaces the given person {@code target} with {@code editedIngredient}."
+        "content": "     * {@code person} must not already exist in the address book."
       },
       {
         "lineNumber": 125,
         "author": {
           "gitId": "Trav1sT"
         },
-        "content": "     * {@code target} must exist in the address book."
+        "content": "     */"
       },
       {
         "lineNumber": 126,
         "author": {
           "gitId": "Trav1sT"
         },
-        "content": "     * The person identity of {@code editedIngredient} must not be the same as another existing person in the"
+        "content": "    void addIngredient(Ingredient ind);"
       },
       {
         "lineNumber": 127,
         "author": {
           "gitId": "Trav1sT"
         },
-        "content": "     * address book."
+        "content": ""
       },
       {
         "lineNumber": 128,
         "author": {
           "gitId": "Trav1sT"
         },
-        "content": "     */"
+        "content": "    /**"
       },
       {
         "lineNumber": 129,
         "author": {
           "gitId": "Trav1sT"
         },
-        "content": "    void setIngredient(Ingredient target, Ingredient editedIngredient);"
+        "content": "     * Replaces the given person {@code target} with {@code editedIngredient}."
       },
       {
         "lineNumber": 130,
         "author": {
           "gitId": "Trav1sT"
         },
-        "content": ""
+        "content": "     * {@code target} must exist in the address book."
       },
       {
         "lineNumber": 131,
         "author": {
           "gitId": "Trav1sT"
         },
-        "content": "    /** Returns an unmodifiable view of the filtered person list */"
+        "content": "     * The person identity of {@code editedIngredient} must not be the same as another existing person in the"
       },
       {
         "lineNumber": 132,
         "author": {
-          "gitId": "hjl99"
+          "gitId": "Trav1sT"
         },
-        "content": "    ObservableList\u003cIngredient\u003e getFilteredIngredientList();"
+        "content": "     * address book."
       },
       {
         "lineNumber": 133,
         "author": {
           "gitId": "Trav1sT"
         },
-        "content": ""
+        "content": "     */"
       },
       {
         "lineNumber": 134,
         "author": {
           "gitId": "Trav1sT"
         },
-        "content": "    /**"
+        "content": "    void setIngredient(Ingredient target, Ingredient editedIngredient);"
       },
       {
         "lineNumber": 135,
         "author": {
           "gitId": "Trav1sT"
         },
-        "content": "     * Updates the filter of the filtered person list to filter by the given {@code predicate}."
+        "content": ""
       },
       {
         "lineNumber": 136,
         "author": {
           "gitId": "Trav1sT"
         },
-        "content": "     * @throws NullPointerException if {@code predicate} is null."
+        "content": "    /** Returns an unmodifiable view of the filtered person list */"
       },
       {
         "lineNumber": 137,
         "author": {
-          "gitId": "Trav1sT"
+          "gitId": "hjl99"
         },
-        "content": "     */"
+        "content": "    ObservableList\u003cIngredient\u003e getFilteredIngredientList();"
       },
       {
         "lineNumber": 138,
         "author": {
           "gitId": "Trav1sT"
         },
-        "content": "    void updateFilteredIngredientList(Predicate\u003cFoodEntry\u003e predicate);"
+        "content": ""
       },
       {
         "lineNumber": 139,
+        "author": {
+          "gitId": "Trav1sT"
+        },
+        "content": "    /**"
+      },
+      {
+        "lineNumber": 140,
+        "author": {
+          "gitId": "Trav1sT"
+        },
+        "content": "     * Updates the filter of the filtered person list to filter by the given {@code predicate}."
+      },
+      {
+        "lineNumber": 141,
+        "author": {
+          "gitId": "Trav1sT"
+        },
+        "content": "     * @throws NullPointerException if {@code predicate} is null."
+      },
+      {
+        "lineNumber": 142,
+        "author": {
+          "gitId": "Trav1sT"
+        },
+        "content": "     */"
+      },
+      {
+        "lineNumber": 143,
+        "author": {
+          "gitId": "Trav1sT"
+        },
+        "content": "    void updateFilteredIngredientList(Predicate\u003cFoodEntry\u003e predicate);"
+      },
+      {
+        "lineNumber": 144,
         "author": {
           "gitId": "hjl99"
         },
         "content": ""
       },
       {
-        "lineNumber": 140,
+        "lineNumber": 145,
         "author": {
           "gitId": "hjl99"
         },
@@ -20632,7 +21609,7 @@
     ],
     "authorContributionMap": {
       "hjl99": 87,
-      "Trav1sT": 53
+      "Trav1sT": 58
     }
   },
   {
@@ -20957,7 +21934,7 @@
       {
         "lineNumber": 46,
         "author": {
-          "gitId": "hjl99"
+          "gitId": "Trav1sT"
         },
         "content": "        logger.fine(\"Initializing with ingredient book: \" + ingredientBook + \" and user prefs \" + userPrefs);"
       },
@@ -21645,119 +22622,119 @@
         "author": {
           "gitId": "Trav1sT"
         },
-        "content": "     * Sets the user prefs\u0027 address book file path."
+        "content": "     * Returns the user prefs\u0027 ingredient book file path."
       },
       {
         "lineNumber": 145,
         "author": {
           "gitId": "Trav1sT"
         },
-        "content": "     *"
+        "content": "     */"
       },
       {
         "lineNumber": 146,
         "author": {
-          "gitId": "hjl99"
+          "gitId": "Trav1sT"
         },
-        "content": "     * @param indBookFilePath"
+        "content": "    @Override"
       },
       {
         "lineNumber": 147,
         "author": {
           "gitId": "Trav1sT"
         },
-        "content": "     */"
+        "content": "    public Path getIngredientBookFilePath() {"
       },
       {
         "lineNumber": 148,
         "author": {
           "gitId": "Trav1sT"
         },
-        "content": "    @Override"
+        "content": "        return userPrefs.getAddressBookFilePath();"
       },
       {
         "lineNumber": 149,
-        "author": {
-          "gitId": "hjl99"
-        },
-        "content": "    public void setIngredientBookFilePath(Path indBookFilePath) {"
-      },
-      {
-        "lineNumber": 150,
-        "author": {
-          "gitId": "hjl99"
-        },
-        "content": "        requireNonNull(indBookFilePath);"
-      },
-      {
-        "lineNumber": 151,
-        "author": {
-          "gitId": "hjl99"
-        },
-        "content": "        userPrefs.setIngredientBookFilePath(indBookFilePath);"
-      },
-      {
-        "lineNumber": 152,
         "author": {
           "gitId": "Trav1sT"
         },
         "content": "    }"
       },
       {
-        "lineNumber": 153,
+        "lineNumber": 150,
         "author": {
           "gitId": "Trav1sT"
         },
         "content": ""
       },
       {
-        "lineNumber": 154,
+        "lineNumber": 151,
         "author": {
           "gitId": "Trav1sT"
         },
         "content": "    /**"
       },
       {
-        "lineNumber": 155,
+        "lineNumber": 152,
         "author": {
           "gitId": "Trav1sT"
         },
-        "content": "     * Replaces address book data with the data in {@code addressBook}."
+        "content": "     * Sets the user prefs\u0027 address book file path."
       },
       {
-        "lineNumber": 156,
+        "lineNumber": 153,
         "author": {
           "gitId": "Trav1sT"
         },
         "content": "     *"
       },
       {
-        "lineNumber": 157,
+        "lineNumber": 154,
         "author": {
-          "gitId": "Trav1sT"
+          "gitId": "zhiayang"
         },
-        "content": "     * @param addressBook"
+        "content": "     * @param indBookFilePath"
       },
       {
-        "lineNumber": 158,
+        "lineNumber": 155,
         "author": {
           "gitId": "Trav1sT"
         },
         "content": "     */"
       },
       {
-        "lineNumber": 159,
+        "lineNumber": 156,
         "author": {
           "gitId": "Trav1sT"
         },
         "content": "    @Override"
       },
       {
+        "lineNumber": 157,
+        "author": {
+          "gitId": "zhiayang"
+        },
+        "content": "    public void setIngredientBookFilePath(Path indBookFilePath) {"
+      },
+      {
+        "lineNumber": 158,
+        "author": {
+          "gitId": "zhiayang"
+        },
+        "content": "        requireNonNull(indBookFilePath);"
+      },
+      {
+        "lineNumber": 159,
+        "author": {
+          "gitId": "zhiayang"
+        },
+        "content": "        userPrefs.setIngredientBookFilePath(indBookFilePath);"
+      },
+      {
         "lineNumber": 160,
         "author": {
           "gitId": "Trav1sT"
         },
-        "content": "    public void setAddressBook(ReadOnlyFoodEntryBook addressBook) {"
+        "content": "    }"
       },
       {
         "lineNumber": 161,
@@ -21771,7 +22748,7 @@
         "author": {
           "gitId": "Trav1sT"
         },
-        "content": "    }"
+        "content": "    //\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d Filtered Ingredient List Accessors \u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d"
       },
       {
         "lineNumber": 163,
@@ -21785,238 +22762,238 @@
         "author": {
           "gitId": "Trav1sT"
         },
-        "content": "    //\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d Filtered Ingredient List Accessors \u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d"
+        "content": "    public void setIngredientBook(ReadOnlyIngredientBook ingredientBook) {"
       },
       {
         "lineNumber": 165,
         "author": {
           "gitId": "Trav1sT"
         },
-        "content": ""
+        "content": "        this.ingredientBook.resetData(ingredientBook);"
       },
       {
         "lineNumber": 166,
         "author": {
           "gitId": "Trav1sT"
         },
-        "content": "    public void setIngredientBook(ReadOnlyIngredientBook ingredientBook) {"
+        "content": "    }"
       },
       {
         "lineNumber": 167,
         "author": {
           "gitId": "Trav1sT"
         },
-        "content": "        this.ingredientBook.resetData(ingredientBook);"
+        "content": ""
       },
       {
         "lineNumber": 168,
         "author": {
           "gitId": "Trav1sT"
         },
-        "content": "    }"
+        "content": "    @Override"
       },
       {
         "lineNumber": 169,
         "author": {
           "gitId": "Trav1sT"
         },
-        "content": ""
+        "content": "    public ReadOnlyIngredientBook getIngredientBook() {"
       },
       {
         "lineNumber": 170,
         "author": {
           "gitId": "Trav1sT"
         },
-        "content": "    @Override"
+        "content": "        return ingredientBook;"
       },
       {
         "lineNumber": 171,
         "author": {
           "gitId": "Trav1sT"
         },
-        "content": "    public ReadOnlyIngredientBook getIngredientBook() {"
+        "content": "    }"
       },
       {
         "lineNumber": 172,
         "author": {
           "gitId": "Trav1sT"
         },
-        "content": "        return ingredientBook;"
+        "content": ""
       },
       {
         "lineNumber": 173,
         "author": {
           "gitId": "Trav1sT"
         },
-        "content": "    }"
-      },
-      {
-        "lineNumber": 174,
-        "author": {
-          "gitId": "Trav1sT"
-        },
-        "content": ""
-      },
-      {
-        "lineNumber": 175,
-        "author": {
-          "gitId": "Trav1sT"
-        },
         "content": "    @Override"
       },
       {
-        "lineNumber": 176,
+        "lineNumber": 174,
         "author": {
           "gitId": "hjl99"
         },
         "content": "    public boolean hasIngredient(Ingredient ind) {"
       },
       {
-        "lineNumber": 177,
+        "lineNumber": 175,
         "author": {
           "gitId": "hjl99"
         },
         "content": "        requireNonNull(ind);"
       },
       {
-        "lineNumber": 178,
+        "lineNumber": 176,
         "author": {
           "gitId": "hjl99"
         },
         "content": "        return ingredientBook.hasIngredient(ind);"
       },
       {
-        "lineNumber": 179,
+        "lineNumber": 177,
         "author": {
           "gitId": "Trav1sT"
         },
         "content": "    }"
+      },
+      {
+        "lineNumber": 178,
+        "author": {
+          "gitId": "Trav1sT"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 179,
+        "author": {
+          "gitId": "Trav1sT"
+        },
+        "content": "    @Override"
       },
       {
         "lineNumber": 180,
         "author": {
           "gitId": "Trav1sT"
         },
-        "content": ""
+        "content": "    public void deleteIngredient(Ingredient target) {"
       },
       {
         "lineNumber": 181,
         "author": {
           "gitId": "Trav1sT"
         },
-        "content": "    @Override"
+        "content": "        ingredientBook.removeIngredient(target);"
       },
       {
         "lineNumber": 182,
         "author": {
           "gitId": "Trav1sT"
         },
-        "content": "    public void deleteIngredient(Ingredient target) {"
+        "content": "    }"
       },
       {
         "lineNumber": 183,
         "author": {
           "gitId": "Trav1sT"
         },
-        "content": "        ingredientBook.removeIngredient(target);"
+        "content": ""
       },
       {
         "lineNumber": 184,
         "author": {
           "gitId": "Trav1sT"
         },
-        "content": "    }"
-      },
-      {
-        "lineNumber": 185,
-        "author": {
-          "gitId": "Trav1sT"
-        },
-        "content": ""
-      },
-      {
-        "lineNumber": 186,
-        "author": {
-          "gitId": "Trav1sT"
-        },
         "content": "    @Override"
       },
       {
-        "lineNumber": 187,
+        "lineNumber": 185,
         "author": {
           "gitId": "hjl99"
         },
         "content": "    public void addIngredient(Ingredient ind) {"
       },
       {
-        "lineNumber": 188,
+        "lineNumber": 186,
         "author": {
           "gitId": "hjl99"
         },
         "content": "        ingredientBook.addIngredient(ind);"
       },
       {
-        "lineNumber": 189,
+        "lineNumber": 187,
         "author": {
           "gitId": "Trav1sT"
         },
         "content": "        updateFilteredIngredientList(PREDICATE_SHOW_ALL_INGREDIENTS);"
       },
       {
-        "lineNumber": 190,
+        "lineNumber": 188,
         "author": {
           "gitId": "Trav1sT"
         },
         "content": "    }"
       },
       {
-        "lineNumber": 191,
+        "lineNumber": 189,
         "author": {
           "gitId": "Trav1sT"
         },
         "content": ""
       },
       {
-        "lineNumber": 192,
+        "lineNumber": 190,
         "author": {
           "gitId": "Trav1sT"
         },
         "content": "    @Override"
       },
       {
-        "lineNumber": 193,
+        "lineNumber": 191,
         "author": {
           "gitId": "Trav1sT"
         },
         "content": "    public void setIngredient(Ingredient target, Ingredient editedIngredient) {"
       },
       {
-        "lineNumber": 194,
+        "lineNumber": 192,
         "author": {
           "gitId": "Trav1sT"
         },
         "content": "        requireAllNonNull(target, editedIngredient);"
       },
       {
-        "lineNumber": 195,
+        "lineNumber": 193,
         "author": {
           "gitId": "Trav1sT"
         },
         "content": ""
       },
       {
-        "lineNumber": 196,
+        "lineNumber": 194,
         "author": {
           "gitId": "Trav1sT"
         },
         "content": "        ingredientBook.setIngredient(target, editedIngredient);"
       },
       {
-        "lineNumber": 197,
+        "lineNumber": 195,
         "author": {
           "gitId": "Trav1sT"
         },
         "content": "    }"
+      },
+      {
+        "lineNumber": 196,
+        "author": {
+          "gitId": "Trav1sT"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 197,
+        "author": {
+          "gitId": "Trav1sT"
+        },
+        "content": "    //\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d Filtered Ingredient List Accessors \u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d"
       },
       {
         "lineNumber": 198,
@@ -22030,112 +23007,112 @@
         "author": {
           "gitId": "Trav1sT"
         },
-        "content": "    //\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d Filtered Ingredient List Accessors \u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d"
+        "content": "    /**"
       },
       {
         "lineNumber": 200,
         "author": {
           "gitId": "Trav1sT"
         },
-        "content": ""
+        "content": "     * Returns an unmodifiable view of the list of {@code Ingredient} backed by the internal list of"
       },
       {
         "lineNumber": 201,
         "author": {
           "gitId": "Trav1sT"
         },
-        "content": "    /**"
+        "content": "     * {@code versionedAddressBook}"
       },
       {
         "lineNumber": 202,
         "author": {
           "gitId": "Trav1sT"
         },
-        "content": "     * Returns an unmodifiable view of the list of {@code Ingredient} backed by the internal list of"
+        "content": "     */"
       },
       {
         "lineNumber": 203,
         "author": {
           "gitId": "Trav1sT"
         },
-        "content": "     * {@code versionedAddressBook}"
+        "content": "    @Override"
       },
       {
         "lineNumber": 204,
         "author": {
           "gitId": "Trav1sT"
         },
-        "content": "     */"
+        "content": "    public ObservableList\u003cIngredient\u003e getFilteredIngredientList() {"
       },
       {
         "lineNumber": 205,
         "author": {
           "gitId": "Trav1sT"
         },
-        "content": "    @Override"
+        "content": "        return filteredIngredients;"
       },
       {
         "lineNumber": 206,
         "author": {
           "gitId": "Trav1sT"
         },
-        "content": "    public ObservableList\u003cIngredient\u003e getFilteredIngredientList() {"
+        "content": "    }"
       },
       {
         "lineNumber": 207,
         "author": {
           "gitId": "Trav1sT"
         },
-        "content": "        return filteredIngredients;"
+        "content": ""
       },
       {
         "lineNumber": 208,
         "author": {
           "gitId": "Trav1sT"
         },
-        "content": "    }"
+        "content": ""
       },
       {
         "lineNumber": 209,
         "author": {
           "gitId": "Trav1sT"
         },
-        "content": ""
+        "content": "    @Override"
       },
       {
         "lineNumber": 210,
         "author": {
           "gitId": "Trav1sT"
         },
-        "content": ""
+        "content": "    public void updateFilteredIngredientList(Predicate\u003cFoodEntry\u003e predicate) {"
       },
       {
         "lineNumber": 211,
         "author": {
           "gitId": "Trav1sT"
         },
-        "content": "    @Override"
+        "content": "        requireNonNull(predicate);"
       },
       {
         "lineNumber": 212,
         "author": {
           "gitId": "Trav1sT"
         },
-        "content": "    public void updateFilteredIngredientList(Predicate\u003cFoodEntry\u003e predicate) {"
+        "content": "        filteredIngredients.setPredicate(predicate);"
       },
       {
         "lineNumber": 213,
         "author": {
-          "gitId": "Trav1sT"
+          "gitId": "hjl99"
         },
-        "content": "        requireNonNull(predicate);"
+        "content": ""
       },
       {
         "lineNumber": 214,
         "author": {
-          "gitId": "Trav1sT"
+          "gitId": "hjl99"
         },
-        "content": "        filteredIngredients.setPredicate(predicate);"
+        "content": "    }"
       },
       {
         "lineNumber": 215,
@@ -22149,154 +23126,154 @@
         "author": {
           "gitId": "hjl99"
         },
-        "content": "    }"
+        "content": "    @Override"
       },
       {
         "lineNumber": 217,
         "author": {
           "gitId": "hjl99"
         },
-        "content": ""
+        "content": "    public boolean equals(Object obj) {"
       },
       {
         "lineNumber": 218,
         "author": {
           "gitId": "hjl99"
         },
-        "content": "    @Override"
+        "content": "        // short circuit if same object"
       },
       {
         "lineNumber": 219,
         "author": {
           "gitId": "hjl99"
         },
-        "content": "    public boolean equals(Object obj) {"
+        "content": "        if (obj \u003d\u003d this) {"
       },
       {
         "lineNumber": 220,
         "author": {
           "gitId": "hjl99"
         },
-        "content": "        // short circuit if same object"
+        "content": "            return true;"
       },
       {
         "lineNumber": 221,
         "author": {
           "gitId": "hjl99"
         },
-        "content": "        if (obj \u003d\u003d this) {"
+        "content": "        }"
       },
       {
         "lineNumber": 222,
         "author": {
           "gitId": "hjl99"
         },
-        "content": "            return true;"
+        "content": ""
       },
       {
         "lineNumber": 223,
         "author": {
           "gitId": "hjl99"
         },
-        "content": "        }"
+        "content": "        // instanceof handles nulls"
       },
       {
         "lineNumber": 224,
         "author": {
           "gitId": "hjl99"
         },
-        "content": ""
+        "content": "        if (!(obj instanceof ModelManager)) {"
       },
       {
         "lineNumber": 225,
         "author": {
           "gitId": "hjl99"
         },
-        "content": "        // instanceof handles nulls"
+        "content": "            return false;"
       },
       {
         "lineNumber": 226,
         "author": {
           "gitId": "hjl99"
         },
-        "content": "        if (!(obj instanceof ModelManager)) {"
+        "content": "        }"
       },
       {
         "lineNumber": 227,
         "author": {
           "gitId": "hjl99"
         },
-        "content": "            return false;"
+        "content": ""
       },
       {
         "lineNumber": 228,
         "author": {
           "gitId": "hjl99"
         },
-        "content": "        }"
+        "content": "        // state check"
       },
       {
         "lineNumber": 229,
         "author": {
           "gitId": "hjl99"
         },
-        "content": ""
+        "content": "        ModelManager other \u003d (ModelManager) obj;"
       },
       {
         "lineNumber": 230,
         "author": {
           "gitId": "hjl99"
         },
-        "content": "        // state check"
+        "content": ""
       },
       {
         "lineNumber": 231,
         "author": {
           "gitId": "hjl99"
         },
-        "content": "        ModelManager other \u003d (ModelManager) obj;"
+        "content": "        return recipeBook.equals(other.recipeBook)"
       },
       {
         "lineNumber": 232,
         "author": {
           "gitId": "hjl99"
         },
-        "content": ""
-      },
-      {
-        "lineNumber": 233,
-        "author": {
-          "gitId": "hjl99"
-        },
-        "content": "        return recipeBook.equals(other.recipeBook)"
-      },
-      {
-        "lineNumber": 234,
-        "author": {
-          "gitId": "hjl99"
-        },
         "content": "                \u0026\u0026 userPrefs.equals(other.userPrefs)"
       },
       {
-        "lineNumber": 235,
+        "lineNumber": 233,
         "author": {
           "gitId": "Trav1sT"
         },
         "content": "                \u0026\u0026 filteredRecipes.equals(other.filteredRecipes)"
       },
       {
-        "lineNumber": 236,
+        "lineNumber": 234,
         "author": {
           "gitId": "Trav1sT"
         },
         "content": "                \u0026\u0026 ingredientBook.equals(other.ingredientBook)"
       },
       {
-        "lineNumber": 237,
+        "lineNumber": 235,
         "author": {
           "gitId": "hjl99"
         },
         "content": "                \u0026\u0026 filteredIngredients.equals(other.filteredIngredients);"
+      },
+      {
+        "lineNumber": 236,
+        "author": {
+          "gitId": "hjl99"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 237,
+        "author": {
+          "gitId": "hjl99"
+        },
+        "content": "    }"
       },
       {
         "lineNumber": 238,
@@ -22310,26 +23287,13 @@
         "author": {
           "gitId": "hjl99"
         },
-        "content": "    }"
-      },
-      {
-        "lineNumber": 240,
-        "author": {
-          "gitId": "hjl99"
-        },
-        "content": ""
-      },
-      {
-        "lineNumber": 241,
-        "author": {
-          "gitId": "hjl99"
-        },
         "content": "}"
       }
     ],
     "authorContributionMap": {
-      "hjl99": 156,
-      "Trav1sT": 85
+      "hjl99": 151,
+      "zhiayang": 4,
+      "Trav1sT": 84
     }
   },
   {
@@ -27280,7 +28244,7 @@
         "author": {
           "gitId": "Trav1sT"
         },
-        "content": "        return entries.asUnmodifiableObservableList().size() + \" persons\";"
+        "content": "        return entries.asUnmodifiableObservableList().size() + \" ingredients\";"
       },
       {
         "lineNumber": 83,
@@ -29994,7 +30958,7 @@
         "author": {
           "gitId": "Trav1sT"
         },
-        "content": "        return entries.asUnmodifiableObservableList().size() + \" persons\";"
+        "content": "        return entries.asUnmodifiableObservableList().size() + \" recipes\";"
       },
       {
         "lineNumber": 83,
@@ -38461,6 +39425,302 @@
     }
   },
   {
+    "path": "src/test/java/chopchop/logic/commands/AddIngredientCommandIntTest.java",
+    "fileType": "test-code",
+    "lines": [
+      {
+        "lineNumber": 1,
+        "author": {
+          "gitId": "Trav1sT"
+        },
+        "content": "package chopchop.logic.commands;"
+      },
+      {
+        "lineNumber": 2,
+        "author": {
+          "gitId": "Trav1sT"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 3,
+        "author": {
+          "gitId": "Trav1sT"
+        },
+        "content": "import static chopchop.logic.commands.CommandTestUtil.assertCommandFailure;"
+      },
+      {
+        "lineNumber": 4,
+        "author": {
+          "gitId": "Trav1sT"
+        },
+        "content": "import static chopchop.logic.commands.CommandTestUtil.assertCommandSuccess;"
+      },
+      {
+        "lineNumber": 5,
+        "author": {
+          "gitId": "Trav1sT"
+        },
+        "content": "import static chopchop.testutil.TypicalIngredients.getTypicalIngredientBook;"
+      },
+      {
+        "lineNumber": 6,
+        "author": {
+          "gitId": "Trav1sT"
+        },
+        "content": "import org.junit.jupiter.api.BeforeEach;"
+      },
+      {
+        "lineNumber": 7,
+        "author": {
+          "gitId": "Trav1sT"
+        },
+        "content": "import org.junit.jupiter.api.Test;"
+      },
+      {
+        "lineNumber": 8,
+        "author": {
+          "gitId": "Trav1sT"
+        },
+        "content": "import chopchop.model.Model;"
+      },
+      {
+        "lineNumber": 9,
+        "author": {
+          "gitId": "Trav1sT"
+        },
+        "content": "import chopchop.model.ModelManager;"
+      },
+      {
+        "lineNumber": 10,
+        "author": {
+          "gitId": "Trav1sT"
+        },
+        "content": "import chopchop.model.UserPrefs;"
+      },
+      {
+        "lineNumber": 11,
+        "author": {
+          "gitId": "Trav1sT"
+        },
+        "content": "import chopchop.model.ingredient.Ingredient;"
+      },
+      {
+        "lineNumber": 12,
+        "author": {
+          "gitId": "Trav1sT"
+        },
+        "content": "import chopchop.model.recipe.RecipeBook;"
+      },
+      {
+        "lineNumber": 13,
+        "author": {
+          "gitId": "Trav1sT"
+        },
+        "content": "import chopchop.testutil.IngredientBuilder;"
+      },
+      {
+        "lineNumber": 14,
+        "author": {
+          "gitId": "Trav1sT"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 15,
+        "author": {
+          "gitId": "Trav1sT"
+        },
+        "content": "public class AddIngredientCommandIntTest {"
+      },
+      {
+        "lineNumber": 16,
+        "author": {
+          "gitId": "Trav1sT"
+        },
+        "content": "    private Model model;"
+      },
+      {
+        "lineNumber": 17,
+        "author": {
+          "gitId": "Trav1sT"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 18,
+        "author": {
+          "gitId": "Trav1sT"
+        },
+        "content": "    @BeforeEach"
+      },
+      {
+        "lineNumber": 19,
+        "author": {
+          "gitId": "Trav1sT"
+        },
+        "content": "    public void setUp() {"
+      },
+      {
+        "lineNumber": 20,
+        "author": {
+          "gitId": "Trav1sT"
+        },
+        "content": "        model \u003d new ModelManager(new RecipeBook(), getTypicalIngredientBook(), new UserPrefs());"
+      },
+      {
+        "lineNumber": 21,
+        "author": {
+          "gitId": "Trav1sT"
+        },
+        "content": "    }"
+      },
+      {
+        "lineNumber": 22,
+        "author": {
+          "gitId": "Trav1sT"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 23,
+        "author": {
+          "gitId": "Trav1sT"
+        },
+        "content": "    @Test"
+      },
+      {
+        "lineNumber": 24,
+        "author": {
+          "gitId": "Trav1sT"
+        },
+        "content": "    public void execute_newPerson_success() {"
+      },
+      {
+        "lineNumber": 25,
+        "author": {
+          "gitId": "Trav1sT"
+        },
+        "content": "        Ingredient validIngredient \u003d new IngredientBuilder().build();"
+      },
+      {
+        "lineNumber": 26,
+        "author": {
+          "gitId": "Trav1sT"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 27,
+        "author": {
+          "gitId": "Trav1sT"
+        },
+        "content": "        Model expectedModel \u003d new ModelManager(new RecipeBook(), model.getIngredientBook(), new UserPrefs());"
+      },
+      {
+        "lineNumber": 28,
+        "author": {
+          "gitId": "Trav1sT"
+        },
+        "content": "        expectedModel.addIngredient(validIngredient);"
+      },
+      {
+        "lineNumber": 29,
+        "author": {
+          "gitId": "Trav1sT"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 30,
+        "author": {
+          "gitId": "Trav1sT"
+        },
+        "content": "        assertCommandSuccess(new AddIngredientCommand(validIngredient), model,"
+      },
+      {
+        "lineNumber": 31,
+        "author": {
+          "gitId": "Trav1sT"
+        },
+        "content": "            String.format(AddIngredientCommand.MESSAGE_SUCCESS, validIngredient), expectedModel);"
+      },
+      {
+        "lineNumber": 32,
+        "author": {
+          "gitId": "Trav1sT"
+        },
+        "content": "    }"
+      },
+      {
+        "lineNumber": 33,
+        "author": {
+          "gitId": "Trav1sT"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 34,
+        "author": {
+          "gitId": "Trav1sT"
+        },
+        "content": "    @Test"
+      },
+      {
+        "lineNumber": 35,
+        "author": {
+          "gitId": "Trav1sT"
+        },
+        "content": "    public void execute_duplicatePerson_throwsCommandException() {"
+      },
+      {
+        "lineNumber": 36,
+        "author": {
+          "gitId": "Trav1sT"
+        },
+        "content": "        Ingredient personInList \u003d model.getIngredientBook().getFoodEntryList().get(0);"
+      },
+      {
+        "lineNumber": 37,
+        "author": {
+          "gitId": "Trav1sT"
+        },
+        "content": "        assertCommandFailure(new AddIngredientCommand(personInList), model,"
+      },
+      {
+        "lineNumber": 38,
+        "author": {
+          "gitId": "Trav1sT"
+        },
+        "content": "            AddIngredientCommand.MESSAGE_DUPLICATE_INGREDIENT);"
+      },
+      {
+        "lineNumber": 39,
+        "author": {
+          "gitId": "Trav1sT"
+        },
+        "content": "    }"
+      },
+      {
+        "lineNumber": 40,
+        "author": {
+          "gitId": "Trav1sT"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 41,
+        "author": {
+          "gitId": "Trav1sT"
+        },
+        "content": "}"
+      }
+    ],
+    "authorContributionMap": {
+      "Trav1sT": 41
+    }
+  },
+  {
     "path": "src/test/java/chopchop/logic/commands/AddIngredientCommandTest.java",
     "fileType": "test-code",
     "lines": [
@@ -38483,10 +39743,780 @@
         "author": {
           "gitId": "Trav1sT"
         },
-        "content": "public class AddIngredientCommandTest {"
+        "content": "import static java.util.Objects.requireNonNull;"
       },
       {
         "lineNumber": 4,
+        "author": {
+          "gitId": "Trav1sT"
+        },
+        "content": "import static org.junit.jupiter.api.Assertions.assertEquals;"
+      },
+      {
+        "lineNumber": 5,
+        "author": {
+          "gitId": "Trav1sT"
+        },
+        "content": "import static org.junit.jupiter.api.Assertions.assertFalse;"
+      },
+      {
+        "lineNumber": 6,
+        "author": {
+          "gitId": "Trav1sT"
+        },
+        "content": "import static org.junit.jupiter.api.Assertions.assertTrue;"
+      },
+      {
+        "lineNumber": 7,
+        "author": {
+          "gitId": "Trav1sT"
+        },
+        "content": "import static chopchop.testutil.Assert.assertThrows;"
+      },
+      {
+        "lineNumber": 8,
+        "author": {
+          "gitId": "Trav1sT"
+        },
+        "content": "import java.util.ArrayList;"
+      },
+      {
+        "lineNumber": 9,
+        "author": {
+          "gitId": "Trav1sT"
+        },
+        "content": "import java.util.Arrays;"
+      },
+      {
+        "lineNumber": 10,
+        "author": {
+          "gitId": "Trav1sT"
+        },
+        "content": "import org.junit.jupiter.api.Test;"
+      },
+      {
+        "lineNumber": 11,
+        "author": {
+          "gitId": "Trav1sT"
+        },
+        "content": "import chopchop.logic.commands.exceptions.CommandException;"
+      },
+      {
+        "lineNumber": 12,
+        "author": {
+          "gitId": "Trav1sT"
+        },
+        "content": "import chopchop.model.ModelStub;"
+      },
+      {
+        "lineNumber": 13,
+        "author": {
+          "gitId": "Trav1sT"
+        },
+        "content": "import chopchop.model.ingredient.Ingredient;"
+      },
+      {
+        "lineNumber": 14,
+        "author": {
+          "gitId": "Trav1sT"
+        },
+        "content": "import chopchop.model.ingredient.IngredientBook;"
+      },
+      {
+        "lineNumber": 15,
+        "author": {
+          "gitId": "Trav1sT"
+        },
+        "content": "import chopchop.model.ingredient.ReadOnlyIngredientBook;"
+      },
+      {
+        "lineNumber": 16,
+        "author": {
+          "gitId": "Trav1sT"
+        },
+        "content": "import chopchop.testutil.IngredientBuilder;"
+      },
+      {
+        "lineNumber": 17,
+        "author": {
+          "gitId": "Trav1sT"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 18,
+        "author": {
+          "gitId": "Trav1sT"
+        },
+        "content": "public class AddIngredientCommandTest {"
+      },
+      {
+        "lineNumber": 19,
+        "author": {
+          "gitId": "Trav1sT"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 20,
+        "author": {
+          "gitId": "Trav1sT"
+        },
+        "content": "    @Test"
+      },
+      {
+        "lineNumber": 21,
+        "author": {
+          "gitId": "Trav1sT"
+        },
+        "content": "    public void constructor_nullIngredient_throwsNullPointerException() {"
+      },
+      {
+        "lineNumber": 22,
+        "author": {
+          "gitId": "Trav1sT"
+        },
+        "content": "        assertThrows(NullPointerException.class, () -\u003e new AddIngredientCommand(null));"
+      },
+      {
+        "lineNumber": 23,
+        "author": {
+          "gitId": "Trav1sT"
+        },
+        "content": "    }"
+      },
+      {
+        "lineNumber": 24,
+        "author": {
+          "gitId": "Trav1sT"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 25,
+        "author": {
+          "gitId": "Trav1sT"
+        },
+        "content": "    @Test"
+      },
+      {
+        "lineNumber": 26,
+        "author": {
+          "gitId": "Trav1sT"
+        },
+        "content": "    public void execute_ingredientAcceptedByModel_addSuccessful() throws Exception {"
+      },
+      {
+        "lineNumber": 27,
+        "author": {
+          "gitId": "Trav1sT"
+        },
+        "content": "        AddIngredientCommandTest.ModelStubAcceptingIngredientAdded modelStub \u003d new ModelStubAcceptingIngredientAdded();"
+      },
+      {
+        "lineNumber": 28,
+        "author": {
+          "gitId": "Trav1sT"
+        },
+        "content": "        Ingredient validIngredient \u003d new IngredientBuilder().build();"
+      },
+      {
+        "lineNumber": 29,
+        "author": {
+          "gitId": "Trav1sT"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 30,
+        "author": {
+          "gitId": "Trav1sT"
+        },
+        "content": "        CommandResult commandResult \u003d new AddIngredientCommand(validIngredient).execute(modelStub);"
+      },
+      {
+        "lineNumber": 31,
+        "author": {
+          "gitId": "Trav1sT"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 32,
+        "author": {
+          "gitId": "Trav1sT"
+        },
+        "content": "        assertEquals(String.format(AddIngredientCommand.MESSAGE_SUCCESS, validIngredient),"
+      },
+      {
+        "lineNumber": 33,
+        "author": {
+          "gitId": "Trav1sT"
+        },
+        "content": "            commandResult.getFeedbackToUser());"
+      },
+      {
+        "lineNumber": 34,
+        "author": {
+          "gitId": "Trav1sT"
+        },
+        "content": "        assertEquals(Arrays.asList(validIngredient), modelStub.ingredientsAdded);"
+      },
+      {
+        "lineNumber": 35,
+        "author": {
+          "gitId": "Trav1sT"
+        },
+        "content": "    }"
+      },
+      {
+        "lineNumber": 36,
+        "author": {
+          "gitId": "Trav1sT"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 37,
+        "author": {
+          "gitId": "Trav1sT"
+        },
+        "content": "    @Test"
+      },
+      {
+        "lineNumber": 38,
+        "author": {
+          "gitId": "Trav1sT"
+        },
+        "content": "    public void execute_duplicateIngredient_throwsCommandException() {"
+      },
+      {
+        "lineNumber": 39,
+        "author": {
+          "gitId": "Trav1sT"
+        },
+        "content": "        Ingredient validIngredient \u003d new IngredientBuilder().build();"
+      },
+      {
+        "lineNumber": 40,
+        "author": {
+          "gitId": "Trav1sT"
+        },
+        "content": "        chopchop.logic.commands.AddCommand addCommand \u003d new AddIngredientCommand(validIngredient);"
+      },
+      {
+        "lineNumber": 41,
+        "author": {
+          "gitId": "Trav1sT"
+        },
+        "content": "        ModelStub modelStub \u003d new ModelStubWithIngredient(validIngredient);"
+      },
+      {
+        "lineNumber": 42,
+        "author": {
+          "gitId": "Trav1sT"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 43,
+        "author": {
+          "gitId": "Trav1sT"
+        },
+        "content": "        assertThrows(CommandException.class,"
+      },
+      {
+        "lineNumber": 44,
+        "author": {
+          "gitId": "Trav1sT"
+        },
+        "content": "            AddIngredientCommand.MESSAGE_DUPLICATE_INGREDIENT, () -\u003e addCommand.execute(modelStub)"
+      },
+      {
+        "lineNumber": 45,
+        "author": {
+          "gitId": "Trav1sT"
+        },
+        "content": "        );"
+      },
+      {
+        "lineNumber": 46,
+        "author": {
+          "gitId": "Trav1sT"
+        },
+        "content": "    }"
+      },
+      {
+        "lineNumber": 47,
+        "author": {
+          "gitId": "Trav1sT"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 48,
+        "author": {
+          "gitId": "Trav1sT"
+        },
+        "content": "    @Test"
+      },
+      {
+        "lineNumber": 49,
+        "author": {
+          "gitId": "Trav1sT"
+        },
+        "content": "    public void equals() {"
+      },
+      {
+        "lineNumber": 50,
+        "author": {
+          "gitId": "Trav1sT"
+        },
+        "content": "        Ingredient apple \u003d new IngredientBuilder().withName(\"Apple\").build();"
+      },
+      {
+        "lineNumber": 51,
+        "author": {
+          "gitId": "Trav1sT"
+        },
+        "content": "        Ingredient banana \u003d new IngredientBuilder().withName(\"Banana\").build();"
+      },
+      {
+        "lineNumber": 52,
+        "author": {
+          "gitId": "Trav1sT"
+        },
+        "content": "        AddCommand addAppleCommand \u003d new AddIngredientCommand(apple);"
+      },
+      {
+        "lineNumber": 53,
+        "author": {
+          "gitId": "Trav1sT"
+        },
+        "content": "        AddCommand addBananaCommand \u003d new AddIngredientCommand(banana);"
+      },
+      {
+        "lineNumber": 54,
+        "author": {
+          "gitId": "Trav1sT"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 55,
+        "author": {
+          "gitId": "Trav1sT"
+        },
+        "content": "        // same object -\u003e returns true"
+      },
+      {
+        "lineNumber": 56,
+        "author": {
+          "gitId": "Trav1sT"
+        },
+        "content": "        assertTrue(addAppleCommand.equals(addAppleCommand));"
+      },
+      {
+        "lineNumber": 57,
+        "author": {
+          "gitId": "Trav1sT"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 58,
+        "author": {
+          "gitId": "Trav1sT"
+        },
+        "content": "        // same values -\u003e returns true"
+      },
+      {
+        "lineNumber": 59,
+        "author": {
+          "gitId": "Trav1sT"
+        },
+        "content": "        AddCommand addAliceCommandCopy \u003d new AddIngredientCommand(apple);"
+      },
+      {
+        "lineNumber": 60,
+        "author": {
+          "gitId": "Trav1sT"
+        },
+        "content": "        assertTrue(addAppleCommand.equals(addAliceCommandCopy));"
+      },
+      {
+        "lineNumber": 61,
+        "author": {
+          "gitId": "Trav1sT"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 62,
+        "author": {
+          "gitId": "Trav1sT"
+        },
+        "content": "        // different types -\u003e returns false"
+      },
+      {
+        "lineNumber": 63,
+        "author": {
+          "gitId": "Trav1sT"
+        },
+        "content": "        assertFalse(addAppleCommand.equals(1));"
+      },
+      {
+        "lineNumber": 64,
+        "author": {
+          "gitId": "Trav1sT"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 65,
+        "author": {
+          "gitId": "Trav1sT"
+        },
+        "content": "        // null -\u003e returns false"
+      },
+      {
+        "lineNumber": 66,
+        "author": {
+          "gitId": "Trav1sT"
+        },
+        "content": "        assertFalse(addAppleCommand.equals(null));"
+      },
+      {
+        "lineNumber": 67,
+        "author": {
+          "gitId": "Trav1sT"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 68,
+        "author": {
+          "gitId": "Trav1sT"
+        },
+        "content": "        // different ingredient -\u003e returns false"
+      },
+      {
+        "lineNumber": 69,
+        "author": {
+          "gitId": "Trav1sT"
+        },
+        "content": "        assertFalse(addAppleCommand.equals(addBananaCommand));"
+      },
+      {
+        "lineNumber": 70,
+        "author": {
+          "gitId": "Trav1sT"
+        },
+        "content": "    }"
+      },
+      {
+        "lineNumber": 71,
+        "author": {
+          "gitId": "Trav1sT"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 72,
+        "author": {
+          "gitId": "Trav1sT"
+        },
+        "content": "    /**"
+      },
+      {
+        "lineNumber": 73,
+        "author": {
+          "gitId": "Trav1sT"
+        },
+        "content": "     * A Model stub that contains a single ingredient."
+      },
+      {
+        "lineNumber": 74,
+        "author": {
+          "gitId": "Trav1sT"
+        },
+        "content": "     */"
+      },
+      {
+        "lineNumber": 75,
+        "author": {
+          "gitId": "Trav1sT"
+        },
+        "content": "    private class ModelStubWithIngredient extends ModelStub {"
+      },
+      {
+        "lineNumber": 76,
+        "author": {
+          "gitId": "Trav1sT"
+        },
+        "content": "        private final Ingredient ingredient;"
+      },
+      {
+        "lineNumber": 77,
+        "author": {
+          "gitId": "Trav1sT"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 78,
+        "author": {
+          "gitId": "Trav1sT"
+        },
+        "content": "        ModelStubWithIngredient(Ingredient ingredient) {"
+      },
+      {
+        "lineNumber": 79,
+        "author": {
+          "gitId": "Trav1sT"
+        },
+        "content": "            requireNonNull(ingredient);"
+      },
+      {
+        "lineNumber": 80,
+        "author": {
+          "gitId": "Trav1sT"
+        },
+        "content": "            this.ingredient \u003d ingredient;"
+      },
+      {
+        "lineNumber": 81,
+        "author": {
+          "gitId": "Trav1sT"
+        },
+        "content": "        }"
+      },
+      {
+        "lineNumber": 82,
+        "author": {
+          "gitId": "Trav1sT"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 83,
+        "author": {
+          "gitId": "Trav1sT"
+        },
+        "content": "        @Override"
+      },
+      {
+        "lineNumber": 84,
+        "author": {
+          "gitId": "Trav1sT"
+        },
+        "content": "        public boolean hasIngredient(Ingredient ingredient) {"
+      },
+      {
+        "lineNumber": 85,
+        "author": {
+          "gitId": "Trav1sT"
+        },
+        "content": "            requireNonNull(ingredient);"
+      },
+      {
+        "lineNumber": 86,
+        "author": {
+          "gitId": "Trav1sT"
+        },
+        "content": "            return this.ingredient.equals(ingredient);"
+      },
+      {
+        "lineNumber": 87,
+        "author": {
+          "gitId": "Trav1sT"
+        },
+        "content": "        }"
+      },
+      {
+        "lineNumber": 88,
+        "author": {
+          "gitId": "Trav1sT"
+        },
+        "content": "    }"
+      },
+      {
+        "lineNumber": 89,
+        "author": {
+          "gitId": "Trav1sT"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 90,
+        "author": {
+          "gitId": "Trav1sT"
+        },
+        "content": "    /**"
+      },
+      {
+        "lineNumber": 91,
+        "author": {
+          "gitId": "Trav1sT"
+        },
+        "content": "     * A Model stub that always accept the ingredient being added."
+      },
+      {
+        "lineNumber": 92,
+        "author": {
+          "gitId": "Trav1sT"
+        },
+        "content": "     */"
+      },
+      {
+        "lineNumber": 93,
+        "author": {
+          "gitId": "Trav1sT"
+        },
+        "content": "    private class ModelStubAcceptingIngredientAdded extends ModelStub {"
+      },
+      {
+        "lineNumber": 94,
+        "author": {
+          "gitId": "Trav1sT"
+        },
+        "content": "        final ArrayList\u003cIngredient\u003e ingredientsAdded \u003d new ArrayList\u003c\u003e();"
+      },
+      {
+        "lineNumber": 95,
+        "author": {
+          "gitId": "Trav1sT"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 96,
+        "author": {
+          "gitId": "Trav1sT"
+        },
+        "content": "        @Override"
+      },
+      {
+        "lineNumber": 97,
+        "author": {
+          "gitId": "Trav1sT"
+        },
+        "content": "        public boolean hasIngredient(Ingredient ingredient) {"
+      },
+      {
+        "lineNumber": 98,
+        "author": {
+          "gitId": "Trav1sT"
+        },
+        "content": "            requireNonNull(ingredient);"
+      },
+      {
+        "lineNumber": 99,
+        "author": {
+          "gitId": "Trav1sT"
+        },
+        "content": "            return ingredientsAdded.stream().anyMatch(ingredient::equals);"
+      },
+      {
+        "lineNumber": 100,
+        "author": {
+          "gitId": "Trav1sT"
+        },
+        "content": "        }"
+      },
+      {
+        "lineNumber": 101,
+        "author": {
+          "gitId": "Trav1sT"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 102,
+        "author": {
+          "gitId": "Trav1sT"
+        },
+        "content": "        @Override"
+      },
+      {
+        "lineNumber": 103,
+        "author": {
+          "gitId": "Trav1sT"
+        },
+        "content": "        public void addIngredient(Ingredient ingredient) {"
+      },
+      {
+        "lineNumber": 104,
+        "author": {
+          "gitId": "Trav1sT"
+        },
+        "content": "            requireNonNull(ingredient);"
+      },
+      {
+        "lineNumber": 105,
+        "author": {
+          "gitId": "Trav1sT"
+        },
+        "content": "            ingredientsAdded.add(ingredient);"
+      },
+      {
+        "lineNumber": 106,
+        "author": {
+          "gitId": "Trav1sT"
+        },
+        "content": "        }"
+      },
+      {
+        "lineNumber": 107,
+        "author": {
+          "gitId": "Trav1sT"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 108,
+        "author": {
+          "gitId": "Trav1sT"
+        },
+        "content": "        @Override"
+      },
+      {
+        "lineNumber": 109,
+        "author": {
+          "gitId": "Trav1sT"
+        },
+        "content": "        public ReadOnlyIngredientBook getIngredientBook() {"
+      },
+      {
+        "lineNumber": 110,
+        "author": {
+          "gitId": "Trav1sT"
+        },
+        "content": "            return new IngredientBook();"
+      },
+      {
+        "lineNumber": 111,
+        "author": {
+          "gitId": "Trav1sT"
+        },
+        "content": "        }"
+      },
+      {
+        "lineNumber": 112,
+        "author": {
+          "gitId": "Trav1sT"
+        },
+        "content": "    }"
+      },
+      {
+        "lineNumber": 113,
+        "author": {
+          "gitId": "Trav1sT"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 114,
         "author": {
           "gitId": "Trav1sT"
         },
@@ -38494,7 +40524,7 @@
       }
     ],
     "authorContributionMap": {
-      "Trav1sT": 4
+      "Trav1sT": 114
     }
   },
   {
@@ -38520,73 +40550,549 @@
         "author": {
           "gitId": "Trav1sT"
         },
-        "content": "public class CommandTestUtil {"
+        "content": "import static org.junit.jupiter.api.Assertions.assertEquals;"
       },
       {
         "lineNumber": 4,
         "author": {
           "gitId": "Trav1sT"
         },
-        "content": "    public static final String VALID_INGREDIENT_NAME_APRICOT \u003d \"Apricot\";"
+        "content": "import static org.junit.jupiter.api.Assertions.assertTrue;"
       },
       {
         "lineNumber": 5,
         "author": {
           "gitId": "Trav1sT"
         },
-        "content": "    public static final String VALID_INGREDIENT_NAME_BANANA \u003d \"Banana\";"
+        "content": "import static chopchop.testutil.Assert.assertThrows;"
       },
       {
         "lineNumber": 6,
         "author": {
           "gitId": "Trav1sT"
         },
-        "content": "    public static final double VALID_INGREDIENT_QTY_APRICOT \u003d 1000000;"
+        "content": "import java.util.ArrayList;"
       },
       {
         "lineNumber": 7,
         "author": {
           "gitId": "Trav1sT"
         },
-        "content": "    public static final double VALID_INGREDIENT_QTY_BANANA \u003d 10.5;"
+        "content": "import java.util.Arrays;"
       },
       {
         "lineNumber": 8,
         "author": {
           "gitId": "Trav1sT"
         },
-        "content": "    public static final String VALID_INGREDIENT_EXPIRY_APRICOT \u003d \"2020-12-01\";"
+        "content": "import java.util.List;"
       },
       {
         "lineNumber": 9,
         "author": {
           "gitId": "Trav1sT"
         },
-        "content": "    public static final String VALID_INGREDIENT_EXPIRY_BANANA \u003d \"2021-10-13\";"
+        "content": "import chopchop.commons.core.index.Index;"
       },
       {
         "lineNumber": 10,
         "author": {
-          "gitId": "hjl99"
+          "gitId": "Trav1sT"
+        },
+        "content": "import chopchop.logic.commands.exceptions.CommandException;"
+      },
+      {
+        "lineNumber": 11,
+        "author": {
+          "gitId": "Trav1sT"
+        },
+        "content": "import chopchop.model.Model;"
+      },
+      {
+        "lineNumber": 12,
+        "author": {
+          "gitId": "Trav1sT"
+        },
+        "content": "import chopchop.model.attributes.NameContainsKeywordsPredicate;"
+      },
+      {
+        "lineNumber": 13,
+        "author": {
+          "gitId": "Trav1sT"
+        },
+        "content": "import chopchop.model.ingredient.Ingredient;"
+      },
+      {
+        "lineNumber": 14,
+        "author": {
+          "gitId": "Trav1sT"
+        },
+        "content": "import chopchop.model.ingredient.IngredientBook;"
+      },
+      {
+        "lineNumber": 15,
+        "author": {
+          "gitId": "Trav1sT"
         },
         "content": ""
       },
       {
-        "lineNumber": 11,
+        "lineNumber": 16,
+        "author": {
+          "gitId": "Trav1sT"
+        },
+        "content": "public class CommandTestUtil {"
+      },
+      {
+        "lineNumber": 17,
+        "author": {
+          "gitId": "Trav1sT"
+        },
+        "content": "    public static final String VALID_INGREDIENT_NAME_APRICOT \u003d \"Apricot\";"
+      },
+      {
+        "lineNumber": 18,
+        "author": {
+          "gitId": "Trav1sT"
+        },
+        "content": "    public static final String VALID_INGREDIENT_NAME_BANANA \u003d \"Banana\";"
+      },
+      {
+        "lineNumber": 19,
+        "author": {
+          "gitId": "Trav1sT"
+        },
+        "content": "    public static final double VALID_INGREDIENT_QTY_APRICOT \u003d 1000000;"
+      },
+      {
+        "lineNumber": 20,
+        "author": {
+          "gitId": "Trav1sT"
+        },
+        "content": "    public static final double VALID_INGREDIENT_QTY_BANANA \u003d 10.5;"
+      },
+      {
+        "lineNumber": 21,
+        "author": {
+          "gitId": "Trav1sT"
+        },
+        "content": "    public static final String VALID_INGREDIENT_EXPIRY_APRICOT \u003d \"2020-12-01\";"
+      },
+      {
+        "lineNumber": 22,
+        "author": {
+          "gitId": "Trav1sT"
+        },
+        "content": "    public static final String VALID_INGREDIENT_EXPIRY_BANANA \u003d \"2021-10-13\";"
+      },
+      {
+        "lineNumber": 23,
         "author": {
           "gitId": "hjl99"
         },
         "content": "    public static final String VALID_RECIPE_NAME_APRICOT_SALAD \u003d \"Apricot Salad\";"
       },
       {
-        "lineNumber": 12,
+        "lineNumber": 24,
         "author": {
           "gitId": "hjl99"
         },
         "content": "    public static final String VALID_RECIPE_NAME_BANANA_SALAD \u003d \"Banana Salad\";"
       },
       {
-        "lineNumber": 13,
+        "lineNumber": 25,
+        "author": {
+          "gitId": "Trav1sT"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 26,
+        "author": {
+          "gitId": "Trav1sT"
+        },
+        "content": "    /**"
+      },
+      {
+        "lineNumber": 27,
+        "author": {
+          "gitId": "Trav1sT"
+        },
+        "content": "     * Executes the given {@code command}, confirms that \u003cbr\u003e"
+      },
+      {
+        "lineNumber": 28,
+        "author": {
+          "gitId": "Trav1sT"
+        },
+        "content": "     * - the returned {@link CommandResult} matches {@code expectedCommandResult} \u003cbr\u003e"
+      },
+      {
+        "lineNumber": 29,
+        "author": {
+          "gitId": "Trav1sT"
+        },
+        "content": "     * - the {@code actualModel} matches {@code expectedModel}"
+      },
+      {
+        "lineNumber": 30,
+        "author": {
+          "gitId": "Trav1sT"
+        },
+        "content": "     */"
+      },
+      {
+        "lineNumber": 31,
+        "author": {
+          "gitId": "Trav1sT"
+        },
+        "content": "    public static void assertCommandSuccess(Command command, Model actualModel, CommandResult expectedCommandResult,"
+      },
+      {
+        "lineNumber": 32,
+        "author": {
+          "gitId": "Trav1sT"
+        },
+        "content": "                                            Model expectedModel) {"
+      },
+      {
+        "lineNumber": 33,
+        "author": {
+          "gitId": "Trav1sT"
+        },
+        "content": "        try {"
+      },
+      {
+        "lineNumber": 34,
+        "author": {
+          "gitId": "Trav1sT"
+        },
+        "content": "            CommandResult result \u003d command.execute(actualModel);"
+      },
+      {
+        "lineNumber": 35,
+        "author": {
+          "gitId": "Trav1sT"
+        },
+        "content": "            assertEquals(expectedCommandResult, result);"
+      },
+      {
+        "lineNumber": 36,
+        "author": {
+          "gitId": "Trav1sT"
+        },
+        "content": "            assertEquals(expectedModel, actualModel);"
+      },
+      {
+        "lineNumber": 37,
+        "author": {
+          "gitId": "Trav1sT"
+        },
+        "content": "        } catch (CommandException ce) {"
+      },
+      {
+        "lineNumber": 38,
+        "author": {
+          "gitId": "Trav1sT"
+        },
+        "content": "            throw new AssertionError(\"Execution of command should not fail.\", ce);"
+      },
+      {
+        "lineNumber": 39,
+        "author": {
+          "gitId": "Trav1sT"
+        },
+        "content": "        }"
+      },
+      {
+        "lineNumber": 40,
+        "author": {
+          "gitId": "Trav1sT"
+        },
+        "content": "    }"
+      },
+      {
+        "lineNumber": 41,
+        "author": {
+          "gitId": "Trav1sT"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 42,
+        "author": {
+          "gitId": "Trav1sT"
+        },
+        "content": "    /**"
+      },
+      {
+        "lineNumber": 43,
+        "author": {
+          "gitId": "Trav1sT"
+        },
+        "content": "     * Convenience wrapper to {@link #assertCommandSuccess(Command, Model, CommandResult, Model)}"
+      },
+      {
+        "lineNumber": 44,
+        "author": {
+          "gitId": "Trav1sT"
+        },
+        "content": "     * that takes a string {@code expectedMessage}."
+      },
+      {
+        "lineNumber": 45,
+        "author": {
+          "gitId": "Trav1sT"
+        },
+        "content": "     */"
+      },
+      {
+        "lineNumber": 46,
+        "author": {
+          "gitId": "Trav1sT"
+        },
+        "content": "    public static void assertCommandSuccess(Command command, Model actualModel, String expectedMessage,"
+      },
+      {
+        "lineNumber": 47,
+        "author": {
+          "gitId": "Trav1sT"
+        },
+        "content": "                                            Model expectedModel) {"
+      },
+      {
+        "lineNumber": 48,
+        "author": {
+          "gitId": "Trav1sT"
+        },
+        "content": "        CommandResult expectedCommandResult \u003d new CommandResult(expectedMessage);"
+      },
+      {
+        "lineNumber": 49,
+        "author": {
+          "gitId": "Trav1sT"
+        },
+        "content": "        assertCommandSuccess(command, actualModel, expectedCommandResult, expectedModel);"
+      },
+      {
+        "lineNumber": 50,
+        "author": {
+          "gitId": "Trav1sT"
+        },
+        "content": "    }"
+      },
+      {
+        "lineNumber": 51,
+        "author": {
+          "gitId": "Trav1sT"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 52,
+        "author": {
+          "gitId": "Trav1sT"
+        },
+        "content": "    /**"
+      },
+      {
+        "lineNumber": 53,
+        "author": {
+          "gitId": "Trav1sT"
+        },
+        "content": "     * Executes the given {@code command}, confirms that \u003cbr\u003e"
+      },
+      {
+        "lineNumber": 54,
+        "author": {
+          "gitId": "Trav1sT"
+        },
+        "content": "     * - a {@code CommandException} is thrown \u003cbr\u003e"
+      },
+      {
+        "lineNumber": 55,
+        "author": {
+          "gitId": "Trav1sT"
+        },
+        "content": "     * - the CommandException message matches {@code expectedMessage} \u003cbr\u003e"
+      },
+      {
+        "lineNumber": 56,
+        "author": {
+          "gitId": "Trav1sT"
+        },
+        "content": "     * - the address book, filtered person list and selected person in {@code actualModel} remain unchanged"
+      },
+      {
+        "lineNumber": 57,
+        "author": {
+          "gitId": "Trav1sT"
+        },
+        "content": "     */"
+      },
+      {
+        "lineNumber": 58,
+        "author": {
+          "gitId": "Trav1sT"
+        },
+        "content": "    public static void assertCommandFailure(Command command, Model actualModel, String expectedMessage) {"
+      },
+      {
+        "lineNumber": 59,
+        "author": {
+          "gitId": "Trav1sT"
+        },
+        "content": "        // we are unable to defensively copy the model for comparison later, so we can"
+      },
+      {
+        "lineNumber": 60,
+        "author": {
+          "gitId": "Trav1sT"
+        },
+        "content": "        // only do so by copying its components."
+      },
+      {
+        "lineNumber": 61,
+        "author": {
+          "gitId": "Trav1sT"
+        },
+        "content": "        IngredientBook expectedIndBook \u003d new IngredientBook(actualModel.getIngredientBook());"
+      },
+      {
+        "lineNumber": 62,
+        "author": {
+          "gitId": "Trav1sT"
+        },
+        "content": "        List\u003cIngredient\u003e expectedFilteredList \u003d new ArrayList\u003c\u003e(actualModel.getFilteredIngredientList());"
+      },
+      {
+        "lineNumber": 63,
+        "author": {
+          "gitId": "Trav1sT"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 64,
+        "author": {
+          "gitId": "Trav1sT"
+        },
+        "content": "        assertThrows(CommandException.class, expectedMessage, () -\u003e command.execute(actualModel));"
+      },
+      {
+        "lineNumber": 65,
+        "author": {
+          "gitId": "Trav1sT"
+        },
+        "content": "        assertEquals(expectedIndBook, actualModel.getIngredientBook());"
+      },
+      {
+        "lineNumber": 66,
+        "author": {
+          "gitId": "Trav1sT"
+        },
+        "content": "        assertEquals(expectedFilteredList, actualModel.getFilteredIngredientList());"
+      },
+      {
+        "lineNumber": 67,
+        "author": {
+          "gitId": "Trav1sT"
+        },
+        "content": "    }"
+      },
+      {
+        "lineNumber": 68,
+        "author": {
+          "gitId": "Trav1sT"
+        },
+        "content": "    /**"
+      },
+      {
+        "lineNumber": 69,
+        "author": {
+          "gitId": "Trav1sT"
+        },
+        "content": "     * Updates {@code model}\u0027s filtered list to show only the person at the given {@code targetIndex} in the"
+      },
+      {
+        "lineNumber": 70,
+        "author": {
+          "gitId": "Trav1sT"
+        },
+        "content": "     * {@code model}\u0027s address book."
+      },
+      {
+        "lineNumber": 71,
+        "author": {
+          "gitId": "Trav1sT"
+        },
+        "content": "     */"
+      },
+      {
+        "lineNumber": 72,
+        "author": {
+          "gitId": "Trav1sT"
+        },
+        "content": "    public static void showPersonAtIndex(Model model, Index targetIndex) {"
+      },
+      {
+        "lineNumber": 73,
+        "author": {
+          "gitId": "Trav1sT"
+        },
+        "content": "        assertTrue(targetIndex.getZeroBased() \u003c model.getFilteredIngredientList().size());"
+      },
+      {
+        "lineNumber": 74,
+        "author": {
+          "gitId": "Trav1sT"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 75,
+        "author": {
+          "gitId": "Trav1sT"
+        },
+        "content": "        Ingredient person \u003d model.getFilteredIngredientList().get(targetIndex.getZeroBased());"
+      },
+      {
+        "lineNumber": 76,
+        "author": {
+          "gitId": "Trav1sT"
+        },
+        "content": "        final String[] splitName \u003d person.getName().fullName.split(\"\\\\s+\");"
+      },
+      {
+        "lineNumber": 77,
+        "author": {
+          "gitId": "Trav1sT"
+        },
+        "content": "        model.updateFilteredIngredientList(new NameContainsKeywordsPredicate(Arrays.asList(splitName[0])));"
+      },
+      {
+        "lineNumber": 78,
+        "author": {
+          "gitId": "Trav1sT"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 79,
+        "author": {
+          "gitId": "Trav1sT"
+        },
+        "content": "        assertEquals(1, model.getFilteredIngredientList().size());"
+      },
+      {
+        "lineNumber": 80,
+        "author": {
+          "gitId": "Trav1sT"
+        },
+        "content": "    }"
+      },
+      {
+        "lineNumber": 81,
         "author": {
           "gitId": "Trav1sT"
         },
@@ -38594,8 +41100,8 @@
       }
     ],
     "authorContributionMap": {
-      "hjl99": 3,
-      "Trav1sT": 10
+      "hjl99": 2,
+      "Trav1sT": 79
     }
   },
   {
@@ -38621,47 +41127,710 @@
         "author": {
           "gitId": "Trav1sT"
         },
-        "content": "public class DeleteIngredientCommandTest {"
+        "content": "import static org.junit.jupiter.api.Assertions.assertFalse;"
       },
       {
         "lineNumber": 4,
         "author": {
           "gitId": "Trav1sT"
         },
-        "content": "}"
-      }
-    ],
-    "authorContributionMap": {
-      "Trav1sT": 4
-    }
-  },
-  {
-    "path": "src/test/java/chopchop/logic/commands/FilterIngredientCommandTest.java",
-    "fileType": "test-code",
-    "lines": [
+        "content": "import static org.junit.jupiter.api.Assertions.assertTrue;"
+      },
       {
-        "lineNumber": 1,
+        "lineNumber": 5,
         "author": {
           "gitId": "Trav1sT"
         },
-        "content": "package chopchop.logic.commands;"
+        "content": "import static chopchop.logic.commands.CommandTestUtil.assertCommandFailure;"
       },
       {
-        "lineNumber": 2,
+        "lineNumber": 6,
+        "author": {
+          "gitId": "Trav1sT"
+        },
+        "content": "import static chopchop.logic.commands.CommandTestUtil.assertCommandSuccess;"
+      },
+      {
+        "lineNumber": 7,
+        "author": {
+          "gitId": "Trav1sT"
+        },
+        "content": "import static chopchop.logic.commands.CommandTestUtil.showPersonAtIndex;"
+      },
+      {
+        "lineNumber": 8,
+        "author": {
+          "gitId": "Trav1sT"
+        },
+        "content": "import static chopchop.testutil.TypicalIndexes.INDEX_FIRST_INGREDIENT;"
+      },
+      {
+        "lineNumber": 9,
+        "author": {
+          "gitId": "Trav1sT"
+        },
+        "content": "import static chopchop.testutil.TypicalIndexes.INDEX_SECOND_INGREDIENT;"
+      },
+      {
+        "lineNumber": 10,
+        "author": {
+          "gitId": "Trav1sT"
+        },
+        "content": "import static chopchop.testutil.TypicalIngredients.getTypicalIngredientBook;"
+      },
+      {
+        "lineNumber": 11,
+        "author": {
+          "gitId": "Trav1sT"
+        },
+        "content": "import org.junit.jupiter.api.Test;"
+      },
+      {
+        "lineNumber": 12,
+        "author": {
+          "gitId": "Trav1sT"
+        },
+        "content": "import chopchop.commons.core.Messages;"
+      },
+      {
+        "lineNumber": 13,
+        "author": {
+          "gitId": "Trav1sT"
+        },
+        "content": "import chopchop.commons.core.index.Index;"
+      },
+      {
+        "lineNumber": 14,
+        "author": {
+          "gitId": "Trav1sT"
+        },
+        "content": "import chopchop.model.Model;"
+      },
+      {
+        "lineNumber": 15,
+        "author": {
+          "gitId": "Trav1sT"
+        },
+        "content": "import chopchop.model.ModelManager;"
+      },
+      {
+        "lineNumber": 16,
+        "author": {
+          "gitId": "Trav1sT"
+        },
+        "content": "import chopchop.model.UserPrefs;"
+      },
+      {
+        "lineNumber": 17,
+        "author": {
+          "gitId": "Trav1sT"
+        },
+        "content": "import chopchop.model.ingredient.Ingredient;"
+      },
+      {
+        "lineNumber": 18,
+        "author": {
+          "gitId": "Trav1sT"
+        },
+        "content": "import chopchop.model.recipe.RecipeBook;"
+      },
+      {
+        "lineNumber": 19,
         "author": {
           "gitId": "Trav1sT"
         },
         "content": ""
       },
       {
-        "lineNumber": 3,
+        "lineNumber": 20,
         "author": {
           "gitId": "Trav1sT"
         },
-        "content": "public class FilterIngredientCommandTest {"
+        "content": "public class DeleteIngredientCommandTest {"
       },
       {
-        "lineNumber": 4,
+        "lineNumber": 21,
+        "author": {
+          "gitId": "Trav1sT"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 22,
+        "author": {
+          "gitId": "Trav1sT"
+        },
+        "content": "    private Model model \u003d new ModelManager(new RecipeBook(), getTypicalIngredientBook(), new UserPrefs());"
+      },
+      {
+        "lineNumber": 23,
+        "author": {
+          "gitId": "Trav1sT"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 24,
+        "author": {
+          "gitId": "Trav1sT"
+        },
+        "content": "    @Test"
+      },
+      {
+        "lineNumber": 25,
+        "author": {
+          "gitId": "Trav1sT"
+        },
+        "content": "    public void execute_validIndexUnfilteredList_success() {"
+      },
+      {
+        "lineNumber": 26,
+        "author": {
+          "gitId": "Trav1sT"
+        },
+        "content": "        Ingredient indToDelete \u003d model.getFilteredIngredientList().get(INDEX_FIRST_INGREDIENT.getZeroBased());"
+      },
+      {
+        "lineNumber": 27,
+        "author": {
+          "gitId": "Trav1sT"
+        },
+        "content": "        DeleteIngredientCommand deleteCommand \u003d new DeleteIngredientCommand(INDEX_FIRST_INGREDIENT);"
+      },
+      {
+        "lineNumber": 28,
+        "author": {
+          "gitId": "Trav1sT"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 29,
+        "author": {
+          "gitId": "Trav1sT"
+        },
+        "content": "        String expectedMessage \u003d String.format(DeleteIngredientCommand.MESSAGE_DELETE_INGREDIENT_SUCCESS, indToDelete);"
+      },
+      {
+        "lineNumber": 30,
+        "author": {
+          "gitId": "Trav1sT"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 31,
+        "author": {
+          "gitId": "Trav1sT"
+        },
+        "content": "        ModelManager expectedModel \u003d new ModelManager(new RecipeBook(), model.getIngredientBook(), new UserPrefs());"
+      },
+      {
+        "lineNumber": 32,
+        "author": {
+          "gitId": "Trav1sT"
+        },
+        "content": "        expectedModel.deleteIngredient(indToDelete);"
+      },
+      {
+        "lineNumber": 33,
+        "author": {
+          "gitId": "Trav1sT"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 34,
+        "author": {
+          "gitId": "Trav1sT"
+        },
+        "content": "        assertCommandSuccess(deleteCommand, model, expectedMessage, expectedModel);"
+      },
+      {
+        "lineNumber": 35,
+        "author": {
+          "gitId": "Trav1sT"
+        },
+        "content": "    }"
+      },
+      {
+        "lineNumber": 36,
+        "author": {
+          "gitId": "Trav1sT"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 37,
+        "author": {
+          "gitId": "Trav1sT"
+        },
+        "content": "    @Test"
+      },
+      {
+        "lineNumber": 38,
+        "author": {
+          "gitId": "Trav1sT"
+        },
+        "content": "    public void execute_invalidIndexUnfilteredList_throwsCommandException() {"
+      },
+      {
+        "lineNumber": 39,
+        "author": {
+          "gitId": "Trav1sT"
+        },
+        "content": "        Index outOfBoundIndex \u003d Index.fromOneBased(model.getFilteredIngredientList().size() + 1);"
+      },
+      {
+        "lineNumber": 40,
+        "author": {
+          "gitId": "Trav1sT"
+        },
+        "content": "        DeleteIngredientCommand deleteCommand \u003d new DeleteIngredientCommand(outOfBoundIndex);"
+      },
+      {
+        "lineNumber": 41,
+        "author": {
+          "gitId": "Trav1sT"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 42,
+        "author": {
+          "gitId": "Trav1sT"
+        },
+        "content": "        assertCommandFailure(deleteCommand, model, Messages.MESSAGE_INVALID_INGREDIENT_DISPLAYED_INDEX);"
+      },
+      {
+        "lineNumber": 43,
+        "author": {
+          "gitId": "Trav1sT"
+        },
+        "content": "    }"
+      },
+      {
+        "lineNumber": 44,
+        "author": {
+          "gitId": "Trav1sT"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 45,
+        "author": {
+          "gitId": "Trav1sT"
+        },
+        "content": "    @Test"
+      },
+      {
+        "lineNumber": 46,
+        "author": {
+          "gitId": "Trav1sT"
+        },
+        "content": "    public void execute_validIndexFilteredList_success() {"
+      },
+      {
+        "lineNumber": 47,
+        "author": {
+          "gitId": "Trav1sT"
+        },
+        "content": "        showPersonAtIndex(model, INDEX_FIRST_INGREDIENT);"
+      },
+      {
+        "lineNumber": 48,
+        "author": {
+          "gitId": "Trav1sT"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 49,
+        "author": {
+          "gitId": "Trav1sT"
+        },
+        "content": "        Ingredient indToDelete \u003d model.getFilteredIngredientList().get(INDEX_FIRST_INGREDIENT.getZeroBased());"
+      },
+      {
+        "lineNumber": 50,
+        "author": {
+          "gitId": "Trav1sT"
+        },
+        "content": "        DeleteIngredientCommand deleteCommand \u003d new DeleteIngredientCommand(INDEX_FIRST_INGREDIENT);"
+      },
+      {
+        "lineNumber": 51,
+        "author": {
+          "gitId": "Trav1sT"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 52,
+        "author": {
+          "gitId": "Trav1sT"
+        },
+        "content": "        String expectedMessage \u003d String.format(DeleteIngredientCommand.MESSAGE_DELETE_INGREDIENT_SUCCESS, indToDelete);"
+      },
+      {
+        "lineNumber": 53,
+        "author": {
+          "gitId": "Trav1sT"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 54,
+        "author": {
+          "gitId": "Trav1sT"
+        },
+        "content": "        Model expectedModel \u003d new ModelManager(new RecipeBook(), model.getIngredientBook(), new UserPrefs());"
+      },
+      {
+        "lineNumber": 55,
+        "author": {
+          "gitId": "Trav1sT"
+        },
+        "content": "        expectedModel.deleteIngredient(indToDelete);"
+      },
+      {
+        "lineNumber": 56,
+        "author": {
+          "gitId": "Trav1sT"
+        },
+        "content": "        showNoIngredient(expectedModel);"
+      },
+      {
+        "lineNumber": 57,
+        "author": {
+          "gitId": "Trav1sT"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 58,
+        "author": {
+          "gitId": "Trav1sT"
+        },
+        "content": "        assertCommandSuccess(deleteCommand, model, expectedMessage, expectedModel);"
+      },
+      {
+        "lineNumber": 59,
+        "author": {
+          "gitId": "Trav1sT"
+        },
+        "content": "    }"
+      },
+      {
+        "lineNumber": 60,
+        "author": {
+          "gitId": "Trav1sT"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 61,
+        "author": {
+          "gitId": "Trav1sT"
+        },
+        "content": "    @Test"
+      },
+      {
+        "lineNumber": 62,
+        "author": {
+          "gitId": "Trav1sT"
+        },
+        "content": "    public void execute_invalidIndexFilteredList_throwsCommandException() {"
+      },
+      {
+        "lineNumber": 63,
+        "author": {
+          "gitId": "Trav1sT"
+        },
+        "content": "        showPersonAtIndex(model, INDEX_FIRST_INGREDIENT);"
+      },
+      {
+        "lineNumber": 64,
+        "author": {
+          "gitId": "Trav1sT"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 65,
+        "author": {
+          "gitId": "Trav1sT"
+        },
+        "content": "        Index outOfBoundIndex \u003d INDEX_SECOND_INGREDIENT;"
+      },
+      {
+        "lineNumber": 66,
+        "author": {
+          "gitId": "Trav1sT"
+        },
+        "content": "        // ensures that outOfBoundIndex is still in bounds of ingredient book list"
+      },
+      {
+        "lineNumber": 67,
+        "author": {
+          "gitId": "Trav1sT"
+        },
+        "content": "        assertTrue(outOfBoundIndex.getZeroBased() \u003c model.getIngredientBook().getFoodEntryList().size());"
+      },
+      {
+        "lineNumber": 68,
+        "author": {
+          "gitId": "Trav1sT"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 69,
+        "author": {
+          "gitId": "Trav1sT"
+        },
+        "content": "        DeleteIngredientCommand deleteCommand \u003d new DeleteIngredientCommand(outOfBoundIndex);"
+      },
+      {
+        "lineNumber": 70,
+        "author": {
+          "gitId": "Trav1sT"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 71,
+        "author": {
+          "gitId": "Trav1sT"
+        },
+        "content": "        assertCommandFailure(deleteCommand, model, Messages.MESSAGE_INVALID_INGREDIENT_DISPLAYED_INDEX);"
+      },
+      {
+        "lineNumber": 72,
+        "author": {
+          "gitId": "Trav1sT"
+        },
+        "content": "    }"
+      },
+      {
+        "lineNumber": 73,
+        "author": {
+          "gitId": "Trav1sT"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 74,
+        "author": {
+          "gitId": "Trav1sT"
+        },
+        "content": "    @Test"
+      },
+      {
+        "lineNumber": 75,
+        "author": {
+          "gitId": "Trav1sT"
+        },
+        "content": "    public void equals() {"
+      },
+      {
+        "lineNumber": 76,
+        "author": {
+          "gitId": "Trav1sT"
+        },
+        "content": "        DeleteIngredientCommand deleteFirstCommand \u003d new DeleteIngredientCommand(INDEX_FIRST_INGREDIENT);"
+      },
+      {
+        "lineNumber": 77,
+        "author": {
+          "gitId": "Trav1sT"
+        },
+        "content": "        DeleteIngredientCommand deleteSecondCommand \u003d new DeleteIngredientCommand(INDEX_SECOND_INGREDIENT);"
+      },
+      {
+        "lineNumber": 78,
+        "author": {
+          "gitId": "Trav1sT"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 79,
+        "author": {
+          "gitId": "Trav1sT"
+        },
+        "content": "        // same object -\u003e returns true"
+      },
+      {
+        "lineNumber": 80,
+        "author": {
+          "gitId": "Trav1sT"
+        },
+        "content": "        assertTrue(deleteFirstCommand.equals(deleteFirstCommand));"
+      },
+      {
+        "lineNumber": 81,
+        "author": {
+          "gitId": "Trav1sT"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 82,
+        "author": {
+          "gitId": "Trav1sT"
+        },
+        "content": "        // same values -\u003e returns true"
+      },
+      {
+        "lineNumber": 83,
+        "author": {
+          "gitId": "Trav1sT"
+        },
+        "content": "        DeleteIngredientCommand deleteFirstCommandCopy \u003d new DeleteIngredientCommand(INDEX_FIRST_INGREDIENT);"
+      },
+      {
+        "lineNumber": 84,
+        "author": {
+          "gitId": "Trav1sT"
+        },
+        "content": "        assertTrue(deleteFirstCommand.equals(deleteFirstCommandCopy));"
+      },
+      {
+        "lineNumber": 85,
+        "author": {
+          "gitId": "Trav1sT"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 86,
+        "author": {
+          "gitId": "Trav1sT"
+        },
+        "content": "        // different types -\u003e returns false"
+      },
+      {
+        "lineNumber": 87,
+        "author": {
+          "gitId": "Trav1sT"
+        },
+        "content": "        assertFalse(deleteFirstCommand.equals(1));"
+      },
+      {
+        "lineNumber": 88,
+        "author": {
+          "gitId": "Trav1sT"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 89,
+        "author": {
+          "gitId": "Trav1sT"
+        },
+        "content": "        // null -\u003e returns false"
+      },
+      {
+        "lineNumber": 90,
+        "author": {
+          "gitId": "Trav1sT"
+        },
+        "content": "        assertFalse(deleteFirstCommand.equals(null));"
+      },
+      {
+        "lineNumber": 91,
+        "author": {
+          "gitId": "Trav1sT"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 92,
+        "author": {
+          "gitId": "Trav1sT"
+        },
+        "content": "        // different person -\u003e returns false"
+      },
+      {
+        "lineNumber": 93,
+        "author": {
+          "gitId": "Trav1sT"
+        },
+        "content": "        assertFalse(deleteFirstCommand.equals(deleteSecondCommand));"
+      },
+      {
+        "lineNumber": 94,
+        "author": {
+          "gitId": "Trav1sT"
+        },
+        "content": "    }"
+      },
+      {
+        "lineNumber": 95,
+        "author": {
+          "gitId": "Trav1sT"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 96,
+        "author": {
+          "gitId": "Trav1sT"
+        },
+        "content": "    /**"
+      },
+      {
+        "lineNumber": 97,
+        "author": {
+          "gitId": "Trav1sT"
+        },
+        "content": "     * Updates {@code model}\u0027s filtered list to show no one."
+      },
+      {
+        "lineNumber": 98,
+        "author": {
+          "gitId": "Trav1sT"
+        },
+        "content": "     */"
+      },
+      {
+        "lineNumber": 99,
+        "author": {
+          "gitId": "Trav1sT"
+        },
+        "content": "    private void showNoIngredient(Model model) {"
+      },
+      {
+        "lineNumber": 100,
+        "author": {
+          "gitId": "Trav1sT"
+        },
+        "content": "        model.updateFilteredIngredientList(p -\u003e false);"
+      },
+      {
+        "lineNumber": 101,
+        "author": {
+          "gitId": "Trav1sT"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 102,
+        "author": {
+          "gitId": "Trav1sT"
+        },
+        "content": "        assertTrue(model.getFilteredIngredientList().isEmpty());"
+      },
+      {
+        "lineNumber": 103,
+        "author": {
+          "gitId": "Trav1sT"
+        },
+        "content": "    }"
+      },
+      {
+        "lineNumber": 104,
         "author": {
           "gitId": "Trav1sT"
         },
@@ -38669,7 +41838,7 @@
       }
     ],
     "authorContributionMap": {
-      "Trav1sT": 4
+      "Trav1sT": 104
     }
   },
   {
@@ -38695,47 +41864,521 @@
         "author": {
           "gitId": "Trav1sT"
         },
-        "content": "public class FindIngredientCommandTest {"
+        "content": "import static chopchop.commons.core.Messages.MESSAGE_INGREDIENTS_LISTED_OVERVIEW;"
       },
       {
         "lineNumber": 4,
         "author": {
           "gitId": "Trav1sT"
         },
-        "content": "}"
-      }
-    ],
-    "authorContributionMap": {
-      "Trav1sT": 4
-    }
-  },
-  {
-    "path": "src/test/java/chopchop/logic/commands/ListExpiringIngredientCommandTest.java",
-    "fileType": "test-code",
-    "lines": [
+        "content": "import static chopchop.testutil.TypicalIngredients.APRICOT;"
+      },
       {
-        "lineNumber": 1,
+        "lineNumber": 5,
         "author": {
           "gitId": "Trav1sT"
         },
-        "content": "package chopchop.logic.commands;"
+        "content": "import static chopchop.testutil.TypicalIngredients.BANANA;"
       },
       {
-        "lineNumber": 2,
+        "lineNumber": 6,
+        "author": {
+          "gitId": "Trav1sT"
+        },
+        "content": "import static org.junit.jupiter.api.Assertions.assertEquals;"
+      },
+      {
+        "lineNumber": 7,
+        "author": {
+          "gitId": "Trav1sT"
+        },
+        "content": "import static org.junit.jupiter.api.Assertions.assertFalse;"
+      },
+      {
+        "lineNumber": 8,
+        "author": {
+          "gitId": "Trav1sT"
+        },
+        "content": "import static org.junit.jupiter.api.Assertions.assertTrue;"
+      },
+      {
+        "lineNumber": 9,
+        "author": {
+          "gitId": "Trav1sT"
+        },
+        "content": "import static chopchop.logic.commands.CommandTestUtil.assertCommandSuccess;"
+      },
+      {
+        "lineNumber": 10,
+        "author": {
+          "gitId": "Trav1sT"
+        },
+        "content": "import static chopchop.testutil.TypicalIngredients.getTypicalIngredientBook;"
+      },
+      {
+        "lineNumber": 11,
+        "author": {
+          "gitId": "Trav1sT"
+        },
+        "content": "import java.util.Arrays;"
+      },
+      {
+        "lineNumber": 12,
+        "author": {
+          "gitId": "Trav1sT"
+        },
+        "content": "import java.util.Collections;"
+      },
+      {
+        "lineNumber": 13,
+        "author": {
+          "gitId": "Trav1sT"
+        },
+        "content": "import org.junit.jupiter.api.Test;"
+      },
+      {
+        "lineNumber": 14,
+        "author": {
+          "gitId": "Trav1sT"
+        },
+        "content": "import chopchop.model.Model;"
+      },
+      {
+        "lineNumber": 15,
+        "author": {
+          "gitId": "Trav1sT"
+        },
+        "content": "import chopchop.model.ModelManager;"
+      },
+      {
+        "lineNumber": 16,
+        "author": {
+          "gitId": "Trav1sT"
+        },
+        "content": "import chopchop.model.UserPrefs;"
+      },
+      {
+        "lineNumber": 17,
+        "author": {
+          "gitId": "Trav1sT"
+        },
+        "content": "import chopchop.model.attributes.NameContainsKeywordsPredicate;"
+      },
+      {
+        "lineNumber": 18,
+        "author": {
+          "gitId": "Trav1sT"
+        },
+        "content": "import chopchop.model.recipe.RecipeBook;"
+      },
+      {
+        "lineNumber": 19,
         "author": {
           "gitId": "Trav1sT"
         },
         "content": ""
       },
       {
-        "lineNumber": 3,
+        "lineNumber": 20,
         "author": {
           "gitId": "Trav1sT"
         },
-        "content": "public class ListExpiringIngredientCommandTest {"
+        "content": "public class FindIngredientCommandTest {"
       },
       {
-        "lineNumber": 4,
+        "lineNumber": 21,
+        "author": {
+          "gitId": "Trav1sT"
+        },
+        "content": "    private Model model \u003d new ModelManager(new RecipeBook(), getTypicalIngredientBook(), new UserPrefs());"
+      },
+      {
+        "lineNumber": 22,
+        "author": {
+          "gitId": "Trav1sT"
+        },
+        "content": "    private Model expectedModel \u003d new ModelManager(new RecipeBook(), getTypicalIngredientBook(), new UserPrefs());"
+      },
+      {
+        "lineNumber": 23,
+        "author": {
+          "gitId": "Trav1sT"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 24,
+        "author": {
+          "gitId": "Trav1sT"
+        },
+        "content": "    @Test"
+      },
+      {
+        "lineNumber": 25,
+        "author": {
+          "gitId": "Trav1sT"
+        },
+        "content": "    public void equals() {"
+      },
+      {
+        "lineNumber": 26,
+        "author": {
+          "gitId": "Trav1sT"
+        },
+        "content": "        NameContainsKeywordsPredicate firstPredicate \u003d"
+      },
+      {
+        "lineNumber": 27,
+        "author": {
+          "gitId": "Trav1sT"
+        },
+        "content": "            new NameContainsKeywordsPredicate(Collections.singletonList(\"first\"));"
+      },
+      {
+        "lineNumber": 28,
+        "author": {
+          "gitId": "Trav1sT"
+        },
+        "content": "        NameContainsKeywordsPredicate secondPredicate \u003d"
+      },
+      {
+        "lineNumber": 29,
+        "author": {
+          "gitId": "Trav1sT"
+        },
+        "content": "            new NameContainsKeywordsPredicate(Collections.singletonList(\"second\"));"
+      },
+      {
+        "lineNumber": 30,
+        "author": {
+          "gitId": "Trav1sT"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 31,
+        "author": {
+          "gitId": "Trav1sT"
+        },
+        "content": "        FindCommand findFirstCommand \u003d new FindIngredientCommand(firstPredicate);"
+      },
+      {
+        "lineNumber": 32,
+        "author": {
+          "gitId": "Trav1sT"
+        },
+        "content": "        FindCommand findSecondCommand \u003d new FindIngredientCommand(secondPredicate);"
+      },
+      {
+        "lineNumber": 33,
+        "author": {
+          "gitId": "Trav1sT"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 34,
+        "author": {
+          "gitId": "Trav1sT"
+        },
+        "content": "        // same object -\u003e returns true"
+      },
+      {
+        "lineNumber": 35,
+        "author": {
+          "gitId": "Trav1sT"
+        },
+        "content": "        assertTrue(findFirstCommand.equals(findFirstCommand));"
+      },
+      {
+        "lineNumber": 36,
+        "author": {
+          "gitId": "Trav1sT"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 37,
+        "author": {
+          "gitId": "Trav1sT"
+        },
+        "content": "        // same values -\u003e returns true"
+      },
+      {
+        "lineNumber": 38,
+        "author": {
+          "gitId": "Trav1sT"
+        },
+        "content": "        FindCommand findFirstCommandCopy \u003d new FindIngredientCommand(firstPredicate);"
+      },
+      {
+        "lineNumber": 39,
+        "author": {
+          "gitId": "Trav1sT"
+        },
+        "content": "        assertTrue(findFirstCommand.equals(findFirstCommandCopy));"
+      },
+      {
+        "lineNumber": 40,
+        "author": {
+          "gitId": "Trav1sT"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 41,
+        "author": {
+          "gitId": "Trav1sT"
+        },
+        "content": "        // different types -\u003e returns false"
+      },
+      {
+        "lineNumber": 42,
+        "author": {
+          "gitId": "Trav1sT"
+        },
+        "content": "        assertFalse(findFirstCommand.equals(1));"
+      },
+      {
+        "lineNumber": 43,
+        "author": {
+          "gitId": "Trav1sT"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 44,
+        "author": {
+          "gitId": "Trav1sT"
+        },
+        "content": "        // null -\u003e returns false"
+      },
+      {
+        "lineNumber": 45,
+        "author": {
+          "gitId": "Trav1sT"
+        },
+        "content": "        assertFalse(findFirstCommand.equals(null));"
+      },
+      {
+        "lineNumber": 46,
+        "author": {
+          "gitId": "Trav1sT"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 47,
+        "author": {
+          "gitId": "Trav1sT"
+        },
+        "content": "        // different person -\u003e returns false"
+      },
+      {
+        "lineNumber": 48,
+        "author": {
+          "gitId": "Trav1sT"
+        },
+        "content": "        assertFalse(findFirstCommand.equals(findSecondCommand));"
+      },
+      {
+        "lineNumber": 49,
+        "author": {
+          "gitId": "Trav1sT"
+        },
+        "content": "    }"
+      },
+      {
+        "lineNumber": 50,
+        "author": {
+          "gitId": "Trav1sT"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 51,
+        "author": {
+          "gitId": "Trav1sT"
+        },
+        "content": "    @Test"
+      },
+      {
+        "lineNumber": 52,
+        "author": {
+          "gitId": "Trav1sT"
+        },
+        "content": "    public void execute_zeroKeywords_noPersonFound() {"
+      },
+      {
+        "lineNumber": 53,
+        "author": {
+          "gitId": "Trav1sT"
+        },
+        "content": "        String expectedMessage \u003d String.format(MESSAGE_INGREDIENTS_LISTED_OVERVIEW, 0);"
+      },
+      {
+        "lineNumber": 54,
+        "author": {
+          "gitId": "Trav1sT"
+        },
+        "content": "        NameContainsKeywordsPredicate predicate \u003d preparePredicate(\" \");"
+      },
+      {
+        "lineNumber": 55,
+        "author": {
+          "gitId": "Trav1sT"
+        },
+        "content": "        FindIngredientCommand command \u003d new FindIngredientCommand(predicate);"
+      },
+      {
+        "lineNumber": 56,
+        "author": {
+          "gitId": "Trav1sT"
+        },
+        "content": "        expectedModel.updateFilteredIngredientList(predicate);"
+      },
+      {
+        "lineNumber": 57,
+        "author": {
+          "gitId": "Trav1sT"
+        },
+        "content": "        assertCommandSuccess(command, model, expectedMessage, expectedModel);"
+      },
+      {
+        "lineNumber": 58,
+        "author": {
+          "gitId": "Trav1sT"
+        },
+        "content": "        assertEquals(Collections.emptyList(), model.getFilteredIngredientList());"
+      },
+      {
+        "lineNumber": 59,
+        "author": {
+          "gitId": "Trav1sT"
+        },
+        "content": "    }"
+      },
+      {
+        "lineNumber": 60,
+        "author": {
+          "gitId": "Trav1sT"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 61,
+        "author": {
+          "gitId": "Trav1sT"
+        },
+        "content": "    @Test"
+      },
+      {
+        "lineNumber": 62,
+        "author": {
+          "gitId": "Trav1sT"
+        },
+        "content": "    public void execute_multipleKeywords_multipleIngredientsFound() {"
+      },
+      {
+        "lineNumber": 63,
+        "author": {
+          "gitId": "Trav1sT"
+        },
+        "content": "        String expectedMessage \u003d String.format(MESSAGE_INGREDIENTS_LISTED_OVERVIEW, 2);"
+      },
+      {
+        "lineNumber": 64,
+        "author": {
+          "gitId": "Trav1sT"
+        },
+        "content": "        NameContainsKeywordsPredicate predicate \u003d preparePredicate(\"apricot banana\");"
+      },
+      {
+        "lineNumber": 65,
+        "author": {
+          "gitId": "Trav1sT"
+        },
+        "content": "        chopchop.logic.commands.FindCommand command \u003d new FindIngredientCommand(predicate);"
+      },
+      {
+        "lineNumber": 66,
+        "author": {
+          "gitId": "Trav1sT"
+        },
+        "content": "        expectedModel.updateFilteredIngredientList(predicate);"
+      },
+      {
+        "lineNumber": 67,
+        "author": {
+          "gitId": "Trav1sT"
+        },
+        "content": "        assertCommandSuccess(command, model, expectedMessage, expectedModel);"
+      },
+      {
+        "lineNumber": 68,
+        "author": {
+          "gitId": "Trav1sT"
+        },
+        "content": "        assertEquals(Arrays.asList(APRICOT, BANANA), model.getFilteredIngredientList());"
+      },
+      {
+        "lineNumber": 69,
+        "author": {
+          "gitId": "Trav1sT"
+        },
+        "content": "    }"
+      },
+      {
+        "lineNumber": 70,
+        "author": {
+          "gitId": "Trav1sT"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 71,
+        "author": {
+          "gitId": "Trav1sT"
+        },
+        "content": "    /**"
+      },
+      {
+        "lineNumber": 72,
+        "author": {
+          "gitId": "Trav1sT"
+        },
+        "content": "     * Parses {@code userInput} into a {@code NameContainsKeywordsPredicate}."
+      },
+      {
+        "lineNumber": 73,
+        "author": {
+          "gitId": "Trav1sT"
+        },
+        "content": "     */"
+      },
+      {
+        "lineNumber": 74,
+        "author": {
+          "gitId": "Trav1sT"
+        },
+        "content": "    private NameContainsKeywordsPredicate preparePredicate(String userInput) {"
+      },
+      {
+        "lineNumber": 75,
+        "author": {
+          "gitId": "Trav1sT"
+        },
+        "content": "        return new NameContainsKeywordsPredicate(Arrays.asList(userInput.split(\"\\\\s+\")));"
+      },
+      {
+        "lineNumber": 76,
+        "author": {
+          "gitId": "Trav1sT"
+        },
+        "content": "    }"
+      },
+      {
+        "lineNumber": 77,
         "author": {
           "gitId": "Trav1sT"
         },
@@ -38743,7 +42386,7 @@
       }
     ],
     "authorContributionMap": {
-      "Trav1sT": 4
+      "Trav1sT": 77
     }
   },
   {
@@ -38769,10 +42412,227 @@
         "author": {
           "gitId": "Trav1sT"
         },
-        "content": "public class ListIngredientCommandTest {"
+        "content": "import static chopchop.logic.commands.CommandTestUtil.assertCommandSuccess;"
       },
       {
         "lineNumber": 4,
+        "author": {
+          "gitId": "Trav1sT"
+        },
+        "content": "import static chopchop.logic.commands.CommandTestUtil.showPersonAtIndex;"
+      },
+      {
+        "lineNumber": 5,
+        "author": {
+          "gitId": "Trav1sT"
+        },
+        "content": "import static chopchop.testutil.TypicalIndexes.INDEX_FIRST_INGREDIENT;"
+      },
+      {
+        "lineNumber": 6,
+        "author": {
+          "gitId": "Trav1sT"
+        },
+        "content": "import static chopchop.testutil.TypicalIngredients.getTypicalIngredientBook;"
+      },
+      {
+        "lineNumber": 7,
+        "author": {
+          "gitId": "Trav1sT"
+        },
+        "content": "import org.junit.jupiter.api.BeforeEach;"
+      },
+      {
+        "lineNumber": 8,
+        "author": {
+          "gitId": "Trav1sT"
+        },
+        "content": "import org.junit.jupiter.api.Test;"
+      },
+      {
+        "lineNumber": 9,
+        "author": {
+          "gitId": "Trav1sT"
+        },
+        "content": "import chopchop.model.Model;"
+      },
+      {
+        "lineNumber": 10,
+        "author": {
+          "gitId": "Trav1sT"
+        },
+        "content": "import chopchop.model.ModelManager;"
+      },
+      {
+        "lineNumber": 11,
+        "author": {
+          "gitId": "Trav1sT"
+        },
+        "content": "import chopchop.model.UserPrefs;"
+      },
+      {
+        "lineNumber": 12,
+        "author": {
+          "gitId": "Trav1sT"
+        },
+        "content": "import chopchop.model.recipe.RecipeBook;"
+      },
+      {
+        "lineNumber": 13,
+        "author": {
+          "gitId": "Trav1sT"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 14,
+        "author": {
+          "gitId": "Trav1sT"
+        },
+        "content": "public class ListIngredientCommandTest {"
+      },
+      {
+        "lineNumber": 15,
+        "author": {
+          "gitId": "Trav1sT"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 16,
+        "author": {
+          "gitId": "Trav1sT"
+        },
+        "content": "    private Model model;"
+      },
+      {
+        "lineNumber": 17,
+        "author": {
+          "gitId": "Trav1sT"
+        },
+        "content": "    private Model expectedModel;"
+      },
+      {
+        "lineNumber": 18,
+        "author": {
+          "gitId": "Trav1sT"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 19,
+        "author": {
+          "gitId": "Trav1sT"
+        },
+        "content": "    @BeforeEach"
+      },
+      {
+        "lineNumber": 20,
+        "author": {
+          "gitId": "Trav1sT"
+        },
+        "content": "    public void setUp() {"
+      },
+      {
+        "lineNumber": 21,
+        "author": {
+          "gitId": "Trav1sT"
+        },
+        "content": "        model \u003d new ModelManager(new RecipeBook(), getTypicalIngredientBook(), new UserPrefs());"
+      },
+      {
+        "lineNumber": 22,
+        "author": {
+          "gitId": "Trav1sT"
+        },
+        "content": "        expectedModel \u003d new ModelManager(new RecipeBook(), model.getIngredientBook(), new UserPrefs());"
+      },
+      {
+        "lineNumber": 23,
+        "author": {
+          "gitId": "Trav1sT"
+        },
+        "content": "    }"
+      },
+      {
+        "lineNumber": 24,
+        "author": {
+          "gitId": "Trav1sT"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 25,
+        "author": {
+          "gitId": "Trav1sT"
+        },
+        "content": "    @Test"
+      },
+      {
+        "lineNumber": 26,
+        "author": {
+          "gitId": "Trav1sT"
+        },
+        "content": "    public void execute_listIsNotFiltered_showsSameList() {"
+      },
+      {
+        "lineNumber": 27,
+        "author": {
+          "gitId": "Trav1sT"
+        },
+        "content": "        assertCommandSuccess(new ListIngredientCommand(), model, ListIngredientCommand.MESSAGE_SUCCESS, expectedModel);"
+      },
+      {
+        "lineNumber": 28,
+        "author": {
+          "gitId": "Trav1sT"
+        },
+        "content": "    }"
+      },
+      {
+        "lineNumber": 29,
+        "author": {
+          "gitId": "Trav1sT"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 30,
+        "author": {
+          "gitId": "Trav1sT"
+        },
+        "content": "    @Test"
+      },
+      {
+        "lineNumber": 31,
+        "author": {
+          "gitId": "Trav1sT"
+        },
+        "content": "    public void execute_listIsFiltered_showsEverything() {"
+      },
+      {
+        "lineNumber": 32,
+        "author": {
+          "gitId": "Trav1sT"
+        },
+        "content": "        showPersonAtIndex(model, INDEX_FIRST_INGREDIENT);"
+      },
+      {
+        "lineNumber": 33,
+        "author": {
+          "gitId": "Trav1sT"
+        },
+        "content": "        assertCommandSuccess(new ListIngredientCommand(), model, ListIngredientCommand.MESSAGE_SUCCESS, expectedModel);"
+      },
+      {
+        "lineNumber": 34,
+        "author": {
+          "gitId": "Trav1sT"
+        },
+        "content": "    }"
+      },
+      {
+        "lineNumber": 35,
         "author": {
           "gitId": "Trav1sT"
         },
@@ -38780,7 +42640,7 @@
       }
     ],
     "authorContributionMap": {
-      "Trav1sT": 4
+      "Trav1sT": 35
     }
   },
   {
@@ -40454,6 +44314,967 @@
     "authorContributionMap": {
       "hjl99": 50,
       "Trav1sT": 78
+    }
+  },
+  {
+    "path": "src/test/java/chopchop/model/ModelStub.java",
+    "fileType": "test-code",
+    "lines": [
+      {
+        "lineNumber": 1,
+        "author": {
+          "gitId": "Trav1sT"
+        },
+        "content": "package chopchop.model;"
+      },
+      {
+        "lineNumber": 2,
+        "author": {
+          "gitId": "Trav1sT"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 3,
+        "author": {
+          "gitId": "Trav1sT"
+        },
+        "content": "import java.nio.file.Path;"
+      },
+      {
+        "lineNumber": 4,
+        "author": {
+          "gitId": "Trav1sT"
+        },
+        "content": "import java.util.function.Predicate;"
+      },
+      {
+        "lineNumber": 5,
+        "author": {
+          "gitId": "Trav1sT"
+        },
+        "content": "import chopchop.commons.core.GuiSettings;"
+      },
+      {
+        "lineNumber": 6,
+        "author": {
+          "gitId": "Trav1sT"
+        },
+        "content": "import chopchop.model.ingredient.Ingredient;"
+      },
+      {
+        "lineNumber": 7,
+        "author": {
+          "gitId": "Trav1sT"
+        },
+        "content": "import chopchop.model.ingredient.ReadOnlyIngredientBook;"
+      },
+      {
+        "lineNumber": 8,
+        "author": {
+          "gitId": "Trav1sT"
+        },
+        "content": "import chopchop.model.recipe.ReadOnlyRecipeBook;"
+      },
+      {
+        "lineNumber": 9,
+        "author": {
+          "gitId": "Trav1sT"
+        },
+        "content": "import chopchop.model.recipe.Recipe;"
+      },
+      {
+        "lineNumber": 10,
+        "author": {
+          "gitId": "Trav1sT"
+        },
+        "content": "import javafx.collections.ObservableList;"
+      },
+      {
+        "lineNumber": 11,
+        "author": {
+          "gitId": "Trav1sT"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 12,
+        "author": {
+          "gitId": "Trav1sT"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 13,
+        "author": {
+          "gitId": "Trav1sT"
+        },
+        "content": "/**"
+      },
+      {
+        "lineNumber": 14,
+        "author": {
+          "gitId": "Trav1sT"
+        },
+        "content": " * A default model stub that have all of the methods failing."
+      },
+      {
+        "lineNumber": 15,
+        "author": {
+          "gitId": "Trav1sT"
+        },
+        "content": " */"
+      },
+      {
+        "lineNumber": 16,
+        "author": {
+          "gitId": "Trav1sT"
+        },
+        "content": "public abstract class ModelStub implements Model {"
+      },
+      {
+        "lineNumber": 17,
+        "author": {
+          "gitId": "Trav1sT"
+        },
+        "content": "    @Override"
+      },
+      {
+        "lineNumber": 18,
+        "author": {
+          "gitId": "Trav1sT"
+        },
+        "content": "    public void setUserPrefs(ReadOnlyUserPrefs userPrefs) {"
+      },
+      {
+        "lineNumber": 19,
+        "author": {
+          "gitId": "Trav1sT"
+        },
+        "content": "        throw new AssertionError(\"This method should not be called.\");"
+      },
+      {
+        "lineNumber": 20,
+        "author": {
+          "gitId": "Trav1sT"
+        },
+        "content": "    }"
+      },
+      {
+        "lineNumber": 21,
+        "author": {
+          "gitId": "Trav1sT"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 22,
+        "author": {
+          "gitId": "Trav1sT"
+        },
+        "content": "    @Override"
+      },
+      {
+        "lineNumber": 23,
+        "author": {
+          "gitId": "Trav1sT"
+        },
+        "content": "    public ReadOnlyUserPrefs getUserPrefs() {"
+      },
+      {
+        "lineNumber": 24,
+        "author": {
+          "gitId": "Trav1sT"
+        },
+        "content": "        throw new AssertionError(\"This method should not be called.\");"
+      },
+      {
+        "lineNumber": 25,
+        "author": {
+          "gitId": "Trav1sT"
+        },
+        "content": "    }"
+      },
+      {
+        "lineNumber": 26,
+        "author": {
+          "gitId": "Trav1sT"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 27,
+        "author": {
+          "gitId": "Trav1sT"
+        },
+        "content": "    @Override"
+      },
+      {
+        "lineNumber": 28,
+        "author": {
+          "gitId": "Trav1sT"
+        },
+        "content": "    public GuiSettings getGuiSettings() {"
+      },
+      {
+        "lineNumber": 29,
+        "author": {
+          "gitId": "Trav1sT"
+        },
+        "content": "        throw new AssertionError(\"This method should not be called.\");"
+      },
+      {
+        "lineNumber": 30,
+        "author": {
+          "gitId": "Trav1sT"
+        },
+        "content": "    }"
+      },
+      {
+        "lineNumber": 31,
+        "author": {
+          "gitId": "Trav1sT"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 32,
+        "author": {
+          "gitId": "Trav1sT"
+        },
+        "content": "    @Override"
+      },
+      {
+        "lineNumber": 33,
+        "author": {
+          "gitId": "Trav1sT"
+        },
+        "content": "    public void setGuiSettings(GuiSettings guiSettings) {"
+      },
+      {
+        "lineNumber": 34,
+        "author": {
+          "gitId": "Trav1sT"
+        },
+        "content": "        throw new AssertionError(\"This method should not be called.\");"
+      },
+      {
+        "lineNumber": 35,
+        "author": {
+          "gitId": "Trav1sT"
+        },
+        "content": "    }"
+      },
+      {
+        "lineNumber": 36,
+        "author": {
+          "gitId": "Trav1sT"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 37,
+        "author": {
+          "gitId": "Trav1sT"
+        },
+        "content": "    @Override"
+      },
+      {
+        "lineNumber": 38,
+        "author": {
+          "gitId": "Trav1sT"
+        },
+        "content": "    public Path getIngredientBookFilePath() {"
+      },
+      {
+        "lineNumber": 39,
+        "author": {
+          "gitId": "Trav1sT"
+        },
+        "content": "        throw new AssertionError(\"This method should not be called.\");"
+      },
+      {
+        "lineNumber": 40,
+        "author": {
+          "gitId": "Trav1sT"
+        },
+        "content": "    }"
+      },
+      {
+        "lineNumber": 41,
+        "author": {
+          "gitId": "Trav1sT"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 42,
+        "author": {
+          "gitId": "Trav1sT"
+        },
+        "content": "    @Override"
+      },
+      {
+        "lineNumber": 43,
+        "author": {
+          "gitId": "Trav1sT"
+        },
+        "content": "    public void setIngredientBookFilePath(Path indBookFilePath) {"
+      },
+      {
+        "lineNumber": 44,
+        "author": {
+          "gitId": "Trav1sT"
+        },
+        "content": "        throw new AssertionError(\"This method should not be called.\");"
+      },
+      {
+        "lineNumber": 45,
+        "author": {
+          "gitId": "Trav1sT"
+        },
+        "content": "    }"
+      },
+      {
+        "lineNumber": 46,
+        "author": {
+          "gitId": "Trav1sT"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 47,
+        "author": {
+          "gitId": "Trav1sT"
+        },
+        "content": "    @Override"
+      },
+      {
+        "lineNumber": 48,
+        "author": {
+          "gitId": "Trav1sT"
+        },
+        "content": "    public void addIngredient(Ingredient ingredient) {"
+      },
+      {
+        "lineNumber": 49,
+        "author": {
+          "gitId": "Trav1sT"
+        },
+        "content": "        throw new AssertionError(\"This method should not be called.\");"
+      },
+      {
+        "lineNumber": 50,
+        "author": {
+          "gitId": "Trav1sT"
+        },
+        "content": "    }"
+      },
+      {
+        "lineNumber": 51,
+        "author": {
+          "gitId": "Trav1sT"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 52,
+        "author": {
+          "gitId": "Trav1sT"
+        },
+        "content": "    @Override"
+      },
+      {
+        "lineNumber": 53,
+        "author": {
+          "gitId": "Trav1sT"
+        },
+        "content": "    public void setIngredientBook(ReadOnlyIngredientBook newData) {"
+      },
+      {
+        "lineNumber": 54,
+        "author": {
+          "gitId": "Trav1sT"
+        },
+        "content": "        throw new AssertionError(\"This method should not be called.\");"
+      },
+      {
+        "lineNumber": 55,
+        "author": {
+          "gitId": "Trav1sT"
+        },
+        "content": "    }"
+      },
+      {
+        "lineNumber": 56,
+        "author": {
+          "gitId": "Trav1sT"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 57,
+        "author": {
+          "gitId": "Trav1sT"
+        },
+        "content": "    @Override"
+      },
+      {
+        "lineNumber": 58,
+        "author": {
+          "gitId": "Trav1sT"
+        },
+        "content": "    public ReadOnlyIngredientBook getIngredientBook() {"
+      },
+      {
+        "lineNumber": 59,
+        "author": {
+          "gitId": "Trav1sT"
+        },
+        "content": "        throw new AssertionError(\"This method should not be called.\");"
+      },
+      {
+        "lineNumber": 60,
+        "author": {
+          "gitId": "Trav1sT"
+        },
+        "content": "    }"
+      },
+      {
+        "lineNumber": 61,
+        "author": {
+          "gitId": "Trav1sT"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 62,
+        "author": {
+          "gitId": "Trav1sT"
+        },
+        "content": "    @Override"
+      },
+      {
+        "lineNumber": 63,
+        "author": {
+          "gitId": "Trav1sT"
+        },
+        "content": "    public boolean hasIngredient(Ingredient ingredient) {"
+      },
+      {
+        "lineNumber": 64,
+        "author": {
+          "gitId": "Trav1sT"
+        },
+        "content": "        throw new AssertionError(\"This method should not be called.\");"
+      },
+      {
+        "lineNumber": 65,
+        "author": {
+          "gitId": "Trav1sT"
+        },
+        "content": "    }"
+      },
+      {
+        "lineNumber": 66,
+        "author": {
+          "gitId": "Trav1sT"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 67,
+        "author": {
+          "gitId": "Trav1sT"
+        },
+        "content": "    @Override"
+      },
+      {
+        "lineNumber": 68,
+        "author": {
+          "gitId": "Trav1sT"
+        },
+        "content": "    public void deleteIngredient(Ingredient target) {"
+      },
+      {
+        "lineNumber": 69,
+        "author": {
+          "gitId": "Trav1sT"
+        },
+        "content": "        throw new AssertionError(\"This method should not be called.\");"
+      },
+      {
+        "lineNumber": 70,
+        "author": {
+          "gitId": "Trav1sT"
+        },
+        "content": "    }"
+      },
+      {
+        "lineNumber": 71,
+        "author": {
+          "gitId": "Trav1sT"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 72,
+        "author": {
+          "gitId": "Trav1sT"
+        },
+        "content": "    @Override"
+      },
+      {
+        "lineNumber": 73,
+        "author": {
+          "gitId": "Trav1sT"
+        },
+        "content": "    public void setIngredient(Ingredient target, Ingredient editedIngredient) {"
+      },
+      {
+        "lineNumber": 74,
+        "author": {
+          "gitId": "Trav1sT"
+        },
+        "content": "        throw new AssertionError(\"This method should not be called.\");"
+      },
+      {
+        "lineNumber": 75,
+        "author": {
+          "gitId": "Trav1sT"
+        },
+        "content": "    }"
+      },
+      {
+        "lineNumber": 76,
+        "author": {
+          "gitId": "Trav1sT"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 77,
+        "author": {
+          "gitId": "Trav1sT"
+        },
+        "content": "    @Override"
+      },
+      {
+        "lineNumber": 78,
+        "author": {
+          "gitId": "Trav1sT"
+        },
+        "content": "    public ObservableList\u003cIngredient\u003e getFilteredIngredientList() {"
+      },
+      {
+        "lineNumber": 79,
+        "author": {
+          "gitId": "Trav1sT"
+        },
+        "content": "        throw new AssertionError(\"This method should not be called.\");"
+      },
+      {
+        "lineNumber": 80,
+        "author": {
+          "gitId": "Trav1sT"
+        },
+        "content": "    }"
+      },
+      {
+        "lineNumber": 81,
+        "author": {
+          "gitId": "Trav1sT"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 82,
+        "author": {
+          "gitId": "Trav1sT"
+        },
+        "content": "    @Override"
+      },
+      {
+        "lineNumber": 83,
+        "author": {
+          "gitId": "Trav1sT"
+        },
+        "content": "    public void updateFilteredIngredientList(Predicate\u003cFoodEntry\u003e predicate) {"
+      },
+      {
+        "lineNumber": 84,
+        "author": {
+          "gitId": "Trav1sT"
+        },
+        "content": "        throw new AssertionError(\"This method should not be called.\");"
+      },
+      {
+        "lineNumber": 85,
+        "author": {
+          "gitId": "Trav1sT"
+        },
+        "content": "    }"
+      },
+      {
+        "lineNumber": 86,
+        "author": {
+          "gitId": "Trav1sT"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 87,
+        "author": {
+          "gitId": "Trav1sT"
+        },
+        "content": "    @Override"
+      },
+      {
+        "lineNumber": 88,
+        "author": {
+          "gitId": "Trav1sT"
+        },
+        "content": "    public Path getRecipeBookFilePath() {"
+      },
+      {
+        "lineNumber": 89,
+        "author": {
+          "gitId": "Trav1sT"
+        },
+        "content": "        throw new AssertionError(\"This method should not be called.\");"
+      },
+      {
+        "lineNumber": 90,
+        "author": {
+          "gitId": "Trav1sT"
+        },
+        "content": "    }"
+      },
+      {
+        "lineNumber": 91,
+        "author": {
+          "gitId": "Trav1sT"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 92,
+        "author": {
+          "gitId": "Trav1sT"
+        },
+        "content": "    @Override"
+      },
+      {
+        "lineNumber": 93,
+        "author": {
+          "gitId": "Trav1sT"
+        },
+        "content": "    public void setRecipeBookFilePath(Path indBookFilePath) {"
+      },
+      {
+        "lineNumber": 94,
+        "author": {
+          "gitId": "Trav1sT"
+        },
+        "content": "        throw new AssertionError(\"This method should not be called.\");"
+      },
+      {
+        "lineNumber": 95,
+        "author": {
+          "gitId": "Trav1sT"
+        },
+        "content": "    }"
+      },
+      {
+        "lineNumber": 96,
+        "author": {
+          "gitId": "Trav1sT"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 97,
+        "author": {
+          "gitId": "Trav1sT"
+        },
+        "content": "    @Override"
+      },
+      {
+        "lineNumber": 98,
+        "author": {
+          "gitId": "Trav1sT"
+        },
+        "content": "    public void addRecipe(Recipe recipe) {"
+      },
+      {
+        "lineNumber": 99,
+        "author": {
+          "gitId": "Trav1sT"
+        },
+        "content": "        throw new AssertionError(\"This method should not be called.\");"
+      },
+      {
+        "lineNumber": 100,
+        "author": {
+          "gitId": "Trav1sT"
+        },
+        "content": "    }"
+      },
+      {
+        "lineNumber": 101,
+        "author": {
+          "gitId": "Trav1sT"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 102,
+        "author": {
+          "gitId": "Trav1sT"
+        },
+        "content": "    @Override"
+      },
+      {
+        "lineNumber": 103,
+        "author": {
+          "gitId": "Trav1sT"
+        },
+        "content": "    public void setRecipeBook(ReadOnlyRecipeBook newData) {"
+      },
+      {
+        "lineNumber": 104,
+        "author": {
+          "gitId": "Trav1sT"
+        },
+        "content": "        throw new AssertionError(\"This method should not be called.\");"
+      },
+      {
+        "lineNumber": 105,
+        "author": {
+          "gitId": "Trav1sT"
+        },
+        "content": "    }"
+      },
+      {
+        "lineNumber": 106,
+        "author": {
+          "gitId": "Trav1sT"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 107,
+        "author": {
+          "gitId": "Trav1sT"
+        },
+        "content": "    @Override"
+      },
+      {
+        "lineNumber": 108,
+        "author": {
+          "gitId": "Trav1sT"
+        },
+        "content": "    public ReadOnlyRecipeBook getRecipeBook() {"
+      },
+      {
+        "lineNumber": 109,
+        "author": {
+          "gitId": "Trav1sT"
+        },
+        "content": "        throw new AssertionError(\"This method should not be called.\");"
+      },
+      {
+        "lineNumber": 110,
+        "author": {
+          "gitId": "Trav1sT"
+        },
+        "content": "    }"
+      },
+      {
+        "lineNumber": 111,
+        "author": {
+          "gitId": "Trav1sT"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 112,
+        "author": {
+          "gitId": "Trav1sT"
+        },
+        "content": "    @Override"
+      },
+      {
+        "lineNumber": 113,
+        "author": {
+          "gitId": "Trav1sT"
+        },
+        "content": "    public boolean hasRecipe(Recipe recipe) {"
+      },
+      {
+        "lineNumber": 114,
+        "author": {
+          "gitId": "Trav1sT"
+        },
+        "content": "        throw new AssertionError(\"This method should not be called.\");"
+      },
+      {
+        "lineNumber": 115,
+        "author": {
+          "gitId": "Trav1sT"
+        },
+        "content": "    }"
+      },
+      {
+        "lineNumber": 116,
+        "author": {
+          "gitId": "Trav1sT"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 117,
+        "author": {
+          "gitId": "Trav1sT"
+        },
+        "content": "    @Override"
+      },
+      {
+        "lineNumber": 118,
+        "author": {
+          "gitId": "Trav1sT"
+        },
+        "content": "    public void deleteRecipe(Recipe target) {"
+      },
+      {
+        "lineNumber": 119,
+        "author": {
+          "gitId": "Trav1sT"
+        },
+        "content": "        throw new AssertionError(\"This method should not be called.\");"
+      },
+      {
+        "lineNumber": 120,
+        "author": {
+          "gitId": "Trav1sT"
+        },
+        "content": "    }"
+      },
+      {
+        "lineNumber": 121,
+        "author": {
+          "gitId": "Trav1sT"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 122,
+        "author": {
+          "gitId": "Trav1sT"
+        },
+        "content": "    @Override"
+      },
+      {
+        "lineNumber": 123,
+        "author": {
+          "gitId": "Trav1sT"
+        },
+        "content": "    public void setRecipe(Recipe target, Recipe editedRecipe) {"
+      },
+      {
+        "lineNumber": 124,
+        "author": {
+          "gitId": "Trav1sT"
+        },
+        "content": "        throw new AssertionError(\"This method should not be called.\");"
+      },
+      {
+        "lineNumber": 125,
+        "author": {
+          "gitId": "Trav1sT"
+        },
+        "content": "    }"
+      },
+      {
+        "lineNumber": 126,
+        "author": {
+          "gitId": "Trav1sT"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 127,
+        "author": {
+          "gitId": "Trav1sT"
+        },
+        "content": "    @Override"
+      },
+      {
+        "lineNumber": 128,
+        "author": {
+          "gitId": "Trav1sT"
+        },
+        "content": "    public ObservableList\u003cRecipe\u003e getFilteredRecipeList() {"
+      },
+      {
+        "lineNumber": 129,
+        "author": {
+          "gitId": "Trav1sT"
+        },
+        "content": "        throw new AssertionError(\"This method should not be called.\");"
+      },
+      {
+        "lineNumber": 130,
+        "author": {
+          "gitId": "Trav1sT"
+        },
+        "content": "    }"
+      },
+      {
+        "lineNumber": 131,
+        "author": {
+          "gitId": "Trav1sT"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 132,
+        "author": {
+          "gitId": "Trav1sT"
+        },
+        "content": "    @Override"
+      },
+      {
+        "lineNumber": 133,
+        "author": {
+          "gitId": "Trav1sT"
+        },
+        "content": "    public void updateFilteredRecipeList(Predicate\u003cFoodEntry\u003e predicate) {"
+      },
+      {
+        "lineNumber": 134,
+        "author": {
+          "gitId": "Trav1sT"
+        },
+        "content": "        throw new AssertionError(\"This method should not be called.\");"
+      },
+      {
+        "lineNumber": 135,
+        "author": {
+          "gitId": "Trav1sT"
+        },
+        "content": "    }"
+      },
+      {
+        "lineNumber": 136,
+        "author": {
+          "gitId": "Trav1sT"
+        },
+        "content": "}"
+      }
+    ],
+    "authorContributionMap": {
+      "Trav1sT": 136
     }
   },
   {

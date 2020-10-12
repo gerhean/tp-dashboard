@@ -21854,7 +21854,7 @@
     }
   },
   {
-    "path": "src/main/java/nustorage/logic/commands/AddInventoryCommand.java",
+    "path": "src/main/java/nustorage/logic/commands/AddInventoryRecordCommand.java",
     "fileType": "functional-code",
     "lines": [
       {
@@ -21883,304 +21883,367 @@
         "author": {
           "gitId": "Elgoh"
         },
-        "content": ""
+        "content": "import static nustorage.logic.parser.CliSyntax.PREFIX_ITEM_COST;"
       },
       {
         "lineNumber": 5,
         "author": {
-          "gitId": "FizzyAgent"
+          "gitId": "Elgoh"
         },
-        "content": "import java.util.Optional;"
+        "content": "import static nustorage.logic.parser.CliSyntax.PREFIX_ITEM_DESCRIPTION;"
       },
       {
         "lineNumber": 6,
         "author": {
-          "gitId": "FizzyAgent"
+          "gitId": "Elgoh"
         },
-        "content": ""
+        "content": "import static nustorage.logic.parser.CliSyntax.PREFIX_QUANTITY;"
       },
       {
         "lineNumber": 7,
         "author": {
           "gitId": "Elgoh"
         },
-        "content": "import nustorage.logic.commands.exceptions.CommandException;"
+        "content": ""
       },
       {
         "lineNumber": 8,
         "author": {
-          "gitId": "Elgoh"
+          "gitId": "FizzyAgent"
         },
-        "content": "import nustorage.model.Model;"
+        "content": "import java.util.Optional;"
       },
       {
         "lineNumber": 9,
         "author": {
           "gitId": "FizzyAgent"
         },
-        "content": "import nustorage.model.record.FinanceRecord;"
+        "content": ""
       },
       {
         "lineNumber": 10,
         "author": {
           "gitId": "Elgoh"
         },
-        "content": "import nustorage.model.record.InventoryRecord;"
+        "content": "import nustorage.logic.commands.exceptions.CommandException;"
       },
       {
         "lineNumber": 11,
         "author": {
           "gitId": "Elgoh"
         },
-        "content": ""
+        "content": "import nustorage.model.Model;"
       },
       {
         "lineNumber": 12,
         "author": {
-          "gitId": "Elgoh"
+          "gitId": "FizzyAgent"
         },
-        "content": "/**"
+        "content": "import nustorage.model.record.FinanceRecord;"
       },
       {
         "lineNumber": 13,
         "author": {
           "gitId": "Elgoh"
         },
-        "content": " * An add inventory command class"
+        "content": "import nustorage.model.record.InventoryRecord;"
       },
       {
         "lineNumber": 14,
         "author": {
           "gitId": "Elgoh"
         },
-        "content": " */"
+        "content": ""
       },
       {
         "lineNumber": 15,
         "author": {
           "gitId": "Elgoh"
         },
-        "content": "public class AddInventoryCommand extends Command {"
+        "content": "/**"
       },
       {
         "lineNumber": 16,
         "author": {
           "gitId": "Elgoh"
         },
-        "content": ""
+        "content": " * An add inventory command class"
       },
       {
         "lineNumber": 17,
         "author": {
           "gitId": "Elgoh"
         },
-        "content": "    public static final String COMMAND_WORD \u003d \"add_inventory\";"
+        "content": " */"
       },
       {
         "lineNumber": 18,
         "author": {
           "gitId": "Elgoh"
         },
-        "content": ""
+        "content": "public class AddInventoryRecordCommand extends Command {"
       },
       {
         "lineNumber": 19,
         "author": {
           "gitId": "Elgoh"
         },
-        "content": "    public static final String MESSAGE_SUCCESS \u003d \"New Inventory record added: %1$s\";"
+        "content": ""
       },
       {
         "lineNumber": 20,
         "author": {
           "gitId": "Elgoh"
         },
-        "content": ""
+        "content": "    public static final String COMMAND_WORD \u003d \"add_inventory\";"
       },
       {
         "lineNumber": 21,
         "author": {
-          "gitId": "FizzyAgent"
+          "gitId": "Elgoh"
         },
-        "content": "    private final InventoryRecord newInventoryRecord;"
+        "content": ""
       },
       {
         "lineNumber": 22,
         "author": {
-          "gitId": "FizzyAgent"
+          "gitId": "Elgoh"
         },
-        "content": "    private final Optional\u003cFinanceRecord\u003e newFinanceRecord;"
+        "content": "    public static final String MESSAGE_USAGE \u003d COMMAND_WORD + \": Adds an inventory record to the Inventory. \""
       },
       {
         "lineNumber": 23,
         "author": {
           "gitId": "Elgoh"
         },
-        "content": ""
+        "content": "            + \"Parameters: \""
       },
       {
         "lineNumber": 24,
         "author": {
           "gitId": "Elgoh"
         },
-        "content": "    /**"
+        "content": "            + PREFIX_ITEM_DESCRIPTION + \"ITEM_DESCRIPTION \""
       },
       {
         "lineNumber": 25,
         "author": {
           "gitId": "Elgoh"
         },
-        "content": "     * Constructs an AddInventoryCommand class using a new inventory record."
+        "content": "            + PREFIX_QUANTITY + \"QUANTITY \""
       },
       {
         "lineNumber": 26,
         "author": {
-          "gitId": "FizzyAgent"
+          "gitId": "Elgoh"
         },
-        "content": "     * @param newInventoryRecord New inventory record."
+        "content": "            + PREFIX_ITEM_COST + \"ITEM_COST\""
       },
       {
         "lineNumber": 27,
         "author": {
-          "gitId": "FizzyAgent"
+          "gitId": "Elgoh"
         },
-        "content": "     * @param newFinanceRecord New finance record."
+        "content": "            + \"(OPTIONAL) \u0027c/\u0027 is optional \";"
       },
       {
         "lineNumber": 28,
         "author": {
           "gitId": "Elgoh"
         },
-        "content": "     */"
+        "content": ""
       },
       {
         "lineNumber": 29,
         "author": {
-          "gitId": "FizzyAgent"
+          "gitId": "Elgoh"
         },
-        "content": "    public AddInventoryCommand(InventoryRecord newInventoryRecord, Optional\u003cFinanceRecord\u003e newFinanceRecord) {"
+        "content": "    public static final String MESSAGE_SUCCESS \u003d \"New Inventory record added: %1$s\";"
       },
       {
         "lineNumber": 30,
         "author": {
           "gitId": "FizzyAgent"
         },
-        "content": "        requireNonNull(newInventoryRecord);"
+        "content": "    private final InventoryRecord newInventoryRecord;"
       },
       {
         "lineNumber": 31,
         "author": {
           "gitId": "FizzyAgent"
         },
-        "content": "        this.newInventoryRecord \u003d newInventoryRecord;"
+        "content": "    private final Optional\u003cFinanceRecord\u003e newFinanceRecord;"
       },
       {
         "lineNumber": 32,
         "author": {
-          "gitId": "FizzyAgent"
+          "gitId": "Elgoh"
         },
-        "content": "        this.newFinanceRecord \u003d newFinanceRecord;"
+        "content": ""
       },
       {
         "lineNumber": 33,
         "author": {
           "gitId": "Elgoh"
         },
-        "content": "    }"
+        "content": "    /**"
       },
       {
         "lineNumber": 34,
         "author": {
           "gitId": "Elgoh"
         },
-        "content": ""
+        "content": "     * Constructs an AddInventoryCommand class using a new inventory record."
       },
       {
         "lineNumber": 35,
         "author": {
-          "gitId": "Elgoh"
+          "gitId": "FizzyAgent"
         },
-        "content": "    @Override"
+        "content": "     * @param newInventoryRecord New inventory record."
       },
       {
         "lineNumber": 36,
         "author": {
-          "gitId": "Elgoh"
+          "gitId": "FizzyAgent"
         },
-        "content": "    public CommandResult execute(Model model) throws CommandException {"
+        "content": "     * @param newFinanceRecord New finance record."
       },
       {
         "lineNumber": 37,
         "author": {
           "gitId": "Elgoh"
         },
-        "content": "        requireNonNull(model);"
+        "content": "     */"
       },
       {
         "lineNumber": 38,
         "author": {
-          "gitId": "FizzyAgent"
+          "gitId": "Elgoh"
         },
-        "content": "        model.addInventoryRecord(newInventoryRecord);"
+        "content": "    public AddInventoryRecordCommand(InventoryRecord newInventoryRecord, Optional\u003cFinanceRecord\u003e newFinanceRecord) {"
       },
       {
         "lineNumber": 39,
         "author": {
           "gitId": "FizzyAgent"
         },
-        "content": ""
+        "content": "        requireNonNull(newInventoryRecord);"
       },
       {
         "lineNumber": 40,
         "author": {
           "gitId": "FizzyAgent"
         },
-        "content": "        if (newFinanceRecord.isPresent()) {"
+        "content": "        this.newInventoryRecord \u003d newInventoryRecord;"
       },
       {
         "lineNumber": 41,
         "author": {
           "gitId": "FizzyAgent"
         },
-        "content": "            model.addFinanceRecord(newFinanceRecord.get());"
+        "content": "        this.newFinanceRecord \u003d newFinanceRecord;"
       },
       {
         "lineNumber": 42,
-        "author": {
-          "gitId": "FizzyAgent"
-        },
-        "content": "        }"
-      },
-      {
-        "lineNumber": 43,
-        "author": {
-          "gitId": "FizzyAgent"
-        },
-        "content": ""
-      },
-      {
-        "lineNumber": 44,
-        "author": {
-          "gitId": "FizzyAgent"
-        },
-        "content": "        return new CommandResult(String.format(MESSAGE_SUCCESS, newInventoryRecord));"
-      },
-      {
-        "lineNumber": 45,
         "author": {
           "gitId": "Elgoh"
         },
         "content": "    }"
       },
       {
-        "lineNumber": 46,
+        "lineNumber": 43,
         "author": {
           "gitId": "Elgoh"
         },
         "content": ""
       },
       {
+        "lineNumber": 44,
+        "author": {
+          "gitId": "Elgoh"
+        },
+        "content": "    @Override"
+      },
+      {
+        "lineNumber": 45,
+        "author": {
+          "gitId": "Elgoh"
+        },
+        "content": "    public CommandResult execute(Model model) throws CommandException {"
+      },
+      {
+        "lineNumber": 46,
+        "author": {
+          "gitId": "Elgoh"
+        },
+        "content": "        requireNonNull(model);"
+      },
+      {
         "lineNumber": 47,
+        "author": {
+          "gitId": "FizzyAgent"
+        },
+        "content": "        model.addInventoryRecord(newInventoryRecord);"
+      },
+      {
+        "lineNumber": 48,
+        "author": {
+          "gitId": "FizzyAgent"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 49,
+        "author": {
+          "gitId": "FizzyAgent"
+        },
+        "content": "        if (newFinanceRecord.isPresent()) {"
+      },
+      {
+        "lineNumber": 50,
+        "author": {
+          "gitId": "FizzyAgent"
+        },
+        "content": "            model.addFinanceRecord(newFinanceRecord.get());"
+      },
+      {
+        "lineNumber": 51,
+        "author": {
+          "gitId": "FizzyAgent"
+        },
+        "content": "        }"
+      },
+      {
+        "lineNumber": 52,
+        "author": {
+          "gitId": "FizzyAgent"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 53,
+        "author": {
+          "gitId": "FizzyAgent"
+        },
+        "content": "        return new CommandResult(String.format(MESSAGE_SUCCESS, newInventoryRecord));"
+      },
+      {
+        "lineNumber": 54,
+        "author": {
+          "gitId": "Elgoh"
+        },
+        "content": "    }"
+      },
+      {
+        "lineNumber": 55,
+        "author": {
+          "gitId": "Elgoh"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 56,
         "author": {
           "gitId": "Elgoh"
         },
@@ -22188,8 +22251,8 @@
       }
     ],
     "authorContributionMap": {
-      "FizzyAgent": 18,
-      "Elgoh": 29
+      "FizzyAgent": 17,
+      "Elgoh": 39
     }
   },
   {
@@ -23753,6 +23816,365 @@
     "authorContributionMap": {
       "FizzyAgent": 45,
       "Door-oof": 3
+    }
+  },
+  {
+    "path": "src/main/java/nustorage/logic/commands/DeleteInventoryRecordCommand.java",
+    "fileType": "functional-code",
+    "lines": [
+      {
+        "lineNumber": 1,
+        "author": {
+          "gitId": "Elgoh"
+        },
+        "content": "package nustorage.logic.commands;"
+      },
+      {
+        "lineNumber": 2,
+        "author": {
+          "gitId": "Elgoh"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 3,
+        "author": {
+          "gitId": "Elgoh"
+        },
+        "content": "import static java.util.Objects.requireNonNull;"
+      },
+      {
+        "lineNumber": 4,
+        "author": {
+          "gitId": "Elgoh"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 5,
+        "author": {
+          "gitId": "Elgoh"
+        },
+        "content": "import java.util.List;"
+      },
+      {
+        "lineNumber": 6,
+        "author": {
+          "gitId": "Elgoh"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 7,
+        "author": {
+          "gitId": "Elgoh"
+        },
+        "content": "import nustorage.commons.core.Messages;"
+      },
+      {
+        "lineNumber": 8,
+        "author": {
+          "gitId": "Elgoh"
+        },
+        "content": "import nustorage.commons.core.index.Index;"
+      },
+      {
+        "lineNumber": 9,
+        "author": {
+          "gitId": "Elgoh"
+        },
+        "content": "import nustorage.logic.commands.exceptions.CommandException;"
+      },
+      {
+        "lineNumber": 10,
+        "author": {
+          "gitId": "Elgoh"
+        },
+        "content": "import nustorage.model.Model;"
+      },
+      {
+        "lineNumber": 11,
+        "author": {
+          "gitId": "Elgoh"
+        },
+        "content": "import nustorage.model.record.InventoryRecord;"
+      },
+      {
+        "lineNumber": 12,
+        "author": {
+          "gitId": "Elgoh"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 13,
+        "author": {
+          "gitId": "Elgoh"
+        },
+        "content": "public class DeleteInventoryRecordCommand extends Command {"
+      },
+      {
+        "lineNumber": 14,
+        "author": {
+          "gitId": "Elgoh"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 15,
+        "author": {
+          "gitId": "Elgoh"
+        },
+        "content": "    public static final String COMMAND_WORD \u003d \"delete_inventory\";"
+      },
+      {
+        "lineNumber": 16,
+        "author": {
+          "gitId": "Elgoh"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 17,
+        "author": {
+          "gitId": "Elgoh"
+        },
+        "content": "    public static final String MESSAGE_USAGE \u003d COMMAND_WORD"
+      },
+      {
+        "lineNumber": 18,
+        "author": {
+          "gitId": "Elgoh"
+        },
+        "content": "            + \": Deletes the inventory record identified by the index number used in Inventory.\\n\""
+      },
+      {
+        "lineNumber": 19,
+        "author": {
+          "gitId": "Elgoh"
+        },
+        "content": "            + \"Parameters: INDEX (must be a positive integer)\\n\""
+      },
+      {
+        "lineNumber": 20,
+        "author": {
+          "gitId": "Elgoh"
+        },
+        "content": "            + \"Example: \" + COMMAND_WORD + \" 1\";"
+      },
+      {
+        "lineNumber": 21,
+        "author": {
+          "gitId": "Elgoh"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 22,
+        "author": {
+          "gitId": "Elgoh"
+        },
+        "content": "    public static final String MESSAGE_DELETE_INVENTORY_RECORD_SUCCESS \u003d \"Deleted InventoryRecord: %1$s\";"
+      },
+      {
+        "lineNumber": 23,
+        "author": {
+          "gitId": "Elgoh"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 24,
+        "author": {
+          "gitId": "Elgoh"
+        },
+        "content": "    private final Index targetIndex;"
+      },
+      {
+        "lineNumber": 25,
+        "author": {
+          "gitId": "Elgoh"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 26,
+        "author": {
+          "gitId": "Elgoh"
+        },
+        "content": "    public DeleteInventoryRecordCommand(Index targetIndex) {"
+      },
+      {
+        "lineNumber": 27,
+        "author": {
+          "gitId": "Elgoh"
+        },
+        "content": "        this.targetIndex \u003d targetIndex;"
+      },
+      {
+        "lineNumber": 28,
+        "author": {
+          "gitId": "Elgoh"
+        },
+        "content": "    }"
+      },
+      {
+        "lineNumber": 29,
+        "author": {
+          "gitId": "Elgoh"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 30,
+        "author": {
+          "gitId": "Elgoh"
+        },
+        "content": "    @Override"
+      },
+      {
+        "lineNumber": 31,
+        "author": {
+          "gitId": "Elgoh"
+        },
+        "content": "    public CommandResult execute(Model model) throws CommandException {"
+      },
+      {
+        "lineNumber": 32,
+        "author": {
+          "gitId": "Elgoh"
+        },
+        "content": "        requireNonNull(model);"
+      },
+      {
+        "lineNumber": 33,
+        "author": {
+          "gitId": "Elgoh"
+        },
+        "content": "        List\u003cInventoryRecord\u003e lastShownList \u003d model.getFilteredInventory();"
+      },
+      {
+        "lineNumber": 34,
+        "author": {
+          "gitId": "Elgoh"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 35,
+        "author": {
+          "gitId": "Elgoh"
+        },
+        "content": "        if (targetIndex.getZeroBased() \u003e\u003d lastShownList.size()) {"
+      },
+      {
+        "lineNumber": 36,
+        "author": {
+          "gitId": "Elgoh"
+        },
+        "content": "            throw new CommandException(Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);"
+      },
+      {
+        "lineNumber": 37,
+        "author": {
+          "gitId": "Elgoh"
+        },
+        "content": "        }"
+      },
+      {
+        "lineNumber": 38,
+        "author": {
+          "gitId": "Elgoh"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 39,
+        "author": {
+          "gitId": "Elgoh"
+        },
+        "content": "        InventoryRecord inventoryRecordToDelete \u003d lastShownList.get(targetIndex.getZeroBased());"
+      },
+      {
+        "lineNumber": 40,
+        "author": {
+          "gitId": "Elgoh"
+        },
+        "content": "        model.deleteInventoryRecord(inventoryRecordToDelete);"
+      },
+      {
+        "lineNumber": 41,
+        "author": {
+          "gitId": "Elgoh"
+        },
+        "content": "        return new CommandResult(String.format(MESSAGE_DELETE_INVENTORY_RECORD_SUCCESS, inventoryRecordToDelete));"
+      },
+      {
+        "lineNumber": 42,
+        "author": {
+          "gitId": "Elgoh"
+        },
+        "content": "    }"
+      },
+      {
+        "lineNumber": 43,
+        "author": {
+          "gitId": "Elgoh"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 44,
+        "author": {
+          "gitId": "Elgoh"
+        },
+        "content": "    @Override"
+      },
+      {
+        "lineNumber": 45,
+        "author": {
+          "gitId": "Elgoh"
+        },
+        "content": "    public boolean equals(Object other) {"
+      },
+      {
+        "lineNumber": 46,
+        "author": {
+          "gitId": "Elgoh"
+        },
+        "content": "        return other \u003d\u003d this // short circuit if same object"
+      },
+      {
+        "lineNumber": 47,
+        "author": {
+          "gitId": "Elgoh"
+        },
+        "content": "                || (other instanceof DeleteInventoryRecordCommand // instanceof handles nulls"
+      },
+      {
+        "lineNumber": 48,
+        "author": {
+          "gitId": "Elgoh"
+        },
+        "content": "                \u0026\u0026 targetIndex.equals(((DeleteInventoryRecordCommand) other).targetIndex)); // state check"
+      },
+      {
+        "lineNumber": 49,
+        "author": {
+          "gitId": "Elgoh"
+        },
+        "content": "    }"
+      },
+      {
+        "lineNumber": 50,
+        "author": {
+          "gitId": "Elgoh"
+        },
+        "content": "}"
+      }
+    ],
+    "authorContributionMap": {
+      "Elgoh": 50
     }
   },
   {
@@ -29681,7 +30103,7 @@
     }
   },
   {
-    "path": "src/main/java/nustorage/logic/parser/AddInventoryCommandParser.java",
+    "path": "src/main/java/nustorage/logic/parser/AddInventoryRecordCommandParser.java",
     "fileType": "functional-code",
     "lines": [
       {
@@ -29759,168 +30181,168 @@
         "author": {
           "gitId": "Elgoh"
         },
-        "content": "import nustorage.logic.commands.AddCommand;"
+        "content": "import nustorage.logic.commands.AddInventoryRecordCommand;"
       },
       {
         "lineNumber": 12,
         "author": {
           "gitId": "Elgoh"
         },
-        "content": "import nustorage.logic.commands.AddInventoryCommand;"
-      },
-      {
-        "lineNumber": 13,
-        "author": {
-          "gitId": "Elgoh"
-        },
         "content": "import nustorage.logic.parser.exceptions.ParseException;"
       },
       {
-        "lineNumber": 14,
+        "lineNumber": 13,
         "author": {
           "gitId": "FizzyAgent"
         },
         "content": "import nustorage.model.record.FinanceRecord;"
       },
       {
-        "lineNumber": 15,
+        "lineNumber": 14,
         "author": {
           "gitId": "Elgoh"
         },
         "content": "import nustorage.model.record.InventoryRecord;"
       },
       {
-        "lineNumber": 16,
+        "lineNumber": 15,
         "author": {
           "gitId": "Elgoh"
         },
         "content": ""
       },
       {
-        "lineNumber": 17,
+        "lineNumber": 16,
         "author": {
           "gitId": "Elgoh"
         },
         "content": "/**"
       },
       {
-        "lineNumber": 18,
+        "lineNumber": 17,
         "author": {
           "gitId": "Elgoh"
         },
         "content": " * Parses input arguments and creates a new AddInventory object"
       },
       {
-        "lineNumber": 19,
+        "lineNumber": 18,
         "author": {
           "gitId": "Elgoh"
         },
         "content": " */"
       },
       {
+        "lineNumber": 19,
+        "author": {
+          "gitId": "Elgoh"
+        },
+        "content": "public class AddInventoryRecordCommandParser implements Parser\u003cAddInventoryRecordCommand\u003e {"
+      },
+      {
         "lineNumber": 20,
         "author": {
           "gitId": "Elgoh"
         },
-        "content": "public class AddInventoryCommandParser implements Parser\u003cAddInventoryCommand\u003e {"
+        "content": ""
       },
       {
         "lineNumber": 21,
         "author": {
           "gitId": "Elgoh"
         },
-        "content": ""
+        "content": "    /**"
       },
       {
         "lineNumber": 22,
         "author": {
           "gitId": "Elgoh"
         },
-        "content": "    /**"
+        "content": "     * Parses Inventory commands arguments from the user."
       },
       {
         "lineNumber": 23,
         "author": {
           "gitId": "Elgoh"
         },
-        "content": "     * Parses Inventory commands arguments from the user."
+        "content": "     * @param args User arguments."
       },
       {
         "lineNumber": 24,
         "author": {
           "gitId": "Elgoh"
         },
-        "content": "     * @param args User arguments."
+        "content": "     * @return An AddInventoryCommand."
       },
       {
         "lineNumber": 25,
         "author": {
           "gitId": "Elgoh"
         },
-        "content": "     * @return An AddInventoryCommand."
+        "content": "     * @throws ParseException When user arguments results in a parsing error."
       },
       {
         "lineNumber": 26,
         "author": {
           "gitId": "Elgoh"
         },
-        "content": "     * @throws ParseException When user arguments results in a parsing error."
+        "content": "     */"
       },
       {
         "lineNumber": 27,
         "author": {
           "gitId": "Elgoh"
         },
-        "content": "     */"
+        "content": "    public AddInventoryRecordCommand parse(String args) throws ParseException {"
       },
       {
         "lineNumber": 28,
         "author": {
           "gitId": "Elgoh"
         },
-        "content": "    public AddInventoryCommand parse(String args) throws ParseException {"
+        "content": "        ArgumentMultimap argMultimap \u003d"
       },
       {
         "lineNumber": 29,
         "author": {
           "gitId": "Elgoh"
         },
-        "content": "        ArgumentMultimap argMultimap \u003d"
+        "content": "                ArgumentTokenizer.tokenize(args, PREFIX_QUANTITY, PREFIX_ITEM_DESCRIPTION, PREFIX_ITEM_COST);"
       },
       {
         "lineNumber": 30,
-        "author": {
-          "gitId": "FizzyAgent"
-        },
-        "content": "                ArgumentTokenizer.tokenize(args, PREFIX_QUANTITY, PREFIX_ITEM_DESCRIPTION);"
-      },
-      {
-        "lineNumber": 31,
         "author": {
           "gitId": "Elgoh"
         },
         "content": ""
       },
       {
-        "lineNumber": 32,
+        "lineNumber": 31,
         "author": {
-          "gitId": "FizzyAgent"
+          "gitId": "Elgoh"
         },
-        "content": "        if (!arePrefixesPresent(argMultimap, PREFIX_QUANTITY, PREFIX_ITEM_COST, PREFIX_ITEM_DESCRIPTION)"
+        "content": "        if (!arePrefixesPresent(argMultimap, PREFIX_QUANTITY, PREFIX_ITEM_DESCRIPTION)"
       },
       {
-        "lineNumber": 33,
+        "lineNumber": 32,
         "author": {
           "gitId": "Elgoh"
         },
         "content": "                || !argMultimap.getPreamble().isEmpty()) {"
       },
       {
+        "lineNumber": 33,
+        "author": {
+          "gitId": "Elgoh"
+        },
+        "content": "            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT,"
+      },
+      {
         "lineNumber": 34,
         "author": {
           "gitId": "Elgoh"
         },
-        "content": "            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddCommand.MESSAGE_USAGE));"
+        "content": "                    AddInventoryRecordCommand.MESSAGE_USAGE));"
       },
       {
         "lineNumber": 35,
@@ -29995,9 +30417,9 @@
       {
         "lineNumber": 45,
         "author": {
-          "gitId": "FizzyAgent"
+          "gitId": "Elgoh"
         },
-        "content": "            return new AddInventoryCommand(inventoryRecord, Optional.of(financeRecord));"
+        "content": "            return new AddInventoryRecordCommand(inventoryRecord, Optional.of(financeRecord));"
       },
       {
         "lineNumber": 46,
@@ -30016,9 +30438,9 @@
       {
         "lineNumber": 48,
         "author": {
-          "gitId": "FizzyAgent"
+          "gitId": "Elgoh"
         },
-        "content": "        return new AddInventoryCommand(inventoryRecord, Optional.empty());"
+        "content": "        return new AddInventoryRecordCommand(inventoryRecord, Optional.empty());"
       },
       {
         "lineNumber": 49,
@@ -30064,8 +30486,8 @@
       }
     ],
     "authorContributionMap": {
-      "FizzyAgent": 15,
-      "Elgoh": 39
+      "FizzyAgent": 11,
+      "Elgoh": 43
     }
   },
   {
@@ -30145,9 +30567,9 @@
       {
         "lineNumber": 11,
         "author": {
-          "gitId": "FizzyAgent"
+          "gitId": "Elgoh"
         },
-        "content": "import nustorage.logic.commands.AddInventoryCommand;"
+        "content": "import nustorage.logic.commands.AddInventoryRecordCommand;"
       },
       {
         "lineNumber": 12,
@@ -30180,614 +30602,642 @@
       {
         "lineNumber": 16,
         "author": {
-          "gitId": "FizzyAgent"
+          "gitId": "Elgoh"
         },
-        "content": "import nustorage.logic.commands.EditCommand;"
+        "content": "import nustorage.logic.commands.DeleteInventoryRecordCommand;"
       },
       {
         "lineNumber": 17,
         "author": {
           "gitId": "FizzyAgent"
         },
-        "content": "import nustorage.logic.commands.EditFinanceCommand;"
+        "content": "import nustorage.logic.commands.EditCommand;"
       },
       {
         "lineNumber": 18,
         "author": {
           "gitId": "FizzyAgent"
         },
-        "content": "import nustorage.logic.commands.EditInventoryCommand;"
+        "content": "import nustorage.logic.commands.EditFinanceCommand;"
       },
       {
         "lineNumber": 19,
         "author": {
           "gitId": "FizzyAgent"
         },
-        "content": "import nustorage.logic.commands.ExitCommand;"
+        "content": "import nustorage.logic.commands.EditInventoryCommand;"
       },
       {
         "lineNumber": 20,
         "author": {
           "gitId": "FizzyAgent"
         },
-        "content": "import nustorage.logic.commands.FindCommand;"
+        "content": "import nustorage.logic.commands.ExitCommand;"
       },
       {
         "lineNumber": 21,
         "author": {
           "gitId": "FizzyAgent"
         },
-        "content": "import nustorage.logic.commands.HelpCommand;"
+        "content": "import nustorage.logic.commands.FindCommand;"
       },
       {
         "lineNumber": 22,
         "author": {
           "gitId": "FizzyAgent"
         },
-        "content": "import nustorage.logic.commands.ListCommand;"
+        "content": "import nustorage.logic.commands.HelpCommand;"
       },
       {
         "lineNumber": 23,
         "author": {
           "gitId": "FizzyAgent"
         },
-        "content": "import nustorage.logic.commands.ListFinanceRecordsCommand;"
+        "content": "import nustorage.logic.commands.ListCommand;"
       },
       {
         "lineNumber": 24,
         "author": {
           "gitId": "FizzyAgent"
         },
-        "content": "import nustorage.logic.commands.ListInventoryCommand;"
+        "content": "import nustorage.logic.commands.ListFinanceRecordsCommand;"
       },
       {
         "lineNumber": 25,
         "author": {
           "gitId": "FizzyAgent"
         },
-        "content": "import nustorage.logic.parser.exceptions.ParseException;"
+        "content": "import nustorage.logic.commands.ListInventoryCommand;"
       },
       {
         "lineNumber": 26,
         "author": {
-          "gitId": "-"
+          "gitId": "FizzyAgent"
         },
-        "content": ""
+        "content": "import nustorage.logic.parser.exceptions.ParseException;"
       },
       {
         "lineNumber": 27,
         "author": {
           "gitId": "-"
         },
-        "content": "/**"
+        "content": ""
       },
       {
         "lineNumber": 28,
         "author": {
           "gitId": "-"
         },
-        "content": " * Parses user input."
+        "content": "/**"
       },
       {
         "lineNumber": 29,
         "author": {
           "gitId": "-"
         },
-        "content": " */"
+        "content": " * Parses user input."
       },
       {
         "lineNumber": 30,
         "author": {
           "gitId": "-"
         },
-        "content": "public class AddressBookParser {"
+        "content": " */"
       },
       {
         "lineNumber": 31,
         "author": {
           "gitId": "-"
         },
-        "content": ""
+        "content": "public class AddressBookParser {"
       },
       {
         "lineNumber": 32,
         "author": {
           "gitId": "-"
         },
-        "content": "    /**"
+        "content": ""
       },
       {
         "lineNumber": 33,
         "author": {
           "gitId": "-"
         },
-        "content": "     * Used for initial separation of command word and args."
+        "content": "    /**"
       },
       {
         "lineNumber": 34,
         "author": {
           "gitId": "-"
         },
-        "content": "     */"
+        "content": "     * Used for initial separation of command word and args."
       },
       {
         "lineNumber": 35,
         "author": {
           "gitId": "-"
         },
-        "content": "    private static final Pattern BASIC_COMMAND_FORMAT \u003d Pattern.compile(\"(?\u003ccommandWord\u003e\\\\S+)(?\u003carguments\u003e.*)\");"
+        "content": "     */"
       },
       {
         "lineNumber": 36,
         "author": {
           "gitId": "-"
         },
-        "content": ""
+        "content": "    private static final Pattern BASIC_COMMAND_FORMAT \u003d Pattern.compile(\"(?\u003ccommandWord\u003e\\\\S+)(?\u003carguments\u003e.*)\");"
       },
       {
         "lineNumber": 37,
         "author": {
           "gitId": "-"
         },
-        "content": "    /**"
+        "content": ""
       },
       {
         "lineNumber": 38,
         "author": {
           "gitId": "-"
         },
-        "content": "     * Parses user input into command for execution."
+        "content": "    /**"
       },
       {
         "lineNumber": 39,
         "author": {
           "gitId": "-"
         },
-        "content": "     *"
+        "content": "     * Parses user input into command for execution."
       },
       {
         "lineNumber": 40,
         "author": {
           "gitId": "-"
         },
-        "content": "     * @param userInput full user input string"
+        "content": "     *"
       },
       {
         "lineNumber": 41,
         "author": {
           "gitId": "-"
         },
-        "content": "     * @return the command based on the user input"
+        "content": "     * @param userInput full user input string"
       },
       {
         "lineNumber": 42,
         "author": {
           "gitId": "-"
         },
-        "content": "     * @throws ParseException if the user input does not conform the expected format"
+        "content": "     * @return the command based on the user input"
       },
       {
         "lineNumber": 43,
         "author": {
           "gitId": "-"
         },
-        "content": "     */"
+        "content": "     * @throws ParseException if the user input does not conform the expected format"
       },
       {
         "lineNumber": 44,
         "author": {
           "gitId": "-"
         },
-        "content": "    public Command parseCommand(String userInput) throws ParseException {"
+        "content": "     */"
       },
       {
         "lineNumber": 45,
         "author": {
           "gitId": "-"
         },
-        "content": "        final Matcher matcher \u003d BASIC_COMMAND_FORMAT.matcher(userInput.trim());"
+        "content": "    public Command parseCommand(String userInput) throws ParseException {"
       },
       {
         "lineNumber": 46,
         "author": {
           "gitId": "-"
         },
-        "content": "        if (!matcher.matches()) {"
+        "content": "        final Matcher matcher \u003d BASIC_COMMAND_FORMAT.matcher(userInput.trim());"
       },
       {
         "lineNumber": 47,
         "author": {
           "gitId": "-"
         },
-        "content": "            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, HelpCommand.MESSAGE_USAGE));"
+        "content": "        if (!matcher.matches()) {"
       },
       {
         "lineNumber": 48,
         "author": {
           "gitId": "-"
         },
-        "content": "        }"
+        "content": "            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, HelpCommand.MESSAGE_USAGE));"
       },
       {
         "lineNumber": 49,
         "author": {
           "gitId": "-"
         },
-        "content": ""
+        "content": "        }"
       },
       {
         "lineNumber": 50,
         "author": {
           "gitId": "-"
         },
-        "content": "        final String commandWord \u003d matcher.group(\"commandWord\");"
+        "content": ""
       },
       {
         "lineNumber": 51,
         "author": {
           "gitId": "-"
         },
-        "content": "        final String arguments \u003d matcher.group(\"arguments\");"
+        "content": "        final String commandWord \u003d matcher.group(\"commandWord\");"
       },
       {
         "lineNumber": 52,
         "author": {
           "gitId": "-"
         },
-        "content": "        switch (commandWord) {"
+        "content": "        final String arguments \u003d matcher.group(\"arguments\");"
       },
       {
         "lineNumber": 53,
         "author": {
-          "gitId": "IronBiscuit"
+          "gitId": "-"
         },
-        "content": "        case ListInventoryCommand.COMMAND_WORD:"
+        "content": "        switch (commandWord) {"
       },
       {
         "lineNumber": 54,
         "author": {
           "gitId": "IronBiscuit"
         },
-        "content": "            return new ListInventoryCommand();"
+        "content": "        case ListInventoryCommand.COMMAND_WORD:"
       },
       {
         "lineNumber": 55,
         "author": {
-          "gitId": "-"
+          "gitId": "IronBiscuit"
         },
-        "content": ""
+        "content": "            return new ListInventoryCommand();"
       },
       {
         "lineNumber": 56,
         "author": {
-          "gitId": "Elgoh"
+          "gitId": "-"
         },
-        "content": "        case AddInventoryCommand.COMMAND_WORD:"
+        "content": ""
       },
       {
         "lineNumber": 57,
         "author": {
           "gitId": "Elgoh"
         },
-        "content": "            return new AddInventoryCommandParser().parse(arguments);"
+        "content": "        case AddInventoryRecordCommand.COMMAND_WORD:"
       },
       {
         "lineNumber": 58,
         "author": {
           "gitId": "Elgoh"
         },
-        "content": ""
+        "content": "            return new AddInventoryRecordCommandParser().parse(arguments);"
       },
       {
         "lineNumber": 59,
         "author": {
           "gitId": "Elgoh"
         },
-        "content": "        case EditInventoryCommand.COMMAND_WORD:"
+        "content": ""
       },
       {
         "lineNumber": 60,
         "author": {
           "gitId": "Elgoh"
         },
-        "content": "            return new EditInventoryCommandParser().parse(arguments);"
+        "content": "        case EditInventoryCommand.COMMAND_WORD:"
       },
       {
         "lineNumber": 61,
         "author": {
           "gitId": "Elgoh"
         },
-        "content": ""
+        "content": "            return new EditInventoryCommandParser().parse(arguments);"
       },
       {
         "lineNumber": 62,
         "author": {
-          "gitId": "FizzyAgent"
-        },
-        "content": "        case AddFinanceCommand.COMMAND_WORD:"
-      },
-      {
-        "lineNumber": 63,
-        "author": {
-          "gitId": "FizzyAgent"
-        },
-        "content": "            return new AddFinanceCommandParser().parse(arguments);"
-      },
-      {
-        "lineNumber": 64,
-        "author": {
-          "gitId": "FizzyAgent"
+          "gitId": "Elgoh"
         },
         "content": ""
       },
       {
+        "lineNumber": 63,
+        "author": {
+          "gitId": "Elgoh"
+        },
+        "content": "        case DeleteInventoryRecordCommand.COMMAND_WORD:"
+      },
+      {
+        "lineNumber": 64,
+        "author": {
+          "gitId": "Elgoh"
+        },
+        "content": "            return new DeleteInventoryRecordCommandParser().parse(arguments);"
+      },
+      {
         "lineNumber": 65,
         "author": {
-          "gitId": "FizzyAgent"
+          "gitId": "Elgoh"
         },
-        "content": "        case EditFinanceCommand.COMMAND_WORD:"
+        "content": ""
       },
       {
         "lineNumber": 66,
         "author": {
           "gitId": "FizzyAgent"
         },
-        "content": "            return new EditFinanceCommandParser().parse(arguments);"
+        "content": "        case AddFinanceCommand.COMMAND_WORD:"
       },
       {
         "lineNumber": 67,
         "author": {
-          "gitId": "-"
+          "gitId": "FizzyAgent"
         },
-        "content": ""
+        "content": "            return new AddFinanceCommandParser().parse(arguments);"
       },
       {
         "lineNumber": 68,
         "author": {
-          "gitId": "-"
-        },
-        "content": "        case AddCommand.COMMAND_WORD:"
-      },
-      {
-        "lineNumber": 69,
-        "author": {
-          "gitId": "-"
-        },
-        "content": "            return new AddCommandParser().parse(arguments);"
-      },
-      {
-        "lineNumber": 70,
-        "author": {
-          "gitId": "-"
+          "gitId": "FizzyAgent"
         },
         "content": ""
       },
       {
+        "lineNumber": 69,
+        "author": {
+          "gitId": "FizzyAgent"
+        },
+        "content": "        case EditFinanceCommand.COMMAND_WORD:"
+      },
+      {
+        "lineNumber": 70,
+        "author": {
+          "gitId": "FizzyAgent"
+        },
+        "content": "            return new EditFinanceCommandParser().parse(arguments);"
+      },
+      {
         "lineNumber": 71,
         "author": {
-          "gitId": "-"
+          "gitId": "FizzyAgent"
         },
-        "content": "        case EditCommand.COMMAND_WORD:"
+        "content": ""
       },
       {
         "lineNumber": 72,
         "author": {
           "gitId": "-"
         },
-        "content": "            return new EditCommandParser().parse(arguments);"
+        "content": "        case AddCommand.COMMAND_WORD:"
       },
       {
         "lineNumber": 73,
         "author": {
           "gitId": "-"
         },
-        "content": ""
+        "content": "            return new AddCommandParser().parse(arguments);"
       },
       {
         "lineNumber": 74,
         "author": {
-          "gitId": "FizzyAgent"
+          "gitId": "-"
         },
-        "content": "        case DeleteFinanceCommand.COMMAND_WORD:"
+        "content": ""
       },
       {
         "lineNumber": 75,
         "author": {
-          "gitId": "FizzyAgent"
+          "gitId": "-"
         },
-        "content": "            return new DeleteFinanceCommandParser().parse(arguments);"
+        "content": "        case EditCommand.COMMAND_WORD:"
       },
       {
         "lineNumber": 76,
         "author": {
-          "gitId": "FizzyAgent"
+          "gitId": "-"
         },
-        "content": ""
+        "content": "            return new EditCommandParser().parse(arguments);"
       },
       {
         "lineNumber": 77,
         "author": {
           "gitId": "-"
         },
-        "content": "        case DeleteCommand.COMMAND_WORD:"
+        "content": ""
       },
       {
         "lineNumber": 78,
+        "author": {
+          "gitId": "FizzyAgent"
+        },
+        "content": "        case DeleteFinanceCommand.COMMAND_WORD:"
+      },
+      {
+        "lineNumber": 79,
+        "author": {
+          "gitId": "FizzyAgent"
+        },
+        "content": "            return new DeleteFinanceCommandParser().parse(arguments);"
+      },
+      {
+        "lineNumber": 80,
+        "author": {
+          "gitId": "FizzyAgent"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 81,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "        case DeleteCommand.COMMAND_WORD:"
+      },
+      {
+        "lineNumber": 82,
         "author": {
           "gitId": "-"
         },
         "content": "            return new DeleteCommandParser().parse(arguments);"
       },
       {
-        "lineNumber": 79,
+        "lineNumber": 83,
         "author": {
           "gitId": "-"
         },
         "content": ""
       },
       {
-        "lineNumber": 80,
+        "lineNumber": 84,
         "author": {
           "gitId": "Door-oof"
         },
         "content": "        case ListFinanceRecordsCommand.COMMAND_WORD:"
       },
       {
-        "lineNumber": 81,
+        "lineNumber": 85,
         "author": {
           "gitId": "Door-oof"
         },
         "content": "            return new ListFinanceRecordsCommand();"
       },
       {
-        "lineNumber": 82,
+        "lineNumber": 86,
         "author": {
           "gitId": "Door-oof"
         },
         "content": ""
       },
       {
-        "lineNumber": 83,
+        "lineNumber": 87,
         "author": {
           "gitId": "-"
         },
         "content": "        case ClearCommand.COMMAND_WORD:"
       },
       {
-        "lineNumber": 84,
+        "lineNumber": 88,
         "author": {
           "gitId": "-"
         },
         "content": "            return new ClearCommand();"
       },
       {
-        "lineNumber": 85,
-        "author": {
-          "gitId": "-"
-        },
-        "content": ""
-      },
-      {
-        "lineNumber": 86,
-        "author": {
-          "gitId": "-"
-        },
-        "content": "        case FindCommand.COMMAND_WORD:"
-      },
-      {
-        "lineNumber": 87,
-        "author": {
-          "gitId": "-"
-        },
-        "content": "            return new FindCommandParser().parse(arguments);"
-      },
-      {
-        "lineNumber": 88,
-        "author": {
-          "gitId": "-"
-        },
-        "content": ""
-      },
-      {
         "lineNumber": 89,
         "author": {
           "gitId": "-"
         },
-        "content": "        case ListCommand.COMMAND_WORD:"
+        "content": ""
       },
       {
         "lineNumber": 90,
         "author": {
           "gitId": "-"
         },
-        "content": "            return new ListCommand();"
+        "content": "        case FindCommand.COMMAND_WORD:"
       },
       {
         "lineNumber": 91,
         "author": {
           "gitId": "-"
         },
-        "content": ""
+        "content": "            return new FindCommandParser().parse(arguments);"
       },
       {
         "lineNumber": 92,
         "author": {
           "gitId": "-"
         },
-        "content": "        case ExitCommand.COMMAND_WORD:"
+        "content": ""
       },
       {
         "lineNumber": 93,
         "author": {
           "gitId": "-"
         },
-        "content": "            return new ExitCommand();"
+        "content": "        case ListCommand.COMMAND_WORD:"
       },
       {
         "lineNumber": 94,
         "author": {
           "gitId": "-"
         },
-        "content": ""
+        "content": "            return new ListCommand();"
       },
       {
         "lineNumber": 95,
         "author": {
           "gitId": "-"
         },
-        "content": "        case HelpCommand.COMMAND_WORD:"
+        "content": ""
       },
       {
         "lineNumber": 96,
         "author": {
           "gitId": "-"
         },
-        "content": "            return new HelpCommand();"
+        "content": "        case ExitCommand.COMMAND_WORD:"
       },
       {
         "lineNumber": 97,
         "author": {
           "gitId": "-"
         },
-        "content": ""
+        "content": "            return new ExitCommand();"
       },
       {
         "lineNumber": 98,
         "author": {
           "gitId": "-"
         },
-        "content": "        default:"
+        "content": ""
       },
       {
         "lineNumber": 99,
         "author": {
           "gitId": "-"
         },
-        "content": "            throw new ParseException(MESSAGE_UNKNOWN_COMMAND);"
+        "content": "        case HelpCommand.COMMAND_WORD:"
       },
       {
         "lineNumber": 100,
         "author": {
           "gitId": "-"
         },
-        "content": "        }"
+        "content": "            return new HelpCommand();"
       },
       {
         "lineNumber": 101,
         "author": {
           "gitId": "-"
         },
-        "content": "    }"
+        "content": ""
       },
       {
         "lineNumber": 102,
         "author": {
           "gitId": "-"
         },
-        "content": ""
+        "content": "        default:"
       },
       {
         "lineNumber": 103,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "            throw new ParseException(MESSAGE_UNKNOWN_COMMAND);"
+      },
+      {
+        "lineNumber": 104,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "        }"
+      },
+      {
+        "lineNumber": 105,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "    }"
+      },
+      {
+        "lineNumber": 106,
+        "author": {
+          "gitId": "-"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 107,
         "author": {
           "gitId": "-"
         },
@@ -30797,9 +31247,9 @@
     "authorContributionMap": {
       "IronBiscuit": 2,
       "FizzyAgent": 28,
-      "Elgoh": 6,
+      "Elgoh": 11,
       "Door-oof": 3,
-      "-": 64
+      "-": 63
     }
   },
   {
@@ -32852,6 +33302,211 @@
     ],
     "authorContributionMap": {
       "FizzyAgent": 25
+    }
+  },
+  {
+    "path": "src/main/java/nustorage/logic/parser/DeleteInventoryRecordCommandParser.java",
+    "fileType": "functional-code",
+    "lines": [
+      {
+        "lineNumber": 1,
+        "author": {
+          "gitId": "Elgoh"
+        },
+        "content": "package nustorage.logic.parser;"
+      },
+      {
+        "lineNumber": 2,
+        "author": {
+          "gitId": "Elgoh"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 3,
+        "author": {
+          "gitId": "Elgoh"
+        },
+        "content": "import static nustorage.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;"
+      },
+      {
+        "lineNumber": 4,
+        "author": {
+          "gitId": "Elgoh"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 5,
+        "author": {
+          "gitId": "Elgoh"
+        },
+        "content": "import nustorage.commons.core.index.Index;"
+      },
+      {
+        "lineNumber": 6,
+        "author": {
+          "gitId": "Elgoh"
+        },
+        "content": "import nustorage.logic.commands.DeleteInventoryRecordCommand;"
+      },
+      {
+        "lineNumber": 7,
+        "author": {
+          "gitId": "Elgoh"
+        },
+        "content": "import nustorage.logic.parser.exceptions.ParseException;"
+      },
+      {
+        "lineNumber": 8,
+        "author": {
+          "gitId": "Elgoh"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 9,
+        "author": {
+          "gitId": "Elgoh"
+        },
+        "content": "/**"
+      },
+      {
+        "lineNumber": 10,
+        "author": {
+          "gitId": "Elgoh"
+        },
+        "content": " * Parses input arguments and creates a new DeleteInventoryRecordCommand object"
+      },
+      {
+        "lineNumber": 11,
+        "author": {
+          "gitId": "Elgoh"
+        },
+        "content": " */"
+      },
+      {
+        "lineNumber": 12,
+        "author": {
+          "gitId": "Elgoh"
+        },
+        "content": "public class DeleteInventoryRecordCommandParser {"
+      },
+      {
+        "lineNumber": 13,
+        "author": {
+          "gitId": "Elgoh"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 14,
+        "author": {
+          "gitId": "Elgoh"
+        },
+        "content": "    /**"
+      },
+      {
+        "lineNumber": 15,
+        "author": {
+          "gitId": "Elgoh"
+        },
+        "content": "     * Parses the given {@code String} of arguments in the context of the DeleteInventoryRecordCommand"
+      },
+      {
+        "lineNumber": 16,
+        "author": {
+          "gitId": "Elgoh"
+        },
+        "content": "     * and returns a DeleteInventoryRecordCommand object for execution."
+      },
+      {
+        "lineNumber": 17,
+        "author": {
+          "gitId": "Elgoh"
+        },
+        "content": "     * @throws ParseException if the user input does not conform the expected format"
+      },
+      {
+        "lineNumber": 18,
+        "author": {
+          "gitId": "Elgoh"
+        },
+        "content": "     */"
+      },
+      {
+        "lineNumber": 19,
+        "author": {
+          "gitId": "Elgoh"
+        },
+        "content": "    public DeleteInventoryRecordCommand parse(String args) throws ParseException {"
+      },
+      {
+        "lineNumber": 20,
+        "author": {
+          "gitId": "Elgoh"
+        },
+        "content": "        try {"
+      },
+      {
+        "lineNumber": 21,
+        "author": {
+          "gitId": "Elgoh"
+        },
+        "content": "            Index index \u003d ParserUtil.parseIndex(args);"
+      },
+      {
+        "lineNumber": 22,
+        "author": {
+          "gitId": "Elgoh"
+        },
+        "content": "            return new DeleteInventoryRecordCommand(index);"
+      },
+      {
+        "lineNumber": 23,
+        "author": {
+          "gitId": "Elgoh"
+        },
+        "content": "        } catch (ParseException pe) {"
+      },
+      {
+        "lineNumber": 24,
+        "author": {
+          "gitId": "Elgoh"
+        },
+        "content": "            throw new ParseException("
+      },
+      {
+        "lineNumber": 25,
+        "author": {
+          "gitId": "Elgoh"
+        },
+        "content": "                    String.format(MESSAGE_INVALID_COMMAND_FORMAT, DeleteInventoryRecordCommand.MESSAGE_USAGE), pe);"
+      },
+      {
+        "lineNumber": 26,
+        "author": {
+          "gitId": "Elgoh"
+        },
+        "content": "        }"
+      },
+      {
+        "lineNumber": 27,
+        "author": {
+          "gitId": "Elgoh"
+        },
+        "content": "    }"
+      },
+      {
+        "lineNumber": 28,
+        "author": {
+          "gitId": "Elgoh"
+        },
+        "content": "}"
+      }
+    ],
+    "authorContributionMap": {
+      "Elgoh": 28
     }
   },
   {
@@ -38787,502 +39442,516 @@
       {
         "lineNumber": 51,
         "author": {
-          "gitId": "-"
+          "gitId": "Elgoh"
         },
-        "content": "    /**"
+        "content": "    void deleteInventoryRecord(InventoryRecord target);"
       },
       {
         "lineNumber": 52,
         "author": {
-          "gitId": "-"
+          "gitId": "Elgoh"
         },
-        "content": "     * Returns the user prefs\u0027 address book file path."
+        "content": ""
       },
       {
         "lineNumber": 53,
         "author": {
           "gitId": "-"
         },
-        "content": "     */"
+        "content": "    /**"
       },
       {
         "lineNumber": 54,
         "author": {
-          "gitId": "-"
+          "gitId": "Elgoh"
         },
-        "content": "    Path getAddressBookFilePath();"
+        "content": "     *  * Returns the user prefs\u0027 address book file path."
       },
       {
         "lineNumber": 55,
         "author": {
           "gitId": "-"
         },
-        "content": ""
+        "content": "     */"
       },
       {
         "lineNumber": 56,
         "author": {
           "gitId": "-"
         },
-        "content": "    /**"
+        "content": "    Path getAddressBookFilePath();"
       },
       {
         "lineNumber": 57,
         "author": {
           "gitId": "-"
         },
-        "content": "     * Sets the user prefs\u0027 address book file path."
+        "content": ""
       },
       {
         "lineNumber": 58,
         "author": {
           "gitId": "-"
         },
-        "content": "     */"
+        "content": "    /**"
       },
       {
         "lineNumber": 59,
         "author": {
           "gitId": "-"
         },
-        "content": "    void setAddressBookFilePath(Path addressBookFilePath);"
+        "content": "     * Sets the user prefs\u0027 address book file path."
       },
       {
         "lineNumber": 60,
         "author": {
           "gitId": "-"
         },
-        "content": ""
+        "content": "     */"
       },
       {
         "lineNumber": 61,
         "author": {
           "gitId": "-"
         },
-        "content": "    /**"
+        "content": "    void setAddressBookFilePath(Path addressBookFilePath);"
       },
       {
         "lineNumber": 62,
         "author": {
           "gitId": "-"
         },
-        "content": "     * Replaces address book data with the data in {@code addressBook}."
+        "content": ""
       },
       {
         "lineNumber": 63,
         "author": {
           "gitId": "-"
         },
-        "content": "     */"
+        "content": "    /**"
       },
       {
         "lineNumber": 64,
         "author": {
           "gitId": "-"
         },
-        "content": "    void setAddressBook(ReadOnlyAddressBook addressBook);"
+        "content": "     * Replaces address book data with the data in {@code addressBook}."
       },
       {
         "lineNumber": 65,
         "author": {
           "gitId": "-"
         },
-        "content": ""
+        "content": "     */"
       },
       {
         "lineNumber": 66,
         "author": {
           "gitId": "-"
         },
-        "content": "    /** Returns the AddressBook */"
+        "content": "    void setAddressBook(ReadOnlyAddressBook addressBook);"
       },
       {
         "lineNumber": 67,
         "author": {
           "gitId": "-"
         },
-        "content": "    ReadOnlyAddressBook getAddressBook();"
+        "content": ""
       },
       {
         "lineNumber": 68,
         "author": {
           "gitId": "-"
         },
-        "content": ""
+        "content": "    /** Returns the AddressBook */"
       },
       {
         "lineNumber": 69,
         "author": {
           "gitId": "-"
         },
-        "content": "    /**"
+        "content": "    ReadOnlyAddressBook getAddressBook();"
       },
       {
         "lineNumber": 70,
         "author": {
           "gitId": "-"
         },
-        "content": "     * Returns true if a person with the same identity as {@code person} exists in the address book."
+        "content": ""
       },
       {
         "lineNumber": 71,
         "author": {
           "gitId": "-"
         },
-        "content": "     */"
+        "content": "    /**"
       },
       {
         "lineNumber": 72,
         "author": {
           "gitId": "-"
         },
-        "content": "    boolean hasPerson(Person person);"
+        "content": "     * Returns true if a person with the same identity as {@code person} exists in the address book."
       },
       {
         "lineNumber": 73,
         "author": {
           "gitId": "-"
         },
-        "content": ""
+        "content": "     */"
       },
       {
         "lineNumber": 74,
         "author": {
           "gitId": "-"
         },
-        "content": "    /**"
+        "content": "    boolean hasPerson(Person person);"
       },
       {
         "lineNumber": 75,
         "author": {
           "gitId": "-"
         },
-        "content": "     * Deletes the given person."
+        "content": ""
       },
       {
         "lineNumber": 76,
         "author": {
           "gitId": "-"
         },
-        "content": "     * The person must exist in the address book."
+        "content": "    /**"
       },
       {
         "lineNumber": 77,
         "author": {
           "gitId": "-"
         },
-        "content": "     */"
+        "content": "     * Deletes the given person."
       },
       {
         "lineNumber": 78,
         "author": {
           "gitId": "-"
         },
-        "content": "    void deletePerson(Person target);"
+        "content": "     * The person must exist in the address book."
       },
       {
         "lineNumber": 79,
         "author": {
           "gitId": "-"
         },
-        "content": ""
+        "content": "     */"
       },
       {
         "lineNumber": 80,
         "author": {
           "gitId": "-"
         },
-        "content": "    /**"
+        "content": "    void deletePerson(Person target);"
       },
       {
         "lineNumber": 81,
         "author": {
           "gitId": "-"
         },
-        "content": "     * Adds the given person."
+        "content": ""
       },
       {
         "lineNumber": 82,
         "author": {
           "gitId": "-"
         },
-        "content": "     * {@code person} must not already exist in the address book."
+        "content": "    /**"
       },
       {
         "lineNumber": 83,
         "author": {
           "gitId": "-"
         },
-        "content": "     */"
+        "content": "     * Adds the given person."
       },
       {
         "lineNumber": 84,
         "author": {
           "gitId": "-"
         },
-        "content": "    void addPerson(Person person);"
+        "content": "     * {@code person} must not already exist in the address book."
       },
       {
         "lineNumber": 85,
         "author": {
           "gitId": "-"
         },
-        "content": ""
+        "content": "     */"
       },
       {
         "lineNumber": 86,
         "author": {
           "gitId": "-"
         },
-        "content": "    /**"
+        "content": "    void addPerson(Person person);"
       },
       {
         "lineNumber": 87,
         "author": {
           "gitId": "-"
         },
-        "content": "     * Replaces the given person {@code target} with {@code editedPerson}."
+        "content": ""
       },
       {
         "lineNumber": 88,
         "author": {
           "gitId": "-"
         },
-        "content": "     * {@code target} must exist in the address book."
+        "content": "    /**"
       },
       {
         "lineNumber": 89,
         "author": {
           "gitId": "-"
         },
-        "content": "     * The person identity of {@code editedPerson} must not be the same as another existing person in the address book."
+        "content": "     * Replaces the given person {@code target} with {@code editedPerson}."
       },
       {
         "lineNumber": 90,
         "author": {
           "gitId": "-"
         },
-        "content": "     */"
+        "content": "     * {@code target} must exist in the address book."
       },
       {
         "lineNumber": 91,
         "author": {
           "gitId": "-"
         },
-        "content": "    void setPerson(Person target, Person editedPerson);"
+        "content": "     * The person identity of {@code editedPerson} must not be the same as another existing person in the address book."
       },
       {
         "lineNumber": 92,
         "author": {
           "gitId": "-"
         },
-        "content": ""
+        "content": "     */"
       },
       {
         "lineNumber": 93,
         "author": {
-          "gitId": "Elgoh"
+          "gitId": "-"
         },
-        "content": "    /**"
+        "content": "    void setPerson(Person target, Person editedPerson);"
       },
       {
         "lineNumber": 94,
         "author": {
-          "gitId": "Elgoh"
+          "gitId": "-"
         },
-        "content": "     * Replaces the given InventoryRecord {@code target} with {@code editedInventoryRecord}."
+        "content": ""
       },
       {
         "lineNumber": 95,
         "author": {
           "gitId": "Elgoh"
         },
-        "content": "     * {@code target} must exist in the Inventory."
+        "content": "    /**"
       },
       {
         "lineNumber": 96,
         "author": {
           "gitId": "Elgoh"
         },
-        "content": "     * The description of {@code editedInventoryRecord} must not be the same as another existing InventoryRecord."
+        "content": "     * Replaces the given InventoryRecord {@code target} with {@code editedInventoryRecord}."
       },
       {
         "lineNumber": 97,
         "author": {
           "gitId": "Elgoh"
         },
-        "content": "     */"
+        "content": "     * {@code target} must exist in the Inventory."
       },
       {
         "lineNumber": 98,
         "author": {
           "gitId": "Elgoh"
         },
-        "content": "    void setInventoryRecord(InventoryRecord target, InventoryRecord editedInventoryRecord);"
+        "content": "     * The description of {@code editedInventoryRecord} must not be the same as another existing InventoryRecord."
       },
       {
         "lineNumber": 99,
         "author": {
           "gitId": "Elgoh"
         },
-        "content": ""
+        "content": "     */"
       },
       {
         "lineNumber": 100,
         "author": {
           "gitId": "Elgoh"
         },
-        "content": "    /**"
+        "content": "    void setInventoryRecord(InventoryRecord target, InventoryRecord editedInventoryRecord);"
       },
       {
         "lineNumber": 101,
         "author": {
           "gitId": "Elgoh"
         },
-        "content": "     *"
+        "content": ""
       },
       {
         "lineNumber": 102,
         "author": {
           "gitId": "Elgoh"
         },
-        "content": "     * Returns true if a record with the same identity as {@code InventoryRecord} exists in the Inventory."
+        "content": "    /**"
       },
       {
         "lineNumber": 103,
         "author": {
           "gitId": "Elgoh"
         },
-        "content": "     */"
+        "content": "     *"
       },
       {
         "lineNumber": 104,
         "author": {
           "gitId": "Elgoh"
         },
-        "content": "    boolean hasInventoryRecord(InventoryRecord inventoryRecord);"
+        "content": "     * Returns true if a record with the same identity as {@code InventoryRecord} exists in the Inventory."
       },
       {
         "lineNumber": 105,
         "author": {
           "gitId": "Elgoh"
         },
-        "content": ""
+        "content": "     */"
       },
       {
         "lineNumber": 106,
         "author": {
-          "gitId": "-"
+          "gitId": "Elgoh"
         },
-        "content": "    /** Returns an unmodifiable view of the filtered person list */"
+        "content": "    boolean hasInventoryRecord(InventoryRecord inventoryRecord);"
       },
       {
         "lineNumber": 107,
         "author": {
-          "gitId": "-"
+          "gitId": "Elgoh"
         },
-        "content": "    ObservableList\u003cPerson\u003e getFilteredPersonList();"
+        "content": ""
       },
       {
         "lineNumber": 108,
         "author": {
           "gitId": "-"
         },
-        "content": ""
+        "content": "    /** Returns an unmodifiable view of the filtered person list */"
       },
       {
         "lineNumber": 109,
         "author": {
-          "gitId": "IronBiscuit"
+          "gitId": "-"
         },
-        "content": "    ObservableList\u003cInventoryRecord\u003e getFilteredInventory();"
+        "content": "    ObservableList\u003cPerson\u003e getFilteredPersonList();"
       },
       {
         "lineNumber": 110,
         "author": {
-          "gitId": "IronBiscuit"
+          "gitId": "-"
         },
         "content": ""
       },
       {
         "lineNumber": 111,
         "author": {
-          "gitId": "Door-oof"
+          "gitId": "IronBiscuit"
         },
-        "content": "    ObservableList\u003cFinanceRecord\u003e getFilteredFinanceList();"
+        "content": "    ObservableList\u003cInventoryRecord\u003e getFilteredInventory();"
       },
       {
         "lineNumber": 112,
         "author": {
-          "gitId": "Door-oof"
+          "gitId": "IronBiscuit"
         },
         "content": ""
       },
       {
         "lineNumber": 113,
         "author": {
-          "gitId": "-"
+          "gitId": "Door-oof"
         },
-        "content": "    /**"
+        "content": "    ObservableList\u003cFinanceRecord\u003e getFilteredFinanceList();"
       },
       {
         "lineNumber": 114,
         "author": {
-          "gitId": "-"
+          "gitId": "Door-oof"
         },
-        "content": "     * Updates the filter of the filtered person list to filter by the given {@code predicate}."
+        "content": ""
       },
       {
         "lineNumber": 115,
         "author": {
           "gitId": "-"
         },
-        "content": "     * @throws NullPointerException if {@code predicate} is null."
+        "content": "    /**"
       },
       {
         "lineNumber": 116,
         "author": {
           "gitId": "-"
         },
-        "content": "     */"
+        "content": "     * Updates the filter of the filtered person list to filter by the given {@code predicate}."
       },
       {
         "lineNumber": 117,
         "author": {
           "gitId": "-"
         },
-        "content": "    void updateFilteredPersonList(Predicate\u003cPerson\u003e predicate);"
+        "content": "     * @throws NullPointerException if {@code predicate} is null."
       },
       {
         "lineNumber": 118,
         "author": {
-          "gitId": "IronBiscuit"
+          "gitId": "-"
         },
-        "content": ""
+        "content": "     */"
       },
       {
         "lineNumber": 119,
         "author": {
-          "gitId": "IronBiscuit"
+          "gitId": "-"
         },
-        "content": "    void updateFilteredInventoryList(Predicate\u003cInventoryRecord\u003e predicate);"
+        "content": "    void updateFilteredPersonList(Predicate\u003cPerson\u003e predicate);"
       },
       {
         "lineNumber": 120,
         "author": {
-          "gitId": "Door-oof"
+          "gitId": "IronBiscuit"
         },
         "content": ""
       },
       {
         "lineNumber": 121,
         "author": {
+          "gitId": "IronBiscuit"
+        },
+        "content": "    void updateFilteredInventoryList(Predicate\u003cInventoryRecord\u003e predicate);"
+      },
+      {
+        "lineNumber": 122,
+        "author": {
+          "gitId": "Door-oof"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 123,
+        "author": {
           "gitId": "Door-oof"
         },
         "content": "    void updateFilteredFinanceList(Predicate\u003cFinanceRecord\u003e predicate);"
       },
       {
-        "lineNumber": 122,
+        "lineNumber": 124,
         "author": {
           "gitId": "-"
         },
@@ -39292,9 +39961,9 @@
     "authorContributionMap": {
       "IronBiscuit": 5,
       "FizzyAgent": 11,
-      "Elgoh": 16,
+      "Elgoh": 19,
       "Door-oof": 6,
-      "-": 84
+      "-": 83
     }
   },
   {
@@ -40167,250 +40836,250 @@
         "author": {
           "gitId": "Elgoh"
         },
-        "content": "    //\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d FinanceAccount \u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d"
+        "content": "    @Override"
       },
       {
         "lineNumber": 125,
         "author": {
-          "gitId": "FizzyAgent"
+          "gitId": "Elgoh"
         },
-        "content": "    @Override"
+        "content": "    public void deleteInventoryRecord(InventoryRecord target) {"
       },
       {
         "lineNumber": 126,
         "author": {
-          "gitId": "FizzyAgent"
+          "gitId": "Elgoh"
         },
-        "content": "    public void addFinanceRecord(FinanceRecord newRecord) {"
+        "content": "        requireAllNonNull(target);"
       },
       {
         "lineNumber": 127,
         "author": {
-          "gitId": "FizzyAgent"
-        },
-        "content": "        financeAccount.addRecord(newRecord);"
-      },
-      {
-        "lineNumber": 128,
-        "author": {
-          "gitId": "FizzyAgent"
-        },
-        "content": "    }"
-      },
-      {
-        "lineNumber": 129,
-        "author": {
-          "gitId": "FizzyAgent"
+          "gitId": "Elgoh"
         },
         "content": ""
       },
       {
+        "lineNumber": 128,
+        "author": {
+          "gitId": "Elgoh"
+        },
+        "content": "        inventory.deleteInventoryRecord(target);"
+      },
+      {
+        "lineNumber": 129,
+        "author": {
+          "gitId": "Elgoh"
+        },
+        "content": "    }"
+      },
+      {
         "lineNumber": 130,
         "author": {
-          "gitId": "Door-oof"
+          "gitId": "Elgoh"
         },
-        "content": "    @Override"
+        "content": ""
       },
       {
         "lineNumber": 131,
         "author": {
-          "gitId": "FizzyAgent"
+          "gitId": "Elgoh"
         },
-        "content": "    public ObservableList\u003cFinanceRecord\u003e getFilteredFinanceList() {"
+        "content": "    //\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d FinanceAccount \u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d"
       },
       {
         "lineNumber": 132,
         "author": {
           "gitId": "FizzyAgent"
         },
-        "content": "        return filteredFinance;"
+        "content": "    @Override"
       },
       {
         "lineNumber": 133,
         "author": {
           "gitId": "FizzyAgent"
         },
-        "content": "    }"
+        "content": "    public void addFinanceRecord(FinanceRecord newRecord) {"
       },
       {
         "lineNumber": 134,
         "author": {
           "gitId": "FizzyAgent"
         },
-        "content": ""
+        "content": "        financeAccount.addRecord(newRecord);"
       },
       {
         "lineNumber": 135,
         "author": {
           "gitId": "FizzyAgent"
         },
-        "content": "    @Override"
+        "content": "    }"
       },
       {
         "lineNumber": 136,
         "author": {
           "gitId": "FizzyAgent"
         },
-        "content": "    public void setFinanceRecord(FinanceRecord target, FinanceRecord editedFinanceRecord) {"
+        "content": ""
       },
       {
         "lineNumber": 137,
         "author": {
-          "gitId": "FizzyAgent"
+          "gitId": "Door-oof"
         },
-        "content": "        requireAllNonNull(target, editedFinanceRecord);"
+        "content": "    @Override"
       },
       {
         "lineNumber": 138,
         "author": {
           "gitId": "FizzyAgent"
         },
-        "content": ""
+        "content": "    public ObservableList\u003cFinanceRecord\u003e getFilteredFinanceList() {"
       },
       {
         "lineNumber": 139,
         "author": {
           "gitId": "FizzyAgent"
         },
-        "content": "        financeAccount.setFinanceRecord(target, editedFinanceRecord);"
+        "content": "        return filteredFinance;"
       },
       {
         "lineNumber": 140,
         "author": {
-          "gitId": "Door-oof"
+          "gitId": "FizzyAgent"
         },
         "content": "    }"
       },
       {
         "lineNumber": 141,
         "author": {
-          "gitId": "Door-oof"
+          "gitId": "FizzyAgent"
         },
         "content": ""
       },
       {
         "lineNumber": 142,
         "author": {
-          "gitId": "Door-oof"
+          "gitId": "FizzyAgent"
         },
         "content": "    @Override"
       },
       {
         "lineNumber": 143,
         "author": {
-          "gitId": "Door-oof"
+          "gitId": "FizzyAgent"
         },
-        "content": "    public void updateFilteredFinanceList(Predicate\u003cFinanceRecord\u003e predicate) {"
+        "content": "    public void setFinanceRecord(FinanceRecord target, FinanceRecord editedFinanceRecord) {"
       },
       {
         "lineNumber": 144,
         "author": {
-          "gitId": "Door-oof"
+          "gitId": "FizzyAgent"
         },
-        "content": "        requireNonNull(predicate);"
+        "content": "        requireAllNonNull(target, editedFinanceRecord);"
       },
       {
         "lineNumber": 145,
         "author": {
-          "gitId": "Door-oof"
+          "gitId": "FizzyAgent"
         },
-        "content": "        filteredFinance.setPredicate(predicate);"
+        "content": ""
       },
       {
         "lineNumber": 146,
         "author": {
-          "gitId": "Door-oof"
+          "gitId": "FizzyAgent"
         },
-        "content": "    }"
+        "content": "        financeAccount.setFinanceRecord(target, editedFinanceRecord);"
       },
       {
         "lineNumber": 147,
         "author": {
           "gitId": "Door-oof"
         },
-        "content": ""
+        "content": "    }"
       },
       {
         "lineNumber": 148,
         "author": {
-          "gitId": "FizzyAgent"
-        },
-        "content": "    @Override"
-      },
-      {
-        "lineNumber": 149,
-        "author": {
-          "gitId": "FizzyAgent"
-        },
-        "content": "    public Optional\u003cFinanceRecord\u003e deleteFinanceRecord(Index targetIndex) {"
-      },
-      {
-        "lineNumber": 150,
-        "author": {
-          "gitId": "FizzyAgent"
-        },
-        "content": "        return financeAccount.removeRecord(targetIndex);"
-      },
-      {
-        "lineNumber": 151,
-        "author": {
-          "gitId": "FizzyAgent"
-        },
-        "content": "    }"
-      },
-      {
-        "lineNumber": 152,
-        "author": {
-          "gitId": "FizzyAgent"
+          "gitId": "Door-oof"
         },
         "content": ""
       },
       {
+        "lineNumber": 149,
+        "author": {
+          "gitId": "Door-oof"
+        },
+        "content": "    @Override"
+      },
+      {
+        "lineNumber": 150,
+        "author": {
+          "gitId": "Door-oof"
+        },
+        "content": "    public void updateFilteredFinanceList(Predicate\u003cFinanceRecord\u003e predicate) {"
+      },
+      {
+        "lineNumber": 151,
+        "author": {
+          "gitId": "Door-oof"
+        },
+        "content": "        requireNonNull(predicate);"
+      },
+      {
+        "lineNumber": 152,
+        "author": {
+          "gitId": "Door-oof"
+        },
+        "content": "        filteredFinance.setPredicate(predicate);"
+      },
+      {
         "lineNumber": 153,
         "author": {
-          "gitId": "-"
+          "gitId": "Door-oof"
         },
-        "content": "    //\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d AddressBook \u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d"
+        "content": "    }"
       },
       {
         "lineNumber": 154,
         "author": {
-          "gitId": "-"
+          "gitId": "Door-oof"
         },
         "content": ""
       },
       {
         "lineNumber": 155,
         "author": {
-          "gitId": "-"
+          "gitId": "FizzyAgent"
         },
         "content": "    @Override"
       },
       {
         "lineNumber": 156,
         "author": {
-          "gitId": "-"
+          "gitId": "FizzyAgent"
         },
-        "content": "    public void setAddressBook(ReadOnlyAddressBook addressBook) {"
+        "content": "    public Optional\u003cFinanceRecord\u003e deleteFinanceRecord(Index targetIndex) {"
       },
       {
         "lineNumber": 157,
         "author": {
-          "gitId": "-"
+          "gitId": "FizzyAgent"
         },
-        "content": "        this.addressBook.resetData(addressBook);"
+        "content": "        return financeAccount.removeRecord(targetIndex);"
       },
       {
         "lineNumber": 158,
         "author": {
-          "gitId": "-"
+          "gitId": "FizzyAgent"
         },
         "content": "    }"
       },
       {
         "lineNumber": 159,
         "author": {
-          "gitId": "-"
+          "gitId": "FizzyAgent"
         },
         "content": ""
       },
@@ -40419,189 +41088,189 @@
         "author": {
           "gitId": "-"
         },
-        "content": "    @Override"
+        "content": "    //\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d AddressBook \u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d"
       },
       {
         "lineNumber": 161,
         "author": {
           "gitId": "-"
         },
-        "content": "    public ReadOnlyAddressBook getAddressBook() {"
+        "content": ""
       },
       {
         "lineNumber": 162,
         "author": {
           "gitId": "-"
         },
-        "content": "        return addressBook;"
+        "content": "    @Override"
       },
       {
         "lineNumber": 163,
         "author": {
           "gitId": "-"
         },
-        "content": "    }"
+        "content": "    public void setAddressBook(ReadOnlyAddressBook addressBook) {"
       },
       {
         "lineNumber": 164,
         "author": {
           "gitId": "-"
         },
-        "content": ""
+        "content": "        this.addressBook.resetData(addressBook);"
       },
       {
         "lineNumber": 165,
         "author": {
           "gitId": "-"
         },
-        "content": "    @Override"
+        "content": "    }"
       },
       {
         "lineNumber": 166,
         "author": {
           "gitId": "-"
         },
-        "content": "    public boolean hasPerson(Person person) {"
+        "content": ""
       },
       {
         "lineNumber": 167,
         "author": {
           "gitId": "-"
         },
-        "content": "        requireNonNull(person);"
+        "content": "    @Override"
       },
       {
         "lineNumber": 168,
         "author": {
           "gitId": "-"
         },
-        "content": "        return addressBook.hasPerson(person);"
+        "content": "    public ReadOnlyAddressBook getAddressBook() {"
       },
       {
         "lineNumber": 169,
         "author": {
           "gitId": "-"
         },
-        "content": "    }"
+        "content": "        return addressBook;"
       },
       {
         "lineNumber": 170,
         "author": {
           "gitId": "-"
         },
-        "content": ""
+        "content": "    }"
       },
       {
         "lineNumber": 171,
         "author": {
           "gitId": "-"
         },
-        "content": "    @Override"
+        "content": ""
       },
       {
         "lineNumber": 172,
         "author": {
           "gitId": "-"
         },
-        "content": "    public void deletePerson(Person target) {"
+        "content": "    @Override"
       },
       {
         "lineNumber": 173,
         "author": {
           "gitId": "-"
         },
-        "content": "        addressBook.removePerson(target);"
+        "content": "    public boolean hasPerson(Person person) {"
       },
       {
         "lineNumber": 174,
         "author": {
           "gitId": "-"
         },
-        "content": "    }"
+        "content": "        requireNonNull(person);"
       },
       {
         "lineNumber": 175,
         "author": {
           "gitId": "-"
         },
-        "content": ""
+        "content": "        return addressBook.hasPerson(person);"
       },
       {
         "lineNumber": 176,
         "author": {
           "gitId": "-"
         },
-        "content": "    @Override"
+        "content": "    }"
       },
       {
         "lineNumber": 177,
         "author": {
           "gitId": "-"
         },
-        "content": "    public void addPerson(Person person) {"
+        "content": ""
       },
       {
         "lineNumber": 178,
         "author": {
           "gitId": "-"
         },
-        "content": "        addressBook.addPerson(person);"
+        "content": "    @Override"
       },
       {
         "lineNumber": 179,
         "author": {
           "gitId": "-"
         },
-        "content": "        updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);"
+        "content": "    public void deletePerson(Person target) {"
       },
       {
         "lineNumber": 180,
         "author": {
           "gitId": "-"
         },
-        "content": "    }"
+        "content": "        addressBook.removePerson(target);"
       },
       {
         "lineNumber": 181,
         "author": {
           "gitId": "-"
         },
-        "content": ""
+        "content": "    }"
       },
       {
         "lineNumber": 182,
         "author": {
           "gitId": "-"
         },
-        "content": "    @Override"
+        "content": ""
       },
       {
         "lineNumber": 183,
         "author": {
           "gitId": "-"
         },
-        "content": "    public void setPerson(Person target, Person editedPerson) {"
+        "content": "    @Override"
       },
       {
         "lineNumber": 184,
         "author": {
           "gitId": "-"
         },
-        "content": "        requireAllNonNull(target, editedPerson);"
+        "content": "    public void addPerson(Person person) {"
       },
       {
         "lineNumber": 185,
         "author": {
           "gitId": "-"
         },
-        "content": ""
+        "content": "        addressBook.addPerson(person);"
       },
       {
         "lineNumber": 186,
         "author": {
           "gitId": "-"
         },
-        "content": "        addressBook.setPerson(target, editedPerson);"
+        "content": "        updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);"
       },
       {
         "lineNumber": 187,
@@ -40622,124 +41291,124 @@
         "author": {
           "gitId": "-"
         },
-        "content": "    //\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d Filtered Person List Accessors \u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d"
+        "content": "    @Override"
       },
       {
         "lineNumber": 190,
         "author": {
           "gitId": "-"
         },
-        "content": ""
+        "content": "    public void setPerson(Person target, Person editedPerson) {"
       },
       {
         "lineNumber": 191,
         "author": {
           "gitId": "-"
         },
-        "content": "    /**"
+        "content": "        requireAllNonNull(target, editedPerson);"
       },
       {
         "lineNumber": 192,
         "author": {
           "gitId": "-"
         },
-        "content": "     * Returns an unmodifiable view of the list of {@code Person} backed by the internal list of"
+        "content": ""
       },
       {
         "lineNumber": 193,
         "author": {
           "gitId": "-"
         },
-        "content": "     * {@code versionedAddressBook}"
+        "content": "        addressBook.setPerson(target, editedPerson);"
       },
       {
         "lineNumber": 194,
         "author": {
           "gitId": "-"
         },
-        "content": "     */"
+        "content": "    }"
       },
       {
         "lineNumber": 195,
         "author": {
           "gitId": "-"
         },
-        "content": "    @Override"
+        "content": ""
       },
       {
         "lineNumber": 196,
         "author": {
           "gitId": "-"
         },
-        "content": "    public ObservableList\u003cPerson\u003e getFilteredPersonList() {"
+        "content": "    //\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d Filtered Person List Accessors \u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d"
       },
       {
         "lineNumber": 197,
         "author": {
           "gitId": "-"
         },
-        "content": "        return filteredPersons;"
+        "content": ""
       },
       {
         "lineNumber": 198,
         "author": {
           "gitId": "-"
         },
-        "content": "    }"
+        "content": "    /**"
       },
       {
         "lineNumber": 199,
         "author": {
           "gitId": "-"
         },
-        "content": ""
+        "content": "     * Returns an unmodifiable view of the list of {@code Person} backed by the internal list of"
       },
       {
         "lineNumber": 200,
         "author": {
           "gitId": "-"
         },
-        "content": "    @Override"
+        "content": "     * {@code versionedAddressBook}"
       },
       {
         "lineNumber": 201,
         "author": {
           "gitId": "-"
         },
-        "content": "    public void updateFilteredPersonList(Predicate\u003cPerson\u003e predicate) {"
+        "content": "     */"
       },
       {
         "lineNumber": 202,
         "author": {
           "gitId": "-"
         },
-        "content": "        requireNonNull(predicate);"
+        "content": "    @Override"
       },
       {
         "lineNumber": 203,
         "author": {
           "gitId": "-"
         },
-        "content": "        filteredPersons.setPredicate(predicate);"
+        "content": "    public ObservableList\u003cPerson\u003e getFilteredPersonList() {"
       },
       {
         "lineNumber": 204,
         "author": {
           "gitId": "-"
         },
-        "content": "    }"
+        "content": "        return filteredPersons;"
       },
       {
         "lineNumber": 205,
         "author": {
           "gitId": "-"
         },
-        "content": ""
+        "content": "    }"
       },
       {
         "lineNumber": 206,
         "author": {
-          "gitId": "IronBiscuit"
+          "gitId": "-"
         },
         "content": ""
       },
@@ -40755,40 +41424,40 @@
         "author": {
           "gitId": "-"
         },
-        "content": "    public boolean equals(Object obj) {"
+        "content": "    public void updateFilteredPersonList(Predicate\u003cPerson\u003e predicate) {"
       },
       {
         "lineNumber": 209,
         "author": {
           "gitId": "-"
         },
-        "content": "        // short circuit if same object"
+        "content": "        requireNonNull(predicate);"
       },
       {
         "lineNumber": 210,
         "author": {
           "gitId": "-"
         },
-        "content": "        if (obj \u003d\u003d this) {"
+        "content": "        filteredPersons.setPredicate(predicate);"
       },
       {
         "lineNumber": 211,
         "author": {
           "gitId": "-"
         },
-        "content": "            return true;"
+        "content": "    }"
       },
       {
         "lineNumber": 212,
         "author": {
           "gitId": "-"
         },
-        "content": "        }"
+        "content": ""
       },
       {
         "lineNumber": 213,
         "author": {
-          "gitId": "-"
+          "gitId": "IronBiscuit"
         },
         "content": ""
       },
@@ -40797,77 +41466,77 @@
         "author": {
           "gitId": "-"
         },
-        "content": "        // instanceof handles nulls"
+        "content": "    @Override"
       },
       {
         "lineNumber": 215,
         "author": {
           "gitId": "-"
         },
-        "content": "        if (!(obj instanceof ModelManager)) {"
+        "content": "    public boolean equals(Object obj) {"
       },
       {
         "lineNumber": 216,
         "author": {
           "gitId": "-"
         },
-        "content": "            return false;"
+        "content": "        // short circuit if same object"
       },
       {
         "lineNumber": 217,
         "author": {
           "gitId": "-"
         },
-        "content": "        }"
+        "content": "        if (obj \u003d\u003d this) {"
       },
       {
         "lineNumber": 218,
         "author": {
           "gitId": "-"
         },
-        "content": ""
+        "content": "            return true;"
       },
       {
         "lineNumber": 219,
         "author": {
           "gitId": "-"
         },
-        "content": "        // state check"
+        "content": "        }"
       },
       {
         "lineNumber": 220,
         "author": {
           "gitId": "-"
         },
-        "content": "        ModelManager other \u003d (ModelManager) obj;"
+        "content": ""
       },
       {
         "lineNumber": 221,
         "author": {
           "gitId": "-"
         },
-        "content": "        return addressBook.equals(other.addressBook)"
+        "content": "        // instanceof handles nulls"
       },
       {
         "lineNumber": 222,
         "author": {
           "gitId": "-"
         },
-        "content": "                \u0026\u0026 userPrefs.equals(other.userPrefs)"
+        "content": "        if (!(obj instanceof ModelManager)) {"
       },
       {
         "lineNumber": 223,
         "author": {
           "gitId": "-"
         },
-        "content": "                \u0026\u0026 filteredPersons.equals(other.filteredPersons);"
+        "content": "            return false;"
       },
       {
         "lineNumber": 224,
         "author": {
           "gitId": "-"
         },
-        "content": "    }"
+        "content": "        }"
       },
       {
         "lineNumber": 225,
@@ -40881,13 +41550,62 @@
         "author": {
           "gitId": "-"
         },
+        "content": "        // state check"
+      },
+      {
+        "lineNumber": 227,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "        ModelManager other \u003d (ModelManager) obj;"
+      },
+      {
+        "lineNumber": 228,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "        return addressBook.equals(other.addressBook)"
+      },
+      {
+        "lineNumber": 229,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "                \u0026\u0026 userPrefs.equals(other.userPrefs)"
+      },
+      {
+        "lineNumber": 230,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "                \u0026\u0026 filteredPersons.equals(other.filteredPersons);"
+      },
+      {
+        "lineNumber": 231,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "    }"
+      },
+      {
+        "lineNumber": 232,
+        "author": {
+          "gitId": "-"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 233,
+        "author": {
+          "gitId": "-"
+        },
         "content": "}"
       }
     ],
     "authorContributionMap": {
       "IronBiscuit": 15,
       "FizzyAgent": 33,
-      "Elgoh": 22,
+      "Elgoh": 29,
       "Door-oof": 10,
       "-": 146
     }
@@ -68096,98 +68814,98 @@
       {
         "lineNumber": 108,
         "author": {
-          "gitId": "IronBiscuit"
+          "gitId": "Elgoh"
         },
         "content": "        @Override"
       },
       {
         "lineNumber": 109,
         "author": {
-          "gitId": "IronBiscuit"
+          "gitId": "Elgoh"
         },
-        "content": "        public ObservableList\u003cInventoryRecord\u003e getFilteredInventory() {"
+        "content": "        public void deleteInventoryRecord(InventoryRecord target) {}"
       },
       {
         "lineNumber": 110,
         "author": {
-          "gitId": "IronBiscuit"
+          "gitId": "Elgoh"
         },
-        "content": "            throw new AssertionError(\"This method should not be called.\");"
+        "content": ""
       },
       {
         "lineNumber": 111,
         "author": {
           "gitId": "IronBiscuit"
         },
-        "content": "        }"
+        "content": "        @Override"
       },
       {
         "lineNumber": 112,
         "author": {
-          "gitId": "Elgoh"
+          "gitId": "IronBiscuit"
         },
-        "content": "        @Override"
+        "content": "        public ObservableList\u003cInventoryRecord\u003e getFilteredInventory() {"
       },
       {
         "lineNumber": 113,
         "author": {
-          "gitId": "Elgoh"
+          "gitId": "IronBiscuit"
         },
-        "content": "        public boolean hasInventoryRecord(InventoryRecord inventoryRecord) {"
+        "content": "            throw new AssertionError(\"This method should not be called.\");"
       },
       {
         "lineNumber": 114,
         "author": {
-          "gitId": "Elgoh"
+          "gitId": "IronBiscuit"
         },
-        "content": "            return true;"
+        "content": "        }"
       },
       {
         "lineNumber": 115,
         "author": {
           "gitId": "Elgoh"
         },
-        "content": "        }"
+        "content": "        @Override"
       },
       {
         "lineNumber": 116,
         "author": {
           "gitId": "Elgoh"
         },
-        "content": "        @Override"
+        "content": "        public boolean hasInventoryRecord(InventoryRecord inventoryRecord) {"
       },
       {
         "lineNumber": 117,
         "author": {
           "gitId": "Elgoh"
         },
-        "content": "        public void setInventoryRecord(InventoryRecord a, InventoryRecord b) {}"
+        "content": "            return true;"
       },
       {
         "lineNumber": 118,
         "author": {
-          "gitId": "IronBiscuit"
+          "gitId": "Elgoh"
         },
-        "content": ""
+        "content": "        }"
       },
       {
         "lineNumber": 119,
         "author": {
-          "gitId": "FizzyAgent"
+          "gitId": "Elgoh"
         },
         "content": "        @Override"
       },
       {
         "lineNumber": 120,
         "author": {
-          "gitId": "FizzyAgent"
+          "gitId": "Elgoh"
         },
-        "content": "        public void addFinanceRecord(FinanceRecord newRecord) {"
+        "content": "        public void setInventoryRecord(InventoryRecord a, InventoryRecord b) {}"
       },
       {
         "lineNumber": 121,
         "author": {
-          "gitId": "FizzyAgent"
+          "gitId": "IronBiscuit"
         },
         "content": ""
       },
@@ -68196,68 +68914,68 @@
         "author": {
           "gitId": "FizzyAgent"
         },
-        "content": "        }"
+        "content": "        @Override"
       },
       {
         "lineNumber": 123,
         "author": {
           "gitId": "FizzyAgent"
         },
-        "content": ""
+        "content": "        public void addFinanceRecord(FinanceRecord newRecord) {"
       },
       {
         "lineNumber": 124,
         "author": {
-          "gitId": "Door-oof"
+          "gitId": "FizzyAgent"
         },
-        "content": "        @Override"
+        "content": ""
       },
       {
         "lineNumber": 125,
         "author": {
           "gitId": "FizzyAgent"
         },
-        "content": "        public ObservableList\u003cFinanceRecord\u003e getFilteredFinanceList() {"
+        "content": "        }"
       },
       {
         "lineNumber": 126,
         "author": {
-          "gitId": "Door-oof"
+          "gitId": "FizzyAgent"
         },
-        "content": "            return null;"
+        "content": ""
       },
       {
         "lineNumber": 127,
         "author": {
           "gitId": "Door-oof"
         },
-        "content": "        }"
+        "content": "        @Override"
       },
       {
         "lineNumber": 128,
         "author": {
-          "gitId": "Door-oof"
+          "gitId": "FizzyAgent"
         },
-        "content": ""
+        "content": "        public ObservableList\u003cFinanceRecord\u003e getFilteredFinanceList() {"
       },
       {
         "lineNumber": 129,
         "author": {
-          "gitId": "FizzyAgent"
+          "gitId": "Door-oof"
         },
-        "content": "        @Override"
+        "content": "            return null;"
       },
       {
         "lineNumber": 130,
         "author": {
-          "gitId": "FizzyAgent"
+          "gitId": "Door-oof"
         },
-        "content": "        public void setFinanceRecord(FinanceRecord target, FinanceRecord editedFinanceRecord) {"
+        "content": "        }"
       },
       {
         "lineNumber": 131,
         "author": {
-          "gitId": "FizzyAgent"
+          "gitId": "Door-oof"
         },
         "content": ""
       },
@@ -68266,413 +68984,413 @@
         "author": {
           "gitId": "FizzyAgent"
         },
-        "content": "        }"
+        "content": "        @Override"
       },
       {
         "lineNumber": 133,
         "author": {
           "gitId": "FizzyAgent"
         },
-        "content": ""
+        "content": "        public void setFinanceRecord(FinanceRecord target, FinanceRecord editedFinanceRecord) {"
       },
       {
         "lineNumber": 134,
         "author": {
           "gitId": "FizzyAgent"
         },
-        "content": "        @Override"
+        "content": ""
       },
       {
         "lineNumber": 135,
         "author": {
           "gitId": "FizzyAgent"
         },
-        "content": "        public Optional\u003cFinanceRecord\u003e deleteFinanceRecord(Index targetIndex) {"
+        "content": "        }"
       },
       {
         "lineNumber": 136,
         "author": {
           "gitId": "FizzyAgent"
         },
-        "content": "            return Optional.empty();"
+        "content": ""
       },
       {
         "lineNumber": 137,
         "author": {
           "gitId": "FizzyAgent"
         },
-        "content": "        }"
+        "content": "        @Override"
       },
       {
         "lineNumber": 138,
         "author": {
           "gitId": "FizzyAgent"
         },
-        "content": ""
+        "content": "        public Optional\u003cFinanceRecord\u003e deleteFinanceRecord(Index targetIndex) {"
       },
       {
         "lineNumber": 139,
         "author": {
-          "gitId": "-"
+          "gitId": "FizzyAgent"
         },
-        "content": "        @Override"
+        "content": "            return Optional.empty();"
       },
       {
         "lineNumber": 140,
         "author": {
-          "gitId": "-"
+          "gitId": "FizzyAgent"
         },
-        "content": "        public Path getAddressBookFilePath() {"
+        "content": "        }"
       },
       {
         "lineNumber": 141,
         "author": {
-          "gitId": "-"
+          "gitId": "FizzyAgent"
         },
-        "content": "            throw new AssertionError(\"This method should not be called.\");"
+        "content": ""
       },
       {
         "lineNumber": 142,
         "author": {
           "gitId": "-"
         },
-        "content": "        }"
+        "content": "        @Override"
       },
       {
         "lineNumber": 143,
         "author": {
           "gitId": "-"
         },
-        "content": ""
+        "content": "        public Path getAddressBookFilePath() {"
       },
       {
         "lineNumber": 144,
         "author": {
           "gitId": "-"
         },
-        "content": "        @Override"
+        "content": "            throw new AssertionError(\"This method should not be called.\");"
       },
       {
         "lineNumber": 145,
         "author": {
           "gitId": "-"
         },
-        "content": "        public void setAddressBookFilePath(Path addressBookFilePath) {"
+        "content": "        }"
       },
       {
         "lineNumber": 146,
         "author": {
           "gitId": "-"
         },
-        "content": "            throw new AssertionError(\"This method should not be called.\");"
+        "content": ""
       },
       {
         "lineNumber": 147,
         "author": {
           "gitId": "-"
         },
-        "content": "        }"
+        "content": "        @Override"
       },
       {
         "lineNumber": 148,
         "author": {
           "gitId": "-"
         },
-        "content": ""
+        "content": "        public void setAddressBookFilePath(Path addressBookFilePath) {"
       },
       {
         "lineNumber": 149,
         "author": {
           "gitId": "-"
         },
-        "content": "        @Override"
+        "content": "            throw new AssertionError(\"This method should not be called.\");"
       },
       {
         "lineNumber": 150,
         "author": {
           "gitId": "-"
         },
-        "content": "        public void addPerson(Person person) {"
+        "content": "        }"
       },
       {
         "lineNumber": 151,
         "author": {
           "gitId": "-"
         },
-        "content": "            throw new AssertionError(\"This method should not be called.\");"
+        "content": ""
       },
       {
         "lineNumber": 152,
         "author": {
           "gitId": "-"
         },
-        "content": "        }"
+        "content": "        @Override"
       },
       {
         "lineNumber": 153,
         "author": {
           "gitId": "-"
         },
-        "content": ""
+        "content": "        public void addPerson(Person person) {"
       },
       {
         "lineNumber": 154,
         "author": {
           "gitId": "-"
         },
-        "content": "        @Override"
+        "content": "            throw new AssertionError(\"This method should not be called.\");"
       },
       {
         "lineNumber": 155,
         "author": {
           "gitId": "-"
         },
-        "content": "        public void setAddressBook(ReadOnlyAddressBook newData) {"
+        "content": "        }"
       },
       {
         "lineNumber": 156,
         "author": {
           "gitId": "-"
         },
-        "content": "            throw new AssertionError(\"This method should not be called.\");"
+        "content": ""
       },
       {
         "lineNumber": 157,
         "author": {
           "gitId": "-"
         },
-        "content": "        }"
+        "content": "        @Override"
       },
       {
         "lineNumber": 158,
         "author": {
           "gitId": "-"
         },
-        "content": ""
+        "content": "        public void setAddressBook(ReadOnlyAddressBook newData) {"
       },
       {
         "lineNumber": 159,
         "author": {
           "gitId": "-"
         },
-        "content": "        @Override"
+        "content": "            throw new AssertionError(\"This method should not be called.\");"
       },
       {
         "lineNumber": 160,
         "author": {
           "gitId": "-"
         },
-        "content": "        public ReadOnlyAddressBook getAddressBook() {"
+        "content": "        }"
       },
       {
         "lineNumber": 161,
         "author": {
           "gitId": "-"
         },
-        "content": "            throw new AssertionError(\"This method should not be called.\");"
+        "content": ""
       },
       {
         "lineNumber": 162,
         "author": {
           "gitId": "-"
         },
-        "content": "        }"
+        "content": "        @Override"
       },
       {
         "lineNumber": 163,
         "author": {
           "gitId": "-"
         },
-        "content": ""
+        "content": "        public ReadOnlyAddressBook getAddressBook() {"
       },
       {
         "lineNumber": 164,
         "author": {
           "gitId": "-"
         },
-        "content": "        @Override"
+        "content": "            throw new AssertionError(\"This method should not be called.\");"
       },
       {
         "lineNumber": 165,
         "author": {
           "gitId": "-"
         },
-        "content": "        public boolean hasPerson(Person person) {"
+        "content": "        }"
       },
       {
         "lineNumber": 166,
         "author": {
           "gitId": "-"
         },
-        "content": "            throw new AssertionError(\"This method should not be called.\");"
+        "content": ""
       },
       {
         "lineNumber": 167,
         "author": {
           "gitId": "-"
         },
-        "content": "        }"
+        "content": "        @Override"
       },
       {
         "lineNumber": 168,
         "author": {
           "gitId": "-"
         },
-        "content": ""
+        "content": "        public boolean hasPerson(Person person) {"
       },
       {
         "lineNumber": 169,
         "author": {
           "gitId": "-"
         },
-        "content": "        @Override"
+        "content": "            throw new AssertionError(\"This method should not be called.\");"
       },
       {
         "lineNumber": 170,
         "author": {
           "gitId": "-"
         },
-        "content": "        public void deletePerson(Person target) {"
+        "content": "        }"
       },
       {
         "lineNumber": 171,
         "author": {
           "gitId": "-"
         },
-        "content": "            throw new AssertionError(\"This method should not be called.\");"
+        "content": ""
       },
       {
         "lineNumber": 172,
         "author": {
           "gitId": "-"
         },
-        "content": "        }"
+        "content": "        @Override"
       },
       {
         "lineNumber": 173,
         "author": {
           "gitId": "-"
         },
-        "content": ""
+        "content": "        public void deletePerson(Person target) {"
       },
       {
         "lineNumber": 174,
         "author": {
           "gitId": "-"
         },
-        "content": "        @Override"
+        "content": "            throw new AssertionError(\"This method should not be called.\");"
       },
       {
         "lineNumber": 175,
         "author": {
           "gitId": "-"
         },
-        "content": "        public void setPerson(Person target, Person editedPerson) {"
+        "content": "        }"
       },
       {
         "lineNumber": 176,
         "author": {
           "gitId": "-"
         },
-        "content": "            throw new AssertionError(\"This method should not be called.\");"
+        "content": ""
       },
       {
         "lineNumber": 177,
         "author": {
           "gitId": "-"
         },
-        "content": "        }"
+        "content": "        @Override"
       },
       {
         "lineNumber": 178,
         "author": {
           "gitId": "-"
         },
-        "content": ""
+        "content": "        public void setPerson(Person target, Person editedPerson) {"
       },
       {
         "lineNumber": 179,
         "author": {
           "gitId": "-"
         },
-        "content": "        @Override"
+        "content": "            throw new AssertionError(\"This method should not be called.\");"
       },
       {
         "lineNumber": 180,
         "author": {
           "gitId": "-"
         },
-        "content": "        public ObservableList\u003cPerson\u003e getFilteredPersonList() {"
+        "content": "        }"
       },
       {
         "lineNumber": 181,
         "author": {
           "gitId": "-"
         },
-        "content": "            throw new AssertionError(\"This method should not be called.\");"
+        "content": ""
       },
       {
         "lineNumber": 182,
         "author": {
           "gitId": "-"
         },
-        "content": "        }"
+        "content": "        @Override"
       },
       {
         "lineNumber": 183,
         "author": {
           "gitId": "-"
         },
-        "content": ""
+        "content": "        public ObservableList\u003cPerson\u003e getFilteredPersonList() {"
       },
       {
         "lineNumber": 184,
         "author": {
           "gitId": "-"
         },
-        "content": "        @Override"
+        "content": "            throw new AssertionError(\"This method should not be called.\");"
       },
       {
         "lineNumber": 185,
         "author": {
           "gitId": "-"
         },
-        "content": "        public void updateFilteredPersonList(Predicate\u003cPerson\u003e predicate) {"
+        "content": "        }"
       },
       {
         "lineNumber": 186,
         "author": {
           "gitId": "-"
         },
-        "content": "            throw new AssertionError(\"This method should not be called.\");"
+        "content": ""
       },
       {
         "lineNumber": 187,
         "author": {
           "gitId": "-"
         },
-        "content": "        }"
+        "content": "        @Override"
       },
       {
         "lineNumber": 188,
         "author": {
-          "gitId": "IronBiscuit"
+          "gitId": "-"
         },
-        "content": ""
+        "content": "        public void updateFilteredPersonList(Predicate\u003cPerson\u003e predicate) {"
       },
       {
         "lineNumber": 189,
         "author": {
-          "gitId": "IronBiscuit"
+          "gitId": "-"
         },
-        "content": "        @Override"
+        "content": "            throw new AssertionError(\"This method should not be called.\");"
       },
       {
         "lineNumber": 190,
         "author": {
-          "gitId": "IronBiscuit"
+          "gitId": "-"
         },
-        "content": "        public void updateFilteredInventoryList(Predicate\u003cInventoryRecord\u003e predicate) {"
+        "content": "        }"
       },
       {
         "lineNumber": 191,
@@ -68686,33 +69404,33 @@
         "author": {
           "gitId": "IronBiscuit"
         },
-        "content": "        }"
+        "content": "        @Override"
       },
       {
         "lineNumber": 193,
         "author": {
           "gitId": "IronBiscuit"
         },
-        "content": ""
+        "content": "        public void updateFilteredInventoryList(Predicate\u003cInventoryRecord\u003e predicate) {"
       },
       {
         "lineNumber": 194,
         "author": {
-          "gitId": "Door-oof"
+          "gitId": "IronBiscuit"
         },
-        "content": "        @Override"
+        "content": ""
       },
       {
         "lineNumber": 195,
         "author": {
-          "gitId": "Door-oof"
+          "gitId": "IronBiscuit"
         },
-        "content": "        public void updateFilteredFinanceList(Predicate\u003cFinanceRecord\u003e predicate) {"
+        "content": "        }"
       },
       {
         "lineNumber": 196,
         "author": {
-          "gitId": "Door-oof"
+          "gitId": "IronBiscuit"
         },
         "content": ""
       },
@@ -68721,332 +69439,353 @@
         "author": {
           "gitId": "Door-oof"
         },
-        "content": "        }"
+        "content": "        @Override"
       },
       {
         "lineNumber": 198,
         "author": {
           "gitId": "Door-oof"
         },
-        "content": ""
+        "content": "        public void updateFilteredFinanceList(Predicate\u003cFinanceRecord\u003e predicate) {"
       },
       {
         "lineNumber": 199,
         "author": {
-          "gitId": "IronBiscuit"
+          "gitId": "Door-oof"
         },
         "content": ""
       },
       {
         "lineNumber": 200,
         "author": {
-          "gitId": "-"
+          "gitId": "Door-oof"
         },
-        "content": "    }"
+        "content": "        }"
       },
       {
         "lineNumber": 201,
         "author": {
-          "gitId": "-"
+          "gitId": "Door-oof"
         },
         "content": ""
       },
       {
         "lineNumber": 202,
         "author": {
-          "gitId": "-"
+          "gitId": "IronBiscuit"
         },
-        "content": "    /**"
+        "content": ""
       },
       {
         "lineNumber": 203,
         "author": {
           "gitId": "-"
         },
-        "content": "     * A Model stub that contains a single person."
+        "content": "    }"
       },
       {
         "lineNumber": 204,
         "author": {
           "gitId": "-"
         },
-        "content": "     */"
+        "content": ""
       },
       {
         "lineNumber": 205,
         "author": {
           "gitId": "-"
         },
-        "content": "    private class ModelStubWithPerson extends ModelStub {"
+        "content": "    /**"
       },
       {
         "lineNumber": 206,
         "author": {
           "gitId": "-"
         },
-        "content": "        private final Person person;"
+        "content": "     * A Model stub that contains a single person."
       },
       {
         "lineNumber": 207,
         "author": {
           "gitId": "-"
         },
-        "content": ""
+        "content": "     */"
       },
       {
         "lineNumber": 208,
         "author": {
           "gitId": "-"
         },
-        "content": "        ModelStubWithPerson(Person person) {"
+        "content": "    private class ModelStubWithPerson extends ModelStub {"
       },
       {
         "lineNumber": 209,
         "author": {
           "gitId": "-"
         },
-        "content": "            requireNonNull(person);"
+        "content": "        private final Person person;"
       },
       {
         "lineNumber": 210,
         "author": {
           "gitId": "-"
         },
-        "content": "            this.person \u003d person;"
+        "content": ""
       },
       {
         "lineNumber": 211,
         "author": {
           "gitId": "-"
         },
-        "content": "        }"
+        "content": "        ModelStubWithPerson(Person person) {"
       },
       {
         "lineNumber": 212,
         "author": {
           "gitId": "-"
         },
-        "content": ""
+        "content": "            requireNonNull(person);"
       },
       {
         "lineNumber": 213,
         "author": {
           "gitId": "-"
         },
-        "content": "        @Override"
+        "content": "            this.person \u003d person;"
       },
       {
         "lineNumber": 214,
         "author": {
           "gitId": "-"
         },
-        "content": "        public boolean hasPerson(Person person) {"
+        "content": "        }"
       },
       {
         "lineNumber": 215,
         "author": {
           "gitId": "-"
         },
-        "content": "            requireNonNull(person);"
+        "content": ""
       },
       {
         "lineNumber": 216,
         "author": {
           "gitId": "-"
         },
-        "content": "            return this.person.isSamePerson(person);"
+        "content": "        @Override"
       },
       {
         "lineNumber": 217,
         "author": {
           "gitId": "-"
         },
-        "content": "        }"
+        "content": "        public boolean hasPerson(Person person) {"
       },
       {
         "lineNumber": 218,
         "author": {
           "gitId": "-"
         },
-        "content": "    }"
+        "content": "            requireNonNull(person);"
       },
       {
         "lineNumber": 219,
         "author": {
           "gitId": "-"
         },
-        "content": ""
+        "content": "            return this.person.isSamePerson(person);"
       },
       {
         "lineNumber": 220,
         "author": {
           "gitId": "-"
         },
-        "content": "    /**"
+        "content": "        }"
       },
       {
         "lineNumber": 221,
         "author": {
           "gitId": "-"
         },
-        "content": "     * A Model stub that always accept the person being added."
+        "content": "    }"
       },
       {
         "lineNumber": 222,
         "author": {
           "gitId": "-"
         },
-        "content": "     */"
+        "content": ""
       },
       {
         "lineNumber": 223,
         "author": {
           "gitId": "-"
         },
-        "content": "    private class ModelStubAcceptingPersonAdded extends ModelStub {"
+        "content": "    /**"
       },
       {
         "lineNumber": 224,
         "author": {
           "gitId": "-"
         },
-        "content": "        final ArrayList\u003cPerson\u003e personsAdded \u003d new ArrayList\u003c\u003e();"
+        "content": "     * A Model stub that always accept the person being added."
       },
       {
         "lineNumber": 225,
         "author": {
           "gitId": "-"
         },
-        "content": ""
+        "content": "     */"
       },
       {
         "lineNumber": 226,
         "author": {
           "gitId": "-"
         },
-        "content": "        @Override"
+        "content": "    private class ModelStubAcceptingPersonAdded extends ModelStub {"
       },
       {
         "lineNumber": 227,
         "author": {
           "gitId": "-"
         },
-        "content": "        public boolean hasPerson(Person person) {"
+        "content": "        final ArrayList\u003cPerson\u003e personsAdded \u003d new ArrayList\u003c\u003e();"
       },
       {
         "lineNumber": 228,
         "author": {
           "gitId": "-"
         },
-        "content": "            requireNonNull(person);"
+        "content": ""
       },
       {
         "lineNumber": 229,
         "author": {
           "gitId": "-"
         },
-        "content": "            return personsAdded.stream().anyMatch(person::isSamePerson);"
+        "content": "        @Override"
       },
       {
         "lineNumber": 230,
         "author": {
           "gitId": "-"
         },
-        "content": "        }"
+        "content": "        public boolean hasPerson(Person person) {"
       },
       {
         "lineNumber": 231,
         "author": {
           "gitId": "-"
         },
-        "content": ""
+        "content": "            requireNonNull(person);"
       },
       {
         "lineNumber": 232,
         "author": {
           "gitId": "-"
         },
-        "content": "        @Override"
+        "content": "            return personsAdded.stream().anyMatch(person::isSamePerson);"
       },
       {
         "lineNumber": 233,
         "author": {
           "gitId": "-"
         },
-        "content": "        public void addPerson(Person person) {"
+        "content": "        }"
       },
       {
         "lineNumber": 234,
         "author": {
           "gitId": "-"
         },
-        "content": "            requireNonNull(person);"
+        "content": ""
       },
       {
         "lineNumber": 235,
         "author": {
           "gitId": "-"
         },
-        "content": "            personsAdded.add(person);"
+        "content": "        @Override"
       },
       {
         "lineNumber": 236,
         "author": {
           "gitId": "-"
         },
-        "content": "        }"
+        "content": "        public void addPerson(Person person) {"
       },
       {
         "lineNumber": 237,
         "author": {
           "gitId": "-"
         },
-        "content": ""
+        "content": "            requireNonNull(person);"
       },
       {
         "lineNumber": 238,
         "author": {
           "gitId": "-"
         },
-        "content": "        @Override"
+        "content": "            personsAdded.add(person);"
       },
       {
         "lineNumber": 239,
         "author": {
           "gitId": "-"
         },
-        "content": "        public ReadOnlyAddressBook getAddressBook() {"
+        "content": "        }"
       },
       {
         "lineNumber": 240,
         "author": {
           "gitId": "-"
         },
-        "content": "            return new AddressBook();"
+        "content": ""
       },
       {
         "lineNumber": 241,
         "author": {
           "gitId": "-"
         },
-        "content": "        }"
+        "content": "        @Override"
       },
       {
         "lineNumber": 242,
         "author": {
           "gitId": "-"
         },
-        "content": "    }"
+        "content": "        public ReadOnlyAddressBook getAddressBook() {"
       },
       {
         "lineNumber": 243,
         "author": {
           "gitId": "-"
         },
-        "content": ""
+        "content": "            return new AddressBook();"
       },
       {
         "lineNumber": 244,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "        }"
+      },
+      {
+        "lineNumber": 245,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "    }"
+      },
+      {
+        "lineNumber": 246,
+        "author": {
+          "gitId": "-"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 247,
         "author": {
           "gitId": "-"
         },
@@ -69056,7 +69795,7 @@
     "authorContributionMap": {
       "IronBiscuit": 12,
       "FizzyAgent": 29,
-      "Elgoh": 10,
+      "Elgoh": 13,
       "Door-oof": 9,
       "-": 184
     }
