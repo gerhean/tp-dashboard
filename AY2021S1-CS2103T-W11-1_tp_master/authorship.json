@@ -32831,988 +32831,6 @@
     }
   },
   {
-    "path": "src/main/java/seedu/address/model/appointment/AppointmentList.java",
-    "fileType": "functional-code",
-    "lines": [
-      {
-        "lineNumber": 1,
-        "author": {
-          "gitId": "chshen1998"
-        },
-        "content": "package seedu.address.model.appointment;"
-      },
-      {
-        "lineNumber": 2,
-        "author": {
-          "gitId": "chshen1998"
-        },
-        "content": ""
-      },
-      {
-        "lineNumber": 3,
-        "author": {
-          "gitId": "chshen1998"
-        },
-        "content": "import static java.util.Objects.requireNonNull;"
-      },
-      {
-        "lineNumber": 4,
-        "author": {
-          "gitId": "chshen1998"
-        },
-        "content": "import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;"
-      },
-      {
-        "lineNumber": 5,
-        "author": {
-          "gitId": "chshen1998"
-        },
-        "content": ""
-      },
-      {
-        "lineNumber": 6,
-        "author": {
-          "gitId": "chshen1998"
-        },
-        "content": "import java.util.Iterator;"
-      },
-      {
-        "lineNumber": 7,
-        "author": {
-          "gitId": "chshen1998"
-        },
-        "content": "import java.util.List;"
-      },
-      {
-        "lineNumber": 8,
-        "author": {
-          "gitId": "chshen1998"
-        },
-        "content": ""
-      },
-      {
-        "lineNumber": 9,
-        "author": {
-          "gitId": "chshen1998"
-        },
-        "content": "import javafx.collections.FXCollections;"
-      },
-      {
-        "lineNumber": 10,
-        "author": {
-          "gitId": "chshen1998"
-        },
-        "content": "import javafx.collections.ObservableList;"
-      },
-      {
-        "lineNumber": 11,
-        "author": {
-          "gitId": "chshen1998"
-        },
-        "content": "import seedu.address.model.appointment.exceptions.AppointmentNotFoundException;"
-      },
-      {
-        "lineNumber": 12,
-        "author": {
-          "gitId": "chshen1998"
-        },
-        "content": "import seedu.address.model.appointment.exceptions.DuplicateAppointmentException;"
-      },
-      {
-        "lineNumber": 13,
-        "author": {
-          "gitId": "chshen1998"
-        },
-        "content": ""
-      },
-      {
-        "lineNumber": 14,
-        "author": {
-          "gitId": "chshen1998"
-        },
-        "content": "/**"
-      },
-      {
-        "lineNumber": 15,
-        "author": {
-          "gitId": "chshen1998"
-        },
-        "content": " * A list of appointments that enforces uniqueness between its elements and does not allow nulls."
-      },
-      {
-        "lineNumber": 16,
-        "author": {
-          "gitId": "chshen1998"
-        },
-        "content": " * An appointment is considered unique by comparing using {@code Appointment#isSameAppointment(Appointment)}."
-      },
-      {
-        "lineNumber": 17,
-        "author": {
-          "gitId": "chshen1998"
-        },
-        "content": " * As such, adding and updating of persons uses Appointment#isSameAppointment(Appointment)"
-      },
-      {
-        "lineNumber": 18,
-        "author": {
-          "gitId": "chshen1998"
-        },
-        "content": " * for equality so as to ensure that the appointment being added or updated is"
-      },
-      {
-        "lineNumber": 19,
-        "author": {
-          "gitId": "chshen1998"
-        },
-        "content": " * unique in terms of identity in the AppointmentList."
-      },
-      {
-        "lineNumber": 20,
-        "author": {
-          "gitId": "chshen1998"
-        },
-        "content": " * However, the removal of a appointment uses Appointment#equals(Object) so"
-      },
-      {
-        "lineNumber": 21,
-        "author": {
-          "gitId": "chshen1998"
-        },
-        "content": " * as to ensure that the appointment with exactly the same fields will be removed."
-      },
-      {
-        "lineNumber": 22,
-        "author": {
-          "gitId": "chshen1998"
-        },
-        "content": " *"
-      },
-      {
-        "lineNumber": 23,
-        "author": {
-          "gitId": "chshen1998"
-        },
-        "content": " * Supports a minimal set of list operations."
-      },
-      {
-        "lineNumber": 24,
-        "author": {
-          "gitId": "chshen1998"
-        },
-        "content": " *"
-      },
-      {
-        "lineNumber": 25,
-        "author": {
-          "gitId": "chshen1998"
-        },
-        "content": " * @see Appointment#isSameAppointment(Appointment)"
-      },
-      {
-        "lineNumber": 26,
-        "author": {
-          "gitId": "chshen1998"
-        },
-        "content": " */"
-      },
-      {
-        "lineNumber": 27,
-        "author": {
-          "gitId": "chshen1998"
-        },
-        "content": "public class AppointmentList implements Iterable\u003cAppointment\u003e {"
-      },
-      {
-        "lineNumber": 28,
-        "author": {
-          "gitId": "chshen1998"
-        },
-        "content": ""
-      },
-      {
-        "lineNumber": 29,
-        "author": {
-          "gitId": "chshen1998"
-        },
-        "content": "    private ObservableList\u003cAppointment\u003e internalList \u003d FXCollections.observableArrayList();"
-      },
-      {
-        "lineNumber": 30,
-        "author": {
-          "gitId": "chshen1998"
-        },
-        "content": "    private final ObservableList\u003cAppointment\u003e internalUnmodifiableList \u003d"
-      },
-      {
-        "lineNumber": 31,
-        "author": {
-          "gitId": "chshen1998"
-        },
-        "content": "            FXCollections.unmodifiableObservableList(internalList);"
-      },
-      {
-        "lineNumber": 32,
-        "author": {
-          "gitId": "chshen1998"
-        },
-        "content": ""
-      },
-      {
-        "lineNumber": 33,
-        "author": {
-          "gitId": "chshen1998"
-        },
-        "content": "    /**"
-      },
-      {
-        "lineNumber": 34,
-        "author": {
-          "gitId": "chshen1998"
-        },
-        "content": "     * Returns true if the list contains an equivalent appointment as the given argument."
-      },
-      {
-        "lineNumber": 35,
-        "author": {
-          "gitId": "chshen1998"
-        },
-        "content": "     */"
-      },
-      {
-        "lineNumber": 36,
-        "author": {
-          "gitId": "chshen1998"
-        },
-        "content": "    public boolean contains(Appointment toCheck) {"
-      },
-      {
-        "lineNumber": 37,
-        "author": {
-          "gitId": "chshen1998"
-        },
-        "content": "        requireNonNull(toCheck);"
-      },
-      {
-        "lineNumber": 38,
-        "author": {
-          "gitId": "chshen1998"
-        },
-        "content": "        return internalList.stream().anyMatch(toCheck::isSameAppointment);"
-      },
-      {
-        "lineNumber": 39,
-        "author": {
-          "gitId": "chshen1998"
-        },
-        "content": "    }"
-      },
-      {
-        "lineNumber": 40,
-        "author": {
-          "gitId": "chshen1998"
-        },
-        "content": ""
-      },
-      {
-        "lineNumber": 41,
-        "author": {
-          "gitId": "chshen1998"
-        },
-        "content": "    /**"
-      },
-      {
-        "lineNumber": 42,
-        "author": {
-          "gitId": "chshen1998"
-        },
-        "content": "     * Adds an apointment to the list."
-      },
-      {
-        "lineNumber": 43,
-        "author": {
-          "gitId": "chshen1998"
-        },
-        "content": "     * The appointment must not already exist in the list."
-      },
-      {
-        "lineNumber": 44,
-        "author": {
-          "gitId": "chshen1998"
-        },
-        "content": "     */"
-      },
-      {
-        "lineNumber": 45,
-        "author": {
-          "gitId": "chshen1998"
-        },
-        "content": "    public void add(Appointment toAdd) {"
-      },
-      {
-        "lineNumber": 46,
-        "author": {
-          "gitId": "chshen1998"
-        },
-        "content": "        requireNonNull(toAdd);"
-      },
-      {
-        "lineNumber": 47,
-        "author": {
-          "gitId": "chshen1998"
-        },
-        "content": "        if (contains(toAdd)) {"
-      },
-      {
-        "lineNumber": 48,
-        "author": {
-          "gitId": "chshen1998"
-        },
-        "content": "            throw new DuplicateAppointmentException();"
-      },
-      {
-        "lineNumber": 49,
-        "author": {
-          "gitId": "chshen1998"
-        },
-        "content": "        }"
-      },
-      {
-        "lineNumber": 50,
-        "author": {
-          "gitId": "chshen1998"
-        },
-        "content": "        internalList.add(toAdd);"
-      },
-      {
-        "lineNumber": 51,
-        "author": {
-          "gitId": "chshen1998"
-        },
-        "content": "    }"
-      },
-      {
-        "lineNumber": 52,
-        "author": {
-          "gitId": "chshen1998"
-        },
-        "content": ""
-      },
-      {
-        "lineNumber": 53,
-        "author": {
-          "gitId": "chshen1998"
-        },
-        "content": "    /**"
-      },
-      {
-        "lineNumber": 54,
-        "author": {
-          "gitId": "chshen1998"
-        },
-        "content": "     * Replaces the appointment {@code target} in the list with {@code editedAppointment}."
-      },
-      {
-        "lineNumber": 55,
-        "author": {
-          "gitId": "chshen1998"
-        },
-        "content": "     * {@code target} must exist in the list."
-      },
-      {
-        "lineNumber": 56,
-        "author": {
-          "gitId": "chshen1998"
-        },
-        "content": "     * The appointment identity of {@code editedAppointment} must not be the same as another existing appointment"
-      },
-      {
-        "lineNumber": 57,
-        "author": {
-          "gitId": "chshen1998"
-        },
-        "content": "     * in the list."
-      },
-      {
-        "lineNumber": 58,
-        "author": {
-          "gitId": "chshen1998"
-        },
-        "content": "     */"
-      },
-      {
-        "lineNumber": 59,
-        "author": {
-          "gitId": "chshen1998"
-        },
-        "content": "    public void setAppointment(Appointment target, Appointment editedAppointment) {"
-      },
-      {
-        "lineNumber": 60,
-        "author": {
-          "gitId": "chshen1998"
-        },
-        "content": "        requireAllNonNull(target, editedAppointment);"
-      },
-      {
-        "lineNumber": 61,
-        "author": {
-          "gitId": "chshen1998"
-        },
-        "content": ""
-      },
-      {
-        "lineNumber": 62,
-        "author": {
-          "gitId": "chshen1998"
-        },
-        "content": "        int index \u003d internalList.indexOf(target);"
-      },
-      {
-        "lineNumber": 63,
-        "author": {
-          "gitId": "chshen1998"
-        },
-        "content": "        if (index \u003d\u003d -1) {"
-      },
-      {
-        "lineNumber": 64,
-        "author": {
-          "gitId": "chshen1998"
-        },
-        "content": "            throw new AppointmentNotFoundException();"
-      },
-      {
-        "lineNumber": 65,
-        "author": {
-          "gitId": "chshen1998"
-        },
-        "content": "        }"
-      },
-      {
-        "lineNumber": 66,
-        "author": {
-          "gitId": "chshen1998"
-        },
-        "content": ""
-      },
-      {
-        "lineNumber": 67,
-        "author": {
-          "gitId": "chshen1998"
-        },
-        "content": "        if (!target.isSameAppointment(editedAppointment) \u0026\u0026 contains(editedAppointment)) {"
-      },
-      {
-        "lineNumber": 68,
-        "author": {
-          "gitId": "chshen1998"
-        },
-        "content": "            throw new DuplicateAppointmentException();"
-      },
-      {
-        "lineNumber": 69,
-        "author": {
-          "gitId": "chshen1998"
-        },
-        "content": "        }"
-      },
-      {
-        "lineNumber": 70,
-        "author": {
-          "gitId": "chshen1998"
-        },
-        "content": ""
-      },
-      {
-        "lineNumber": 71,
-        "author": {
-          "gitId": "chshen1998"
-        },
-        "content": "        internalList.set(index, editedAppointment);"
-      },
-      {
-        "lineNumber": 72,
-        "author": {
-          "gitId": "chshen1998"
-        },
-        "content": "    }"
-      },
-      {
-        "lineNumber": 73,
-        "author": {
-          "gitId": "chshen1998"
-        },
-        "content": ""
-      },
-      {
-        "lineNumber": 74,
-        "author": {
-          "gitId": "chshen1998"
-        },
-        "content": "    /**"
-      },
-      {
-        "lineNumber": 75,
-        "author": {
-          "gitId": "chshen1998"
-        },
-        "content": "     * Removes the equivalent appointment from the list."
-      },
-      {
-        "lineNumber": 76,
-        "author": {
-          "gitId": "chshen1998"
-        },
-        "content": "     * The appointment must exist in the list."
-      },
-      {
-        "lineNumber": 77,
-        "author": {
-          "gitId": "chshen1998"
-        },
-        "content": "     */"
-      },
-      {
-        "lineNumber": 78,
-        "author": {
-          "gitId": "chshen1998"
-        },
-        "content": "    public void remove(Appointment toRemove) {"
-      },
-      {
-        "lineNumber": 79,
-        "author": {
-          "gitId": "chshen1998"
-        },
-        "content": "        requireNonNull(toRemove);"
-      },
-      {
-        "lineNumber": 80,
-        "author": {
-          "gitId": "chshen1998"
-        },
-        "content": "        if (!internalList.remove(toRemove)) {"
-      },
-      {
-        "lineNumber": 81,
-        "author": {
-          "gitId": "chshen1998"
-        },
-        "content": "            throw new AppointmentNotFoundException();"
-      },
-      {
-        "lineNumber": 82,
-        "author": {
-          "gitId": "chshen1998"
-        },
-        "content": "        }"
-      },
-      {
-        "lineNumber": 83,
-        "author": {
-          "gitId": "chshen1998"
-        },
-        "content": "    }"
-      },
-      {
-        "lineNumber": 84,
-        "author": {
-          "gitId": "chshen1998"
-        },
-        "content": ""
-      },
-      {
-        "lineNumber": 85,
-        "author": {
-          "gitId": "chshen1998"
-        },
-        "content": "    public void setAppointments(seedu.address.model.appointment.AppointmentList replacement) {"
-      },
-      {
-        "lineNumber": 86,
-        "author": {
-          "gitId": "chshen1998"
-        },
-        "content": "        requireNonNull(replacement);"
-      },
-      {
-        "lineNumber": 87,
-        "author": {
-          "gitId": "chshen1998"
-        },
-        "content": "        internalList.setAll(replacement.internalList);"
-      },
-      {
-        "lineNumber": 88,
-        "author": {
-          "gitId": "chshen1998"
-        },
-        "content": "    }"
-      },
-      {
-        "lineNumber": 89,
-        "author": {
-          "gitId": "chshen1998"
-        },
-        "content": ""
-      },
-      {
-        "lineNumber": 90,
-        "author": {
-          "gitId": "chshen1998"
-        },
-        "content": "    /**"
-      },
-      {
-        "lineNumber": 91,
-        "author": {
-          "gitId": "chshen1998"
-        },
-        "content": "     * Replaces the contents of this list with {@code appointments}."
-      },
-      {
-        "lineNumber": 92,
-        "author": {
-          "gitId": "chshen1998"
-        },
-        "content": "     * {@code appointments} must not contain duplicate appointments."
-      },
-      {
-        "lineNumber": 93,
-        "author": {
-          "gitId": "chshen1998"
-        },
-        "content": "     */"
-      },
-      {
-        "lineNumber": 94,
-        "author": {
-          "gitId": "chshen1998"
-        },
-        "content": "    public void setAppointments(List\u003cAppointment\u003e appointments) {"
-      },
-      {
-        "lineNumber": 95,
-        "author": {
-          "gitId": "chshen1998"
-        },
-        "content": "        requireAllNonNull(appointments);"
-      },
-      {
-        "lineNumber": 96,
-        "author": {
-          "gitId": "chshen1998"
-        },
-        "content": "        if (!appointmentsAreUnique(appointments)) {"
-      },
-      {
-        "lineNumber": 97,
-        "author": {
-          "gitId": "chshen1998"
-        },
-        "content": "            throw new DuplicateAppointmentException();"
-      },
-      {
-        "lineNumber": 98,
-        "author": {
-          "gitId": "chshen1998"
-        },
-        "content": "        }"
-      },
-      {
-        "lineNumber": 99,
-        "author": {
-          "gitId": "chshen1998"
-        },
-        "content": "        internalList.setAll(appointments);"
-      },
-      {
-        "lineNumber": 100,
-        "author": {
-          "gitId": "chshen1998"
-        },
-        "content": "    }"
-      },
-      {
-        "lineNumber": 101,
-        "author": {
-          "gitId": "chshen1998"
-        },
-        "content": ""
-      },
-      {
-        "lineNumber": 102,
-        "author": {
-          "gitId": "chshen1998"
-        },
-        "content": "    /**"
-      },
-      {
-        "lineNumber": 103,
-        "author": {
-          "gitId": "chshen1998"
-        },
-        "content": "     * Returns the backing list as an unmodifiable {@code ObservableList}."
-      },
-      {
-        "lineNumber": 104,
-        "author": {
-          "gitId": "chshen1998"
-        },
-        "content": "     */"
-      },
-      {
-        "lineNumber": 105,
-        "author": {
-          "gitId": "chshen1998"
-        },
-        "content": "    public ObservableList\u003cAppointment\u003e asUnmodifiableObservableList() {"
-      },
-      {
-        "lineNumber": 106,
-        "author": {
-          "gitId": "chshen1998"
-        },
-        "content": "        return internalUnmodifiableList;"
-      },
-      {
-        "lineNumber": 107,
-        "author": {
-          "gitId": "chshen1998"
-        },
-        "content": "    }"
-      },
-      {
-        "lineNumber": 108,
-        "author": {
-          "gitId": "chshen1998"
-        },
-        "content": ""
-      },
-      {
-        "lineNumber": 109,
-        "author": {
-          "gitId": "chshen1998"
-        },
-        "content": "    @Override"
-      },
-      {
-        "lineNumber": 110,
-        "author": {
-          "gitId": "chshen1998"
-        },
-        "content": "    public Iterator\u003cAppointment\u003e iterator() {"
-      },
-      {
-        "lineNumber": 111,
-        "author": {
-          "gitId": "chshen1998"
-        },
-        "content": "        return internalList.iterator();"
-      },
-      {
-        "lineNumber": 112,
-        "author": {
-          "gitId": "chshen1998"
-        },
-        "content": "    }"
-      },
-      {
-        "lineNumber": 113,
-        "author": {
-          "gitId": "chshen1998"
-        },
-        "content": ""
-      },
-      {
-        "lineNumber": 114,
-        "author": {
-          "gitId": "chshen1998"
-        },
-        "content": "    @Override"
-      },
-      {
-        "lineNumber": 115,
-        "author": {
-          "gitId": "chshen1998"
-        },
-        "content": "    public boolean equals(Object other) {"
-      },
-      {
-        "lineNumber": 116,
-        "author": {
-          "gitId": "chshen1998"
-        },
-        "content": "        return other \u003d\u003d this // short circuit if same object"
-      },
-      {
-        "lineNumber": 117,
-        "author": {
-          "gitId": "chshen1998"
-        },
-        "content": "                || (other instanceof seedu.address.model.appointment.AppointmentList // instanceof handles nulls"
-      },
-      {
-        "lineNumber": 118,
-        "author": {
-          "gitId": "chshen1998"
-        },
-        "content": "                \u0026\u0026 internalList.equals(((seedu.address.model.appointment.AppointmentList) other).internalList));"
-      },
-      {
-        "lineNumber": 119,
-        "author": {
-          "gitId": "chshen1998"
-        },
-        "content": "    }"
-      },
-      {
-        "lineNumber": 120,
-        "author": {
-          "gitId": "chshen1998"
-        },
-        "content": ""
-      },
-      {
-        "lineNumber": 121,
-        "author": {
-          "gitId": "chshen1998"
-        },
-        "content": "    @Override"
-      },
-      {
-        "lineNumber": 122,
-        "author": {
-          "gitId": "chshen1998"
-        },
-        "content": "    public int hashCode() {"
-      },
-      {
-        "lineNumber": 123,
-        "author": {
-          "gitId": "chshen1998"
-        },
-        "content": "        return internalList.hashCode();"
-      },
-      {
-        "lineNumber": 124,
-        "author": {
-          "gitId": "chshen1998"
-        },
-        "content": "    }"
-      },
-      {
-        "lineNumber": 125,
-        "author": {
-          "gitId": "chshen1998"
-        },
-        "content": ""
-      },
-      {
-        "lineNumber": 126,
-        "author": {
-          "gitId": "chshen1998"
-        },
-        "content": "    /**"
-      },
-      {
-        "lineNumber": 127,
-        "author": {
-          "gitId": "chshen1998"
-        },
-        "content": "     * Returns true if {@code appointments} contains only unique appointments."
-      },
-      {
-        "lineNumber": 128,
-        "author": {
-          "gitId": "chshen1998"
-        },
-        "content": "     */"
-      },
-      {
-        "lineNumber": 129,
-        "author": {
-          "gitId": "chshen1998"
-        },
-        "content": "    private boolean appointmentsAreUnique(List\u003cAppointment\u003e appointments) {"
-      },
-      {
-        "lineNumber": 130,
-        "author": {
-          "gitId": "chshen1998"
-        },
-        "content": "        for (int i \u003d 0; i \u003c appointments.size() - 1; i++) {"
-      },
-      {
-        "lineNumber": 131,
-        "author": {
-          "gitId": "chshen1998"
-        },
-        "content": "            for (int j \u003d i + 1; j \u003c appointments.size(); j++) {"
-      },
-      {
-        "lineNumber": 132,
-        "author": {
-          "gitId": "chshen1998"
-        },
-        "content": "                if (appointments.get(i).isSameAppointment(appointments.get(j))) {"
-      },
-      {
-        "lineNumber": 133,
-        "author": {
-          "gitId": "chshen1998"
-        },
-        "content": "                    return false;"
-      },
-      {
-        "lineNumber": 134,
-        "author": {
-          "gitId": "chshen1998"
-        },
-        "content": "                }"
-      },
-      {
-        "lineNumber": 135,
-        "author": {
-          "gitId": "chshen1998"
-        },
-        "content": "            }"
-      },
-      {
-        "lineNumber": 136,
-        "author": {
-          "gitId": "chshen1998"
-        },
-        "content": "        }"
-      },
-      {
-        "lineNumber": 137,
-        "author": {
-          "gitId": "chshen1998"
-        },
-        "content": "        return true;"
-      },
-      {
-        "lineNumber": 138,
-        "author": {
-          "gitId": "chshen1998"
-        },
-        "content": "    }"
-      },
-      {
-        "lineNumber": 139,
-        "author": {
-          "gitId": "chshen1998"
-        },
-        "content": "}"
-      }
-    ],
-    "authorContributionMap": {
-      "chshen1998": 139
-    }
-  },
-  {
     "path": "src/main/java/seedu/address/model/appointment/AppointmentTime.java",
     "fileType": "functional-code",
     "lines": [
@@ -34374,222 +33392,229 @@
       {
         "lineNumber": 11,
         "author": {
-          "gitId": "yeohhq"
+          "gitId": "chshen1998"
         },
-        "content": "    public static final String VALIDATION_REGEX \u003d \"\\\\p{Alnum}+\";"
+        "content": "    // public static final String VALIDATION_REGEX \u003d \"\\\\p{Alnum}+\";"
       },
       {
         "lineNumber": 12,
         "author": {
-          "gitId": "yeohhq"
+          "gitId": "chshen1998"
         },
-        "content": ""
+        "content": "    public static final String VALIDATION_REGEX \u003d \"[\\\\p{Alnum}][\\\\p{Alnum} ]*\";"
       },
       {
         "lineNumber": 13,
         "author": {
           "gitId": "yeohhq"
         },
-        "content": "    public final String description;"
+        "content": ""
       },
       {
         "lineNumber": 14,
         "author": {
           "gitId": "yeohhq"
         },
-        "content": ""
+        "content": "    public final String description;"
       },
       {
         "lineNumber": 15,
         "author": {
           "gitId": "yeohhq"
         },
-        "content": "    /**"
+        "content": ""
       },
       {
         "lineNumber": 16,
         "author": {
           "gitId": "yeohhq"
         },
-        "content": "     * Constructs a {@code Description}."
+        "content": "    /**"
       },
       {
         "lineNumber": 17,
         "author": {
           "gitId": "yeohhq"
         },
-        "content": "     *"
+        "content": "     * Constructs a {@code Description}."
       },
       {
         "lineNumber": 18,
         "author": {
           "gitId": "yeohhq"
         },
-        "content": "     * @param description A valid appointment description."
+        "content": "     *"
       },
       {
         "lineNumber": 19,
         "author": {
           "gitId": "yeohhq"
         },
-        "content": "     */"
+        "content": "     * @param description A valid appointment description."
       },
       {
         "lineNumber": 20,
         "author": {
           "gitId": "yeohhq"
         },
-        "content": "    public Description(String description) {"
+        "content": "     */"
       },
       {
         "lineNumber": 21,
         "author": {
           "gitId": "yeohhq"
         },
-        "content": "        requireNonNull(description);"
+        "content": "    public Description(String description) {"
       },
       {
         "lineNumber": 22,
         "author": {
           "gitId": "yeohhq"
         },
-        "content": "        checkArgument(isValidDescription(description), MESSAGE_CONSTRAINTS);"
+        "content": "        requireNonNull(description);"
       },
       {
         "lineNumber": 23,
         "author": {
           "gitId": "yeohhq"
         },
-        "content": "        this.description \u003d description;"
+        "content": "        checkArgument(isValidDescription(description), MESSAGE_CONSTRAINTS);"
       },
       {
         "lineNumber": 24,
         "author": {
           "gitId": "yeohhq"
         },
-        "content": "    }"
+        "content": "        this.description \u003d description;"
       },
       {
         "lineNumber": 25,
         "author": {
           "gitId": "yeohhq"
         },
-        "content": ""
+        "content": "    }"
       },
       {
         "lineNumber": 26,
         "author": {
           "gitId": "yeohhq"
         },
-        "content": "    /**"
+        "content": ""
       },
       {
         "lineNumber": 27,
         "author": {
           "gitId": "yeohhq"
         },
-        "content": "     * Returns true if a given string is a valid appointment description."
+        "content": "    /**"
       },
       {
         "lineNumber": 28,
         "author": {
           "gitId": "yeohhq"
         },
-        "content": "     */"
+        "content": "     * Returns true if a given string is a valid appointment description."
       },
       {
         "lineNumber": 29,
         "author": {
           "gitId": "yeohhq"
         },
-        "content": "    public static boolean isValidDescription(String description) {"
+        "content": "     */"
       },
       {
         "lineNumber": 30,
         "author": {
           "gitId": "yeohhq"
         },
-        "content": "        return description.matches(VALIDATION_REGEX);"
+        "content": "    public static boolean isValidDescription(String description) {"
       },
       {
         "lineNumber": 31,
         "author": {
           "gitId": "yeohhq"
         },
-        "content": "    }"
+        "content": "        return description.matches(VALIDATION_REGEX);"
       },
       {
         "lineNumber": 32,
         "author": {
           "gitId": "yeohhq"
         },
-        "content": ""
+        "content": "    }"
       },
       {
         "lineNumber": 33,
         "author": {
           "gitId": "yeohhq"
         },
-        "content": "    @Override"
+        "content": ""
       },
       {
         "lineNumber": 34,
         "author": {
           "gitId": "yeohhq"
         },
-        "content": "    public int hashCode() {"
+        "content": "    @Override"
       },
       {
         "lineNumber": 35,
         "author": {
           "gitId": "yeohhq"
         },
-        "content": "        return description.hashCode();"
+        "content": "    public int hashCode() {"
       },
       {
         "lineNumber": 36,
         "author": {
           "gitId": "yeohhq"
         },
-        "content": "    }"
+        "content": "        return description.hashCode();"
       },
       {
         "lineNumber": 37,
         "author": {
           "gitId": "yeohhq"
         },
-        "content": ""
+        "content": "    }"
       },
       {
         "lineNumber": 38,
         "author": {
           "gitId": "yeohhq"
         },
-        "content": "    public String toString() {"
+        "content": ""
       },
       {
         "lineNumber": 39,
         "author": {
           "gitId": "yeohhq"
         },
-        "content": "        return description;"
+        "content": "    public String toString() {"
       },
       {
         "lineNumber": 40,
         "author": {
           "gitId": "yeohhq"
         },
-        "content": "    }"
+        "content": "        return description;"
       },
       {
         "lineNumber": 41,
         "author": {
           "gitId": "yeohhq"
         },
-        "content": ""
+        "content": "    }"
       },
       {
         "lineNumber": 42,
+        "author": {
+          "gitId": "yeohhq"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 43,
         "author": {
           "gitId": "yeohhq"
         },
@@ -34597,7 +33622,8 @@
       }
     ],
     "authorContributionMap": {
-      "yeohhq": 42
+      "yeohhq": 41,
+      "chshen1998": 2
     }
   },
   {
@@ -51410,31 +50436,780 @@
         "author": {
           "gitId": "chshen1998"
         },
-        "content": "/**"
+        "content": "import static org.junit.jupiter.api.Assertions.assertEquals;"
       },
       {
         "lineNumber": 4,
         "author": {
           "gitId": "chshen1998"
         },
-        "content": " * Contains helper methods for testing appointment commands."
+        "content": "import static org.junit.jupiter.api.Assertions.assertTrue;"
       },
       {
         "lineNumber": 5,
         "author": {
           "gitId": "chshen1998"
         },
-        "content": " */"
+        "content": "import static seedu.address.logic.parser.CliSyntax.PREFIX_APPOINTMENT_END;"
       },
       {
         "lineNumber": 6,
         "author": {
           "gitId": "chshen1998"
         },
-        "content": "public class AppointmentCommandTestUtil {"
+        "content": "import static seedu.address.logic.parser.CliSyntax.PREFIX_APPOINTMENT_START;"
       },
       {
         "lineNumber": 7,
+        "author": {
+          "gitId": "chshen1998"
+        },
+        "content": "import static seedu.address.logic.parser.CliSyntax.PREFIX_DESCRIPTION;"
+      },
+      {
+        "lineNumber": 8,
+        "author": {
+          "gitId": "chshen1998"
+        },
+        "content": "import static seedu.address.logic.parser.CliSyntax.PREFIX_PATIENT;"
+      },
+      {
+        "lineNumber": 9,
+        "author": {
+          "gitId": "chshen1998"
+        },
+        "content": "import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG;"
+      },
+      {
+        "lineNumber": 10,
+        "author": {
+          "gitId": "chshen1998"
+        },
+        "content": "import static seedu.address.testutil.Assert.assertThrows;"
+      },
+      {
+        "lineNumber": 11,
+        "author": {
+          "gitId": "chshen1998"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 12,
+        "author": {
+          "gitId": "chshen1998"
+        },
+        "content": "import java.util.ArrayList;"
+      },
+      {
+        "lineNumber": 13,
+        "author": {
+          "gitId": "chshen1998"
+        },
+        "content": "import java.util.List;"
+      },
+      {
+        "lineNumber": 14,
+        "author": {
+          "gitId": "chshen1998"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 15,
+        "author": {
+          "gitId": "chshen1998"
+        },
+        "content": "import seedu.address.commons.core.index.Index;"
+      },
+      {
+        "lineNumber": 16,
+        "author": {
+          "gitId": "chshen1998"
+        },
+        "content": "import seedu.address.logic.commands.Command;"
+      },
+      {
+        "lineNumber": 17,
+        "author": {
+          "gitId": "chshen1998"
+        },
+        "content": "import seedu.address.logic.commands.CommandResult;"
+      },
+      {
+        "lineNumber": 18,
+        "author": {
+          "gitId": "chshen1998"
+        },
+        "content": "import seedu.address.logic.commands.exceptions.CommandException;"
+      },
+      {
+        "lineNumber": 19,
+        "author": {
+          "gitId": "chshen1998"
+        },
+        "content": "import seedu.address.model.AddressBook;"
+      },
+      {
+        "lineNumber": 20,
+        "author": {
+          "gitId": "chshen1998"
+        },
+        "content": "import seedu.address.model.Model;"
+      },
+      {
+        "lineNumber": 21,
+        "author": {
+          "gitId": "chshen1998"
+        },
+        "content": "import seedu.address.model.appointment.Appointment;"
+      },
+      {
+        "lineNumber": 22,
+        "author": {
+          "gitId": "chshen1998"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 23,
+        "author": {
+          "gitId": "chshen1998"
+        },
+        "content": "/**"
+      },
+      {
+        "lineNumber": 24,
+        "author": {
+          "gitId": "chshen1998"
+        },
+        "content": " * Contains helper methods for testing appointment commands."
+      },
+      {
+        "lineNumber": 25,
+        "author": {
+          "gitId": "chshen1998"
+        },
+        "content": " */"
+      },
+      {
+        "lineNumber": 26,
+        "author": {
+          "gitId": "chshen1998"
+        },
+        "content": "public class AppointmentCommandTestUtil {"
+      },
+      {
+        "lineNumber": 27,
+        "author": {
+          "gitId": "chshen1998"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 28,
+        "author": {
+          "gitId": "chshen1998"
+        },
+        "content": "    public static final String VALID_START_ONE \u003d \"2020-10-07 08:00\";"
+      },
+      {
+        "lineNumber": 29,
+        "author": {
+          "gitId": "chshen1998"
+        },
+        "content": "    public static final String VALID_START_TWO \u003d \"2020-08-05 14:00\";"
+      },
+      {
+        "lineNumber": 30,
+        "author": {
+          "gitId": "chshen1998"
+        },
+        "content": "    public static final String VALID_END_ONE \u003d \"2020-10-07 10:00\";"
+      },
+      {
+        "lineNumber": 31,
+        "author": {
+          "gitId": "chshen1998"
+        },
+        "content": "    public static final String VALID_END_TWO \u003d \"2020-08-05 16:00\";"
+      },
+      {
+        "lineNumber": 32,
+        "author": {
+          "gitId": "chshen1998"
+        },
+        "content": "    public static final int VALID_PATIENT_ONE \u003d 0;"
+      },
+      {
+        "lineNumber": 33,
+        "author": {
+          "gitId": "chshen1998"
+        },
+        "content": "    public static final int VALID_PATIENT_TWO \u003d 1;"
+      },
+      {
+        "lineNumber": 34,
+        "author": {
+          "gitId": "chshen1998"
+        },
+        "content": "    public static final String VALID_DESCRIPTION_ONE \u003d \"Review Appointment\";"
+      },
+      {
+        "lineNumber": 35,
+        "author": {
+          "gitId": "chshen1998"
+        },
+        "content": "    public static final String VALID_DESCRIPTION_TWO \u003d \"Followup Appointment\";"
+      },
+      {
+        "lineNumber": 36,
+        "author": {
+          "gitId": "chshen1998"
+        },
+        "content": "    public static final String VALID_TAG_ONE \u003d \"Review\";"
+      },
+      {
+        "lineNumber": 37,
+        "author": {
+          "gitId": "chshen1998"
+        },
+        "content": "    public static final String VALID_TAG_TWO \u003d \"Followup\";"
+      },
+      {
+        "lineNumber": 38,
+        "author": {
+          "gitId": "chshen1998"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 39,
+        "author": {
+          "gitId": "chshen1998"
+        },
+        "content": "    public static final String START_DESC_ONE \u003d \" \" + PREFIX_APPOINTMENT_START + VALID_START_ONE;"
+      },
+      {
+        "lineNumber": 40,
+        "author": {
+          "gitId": "chshen1998"
+        },
+        "content": "    public static final String START_DESC_TWO \u003d \" \" + PREFIX_APPOINTMENT_START + VALID_START_TWO;"
+      },
+      {
+        "lineNumber": 41,
+        "author": {
+          "gitId": "chshen1998"
+        },
+        "content": "    public static final String END_DESC_ONE \u003d \" \" + PREFIX_APPOINTMENT_END + VALID_END_ONE;"
+      },
+      {
+        "lineNumber": 42,
+        "author": {
+          "gitId": "chshen1998"
+        },
+        "content": "    public static final String END_DESC_TWO \u003d \" \" + PREFIX_APPOINTMENT_END + VALID_END_TWO;"
+      },
+      {
+        "lineNumber": 43,
+        "author": {
+          "gitId": "chshen1998"
+        },
+        "content": "    public static final String PATIENT_DESC_ONE \u003d \" \" + PREFIX_PATIENT + VALID_PATIENT_ONE;"
+      },
+      {
+        "lineNumber": 44,
+        "author": {
+          "gitId": "chshen1998"
+        },
+        "content": "    public static final String PATIENT_DESC_TWO \u003d \" \" + PREFIX_PATIENT + VALID_PATIENT_TWO;"
+      },
+      {
+        "lineNumber": 45,
+        "author": {
+          "gitId": "chshen1998"
+        },
+        "content": "    public static final String DESCRIPTION_DESC_ONE \u003d \" \" + PREFIX_DESCRIPTION + VALID_DESCRIPTION_ONE;"
+      },
+      {
+        "lineNumber": 46,
+        "author": {
+          "gitId": "chshen1998"
+        },
+        "content": "    public static final String DESCRIPTION_DESC_TWO \u003d \" \" + PREFIX_DESCRIPTION + VALID_DESCRIPTION_TWO;"
+      },
+      {
+        "lineNumber": 47,
+        "author": {
+          "gitId": "chshen1998"
+        },
+        "content": "    public static final String TAG_DESC_ONE \u003d \" \" + PREFIX_TAG + VALID_TAG_ONE;"
+      },
+      {
+        "lineNumber": 48,
+        "author": {
+          "gitId": "chshen1998"
+        },
+        "content": "    public static final String TAG_DESC_TWO \u003d \" \" + PREFIX_TAG + VALID_TAG_TWO;"
+      },
+      {
+        "lineNumber": 49,
+        "author": {
+          "gitId": "chshen1998"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 50,
+        "author": {
+          "gitId": "chshen1998"
+        },
+        "content": "    // Must follow correct date \u0026 time format"
+      },
+      {
+        "lineNumber": 51,
+        "author": {
+          "gitId": "chshen1998"
+        },
+        "content": "    public static final String INVALID_START_DESC \u003d \" \" + PREFIX_APPOINTMENT_START + \"08:00 2020-10-07\";"
+      },
+      {
+        "lineNumber": 52,
+        "author": {
+          "gitId": "chshen1998"
+        },
+        "content": "    public static final String INVALID_END_DESC \u003d \" \" + PREFIX_APPOINTMENT_END + \"07-10-2020 08:00\";"
+      },
+      {
+        "lineNumber": 53,
+        "author": {
+          "gitId": "chshen1998"
+        },
+        "content": "    // Patient id must be a number"
+      },
+      {
+        "lineNumber": 54,
+        "author": {
+          "gitId": "chshen1998"
+        },
+        "content": "    public static final String INVALID_PATIENT_DESC \u003d \" \" + PREFIX_PATIENT + \"A\";"
+      },
+      {
+        "lineNumber": 55,
+        "author": {
+          "gitId": "chshen1998"
+        },
+        "content": "    // \u0027*\u0027 not allowed in tags"
+      },
+      {
+        "lineNumber": 56,
+        "author": {
+          "gitId": "chshen1998"
+        },
+        "content": "    public static final String INVALID_TAG_DESC \u003d \" \" + PREFIX_TAG + \"Review*\";"
+      },
+      {
+        "lineNumber": 57,
+        "author": {
+          "gitId": "chshen1998"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 58,
+        "author": {
+          "gitId": "chshen1998"
+        },
+        "content": "    /**"
+      },
+      {
+        "lineNumber": 59,
+        "author": {
+          "gitId": "chshen1998"
+        },
+        "content": "     * Executes the given {@code command}, confirms that \u003cbr\u003e"
+      },
+      {
+        "lineNumber": 60,
+        "author": {
+          "gitId": "chshen1998"
+        },
+        "content": "     * - the returned {@link CommandResult} matches {@code expectedCommandResult} \u003cbr\u003e"
+      },
+      {
+        "lineNumber": 61,
+        "author": {
+          "gitId": "chshen1998"
+        },
+        "content": "     * - the {@code actualModel} matches {@code expectedModel}"
+      },
+      {
+        "lineNumber": 62,
+        "author": {
+          "gitId": "chshen1998"
+        },
+        "content": "     */"
+      },
+      {
+        "lineNumber": 63,
+        "author": {
+          "gitId": "chshen1998"
+        },
+        "content": "    public static void assertCommandSuccess(Command command, Model actualModel, CommandResult expectedCommandResult,"
+      },
+      {
+        "lineNumber": 64,
+        "author": {
+          "gitId": "chshen1998"
+        },
+        "content": "                                            Model expectedModel) {"
+      },
+      {
+        "lineNumber": 65,
+        "author": {
+          "gitId": "chshen1998"
+        },
+        "content": "        try {"
+      },
+      {
+        "lineNumber": 66,
+        "author": {
+          "gitId": "chshen1998"
+        },
+        "content": "            CommandResult result \u003d command.execute(actualModel);"
+      },
+      {
+        "lineNumber": 67,
+        "author": {
+          "gitId": "chshen1998"
+        },
+        "content": "            assertEquals(expectedCommandResult, result);"
+      },
+      {
+        "lineNumber": 68,
+        "author": {
+          "gitId": "chshen1998"
+        },
+        "content": "            assertEquals(expectedModel, actualModel);"
+      },
+      {
+        "lineNumber": 69,
+        "author": {
+          "gitId": "chshen1998"
+        },
+        "content": "        } catch (CommandException ce) {"
+      },
+      {
+        "lineNumber": 70,
+        "author": {
+          "gitId": "chshen1998"
+        },
+        "content": "            throw new AssertionError(\"Execution of command should not fail.\", ce);"
+      },
+      {
+        "lineNumber": 71,
+        "author": {
+          "gitId": "chshen1998"
+        },
+        "content": "        }"
+      },
+      {
+        "lineNumber": 72,
+        "author": {
+          "gitId": "chshen1998"
+        },
+        "content": "    }"
+      },
+      {
+        "lineNumber": 73,
+        "author": {
+          "gitId": "chshen1998"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 74,
+        "author": {
+          "gitId": "chshen1998"
+        },
+        "content": "    /**"
+      },
+      {
+        "lineNumber": 75,
+        "author": {
+          "gitId": "chshen1998"
+        },
+        "content": "     * Convenience wrapper to {@link #assertCommandSuccess(Command, Model, CommandResult, Model)}"
+      },
+      {
+        "lineNumber": 76,
+        "author": {
+          "gitId": "chshen1998"
+        },
+        "content": "     * that takes a string {@code expectedMessage}."
+      },
+      {
+        "lineNumber": 77,
+        "author": {
+          "gitId": "chshen1998"
+        },
+        "content": "     */"
+      },
+      {
+        "lineNumber": 78,
+        "author": {
+          "gitId": "chshen1998"
+        },
+        "content": "    public static void assertCommandSuccess(Command command, Model actualModel, String expectedMessage,"
+      },
+      {
+        "lineNumber": 79,
+        "author": {
+          "gitId": "chshen1998"
+        },
+        "content": "                                            Model expectedModel) {"
+      },
+      {
+        "lineNumber": 80,
+        "author": {
+          "gitId": "chshen1998"
+        },
+        "content": "        CommandResult expectedCommandResult \u003d new CommandResult(expectedMessage);"
+      },
+      {
+        "lineNumber": 81,
+        "author": {
+          "gitId": "chshen1998"
+        },
+        "content": "        assertCommandSuccess(command, actualModel, expectedCommandResult, expectedModel);"
+      },
+      {
+        "lineNumber": 82,
+        "author": {
+          "gitId": "chshen1998"
+        },
+        "content": "    }"
+      },
+      {
+        "lineNumber": 83,
+        "author": {
+          "gitId": "chshen1998"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 84,
+        "author": {
+          "gitId": "chshen1998"
+        },
+        "content": "    /**"
+      },
+      {
+        "lineNumber": 85,
+        "author": {
+          "gitId": "chshen1998"
+        },
+        "content": "     * Executes the given {@code command}, confirms that \u003cbr\u003e"
+      },
+      {
+        "lineNumber": 86,
+        "author": {
+          "gitId": "chshen1998"
+        },
+        "content": "     * - a {@code CommandException} is thrown \u003cbr\u003e"
+      },
+      {
+        "lineNumber": 87,
+        "author": {
+          "gitId": "chshen1998"
+        },
+        "content": "     * - the CommandException message matches {@code expectedMessage} \u003cbr\u003e"
+      },
+      {
+        "lineNumber": 88,
+        "author": {
+          "gitId": "chshen1998"
+        },
+        "content": "     * - the address book, filtered patient list and selected patient in {@code actualModel} remain unchanged"
+      },
+      {
+        "lineNumber": 89,
+        "author": {
+          "gitId": "chshen1998"
+        },
+        "content": "     */"
+      },
+      {
+        "lineNumber": 90,
+        "author": {
+          "gitId": "chshen1998"
+        },
+        "content": "    public static void assertCommandFailure(Command command, Model actualModel, String expectedMessage) {"
+      },
+      {
+        "lineNumber": 91,
+        "author": {
+          "gitId": "chshen1998"
+        },
+        "content": "        // we are unable to defensively copy the model for comparison later, so we can"
+      },
+      {
+        "lineNumber": 92,
+        "author": {
+          "gitId": "chshen1998"
+        },
+        "content": "        // only do so by copying its components."
+      },
+      {
+        "lineNumber": 93,
+        "author": {
+          "gitId": "chshen1998"
+        },
+        "content": "        AddressBook expectedAddressBook \u003d new AddressBook(actualModel.getAddressBook());"
+      },
+      {
+        "lineNumber": 94,
+        "author": {
+          "gitId": "chshen1998"
+        },
+        "content": "        List\u003cAppointment\u003e expectedFilteredList \u003d new ArrayList\u003c\u003e(actualModel.getFilteredAppointmentList());"
+      },
+      {
+        "lineNumber": 95,
+        "author": {
+          "gitId": "chshen1998"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 96,
+        "author": {
+          "gitId": "chshen1998"
+        },
+        "content": "        assertThrows(CommandException.class, expectedMessage, () -\u003e command.execute(actualModel));"
+      },
+      {
+        "lineNumber": 97,
+        "author": {
+          "gitId": "chshen1998"
+        },
+        "content": "        assertEquals(expectedAddressBook, actualModel.getAddressBook());"
+      },
+      {
+        "lineNumber": 98,
+        "author": {
+          "gitId": "chshen1998"
+        },
+        "content": "        assertEquals(expectedFilteredList, actualModel.getFilteredAppointmentList());"
+      },
+      {
+        "lineNumber": 99,
+        "author": {
+          "gitId": "chshen1998"
+        },
+        "content": "    }"
+      },
+      {
+        "lineNumber": 100,
+        "author": {
+          "gitId": "chshen1998"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 101,
+        "author": {
+          "gitId": "chshen1998"
+        },
+        "content": "    /**"
+      },
+      {
+        "lineNumber": 102,
+        "author": {
+          "gitId": "chshen1998"
+        },
+        "content": "     * Updates {@code model}\u0027s filtered list to show only the patient at the given {@code targetIndex} in the"
+      },
+      {
+        "lineNumber": 103,
+        "author": {
+          "gitId": "chshen1998"
+        },
+        "content": "     * {@code model}\u0027s address book."
+      },
+      {
+        "lineNumber": 104,
+        "author": {
+          "gitId": "chshen1998"
+        },
+        "content": "     */"
+      },
+      {
+        "lineNumber": 105,
+        "author": {
+          "gitId": "chshen1998"
+        },
+        "content": "    public static void showAppointmentAtIndex(Model model, Index targetIndex) {"
+      },
+      {
+        "lineNumber": 106,
+        "author": {
+          "gitId": "chshen1998"
+        },
+        "content": "        assertTrue(targetIndex.getZeroBased() \u003c model.getFilteredAppointmentList().size());"
+      },
+      {
+        "lineNumber": 107,
+        "author": {
+          "gitId": "chshen1998"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 108,
+        "author": {
+          "gitId": "chshen1998"
+        },
+        "content": "        Appointment appointment \u003d model.getFilteredAppointmentList().get(targetIndex.getZeroBased());"
+      },
+      {
+        "lineNumber": 109,
+        "author": {
+          "gitId": "chshen1998"
+        },
+        "content": "        // final String[] splitName \u003d appointment.getName().fullName.split(\"\\\\s+\");"
+      },
+      {
+        "lineNumber": 110,
+        "author": {
+          "gitId": "chshen1998"
+        },
+        "content": "        // model.updateFilteredAppointmentList(new SearchNameFilter(Arrays.asList(splitName[0])));"
+      },
+      {
+        "lineNumber": 111,
+        "author": {
+          "gitId": "chshen1998"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 112,
+        "author": {
+          "gitId": "chshen1998"
+        },
+        "content": "        assertEquals(1, model.getFilteredAppointmentList().size());"
+      },
+      {
+        "lineNumber": 113,
+        "author": {
+          "gitId": "chshen1998"
+        },
+        "content": "    }"
+      },
+      {
+        "lineNumber": 114,
         "author": {
           "gitId": "chshen1998"
         },
@@ -51442,7 +51217,709 @@
       }
     ],
     "authorContributionMap": {
-      "chshen1998": 7
+      "chshen1998": 114
+    }
+  },
+  {
+    "path": "src/test/java/seedu/address/logic/commands/appointmentcommands/AppointmentDeleteCommandTest.java",
+    "fileType": "test-code",
+    "lines": [
+      {
+        "lineNumber": 1,
+        "author": {
+          "gitId": "chshen1998"
+        },
+        "content": "package seedu.address.logic.commands.appointmentcommands;"
+      },
+      {
+        "lineNumber": 2,
+        "author": {
+          "gitId": "chshen1998"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 3,
+        "author": {
+          "gitId": "chshen1998"
+        },
+        "content": "import static org.junit.jupiter.api.Assertions.assertFalse;"
+      },
+      {
+        "lineNumber": 4,
+        "author": {
+          "gitId": "chshen1998"
+        },
+        "content": "import static org.junit.jupiter.api.Assertions.assertTrue;"
+      },
+      {
+        "lineNumber": 5,
+        "author": {
+          "gitId": "chshen1998"
+        },
+        "content": "import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_APPOINTMENT;"
+      },
+      {
+        "lineNumber": 6,
+        "author": {
+          "gitId": "chshen1998"
+        },
+        "content": "import static seedu.address.testutil.TypicalIndexes.INDEX_SECOND_APPOINTMENT;"
+      },
+      {
+        "lineNumber": 7,
+        "author": {
+          "gitId": "chshen1998"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 8,
+        "author": {
+          "gitId": "chshen1998"
+        },
+        "content": "import org.junit.jupiter.api.Test;"
+      },
+      {
+        "lineNumber": 9,
+        "author": {
+          "gitId": "chshen1998"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 10,
+        "author": {
+          "gitId": "chshen1998"
+        },
+        "content": "import seedu.address.commons.core.Messages;"
+      },
+      {
+        "lineNumber": 11,
+        "author": {
+          "gitId": "chshen1998"
+        },
+        "content": "import seedu.address.commons.core.index.Index;"
+      },
+      {
+        "lineNumber": 12,
+        "author": {
+          "gitId": "chshen1998"
+        },
+        "content": "import seedu.address.model.Model;"
+      },
+      {
+        "lineNumber": 13,
+        "author": {
+          "gitId": "chshen1998"
+        },
+        "content": "import seedu.address.model.ModelManager;"
+      },
+      {
+        "lineNumber": 14,
+        "author": {
+          "gitId": "chshen1998"
+        },
+        "content": "import seedu.address.model.UserPrefs;"
+      },
+      {
+        "lineNumber": 15,
+        "author": {
+          "gitId": "chshen1998"
+        },
+        "content": "import seedu.address.model.appointment.Appointment;"
+      },
+      {
+        "lineNumber": 16,
+        "author": {
+          "gitId": "chshen1998"
+        },
+        "content": "import seedu.address.testutil.TypicalAppointments;"
+      },
+      {
+        "lineNumber": 17,
+        "author": {
+          "gitId": "chshen1998"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 18,
+        "author": {
+          "gitId": "chshen1998"
+        },
+        "content": "/**"
+      },
+      {
+        "lineNumber": 19,
+        "author": {
+          "gitId": "chshen1998"
+        },
+        "content": " * Contains integration tests (interaction with the Model, UndoCommand and RedoCommand) and unit tests for"
+      },
+      {
+        "lineNumber": 20,
+        "author": {
+          "gitId": "chshen1998"
+        },
+        "content": " * {@code AppointmentDeleteCommand}."
+      },
+      {
+        "lineNumber": 21,
+        "author": {
+          "gitId": "chshen1998"
+        },
+        "content": " */"
+      },
+      {
+        "lineNumber": 22,
+        "author": {
+          "gitId": "chshen1998"
+        },
+        "content": "public class AppointmentDeleteCommandTest {"
+      },
+      {
+        "lineNumber": 23,
+        "author": {
+          "gitId": "chshen1998"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 24,
+        "author": {
+          "gitId": "chshen1998"
+        },
+        "content": "    private Model model \u003d new ModelManager(TypicalAppointments.getTypicalAddressBook(), new UserPrefs());"
+      },
+      {
+        "lineNumber": 25,
+        "author": {
+          "gitId": "chshen1998"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 26,
+        "author": {
+          "gitId": "chshen1998"
+        },
+        "content": "    @Test"
+      },
+      {
+        "lineNumber": 27,
+        "author": {
+          "gitId": "chshen1998"
+        },
+        "content": "    public void execute_validIndexUnfilteredList_success() {"
+      },
+      {
+        "lineNumber": 28,
+        "author": {
+          "gitId": "chshen1998"
+        },
+        "content": "        Appointment appointmentToDelete \u003d model.getFilteredAppointmentList()"
+      },
+      {
+        "lineNumber": 29,
+        "author": {
+          "gitId": "chshen1998"
+        },
+        "content": "                .get(INDEX_FIRST_APPOINTMENT.getZeroBased());"
+      },
+      {
+        "lineNumber": 30,
+        "author": {
+          "gitId": "chshen1998"
+        },
+        "content": "        AppointmentDeleteCommand appointmentDeleteCommand \u003d new AppointmentDeleteCommand(INDEX_FIRST_APPOINTMENT);"
+      },
+      {
+        "lineNumber": 31,
+        "author": {
+          "gitId": "chshen1998"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 32,
+        "author": {
+          "gitId": "chshen1998"
+        },
+        "content": "        String expectedMessage \u003d String.format(AppointmentDeleteCommand.MESSAGE_DELETE_APPOINTMENT_SUCCESS,"
+      },
+      {
+        "lineNumber": 33,
+        "author": {
+          "gitId": "chshen1998"
+        },
+        "content": "                appointmentToDelete);"
+      },
+      {
+        "lineNumber": 34,
+        "author": {
+          "gitId": "chshen1998"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 35,
+        "author": {
+          "gitId": "chshen1998"
+        },
+        "content": "        ModelManager expectedModel \u003d new ModelManager(model.getAddressBook(), new UserPrefs());"
+      },
+      {
+        "lineNumber": 36,
+        "author": {
+          "gitId": "chshen1998"
+        },
+        "content": "        expectedModel.deleteAppointment(appointmentToDelete);"
+      },
+      {
+        "lineNumber": 37,
+        "author": {
+          "gitId": "chshen1998"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 38,
+        "author": {
+          "gitId": "chshen1998"
+        },
+        "content": "        AppointmentCommandTestUtil.assertCommandSuccess(appointmentDeleteCommand, model,"
+      },
+      {
+        "lineNumber": 39,
+        "author": {
+          "gitId": "chshen1998"
+        },
+        "content": "                expectedMessage, expectedModel);"
+      },
+      {
+        "lineNumber": 40,
+        "author": {
+          "gitId": "chshen1998"
+        },
+        "content": "    }"
+      },
+      {
+        "lineNumber": 41,
+        "author": {
+          "gitId": "chshen1998"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 42,
+        "author": {
+          "gitId": "chshen1998"
+        },
+        "content": "    @Test"
+      },
+      {
+        "lineNumber": 43,
+        "author": {
+          "gitId": "chshen1998"
+        },
+        "content": "    public void execute_invalidIndexUnfilteredList_throwsCommandException() {"
+      },
+      {
+        "lineNumber": 44,
+        "author": {
+          "gitId": "chshen1998"
+        },
+        "content": "        Index outOfBoundIndex \u003d Index.fromOneBased(model.getFilteredAppointmentList().size() + 1);"
+      },
+      {
+        "lineNumber": 45,
+        "author": {
+          "gitId": "chshen1998"
+        },
+        "content": "        AppointmentDeleteCommand appointmentDeleteCommand \u003d new AppointmentDeleteCommand(outOfBoundIndex);"
+      },
+      {
+        "lineNumber": 46,
+        "author": {
+          "gitId": "chshen1998"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 47,
+        "author": {
+          "gitId": "chshen1998"
+        },
+        "content": "        AppointmentCommandTestUtil.assertCommandFailure(appointmentDeleteCommand, model,"
+      },
+      {
+        "lineNumber": 48,
+        "author": {
+          "gitId": "chshen1998"
+        },
+        "content": "                Messages.MESSAGE_INVALID_APPOINTMENT_DISPLAYED_INDEX);"
+      },
+      {
+        "lineNumber": 49,
+        "author": {
+          "gitId": "chshen1998"
+        },
+        "content": "    }"
+      },
+      {
+        "lineNumber": 50,
+        "author": {
+          "gitId": "chshen1998"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 51,
+        "author": {
+          "gitId": "chshen1998"
+        },
+        "content": "    // UNCOMMENT THIS TEST WHEN FILTERS ARE DONE"
+      },
+      {
+        "lineNumber": 52,
+        "author": {
+          "gitId": "chshen1998"
+        },
+        "content": "    /*"
+      },
+      {
+        "lineNumber": 53,
+        "author": {
+          "gitId": "chshen1998"
+        },
+        "content": "    @Test"
+      },
+      {
+        "lineNumber": 54,
+        "author": {
+          "gitId": "chshen1998"
+        },
+        "content": "    public void execute_invalidIndexFilteredList_throwsCommandException() {"
+      },
+      {
+        "lineNumber": 55,
+        "author": {
+          "gitId": "chshen1998"
+        },
+        "content": "        showAppointmentAtIndex(model, INDEX_FIRST_APPOINTMENT);"
+      },
+      {
+        "lineNumber": 56,
+        "author": {
+          "gitId": "chshen1998"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 57,
+        "author": {
+          "gitId": "chshen1998"
+        },
+        "content": "        Index outOfBoundIndex \u003d INDEX_SECOND_APPOINTMENT;"
+      },
+      {
+        "lineNumber": 58,
+        "author": {
+          "gitId": "chshen1998"
+        },
+        "content": "        // ensures that outOfBoundIndex is still in bounds of address book list"
+      },
+      {
+        "lineNumber": 59,
+        "author": {
+          "gitId": "chshen1998"
+        },
+        "content": "        assertTrue(outOfBoundIndex.getZeroBased() \u003c model.getAddressBook().getAppointmentList().size());"
+      },
+      {
+        "lineNumber": 60,
+        "author": {
+          "gitId": "chshen1998"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 61,
+        "author": {
+          "gitId": "chshen1998"
+        },
+        "content": "        AppointmentDeleteCommand appointmentDeleteCommand \u003d new AppointmentDeleteCommand(outOfBoundIndex);"
+      },
+      {
+        "lineNumber": 62,
+        "author": {
+          "gitId": "chshen1998"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 63,
+        "author": {
+          "gitId": "chshen1998"
+        },
+        "content": "        AppointmentCommandTestUtil.assertCommandFailure(appointmentDeleteCommand, model,"
+      },
+      {
+        "lineNumber": 64,
+        "author": {
+          "gitId": "chshen1998"
+        },
+        "content": "                Messages.MESSAGE_INVALID_APPOINTMENT_DISPLAYED_INDEX);"
+      },
+      {
+        "lineNumber": 65,
+        "author": {
+          "gitId": "chshen1998"
+        },
+        "content": "    }"
+      },
+      {
+        "lineNumber": 66,
+        "author": {
+          "gitId": "chshen1998"
+        },
+        "content": "    */"
+      },
+      {
+        "lineNumber": 67,
+        "author": {
+          "gitId": "chshen1998"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 68,
+        "author": {
+          "gitId": "chshen1998"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 69,
+        "author": {
+          "gitId": "chshen1998"
+        },
+        "content": "    @Test"
+      },
+      {
+        "lineNumber": 70,
+        "author": {
+          "gitId": "chshen1998"
+        },
+        "content": "    public void equals() {"
+      },
+      {
+        "lineNumber": 71,
+        "author": {
+          "gitId": "chshen1998"
+        },
+        "content": "        AppointmentDeleteCommand deleteFirstCommand \u003d new AppointmentDeleteCommand(INDEX_FIRST_APPOINTMENT);"
+      },
+      {
+        "lineNumber": 72,
+        "author": {
+          "gitId": "chshen1998"
+        },
+        "content": "        AppointmentDeleteCommand deleteSecondCommand \u003d new AppointmentDeleteCommand(INDEX_SECOND_APPOINTMENT);"
+      },
+      {
+        "lineNumber": 73,
+        "author": {
+          "gitId": "chshen1998"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 74,
+        "author": {
+          "gitId": "chshen1998"
+        },
+        "content": "        // same object -\u003e returns true"
+      },
+      {
+        "lineNumber": 75,
+        "author": {
+          "gitId": "chshen1998"
+        },
+        "content": "        assertTrue(deleteFirstCommand.equals(deleteFirstCommand));"
+      },
+      {
+        "lineNumber": 76,
+        "author": {
+          "gitId": "chshen1998"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 77,
+        "author": {
+          "gitId": "chshen1998"
+        },
+        "content": "        // same values -\u003e returns true"
+      },
+      {
+        "lineNumber": 78,
+        "author": {
+          "gitId": "chshen1998"
+        },
+        "content": "        AppointmentDeleteCommand deleteFirstCommandCopy \u003d new AppointmentDeleteCommand(INDEX_FIRST_APPOINTMENT);"
+      },
+      {
+        "lineNumber": 79,
+        "author": {
+          "gitId": "chshen1998"
+        },
+        "content": "        assertTrue(deleteFirstCommand.equals(deleteFirstCommandCopy));"
+      },
+      {
+        "lineNumber": 80,
+        "author": {
+          "gitId": "chshen1998"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 81,
+        "author": {
+          "gitId": "chshen1998"
+        },
+        "content": "        // different types -\u003e returns false"
+      },
+      {
+        "lineNumber": 82,
+        "author": {
+          "gitId": "chshen1998"
+        },
+        "content": "        assertFalse(deleteFirstCommand.equals(1));"
+      },
+      {
+        "lineNumber": 83,
+        "author": {
+          "gitId": "chshen1998"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 84,
+        "author": {
+          "gitId": "chshen1998"
+        },
+        "content": "        // null -\u003e returns false"
+      },
+      {
+        "lineNumber": 85,
+        "author": {
+          "gitId": "chshen1998"
+        },
+        "content": "        assertFalse(deleteFirstCommand.equals(null));"
+      },
+      {
+        "lineNumber": 86,
+        "author": {
+          "gitId": "chshen1998"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 87,
+        "author": {
+          "gitId": "chshen1998"
+        },
+        "content": "        // different patient -\u003e returns false"
+      },
+      {
+        "lineNumber": 88,
+        "author": {
+          "gitId": "chshen1998"
+        },
+        "content": "        assertFalse(deleteFirstCommand.equals(deleteSecondCommand));"
+      },
+      {
+        "lineNumber": 89,
+        "author": {
+          "gitId": "chshen1998"
+        },
+        "content": "    }"
+      },
+      {
+        "lineNumber": 90,
+        "author": {
+          "gitId": "chshen1998"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 91,
+        "author": {
+          "gitId": "chshen1998"
+        },
+        "content": "    /**"
+      },
+      {
+        "lineNumber": 92,
+        "author": {
+          "gitId": "chshen1998"
+        },
+        "content": "     * Updates {@code model}\u0027s filtered list to show no one."
+      },
+      {
+        "lineNumber": 93,
+        "author": {
+          "gitId": "chshen1998"
+        },
+        "content": "     */"
+      },
+      {
+        "lineNumber": 94,
+        "author": {
+          "gitId": "chshen1998"
+        },
+        "content": "    private void showNoAppointment(Model model) {"
+      },
+      {
+        "lineNumber": 95,
+        "author": {
+          "gitId": "chshen1998"
+        },
+        "content": "        model.updateFilteredAppointmentList(p -\u003e false);"
+      },
+      {
+        "lineNumber": 96,
+        "author": {
+          "gitId": "chshen1998"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 97,
+        "author": {
+          "gitId": "chshen1998"
+        },
+        "content": "        assertTrue(model.getFilteredAppointmentList().isEmpty());"
+      },
+      {
+        "lineNumber": 98,
+        "author": {
+          "gitId": "chshen1998"
+        },
+        "content": "    }"
+      },
+      {
+        "lineNumber": 99,
+        "author": {
+          "gitId": "chshen1998"
+        },
+        "content": "}"
+      }
+    ],
+    "authorContributionMap": {
+      "chshen1998": 99
     }
   },
   {
@@ -51468,7 +51945,7 @@
         "author": {
           "gitId": "chshen1998"
         },
-        "content": "import static seedu.address.logic.commands.patientcommands.PatientCommandTestUtil.assertCommandSuccess;"
+        "content": "import static seedu.address.logic.commands.appointmentcommands.AppointmentCommandTestUtil.assertCommandSuccess;"
       },
       {
         "lineNumber": 4,
@@ -51508,222 +51985,215 @@
       {
         "lineNumber": 9,
         "author": {
-          "gitId": "jimvae"
+          "gitId": "-"
         },
-        "content": "import seedu.address.logic.commands.patientcommands.PatientListCommand;"
+        "content": "import seedu.address.model.Model;"
       },
       {
         "lineNumber": 10,
         "author": {
           "gitId": "-"
         },
-        "content": "import seedu.address.model.Model;"
+        "content": "import seedu.address.model.ModelManager;"
       },
       {
         "lineNumber": 11,
         "author": {
           "gitId": "-"
         },
-        "content": "import seedu.address.model.ModelManager;"
+        "content": "import seedu.address.model.UserPrefs;"
       },
       {
         "lineNumber": 12,
         "author": {
           "gitId": "-"
         },
-        "content": "import seedu.address.model.UserPrefs;"
+        "content": ""
       },
       {
         "lineNumber": 13,
         "author": {
           "gitId": "-"
         },
-        "content": ""
-      },
-      {
-        "lineNumber": 14,
-        "author": {
-          "gitId": "-"
-        },
         "content": "/**"
       },
       {
-        "lineNumber": 15,
+        "lineNumber": 14,
         "author": {
           "gitId": "chshen1998"
         },
         "content": " * Contains integration tests (interaction with the Model) and unit tests for AppointmentListCommand."
       },
       {
-        "lineNumber": 16,
+        "lineNumber": 15,
         "author": {
           "gitId": "chshen1998"
         },
         "content": " * NOT DONE"
       },
       {
-        "lineNumber": 17,
+        "lineNumber": 16,
         "author": {
           "gitId": "-"
         },
         "content": " */"
       },
       {
-        "lineNumber": 18,
+        "lineNumber": 17,
         "author": {
           "gitId": "chshen1998"
         },
         "content": "public class AppointmentListCommandTest {"
       },
       {
-        "lineNumber": 19,
+        "lineNumber": 18,
         "author": {
           "gitId": "-"
         },
         "content": ""
       },
       {
-        "lineNumber": 20,
+        "lineNumber": 19,
         "author": {
           "gitId": "-"
         },
         "content": "    private Model model;"
       },
       {
-        "lineNumber": 21,
+        "lineNumber": 20,
         "author": {
           "gitId": "-"
         },
         "content": "    private Model expectedModel;"
       },
       {
-        "lineNumber": 22,
+        "lineNumber": 21,
         "author": {
           "gitId": "-"
         },
         "content": ""
       },
       {
-        "lineNumber": 23,
+        "lineNumber": 22,
         "author": {
           "gitId": "-"
         },
         "content": "    @BeforeEach"
       },
       {
-        "lineNumber": 24,
+        "lineNumber": 23,
         "author": {
           "gitId": "-"
         },
         "content": "    public void setUp() {"
       },
       {
-        "lineNumber": 25,
+        "lineNumber": 24,
         "author": {
           "gitId": "-"
         },
         "content": "        model \u003d new ModelManager(getTypicalAddressBook(), new UserPrefs());"
       },
       {
-        "lineNumber": 26,
+        "lineNumber": 25,
         "author": {
           "gitId": "-"
         },
         "content": "        expectedModel \u003d new ModelManager(model.getAddressBook(), new UserPrefs());"
       },
       {
-        "lineNumber": 27,
+        "lineNumber": 26,
         "author": {
           "gitId": "-"
         },
         "content": "    }"
+      },
+      {
+        "lineNumber": 27,
+        "author": {
+          "gitId": "-"
+        },
+        "content": ""
       },
       {
         "lineNumber": 28,
         "author": {
           "gitId": "-"
         },
-        "content": ""
+        "content": "    @Test"
       },
       {
         "lineNumber": 29,
         "author": {
           "gitId": "-"
         },
-        "content": "    @Test"
-      },
-      {
-        "lineNumber": 30,
-        "author": {
-          "gitId": "-"
-        },
         "content": "    public void execute_listIsNotFiltered_showsSameList() {"
       },
       {
-        "lineNumber": 31,
+        "lineNumber": 30,
         "author": {
           "gitId": "chshen1998"
         },
         "content": "        assertCommandSuccess(new AppointmentListCommand(), model,"
       },
       {
-        "lineNumber": 32,
+        "lineNumber": 31,
         "author": {
           "gitId": "chshen1998"
         },
         "content": "                AppointmentListCommand.MESSAGE_LIST_APPOINTMENT_SUCCESS, expectedModel);"
       },
       {
-        "lineNumber": 33,
+        "lineNumber": 32,
         "author": {
           "gitId": "-"
         },
         "content": "    }"
       },
       {
-        "lineNumber": 34,
+        "lineNumber": 33,
         "author": {
           "gitId": "-"
         },
         "content": ""
       },
       {
-        "lineNumber": 35,
+        "lineNumber": 34,
         "author": {
           "gitId": "-"
         },
         "content": "    @Test"
       },
       {
-        "lineNumber": 36,
+        "lineNumber": 35,
         "author": {
           "gitId": "-"
         },
         "content": "    public void execute_listIsFiltered_showsEverything() {"
       },
       {
+        "lineNumber": 36,
+        "author": {
+          "gitId": "chshen1998"
+        },
+        "content": "        assertCommandSuccess(new AppointmentListCommand(), model,"
+      },
+      {
         "lineNumber": 37,
         "author": {
           "gitId": "chshen1998"
         },
-        "content": "        // showAppointmentAtIndex(model, INDEX_FIRST_PATIENT);"
+        "content": "                AppointmentListCommand.MESSAGE_LIST_APPOINTMENT_SUCCESS, expectedModel);"
       },
       {
         "lineNumber": 38,
-        "author": {
-          "gitId": "jimvae"
-        },
-        "content": "        assertCommandSuccess(new PatientListCommand(), model, PatientListCommand.MESSAGE_SUCCESS, expectedModel);"
-      },
-      {
-        "lineNumber": 39,
         "author": {
           "gitId": "-"
         },
         "content": "    }"
       },
       {
-        "lineNumber": 40,
+        "lineNumber": 39,
         "author": {
           "gitId": "-"
         },
@@ -51731,9 +52201,1711 @@
       }
     ],
     "authorContributionMap": {
-      "jimvae": 2,
-      "chshen1998": 11,
+      "chshen1998": 12,
       "-": 27
+    }
+  },
+  {
+    "path": "src/test/java/seedu/address/logic/commands/appointmentcommands/AppointmentScheduleCommandTest.java",
+    "fileType": "test-code",
+    "lines": [
+      {
+        "lineNumber": 1,
+        "author": {
+          "gitId": "chshen1998"
+        },
+        "content": "package seedu.address.logic.commands.appointmentcommands;"
+      },
+      {
+        "lineNumber": 2,
+        "author": {
+          "gitId": "chshen1998"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 3,
+        "author": {
+          "gitId": "chshen1998"
+        },
+        "content": "import static java.util.Objects.requireNonNull;"
+      },
+      {
+        "lineNumber": 4,
+        "author": {
+          "gitId": "chshen1998"
+        },
+        "content": "import static org.junit.jupiter.api.Assertions.assertEquals;"
+      },
+      {
+        "lineNumber": 5,
+        "author": {
+          "gitId": "chshen1998"
+        },
+        "content": "import static org.junit.jupiter.api.Assertions.assertFalse;"
+      },
+      {
+        "lineNumber": 6,
+        "author": {
+          "gitId": "chshen1998"
+        },
+        "content": "import static org.junit.jupiter.api.Assertions.assertTrue;"
+      },
+      {
+        "lineNumber": 7,
+        "author": {
+          "gitId": "chshen1998"
+        },
+        "content": "import static seedu.address.logic.commands.appointmentcommands.AppointmentCommandTestUtil.VALID_END_ONE;"
+      },
+      {
+        "lineNumber": 8,
+        "author": {
+          "gitId": "chshen1998"
+        },
+        "content": "import static seedu.address.logic.commands.appointmentcommands.AppointmentCommandTestUtil.VALID_END_TWO;"
+      },
+      {
+        "lineNumber": 9,
+        "author": {
+          "gitId": "chshen1998"
+        },
+        "content": "import static seedu.address.logic.commands.appointmentcommands.AppointmentCommandTestUtil.VALID_START_ONE;"
+      },
+      {
+        "lineNumber": 10,
+        "author": {
+          "gitId": "chshen1998"
+        },
+        "content": "import static seedu.address.logic.commands.appointmentcommands.AppointmentCommandTestUtil.VALID_START_TWO;"
+      },
+      {
+        "lineNumber": 11,
+        "author": {
+          "gitId": "chshen1998"
+        },
+        "content": "import static seedu.address.testutil.Assert.assertThrows;"
+      },
+      {
+        "lineNumber": 12,
+        "author": {
+          "gitId": "chshen1998"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 13,
+        "author": {
+          "gitId": "chshen1998"
+        },
+        "content": "import java.nio.file.Path;"
+      },
+      {
+        "lineNumber": 14,
+        "author": {
+          "gitId": "chshen1998"
+        },
+        "content": "import java.util.ArrayList;"
+      },
+      {
+        "lineNumber": 15,
+        "author": {
+          "gitId": "chshen1998"
+        },
+        "content": "import java.util.Arrays;"
+      },
+      {
+        "lineNumber": 16,
+        "author": {
+          "gitId": "chshen1998"
+        },
+        "content": "import java.util.function.Predicate;"
+      },
+      {
+        "lineNumber": 17,
+        "author": {
+          "gitId": "chshen1998"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 18,
+        "author": {
+          "gitId": "chshen1998"
+        },
+        "content": "import org.junit.jupiter.api.Test;"
+      },
+      {
+        "lineNumber": 19,
+        "author": {
+          "gitId": "chshen1998"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 20,
+        "author": {
+          "gitId": "chshen1998"
+        },
+        "content": "import javafx.collections.ObservableList;"
+      },
+      {
+        "lineNumber": 21,
+        "author": {
+          "gitId": "chshen1998"
+        },
+        "content": "import seedu.address.commons.UserHistoryManager;"
+      },
+      {
+        "lineNumber": 22,
+        "author": {
+          "gitId": "chshen1998"
+        },
+        "content": "import seedu.address.commons.core.GuiSettings;"
+      },
+      {
+        "lineNumber": 23,
+        "author": {
+          "gitId": "chshen1998"
+        },
+        "content": "import seedu.address.logic.commands.CommandResult;"
+      },
+      {
+        "lineNumber": 24,
+        "author": {
+          "gitId": "chshen1998"
+        },
+        "content": "import seedu.address.logic.commands.exceptions.CommandException;"
+      },
+      {
+        "lineNumber": 25,
+        "author": {
+          "gitId": "chshen1998"
+        },
+        "content": "import seedu.address.model.AddressBook;"
+      },
+      {
+        "lineNumber": 26,
+        "author": {
+          "gitId": "chshen1998"
+        },
+        "content": "import seedu.address.model.Model;"
+      },
+      {
+        "lineNumber": 27,
+        "author": {
+          "gitId": "chshen1998"
+        },
+        "content": "import seedu.address.model.ReadOnlyAddressBook;"
+      },
+      {
+        "lineNumber": 28,
+        "author": {
+          "gitId": "chshen1998"
+        },
+        "content": "import seedu.address.model.ReadOnlyUserPrefs;"
+      },
+      {
+        "lineNumber": 29,
+        "author": {
+          "gitId": "chshen1998"
+        },
+        "content": "import seedu.address.model.appointment.Appointment;"
+      },
+      {
+        "lineNumber": 30,
+        "author": {
+          "gitId": "chshen1998"
+        },
+        "content": "import seedu.address.model.patient.Patient;"
+      },
+      {
+        "lineNumber": 31,
+        "author": {
+          "gitId": "chshen1998"
+        },
+        "content": "import seedu.address.testutil.AppointmentBuilder;"
+      },
+      {
+        "lineNumber": 32,
+        "author": {
+          "gitId": "chshen1998"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 33,
+        "author": {
+          "gitId": "chshen1998"
+        },
+        "content": "public class AppointmentScheduleCommandTest {"
+      },
+      {
+        "lineNumber": 34,
+        "author": {
+          "gitId": "chshen1998"
+        },
+        "content": "    @Test"
+      },
+      {
+        "lineNumber": 35,
+        "author": {
+          "gitId": "chshen1998"
+        },
+        "content": "    public void constructor_nullAppointment_throwsNullPointerException() {"
+      },
+      {
+        "lineNumber": 36,
+        "author": {
+          "gitId": "chshen1998"
+        },
+        "content": "        assertThrows(NullPointerException.class, () -\u003e new AppointmentScheduleCommand(null));"
+      },
+      {
+        "lineNumber": 37,
+        "author": {
+          "gitId": "chshen1998"
+        },
+        "content": "    }"
+      },
+      {
+        "lineNumber": 38,
+        "author": {
+          "gitId": "chshen1998"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 39,
+        "author": {
+          "gitId": "chshen1998"
+        },
+        "content": "    @Test"
+      },
+      {
+        "lineNumber": 40,
+        "author": {
+          "gitId": "chshen1998"
+        },
+        "content": "    public void execute_appointmentAcceptedByModel_addSuccessful() throws Exception {"
+      },
+      {
+        "lineNumber": 41,
+        "author": {
+          "gitId": "chshen1998"
+        },
+        "content": "        ModelStubAcceptingAppointmentAdded modelStub \u003d new ModelStubAcceptingAppointmentAdded();"
+      },
+      {
+        "lineNumber": 42,
+        "author": {
+          "gitId": "chshen1998"
+        },
+        "content": "        Appointment validAppointment \u003d new AppointmentBuilder().build();"
+      },
+      {
+        "lineNumber": 43,
+        "author": {
+          "gitId": "chshen1998"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 44,
+        "author": {
+          "gitId": "chshen1998"
+        },
+        "content": "        CommandResult commandResult \u003d new AppointmentScheduleCommand(validAppointment).execute(modelStub);"
+      },
+      {
+        "lineNumber": 45,
+        "author": {
+          "gitId": "chshen1998"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 46,
+        "author": {
+          "gitId": "chshen1998"
+        },
+        "content": "        assertEquals(String.format(AppointmentScheduleCommand.MESSAGE_SUCCESS, validAppointment),"
+      },
+      {
+        "lineNumber": 47,
+        "author": {
+          "gitId": "chshen1998"
+        },
+        "content": "                commandResult.getFeedbackToUser());"
+      },
+      {
+        "lineNumber": 48,
+        "author": {
+          "gitId": "chshen1998"
+        },
+        "content": "        assertEquals(Arrays.asList(validAppointment), modelStub.appointmentAdded);"
+      },
+      {
+        "lineNumber": 49,
+        "author": {
+          "gitId": "chshen1998"
+        },
+        "content": "    }"
+      },
+      {
+        "lineNumber": 50,
+        "author": {
+          "gitId": "chshen1998"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 51,
+        "author": {
+          "gitId": "chshen1998"
+        },
+        "content": "    @Test"
+      },
+      {
+        "lineNumber": 52,
+        "author": {
+          "gitId": "chshen1998"
+        },
+        "content": "    public void execute_duplicateAppointment_throwsCommandException() {"
+      },
+      {
+        "lineNumber": 53,
+        "author": {
+          "gitId": "chshen1998"
+        },
+        "content": "        Appointment validAppointment \u003d new AppointmentBuilder().build();"
+      },
+      {
+        "lineNumber": 54,
+        "author": {
+          "gitId": "chshen1998"
+        },
+        "content": "        AppointmentScheduleCommand appointmentScheduleCommand \u003d new AppointmentScheduleCommand(validAppointment);"
+      },
+      {
+        "lineNumber": 55,
+        "author": {
+          "gitId": "chshen1998"
+        },
+        "content": "        AppointmentScheduleCommandTest.ModelStub modelStub \u003d"
+      },
+      {
+        "lineNumber": 56,
+        "author": {
+          "gitId": "chshen1998"
+        },
+        "content": "                new AppointmentScheduleCommandTest.ModelStubWithAppointment(validAppointment);"
+      },
+      {
+        "lineNumber": 57,
+        "author": {
+          "gitId": "chshen1998"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 58,
+        "author": {
+          "gitId": "chshen1998"
+        },
+        "content": "        assertThrows(CommandException.class, AppointmentScheduleCommand.MESSAGE_DUPLICATE_APPOINTMENT, () -\u003e"
+      },
+      {
+        "lineNumber": 59,
+        "author": {
+          "gitId": "chshen1998"
+        },
+        "content": "                appointmentScheduleCommand.execute(modelStub));"
+      },
+      {
+        "lineNumber": 60,
+        "author": {
+          "gitId": "chshen1998"
+        },
+        "content": "    }"
+      },
+      {
+        "lineNumber": 61,
+        "author": {
+          "gitId": "chshen1998"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 62,
+        "author": {
+          "gitId": "chshen1998"
+        },
+        "content": "    @Test"
+      },
+      {
+        "lineNumber": 63,
+        "author": {
+          "gitId": "chshen1998"
+        },
+        "content": "    public void equals() {"
+      },
+      {
+        "lineNumber": 64,
+        "author": {
+          "gitId": "chshen1998"
+        },
+        "content": "        Appointment apt1 \u003d new AppointmentBuilder().withAppointmentTime(VALID_START_ONE, VALID_END_ONE).build();"
+      },
+      {
+        "lineNumber": 65,
+        "author": {
+          "gitId": "chshen1998"
+        },
+        "content": "        Appointment apt2 \u003d new AppointmentBuilder().withAppointmentTime(VALID_START_TWO, VALID_END_TWO).build();"
+      },
+      {
+        "lineNumber": 66,
+        "author": {
+          "gitId": "chshen1998"
+        },
+        "content": "        AppointmentScheduleCommand addCommand1 \u003d new AppointmentScheduleCommand(apt1);"
+      },
+      {
+        "lineNumber": 67,
+        "author": {
+          "gitId": "chshen1998"
+        },
+        "content": "        AppointmentScheduleCommand addCommand2 \u003d new AppointmentScheduleCommand(apt2);"
+      },
+      {
+        "lineNumber": 68,
+        "author": {
+          "gitId": "chshen1998"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 69,
+        "author": {
+          "gitId": "chshen1998"
+        },
+        "content": "        // same object -\u003e returns true"
+      },
+      {
+        "lineNumber": 70,
+        "author": {
+          "gitId": "chshen1998"
+        },
+        "content": "        assertTrue(addCommand1.equals(addCommand1));"
+      },
+      {
+        "lineNumber": 71,
+        "author": {
+          "gitId": "chshen1998"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 72,
+        "author": {
+          "gitId": "chshen1998"
+        },
+        "content": "        // same values -\u003e returns true"
+      },
+      {
+        "lineNumber": 73,
+        "author": {
+          "gitId": "chshen1998"
+        },
+        "content": "        AppointmentScheduleCommand addCommand1Copy \u003d new AppointmentScheduleCommand(apt1);"
+      },
+      {
+        "lineNumber": 74,
+        "author": {
+          "gitId": "chshen1998"
+        },
+        "content": "        assertTrue(addCommand1.equals(addCommand1Copy));"
+      },
+      {
+        "lineNumber": 75,
+        "author": {
+          "gitId": "chshen1998"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 76,
+        "author": {
+          "gitId": "chshen1998"
+        },
+        "content": "        // different types -\u003e returns false"
+      },
+      {
+        "lineNumber": 77,
+        "author": {
+          "gitId": "chshen1998"
+        },
+        "content": "        assertFalse(addCommand1.equals(1));"
+      },
+      {
+        "lineNumber": 78,
+        "author": {
+          "gitId": "chshen1998"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 79,
+        "author": {
+          "gitId": "chshen1998"
+        },
+        "content": "        // null -\u003e returns false"
+      },
+      {
+        "lineNumber": 80,
+        "author": {
+          "gitId": "chshen1998"
+        },
+        "content": "        assertFalse(addCommand1.equals(null));"
+      },
+      {
+        "lineNumber": 81,
+        "author": {
+          "gitId": "chshen1998"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 82,
+        "author": {
+          "gitId": "chshen1998"
+        },
+        "content": "        // different patient -\u003e returns false"
+      },
+      {
+        "lineNumber": 83,
+        "author": {
+          "gitId": "chshen1998"
+        },
+        "content": "        assertFalse(addCommand1.equals(addCommand2));"
+      },
+      {
+        "lineNumber": 84,
+        "author": {
+          "gitId": "chshen1998"
+        },
+        "content": "    }"
+      },
+      {
+        "lineNumber": 85,
+        "author": {
+          "gitId": "chshen1998"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 86,
+        "author": {
+          "gitId": "chshen1998"
+        },
+        "content": "    /**"
+      },
+      {
+        "lineNumber": 87,
+        "author": {
+          "gitId": "chshen1998"
+        },
+        "content": "     * A default model stub that have all of the methods failing."
+      },
+      {
+        "lineNumber": 88,
+        "author": {
+          "gitId": "chshen1998"
+        },
+        "content": "     */"
+      },
+      {
+        "lineNumber": 89,
+        "author": {
+          "gitId": "chshen1998"
+        },
+        "content": "    private class ModelStub implements Model {"
+      },
+      {
+        "lineNumber": 90,
+        "author": {
+          "gitId": "chshen1998"
+        },
+        "content": "        @Override"
+      },
+      {
+        "lineNumber": 91,
+        "author": {
+          "gitId": "chshen1998"
+        },
+        "content": "        public void setUserPrefs(ReadOnlyUserPrefs userPrefs) {"
+      },
+      {
+        "lineNumber": 92,
+        "author": {
+          "gitId": "chshen1998"
+        },
+        "content": "            throw new AssertionError(\"This method should not be called.\");"
+      },
+      {
+        "lineNumber": 93,
+        "author": {
+          "gitId": "chshen1998"
+        },
+        "content": "        }"
+      },
+      {
+        "lineNumber": 94,
+        "author": {
+          "gitId": "chshen1998"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 95,
+        "author": {
+          "gitId": "chshen1998"
+        },
+        "content": "        @Override"
+      },
+      {
+        "lineNumber": 96,
+        "author": {
+          "gitId": "chshen1998"
+        },
+        "content": "        public ReadOnlyUserPrefs getUserPrefs() {"
+      },
+      {
+        "lineNumber": 97,
+        "author": {
+          "gitId": "chshen1998"
+        },
+        "content": "            throw new AssertionError(\"This method should not be called.\");"
+      },
+      {
+        "lineNumber": 98,
+        "author": {
+          "gitId": "chshen1998"
+        },
+        "content": "        }"
+      },
+      {
+        "lineNumber": 99,
+        "author": {
+          "gitId": "chshen1998"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 100,
+        "author": {
+          "gitId": "chshen1998"
+        },
+        "content": "        @Override"
+      },
+      {
+        "lineNumber": 101,
+        "author": {
+          "gitId": "chshen1998"
+        },
+        "content": "        public GuiSettings getGuiSettings() {"
+      },
+      {
+        "lineNumber": 102,
+        "author": {
+          "gitId": "chshen1998"
+        },
+        "content": "            throw new AssertionError(\"This method should not be called.\");"
+      },
+      {
+        "lineNumber": 103,
+        "author": {
+          "gitId": "chshen1998"
+        },
+        "content": "        }"
+      },
+      {
+        "lineNumber": 104,
+        "author": {
+          "gitId": "chshen1998"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 105,
+        "author": {
+          "gitId": "chshen1998"
+        },
+        "content": "        @Override"
+      },
+      {
+        "lineNumber": 106,
+        "author": {
+          "gitId": "chshen1998"
+        },
+        "content": "        public void setGuiSettings(GuiSettings guiSettings) {"
+      },
+      {
+        "lineNumber": 107,
+        "author": {
+          "gitId": "chshen1998"
+        },
+        "content": "            throw new AssertionError(\"This method should not be called.\");"
+      },
+      {
+        "lineNumber": 108,
+        "author": {
+          "gitId": "chshen1998"
+        },
+        "content": "        }"
+      },
+      {
+        "lineNumber": 109,
+        "author": {
+          "gitId": "chshen1998"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 110,
+        "author": {
+          "gitId": "chshen1998"
+        },
+        "content": "        @Override"
+      },
+      {
+        "lineNumber": 111,
+        "author": {
+          "gitId": "chshen1998"
+        },
+        "content": "        public Path getAddressBookFilePath() {"
+      },
+      {
+        "lineNumber": 112,
+        "author": {
+          "gitId": "chshen1998"
+        },
+        "content": "            throw new AssertionError(\"This method should not be called.\");"
+      },
+      {
+        "lineNumber": 113,
+        "author": {
+          "gitId": "chshen1998"
+        },
+        "content": "        }"
+      },
+      {
+        "lineNumber": 114,
+        "author": {
+          "gitId": "chshen1998"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 115,
+        "author": {
+          "gitId": "chshen1998"
+        },
+        "content": "        @Override"
+      },
+      {
+        "lineNumber": 116,
+        "author": {
+          "gitId": "chshen1998"
+        },
+        "content": "        public void setAddressBookFilePath(Path addressBookFilePath) {"
+      },
+      {
+        "lineNumber": 117,
+        "author": {
+          "gitId": "chshen1998"
+        },
+        "content": "            throw new AssertionError(\"This method should not be called.\");"
+      },
+      {
+        "lineNumber": 118,
+        "author": {
+          "gitId": "chshen1998"
+        },
+        "content": "        }"
+      },
+      {
+        "lineNumber": 119,
+        "author": {
+          "gitId": "chshen1998"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 120,
+        "author": {
+          "gitId": "chshen1998"
+        },
+        "content": "        @Override"
+      },
+      {
+        "lineNumber": 121,
+        "author": {
+          "gitId": "chshen1998"
+        },
+        "content": "        public void addPatient(Patient patient) {"
+      },
+      {
+        "lineNumber": 122,
+        "author": {
+          "gitId": "chshen1998"
+        },
+        "content": "            throw new AssertionError(\"This method should not be called.\");"
+      },
+      {
+        "lineNumber": 123,
+        "author": {
+          "gitId": "chshen1998"
+        },
+        "content": "        }"
+      },
+      {
+        "lineNumber": 124,
+        "author": {
+          "gitId": "chshen1998"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 125,
+        "author": {
+          "gitId": "chshen1998"
+        },
+        "content": "        @Override"
+      },
+      {
+        "lineNumber": 126,
+        "author": {
+          "gitId": "chshen1998"
+        },
+        "content": "        public void setAddressBook(ReadOnlyAddressBook newData) {"
+      },
+      {
+        "lineNumber": 127,
+        "author": {
+          "gitId": "chshen1998"
+        },
+        "content": "            throw new AssertionError(\"This method should not be called.\");"
+      },
+      {
+        "lineNumber": 128,
+        "author": {
+          "gitId": "chshen1998"
+        },
+        "content": "        }"
+      },
+      {
+        "lineNumber": 129,
+        "author": {
+          "gitId": "chshen1998"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 130,
+        "author": {
+          "gitId": "chshen1998"
+        },
+        "content": "        @Override"
+      },
+      {
+        "lineNumber": 131,
+        "author": {
+          "gitId": "chshen1998"
+        },
+        "content": "        public ReadOnlyAddressBook getAddressBook() {"
+      },
+      {
+        "lineNumber": 132,
+        "author": {
+          "gitId": "chshen1998"
+        },
+        "content": "            throw new AssertionError(\"This method should not be called.\");"
+      },
+      {
+        "lineNumber": 133,
+        "author": {
+          "gitId": "chshen1998"
+        },
+        "content": "        }"
+      },
+      {
+        "lineNumber": 134,
+        "author": {
+          "gitId": "chshen1998"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 135,
+        "author": {
+          "gitId": "chshen1998"
+        },
+        "content": "        @Override"
+      },
+      {
+        "lineNumber": 136,
+        "author": {
+          "gitId": "chshen1998"
+        },
+        "content": "        public boolean hasPatient(Patient patient) {"
+      },
+      {
+        "lineNumber": 137,
+        "author": {
+          "gitId": "chshen1998"
+        },
+        "content": "            throw new AssertionError(\"This method should not be called.\");"
+      },
+      {
+        "lineNumber": 138,
+        "author": {
+          "gitId": "chshen1998"
+        },
+        "content": "        }"
+      },
+      {
+        "lineNumber": 139,
+        "author": {
+          "gitId": "chshen1998"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 140,
+        "author": {
+          "gitId": "chshen1998"
+        },
+        "content": "        @Override"
+      },
+      {
+        "lineNumber": 141,
+        "author": {
+          "gitId": "chshen1998"
+        },
+        "content": "        public void deletePatient(Patient target) {"
+      },
+      {
+        "lineNumber": 142,
+        "author": {
+          "gitId": "chshen1998"
+        },
+        "content": "            throw new AssertionError(\"This method should not be called.\");"
+      },
+      {
+        "lineNumber": 143,
+        "author": {
+          "gitId": "chshen1998"
+        },
+        "content": "        }"
+      },
+      {
+        "lineNumber": 144,
+        "author": {
+          "gitId": "chshen1998"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 145,
+        "author": {
+          "gitId": "chshen1998"
+        },
+        "content": "        @Override"
+      },
+      {
+        "lineNumber": 146,
+        "author": {
+          "gitId": "chshen1998"
+        },
+        "content": "        public void setPatient(Patient target, Patient editedPatient) {"
+      },
+      {
+        "lineNumber": 147,
+        "author": {
+          "gitId": "chshen1998"
+        },
+        "content": "            throw new AssertionError(\"This method should not be called.\");"
+      },
+      {
+        "lineNumber": 148,
+        "author": {
+          "gitId": "chshen1998"
+        },
+        "content": "        }"
+      },
+      {
+        "lineNumber": 149,
+        "author": {
+          "gitId": "chshen1998"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 150,
+        "author": {
+          "gitId": "chshen1998"
+        },
+        "content": "        @Override"
+      },
+      {
+        "lineNumber": 151,
+        "author": {
+          "gitId": "chshen1998"
+        },
+        "content": "        public ObservableList\u003cPatient\u003e getFilteredPatientList() {"
+      },
+      {
+        "lineNumber": 152,
+        "author": {
+          "gitId": "chshen1998"
+        },
+        "content": "            throw new AssertionError(\"This method should not be called.\");"
+      },
+      {
+        "lineNumber": 153,
+        "author": {
+          "gitId": "chshen1998"
+        },
+        "content": "        }"
+      },
+      {
+        "lineNumber": 154,
+        "author": {
+          "gitId": "chshen1998"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 155,
+        "author": {
+          "gitId": "chshen1998"
+        },
+        "content": "        @Override"
+      },
+      {
+        "lineNumber": 156,
+        "author": {
+          "gitId": "chshen1998"
+        },
+        "content": "        public void updateFilteredPatientList(Predicate\u003cPatient\u003e predicate) {"
+      },
+      {
+        "lineNumber": 157,
+        "author": {
+          "gitId": "chshen1998"
+        },
+        "content": "            throw new AssertionError(\"This method should not be called.\");"
+      },
+      {
+        "lineNumber": 158,
+        "author": {
+          "gitId": "chshen1998"
+        },
+        "content": "        }"
+      },
+      {
+        "lineNumber": 159,
+        "author": {
+          "gitId": "chshen1998"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 160,
+        "author": {
+          "gitId": "chshen1998"
+        },
+        "content": "        @Override"
+      },
+      {
+        "lineNumber": 161,
+        "author": {
+          "gitId": "chshen1998"
+        },
+        "content": "        public boolean hasAppointment(Appointment appointment) {"
+      },
+      {
+        "lineNumber": 162,
+        "author": {
+          "gitId": "chshen1998"
+        },
+        "content": "            throw new AssertionError(\"This method should not be called.\");"
+      },
+      {
+        "lineNumber": 163,
+        "author": {
+          "gitId": "chshen1998"
+        },
+        "content": "        }"
+      },
+      {
+        "lineNumber": 164,
+        "author": {
+          "gitId": "chshen1998"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 165,
+        "author": {
+          "gitId": "chshen1998"
+        },
+        "content": "        @Override"
+      },
+      {
+        "lineNumber": 166,
+        "author": {
+          "gitId": "chshen1998"
+        },
+        "content": "        public void deleteAppointment(Appointment target) {"
+      },
+      {
+        "lineNumber": 167,
+        "author": {
+          "gitId": "chshen1998"
+        },
+        "content": "            throw new AssertionError(\"This method should not be called.\");"
+      },
+      {
+        "lineNumber": 168,
+        "author": {
+          "gitId": "chshen1998"
+        },
+        "content": "        }"
+      },
+      {
+        "lineNumber": 169,
+        "author": {
+          "gitId": "chshen1998"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 170,
+        "author": {
+          "gitId": "chshen1998"
+        },
+        "content": "        @Override"
+      },
+      {
+        "lineNumber": 171,
+        "author": {
+          "gitId": "chshen1998"
+        },
+        "content": "        public void addAppointment(Appointment appointment) {"
+      },
+      {
+        "lineNumber": 172,
+        "author": {
+          "gitId": "chshen1998"
+        },
+        "content": "            throw new AssertionError(\"This method should not be called.\");"
+      },
+      {
+        "lineNumber": 173,
+        "author": {
+          "gitId": "chshen1998"
+        },
+        "content": "        }"
+      },
+      {
+        "lineNumber": 174,
+        "author": {
+          "gitId": "chshen1998"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 175,
+        "author": {
+          "gitId": "chshen1998"
+        },
+        "content": "        @Override"
+      },
+      {
+        "lineNumber": 176,
+        "author": {
+          "gitId": "chshen1998"
+        },
+        "content": "        public void setAppointment(Appointment target, Appointment editedAppointment) {"
+      },
+      {
+        "lineNumber": 177,
+        "author": {
+          "gitId": "chshen1998"
+        },
+        "content": "            throw new AssertionError(\"This method should not be called.\");"
+      },
+      {
+        "lineNumber": 178,
+        "author": {
+          "gitId": "chshen1998"
+        },
+        "content": "        }"
+      },
+      {
+        "lineNumber": 179,
+        "author": {
+          "gitId": "chshen1998"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 180,
+        "author": {
+          "gitId": "chshen1998"
+        },
+        "content": "        @Override"
+      },
+      {
+        "lineNumber": 181,
+        "author": {
+          "gitId": "chshen1998"
+        },
+        "content": "        public ObservableList\u003cAppointment\u003e getFilteredAppointmentList() {"
+      },
+      {
+        "lineNumber": 182,
+        "author": {
+          "gitId": "chshen1998"
+        },
+        "content": "            throw new AssertionError(\"This method should not be called.\");"
+      },
+      {
+        "lineNumber": 183,
+        "author": {
+          "gitId": "chshen1998"
+        },
+        "content": "        }"
+      },
+      {
+        "lineNumber": 184,
+        "author": {
+          "gitId": "chshen1998"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 185,
+        "author": {
+          "gitId": "chshen1998"
+        },
+        "content": "        @Override"
+      },
+      {
+        "lineNumber": 186,
+        "author": {
+          "gitId": "chshen1998"
+        },
+        "content": "        public void updateFilteredAppointmentList(Predicate\u003cAppointment\u003e predicate) {"
+      },
+      {
+        "lineNumber": 187,
+        "author": {
+          "gitId": "chshen1998"
+        },
+        "content": "            throw new AssertionError(\"This method should not be called.\");"
+      },
+      {
+        "lineNumber": 188,
+        "author": {
+          "gitId": "chshen1998"
+        },
+        "content": "        }"
+      },
+      {
+        "lineNumber": 189,
+        "author": {
+          "gitId": "chshen1998"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 190,
+        "author": {
+          "gitId": "chshen1998"
+        },
+        "content": "        @Override"
+      },
+      {
+        "lineNumber": 191,
+        "author": {
+          "gitId": "chshen1998"
+        },
+        "content": "        public UserHistoryManager getUserHistoryManager() {"
+      },
+      {
+        "lineNumber": 192,
+        "author": {
+          "gitId": "chshen1998"
+        },
+        "content": "            throw new AssertionError(\"This method should not be called.\");"
+      },
+      {
+        "lineNumber": 193,
+        "author": {
+          "gitId": "chshen1998"
+        },
+        "content": "        }"
+      },
+      {
+        "lineNumber": 194,
+        "author": {
+          "gitId": "chshen1998"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 195,
+        "author": {
+          "gitId": "chshen1998"
+        },
+        "content": "        @Override"
+      },
+      {
+        "lineNumber": 196,
+        "author": {
+          "gitId": "chshen1998"
+        },
+        "content": "        public void undoPatientHistory() {"
+      },
+      {
+        "lineNumber": 197,
+        "author": {
+          "gitId": "chshen1998"
+        },
+        "content": "            throw new AssertionError(\"This method should not be called.\");"
+      },
+      {
+        "lineNumber": 198,
+        "author": {
+          "gitId": "chshen1998"
+        },
+        "content": "        }"
+      },
+      {
+        "lineNumber": 199,
+        "author": {
+          "gitId": "chshen1998"
+        },
+        "content": "    }"
+      },
+      {
+        "lineNumber": 200,
+        "author": {
+          "gitId": "chshen1998"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 201,
+        "author": {
+          "gitId": "chshen1998"
+        },
+        "content": "    /**"
+      },
+      {
+        "lineNumber": 202,
+        "author": {
+          "gitId": "chshen1998"
+        },
+        "content": "     * A Model stub that contains a single appointment."
+      },
+      {
+        "lineNumber": 203,
+        "author": {
+          "gitId": "chshen1998"
+        },
+        "content": "     */"
+      },
+      {
+        "lineNumber": 204,
+        "author": {
+          "gitId": "chshen1998"
+        },
+        "content": "    private class ModelStubWithAppointment extends AppointmentScheduleCommandTest.ModelStub {"
+      },
+      {
+        "lineNumber": 205,
+        "author": {
+          "gitId": "chshen1998"
+        },
+        "content": "        private final Appointment appointment;"
+      },
+      {
+        "lineNumber": 206,
+        "author": {
+          "gitId": "chshen1998"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 207,
+        "author": {
+          "gitId": "chshen1998"
+        },
+        "content": "        ModelStubWithAppointment(Appointment appointment) {"
+      },
+      {
+        "lineNumber": 208,
+        "author": {
+          "gitId": "chshen1998"
+        },
+        "content": "            requireNonNull(appointment);"
+      },
+      {
+        "lineNumber": 209,
+        "author": {
+          "gitId": "chshen1998"
+        },
+        "content": "            this.appointment \u003d appointment;"
+      },
+      {
+        "lineNumber": 210,
+        "author": {
+          "gitId": "chshen1998"
+        },
+        "content": "        }"
+      },
+      {
+        "lineNumber": 211,
+        "author": {
+          "gitId": "chshen1998"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 212,
+        "author": {
+          "gitId": "chshen1998"
+        },
+        "content": "        @Override"
+      },
+      {
+        "lineNumber": 213,
+        "author": {
+          "gitId": "chshen1998"
+        },
+        "content": "        public boolean hasAppointment(Appointment appointment) {"
+      },
+      {
+        "lineNumber": 214,
+        "author": {
+          "gitId": "chshen1998"
+        },
+        "content": "            requireNonNull(appointment);"
+      },
+      {
+        "lineNumber": 215,
+        "author": {
+          "gitId": "chshen1998"
+        },
+        "content": "            return this.appointment.isSameAppointment(appointment);"
+      },
+      {
+        "lineNumber": 216,
+        "author": {
+          "gitId": "chshen1998"
+        },
+        "content": "        }"
+      },
+      {
+        "lineNumber": 217,
+        "author": {
+          "gitId": "chshen1998"
+        },
+        "content": "    }"
+      },
+      {
+        "lineNumber": 218,
+        "author": {
+          "gitId": "chshen1998"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 219,
+        "author": {
+          "gitId": "chshen1998"
+        },
+        "content": "    /**"
+      },
+      {
+        "lineNumber": 220,
+        "author": {
+          "gitId": "chshen1998"
+        },
+        "content": "     * A Model stub that always accept the appointment being added."
+      },
+      {
+        "lineNumber": 221,
+        "author": {
+          "gitId": "chshen1998"
+        },
+        "content": "     */"
+      },
+      {
+        "lineNumber": 222,
+        "author": {
+          "gitId": "chshen1998"
+        },
+        "content": "    private class ModelStubAcceptingAppointmentAdded extends AppointmentScheduleCommandTest.ModelStub {"
+      },
+      {
+        "lineNumber": 223,
+        "author": {
+          "gitId": "chshen1998"
+        },
+        "content": "        final ArrayList\u003cAppointment\u003e appointmentAdded \u003d new ArrayList\u003c\u003e();"
+      },
+      {
+        "lineNumber": 224,
+        "author": {
+          "gitId": "chshen1998"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 225,
+        "author": {
+          "gitId": "chshen1998"
+        },
+        "content": "        @Override"
+      },
+      {
+        "lineNumber": 226,
+        "author": {
+          "gitId": "chshen1998"
+        },
+        "content": "        public boolean hasAppointment(Appointment appointment) {"
+      },
+      {
+        "lineNumber": 227,
+        "author": {
+          "gitId": "chshen1998"
+        },
+        "content": "            requireNonNull(appointment);"
+      },
+      {
+        "lineNumber": 228,
+        "author": {
+          "gitId": "chshen1998"
+        },
+        "content": "            return appointmentAdded.stream().anyMatch(appointment::isSameAppointment);"
+      },
+      {
+        "lineNumber": 229,
+        "author": {
+          "gitId": "chshen1998"
+        },
+        "content": "        }"
+      },
+      {
+        "lineNumber": 230,
+        "author": {
+          "gitId": "chshen1998"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 231,
+        "author": {
+          "gitId": "chshen1998"
+        },
+        "content": "        @Override"
+      },
+      {
+        "lineNumber": 232,
+        "author": {
+          "gitId": "chshen1998"
+        },
+        "content": "        public void addAppointment(Appointment appointment) {"
+      },
+      {
+        "lineNumber": 233,
+        "author": {
+          "gitId": "chshen1998"
+        },
+        "content": "            requireNonNull(appointment);"
+      },
+      {
+        "lineNumber": 234,
+        "author": {
+          "gitId": "chshen1998"
+        },
+        "content": "            appointmentAdded.add(appointment);"
+      },
+      {
+        "lineNumber": 235,
+        "author": {
+          "gitId": "chshen1998"
+        },
+        "content": "        }"
+      },
+      {
+        "lineNumber": 236,
+        "author": {
+          "gitId": "chshen1998"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 237,
+        "author": {
+          "gitId": "chshen1998"
+        },
+        "content": "        @Override"
+      },
+      {
+        "lineNumber": 238,
+        "author": {
+          "gitId": "chshen1998"
+        },
+        "content": "        public ReadOnlyAddressBook getAddressBook() {"
+      },
+      {
+        "lineNumber": 239,
+        "author": {
+          "gitId": "chshen1998"
+        },
+        "content": "            return new AddressBook();"
+      },
+      {
+        "lineNumber": 240,
+        "author": {
+          "gitId": "chshen1998"
+        },
+        "content": "        }"
+      },
+      {
+        "lineNumber": 241,
+        "author": {
+          "gitId": "chshen1998"
+        },
+        "content": "    }"
+      },
+      {
+        "lineNumber": 242,
+        "author": {
+          "gitId": "chshen1998"
+        },
+        "content": "}"
+      }
+    ],
+    "authorContributionMap": {
+      "chshen1998": 242
     }
   },
   {
@@ -65260,6 +67432,964 @@
     }
   },
   {
+    "path": "src/test/java/seedu/address/model/appointment/AppointmentTest.java",
+    "fileType": "test-code",
+    "lines": [
+      {
+        "lineNumber": 1,
+        "author": {
+          "gitId": "chshen1998"
+        },
+        "content": "package seedu.address.model.appointment;"
+      },
+      {
+        "lineNumber": 2,
+        "author": {
+          "gitId": "chshen1998"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 3,
+        "author": {
+          "gitId": "chshen1998"
+        },
+        "content": "import static org.junit.jupiter.api.Assertions.assertFalse;"
+      },
+      {
+        "lineNumber": 4,
+        "author": {
+          "gitId": "chshen1998"
+        },
+        "content": "import static org.junit.jupiter.api.Assertions.assertTrue;"
+      },
+      {
+        "lineNumber": 5,
+        "author": {
+          "gitId": "chshen1998"
+        },
+        "content": "import static seedu.address.logic.commands.appointmentcommands.AppointmentCommandTestUtil.VALID_DESCRIPTION_TWO;"
+      },
+      {
+        "lineNumber": 6,
+        "author": {
+          "gitId": "chshen1998"
+        },
+        "content": "import static seedu.address.logic.commands.appointmentcommands.AppointmentCommandTestUtil.VALID_END_TWO;"
+      },
+      {
+        "lineNumber": 7,
+        "author": {
+          "gitId": "chshen1998"
+        },
+        "content": "import static seedu.address.logic.commands.appointmentcommands.AppointmentCommandTestUtil.VALID_START_TWO;"
+      },
+      {
+        "lineNumber": 8,
+        "author": {
+          "gitId": "chshen1998"
+        },
+        "content": "import static seedu.address.logic.commands.appointmentcommands.AppointmentCommandTestUtil.VALID_TAG_TWO;"
+      },
+      {
+        "lineNumber": 9,
+        "author": {
+          "gitId": "chshen1998"
+        },
+        "content": "import static seedu.address.testutil.Assert.assertThrows;"
+      },
+      {
+        "lineNumber": 10,
+        "author": {
+          "gitId": "chshen1998"
+        },
+        "content": "import static seedu.address.testutil.TypicalAppointments.APT1;"
+      },
+      {
+        "lineNumber": 11,
+        "author": {
+          "gitId": "chshen1998"
+        },
+        "content": "import static seedu.address.testutil.TypicalAppointments.APT2;"
+      },
+      {
+        "lineNumber": 12,
+        "author": {
+          "gitId": "chshen1998"
+        },
+        "content": "import static seedu.address.testutil.TypicalPatients.BOB;"
+      },
+      {
+        "lineNumber": 13,
+        "author": {
+          "gitId": "chshen1998"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 14,
+        "author": {
+          "gitId": "chshen1998"
+        },
+        "content": "import org.junit.jupiter.api.Test;"
+      },
+      {
+        "lineNumber": 15,
+        "author": {
+          "gitId": "chshen1998"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 16,
+        "author": {
+          "gitId": "chshen1998"
+        },
+        "content": "import seedu.address.testutil.AppointmentBuilder;"
+      },
+      {
+        "lineNumber": 17,
+        "author": {
+          "gitId": "chshen1998"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 18,
+        "author": {
+          "gitId": "chshen1998"
+        },
+        "content": "public class AppointmentTest {"
+      },
+      {
+        "lineNumber": 19,
+        "author": {
+          "gitId": "chshen1998"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 20,
+        "author": {
+          "gitId": "chshen1998"
+        },
+        "content": "    @Test"
+      },
+      {
+        "lineNumber": 21,
+        "author": {
+          "gitId": "chshen1998"
+        },
+        "content": "    public void asObservableList_modifyList_throwsUnsupportedOperationException() {"
+      },
+      {
+        "lineNumber": 22,
+        "author": {
+          "gitId": "chshen1998"
+        },
+        "content": "        Appointment appointment \u003d new AppointmentBuilder().build();"
+      },
+      {
+        "lineNumber": 23,
+        "author": {
+          "gitId": "chshen1998"
+        },
+        "content": "        assertThrows(UnsupportedOperationException.class, () -\u003e appointment.getTags().remove(0));"
+      },
+      {
+        "lineNumber": 24,
+        "author": {
+          "gitId": "chshen1998"
+        },
+        "content": "    }"
+      },
+      {
+        "lineNumber": 25,
+        "author": {
+          "gitId": "chshen1998"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 26,
+        "author": {
+          "gitId": "chshen1998"
+        },
+        "content": "    @Test"
+      },
+      {
+        "lineNumber": 27,
+        "author": {
+          "gitId": "chshen1998"
+        },
+        "content": "    public void isSameAppointment() {"
+      },
+      {
+        "lineNumber": 28,
+        "author": {
+          "gitId": "chshen1998"
+        },
+        "content": "        // same object -\u003e returns true"
+      },
+      {
+        "lineNumber": 29,
+        "author": {
+          "gitId": "chshen1998"
+        },
+        "content": "        assertTrue(APT1.isSameAppointment(APT1));"
+      },
+      {
+        "lineNumber": 30,
+        "author": {
+          "gitId": "chshen1998"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 31,
+        "author": {
+          "gitId": "chshen1998"
+        },
+        "content": "        // null -\u003e returns false"
+      },
+      {
+        "lineNumber": 32,
+        "author": {
+          "gitId": "chshen1998"
+        },
+        "content": "        assertFalse(APT1.isSameAppointment(null));"
+      },
+      {
+        "lineNumber": 33,
+        "author": {
+          "gitId": "chshen1998"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 34,
+        "author": {
+          "gitId": "chshen1998"
+        },
+        "content": "        // different date and time -\u003e returns false"
+      },
+      {
+        "lineNumber": 35,
+        "author": {
+          "gitId": "chshen1998"
+        },
+        "content": "        Appointment editedApt1 \u003d new AppointmentBuilder(APT1)"
+      },
+      {
+        "lineNumber": 36,
+        "author": {
+          "gitId": "chshen1998"
+        },
+        "content": "                .withAppointmentTime(VALID_START_TWO, VALID_END_TWO).build();"
+      },
+      {
+        "lineNumber": 37,
+        "author": {
+          "gitId": "chshen1998"
+        },
+        "content": "        assertFalse(APT1.isSameAppointment(editedApt1));"
+      },
+      {
+        "lineNumber": 38,
+        "author": {
+          "gitId": "chshen1998"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 39,
+        "author": {
+          "gitId": "chshen1998"
+        },
+        "content": "        // different description -\u003e returns false"
+      },
+      {
+        "lineNumber": 40,
+        "author": {
+          "gitId": "chshen1998"
+        },
+        "content": "        editedApt1 \u003d new AppointmentBuilder(APT1).withDescription(VALID_DESCRIPTION_TWO).build();"
+      },
+      {
+        "lineNumber": 41,
+        "author": {
+          "gitId": "chshen1998"
+        },
+        "content": "        assertFalse(APT1.isSameAppointment(editedApt1));"
+      },
+      {
+        "lineNumber": 42,
+        "author": {
+          "gitId": "chshen1998"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 43,
+        "author": {
+          "gitId": "chshen1998"
+        },
+        "content": "        // different patient-\u003e returns false"
+      },
+      {
+        "lineNumber": 44,
+        "author": {
+          "gitId": "chshen1998"
+        },
+        "content": "        editedApt1 \u003d new AppointmentBuilder(APT1).withPatient(BOB).build();"
+      },
+      {
+        "lineNumber": 45,
+        "author": {
+          "gitId": "chshen1998"
+        },
+        "content": "        assertFalse(APT1.isSameAppointment(editedApt1));"
+      },
+      {
+        "lineNumber": 46,
+        "author": {
+          "gitId": "chshen1998"
+        },
+        "content": "    }"
+      },
+      {
+        "lineNumber": 47,
+        "author": {
+          "gitId": "chshen1998"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 48,
+        "author": {
+          "gitId": "chshen1998"
+        },
+        "content": "    @Test"
+      },
+      {
+        "lineNumber": 49,
+        "author": {
+          "gitId": "chshen1998"
+        },
+        "content": "    public void equals() {"
+      },
+      {
+        "lineNumber": 50,
+        "author": {
+          "gitId": "chshen1998"
+        },
+        "content": "        // same values -\u003e returns true"
+      },
+      {
+        "lineNumber": 51,
+        "author": {
+          "gitId": "chshen1998"
+        },
+        "content": "        Appointment apt1Copy \u003d new AppointmentBuilder(APT1).build();"
+      },
+      {
+        "lineNumber": 52,
+        "author": {
+          "gitId": "chshen1998"
+        },
+        "content": "        assertTrue(APT1.equals(apt1Copy));"
+      },
+      {
+        "lineNumber": 53,
+        "author": {
+          "gitId": "chshen1998"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 54,
+        "author": {
+          "gitId": "chshen1998"
+        },
+        "content": "        // same object -\u003e returns true"
+      },
+      {
+        "lineNumber": 55,
+        "author": {
+          "gitId": "chshen1998"
+        },
+        "content": "        assertTrue(APT1.equals(APT1));"
+      },
+      {
+        "lineNumber": 56,
+        "author": {
+          "gitId": "chshen1998"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 57,
+        "author": {
+          "gitId": "chshen1998"
+        },
+        "content": "        // null -\u003e returns false"
+      },
+      {
+        "lineNumber": 58,
+        "author": {
+          "gitId": "chshen1998"
+        },
+        "content": "        assertFalse(APT1.equals(null));"
+      },
+      {
+        "lineNumber": 59,
+        "author": {
+          "gitId": "chshen1998"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 60,
+        "author": {
+          "gitId": "chshen1998"
+        },
+        "content": "        // different type -\u003e returns false"
+      },
+      {
+        "lineNumber": 61,
+        "author": {
+          "gitId": "chshen1998"
+        },
+        "content": "        assertFalse(APT1.equals(5));"
+      },
+      {
+        "lineNumber": 62,
+        "author": {
+          "gitId": "chshen1998"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 63,
+        "author": {
+          "gitId": "chshen1998"
+        },
+        "content": "        // different appointment -\u003e returns false"
+      },
+      {
+        "lineNumber": 64,
+        "author": {
+          "gitId": "chshen1998"
+        },
+        "content": "        assertFalse(APT1.equals(APT2));"
+      },
+      {
+        "lineNumber": 65,
+        "author": {
+          "gitId": "chshen1998"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 66,
+        "author": {
+          "gitId": "chshen1998"
+        },
+        "content": "        // different appointment time -\u003e returns false"
+      },
+      {
+        "lineNumber": 67,
+        "author": {
+          "gitId": "chshen1998"
+        },
+        "content": "        Appointment editedApt1 \u003d new AppointmentBuilder(APT1)"
+      },
+      {
+        "lineNumber": 68,
+        "author": {
+          "gitId": "chshen1998"
+        },
+        "content": "                .withAppointmentTime(VALID_START_TWO, VALID_END_TWO).build();"
+      },
+      {
+        "lineNumber": 69,
+        "author": {
+          "gitId": "chshen1998"
+        },
+        "content": "        assertFalse(APT1.equals(editedApt1));"
+      },
+      {
+        "lineNumber": 70,
+        "author": {
+          "gitId": "chshen1998"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 71,
+        "author": {
+          "gitId": "chshen1998"
+        },
+        "content": "        // different description -\u003e returns false"
+      },
+      {
+        "lineNumber": 72,
+        "author": {
+          "gitId": "chshen1998"
+        },
+        "content": "        editedApt1 \u003d new AppointmentBuilder(APT1).withDescription(VALID_DESCRIPTION_TWO).build();"
+      },
+      {
+        "lineNumber": 73,
+        "author": {
+          "gitId": "chshen1998"
+        },
+        "content": "        assertFalse(APT1.equals(editedApt1));"
+      },
+      {
+        "lineNumber": 74,
+        "author": {
+          "gitId": "chshen1998"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 75,
+        "author": {
+          "gitId": "chshen1998"
+        },
+        "content": "        // different patient -\u003e returns false"
+      },
+      {
+        "lineNumber": 76,
+        "author": {
+          "gitId": "chshen1998"
+        },
+        "content": "        editedApt1 \u003d new AppointmentBuilder(APT1).withPatient(BOB).build();"
+      },
+      {
+        "lineNumber": 77,
+        "author": {
+          "gitId": "chshen1998"
+        },
+        "content": "        assertFalse(APT1.equals(editedApt1));"
+      },
+      {
+        "lineNumber": 78,
+        "author": {
+          "gitId": "chshen1998"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 79,
+        "author": {
+          "gitId": "chshen1998"
+        },
+        "content": "        // different tags -\u003e returns false"
+      },
+      {
+        "lineNumber": 80,
+        "author": {
+          "gitId": "chshen1998"
+        },
+        "content": "        editedApt1 \u003d new AppointmentBuilder(APT1).withTags(VALID_TAG_TWO).build();"
+      },
+      {
+        "lineNumber": 81,
+        "author": {
+          "gitId": "chshen1998"
+        },
+        "content": "        assertFalse(APT1.equals(editedApt1));"
+      },
+      {
+        "lineNumber": 82,
+        "author": {
+          "gitId": "chshen1998"
+        },
+        "content": "    }"
+      },
+      {
+        "lineNumber": 83,
+        "author": {
+          "gitId": "chshen1998"
+        },
+        "content": "}"
+      }
+    ],
+    "authorContributionMap": {
+      "chshen1998": 83
+    }
+  },
+  {
+    "path": "src/test/java/seedu/address/model/appointment/AppointmentTimeTest.java",
+    "fileType": "test-code",
+    "lines": [
+      {
+        "lineNumber": 1,
+        "author": {
+          "gitId": "chshen1998"
+        },
+        "content": "package seedu.address.model.appointment;"
+      },
+      {
+        "lineNumber": 2,
+        "author": {
+          "gitId": "chshen1998"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 3,
+        "author": {
+          "gitId": "chshen1998"
+        },
+        "content": "import static seedu.address.testutil.Assert.assertThrows;"
+      },
+      {
+        "lineNumber": 4,
+        "author": {
+          "gitId": "chshen1998"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 5,
+        "author": {
+          "gitId": "chshen1998"
+        },
+        "content": "import org.junit.jupiter.api.Test;"
+      },
+      {
+        "lineNumber": 6,
+        "author": {
+          "gitId": "chshen1998"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 7,
+        "author": {
+          "gitId": "chshen1998"
+        },
+        "content": "public class AppointmentTimeTest {"
+      },
+      {
+        "lineNumber": 8,
+        "author": {
+          "gitId": "chshen1998"
+        },
+        "content": "    @Test"
+      },
+      {
+        "lineNumber": 9,
+        "author": {
+          "gitId": "chshen1998"
+        },
+        "content": "    public void constructor_null_throwsNullPointerException() {"
+      },
+      {
+        "lineNumber": 10,
+        "author": {
+          "gitId": "chshen1998"
+        },
+        "content": "        assertThrows(NullPointerException.class, () -\u003e new AppointmentTime(null, null));"
+      },
+      {
+        "lineNumber": 11,
+        "author": {
+          "gitId": "chshen1998"
+        },
+        "content": "    }"
+      },
+      {
+        "lineNumber": 12,
+        "author": {
+          "gitId": "chshen1998"
+        },
+        "content": "}"
+      }
+    ],
+    "authorContributionMap": {
+      "chshen1998": 12
+    }
+  },
+  {
+    "path": "src/test/java/seedu/address/model/appointment/DescriptionTest.java",
+    "fileType": "test-code",
+    "lines": [
+      {
+        "lineNumber": 1,
+        "author": {
+          "gitId": "chshen1998"
+        },
+        "content": "package seedu.address.model.appointment;"
+      },
+      {
+        "lineNumber": 2,
+        "author": {
+          "gitId": "chshen1998"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 3,
+        "author": {
+          "gitId": "chshen1998"
+        },
+        "content": "import static org.junit.jupiter.api.Assertions.assertFalse;"
+      },
+      {
+        "lineNumber": 4,
+        "author": {
+          "gitId": "chshen1998"
+        },
+        "content": "import static org.junit.jupiter.api.Assertions.assertTrue;"
+      },
+      {
+        "lineNumber": 5,
+        "author": {
+          "gitId": "chshen1998"
+        },
+        "content": "import static seedu.address.testutil.Assert.assertThrows;"
+      },
+      {
+        "lineNumber": 6,
+        "author": {
+          "gitId": "chshen1998"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 7,
+        "author": {
+          "gitId": "chshen1998"
+        },
+        "content": "import org.junit.jupiter.api.Test;"
+      },
+      {
+        "lineNumber": 8,
+        "author": {
+          "gitId": "chshen1998"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 9,
+        "author": {
+          "gitId": "chshen1998"
+        },
+        "content": "public class DescriptionTest {"
+      },
+      {
+        "lineNumber": 10,
+        "author": {
+          "gitId": "chshen1998"
+        },
+        "content": "    @Test"
+      },
+      {
+        "lineNumber": 11,
+        "author": {
+          "gitId": "chshen1998"
+        },
+        "content": "    public void constructor_null_throwsNullPointerException() {"
+      },
+      {
+        "lineNumber": 12,
+        "author": {
+          "gitId": "chshen1998"
+        },
+        "content": "        assertThrows(NullPointerException.class, () -\u003e new Description(null));"
+      },
+      {
+        "lineNumber": 13,
+        "author": {
+          "gitId": "chshen1998"
+        },
+        "content": "    }"
+      },
+      {
+        "lineNumber": 14,
+        "author": {
+          "gitId": "chshen1998"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 15,
+        "author": {
+          "gitId": "chshen1998"
+        },
+        "content": "    @Test"
+      },
+      {
+        "lineNumber": 16,
+        "author": {
+          "gitId": "chshen1998"
+        },
+        "content": "    public void constructor_invalidDescription_throwsIllegalArgumentException() {"
+      },
+      {
+        "lineNumber": 17,
+        "author": {
+          "gitId": "chshen1998"
+        },
+        "content": "        String invalidDescription \u003d \"\";"
+      },
+      {
+        "lineNumber": 18,
+        "author": {
+          "gitId": "chshen1998"
+        },
+        "content": "        assertThrows(IllegalArgumentException.class, () -\u003e new Description(invalidDescription));"
+      },
+      {
+        "lineNumber": 19,
+        "author": {
+          "gitId": "chshen1998"
+        },
+        "content": "    }"
+      },
+      {
+        "lineNumber": 20,
+        "author": {
+          "gitId": "chshen1998"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 21,
+        "author": {
+          "gitId": "chshen1998"
+        },
+        "content": "    @Test"
+      },
+      {
+        "lineNumber": 22,
+        "author": {
+          "gitId": "chshen1998"
+        },
+        "content": "    public void isValidDescription() {"
+      },
+      {
+        "lineNumber": 23,
+        "author": {
+          "gitId": "chshen1998"
+        },
+        "content": "        // null name"
+      },
+      {
+        "lineNumber": 24,
+        "author": {
+          "gitId": "chshen1998"
+        },
+        "content": "        assertThrows(NullPointerException.class, () -\u003e Description.isValidDescription(null));"
+      },
+      {
+        "lineNumber": 25,
+        "author": {
+          "gitId": "chshen1998"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 26,
+        "author": {
+          "gitId": "chshen1998"
+        },
+        "content": "        // invalid name"
+      },
+      {
+        "lineNumber": 27,
+        "author": {
+          "gitId": "chshen1998"
+        },
+        "content": "        assertFalse(Description.isValidDescription(\"\")); // empty string"
+      },
+      {
+        "lineNumber": 28,
+        "author": {
+          "gitId": "chshen1998"
+        },
+        "content": "        assertFalse(Description.isValidDescription(\" \")); // spaces only"
+      },
+      {
+        "lineNumber": 29,
+        "author": {
+          "gitId": "chshen1998"
+        },
+        "content": "        assertFalse(Description.isValidDescription(\"^\")); // only non-alphanumeric characters"
+      },
+      {
+        "lineNumber": 30,
+        "author": {
+          "gitId": "chshen1998"
+        },
+        "content": "        assertFalse(Description.isValidDescription(\"peter*\")); // contains non-alphanumeric characters"
+      },
+      {
+        "lineNumber": 31,
+        "author": {
+          "gitId": "chshen1998"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 32,
+        "author": {
+          "gitId": "chshen1998"
+        },
+        "content": "        // valid name"
+      },
+      {
+        "lineNumber": 33,
+        "author": {
+          "gitId": "chshen1998"
+        },
+        "content": "        assertTrue(Description.isValidDescription(\"review\")); // alphabets only"
+      },
+      {
+        "lineNumber": 34,
+        "author": {
+          "gitId": "chshen1998"
+        },
+        "content": "        assertTrue(Description.isValidDescription(\"12345\")); // numbers only"
+      },
+      {
+        "lineNumber": 35,
+        "author": {
+          "gitId": "chshen1998"
+        },
+        "content": "        assertTrue(Description.isValidDescription(\"2ndReview\")); // alphanumeric characters"
+      },
+      {
+        "lineNumber": 36,
+        "author": {
+          "gitId": "chshen1998"
+        },
+        "content": "        assertTrue(Description.isValidDescription(\"CapitalTan\")); // with capital letters"
+      },
+      {
+        "lineNumber": 37,
+        "author": {
+          "gitId": "chshen1998"
+        },
+        "content": "    }"
+      },
+      {
+        "lineNumber": 38,
+        "author": {
+          "gitId": "chshen1998"
+        },
+        "content": "}"
+      }
+    ],
+    "authorContributionMap": {
+      "chshen1998": 38
+    }
+  },
+  {
     "path": "src/test/java/seedu/address/model/patient/AddressTest.java",
     "fileType": "test-code",
     "lines": [
@@ -71787,6 +74917,1165 @@
     }
   },
   {
+    "path": "src/test/java/seedu/address/testutil/AppointmentBuilder.java",
+    "fileType": "test-code",
+    "lines": [
+      {
+        "lineNumber": 1,
+        "author": {
+          "gitId": "chshen1998"
+        },
+        "content": "package seedu.address.testutil;"
+      },
+      {
+        "lineNumber": 2,
+        "author": {
+          "gitId": "chshen1998"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 3,
+        "author": {
+          "gitId": "chshen1998"
+        },
+        "content": "import java.util.HashSet;"
+      },
+      {
+        "lineNumber": 4,
+        "author": {
+          "gitId": "chshen1998"
+        },
+        "content": "import java.util.Set;"
+      },
+      {
+        "lineNumber": 5,
+        "author": {
+          "gitId": "chshen1998"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 6,
+        "author": {
+          "gitId": "chshen1998"
+        },
+        "content": "import seedu.address.model.appointment.Appointment;"
+      },
+      {
+        "lineNumber": 7,
+        "author": {
+          "gitId": "chshen1998"
+        },
+        "content": "import seedu.address.model.appointment.AppointmentTime;"
+      },
+      {
+        "lineNumber": 8,
+        "author": {
+          "gitId": "chshen1998"
+        },
+        "content": "import seedu.address.model.appointment.Description;"
+      },
+      {
+        "lineNumber": 9,
+        "author": {
+          "gitId": "chshen1998"
+        },
+        "content": "import seedu.address.model.patient.Patient;"
+      },
+      {
+        "lineNumber": 10,
+        "author": {
+          "gitId": "chshen1998"
+        },
+        "content": "import seedu.address.model.tag.Tag;"
+      },
+      {
+        "lineNumber": 11,
+        "author": {
+          "gitId": "chshen1998"
+        },
+        "content": "import seedu.address.model.util.SampleDataUtil;"
+      },
+      {
+        "lineNumber": 12,
+        "author": {
+          "gitId": "chshen1998"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 13,
+        "author": {
+          "gitId": "chshen1998"
+        },
+        "content": "/**"
+      },
+      {
+        "lineNumber": 14,
+        "author": {
+          "gitId": "chshen1998"
+        },
+        "content": " * A utility class to help with building Appointment objects."
+      },
+      {
+        "lineNumber": 15,
+        "author": {
+          "gitId": "chshen1998"
+        },
+        "content": " */"
+      },
+      {
+        "lineNumber": 16,
+        "author": {
+          "gitId": "chshen1998"
+        },
+        "content": "public class AppointmentBuilder {"
+      },
+      {
+        "lineNumber": 17,
+        "author": {
+          "gitId": "chshen1998"
+        },
+        "content": "    public static final boolean DEFAULT_COMPLETE \u003d false;"
+      },
+      {
+        "lineNumber": 18,
+        "author": {
+          "gitId": "chshen1998"
+        },
+        "content": "    public static final boolean DEFAULT_MISSED \u003d false;"
+      },
+      {
+        "lineNumber": 19,
+        "author": {
+          "gitId": "chshen1998"
+        },
+        "content": "    private static final AppointmentTime DEFAULT_TIME \u003d new AppointmentTimeBuilder().build();"
+      },
+      {
+        "lineNumber": 20,
+        "author": {
+          "gitId": "chshen1998"
+        },
+        "content": "    private static final Patient DEFAULT_PATIENT \u003d new PatientBuilder().build();"
+      },
+      {
+        "lineNumber": 21,
+        "author": {
+          "gitId": "chshen1998"
+        },
+        "content": "    private static final String DEFAULT_DESCRIPTION \u003d \"Appointment\";"
+      },
+      {
+        "lineNumber": 22,
+        "author": {
+          "gitId": "chshen1998"
+        },
+        "content": "    private AppointmentTime appointmentTime;"
+      },
+      {
+        "lineNumber": 23,
+        "author": {
+          "gitId": "chshen1998"
+        },
+        "content": "    private Patient patient;"
+      },
+      {
+        "lineNumber": 24,
+        "author": {
+          "gitId": "chshen1998"
+        },
+        "content": "    private Description description;"
+      },
+      {
+        "lineNumber": 25,
+        "author": {
+          "gitId": "chshen1998"
+        },
+        "content": "    private Set\u003cTag\u003e tags;"
+      },
+      {
+        "lineNumber": 26,
+        "author": {
+          "gitId": "chshen1998"
+        },
+        "content": "    /**"
+      },
+      {
+        "lineNumber": 27,
+        "author": {
+          "gitId": "chshen1998"
+        },
+        "content": "     * Creates a {@code AppointmentBuilder} with the default details."
+      },
+      {
+        "lineNumber": 28,
+        "author": {
+          "gitId": "chshen1998"
+        },
+        "content": "     */"
+      },
+      {
+        "lineNumber": 29,
+        "author": {
+          "gitId": "chshen1998"
+        },
+        "content": "    public AppointmentBuilder() {"
+      },
+      {
+        "lineNumber": 30,
+        "author": {
+          "gitId": "chshen1998"
+        },
+        "content": "        appointmentTime \u003d DEFAULT_TIME;"
+      },
+      {
+        "lineNumber": 31,
+        "author": {
+          "gitId": "chshen1998"
+        },
+        "content": "        patient \u003d DEFAULT_PATIENT;"
+      },
+      {
+        "lineNumber": 32,
+        "author": {
+          "gitId": "chshen1998"
+        },
+        "content": "        description \u003d new Description(DEFAULT_DESCRIPTION);"
+      },
+      {
+        "lineNumber": 33,
+        "author": {
+          "gitId": "chshen1998"
+        },
+        "content": "        tags \u003d new HashSet\u003c\u003e();"
+      },
+      {
+        "lineNumber": 34,
+        "author": {
+          "gitId": "chshen1998"
+        },
+        "content": "    }"
+      },
+      {
+        "lineNumber": 35,
+        "author": {
+          "gitId": "chshen1998"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 36,
+        "author": {
+          "gitId": "chshen1998"
+        },
+        "content": "    /**"
+      },
+      {
+        "lineNumber": 37,
+        "author": {
+          "gitId": "chshen1998"
+        },
+        "content": "     * Initializes the AppointmentBuilder with the data of {@code appointmentToCopy}."
+      },
+      {
+        "lineNumber": 38,
+        "author": {
+          "gitId": "chshen1998"
+        },
+        "content": "     */"
+      },
+      {
+        "lineNumber": 39,
+        "author": {
+          "gitId": "chshen1998"
+        },
+        "content": "    public AppointmentBuilder(Appointment appointmentToCopy) {"
+      },
+      {
+        "lineNumber": 40,
+        "author": {
+          "gitId": "chshen1998"
+        },
+        "content": "        appointmentTime \u003d appointmentToCopy.getAppointmentTime();"
+      },
+      {
+        "lineNumber": 41,
+        "author": {
+          "gitId": "chshen1998"
+        },
+        "content": "        patient \u003d appointmentToCopy.getPatient();"
+      },
+      {
+        "lineNumber": 42,
+        "author": {
+          "gitId": "chshen1998"
+        },
+        "content": "        description \u003d appointmentToCopy.getDescription();"
+      },
+      {
+        "lineNumber": 43,
+        "author": {
+          "gitId": "chshen1998"
+        },
+        "content": "        tags \u003d appointmentToCopy.getTags();"
+      },
+      {
+        "lineNumber": 44,
+        "author": {
+          "gitId": "chshen1998"
+        },
+        "content": "    }"
+      },
+      {
+        "lineNumber": 45,
+        "author": {
+          "gitId": "chshen1998"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 46,
+        "author": {
+          "gitId": "chshen1998"
+        },
+        "content": "    /**"
+      },
+      {
+        "lineNumber": 47,
+        "author": {
+          "gitId": "chshen1998"
+        },
+        "content": "     * Sets the {@code AppointmentTime} of the {@code Appointment} that we are building."
+      },
+      {
+        "lineNumber": 48,
+        "author": {
+          "gitId": "chshen1998"
+        },
+        "content": "     */"
+      },
+      {
+        "lineNumber": 49,
+        "author": {
+          "gitId": "chshen1998"
+        },
+        "content": "    public AppointmentBuilder withAppointmentTime(String start, String end) {"
+      },
+      {
+        "lineNumber": 50,
+        "author": {
+          "gitId": "chshen1998"
+        },
+        "content": "        this.appointmentTime \u003d new AppointmentTimeBuilder().withStart(start).withEnd(end).build();"
+      },
+      {
+        "lineNumber": 51,
+        "author": {
+          "gitId": "chshen1998"
+        },
+        "content": "        return this;"
+      },
+      {
+        "lineNumber": 52,
+        "author": {
+          "gitId": "chshen1998"
+        },
+        "content": "    }"
+      },
+      {
+        "lineNumber": 53,
+        "author": {
+          "gitId": "chshen1998"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 54,
+        "author": {
+          "gitId": "chshen1998"
+        },
+        "content": "    /**"
+      },
+      {
+        "lineNumber": 55,
+        "author": {
+          "gitId": "chshen1998"
+        },
+        "content": "     * Sets the {@code Patient} of the {@code Appointment} that we are building."
+      },
+      {
+        "lineNumber": 56,
+        "author": {
+          "gitId": "chshen1998"
+        },
+        "content": "     */"
+      },
+      {
+        "lineNumber": 57,
+        "author": {
+          "gitId": "chshen1998"
+        },
+        "content": "    public AppointmentBuilder withPatient(Patient patient) {"
+      },
+      {
+        "lineNumber": 58,
+        "author": {
+          "gitId": "chshen1998"
+        },
+        "content": "        this.patient \u003d patient;"
+      },
+      {
+        "lineNumber": 59,
+        "author": {
+          "gitId": "chshen1998"
+        },
+        "content": "        return this;"
+      },
+      {
+        "lineNumber": 60,
+        "author": {
+          "gitId": "chshen1998"
+        },
+        "content": "    }"
+      },
+      {
+        "lineNumber": 61,
+        "author": {
+          "gitId": "chshen1998"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 62,
+        "author": {
+          "gitId": "chshen1998"
+        },
+        "content": "    /**"
+      },
+      {
+        "lineNumber": 63,
+        "author": {
+          "gitId": "chshen1998"
+        },
+        "content": "     * Sets the {@code Description} of the {@code Appointment} that we are building."
+      },
+      {
+        "lineNumber": 64,
+        "author": {
+          "gitId": "chshen1998"
+        },
+        "content": "     */"
+      },
+      {
+        "lineNumber": 65,
+        "author": {
+          "gitId": "chshen1998"
+        },
+        "content": "    public AppointmentBuilder withDescription(String description) {"
+      },
+      {
+        "lineNumber": 66,
+        "author": {
+          "gitId": "chshen1998"
+        },
+        "content": "        this.description \u003d new Description(description);"
+      },
+      {
+        "lineNumber": 67,
+        "author": {
+          "gitId": "chshen1998"
+        },
+        "content": "        return this;"
+      },
+      {
+        "lineNumber": 68,
+        "author": {
+          "gitId": "chshen1998"
+        },
+        "content": "    }"
+      },
+      {
+        "lineNumber": 69,
+        "author": {
+          "gitId": "chshen1998"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 70,
+        "author": {
+          "gitId": "chshen1998"
+        },
+        "content": "    /**"
+      },
+      {
+        "lineNumber": 71,
+        "author": {
+          "gitId": "chshen1998"
+        },
+        "content": "     * Parses the {@code tags} into a {@code Set\u003cTag\u003e} and set it to the {@code Appointment} that we are building."
+      },
+      {
+        "lineNumber": 72,
+        "author": {
+          "gitId": "chshen1998"
+        },
+        "content": "     */"
+      },
+      {
+        "lineNumber": 73,
+        "author": {
+          "gitId": "chshen1998"
+        },
+        "content": "    public AppointmentBuilder withTags(String ... tags) {"
+      },
+      {
+        "lineNumber": 74,
+        "author": {
+          "gitId": "chshen1998"
+        },
+        "content": "        this.tags \u003d SampleDataUtil.getTagSet(tags);"
+      },
+      {
+        "lineNumber": 75,
+        "author": {
+          "gitId": "chshen1998"
+        },
+        "content": "        return this;"
+      },
+      {
+        "lineNumber": 76,
+        "author": {
+          "gitId": "chshen1998"
+        },
+        "content": "    }"
+      },
+      {
+        "lineNumber": 77,
+        "author": {
+          "gitId": "chshen1998"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 78,
+        "author": {
+          "gitId": "chshen1998"
+        },
+        "content": "    public Appointment build() {"
+      },
+      {
+        "lineNumber": 79,
+        "author": {
+          "gitId": "chshen1998"
+        },
+        "content": "        return new Appointment(appointmentTime, patient, tags, DEFAULT_COMPLETE, DEFAULT_MISSED, description);"
+      },
+      {
+        "lineNumber": 80,
+        "author": {
+          "gitId": "chshen1998"
+        },
+        "content": "    }"
+      },
+      {
+        "lineNumber": 81,
+        "author": {
+          "gitId": "chshen1998"
+        },
+        "content": "}"
+      }
+    ],
+    "authorContributionMap": {
+      "chshen1998": 81
+    }
+  },
+  {
+    "path": "src/test/java/seedu/address/testutil/AppointmentTimeBuilder.java",
+    "fileType": "test-code",
+    "lines": [
+      {
+        "lineNumber": 1,
+        "author": {
+          "gitId": "chshen1998"
+        },
+        "content": "package seedu.address.testutil;"
+      },
+      {
+        "lineNumber": 2,
+        "author": {
+          "gitId": "chshen1998"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 3,
+        "author": {
+          "gitId": "chshen1998"
+        },
+        "content": "import static java.util.Objects.requireNonNull;"
+      },
+      {
+        "lineNumber": 4,
+        "author": {
+          "gitId": "chshen1998"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 5,
+        "author": {
+          "gitId": "chshen1998"
+        },
+        "content": "import java.time.LocalDateTime;"
+      },
+      {
+        "lineNumber": 6,
+        "author": {
+          "gitId": "chshen1998"
+        },
+        "content": "import java.time.format.DateTimeFormatter;"
+      },
+      {
+        "lineNumber": 7,
+        "author": {
+          "gitId": "chshen1998"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 8,
+        "author": {
+          "gitId": "chshen1998"
+        },
+        "content": "import seedu.address.model.appointment.AppointmentTime;"
+      },
+      {
+        "lineNumber": 9,
+        "author": {
+          "gitId": "chshen1998"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 10,
+        "author": {
+          "gitId": "chshen1998"
+        },
+        "content": "/**"
+      },
+      {
+        "lineNumber": 11,
+        "author": {
+          "gitId": "chshen1998"
+        },
+        "content": " * A utility class to help with building AppointmentTime objects."
+      },
+      {
+        "lineNumber": 12,
+        "author": {
+          "gitId": "chshen1998"
+        },
+        "content": " */"
+      },
+      {
+        "lineNumber": 13,
+        "author": {
+          "gitId": "chshen1998"
+        },
+        "content": "public class AppointmentTimeBuilder {"
+      },
+      {
+        "lineNumber": 14,
+        "author": {
+          "gitId": "chshen1998"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 15,
+        "author": {
+          "gitId": "chshen1998"
+        },
+        "content": "    /**"
+      },
+      {
+        "lineNumber": 16,
+        "author": {
+          "gitId": "chshen1998"
+        },
+        "content": "     * Formats date and time inputs as: yyyy-MM-dd hh:mm (eg. 2020-02-20 08:00)."
+      },
+      {
+        "lineNumber": 17,
+        "author": {
+          "gitId": "chshen1998"
+        },
+        "content": "     */"
+      },
+      {
+        "lineNumber": 18,
+        "author": {
+          "gitId": "chshen1998"
+        },
+        "content": "    public static final DateTimeFormatter DATE_FORMATTER \u003d DateTimeFormatter.ofPattern(\"yyyy-MM-dd hh:mm\");"
+      },
+      {
+        "lineNumber": 19,
+        "author": {
+          "gitId": "chshen1998"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 20,
+        "author": {
+          "gitId": "chshen1998"
+        },
+        "content": "    private static final String DEFAULT_START \u003d \"2020-01-01 12:00\";"
+      },
+      {
+        "lineNumber": 21,
+        "author": {
+          "gitId": "chshen1998"
+        },
+        "content": "    private static final String DEFAULT_END \u003d \"2020-01-01 14:00\";"
+      },
+      {
+        "lineNumber": 22,
+        "author": {
+          "gitId": "chshen1998"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 23,
+        "author": {
+          "gitId": "chshen1998"
+        },
+        "content": "    private LocalDateTime start;"
+      },
+      {
+        "lineNumber": 24,
+        "author": {
+          "gitId": "chshen1998"
+        },
+        "content": "    private LocalDateTime end;"
+      },
+      {
+        "lineNumber": 25,
+        "author": {
+          "gitId": "chshen1998"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 26,
+        "author": {
+          "gitId": "chshen1998"
+        },
+        "content": "    /**"
+      },
+      {
+        "lineNumber": 27,
+        "author": {
+          "gitId": "chshen1998"
+        },
+        "content": "     * Creates a {@code AppointmentTimeBuilder} with the default details."
+      },
+      {
+        "lineNumber": 28,
+        "author": {
+          "gitId": "chshen1998"
+        },
+        "content": "     */"
+      },
+      {
+        "lineNumber": 29,
+        "author": {
+          "gitId": "chshen1998"
+        },
+        "content": "    public AppointmentTimeBuilder() {"
+      },
+      {
+        "lineNumber": 30,
+        "author": {
+          "gitId": "chshen1998"
+        },
+        "content": "        start \u003d parseDateTime(DEFAULT_START);"
+      },
+      {
+        "lineNumber": 31,
+        "author": {
+          "gitId": "chshen1998"
+        },
+        "content": "        end \u003d parseDateTime(DEFAULT_END);"
+      },
+      {
+        "lineNumber": 32,
+        "author": {
+          "gitId": "chshen1998"
+        },
+        "content": "    }"
+      },
+      {
+        "lineNumber": 33,
+        "author": {
+          "gitId": "chshen1998"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 34,
+        "author": {
+          "gitId": "chshen1998"
+        },
+        "content": "    /**"
+      },
+      {
+        "lineNumber": 35,
+        "author": {
+          "gitId": "chshen1998"
+        },
+        "content": "     * Initializes the AppointmentTimeBuilder with the data of {@code appointmentTimeToCopy}."
+      },
+      {
+        "lineNumber": 36,
+        "author": {
+          "gitId": "chshen1998"
+        },
+        "content": "     */"
+      },
+      {
+        "lineNumber": 37,
+        "author": {
+          "gitId": "chshen1998"
+        },
+        "content": "    public AppointmentTimeBuilder(AppointmentTime appointmentTimeToCopy) {"
+      },
+      {
+        "lineNumber": 38,
+        "author": {
+          "gitId": "chshen1998"
+        },
+        "content": "        start \u003d appointmentTimeToCopy.getStart();"
+      },
+      {
+        "lineNumber": 39,
+        "author": {
+          "gitId": "chshen1998"
+        },
+        "content": "        end \u003d appointmentTimeToCopy.getEnd();"
+      },
+      {
+        "lineNumber": 40,
+        "author": {
+          "gitId": "chshen1998"
+        },
+        "content": "    }"
+      },
+      {
+        "lineNumber": 41,
+        "author": {
+          "gitId": "chshen1998"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 42,
+        "author": {
+          "gitId": "chshen1998"
+        },
+        "content": "    /**"
+      },
+      {
+        "lineNumber": 43,
+        "author": {
+          "gitId": "chshen1998"
+        },
+        "content": "     * Sets the start time of the {@code AppointmentTime} that we are building."
+      },
+      {
+        "lineNumber": 44,
+        "author": {
+          "gitId": "chshen1998"
+        },
+        "content": "     */"
+      },
+      {
+        "lineNumber": 45,
+        "author": {
+          "gitId": "chshen1998"
+        },
+        "content": "    public AppointmentTimeBuilder withStart(String stringStart) {"
+      },
+      {
+        "lineNumber": 46,
+        "author": {
+          "gitId": "chshen1998"
+        },
+        "content": "        this.start \u003d parseDateTime(stringStart);"
+      },
+      {
+        "lineNumber": 47,
+        "author": {
+          "gitId": "chshen1998"
+        },
+        "content": "        return this;"
+      },
+      {
+        "lineNumber": 48,
+        "author": {
+          "gitId": "chshen1998"
+        },
+        "content": "    }"
+      },
+      {
+        "lineNumber": 49,
+        "author": {
+          "gitId": "chshen1998"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 50,
+        "author": {
+          "gitId": "chshen1998"
+        },
+        "content": "    /**"
+      },
+      {
+        "lineNumber": 51,
+        "author": {
+          "gitId": "chshen1998"
+        },
+        "content": "     * Sets the end time of the {@code AppointmentTime} that we are building."
+      },
+      {
+        "lineNumber": 52,
+        "author": {
+          "gitId": "chshen1998"
+        },
+        "content": "     */"
+      },
+      {
+        "lineNumber": 53,
+        "author": {
+          "gitId": "chshen1998"
+        },
+        "content": "    public AppointmentTimeBuilder withEnd(String stringEnd) {"
+      },
+      {
+        "lineNumber": 54,
+        "author": {
+          "gitId": "chshen1998"
+        },
+        "content": "        this.end \u003d parseDateTime(stringEnd);"
+      },
+      {
+        "lineNumber": 55,
+        "author": {
+          "gitId": "chshen1998"
+        },
+        "content": "        return this;"
+      },
+      {
+        "lineNumber": 56,
+        "author": {
+          "gitId": "chshen1998"
+        },
+        "content": "    }"
+      },
+      {
+        "lineNumber": 57,
+        "author": {
+          "gitId": "chshen1998"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 58,
+        "author": {
+          "gitId": "chshen1998"
+        },
+        "content": "    public AppointmentTime build() {"
+      },
+      {
+        "lineNumber": 59,
+        "author": {
+          "gitId": "chshen1998"
+        },
+        "content": "        return new AppointmentTime(start, end);"
+      },
+      {
+        "lineNumber": 60,
+        "author": {
+          "gitId": "chshen1998"
+        },
+        "content": "    }"
+      },
+      {
+        "lineNumber": 61,
+        "author": {
+          "gitId": "chshen1998"
+        },
+        "content": "    /**"
+      },
+      {
+        "lineNumber": 62,
+        "author": {
+          "gitId": "chshen1998"
+        },
+        "content": "     * Parses a {@code String dateTime} into a {@code LocalDateTime}."
+      },
+      {
+        "lineNumber": 63,
+        "author": {
+          "gitId": "chshen1998"
+        },
+        "content": "     * Leading and trailing whitespaces will be trimmed."
+      },
+      {
+        "lineNumber": 64,
+        "author": {
+          "gitId": "chshen1998"
+        },
+        "content": "     */"
+      },
+      {
+        "lineNumber": 65,
+        "author": {
+          "gitId": "chshen1998"
+        },
+        "content": "    public static LocalDateTime parseDateTime(String dateTime) {"
+      },
+      {
+        "lineNumber": 66,
+        "author": {
+          "gitId": "chshen1998"
+        },
+        "content": "        requireNonNull(dateTime);"
+      },
+      {
+        "lineNumber": 67,
+        "author": {
+          "gitId": "chshen1998"
+        },
+        "content": "        LocalDateTime localDateTime \u003d null;"
+      },
+      {
+        "lineNumber": 68,
+        "author": {
+          "gitId": "chshen1998"
+        },
+        "content": "        String[] dateTimeSplit \u003d dateTime.split(\" \", 2);"
+      },
+      {
+        "lineNumber": 69,
+        "author": {
+          "gitId": "chshen1998"
+        },
+        "content": "        String date \u003d dateTimeSplit[0];"
+      },
+      {
+        "lineNumber": 70,
+        "author": {
+          "gitId": "chshen1998"
+        },
+        "content": "        String time \u003d dateTimeSplit[1];"
+      },
+      {
+        "lineNumber": 71,
+        "author": {
+          "gitId": "chshen1998"
+        },
+        "content": "        String[] dateSplit \u003d date.split(\"-\", 3);"
+      },
+      {
+        "lineNumber": 72,
+        "author": {
+          "gitId": "chshen1998"
+        },
+        "content": "        int year \u003d Integer.parseInt(dateSplit[0]);"
+      },
+      {
+        "lineNumber": 73,
+        "author": {
+          "gitId": "chshen1998"
+        },
+        "content": "        int month \u003d Integer.parseInt(dateSplit[1]);"
+      },
+      {
+        "lineNumber": 74,
+        "author": {
+          "gitId": "chshen1998"
+        },
+        "content": "        int day \u003d Integer.parseInt(dateSplit[2]);"
+      },
+      {
+        "lineNumber": 75,
+        "author": {
+          "gitId": "chshen1998"
+        },
+        "content": "        String[] timeSplit \u003d time.split(\":\", 2);"
+      },
+      {
+        "lineNumber": 76,
+        "author": {
+          "gitId": "chshen1998"
+        },
+        "content": "        int hour \u003d Integer.parseInt(timeSplit[0]);"
+      },
+      {
+        "lineNumber": 77,
+        "author": {
+          "gitId": "chshen1998"
+        },
+        "content": "        int min \u003d Integer.parseInt(timeSplit[1]);"
+      },
+      {
+        "lineNumber": 78,
+        "author": {
+          "gitId": "chshen1998"
+        },
+        "content": "        //String dt \u003d date + \"T\" + time;"
+      },
+      {
+        "lineNumber": 79,
+        "author": {
+          "gitId": "chshen1998"
+        },
+        "content": "        localDateTime \u003d LocalDateTime.of(year, month, day, hour, min);"
+      },
+      {
+        "lineNumber": 80,
+        "author": {
+          "gitId": "chshen1998"
+        },
+        "content": "        return localDateTime;"
+      },
+      {
+        "lineNumber": 81,
+        "author": {
+          "gitId": "chshen1998"
+        },
+        "content": "    }"
+      },
+      {
+        "lineNumber": 82,
+        "author": {
+          "gitId": "chshen1998"
+        },
+        "content": "}"
+      }
+    ],
+    "authorContributionMap": {
+      "chshen1998": 82
+    }
+  },
+  {
     "path": "src/test/java/seedu/address/testutil/EditPatientDescriptorBuilder.java",
     "fileType": "test-code",
     "lines": [
@@ -74650,6 +78939,344 @@
     }
   },
   {
+    "path": "src/test/java/seedu/address/testutil/TypicalAppointments.java",
+    "fileType": "test-code",
+    "lines": [
+      {
+        "lineNumber": 1,
+        "author": {
+          "gitId": "chshen1998"
+        },
+        "content": "package seedu.address.testutil;"
+      },
+      {
+        "lineNumber": 2,
+        "author": {
+          "gitId": "chshen1998"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 3,
+        "author": {
+          "gitId": "chshen1998"
+        },
+        "content": "import static seedu.address.logic.commands.appointmentcommands.AppointmentCommandTestUtil.VALID_DESCRIPTION_ONE;"
+      },
+      {
+        "lineNumber": 4,
+        "author": {
+          "gitId": "chshen1998"
+        },
+        "content": "import static seedu.address.logic.commands.appointmentcommands.AppointmentCommandTestUtil.VALID_DESCRIPTION_TWO;"
+      },
+      {
+        "lineNumber": 5,
+        "author": {
+          "gitId": "chshen1998"
+        },
+        "content": "import static seedu.address.logic.commands.appointmentcommands.AppointmentCommandTestUtil.VALID_END_ONE;"
+      },
+      {
+        "lineNumber": 6,
+        "author": {
+          "gitId": "chshen1998"
+        },
+        "content": "import static seedu.address.logic.commands.appointmentcommands.AppointmentCommandTestUtil.VALID_END_TWO;"
+      },
+      {
+        "lineNumber": 7,
+        "author": {
+          "gitId": "chshen1998"
+        },
+        "content": "import static seedu.address.logic.commands.appointmentcommands.AppointmentCommandTestUtil.VALID_START_ONE;"
+      },
+      {
+        "lineNumber": 8,
+        "author": {
+          "gitId": "chshen1998"
+        },
+        "content": "import static seedu.address.logic.commands.appointmentcommands.AppointmentCommandTestUtil.VALID_START_TWO;"
+      },
+      {
+        "lineNumber": 9,
+        "author": {
+          "gitId": "chshen1998"
+        },
+        "content": "import static seedu.address.logic.commands.appointmentcommands.AppointmentCommandTestUtil.VALID_TAG_ONE;"
+      },
+      {
+        "lineNumber": 10,
+        "author": {
+          "gitId": "chshen1998"
+        },
+        "content": "import static seedu.address.logic.commands.appointmentcommands.AppointmentCommandTestUtil.VALID_TAG_TWO;"
+      },
+      {
+        "lineNumber": 11,
+        "author": {
+          "gitId": "chshen1998"
+        },
+        "content": "import static seedu.address.testutil.TypicalPatients.ALICE;"
+      },
+      {
+        "lineNumber": 12,
+        "author": {
+          "gitId": "chshen1998"
+        },
+        "content": "import static seedu.address.testutil.TypicalPatients.BOB;"
+      },
+      {
+        "lineNumber": 13,
+        "author": {
+          "gitId": "chshen1998"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 14,
+        "author": {
+          "gitId": "chshen1998"
+        },
+        "content": "import java.util.ArrayList;"
+      },
+      {
+        "lineNumber": 15,
+        "author": {
+          "gitId": "chshen1998"
+        },
+        "content": "import java.util.Arrays;"
+      },
+      {
+        "lineNumber": 16,
+        "author": {
+          "gitId": "chshen1998"
+        },
+        "content": "import java.util.List;"
+      },
+      {
+        "lineNumber": 17,
+        "author": {
+          "gitId": "chshen1998"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 18,
+        "author": {
+          "gitId": "chshen1998"
+        },
+        "content": "import seedu.address.model.AddressBook;"
+      },
+      {
+        "lineNumber": 19,
+        "author": {
+          "gitId": "chshen1998"
+        },
+        "content": "import seedu.address.model.appointment.Appointment;"
+      },
+      {
+        "lineNumber": 20,
+        "author": {
+          "gitId": "chshen1998"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 21,
+        "author": {
+          "gitId": "chshen1998"
+        },
+        "content": "/**"
+      },
+      {
+        "lineNumber": 22,
+        "author": {
+          "gitId": "chshen1998"
+        },
+        "content": " * A utility class containing a list of {@code Appointment} objects to be used in tests."
+      },
+      {
+        "lineNumber": 23,
+        "author": {
+          "gitId": "chshen1998"
+        },
+        "content": " */"
+      },
+      {
+        "lineNumber": 24,
+        "author": {
+          "gitId": "chshen1998"
+        },
+        "content": "public class TypicalAppointments {"
+      },
+      {
+        "lineNumber": 25,
+        "author": {
+          "gitId": "chshen1998"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 26,
+        "author": {
+          "gitId": "chshen1998"
+        },
+        "content": "    public static final Appointment APT1 \u003d new AppointmentBuilder().withAppointmentTime(VALID_START_ONE, VALID_END_ONE)"
+      },
+      {
+        "lineNumber": 27,
+        "author": {
+          "gitId": "chshen1998"
+        },
+        "content": "            .withPatient(ALICE).withDescription(VALID_DESCRIPTION_ONE).withTags(VALID_TAG_ONE).build();"
+      },
+      {
+        "lineNumber": 28,
+        "author": {
+          "gitId": "chshen1998"
+        },
+        "content": "    public static final Appointment APT2 \u003d new AppointmentBuilder().withAppointmentTime(VALID_START_TWO, VALID_END_TWO)"
+      },
+      {
+        "lineNumber": 29,
+        "author": {
+          "gitId": "chshen1998"
+        },
+        "content": "            .withPatient(BOB).withDescription(VALID_DESCRIPTION_TWO).withTags(VALID_TAG_TWO).build();"
+      },
+      {
+        "lineNumber": 30,
+        "author": {
+          "gitId": "chshen1998"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 31,
+        "author": {
+          "gitId": "chshen1998"
+        },
+        "content": "    private TypicalAppointments() {} // prevents instantiation"
+      },
+      {
+        "lineNumber": 32,
+        "author": {
+          "gitId": "chshen1998"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 33,
+        "author": {
+          "gitId": "chshen1998"
+        },
+        "content": "    /**"
+      },
+      {
+        "lineNumber": 34,
+        "author": {
+          "gitId": "chshen1998"
+        },
+        "content": "     * Returns an {@code AddressBook} with all the typical appointments."
+      },
+      {
+        "lineNumber": 35,
+        "author": {
+          "gitId": "chshen1998"
+        },
+        "content": "     */"
+      },
+      {
+        "lineNumber": 36,
+        "author": {
+          "gitId": "chshen1998"
+        },
+        "content": "    public static AddressBook getTypicalAddressBook() {"
+      },
+      {
+        "lineNumber": 37,
+        "author": {
+          "gitId": "chshen1998"
+        },
+        "content": "        AddressBook ab \u003d new AddressBook();"
+      },
+      {
+        "lineNumber": 38,
+        "author": {
+          "gitId": "chshen1998"
+        },
+        "content": "        for (Appointment appointment : getTypicalAppointments()) {"
+      },
+      {
+        "lineNumber": 39,
+        "author": {
+          "gitId": "chshen1998"
+        },
+        "content": "            ab.addAppointment(appointment);"
+      },
+      {
+        "lineNumber": 40,
+        "author": {
+          "gitId": "chshen1998"
+        },
+        "content": "        }"
+      },
+      {
+        "lineNumber": 41,
+        "author": {
+          "gitId": "chshen1998"
+        },
+        "content": "        return ab;"
+      },
+      {
+        "lineNumber": 42,
+        "author": {
+          "gitId": "chshen1998"
+        },
+        "content": "    }"
+      },
+      {
+        "lineNumber": 43,
+        "author": {
+          "gitId": "chshen1998"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 44,
+        "author": {
+          "gitId": "chshen1998"
+        },
+        "content": "    public static List\u003cAppointment\u003e getTypicalAppointments() {"
+      },
+      {
+        "lineNumber": 45,
+        "author": {
+          "gitId": "chshen1998"
+        },
+        "content": "        return new ArrayList\u003c\u003e(Arrays.asList(APT1, APT2));"
+      },
+      {
+        "lineNumber": 46,
+        "author": {
+          "gitId": "chshen1998"
+        },
+        "content": "    }"
+      },
+      {
+        "lineNumber": 47,
+        "author": {
+          "gitId": "chshen1998"
+        },
+        "content": "}"
+      }
+    ],
+    "authorContributionMap": {
+      "chshen1998": 47
+    }
+  },
+  {
     "path": "src/test/java/seedu/address/testutil/TypicalIndexes.java",
     "fileType": "test-code",
     "lines": [
@@ -74733,6 +79360,34 @@
       {
         "lineNumber": 12,
         "author": {
+          "gitId": "chshen1998"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 13,
+        "author": {
+          "gitId": "chshen1998"
+        },
+        "content": "    public static final Index INDEX_FIRST_APPOINTMENT \u003d Index.fromOneBased(1);"
+      },
+      {
+        "lineNumber": 14,
+        "author": {
+          "gitId": "chshen1998"
+        },
+        "content": "    public static final Index INDEX_SECOND_APPOINTMENT \u003d Index.fromOneBased(2);"
+      },
+      {
+        "lineNumber": 15,
+        "author": {
+          "gitId": "chshen1998"
+        },
+        "content": "    public static final Index INDEX_THIRD_APPOINTMENT \u003d Index.fromOneBased(3);"
+      },
+      {
+        "lineNumber": 16,
+        "author": {
           "gitId": "-"
         },
         "content": "}"
@@ -74740,6 +79395,7 @@
     ],
     "authorContributionMap": {
       "gordonfgz": 3,
+      "chshen1998": 4,
       "-": 9
     }
   },
