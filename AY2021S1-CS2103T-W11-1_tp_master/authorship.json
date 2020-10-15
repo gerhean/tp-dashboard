@@ -16580,7 +16580,7 @@
         "author": {
           "gitId": "jimvae"
         },
-        "content": "import seedu.address.model.filters.appointmentfilters.SearchPatientFilter;"
+        "content": "import static java.util.Objects.requireNonNull;"
       },
       {
         "lineNumber": 4,
@@ -16594,77 +16594,408 @@
         "author": {
           "gitId": "jimvae"
         },
-        "content": "public class AppointmentFindPatientCommand {"
+        "content": "import seedu.address.commons.core.Messages;"
       },
       {
         "lineNumber": 6,
         "author": {
           "gitId": "jimvae"
         },
-        "content": ""
+        "content": "import seedu.address.logic.commands.Command;"
       },
       {
         "lineNumber": 7,
         "author": {
           "gitId": "jimvae"
         },
-        "content": "    public static final String COMMAND_WORD \u003d \"p-find\";"
+        "content": "import seedu.address.logic.commands.CommandResult;"
       },
       {
         "lineNumber": 8,
         "author": {
           "gitId": "jimvae"
         },
-        "content": ""
+        "content": "import seedu.address.model.Model;"
       },
       {
         "lineNumber": 9,
         "author": {
           "gitId": "jimvae"
         },
-        "content": "    public static final String MESSAGE_USAGE \u003d COMMAND_WORD + \": Finds all appointments with patients whose names \""
+        "content": "import seedu.address.model.filters.appointmentfilters.SearchPatientFilter;"
       },
       {
         "lineNumber": 10,
         "author": {
           "gitId": "jimvae"
         },
-        "content": "            + \"contain any of the specified keywords (case-insensitive) and displays them as a list with index \""
+        "content": ""
       },
       {
         "lineNumber": 11,
         "author": {
           "gitId": "jimvae"
         },
-        "content": "            + \"numbers.\\n\""
+        "content": ""
       },
       {
         "lineNumber": 12,
         "author": {
           "gitId": "jimvae"
         },
-        "content": "            + \"Parameters: KEYWORD [MORE_KEYWORDS]...\\n\""
+        "content": "/**"
       },
       {
         "lineNumber": 13,
         "author": {
           "gitId": "jimvae"
         },
-        "content": "            + \"Example: \" + COMMAND_WORD + \" alice bob charlie\";"
+        "content": " * Finds and lists all appointments in address book whose patient name contains any of the argument keywords."
       },
       {
         "lineNumber": 14,
         "author": {
           "gitId": "jimvae"
         },
-        "content": ""
+        "content": " * Keyword matching is case insensitive."
       },
       {
         "lineNumber": 15,
         "author": {
           "gitId": "jimvae"
         },
+        "content": " */"
+      },
+      {
+        "lineNumber": 16,
+        "author": {
+          "gitId": "jimvae"
+        },
+        "content": "public class AppointmentFindPatientCommand extends Command {"
+      },
+      {
+        "lineNumber": 17,
+        "author": {
+          "gitId": "jimvae"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 18,
+        "author": {
+          "gitId": "jimvae"
+        },
+        "content": "    public static final String COMMAND_WORD \u003d \"a-find\";"
+      },
+      {
+        "lineNumber": 19,
+        "author": {
+          "gitId": "jimvae"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 20,
+        "author": {
+          "gitId": "jimvae"
+        },
+        "content": "    public static final String MESSAGE_USAGE \u003d COMMAND_WORD + \": Finds all appointments with patients whose names \""
+      },
+      {
+        "lineNumber": 21,
+        "author": {
+          "gitId": "jimvae"
+        },
+        "content": "            + \"contain any of the specified keywords (case-insensitive) and displays them as a list with index \""
+      },
+      {
+        "lineNumber": 22,
+        "author": {
+          "gitId": "jimvae"
+        },
+        "content": "            + \"numbers.\\n\""
+      },
+      {
+        "lineNumber": 23,
+        "author": {
+          "gitId": "jimvae"
+        },
+        "content": "            + \"Parameters: KEYWORD [MORE_KEYWORDS]...\\n\""
+      },
+      {
+        "lineNumber": 24,
+        "author": {
+          "gitId": "jimvae"
+        },
+        "content": "            + \"Example: \" + COMMAND_WORD + \" alice bob charlie\";"
+      },
+      {
+        "lineNumber": 25,
+        "author": {
+          "gitId": "jimvae"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 26,
+        "author": {
+          "gitId": "jimvae"
+        },
         "content": "    private final SearchPatientFilter predicate;"
+      },
+      {
+        "lineNumber": 27,
+        "author": {
+          "gitId": "jimvae"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 28,
+        "author": {
+          "gitId": "jimvae"
+        },
+        "content": "    public AppointmentFindPatientCommand(SearchPatientFilter predicate) {"
+      },
+      {
+        "lineNumber": 29,
+        "author": {
+          "gitId": "jimvae"
+        },
+        "content": "        this.predicate \u003d predicate;"
+      },
+      {
+        "lineNumber": 30,
+        "author": {
+          "gitId": "jimvae"
+        },
+        "content": "    }"
+      },
+      {
+        "lineNumber": 31,
+        "author": {
+          "gitId": "jimvae"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 32,
+        "author": {
+          "gitId": "jimvae"
+        },
+        "content": "    @Override"
+      },
+      {
+        "lineNumber": 33,
+        "author": {
+          "gitId": "jimvae"
+        },
+        "content": "    public CommandResult execute(Model model) {"
+      },
+      {
+        "lineNumber": 34,
+        "author": {
+          "gitId": "jimvae"
+        },
+        "content": "        requireNonNull(model);"
+      },
+      {
+        "lineNumber": 35,
+        "author": {
+          "gitId": "jimvae"
+        },
+        "content": "        model.updateFilteredAppointmentList(predicate);"
+      },
+      {
+        "lineNumber": 36,
+        "author": {
+          "gitId": "jimvae"
+        },
+        "content": "        return new CommandResult("
+      },
+      {
+        "lineNumber": 37,
+        "author": {
+          "gitId": "jimvae"
+        },
+        "content": "                String.format(Messages.MESSAGE_PATIENTS_LISTED_OVERVIEW, model.getFilteredAppointmentList().size()));"
+      },
+      {
+        "lineNumber": 38,
+        "author": {
+          "gitId": "jimvae"
+        },
+        "content": "    }"
+      },
+      {
+        "lineNumber": 39,
+        "author": {
+          "gitId": "jimvae"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 40,
+        "author": {
+          "gitId": "jimvae"
+        },
+        "content": "    @Override"
+      },
+      {
+        "lineNumber": 41,
+        "author": {
+          "gitId": "jimvae"
+        },
+        "content": "    public boolean equals(Object other) {"
+      },
+      {
+        "lineNumber": 42,
+        "author": {
+          "gitId": "jimvae"
+        },
+        "content": "        return other \u003d\u003d this // short circuit if same object"
+      },
+      {
+        "lineNumber": 43,
+        "author": {
+          "gitId": "jimvae"
+        },
+        "content": "                || (other instanceof AppointmentFindPatientCommand // instanceof handles nulls"
+      },
+      {
+        "lineNumber": 44,
+        "author": {
+          "gitId": "jimvae"
+        },
+        "content": "                \u0026\u0026 predicate.equals(((AppointmentFindPatientCommand) other).predicate)); // state check"
+      },
+      {
+        "lineNumber": 45,
+        "author": {
+          "gitId": "jimvae"
+        },
+        "content": "    }"
+      },
+      {
+        "lineNumber": 46,
+        "author": {
+          "gitId": "jimvae"
+        },
+        "content": "}"
+      }
+    ],
+    "authorContributionMap": {
+      "jimvae": 46
+    }
+  },
+  {
+    "path": "src/main/java/seedu/address/logic/commands/appointmentcommands/AppointmentIsMissedCommand.java",
+    "fileType": "functional-code",
+    "lines": [
+      {
+        "lineNumber": 1,
+        "author": {
+          "gitId": "jimvae"
+        },
+        "content": "package seedu.address.logic.commands.appointmentcommands;"
+      },
+      {
+        "lineNumber": 2,
+        "author": {
+          "gitId": "jimvae"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 3,
+        "author": {
+          "gitId": "jimvae"
+        },
+        "content": "import static java.util.Objects.requireNonNull;"
+      },
+      {
+        "lineNumber": 4,
+        "author": {
+          "gitId": "jimvae"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 5,
+        "author": {
+          "gitId": "jimvae"
+        },
+        "content": "import seedu.address.commons.core.Messages;"
+      },
+      {
+        "lineNumber": 6,
+        "author": {
+          "gitId": "jimvae"
+        },
+        "content": "import seedu.address.logic.commands.Command;"
+      },
+      {
+        "lineNumber": 7,
+        "author": {
+          "gitId": "jimvae"
+        },
+        "content": "import seedu.address.logic.commands.CommandResult;"
+      },
+      {
+        "lineNumber": 8,
+        "author": {
+          "gitId": "jimvae"
+        },
+        "content": "import seedu.address.model.Model;"
+      },
+      {
+        "lineNumber": 9,
+        "author": {
+          "gitId": "jimvae"
+        },
+        "content": "import seedu.address.model.filters.appointmentfilters.SearchAppointmentMissedFilter;"
+      },
+      {
+        "lineNumber": 10,
+        "author": {
+          "gitId": "jimvae"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 11,
+        "author": {
+          "gitId": "jimvae"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 12,
+        "author": {
+          "gitId": "jimvae"
+        },
+        "content": "/**"
+      },
+      {
+        "lineNumber": 13,
+        "author": {
+          "gitId": "jimvae"
+        },
+        "content": " * Finds and lists all appointments missed appointments in the addressbook."
+      },
+      {
+        "lineNumber": 14,
+        "author": {
+          "gitId": "jimvae"
+        },
+        "content": " */"
+      },
+      {
+        "lineNumber": 15,
+        "author": {
+          "gitId": "jimvae"
+        },
+        "content": "public class AppointmentIsMissedCommand extends Command {"
       },
       {
         "lineNumber": 16,
@@ -16678,73 +17009,185 @@
         "author": {
           "gitId": "jimvae"
         },
-        "content": "    public AppointmentFindPatientCommand(SearchPatientFilter predicate) {"
+        "content": "    public static final String COMMAND_WORD \u003d \"a-missed\";"
       },
       {
         "lineNumber": 18,
         "author": {
           "gitId": "jimvae"
         },
-        "content": "        this.predicate \u003d predicate;"
+        "content": ""
       },
       {
         "lineNumber": 19,
         "author": {
           "gitId": "jimvae"
         },
-        "content": "    }"
+        "content": "    public static final String MESSAGE_USAGE \u003d COMMAND_WORD + \": Finds all missed appointments. \""
       },
       {
         "lineNumber": 20,
         "author": {
           "gitId": "jimvae"
         },
-        "content": ""
+        "content": "            + \"\\n\""
       },
       {
         "lineNumber": 21,
         "author": {
           "gitId": "jimvae"
         },
-        "content": "    @Override"
+        "content": "            + \"Example: \" + COMMAND_WORD;"
       },
       {
         "lineNumber": 22,
         "author": {
           "gitId": "jimvae"
         },
-        "content": "    public boolean equals(Object other) {"
+        "content": ""
       },
       {
         "lineNumber": 23,
         "author": {
           "gitId": "jimvae"
         },
-        "content": "        return other \u003d\u003d this // short circuit if same object"
+        "content": "    private final SearchAppointmentMissedFilter predicate;"
       },
       {
         "lineNumber": 24,
         "author": {
           "gitId": "jimvae"
         },
-        "content": "                || (other instanceof AppointmentFindPatientCommand // instanceof handles nulls"
+        "content": ""
       },
       {
         "lineNumber": 25,
         "author": {
           "gitId": "jimvae"
         },
-        "content": "                \u0026\u0026 predicate.equals(((AppointmentFindPatientCommand) other).predicate)); // state check"
+        "content": "    public AppointmentIsMissedCommand(SearchAppointmentMissedFilter predicate) {"
       },
       {
         "lineNumber": 26,
         "author": {
           "gitId": "jimvae"
         },
-        "content": "    }"
+        "content": "        this.predicate \u003d predicate;"
       },
       {
         "lineNumber": 27,
+        "author": {
+          "gitId": "jimvae"
+        },
+        "content": "    }"
+      },
+      {
+        "lineNumber": 28,
+        "author": {
+          "gitId": "jimvae"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 29,
+        "author": {
+          "gitId": "jimvae"
+        },
+        "content": "    @Override"
+      },
+      {
+        "lineNumber": 30,
+        "author": {
+          "gitId": "jimvae"
+        },
+        "content": "    public CommandResult execute(Model model) {"
+      },
+      {
+        "lineNumber": 31,
+        "author": {
+          "gitId": "jimvae"
+        },
+        "content": "        requireNonNull(model);"
+      },
+      {
+        "lineNumber": 32,
+        "author": {
+          "gitId": "jimvae"
+        },
+        "content": "        model.updateFilteredAppointmentList(predicate);"
+      },
+      {
+        "lineNumber": 33,
+        "author": {
+          "gitId": "jimvae"
+        },
+        "content": "        return new CommandResult("
+      },
+      {
+        "lineNumber": 34,
+        "author": {
+          "gitId": "jimvae"
+        },
+        "content": "                String.format(Messages.MESSAGE_PATIENTS_LISTED_OVERVIEW, model.getFilteredAppointmentList().size()));"
+      },
+      {
+        "lineNumber": 35,
+        "author": {
+          "gitId": "jimvae"
+        },
+        "content": "    }"
+      },
+      {
+        "lineNumber": 36,
+        "author": {
+          "gitId": "jimvae"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 37,
+        "author": {
+          "gitId": "jimvae"
+        },
+        "content": "    @Override"
+      },
+      {
+        "lineNumber": 38,
+        "author": {
+          "gitId": "jimvae"
+        },
+        "content": "    public boolean equals(Object other) {"
+      },
+      {
+        "lineNumber": 39,
+        "author": {
+          "gitId": "jimvae"
+        },
+        "content": "        return other \u003d\u003d this // short circuit if same object"
+      },
+      {
+        "lineNumber": 40,
+        "author": {
+          "gitId": "jimvae"
+        },
+        "content": "                || (other instanceof AppointmentIsMissedCommand // instanceof handles nulls"
+      },
+      {
+        "lineNumber": 41,
+        "author": {
+          "gitId": "jimvae"
+        },
+        "content": "                \u0026\u0026 predicate.equals(((AppointmentIsMissedCommand) other).predicate)); // state check"
+      },
+      {
+        "lineNumber": 42,
+        "author": {
+          "gitId": "jimvae"
+        },
+        "content": "    }"
+      },
+      {
+        "lineNumber": 43,
         "author": {
           "gitId": "jimvae"
         },
@@ -16752,7 +17195,7 @@
       }
     ],
     "authorContributionMap": {
-      "jimvae": 27
+      "jimvae": 43
     }
   },
   {
@@ -17023,226 +17466,226 @@
       {
         "lineNumber": 10,
         "author": {
-          "gitId": "yeohhq"
+          "gitId": "jimvae"
         },
-        "content": "import seedu.address.logic.commands.Command;"
+        "content": "import java.time.LocalDateTime;"
       },
       {
         "lineNumber": 11,
         "author": {
-          "gitId": "yeohhq"
+          "gitId": "jimvae"
         },
-        "content": "import seedu.address.logic.commands.CommandResult;"
+        "content": "import java.util.ArrayList;"
       },
       {
         "lineNumber": 12,
         "author": {
-          "gitId": "yeohhq"
+          "gitId": "jimvae"
         },
-        "content": "import seedu.address.logic.commands.exceptions.CommandException;"
+        "content": ""
       },
       {
         "lineNumber": 13,
         "author": {
-          "gitId": "yeohhq"
+          "gitId": "jimvae"
         },
-        "content": "import seedu.address.model.Model;"
+        "content": "import javafx.collections.ObservableList;"
       },
       {
         "lineNumber": 14,
         "author": {
           "gitId": "yeohhq"
         },
-        "content": "import seedu.address.model.appointment.Appointment;"
+        "content": "import seedu.address.logic.commands.Command;"
       },
       {
         "lineNumber": 15,
         "author": {
           "gitId": "yeohhq"
         },
-        "content": ""
+        "content": "import seedu.address.logic.commands.CommandResult;"
       },
       {
         "lineNumber": 16,
         "author": {
           "gitId": "yeohhq"
         },
-        "content": "/**"
+        "content": "import seedu.address.logic.commands.exceptions.CommandException;"
       },
       {
         "lineNumber": 17,
         "author": {
           "gitId": "yeohhq"
         },
-        "content": " * Adds an appointment to the address book."
+        "content": "import seedu.address.model.Model;"
       },
       {
         "lineNumber": 18,
         "author": {
-          "gitId": "yeohhq"
+          "gitId": "jimvae"
         },
-        "content": " */"
+        "content": "import seedu.address.model.ReadOnlyAddressBook;"
       },
       {
         "lineNumber": 19,
         "author": {
           "gitId": "yeohhq"
         },
-        "content": "public class AppointmentScheduleCommand extends Command {"
+        "content": "import seedu.address.model.appointment.Appointment;"
       },
       {
         "lineNumber": 20,
         "author": {
-          "gitId": "yeohhq"
+          "gitId": "jimvae"
         },
-        "content": ""
+        "content": "import seedu.address.model.patient.Patient;"
       },
       {
         "lineNumber": 21,
         "author": {
-          "gitId": "yeohhq"
+          "gitId": "jimvae"
         },
-        "content": "    public static final String COMMAND_WORD \u003d \"a-schedule\";"
+        "content": ""
       },
       {
         "lineNumber": 22,
         "author": {
           "gitId": "yeohhq"
         },
-        "content": ""
+        "content": "/**"
       },
       {
         "lineNumber": 23,
         "author": {
           "gitId": "yeohhq"
         },
-        "content": "    public static final String MESSAGE_USAGE \u003d COMMAND_WORD + \": Schedules an appointment to Archangel.\""
+        "content": " * Adds an appointment to the address book."
       },
       {
         "lineNumber": 24,
         "author": {
           "gitId": "yeohhq"
         },
-        "content": "            + \"Parameters: \""
+        "content": " */"
       },
       {
         "lineNumber": 25,
         "author": {
           "gitId": "yeohhq"
         },
-        "content": "            + PREFIX_APPOINTMENT_START + \"START \""
+        "content": "public class AppointmentScheduleCommand extends Command {"
       },
       {
         "lineNumber": 26,
         "author": {
           "gitId": "yeohhq"
         },
-        "content": "            + PREFIX_APPOINTMENT_END + \"END \""
+        "content": ""
       },
       {
         "lineNumber": 27,
         "author": {
           "gitId": "yeohhq"
         },
-        "content": "            + PREFIX_PATIENT + \"PATIENT \""
+        "content": "    public static final String COMMAND_WORD \u003d \"a-schedule\";"
       },
       {
         "lineNumber": 28,
         "author": {
           "gitId": "yeohhq"
         },
-        "content": "            + PREFIX_DESCRIPTION + \"BLOOD_TYPE \""
+        "content": ""
       },
       {
         "lineNumber": 29,
         "author": {
           "gitId": "yeohhq"
         },
-        "content": "            + \"[\" + PREFIX_TAG + \"TAG]...\\n\""
+        "content": "    public static final String MESSAGE_USAGE \u003d COMMAND_WORD + \": Schedules an appointment to Archangel.\""
       },
       {
         "lineNumber": 30,
         "author": {
           "gitId": "yeohhq"
         },
-        "content": "            + \"Example: \" + COMMAND_WORD + \" \""
+        "content": "            + \"Parameters: \""
       },
       {
         "lineNumber": 31,
         "author": {
           "gitId": "yeohhq"
         },
-        "content": "            + PREFIX_APPOINTMENT_START + \"2020-01-25 08:00 \""
+        "content": "            + PREFIX_APPOINTMENT_START + \"START \""
       },
       {
         "lineNumber": 32,
         "author": {
           "gitId": "yeohhq"
         },
-        "content": "            + PREFIX_APPOINTMENT_END + \"2020-01-25 12:00 \""
+        "content": "            + PREFIX_APPOINTMENT_END + \"END \""
       },
       {
         "lineNumber": 33,
         "author": {
           "gitId": "yeohhq"
         },
-        "content": "            + PREFIX_PATIENT + \"John Doe \""
+        "content": "            + PREFIX_PATIENT + \"PATIENT \""
       },
       {
         "lineNumber": 34,
         "author": {
           "gitId": "yeohhq"
         },
-        "content": "            + PREFIX_DESCRIPTION + \"Medical checkup \""
+        "content": "            + PREFIX_DESCRIPTION + \"BLOOD_TYPE \""
       },
       {
         "lineNumber": 35,
         "author": {
           "gitId": "yeohhq"
         },
-        "content": "            + PREFIX_TAG + \"LowPriority\";"
+        "content": "            + \"[\" + PREFIX_TAG + \"TAG]...\\n\""
       },
       {
         "lineNumber": 36,
         "author": {
           "gitId": "yeohhq"
         },
-        "content": ""
+        "content": "            + \"Example: \" + COMMAND_WORD + \" \""
       },
       {
         "lineNumber": 37,
         "author": {
           "gitId": "yeohhq"
         },
-        "content": "    public static final String MESSAGE_SUCCESS \u003d \"New appointment scheduled: %1$s\";"
+        "content": "            + PREFIX_APPOINTMENT_START + \"2020-01-25 08:00 \""
       },
       {
         "lineNumber": 38,
         "author": {
           "gitId": "yeohhq"
         },
-        "content": "    public static final String MESSAGE_DUPLICATE_APPOINTMENT \u003d \"This appointment already exists in Archangel\";"
+        "content": "            + PREFIX_APPOINTMENT_END + \"2020-01-25 12:00 \""
       },
       {
         "lineNumber": 39,
         "author": {
-          "gitId": "soaza"
+          "gitId": "jimvae"
         },
-        "content": "    public static final String MESSAGE_MISSING_PATIENT \u003d \"This patient is not in Archangel\";"
+        "content": "            + PREFIX_PATIENT + \"1 \""
       },
       {
         "lineNumber": 40,
         "author": {
           "gitId": "yeohhq"
         },
-        "content": ""
+        "content": "            + PREFIX_DESCRIPTION + \"Medical checkup \""
       },
       {
         "lineNumber": 41,
         "author": {
           "gitId": "yeohhq"
         },
-        "content": "    private final Appointment toSchedule;"
+        "content": "            + PREFIX_TAG + \"LowPriority\";"
       },
       {
         "lineNumber": 42,
@@ -17256,199 +17699,563 @@
         "author": {
           "gitId": "yeohhq"
         },
-        "content": "    /**"
+        "content": "    public static final String MESSAGE_SUCCESS \u003d \"New appointment scheduled: %1$s\";"
       },
       {
         "lineNumber": 44,
         "author": {
           "gitId": "yeohhq"
         },
-        "content": "     * Creates an AppointmentAddCommand to add the specified {@code Appointment}"
+        "content": "    public static final String MESSAGE_DUPLICATE_APPOINTMENT \u003d \"This appointment already exists in Archangel\";"
       },
       {
         "lineNumber": 45,
         "author": {
-          "gitId": "yeohhq"
+          "gitId": "soaza"
         },
-        "content": "     */"
+        "content": "    public static final String MESSAGE_MISSING_PATIENT \u003d \"This patient is not in Archangel\";"
       },
       {
         "lineNumber": 46,
         "author": {
-          "gitId": "yeohhq"
+          "gitId": "jimvae"
         },
-        "content": "    public AppointmentScheduleCommand(Appointment appointment) {"
+        "content": "    public static final String MESSAGE_WRONG_INDEX \u003d \"We have some problem with your index\";"
       },
       {
         "lineNumber": 47,
         "author": {
-          "gitId": "yeohhq"
+          "gitId": "jimvae"
         },
-        "content": "        requireNonNull(appointment);"
+        "content": "    public static final String MESSAGE_INVALID_APPOINTMENT_SLOT \u003d \"That time slot is already taken\";"
       },
       {
         "lineNumber": 48,
         "author": {
-          "gitId": "yeohhq"
+          "gitId": "jimvae"
         },
-        "content": "        toSchedule \u003d appointment;"
+        "content": ""
       },
       {
         "lineNumber": 49,
         "author": {
-          "gitId": "yeohhq"
+          "gitId": "jimvae"
         },
-        "content": "    }"
+        "content": ""
       },
       {
         "lineNumber": 50,
         "author": {
           "gitId": "yeohhq"
         },
-        "content": ""
+        "content": "    private final Appointment toSchedule;"
       },
       {
         "lineNumber": 51,
         "author": {
           "gitId": "yeohhq"
         },
-        "content": "    @Override"
+        "content": ""
       },
       {
         "lineNumber": 52,
         "author": {
           "gitId": "yeohhq"
         },
-        "content": "    public CommandResult execute(Model model) throws CommandException {"
+        "content": "    /**"
       },
       {
         "lineNumber": 53,
         "author": {
           "gitId": "yeohhq"
         },
-        "content": "        requireNonNull(model);"
+        "content": "     * Creates an AppointmentAddCommand to add the specified {@code Appointment}"
       },
       {
         "lineNumber": 54,
         "author": {
-          "gitId": "soaza"
+          "gitId": "yeohhq"
         },
-        "content": "        toSchedule.parsePatient(model.getAddressBook());"
+        "content": "     */"
       },
       {
         "lineNumber": 55,
         "author": {
-          "gitId": "soaza"
+          "gitId": "yeohhq"
         },
-        "content": "        if (!model.hasPatient(toSchedule.getPatient())) {"
+        "content": "    public AppointmentScheduleCommand(Appointment appointment) {"
       },
       {
         "lineNumber": 56,
         "author": {
-          "gitId": "soaza"
+          "gitId": "yeohhq"
         },
-        "content": "            throw new CommandException((MESSAGE_MISSING_PATIENT));"
+        "content": "        requireNonNull(appointment);"
       },
       {
         "lineNumber": 57,
         "author": {
-          "gitId": "soaza"
+          "gitId": "yeohhq"
         },
-        "content": "        }"
+        "content": "        toSchedule \u003d appointment;"
       },
       {
         "lineNumber": 58,
-        "author": {
-          "gitId": "soaza"
-        },
-        "content": "        if (model.hasAppointment(toSchedule)) {"
-      },
-      {
-        "lineNumber": 59,
-        "author": {
-          "gitId": "soaza"
-        },
-        "content": "            throw new CommandException(MESSAGE_DUPLICATE_APPOINTMENT);"
-      },
-      {
-        "lineNumber": 60,
-        "author": {
-          "gitId": "soaza"
-        },
-        "content": "        }"
-      },
-      {
-        "lineNumber": 61,
-        "author": {
-          "gitId": "yeohhq"
-        },
-        "content": "        model.addAppointment(toSchedule);"
-      },
-      {
-        "lineNumber": 62,
-        "author": {
-          "gitId": "yeohhq"
-        },
-        "content": "        return new CommandResult(String.format(MESSAGE_SUCCESS, toSchedule));"
-      },
-      {
-        "lineNumber": 63,
         "author": {
           "gitId": "yeohhq"
         },
         "content": "    }"
       },
       {
-        "lineNumber": 64,
+        "lineNumber": 59,
         "author": {
           "gitId": "yeohhq"
         },
         "content": ""
       },
       {
-        "lineNumber": 65,
+        "lineNumber": 60,
         "author": {
           "gitId": "yeohhq"
         },
         "content": "    @Override"
       },
       {
-        "lineNumber": 66,
+        "lineNumber": 61,
         "author": {
           "gitId": "yeohhq"
         },
-        "content": "    public boolean equals(Object other) {"
+        "content": "    public CommandResult execute(Model model) throws CommandException {"
+      },
+      {
+        "lineNumber": 62,
+        "author": {
+          "gitId": "jimvae"
+        },
+        "content": "        try {"
+      },
+      {
+        "lineNumber": 63,
+        "author": {
+          "gitId": "yeohhq"
+        },
+        "content": "            requireNonNull(model);"
+      },
+      {
+        "lineNumber": 64,
+        "author": {
+          "gitId": "jimvae"
+        },
+        "content": "            ReadOnlyAddressBook addressBook \u003d model.getAddressBook();"
+      },
+      {
+        "lineNumber": 65,
+        "author": {
+          "gitId": "jimvae"
+        },
+        "content": "            ObservableList\u003cPatient\u003e patientList \u003d addressBook.getPatientList();"
+      },
+      {
+        "lineNumber": 66,
+        "author": {
+          "gitId": "jimvae"
+        },
+        "content": "            ObservableList\u003cAppointment\u003e appointmentList \u003d addressBook.getAppointmentList();"
       },
       {
         "lineNumber": 67,
         "author": {
-          "gitId": "yeohhq"
+          "gitId": "jimvae"
         },
-        "content": "        return other \u003d\u003d this // short circuit if same object"
+        "content": ""
       },
       {
         "lineNumber": 68,
         "author": {
-          "gitId": "yeohhq"
+          "gitId": "jimvae"
         },
-        "content": "                || (other instanceof AppointmentScheduleCommand // instanceof handles nulls"
+        "content": "            // Target index inside the unique patient list"
       },
       {
         "lineNumber": 69,
         "author": {
-          "gitId": "yeohhq"
+          "gitId": "jimvae"
         },
-        "content": "                \u0026\u0026 toSchedule.equals(((AppointmentScheduleCommand) other).toSchedule));"
+        "content": "            int index \u003d Integer.parseInt(toSchedule.getPatientString());"
       },
       {
         "lineNumber": 70,
+        "author": {
+          "gitId": "jimvae"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 71,
+        "author": {
+          "gitId": "jimvae"
+        },
+        "content": "            ArrayList\u003cPatient\u003e arr \u003d new ArrayList\u003c\u003e(patientList);"
+      },
+      {
+        "lineNumber": 72,
+        "author": {
+          "gitId": "jimvae"
+        },
+        "content": "            int size \u003d arr.size();"
+      },
+      {
+        "lineNumber": 73,
+        "author": {
+          "gitId": "jimvae"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 74,
+        "author": {
+          "gitId": "jimvae"
+        },
+        "content": "            toSchedule.parsePatient(arr, index);"
+      },
+      {
+        "lineNumber": 75,
+        "author": {
+          "gitId": "jimvae"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 76,
+        "author": {
+          "gitId": "jimvae"
+        },
+        "content": "            // Patient does not exist"
+      },
+      {
+        "lineNumber": 77,
+        "author": {
+          "gitId": "soaza"
+        },
+        "content": "            if (!model.hasPatient(toSchedule.getPatient())) {"
+      },
+      {
+        "lineNumber": 78,
+        "author": {
+          "gitId": "soaza"
+        },
+        "content": "                throw new CommandException((MESSAGE_MISSING_PATIENT));"
+      },
+      {
+        "lineNumber": 79,
+        "author": {
+          "gitId": "soaza"
+        },
+        "content": "            }"
+      },
+      {
+        "lineNumber": 80,
+        "author": {
+          "gitId": "jimvae"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 81,
+        "author": {
+          "gitId": "jimvae"
+        },
+        "content": "            // Appointment slot is already taken"
+      },
+      {
+        "lineNumber": 82,
+        "author": {
+          "gitId": "jimvae"
+        },
+        "content": "            if (!isValidTimeSlot(appointmentList, toSchedule)) {"
+      },
+      {
+        "lineNumber": 83,
+        "author": {
+          "gitId": "jimvae"
+        },
+        "content": "                throw new CommandException(MESSAGE_INVALID_APPOINTMENT_SLOT);"
+      },
+      {
+        "lineNumber": 84,
+        "author": {
+          "gitId": "jimvae"
+        },
+        "content": "            }"
+      },
+      {
+        "lineNumber": 85,
+        "author": {
+          "gitId": "jimvae"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 86,
+        "author": {
+          "gitId": "jimvae"
+        },
+        "content": "            // Appointment already exists"
+      },
+      {
+        "lineNumber": 87,
+        "author": {
+          "gitId": "soaza"
+        },
+        "content": "            if (model.hasAppointment(toSchedule)) {"
+      },
+      {
+        "lineNumber": 88,
+        "author": {
+          "gitId": "soaza"
+        },
+        "content": "                throw new CommandException(MESSAGE_DUPLICATE_APPOINTMENT);"
+      },
+      {
+        "lineNumber": 89,
+        "author": {
+          "gitId": "soaza"
+        },
+        "content": "            }"
+      },
+      {
+        "lineNumber": 90,
+        "author": {
+          "gitId": "yeohhq"
+        },
+        "content": "            model.addAppointment(toSchedule);"
+      },
+      {
+        "lineNumber": 91,
+        "author": {
+          "gitId": "jimvae"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 92,
+        "author": {
+          "gitId": "yeohhq"
+        },
+        "content": "            return new CommandResult(String.format(MESSAGE_SUCCESS, toSchedule));"
+      },
+      {
+        "lineNumber": 93,
+        "author": {
+          "gitId": "jimvae"
+        },
+        "content": "        } catch (NumberFormatException | ArrayIndexOutOfBoundsException e) {"
+      },
+      {
+        "lineNumber": 94,
+        "author": {
+          "gitId": "jimvae"
+        },
+        "content": "            throw new CommandException(MESSAGE_WRONG_INDEX);"
+      },
+      {
+        "lineNumber": 95,
+        "author": {
+          "gitId": "jimvae"
+        },
+        "content": "        }"
+      },
+      {
+        "lineNumber": 96,
         "author": {
           "gitId": "yeohhq"
         },
         "content": "    }"
       },
       {
-        "lineNumber": 71,
+        "lineNumber": 97,
+        "author": {
+          "gitId": "yeohhq"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 98,
+        "author": {
+          "gitId": "yeohhq"
+        },
+        "content": "    @Override"
+      },
+      {
+        "lineNumber": 99,
+        "author": {
+          "gitId": "yeohhq"
+        },
+        "content": "    public boolean equals(Object other) {"
+      },
+      {
+        "lineNumber": 100,
+        "author": {
+          "gitId": "yeohhq"
+        },
+        "content": "        return other \u003d\u003d this // short circuit if same object"
+      },
+      {
+        "lineNumber": 101,
+        "author": {
+          "gitId": "yeohhq"
+        },
+        "content": "                || (other instanceof AppointmentScheduleCommand // instanceof handles nulls"
+      },
+      {
+        "lineNumber": 102,
+        "author": {
+          "gitId": "yeohhq"
+        },
+        "content": "                \u0026\u0026 toSchedule.equals(((AppointmentScheduleCommand) other).toSchedule));"
+      },
+      {
+        "lineNumber": 103,
+        "author": {
+          "gitId": "yeohhq"
+        },
+        "content": "    }"
+      },
+      {
+        "lineNumber": 104,
+        "author": {
+          "gitId": "jimvae"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 105,
+        "author": {
+          "gitId": "jimvae"
+        },
+        "content": "    private Boolean isValidTimeSlot(ObservableList\u003cAppointment\u003e appointmentList, Appointment appointment) {"
+      },
+      {
+        "lineNumber": 106,
+        "author": {
+          "gitId": "jimvae"
+        },
+        "content": "        LocalDateTime startDate \u003d appointment.getStartTime();"
+      },
+      {
+        "lineNumber": 107,
+        "author": {
+          "gitId": "jimvae"
+        },
+        "content": "        LocalDateTime endDate \u003d appointment.getEndTime();"
+      },
+      {
+        "lineNumber": 108,
+        "author": {
+          "gitId": "jimvae"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 109,
+        "author": {
+          "gitId": "jimvae"
+        },
+        "content": "        for (Appointment currentAppointment : appointmentList) {"
+      },
+      {
+        "lineNumber": 110,
+        "author": {
+          "gitId": "jimvae"
+        },
+        "content": "            LocalDateTime currentStartDate \u003d currentAppointment.getStartTime();"
+      },
+      {
+        "lineNumber": 111,
+        "author": {
+          "gitId": "jimvae"
+        },
+        "content": "            LocalDateTime currentEndDate \u003d currentAppointment.getEndTime();"
+      },
+      {
+        "lineNumber": 112,
+        "author": {
+          "gitId": "jimvae"
+        },
+        "content": "            // startDate or endDate is in between currentAppointment slot"
+      },
+      {
+        "lineNumber": 113,
+        "author": {
+          "gitId": "jimvae"
+        },
+        "content": "            // current Appointment slot is within new appointment slot"
+      },
+      {
+        "lineNumber": 114,
+        "author": {
+          "gitId": "jimvae"
+        },
+        "content": "            if (startDate.isAfter(currentStartDate) \u0026\u0026 startDate.isBefore(currentEndDate)"
+      },
+      {
+        "lineNumber": 115,
+        "author": {
+          "gitId": "jimvae"
+        },
+        "content": "                    || endDate.isAfter(currentStartDate) \u0026\u0026 endDate.isBefore(currentEndDate)"
+      },
+      {
+        "lineNumber": 116,
+        "author": {
+          "gitId": "jimvae"
+        },
+        "content": "                    || startDate.isBefore(currentStartDate) \u0026\u0026 endDate.isAfter(currentEndDate)"
+      },
+      {
+        "lineNumber": 117,
+        "author": {
+          "gitId": "jimvae"
+        },
+        "content": "                    || startDate.isEqual(currentStartDate) || endDate.isEqual(currentEndDate)) {"
+      },
+      {
+        "lineNumber": 118,
+        "author": {
+          "gitId": "jimvae"
+        },
+        "content": "                return false;"
+      },
+      {
+        "lineNumber": 119,
+        "author": {
+          "gitId": "jimvae"
+        },
+        "content": "            }"
+      },
+      {
+        "lineNumber": 120,
+        "author": {
+          "gitId": "jimvae"
+        },
+        "content": "        }"
+      },
+      {
+        "lineNumber": 121,
+        "author": {
+          "gitId": "jimvae"
+        },
+        "content": "        return true;"
+      },
+      {
+        "lineNumber": 122,
+        "author": {
+          "gitId": "jimvae"
+        },
+        "content": "    }"
+      },
+      {
+        "lineNumber": 123,
         "author": {
           "gitId": "yeohhq"
         },
@@ -17456,8 +18263,340 @@
       }
     ],
     "authorContributionMap": {
-      "yeohhq": 63,
-      "soaza": 8
+      "jimvae": 56,
+      "yeohhq": 60,
+      "soaza": 7
+    }
+  },
+  {
+    "path": "src/main/java/seedu/address/logic/commands/appointmentcommands/AppointmentTagCommand.java",
+    "fileType": "functional-code",
+    "lines": [
+      {
+        "lineNumber": 1,
+        "author": {
+          "gitId": "jimvae"
+        },
+        "content": "package seedu.address.logic.commands.appointmentcommands;"
+      },
+      {
+        "lineNumber": 2,
+        "author": {
+          "gitId": "jimvae"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 3,
+        "author": {
+          "gitId": "jimvae"
+        },
+        "content": "import static java.util.Objects.requireNonNull;"
+      },
+      {
+        "lineNumber": 4,
+        "author": {
+          "gitId": "jimvae"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 5,
+        "author": {
+          "gitId": "jimvae"
+        },
+        "content": "import seedu.address.commons.core.Messages;"
+      },
+      {
+        "lineNumber": 6,
+        "author": {
+          "gitId": "jimvae"
+        },
+        "content": "import seedu.address.logic.commands.Command;"
+      },
+      {
+        "lineNumber": 7,
+        "author": {
+          "gitId": "jimvae"
+        },
+        "content": "import seedu.address.logic.commands.CommandResult;"
+      },
+      {
+        "lineNumber": 8,
+        "author": {
+          "gitId": "jimvae"
+        },
+        "content": "import seedu.address.model.Model;"
+      },
+      {
+        "lineNumber": 9,
+        "author": {
+          "gitId": "jimvae"
+        },
+        "content": "import seedu.address.model.filters.appointmentfilters.SearchAppointmentTagsFilter;"
+      },
+      {
+        "lineNumber": 10,
+        "author": {
+          "gitId": "jimvae"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 11,
+        "author": {
+          "gitId": "jimvae"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 12,
+        "author": {
+          "gitId": "jimvae"
+        },
+        "content": "/**"
+      },
+      {
+        "lineNumber": 13,
+        "author": {
+          "gitId": "jimvae"
+        },
+        "content": " * Finds and lists all appointments in address book whose tag name contains any of the argument keywords."
+      },
+      {
+        "lineNumber": 14,
+        "author": {
+          "gitId": "jimvae"
+        },
+        "content": " * Keyword matching is case insensitive."
+      },
+      {
+        "lineNumber": 15,
+        "author": {
+          "gitId": "jimvae"
+        },
+        "content": " */"
+      },
+      {
+        "lineNumber": 16,
+        "author": {
+          "gitId": "jimvae"
+        },
+        "content": "public class AppointmentTagCommand extends Command {"
+      },
+      {
+        "lineNumber": 17,
+        "author": {
+          "gitId": "jimvae"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 18,
+        "author": {
+          "gitId": "jimvae"
+        },
+        "content": "    public static final String COMMAND_WORD \u003d \"a-tag\";"
+      },
+      {
+        "lineNumber": 19,
+        "author": {
+          "gitId": "jimvae"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 20,
+        "author": {
+          "gitId": "jimvae"
+        },
+        "content": "    public static final String MESSAGE_USAGE \u003d COMMAND_WORD + \": Finds all appointments with tags that \""
+      },
+      {
+        "lineNumber": 21,
+        "author": {
+          "gitId": "jimvae"
+        },
+        "content": "            + \"contain any of the specified keywords (case-insensitive) and displays them as a list with index \""
+      },
+      {
+        "lineNumber": 22,
+        "author": {
+          "gitId": "jimvae"
+        },
+        "content": "            + \"numbers.\\n\""
+      },
+      {
+        "lineNumber": 23,
+        "author": {
+          "gitId": "jimvae"
+        },
+        "content": "            + \"Parameters: KEYWORD [MORE_KEYWORDS]...\\n\""
+      },
+      {
+        "lineNumber": 24,
+        "author": {
+          "gitId": "jimvae"
+        },
+        "content": "            + \"Example: \" + COMMAND_WORD + \" alice bob charlie\";"
+      },
+      {
+        "lineNumber": 25,
+        "author": {
+          "gitId": "jimvae"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 26,
+        "author": {
+          "gitId": "jimvae"
+        },
+        "content": "    private final SearchAppointmentTagsFilter predicate;"
+      },
+      {
+        "lineNumber": 27,
+        "author": {
+          "gitId": "jimvae"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 28,
+        "author": {
+          "gitId": "jimvae"
+        },
+        "content": "    public AppointmentTagCommand(SearchAppointmentTagsFilter predicate) {"
+      },
+      {
+        "lineNumber": 29,
+        "author": {
+          "gitId": "jimvae"
+        },
+        "content": "        this.predicate \u003d predicate;"
+      },
+      {
+        "lineNumber": 30,
+        "author": {
+          "gitId": "jimvae"
+        },
+        "content": "    }"
+      },
+      {
+        "lineNumber": 31,
+        "author": {
+          "gitId": "jimvae"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 32,
+        "author": {
+          "gitId": "jimvae"
+        },
+        "content": "    @Override"
+      },
+      {
+        "lineNumber": 33,
+        "author": {
+          "gitId": "jimvae"
+        },
+        "content": "    public CommandResult execute(Model model) {"
+      },
+      {
+        "lineNumber": 34,
+        "author": {
+          "gitId": "jimvae"
+        },
+        "content": "        requireNonNull(model);"
+      },
+      {
+        "lineNumber": 35,
+        "author": {
+          "gitId": "jimvae"
+        },
+        "content": "        model.updateFilteredAppointmentList(predicate);"
+      },
+      {
+        "lineNumber": 36,
+        "author": {
+          "gitId": "jimvae"
+        },
+        "content": "        return new CommandResult("
+      },
+      {
+        "lineNumber": 37,
+        "author": {
+          "gitId": "jimvae"
+        },
+        "content": "                String.format(Messages.MESSAGE_PATIENTS_LISTED_OVERVIEW, model.getFilteredAppointmentList().size()));"
+      },
+      {
+        "lineNumber": 38,
+        "author": {
+          "gitId": "jimvae"
+        },
+        "content": "    }"
+      },
+      {
+        "lineNumber": 39,
+        "author": {
+          "gitId": "jimvae"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 40,
+        "author": {
+          "gitId": "jimvae"
+        },
+        "content": "    @Override"
+      },
+      {
+        "lineNumber": 41,
+        "author": {
+          "gitId": "jimvae"
+        },
+        "content": "    public boolean equals(Object other) {"
+      },
+      {
+        "lineNumber": 42,
+        "author": {
+          "gitId": "jimvae"
+        },
+        "content": "        return other \u003d\u003d this // short circuit if same object"
+      },
+      {
+        "lineNumber": 43,
+        "author": {
+          "gitId": "jimvae"
+        },
+        "content": "                || (other instanceof AppointmentTagCommand // instanceof handles nulls"
+      },
+      {
+        "lineNumber": 44,
+        "author": {
+          "gitId": "jimvae"
+        },
+        "content": "                \u0026\u0026 predicate.equals(((AppointmentTagCommand) other).predicate)); // state check"
+      },
+      {
+        "lineNumber": 45,
+        "author": {
+          "gitId": "jimvae"
+        },
+        "content": "    }"
+      },
+      {
+        "lineNumber": 46,
+        "author": {
+          "gitId": "jimvae"
+        },
+        "content": "}"
+      }
+    ],
+    "authorContributionMap": {
+      "jimvae": 46
     }
   },
   {
@@ -22053,359 +23192,359 @@
       {
         "lineNumber": 13,
         "author": {
-          "gitId": "yeohhq"
+          "gitId": "jimvae"
         },
         "content": "import seedu.address.logic.commands.appointmentcommands.AppointmentDeleteCommand;"
       },
       {
         "lineNumber": 14,
         "author": {
-          "gitId": "chshen1998"
+          "gitId": "jimvae"
         },
-        "content": "import seedu.address.logic.commands.appointmentcommands.AppointmentListCommand;"
+        "content": "import seedu.address.logic.commands.appointmentcommands.AppointmentFindPatientCommand;"
       },
       {
         "lineNumber": 15,
         "author": {
-          "gitId": "soaza"
+          "gitId": "jimvae"
         },
-        "content": "import seedu.address.logic.commands.appointmentcommands.AppointmentScheduleCommand;"
+        "content": "import seedu.address.logic.commands.appointmentcommands.AppointmentIsMissedCommand;"
       },
       {
         "lineNumber": 16,
         "author": {
           "gitId": "jimvae"
         },
-        "content": "import seedu.address.logic.commands.patientcommands.HelpCommand;"
+        "content": "import seedu.address.logic.commands.appointmentcommands.AppointmentListCommand;"
       },
       {
         "lineNumber": 17,
         "author": {
           "gitId": "jimvae"
         },
-        "content": "import seedu.address.logic.commands.patientcommands.PatientAddCommand;"
+        "content": "import seedu.address.logic.commands.appointmentcommands.AppointmentScheduleCommand;"
       },
       {
         "lineNumber": 18,
         "author": {
           "gitId": "jimvae"
         },
-        "content": "import seedu.address.logic.commands.patientcommands.PatientDeleteCommand;"
+        "content": "import seedu.address.logic.commands.appointmentcommands.AppointmentTagCommand;"
       },
       {
         "lineNumber": 19,
         "author": {
           "gitId": "jimvae"
         },
-        "content": "import seedu.address.logic.commands.patientcommands.PatientEditCommand;"
+        "content": "import seedu.address.logic.commands.patientcommands.HelpCommand;"
       },
       {
         "lineNumber": 20,
         "author": {
           "gitId": "jimvae"
         },
-        "content": "import seedu.address.logic.commands.patientcommands.PatientFindCommand;"
+        "content": "import seedu.address.logic.commands.patientcommands.PatientAddCommand;"
       },
       {
         "lineNumber": 21,
         "author": {
           "gitId": "jimvae"
         },
-        "content": "import seedu.address.logic.commands.patientcommands.PatientListCommand;"
+        "content": "import seedu.address.logic.commands.patientcommands.PatientDeleteCommand;"
       },
       {
         "lineNumber": 22,
         "author": {
           "gitId": "jimvae"
         },
-        "content": "import seedu.address.logic.commands.patientcommands.PatientRemarkCommand;"
+        "content": "import seedu.address.logic.commands.patientcommands.PatientEditCommand;"
       },
       {
         "lineNumber": 23,
         "author": {
-          "gitId": "yeohhq"
+          "gitId": "jimvae"
         },
-        "content": "import seedu.address.logic.parser.appointmentparser.DeleteAppointmentCommandParser;"
+        "content": "import seedu.address.logic.commands.patientcommands.PatientFindCommand;"
       },
       {
         "lineNumber": 24,
         "author": {
-          "gitId": "chshen1998"
+          "gitId": "jimvae"
         },
-        "content": "import seedu.address.logic.parser.appointmentparser.ListAppointmentCommandParser;"
+        "content": "import seedu.address.logic.commands.patientcommands.PatientListCommand;"
       },
       {
         "lineNumber": 25,
         "author": {
-          "gitId": "soaza"
+          "gitId": "jimvae"
         },
-        "content": "import seedu.address.logic.parser.appointmentparser.ScheduleAppointmentCommandParser;"
+        "content": "import seedu.address.logic.commands.patientcommands.PatientRemarkCommand;"
       },
       {
         "lineNumber": 26,
         "author": {
-          "gitId": "-"
+          "gitId": "jimvae"
         },
-        "content": "import seedu.address.logic.parser.exceptions.ParseException;"
+        "content": "import seedu.address.logic.parser.appointmentparser.AppointmentFindPatientCommandParser;"
       },
       {
         "lineNumber": 27,
         "author": {
           "gitId": "jimvae"
         },
-        "content": "import seedu.address.logic.parser.patientparser.AddCommandParser;"
+        "content": "import seedu.address.logic.parser.appointmentparser.AppointmentMissedCommandParser;"
       },
       {
         "lineNumber": 28,
         "author": {
           "gitId": "jimvae"
         },
-        "content": "import seedu.address.logic.parser.patientparser.DeleteCommandParser;"
+        "content": "import seedu.address.logic.parser.appointmentparser.AppointmentTagCommandParser;"
       },
       {
         "lineNumber": 29,
         "author": {
           "gitId": "jimvae"
         },
-        "content": "import seedu.address.logic.parser.patientparser.EditCommandParser;"
+        "content": "import seedu.address.logic.parser.appointmentparser.DeleteAppointmentCommandParser;"
       },
       {
         "lineNumber": 30,
         "author": {
           "gitId": "jimvae"
         },
-        "content": "import seedu.address.logic.parser.patientparser.FindCommandParser;"
+        "content": "import seedu.address.logic.parser.appointmentparser.ListAppointmentCommandParser;"
       },
       {
         "lineNumber": 31,
         "author": {
           "gitId": "jimvae"
         },
-        "content": "import seedu.address.logic.parser.patientparser.RemarkCommandParser;"
+        "content": "import seedu.address.logic.parser.appointmentparser.ScheduleAppointmentCommandParser;"
       },
       {
         "lineNumber": 32,
         "author": {
           "gitId": "-"
         },
-        "content": "/**"
+        "content": "import seedu.address.logic.parser.exceptions.ParseException;"
       },
       {
         "lineNumber": 33,
         "author": {
-          "gitId": "-"
+          "gitId": "jimvae"
         },
-        "content": " * Parses user input."
+        "content": "import seedu.address.logic.parser.patientparser.AddCommandParser;"
       },
       {
         "lineNumber": 34,
         "author": {
-          "gitId": "-"
+          "gitId": "jimvae"
         },
-        "content": " */"
+        "content": "import seedu.address.logic.parser.patientparser.DeleteCommandParser;"
       },
       {
         "lineNumber": 35,
         "author": {
-          "gitId": "-"
+          "gitId": "jimvae"
         },
-        "content": "public class AddressBookParser {"
+        "content": "import seedu.address.logic.parser.patientparser.EditCommandParser;"
       },
       {
         "lineNumber": 36,
         "author": {
-          "gitId": "-"
+          "gitId": "jimvae"
         },
-        "content": ""
+        "content": "import seedu.address.logic.parser.patientparser.FindCommandParser;"
       },
       {
         "lineNumber": 37,
         "author": {
-          "gitId": "-"
+          "gitId": "jimvae"
         },
-        "content": "    /**"
+        "content": "import seedu.address.logic.parser.patientparser.RemarkCommandParser;"
       },
       {
         "lineNumber": 38,
         "author": {
           "gitId": "-"
         },
-        "content": "     * Used for initial separation of command word and args."
+        "content": "/**"
       },
       {
         "lineNumber": 39,
         "author": {
           "gitId": "-"
         },
-        "content": "     */"
+        "content": " * Parses user input."
       },
       {
         "lineNumber": 40,
         "author": {
           "gitId": "-"
         },
-        "content": "    private static final Pattern BASIC_COMMAND_FORMAT \u003d Pattern.compile(\"(?\u003ccommandWord\u003e\\\\S+)(?\u003carguments\u003e.*)\");"
+        "content": " */"
       },
       {
         "lineNumber": 41,
         "author": {
           "gitId": "-"
         },
-        "content": ""
+        "content": "public class AddressBookParser {"
       },
       {
         "lineNumber": 42,
         "author": {
           "gitId": "-"
         },
-        "content": "    /**"
+        "content": ""
       },
       {
         "lineNumber": 43,
         "author": {
           "gitId": "-"
         },
-        "content": "     * Parses user input into command for execution."
+        "content": "    /**"
       },
       {
         "lineNumber": 44,
         "author": {
           "gitId": "-"
         },
-        "content": "     *"
+        "content": "     * Used for initial separation of command word and args."
       },
       {
         "lineNumber": 45,
         "author": {
           "gitId": "-"
         },
-        "content": "     * @param userInput full user input string"
+        "content": "     */"
       },
       {
         "lineNumber": 46,
         "author": {
           "gitId": "-"
         },
-        "content": "     * @return the command based on the user input"
+        "content": "    private static final Pattern BASIC_COMMAND_FORMAT \u003d Pattern.compile(\"(?\u003ccommandWord\u003e\\\\S+)(?\u003carguments\u003e.*)\");"
       },
       {
         "lineNumber": 47,
         "author": {
           "gitId": "-"
         },
-        "content": "     * @throws ParseException if the user input does not conform the expected format"
+        "content": ""
       },
       {
         "lineNumber": 48,
         "author": {
           "gitId": "-"
         },
-        "content": "     */"
+        "content": "    /**"
       },
       {
         "lineNumber": 49,
         "author": {
           "gitId": "-"
         },
-        "content": "    public Command parseCommand(String userInput) throws ParseException {"
+        "content": "     * Parses user input into command for execution."
       },
       {
         "lineNumber": 50,
         "author": {
           "gitId": "-"
         },
-        "content": "        final Matcher matcher \u003d BASIC_COMMAND_FORMAT.matcher(userInput.trim());"
+        "content": "     *"
       },
       {
         "lineNumber": 51,
         "author": {
           "gitId": "-"
         },
-        "content": "        if (!matcher.matches()) {"
+        "content": "     * @param userInput full user input string"
       },
       {
         "lineNumber": 52,
         "author": {
           "gitId": "-"
         },
-        "content": "            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, HelpCommand.MESSAGE_USAGE));"
+        "content": "     * @return the command based on the user input"
       },
       {
         "lineNumber": 53,
         "author": {
           "gitId": "-"
         },
-        "content": "        }"
+        "content": "     * @throws ParseException if the user input does not conform the expected format"
       },
       {
         "lineNumber": 54,
         "author": {
           "gitId": "-"
         },
-        "content": ""
+        "content": "     */"
       },
       {
         "lineNumber": 55,
         "author": {
           "gitId": "-"
         },
-        "content": "        final String commandWord \u003d matcher.group(\"commandWord\");"
+        "content": "    public Command parseCommand(String userInput) throws ParseException {"
       },
       {
         "lineNumber": 56,
         "author": {
           "gitId": "-"
         },
-        "content": "        final String arguments \u003d matcher.group(\"arguments\");"
+        "content": "        final Matcher matcher \u003d BASIC_COMMAND_FORMAT.matcher(userInput.trim());"
       },
       {
         "lineNumber": 57,
         "author": {
           "gitId": "-"
         },
-        "content": "        switch (commandWord) {"
+        "content": "        if (!matcher.matches()) {"
       },
       {
         "lineNumber": 58,
         "author": {
           "gitId": "-"
         },
-        "content": ""
+        "content": "            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, HelpCommand.MESSAGE_USAGE));"
       },
       {
         "lineNumber": 59,
         "author": {
-          "gitId": "jimvae"
+          "gitId": "-"
         },
-        "content": "        case PatientAddCommand.COMMAND_WORD:"
+        "content": "        }"
       },
       {
         "lineNumber": 60,
         "author": {
           "gitId": "-"
         },
-        "content": "            return new AddCommandParser().parse(arguments);"
+        "content": ""
       },
       {
         "lineNumber": 61,
         "author": {
           "gitId": "-"
         },
-        "content": ""
+        "content": "        final String commandWord \u003d matcher.group(\"commandWord\");"
       },
       {
         "lineNumber": 62,
         "author": {
-          "gitId": "jimvae"
+          "gitId": "-"
         },
-        "content": "        case PatientEditCommand.COMMAND_WORD:"
+        "content": "        final String arguments \u003d matcher.group(\"arguments\");"
       },
       {
         "lineNumber": 63,
         "author": {
           "gitId": "-"
         },
-        "content": "            return new EditCommandParser().parse(arguments);"
+        "content": "        switch (commandWord) {"
       },
       {
         "lineNumber": 64,
@@ -22419,14 +23558,14 @@
         "author": {
           "gitId": "jimvae"
         },
-        "content": "        case PatientDeleteCommand.COMMAND_WORD:"
+        "content": "        case PatientAddCommand.COMMAND_WORD:"
       },
       {
         "lineNumber": 66,
         "author": {
           "gitId": "-"
         },
-        "content": "            return new DeleteCommandParser().parse(arguments);"
+        "content": "            return new AddCommandParser().parse(arguments);"
       },
       {
         "lineNumber": 67,
@@ -22440,14 +23579,14 @@
         "author": {
           "gitId": "jimvae"
         },
-        "content": "        case PatientFindCommand.COMMAND_WORD:"
+        "content": "        case PatientEditCommand.COMMAND_WORD:"
       },
       {
         "lineNumber": 69,
         "author": {
           "gitId": "-"
         },
-        "content": "            return new FindCommandParser().parse(arguments);"
+        "content": "            return new EditCommandParser().parse(arguments);"
       },
       {
         "lineNumber": 70,
@@ -22461,14 +23600,14 @@
         "author": {
           "gitId": "jimvae"
         },
-        "content": "        case PatientListCommand.COMMAND_WORD:"
+        "content": "        case PatientDeleteCommand.COMMAND_WORD:"
       },
       {
         "lineNumber": 72,
         "author": {
-          "gitId": "jimvae"
+          "gitId": "-"
         },
-        "content": "            return new PatientListCommand();"
+        "content": "            return new DeleteCommandParser().parse(arguments);"
       },
       {
         "lineNumber": 73,
@@ -22480,432 +23619,537 @@
       {
         "lineNumber": 74,
         "author": {
-          "gitId": "yeohhq"
+          "gitId": "jimvae"
         },
-        "content": "        case PatientRemarkCommand.COMMAND_WORD:"
+        "content": "        case PatientFindCommand.COMMAND_WORD:"
       },
       {
         "lineNumber": 75,
         "author": {
-          "gitId": "yeohhq"
+          "gitId": "-"
         },
-        "content": "            return new RemarkCommandParser().parse(arguments);"
+        "content": "            return new FindCommandParser().parse(arguments);"
       },
       {
         "lineNumber": 76,
         "author": {
-          "gitId": "yeohhq"
+          "gitId": "-"
         },
         "content": ""
       },
       {
         "lineNumber": 77,
         "author": {
-          "gitId": "yeohhq"
+          "gitId": "jimvae"
         },
-        "content": "        case AppointmentDeleteCommand.COMMAND_WORD:"
+        "content": "        case PatientListCommand.COMMAND_WORD:"
       },
       {
         "lineNumber": 78,
         "author": {
-          "gitId": "yeohhq"
+          "gitId": "jimvae"
         },
-        "content": "            return new DeleteAppointmentCommandParser().parse(arguments);"
+        "content": "            return new PatientListCommand();"
       },
       {
         "lineNumber": 79,
         "author": {
-          "gitId": "yeohhq"
+          "gitId": "-"
         },
         "content": ""
       },
       {
         "lineNumber": 80,
         "author": {
+          "gitId": "yeohhq"
+        },
+        "content": "        case PatientRemarkCommand.COMMAND_WORD:"
+      },
+      {
+        "lineNumber": 81,
+        "author": {
+          "gitId": "yeohhq"
+        },
+        "content": "            return new RemarkCommandParser().parse(arguments);"
+      },
+      {
+        "lineNumber": 82,
+        "author": {
+          "gitId": "yeohhq"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 83,
+        "author": {
+          "gitId": "yeohhq"
+        },
+        "content": "        case AppointmentDeleteCommand.COMMAND_WORD:"
+      },
+      {
+        "lineNumber": 84,
+        "author": {
+          "gitId": "yeohhq"
+        },
+        "content": "            return new DeleteAppointmentCommandParser().parse(arguments);"
+      },
+      {
+        "lineNumber": 85,
+        "author": {
+          "gitId": "yeohhq"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 86,
+        "author": {
           "gitId": "soaza"
         },
         "content": "        case AppointmentScheduleCommand.COMMAND_WORD:"
       },
       {
-        "lineNumber": 81,
+        "lineNumber": 87,
         "author": {
           "gitId": "soaza"
         },
         "content": "            System.out.println(\"schedule called\");"
       },
       {
-        "lineNumber": 82,
+        "lineNumber": 88,
         "author": {
           "gitId": "soaza"
         },
         "content": "            return new ScheduleAppointmentCommandParser().parse(arguments);"
       },
       {
-        "lineNumber": 83,
-        "author": {
-          "gitId": "soaza"
-        },
-        "content": ""
-      },
-      {
-        "lineNumber": 84,
-        "author": {
-          "gitId": "chshen1998"
-        },
-        "content": "        case AppointmentListCommand.COMMAND_WORD:"
-      },
-      {
-        "lineNumber": 85,
-        "author": {
-          "gitId": "chshen1998"
-        },
-        "content": "            return new ListAppointmentCommandParser().parse(arguments);"
-      },
-      {
-        "lineNumber": 86,
-        "author": {
-          "gitId": "chshen1998"
-        },
-        "content": ""
-      },
-      {
-        "lineNumber": 87,
-        "author": {
-          "gitId": "yeohhq"
-        },
-        "content": "        case ClearCommand.COMMAND_WORD:"
-      },
-      {
-        "lineNumber": 88,
-        "author": {
-          "gitId": "yeohhq"
-        },
-        "content": "            return new ClearCommand();"
-      },
-      {
         "lineNumber": 89,
         "author": {
-          "gitId": "-"
+          "gitId": "soaza"
         },
         "content": ""
       },
       {
         "lineNumber": 90,
         "author": {
-          "gitId": "-"
+          "gitId": "chshen1998"
         },
-        "content": "        case ExitCommand.COMMAND_WORD:"
+        "content": "        case AppointmentListCommand.COMMAND_WORD:"
       },
       {
         "lineNumber": 91,
         "author": {
-          "gitId": "-"
+          "gitId": "chshen1998"
         },
-        "content": "            return new ExitCommand();"
+        "content": "            return new ListAppointmentCommandParser().parse(arguments);"
       },
       {
         "lineNumber": 92,
         "author": {
-          "gitId": "-"
+          "gitId": "chshen1998"
         },
         "content": ""
       },
       {
         "lineNumber": 93,
         "author": {
-          "gitId": "-"
+          "gitId": "jimvae"
         },
-        "content": "        case HelpCommand.COMMAND_WORD:"
+        "content": "        case AppointmentFindPatientCommand.COMMAND_WORD:"
       },
       {
         "lineNumber": 94,
         "author": {
-          "gitId": "-"
+          "gitId": "jimvae"
         },
-        "content": "            return new HelpCommand();"
+        "content": "            return new AppointmentFindPatientCommandParser().parse(arguments);"
       },
       {
         "lineNumber": 95,
         "author": {
-          "gitId": "-"
+          "gitId": "jimvae"
         },
         "content": ""
       },
       {
         "lineNumber": 96,
         "author": {
-          "gitId": "soaza"
+          "gitId": "jimvae"
         },
-        "content": "        case UndoCommand.COMMAND_WORD:"
+        "content": "        case AppointmentIsMissedCommand.COMMAND_WORD:"
       },
       {
         "lineNumber": 97,
         "author": {
-          "gitId": "soaza"
+          "gitId": "jimvae"
         },
-        "content": "            return new UndoCommand();"
+        "content": "            return new AppointmentMissedCommandParser().parse(arguments);"
       },
       {
         "lineNumber": 98,
         "author": {
-          "gitId": "soaza"
+          "gitId": "jimvae"
         },
         "content": ""
       },
       {
         "lineNumber": 99,
         "author": {
+          "gitId": "jimvae"
+        },
+        "content": "        case AppointmentTagCommand.COMMAND_WORD:"
+      },
+      {
+        "lineNumber": 100,
+        "author": {
+          "gitId": "jimvae"
+        },
+        "content": "            return new AppointmentTagCommandParser().parse(arguments);"
+      },
+      {
+        "lineNumber": 101,
+        "author": {
+          "gitId": "jimvae"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 102,
+        "author": {
+          "gitId": "yeohhq"
+        },
+        "content": "        case ClearCommand.COMMAND_WORD:"
+      },
+      {
+        "lineNumber": 103,
+        "author": {
+          "gitId": "yeohhq"
+        },
+        "content": "            return new ClearCommand();"
+      },
+      {
+        "lineNumber": 104,
+        "author": {
+          "gitId": "-"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 105,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "        case ExitCommand.COMMAND_WORD:"
+      },
+      {
+        "lineNumber": 106,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "            return new ExitCommand();"
+      },
+      {
+        "lineNumber": 107,
+        "author": {
+          "gitId": "-"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 108,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "        case HelpCommand.COMMAND_WORD:"
+      },
+      {
+        "lineNumber": 109,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "            return new HelpCommand();"
+      },
+      {
+        "lineNumber": 110,
+        "author": {
+          "gitId": "-"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 111,
+        "author": {
+          "gitId": "soaza"
+        },
+        "content": "        case UndoCommand.COMMAND_WORD:"
+      },
+      {
+        "lineNumber": 112,
+        "author": {
+          "gitId": "soaza"
+        },
+        "content": "            return new UndoCommand();"
+      },
+      {
+        "lineNumber": 113,
+        "author": {
+          "gitId": "soaza"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 114,
+        "author": {
           "gitId": "-"
         },
         "content": "        default:"
       },
       {
-        "lineNumber": 100,
+        "lineNumber": 115,
         "author": {
           "gitId": "-"
         },
         "content": "            throw new ParseException(MESSAGE_UNKNOWN_COMMAND);"
       },
       {
-        "lineNumber": 101,
+        "lineNumber": 116,
         "author": {
           "gitId": "-"
         },
         "content": "        }"
       },
       {
-        "lineNumber": 102,
+        "lineNumber": 117,
         "author": {
           "gitId": "-"
         },
         "content": "    }"
       },
       {
-        "lineNumber": 103,
+        "lineNumber": 118,
         "author": {
           "gitId": "-"
         },
         "content": ""
       },
       {
-        "lineNumber": 104,
+        "lineNumber": 119,
         "author": {
           "gitId": "yeohhq"
         },
         "content": "    // TODO: Implement parser for Appointment type commands that require data retrieval of Patients from patient list."
       },
       {
-        "lineNumber": 105,
+        "lineNumber": 120,
         "author": {
           "gitId": "yeohhq"
         },
         "content": "    //    /**"
       },
       {
-        "lineNumber": 106,
+        "lineNumber": 121,
         "author": {
           "gitId": "yeohhq"
         },
         "content": "    //     * Parses user input into command for execution using overloaded method with reference to patient list."
       },
       {
-        "lineNumber": 107,
+        "lineNumber": 122,
         "author": {
           "gitId": "yeohhq"
         },
         "content": "    //     *"
       },
       {
-        "lineNumber": 108,
+        "lineNumber": 123,
         "author": {
           "gitId": "yeohhq"
         },
         "content": "    //     * @param userInput full user input string"
       },
       {
-        "lineNumber": 109,
+        "lineNumber": 124,
         "author": {
           "gitId": "yeohhq"
         },
         "content": "    //     * @param patientObservableList patient list"
       },
       {
-        "lineNumber": 110,
+        "lineNumber": 125,
         "author": {
           "gitId": "yeohhq"
         },
         "content": "    //     * @return the command based on the user input"
       },
       {
-        "lineNumber": 111,
+        "lineNumber": 126,
         "author": {
           "gitId": "yeohhq"
         },
         "content": "    //     * @throws ParseException if the user input does not conform the expected format"
       },
       {
-        "lineNumber": 112,
+        "lineNumber": 127,
         "author": {
           "gitId": "yeohhq"
         },
         "content": "    //     */"
       },
       {
-        "lineNumber": 113,
+        "lineNumber": 128,
         "author": {
           "gitId": "yeohhq"
         },
         "content": "    //    public Command parseCommand(String userInput, ObservableList\u003cPatient\u003e patientObservableList)"
       },
       {
-        "lineNumber": 114,
+        "lineNumber": 129,
         "author": {
           "gitId": "yeohhq"
         },
         "content": "    //    throws ParseException {"
       },
       {
-        "lineNumber": 115,
+        "lineNumber": 130,
         "author": {
           "gitId": "yeohhq"
         },
         "content": "    //        final Matcher matcher \u003d BASIC_COMMAND_FORMAT.matcher(userInput.trim());"
       },
       {
-        "lineNumber": 116,
+        "lineNumber": 131,
         "author": {
           "gitId": "yeohhq"
         },
         "content": "    //        if (!matcher.matches()) {"
       },
       {
-        "lineNumber": 117,
+        "lineNumber": 132,
         "author": {
           "gitId": "yeohhq"
         },
         "content": "    //            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, HelpCommand.MESSAGE_USAGE));"
       },
       {
-        "lineNumber": 118,
-        "author": {
-          "gitId": "yeohhq"
-        },
-        "content": "    //        }"
-      },
-      {
-        "lineNumber": 119,
-        "author": {
-          "gitId": "yeohhq"
-        },
-        "content": "    //"
-      },
-      {
-        "lineNumber": 120,
-        "author": {
-          "gitId": "yeohhq"
-        },
-        "content": "    //        final String commandWord \u003d matcher.group(\"commandWord\");"
-      },
-      {
-        "lineNumber": 121,
-        "author": {
-          "gitId": "yeohhq"
-        },
-        "content": "    //        final String arguments \u003d matcher.group(\"arguments\");"
-      },
-      {
-        "lineNumber": 122,
-        "author": {
-          "gitId": "yeohhq"
-        },
-        "content": "    //        switch (commandWord) {"
-      },
-      {
-        "lineNumber": 123,
-        "author": {
-          "gitId": "yeohhq"
-        },
-        "content": "    //"
-      },
-      {
-        "lineNumber": 124,
-        "author": {
-          "gitId": "yeohhq"
-        },
-        "content": "    //        case AppointmentScheduleCommand.COMMAND_WORD:"
-      },
-      {
-        "lineNumber": 125,
-        "author": {
-          "gitId": "yeohhq"
-        },
-        "content": "    //            return new ScheduleAppointmentCommandParser().parse(arguments, patientObservableList);"
-      },
-      {
-        "lineNumber": 126,
-        "author": {
-          "gitId": "yeohhq"
-        },
-        "content": "    //"
-      },
-      {
-        "lineNumber": 127,
-        "author": {
-          "gitId": "yeohhq"
-        },
-        "content": "    //        case AppointmentEditCommand.COMMAND_WORD:"
-      },
-      {
-        "lineNumber": 128,
-        "author": {
-          "gitId": "yeohhq"
-        },
-        "content": "    //            return new EditAppointmentCommandParser().parse(arguments, patientObservableList);"
-      },
-      {
-        "lineNumber": 129,
-        "author": {
-          "gitId": "yeohhq"
-        },
-        "content": "    //"
-      },
-      {
-        "lineNumber": 130,
-        "author": {
-          "gitId": "yeohhq"
-        },
-        "content": "    //        default:"
-      },
-      {
-        "lineNumber": 131,
-        "author": {
-          "gitId": "yeohhq"
-        },
-        "content": "    //            throw new ParseException(MESSAGE_UNKNOWN_COMMAND);"
-      },
-      {
-        "lineNumber": 132,
-        "author": {
-          "gitId": "yeohhq"
-        },
-        "content": "    //        }"
-      },
-      {
         "lineNumber": 133,
         "author": {
           "gitId": "yeohhq"
         },
-        "content": "    //    }"
+        "content": "    //        }"
       },
       {
         "lineNumber": 134,
         "author": {
           "gitId": "yeohhq"
         },
-        "content": ""
+        "content": "    //"
       },
       {
         "lineNumber": 135,
+        "author": {
+          "gitId": "yeohhq"
+        },
+        "content": "    //        final String commandWord \u003d matcher.group(\"commandWord\");"
+      },
+      {
+        "lineNumber": 136,
+        "author": {
+          "gitId": "yeohhq"
+        },
+        "content": "    //        final String arguments \u003d matcher.group(\"arguments\");"
+      },
+      {
+        "lineNumber": 137,
+        "author": {
+          "gitId": "yeohhq"
+        },
+        "content": "    //        switch (commandWord) {"
+      },
+      {
+        "lineNumber": 138,
+        "author": {
+          "gitId": "yeohhq"
+        },
+        "content": "    //"
+      },
+      {
+        "lineNumber": 139,
+        "author": {
+          "gitId": "yeohhq"
+        },
+        "content": "    //        case AppointmentScheduleCommand.COMMAND_WORD:"
+      },
+      {
+        "lineNumber": 140,
+        "author": {
+          "gitId": "yeohhq"
+        },
+        "content": "    //            return new ScheduleAppointmentCommandParser().parse(arguments, patientObservableList);"
+      },
+      {
+        "lineNumber": 141,
+        "author": {
+          "gitId": "yeohhq"
+        },
+        "content": "    //"
+      },
+      {
+        "lineNumber": 142,
+        "author": {
+          "gitId": "yeohhq"
+        },
+        "content": "    //        case AppointmentEditCommand.COMMAND_WORD:"
+      },
+      {
+        "lineNumber": 143,
+        "author": {
+          "gitId": "yeohhq"
+        },
+        "content": "    //            return new EditAppointmentCommandParser().parse(arguments, patientObservableList);"
+      },
+      {
+        "lineNumber": 144,
+        "author": {
+          "gitId": "yeohhq"
+        },
+        "content": "    //"
+      },
+      {
+        "lineNumber": 145,
+        "author": {
+          "gitId": "yeohhq"
+        },
+        "content": "    //        default:"
+      },
+      {
+        "lineNumber": 146,
+        "author": {
+          "gitId": "yeohhq"
+        },
+        "content": "    //            throw new ParseException(MESSAGE_UNKNOWN_COMMAND);"
+      },
+      {
+        "lineNumber": 147,
+        "author": {
+          "gitId": "yeohhq"
+        },
+        "content": "    //        }"
+      },
+      {
+        "lineNumber": 148,
+        "author": {
+          "gitId": "yeohhq"
+        },
+        "content": "    //    }"
+      },
+      {
+        "lineNumber": 149,
+        "author": {
+          "gitId": "yeohhq"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 150,
         "author": {
           "gitId": "-"
         },
@@ -22913,10 +24157,10 @@
       }
     ],
     "authorContributionMap": {
-      "jimvae": 18,
-      "yeohhq": 41,
-      "soaza": 10,
-      "chshen1998": 5,
+      "jimvae": 39,
+      "yeohhq": 39,
+      "soaza": 8,
+      "chshen1998": 3,
       "-": 61
     }
   },
@@ -24733,6 +25977,747 @@
       "soaza": 1,
       "gordonfgz": 52,
       "-": 120
+    }
+  },
+  {
+    "path": "src/main/java/seedu/address/logic/parser/appointmentparser/AppointmentFindPatientCommandParser.java",
+    "fileType": "functional-code",
+    "lines": [
+      {
+        "lineNumber": 1,
+        "author": {
+          "gitId": "jimvae"
+        },
+        "content": "package seedu.address.logic.parser.appointmentparser;"
+      },
+      {
+        "lineNumber": 2,
+        "author": {
+          "gitId": "jimvae"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 3,
+        "author": {
+          "gitId": "jimvae"
+        },
+        "content": "import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;"
+      },
+      {
+        "lineNumber": 4,
+        "author": {
+          "gitId": "jimvae"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 5,
+        "author": {
+          "gitId": "jimvae"
+        },
+        "content": "import java.util.Arrays;"
+      },
+      {
+        "lineNumber": 6,
+        "author": {
+          "gitId": "jimvae"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 7,
+        "author": {
+          "gitId": "jimvae"
+        },
+        "content": "import seedu.address.logic.commands.appointmentcommands.AppointmentFindPatientCommand;"
+      },
+      {
+        "lineNumber": 8,
+        "author": {
+          "gitId": "jimvae"
+        },
+        "content": "import seedu.address.logic.parser.Parser;"
+      },
+      {
+        "lineNumber": 9,
+        "author": {
+          "gitId": "jimvae"
+        },
+        "content": "import seedu.address.logic.parser.exceptions.ParseException;"
+      },
+      {
+        "lineNumber": 10,
+        "author": {
+          "gitId": "jimvae"
+        },
+        "content": "import seedu.address.model.filters.appointmentfilters.SearchPatientFilter;"
+      },
+      {
+        "lineNumber": 11,
+        "author": {
+          "gitId": "jimvae"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 12,
+        "author": {
+          "gitId": "jimvae"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 13,
+        "author": {
+          "gitId": "jimvae"
+        },
+        "content": "/**"
+      },
+      {
+        "lineNumber": 14,
+        "author": {
+          "gitId": "jimvae"
+        },
+        "content": " * Parses input arguments and creates a new AppointmentFindPatientCommand object"
+      },
+      {
+        "lineNumber": 15,
+        "author": {
+          "gitId": "jimvae"
+        },
+        "content": " */"
+      },
+      {
+        "lineNumber": 16,
+        "author": {
+          "gitId": "jimvae"
+        },
+        "content": "public class AppointmentFindPatientCommandParser implements Parser\u003cAppointmentFindPatientCommand\u003e {"
+      },
+      {
+        "lineNumber": 17,
+        "author": {
+          "gitId": "jimvae"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 18,
+        "author": {
+          "gitId": "jimvae"
+        },
+        "content": "    /**"
+      },
+      {
+        "lineNumber": 19,
+        "author": {
+          "gitId": "jimvae"
+        },
+        "content": "     * Parses the given {@code String} of arguments in the context of the PatientFindCommand"
+      },
+      {
+        "lineNumber": 20,
+        "author": {
+          "gitId": "jimvae"
+        },
+        "content": "     * and returns a PatientFindCommand object for execution."
+      },
+      {
+        "lineNumber": 21,
+        "author": {
+          "gitId": "jimvae"
+        },
+        "content": "     * @throws ParseException if the user input does not conform the expected format"
+      },
+      {
+        "lineNumber": 22,
+        "author": {
+          "gitId": "jimvae"
+        },
+        "content": "     */"
+      },
+      {
+        "lineNumber": 23,
+        "author": {
+          "gitId": "jimvae"
+        },
+        "content": "    public AppointmentFindPatientCommand parse(String args) throws ParseException {"
+      },
+      {
+        "lineNumber": 24,
+        "author": {
+          "gitId": "jimvae"
+        },
+        "content": "        String trimmedArgs \u003d args.trim();"
+      },
+      {
+        "lineNumber": 25,
+        "author": {
+          "gitId": "jimvae"
+        },
+        "content": "        if (trimmedArgs.isEmpty()) {"
+      },
+      {
+        "lineNumber": 26,
+        "author": {
+          "gitId": "jimvae"
+        },
+        "content": "            throw new ParseException("
+      },
+      {
+        "lineNumber": 27,
+        "author": {
+          "gitId": "jimvae"
+        },
+        "content": "                    String.format(MESSAGE_INVALID_COMMAND_FORMAT, AppointmentFindPatientCommand.MESSAGE_USAGE));"
+      },
+      {
+        "lineNumber": 28,
+        "author": {
+          "gitId": "jimvae"
+        },
+        "content": "        }"
+      },
+      {
+        "lineNumber": 29,
+        "author": {
+          "gitId": "jimvae"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 30,
+        "author": {
+          "gitId": "jimvae"
+        },
+        "content": "        String[] nameKeywords \u003d trimmedArgs.split(\"\\\\s+\");"
+      },
+      {
+        "lineNumber": 31,
+        "author": {
+          "gitId": "jimvae"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 32,
+        "author": {
+          "gitId": "jimvae"
+        },
+        "content": "        return new AppointmentFindPatientCommand(new SearchPatientFilter(Arrays.asList(nameKeywords)));"
+      },
+      {
+        "lineNumber": 33,
+        "author": {
+          "gitId": "jimvae"
+        },
+        "content": "    }"
+      },
+      {
+        "lineNumber": 34,
+        "author": {
+          "gitId": "jimvae"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 35,
+        "author": {
+          "gitId": "jimvae"
+        },
+        "content": "}"
+      }
+    ],
+    "authorContributionMap": {
+      "jimvae": 35
+    }
+  },
+  {
+    "path": "src/main/java/seedu/address/logic/parser/appointmentparser/AppointmentMissedCommandParser.java",
+    "fileType": "functional-code",
+    "lines": [
+      {
+        "lineNumber": 1,
+        "author": {
+          "gitId": "jimvae"
+        },
+        "content": "package seedu.address.logic.parser.appointmentparser;"
+      },
+      {
+        "lineNumber": 2,
+        "author": {
+          "gitId": "jimvae"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 3,
+        "author": {
+          "gitId": "jimvae"
+        },
+        "content": "import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;"
+      },
+      {
+        "lineNumber": 4,
+        "author": {
+          "gitId": "jimvae"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 5,
+        "author": {
+          "gitId": "jimvae"
+        },
+        "content": "import seedu.address.logic.commands.appointmentcommands.AppointmentIsMissedCommand;"
+      },
+      {
+        "lineNumber": 6,
+        "author": {
+          "gitId": "jimvae"
+        },
+        "content": "import seedu.address.logic.commands.patientcommands.PatientFindCommand;"
+      },
+      {
+        "lineNumber": 7,
+        "author": {
+          "gitId": "jimvae"
+        },
+        "content": "import seedu.address.logic.parser.Parser;"
+      },
+      {
+        "lineNumber": 8,
+        "author": {
+          "gitId": "jimvae"
+        },
+        "content": "import seedu.address.logic.parser.exceptions.ParseException;"
+      },
+      {
+        "lineNumber": 9,
+        "author": {
+          "gitId": "jimvae"
+        },
+        "content": "import seedu.address.model.filters.appointmentfilters.SearchAppointmentMissedFilter;"
+      },
+      {
+        "lineNumber": 10,
+        "author": {
+          "gitId": "jimvae"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 11,
+        "author": {
+          "gitId": "jimvae"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 12,
+        "author": {
+          "gitId": "jimvae"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 13,
+        "author": {
+          "gitId": "jimvae"
+        },
+        "content": "/**"
+      },
+      {
+        "lineNumber": 14,
+        "author": {
+          "gitId": "jimvae"
+        },
+        "content": " * Parses input arguments and creates a new AppointmentIsMissedCommand object"
+      },
+      {
+        "lineNumber": 15,
+        "author": {
+          "gitId": "jimvae"
+        },
+        "content": " */"
+      },
+      {
+        "lineNumber": 16,
+        "author": {
+          "gitId": "jimvae"
+        },
+        "content": "public class AppointmentMissedCommandParser implements Parser\u003cAppointmentIsMissedCommand\u003e {"
+      },
+      {
+        "lineNumber": 17,
+        "author": {
+          "gitId": "jimvae"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 18,
+        "author": {
+          "gitId": "jimvae"
+        },
+        "content": "    /**"
+      },
+      {
+        "lineNumber": 19,
+        "author": {
+          "gitId": "jimvae"
+        },
+        "content": "     * Parses the given {@code String} of arguments in the context of the PatientFindCommand"
+      },
+      {
+        "lineNumber": 20,
+        "author": {
+          "gitId": "jimvae"
+        },
+        "content": "     * and returns a PatientFindCommand object for execution."
+      },
+      {
+        "lineNumber": 21,
+        "author": {
+          "gitId": "jimvae"
+        },
+        "content": "     * @throws ParseException if the user input does not conform the expected format"
+      },
+      {
+        "lineNumber": 22,
+        "author": {
+          "gitId": "jimvae"
+        },
+        "content": "     */"
+      },
+      {
+        "lineNumber": 23,
+        "author": {
+          "gitId": "jimvae"
+        },
+        "content": "    public AppointmentIsMissedCommand parse(String args) throws ParseException {"
+      },
+      {
+        "lineNumber": 24,
+        "author": {
+          "gitId": "jimvae"
+        },
+        "content": "        if (!args.isEmpty()) {"
+      },
+      {
+        "lineNumber": 25,
+        "author": {
+          "gitId": "jimvae"
+        },
+        "content": "            throw new ParseException("
+      },
+      {
+        "lineNumber": 26,
+        "author": {
+          "gitId": "jimvae"
+        },
+        "content": "                    String.format(MESSAGE_INVALID_COMMAND_FORMAT, PatientFindCommand.MESSAGE_USAGE));"
+      },
+      {
+        "lineNumber": 27,
+        "author": {
+          "gitId": "jimvae"
+        },
+        "content": "        }"
+      },
+      {
+        "lineNumber": 28,
+        "author": {
+          "gitId": "jimvae"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 29,
+        "author": {
+          "gitId": "jimvae"
+        },
+        "content": "        return new AppointmentIsMissedCommand(new SearchAppointmentMissedFilter());"
+      },
+      {
+        "lineNumber": 30,
+        "author": {
+          "gitId": "jimvae"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 31,
+        "author": {
+          "gitId": "jimvae"
+        },
+        "content": "    }"
+      },
+      {
+        "lineNumber": 32,
+        "author": {
+          "gitId": "jimvae"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 33,
+        "author": {
+          "gitId": "jimvae"
+        },
+        "content": "}"
+      }
+    ],
+    "authorContributionMap": {
+      "jimvae": 33
+    }
+  },
+  {
+    "path": "src/main/java/seedu/address/logic/parser/appointmentparser/AppointmentTagCommandParser.java",
+    "fileType": "functional-code",
+    "lines": [
+      {
+        "lineNumber": 1,
+        "author": {
+          "gitId": "jimvae"
+        },
+        "content": "package seedu.address.logic.parser.appointmentparser;"
+      },
+      {
+        "lineNumber": 2,
+        "author": {
+          "gitId": "jimvae"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 3,
+        "author": {
+          "gitId": "jimvae"
+        },
+        "content": "import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;"
+      },
+      {
+        "lineNumber": 4,
+        "author": {
+          "gitId": "jimvae"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 5,
+        "author": {
+          "gitId": "jimvae"
+        },
+        "content": "import java.util.Arrays;"
+      },
+      {
+        "lineNumber": 6,
+        "author": {
+          "gitId": "jimvae"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 7,
+        "author": {
+          "gitId": "jimvae"
+        },
+        "content": "import seedu.address.logic.commands.appointmentcommands.AppointmentTagCommand;"
+      },
+      {
+        "lineNumber": 8,
+        "author": {
+          "gitId": "jimvae"
+        },
+        "content": "import seedu.address.logic.parser.Parser;"
+      },
+      {
+        "lineNumber": 9,
+        "author": {
+          "gitId": "jimvae"
+        },
+        "content": "import seedu.address.logic.parser.exceptions.ParseException;"
+      },
+      {
+        "lineNumber": 10,
+        "author": {
+          "gitId": "jimvae"
+        },
+        "content": "import seedu.address.model.filters.appointmentfilters.SearchAppointmentTagsFilter;"
+      },
+      {
+        "lineNumber": 11,
+        "author": {
+          "gitId": "jimvae"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 12,
+        "author": {
+          "gitId": "jimvae"
+        },
+        "content": "/**"
+      },
+      {
+        "lineNumber": 13,
+        "author": {
+          "gitId": "jimvae"
+        },
+        "content": " * Parses input arguments and creates a new AppointmentTagCommand object"
+      },
+      {
+        "lineNumber": 14,
+        "author": {
+          "gitId": "jimvae"
+        },
+        "content": " */"
+      },
+      {
+        "lineNumber": 15,
+        "author": {
+          "gitId": "jimvae"
+        },
+        "content": "public class AppointmentTagCommandParser implements Parser\u003cAppointmentTagCommand\u003e {"
+      },
+      {
+        "lineNumber": 16,
+        "author": {
+          "gitId": "jimvae"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 17,
+        "author": {
+          "gitId": "jimvae"
+        },
+        "content": "    /**"
+      },
+      {
+        "lineNumber": 18,
+        "author": {
+          "gitId": "jimvae"
+        },
+        "content": "     * Parses the given {@code String} of arguments in the context of the PatientFindCommand"
+      },
+      {
+        "lineNumber": 19,
+        "author": {
+          "gitId": "jimvae"
+        },
+        "content": "     * and returns a PatientFindCommand object for execution."
+      },
+      {
+        "lineNumber": 20,
+        "author": {
+          "gitId": "jimvae"
+        },
+        "content": "     * @throws ParseException if the user input does not conform the expected format"
+      },
+      {
+        "lineNumber": 21,
+        "author": {
+          "gitId": "jimvae"
+        },
+        "content": "     */"
+      },
+      {
+        "lineNumber": 22,
+        "author": {
+          "gitId": "jimvae"
+        },
+        "content": "    public AppointmentTagCommand parse(String args) throws ParseException {"
+      },
+      {
+        "lineNumber": 23,
+        "author": {
+          "gitId": "jimvae"
+        },
+        "content": "        String trimmedArgs \u003d args.trim();"
+      },
+      {
+        "lineNumber": 24,
+        "author": {
+          "gitId": "jimvae"
+        },
+        "content": "        if (trimmedArgs.isEmpty()) {"
+      },
+      {
+        "lineNumber": 25,
+        "author": {
+          "gitId": "jimvae"
+        },
+        "content": "            throw new ParseException("
+      },
+      {
+        "lineNumber": 26,
+        "author": {
+          "gitId": "jimvae"
+        },
+        "content": "                    String.format(MESSAGE_INVALID_COMMAND_FORMAT, AppointmentTagCommand.MESSAGE_USAGE));"
+      },
+      {
+        "lineNumber": 27,
+        "author": {
+          "gitId": "jimvae"
+        },
+        "content": "        }"
+      },
+      {
+        "lineNumber": 28,
+        "author": {
+          "gitId": "jimvae"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 29,
+        "author": {
+          "gitId": "jimvae"
+        },
+        "content": "        String[] nameKeywords \u003d trimmedArgs.split(\"\\\\s+\");"
+      },
+      {
+        "lineNumber": 30,
+        "author": {
+          "gitId": "jimvae"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 31,
+        "author": {
+          "gitId": "jimvae"
+        },
+        "content": "        return new AppointmentTagCommand(new SearchAppointmentTagsFilter(Arrays.asList(nameKeywords)));"
+      },
+      {
+        "lineNumber": 32,
+        "author": {
+          "gitId": "jimvae"
+        },
+        "content": "    }"
+      },
+      {
+        "lineNumber": 33,
+        "author": {
+          "gitId": "jimvae"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 34,
+        "author": {
+          "gitId": "jimvae"
+        },
+        "content": "}"
+      }
+    ],
+    "authorContributionMap": {
+      "jimvae": 34
     }
   },
   {
@@ -32695,9 +34680,9 @@
       {
         "lineNumber": 23,
         "author": {
-          "gitId": "soaza"
+          "gitId": "jimvae"
         },
-        "content": "    private final String patientString;"
+        "content": "    private String patientString;"
       },
       {
         "lineNumber": 24,
@@ -33199,310 +35184,310 @@
       {
         "lineNumber": 95,
         "author": {
-          "gitId": "soaza"
+          "gitId": "jimvae"
         },
-        "content": "        ArrayList\u003cPatient\u003e arr \u003d new ArrayList\u003c\u003e(addressBook.getPatientList());"
+        "content": "        // This method applies for reading the Json file"
       },
       {
         "lineNumber": 96,
         "author": {
           "gitId": "soaza"
         },
-        "content": "        for (int i \u003d 0; i \u003c arr.size(); i++) {"
+        "content": "        ArrayList\u003cPatient\u003e arr \u003d new ArrayList\u003c\u003e(addressBook.getPatientList());"
       },
       {
         "lineNumber": 97,
         "author": {
           "gitId": "soaza"
         },
-        "content": "            if (arr.get(i).getName().toString().equalsIgnoreCase(patientString)) {"
+        "content": "        for (int i \u003d 0; i \u003c arr.size(); i++) {"
       },
       {
         "lineNumber": 98,
         "author": {
-          "gitId": "soaza"
+          "gitId": "jimvae"
         },
-        "content": "                patient \u003d arr.get(i);"
+        "content": "            if (arr.get(i).getName().fullName.equals(patientString)) {"
       },
       {
         "lineNumber": 99,
         "author": {
           "gitId": "soaza"
         },
-        "content": "            }"
+        "content": "                patient \u003d arr.get(i);"
       },
       {
         "lineNumber": 100,
         "author": {
           "gitId": "soaza"
         },
-        "content": "        }"
+        "content": "            }"
       },
       {
         "lineNumber": 101,
         "author": {
           "gitId": "soaza"
         },
-        "content": "    }"
+        "content": "        }"
       },
       {
         "lineNumber": 102,
         "author": {
           "gitId": "soaza"
         },
-        "content": ""
+        "content": "    }"
       },
       {
         "lineNumber": 103,
         "author": {
-          "gitId": "yeohhq"
-        },
-        "content": "    /**"
-      },
-      {
-        "lineNumber": 104,
-        "author": {
-          "gitId": "yeohhq"
-        },
-        "content": "     * Returns an immutable tag set, which throws {@code UnsupportedOperationException}"
-      },
-      {
-        "lineNumber": 105,
-        "author": {
-          "gitId": "yeohhq"
-        },
-        "content": "     * if modification is attempted."
-      },
-      {
-        "lineNumber": 106,
-        "author": {
-          "gitId": "yeohhq"
-        },
-        "content": "     */"
-      },
-      {
-        "lineNumber": 107,
-        "author": {
-          "gitId": "yeohhq"
-        },
-        "content": "    public Set\u003cTag\u003e getTags() {"
-      },
-      {
-        "lineNumber": 108,
-        "author": {
-          "gitId": "yeohhq"
-        },
-        "content": "        return Collections.unmodifiableSet(tags);"
-      },
-      {
-        "lineNumber": 109,
-        "author": {
-          "gitId": "yeohhq"
-        },
-        "content": "    }"
-      },
-      {
-        "lineNumber": 110,
-        "author": {
-          "gitId": "yeohhq"
+          "gitId": "soaza"
         },
         "content": ""
       },
       {
-        "lineNumber": 111,
+        "lineNumber": 104,
         "author": {
-          "gitId": "yeohhq"
+          "gitId": "jimvae"
         },
         "content": "    /**"
       },
       {
-        "lineNumber": 112,
+        "lineNumber": 105,
         "author": {
-          "gitId": "yeohhq"
+          "gitId": "jimvae"
         },
-        "content": "     * Returns true if both appointments have the same appointment time, patient, description."
+        "content": "     * Retrieves patient using index"
       },
       {
-        "lineNumber": 113,
+        "lineNumber": 106,
         "author": {
-          "gitId": "yeohhq"
+          "gitId": "jimvae"
         },
-        "content": "     * This defines a weaker notion of equality between two appointments."
+        "content": "     * @param arr"
       },
       {
-        "lineNumber": 114,
+        "lineNumber": 107,
         "author": {
-          "gitId": "yeohhq"
+          "gitId": "jimvae"
+        },
+        "content": "     * @param index"
+      },
+      {
+        "lineNumber": 108,
+        "author": {
+          "gitId": "jimvae"
         },
         "content": "     */"
       },
       {
+        "lineNumber": 109,
+        "author": {
+          "gitId": "jimvae"
+        },
+        "content": "    // This method only applies for the ScheduleAppointmentCommand"
+      },
+      {
+        "lineNumber": 110,
+        "author": {
+          "gitId": "jimvae"
+        },
+        "content": "    public void parsePatient(ArrayList\u003cPatient\u003e arr, int index) {"
+      },
+      {
+        "lineNumber": 111,
+        "author": {
+          "gitId": "jimvae"
+        },
+        "content": "        patient \u003d arr.get(index - 1);"
+      },
+      {
+        "lineNumber": 112,
+        "author": {
+          "gitId": "jimvae"
+        },
+        "content": "        patientString \u003d patient.getName().fullName.toString();"
+      },
+      {
+        "lineNumber": 113,
+        "author": {
+          "gitId": "jimvae"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 114,
+        "author": {
+          "gitId": "jimvae"
+        },
+        "content": "    }"
+      },
+      {
         "lineNumber": 115,
         "author": {
-          "gitId": "yeohhq"
+          "gitId": "jimvae"
         },
-        "content": "    public boolean isSameAppointment(Appointment otherAppointment) {"
+        "content": ""
       },
       {
         "lineNumber": 116,
         "author": {
           "gitId": "yeohhq"
         },
-        "content": "        if (otherAppointment \u003d\u003d this) {"
+        "content": "    /**"
       },
       {
         "lineNumber": 117,
         "author": {
           "gitId": "yeohhq"
         },
-        "content": "            return true;"
+        "content": "     * Returns an immutable tag set, which throws {@code UnsupportedOperationException}"
       },
       {
         "lineNumber": 118,
         "author": {
           "gitId": "yeohhq"
         },
-        "content": "        }"
+        "content": "     * if modification is attempted."
       },
       {
         "lineNumber": 119,
-        "author": {
-          "gitId": "soaza"
-        },
-        "content": "        System.out.println(otherAppointment.patientString);"
-      },
-      {
-        "lineNumber": 120,
-        "author": {
-          "gitId": "yeohhq"
-        },
-        "content": "        return otherAppointment !\u003d null"
-      },
-      {
-        "lineNumber": 121,
-        "author": {
-          "gitId": "yeohhq"
-        },
-        "content": "                \u0026\u0026 otherAppointment.getAppointmentTime().equals(getAppointmentTime())"
-      },
-      {
-        "lineNumber": 122,
-        "author": {
-          "gitId": "soaza"
-        },
-        "content": "                \u0026\u0026 otherAppointment.getPatientString().equals(getPatientString())"
-      },
-      {
-        "lineNumber": 123,
-        "author": {
-          "gitId": "yeohhq"
-        },
-        "content": "                \u0026\u0026 otherAppointment.getDescription().equals(getDescription());"
-      },
-      {
-        "lineNumber": 124,
-        "author": {
-          "gitId": "yeohhq"
-        },
-        "content": ""
-      },
-      {
-        "lineNumber": 125,
-        "author": {
-          "gitId": "yeohhq"
-        },
-        "content": "    }"
-      },
-      {
-        "lineNumber": 126,
-        "author": {
-          "gitId": "yeohhq"
-        },
-        "content": ""
-      },
-      {
-        "lineNumber": 127,
-        "author": {
-          "gitId": "yeohhq"
-        },
-        "content": "    /**"
-      },
-      {
-        "lineNumber": 128,
-        "author": {
-          "gitId": "yeohhq"
-        },
-        "content": "     * Returns true if both appointments have the same identity and data fields."
-      },
-      {
-        "lineNumber": 129,
-        "author": {
-          "gitId": "yeohhq"
-        },
-        "content": "     * This defines a stronger notion of equality between two appointments."
-      },
-      {
-        "lineNumber": 130,
         "author": {
           "gitId": "yeohhq"
         },
         "content": "     */"
       },
       {
-        "lineNumber": 131,
+        "lineNumber": 120,
         "author": {
           "gitId": "yeohhq"
         },
-        "content": "    public boolean equals(Object other) {"
+        "content": "    public Set\u003cTag\u003e getTags() {"
       },
       {
-        "lineNumber": 132,
+        "lineNumber": 121,
         "author": {
           "gitId": "yeohhq"
         },
-        "content": "        if (other \u003d\u003d this) {"
+        "content": "        return Collections.unmodifiableSet(tags);"
       },
       {
-        "lineNumber": 133,
+        "lineNumber": 122,
         "author": {
           "gitId": "yeohhq"
         },
-        "content": "            return true;"
+        "content": "    }"
       },
       {
-        "lineNumber": 134,
-        "author": {
-          "gitId": "yeohhq"
-        },
-        "content": "        }"
-      },
-      {
-        "lineNumber": 135,
+        "lineNumber": 123,
         "author": {
           "gitId": "yeohhq"
         },
         "content": ""
       },
       {
+        "lineNumber": 124,
+        "author": {
+          "gitId": "yeohhq"
+        },
+        "content": "    /**"
+      },
+      {
+        "lineNumber": 125,
+        "author": {
+          "gitId": "yeohhq"
+        },
+        "content": "     * Returns true if both appointments have the same appointment time, patient, description."
+      },
+      {
+        "lineNumber": 126,
+        "author": {
+          "gitId": "yeohhq"
+        },
+        "content": "     * This defines a weaker notion of equality between two appointments."
+      },
+      {
+        "lineNumber": 127,
+        "author": {
+          "gitId": "yeohhq"
+        },
+        "content": "     */"
+      },
+      {
+        "lineNumber": 128,
+        "author": {
+          "gitId": "yeohhq"
+        },
+        "content": "    public boolean isSameAppointment(Appointment otherAppointment) {"
+      },
+      {
+        "lineNumber": 129,
+        "author": {
+          "gitId": "yeohhq"
+        },
+        "content": "        if (otherAppointment \u003d\u003d this) {"
+      },
+      {
+        "lineNumber": 130,
+        "author": {
+          "gitId": "yeohhq"
+        },
+        "content": "            return true;"
+      },
+      {
+        "lineNumber": 131,
+        "author": {
+          "gitId": "yeohhq"
+        },
+        "content": "        }"
+      },
+      {
+        "lineNumber": 132,
+        "author": {
+          "gitId": "soaza"
+        },
+        "content": "        System.out.println(otherAppointment.patientString);"
+      },
+      {
+        "lineNumber": 133,
+        "author": {
+          "gitId": "yeohhq"
+        },
+        "content": "        return otherAppointment !\u003d null"
+      },
+      {
+        "lineNumber": 134,
+        "author": {
+          "gitId": "yeohhq"
+        },
+        "content": "                \u0026\u0026 otherAppointment.getAppointmentTime().equals(getAppointmentTime())"
+      },
+      {
+        "lineNumber": 135,
+        "author": {
+          "gitId": "soaza"
+        },
+        "content": "                \u0026\u0026 otherAppointment.getPatientString().equals(getPatientString())"
+      },
+      {
         "lineNumber": 136,
         "author": {
           "gitId": "yeohhq"
         },
-        "content": "        if (!(other instanceof Appointment)) {"
+        "content": "                \u0026\u0026 otherAppointment.getDescription().equals(getDescription());"
       },
       {
         "lineNumber": 137,
         "author": {
           "gitId": "yeohhq"
         },
-        "content": "            return false;"
+        "content": ""
       },
       {
         "lineNumber": 138,
         "author": {
           "gitId": "yeohhq"
         },
-        "content": "        }"
+        "content": "    }"
       },
       {
         "lineNumber": 139,
@@ -33516,248 +35501,339 @@
         "author": {
           "gitId": "yeohhq"
         },
-        "content": "        Appointment otherAppointment \u003d (Appointment) other;"
+        "content": "    /**"
       },
       {
         "lineNumber": 141,
         "author": {
           "gitId": "yeohhq"
         },
-        "content": "        return otherAppointment !\u003d null"
+        "content": "     * Returns true if both appointments have the same identity and data fields."
       },
       {
         "lineNumber": 142,
         "author": {
           "gitId": "yeohhq"
         },
-        "content": "                \u0026\u0026 otherAppointment.getAppointmentTime().equals(getAppointmentTime())"
+        "content": "     * This defines a stronger notion of equality between two appointments."
       },
       {
         "lineNumber": 143,
         "author": {
           "gitId": "yeohhq"
         },
-        "content": "                \u0026\u0026 otherAppointment.getPatient().equals(getPatient())"
+        "content": "     */"
       },
       {
         "lineNumber": 144,
         "author": {
           "gitId": "yeohhq"
         },
-        "content": "                \u0026\u0026 otherAppointment.isMissed().equals(isMissed())"
+        "content": "    public boolean equals(Object other) {"
       },
       {
         "lineNumber": 145,
         "author": {
           "gitId": "yeohhq"
         },
-        "content": "                \u0026\u0026 otherAppointment.isCompleted().equals(isCompleted())"
+        "content": "        if (other \u003d\u003d this) {"
       },
       {
         "lineNumber": 146,
         "author": {
           "gitId": "yeohhq"
         },
-        "content": "                \u0026\u0026 otherAppointment.getDescription().equals(getDescription())"
+        "content": "            return true;"
       },
       {
         "lineNumber": 147,
         "author": {
           "gitId": "yeohhq"
         },
-        "content": "                \u0026\u0026 otherAppointment.getTags().equals(getTags());"
+        "content": "        }"
       },
       {
         "lineNumber": 148,
         "author": {
           "gitId": "yeohhq"
         },
-        "content": "    }"
+        "content": ""
       },
       {
         "lineNumber": 149,
         "author": {
           "gitId": "yeohhq"
         },
-        "content": ""
+        "content": "        if (!(other instanceof Appointment)) {"
       },
       {
         "lineNumber": 150,
         "author": {
           "gitId": "yeohhq"
         },
-        "content": "    @Override"
+        "content": "            return false;"
       },
       {
         "lineNumber": 151,
         "author": {
           "gitId": "yeohhq"
         },
-        "content": "    public int hashCode() {"
+        "content": "        }"
       },
       {
         "lineNumber": 152,
         "author": {
           "gitId": "yeohhq"
         },
-        "content": "        // custom fields hashing"
+        "content": ""
       },
       {
         "lineNumber": 153,
         "author": {
           "gitId": "yeohhq"
         },
-        "content": "        return Objects.hash(appointmentTime, patient, isMissed, isCompleted, description, tags);"
+        "content": "        Appointment otherAppointment \u003d (Appointment) other;"
       },
       {
         "lineNumber": 154,
         "author": {
           "gitId": "yeohhq"
         },
-        "content": "    }"
+        "content": "        return otherAppointment !\u003d null"
       },
       {
         "lineNumber": 155,
         "author": {
           "gitId": "yeohhq"
         },
-        "content": ""
+        "content": "                \u0026\u0026 otherAppointment.getAppointmentTime().equals(getAppointmentTime())"
       },
       {
         "lineNumber": 156,
         "author": {
           "gitId": "yeohhq"
         },
-        "content": "    @Override"
+        "content": "                \u0026\u0026 otherAppointment.getPatient().equals(getPatient())"
       },
       {
         "lineNumber": 157,
         "author": {
           "gitId": "yeohhq"
         },
-        "content": "    public String toString() {"
+        "content": "                \u0026\u0026 otherAppointment.isMissed().equals(isMissed())"
       },
       {
         "lineNumber": 158,
         "author": {
           "gitId": "yeohhq"
         },
-        "content": "        final StringBuilder builder \u003d new StringBuilder();"
+        "content": "                \u0026\u0026 otherAppointment.isCompleted().equals(isCompleted())"
       },
       {
         "lineNumber": 159,
         "author": {
           "gitId": "yeohhq"
         },
-        "content": "        builder.append(getDescription())"
+        "content": "                \u0026\u0026 otherAppointment.getDescription().equals(getDescription())"
       },
       {
         "lineNumber": 160,
         "author": {
           "gitId": "yeohhq"
         },
-        "content": "                .append(\" Start: \")"
+        "content": "                \u0026\u0026 otherAppointment.getTags().equals(getTags());"
       },
       {
         "lineNumber": 161,
         "author": {
           "gitId": "yeohhq"
         },
-        "content": "                .append(getStartTime())"
+        "content": "    }"
       },
       {
         "lineNumber": 162,
         "author": {
           "gitId": "yeohhq"
         },
-        "content": "                .append(\" End: \")"
+        "content": ""
       },
       {
         "lineNumber": 163,
         "author": {
           "gitId": "yeohhq"
         },
-        "content": "                .append(getEndTime())"
+        "content": "    @Override"
       },
       {
         "lineNumber": 164,
         "author": {
           "gitId": "yeohhq"
         },
-        "content": "                .append(\" Patient: \")"
+        "content": "    public int hashCode() {"
       },
       {
         "lineNumber": 165,
         "author": {
           "gitId": "yeohhq"
         },
-        "content": "                .append(getPatient())"
+        "content": "        // custom fields hashing"
       },
       {
         "lineNumber": 166,
         "author": {
           "gitId": "yeohhq"
         },
-        "content": "                .append(\" isMissed: \")"
+        "content": "        return Objects.hash(appointmentTime, patient, isMissed, isCompleted, description, tags);"
       },
       {
         "lineNumber": 167,
         "author": {
           "gitId": "yeohhq"
         },
-        "content": "                .append(isMissed())"
+        "content": "    }"
       },
       {
         "lineNumber": 168,
         "author": {
           "gitId": "yeohhq"
         },
-        "content": "                .append(\" isCompleted: \")"
+        "content": ""
       },
       {
         "lineNumber": 169,
         "author": {
           "gitId": "yeohhq"
         },
-        "content": "                .append(isCompleted())"
+        "content": "    @Override"
       },
       {
         "lineNumber": 170,
         "author": {
           "gitId": "yeohhq"
         },
-        "content": "                .append(\" Tags: \");"
+        "content": "    public String toString() {"
       },
       {
         "lineNumber": 171,
         "author": {
           "gitId": "yeohhq"
         },
-        "content": "        getTags().forEach(builder::append);"
+        "content": "        final StringBuilder builder \u003d new StringBuilder();"
       },
       {
         "lineNumber": 172,
         "author": {
           "gitId": "yeohhq"
         },
-        "content": "        return builder.toString();"
+        "content": "        builder.append(getDescription())"
       },
       {
         "lineNumber": 173,
         "author": {
           "gitId": "yeohhq"
         },
-        "content": "    }"
+        "content": "                .append(\" Start: \")"
       },
       {
         "lineNumber": 174,
         "author": {
           "gitId": "yeohhq"
         },
-        "content": ""
+        "content": "                .append(getStartTime())"
       },
       {
         "lineNumber": 175,
+        "author": {
+          "gitId": "yeohhq"
+        },
+        "content": "                .append(\" End: \")"
+      },
+      {
+        "lineNumber": 176,
+        "author": {
+          "gitId": "yeohhq"
+        },
+        "content": "                .append(getEndTime())"
+      },
+      {
+        "lineNumber": 177,
+        "author": {
+          "gitId": "yeohhq"
+        },
+        "content": "                .append(\" Patient: \")"
+      },
+      {
+        "lineNumber": 178,
+        "author": {
+          "gitId": "yeohhq"
+        },
+        "content": "                .append(getPatient())"
+      },
+      {
+        "lineNumber": 179,
+        "author": {
+          "gitId": "yeohhq"
+        },
+        "content": "                .append(\" isMissed: \")"
+      },
+      {
+        "lineNumber": 180,
+        "author": {
+          "gitId": "yeohhq"
+        },
+        "content": "                .append(isMissed())"
+      },
+      {
+        "lineNumber": 181,
+        "author": {
+          "gitId": "yeohhq"
+        },
+        "content": "                .append(\" isCompleted: \")"
+      },
+      {
+        "lineNumber": 182,
+        "author": {
+          "gitId": "yeohhq"
+        },
+        "content": "                .append(isCompleted())"
+      },
+      {
+        "lineNumber": 183,
+        "author": {
+          "gitId": "yeohhq"
+        },
+        "content": "                .append(\" Tags: \");"
+      },
+      {
+        "lineNumber": 184,
+        "author": {
+          "gitId": "yeohhq"
+        },
+        "content": "        getTags().forEach(builder::append);"
+      },
+      {
+        "lineNumber": 185,
+        "author": {
+          "gitId": "yeohhq"
+        },
+        "content": "        return builder.toString();"
+      },
+      {
+        "lineNumber": 186,
+        "author": {
+          "gitId": "yeohhq"
+        },
+        "content": "    }"
+      },
+      {
+        "lineNumber": 187,
+        "author": {
+          "gitId": "yeohhq"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 188,
         "author": {
           "gitId": "jimvae"
         },
@@ -33765,9 +35841,9 @@
       }
     ],
     "authorContributionMap": {
-      "jimvae": 39,
+      "jimvae": 54,
       "yeohhq": 93,
-      "soaza": 43
+      "soaza": 41
     }
   },
   {
@@ -36034,14 +38110,14 @@
         "author": {
           "gitId": "jimvae"
         },
-        "content": "    public SearchAppointmentMissedFilter(Boolean isMissed) {"
+        "content": "    public SearchAppointmentMissedFilter() {"
       },
       {
         "lineNumber": 14,
         "author": {
           "gitId": "jimvae"
         },
-        "content": "        this.isMissed \u003d isMissed;"
+        "content": "        this.isMissed \u003d true;"
       },
       {
         "lineNumber": 15,
@@ -36323,7 +38399,7 @@
         "author": {
           "gitId": "jimvae"
         },
-        "content": "                    return appointment.getPatient().getTags().contains(currentTag);"
+        "content": "                    return appointment.getTags().contains(currentTag);"
       },
       {
         "lineNumber": 26,
@@ -36556,7 +38632,7 @@
         "author": {
           "gitId": "jimvae"
         },
-        "content": "                        .containsWordIgnoreCase(appointment.getPatient().getName().fullName, keyword));"
+        "content": "                        .containsWordIgnoreCase(appointment.getPatientString(), keyword));"
       },
       {
         "lineNumber": 23,
@@ -36866,20 +38942,13 @@
         "author": {
           "gitId": "-"
         },
-        "content": ""
-      },
-      {
-        "lineNumber": 32,
-        "author": {
-          "gitId": "-"
-        },
         "content": "}"
       }
     ],
     "authorContributionMap": {
       "jimvae": 6,
       "gordonfgz": 3,
-      "-": 23
+      "-": 22
     }
   },
   {
@@ -45234,107 +47303,107 @@
       {
         "lineNumber": 61,
         "author": {
-          "gitId": "soaza"
+          "gitId": "jimvae"
         },
-        "content": "        for (JsonAdaptedAppointment jsonAdaptedAppointment : appointments) {"
+        "content": ""
       },
       {
         "lineNumber": 62,
         "author": {
-          "gitId": "soaza"
+          "gitId": "jimvae"
         },
-        "content": "            Appointment appointment \u003d jsonAdaptedAppointment.toModelType();"
+        "content": "        for (JsonAdaptedPatient jsonAdaptedPatient : patients) {"
       },
       {
         "lineNumber": 63,
         "author": {
-          "gitId": "soaza"
+          "gitId": "jimvae"
         },
-        "content": "            appointment.parsePatient(addressBook);"
+        "content": "            Patient patient \u003d jsonAdaptedPatient.toModelType();"
       },
       {
         "lineNumber": 64,
         "author": {
-          "gitId": "soaza"
+          "gitId": "jimvae"
         },
-        "content": "            addressBook.addAppointment(appointment, true);"
+        "content": "            addressBook.addPatient(patient);"
       },
       {
         "lineNumber": 65,
         "author": {
-          "gitId": "soaza"
+          "gitId": "jimvae"
         },
         "content": "        }"
       },
       {
         "lineNumber": 66,
         "author": {
-          "gitId": "gordonfgz"
+          "gitId": "jimvae"
         },
-        "content": "        for (JsonAdaptedPatient jsonAdaptedPatient : patients) {"
+        "content": ""
       },
       {
         "lineNumber": 67,
         "author": {
-          "gitId": "gordonfgz"
+          "gitId": "soaza"
         },
-        "content": "            Patient patient \u003d jsonAdaptedPatient.toModelType();"
+        "content": "        for (JsonAdaptedAppointment jsonAdaptedAppointment : appointments) {"
       },
       {
         "lineNumber": 68,
         "author": {
-          "gitId": "gordonfgz"
+          "gitId": "soaza"
         },
-        "content": "            addressBook.addPatient(patient);"
+        "content": "            Appointment appointment \u003d jsonAdaptedAppointment.toModelType();"
       },
       {
         "lineNumber": 69,
         "author": {
-          "gitId": "-"
+          "gitId": "soaza"
         },
-        "content": "        }"
+        "content": "            appointment.parsePatient(addressBook);"
       },
       {
         "lineNumber": 70,
         "author": {
-          "gitId": "-"
+          "gitId": "soaza"
         },
-        "content": "        return addressBook;"
+        "content": "            addressBook.addAppointment(appointment, true);"
       },
       {
         "lineNumber": 71,
         "author": {
           "gitId": "-"
         },
-        "content": "    }"
+        "content": "        }"
       },
       {
         "lineNumber": 72,
         "author": {
-          "gitId": "-"
+          "gitId": "jimvae"
         },
         "content": ""
       },
       {
         "lineNumber": 73,
         "author": {
-          "gitId": "soaza"
+          "gitId": "-"
         },
-        "content": ""
+        "content": "        return addressBook;"
       },
       {
         "lineNumber": 74,
         "author": {
-          "gitId": "soaza"
+          "gitId": "-"
         },
-        "content": ""
+        "content": "    }"
       },
       {
         "lineNumber": 75,
         "author": {
           "gitId": "-"
         },
-        "content": "}"
+        "content": ""
       },
       {
         "lineNumber": 76,
@@ -45349,12 +47418,34 @@
           "gitId": "soaza"
         },
         "content": ""
+      },
+      {
+        "lineNumber": 78,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "}"
+      },
+      {
+        "lineNumber": 79,
+        "author": {
+          "gitId": "soaza"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 80,
+        "author": {
+          "gitId": "soaza"
+        },
+        "content": ""
       }
     ],
     "authorContributionMap": {
+      "jimvae": 7,
       "yeohhq": 2,
-      "soaza": 19,
-      "gordonfgz": 8,
+      "soaza": 18,
+      "gordonfgz": 5,
       "-": 48
     }
   },
