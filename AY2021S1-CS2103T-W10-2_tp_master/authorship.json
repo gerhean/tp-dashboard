@@ -21596,9 +21596,9 @@
       {
         "lineNumber": 17,
         "author": {
-          "gitId": "TianYong-Goh"
+          "gitId": "caitlinjee"
         },
-        "content": "    public static final String MESSAGE_SUCCESS \u003d \"Listed all Recipe ate\" + \"\\n\";"
+        "content": "    public static final String MESSAGE_SUCCESS \u003d \"Listed all Recipes eaten\" + \"\\n\";"
       },
       {
         "lineNumber": 18,
@@ -21721,7 +21721,8 @@
       }
     ],
     "authorContributionMap": {
-      "TianYong-Goh": 34
+      "TianYong-Goh": 33,
+      "caitlinjee": 1
     }
   },
   {
@@ -22181,6 +22182,386 @@
     }
   },
   {
+    "path": "src/main/java/seedu/address/logic/commands/RecommendCommand.java",
+    "fileType": "functional-code",
+    "lines": [
+      {
+        "lineNumber": 1,
+        "author": {
+          "gitId": "caitlinjee"
+        },
+        "content": "package seedu.address.logic.commands;"
+      },
+      {
+        "lineNumber": 2,
+        "author": {
+          "gitId": "caitlinjee"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 3,
+        "author": {
+          "gitId": "caitlinjee"
+        },
+        "content": "import static java.util.Objects.requireNonNull;"
+      },
+      {
+        "lineNumber": 4,
+        "author": {
+          "gitId": "caitlinjee"
+        },
+        "content": "import static seedu.address.model.Model.PREDICATE_SHOW_ALL_INGREDIENTS;"
+      },
+      {
+        "lineNumber": 5,
+        "author": {
+          "gitId": "caitlinjee"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 6,
+        "author": {
+          "gitId": "caitlinjee"
+        },
+        "content": "import java.util.ArrayList;"
+      },
+      {
+        "lineNumber": 7,
+        "author": {
+          "gitId": "caitlinjee"
+        },
+        "content": "import java.util.List;"
+      },
+      {
+        "lineNumber": 8,
+        "author": {
+          "gitId": "caitlinjee"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 9,
+        "author": {
+          "gitId": "caitlinjee"
+        },
+        "content": "import javafx.collections.ObservableList;"
+      },
+      {
+        "lineNumber": 10,
+        "author": {
+          "gitId": "caitlinjee"
+        },
+        "content": "import seedu.address.model.Model;"
+      },
+      {
+        "lineNumber": 11,
+        "author": {
+          "gitId": "caitlinjee"
+        },
+        "content": "import seedu.address.model.recipe.Ingredient;"
+      },
+      {
+        "lineNumber": 12,
+        "author": {
+          "gitId": "caitlinjee"
+        },
+        "content": "import seedu.address.model.recipe.Recipe;"
+      },
+      {
+        "lineNumber": 13,
+        "author": {
+          "gitId": "caitlinjee"
+        },
+        "content": "import seedu.address.model.recipe.RecommendPredicate;"
+      },
+      {
+        "lineNumber": 14,
+        "author": {
+          "gitId": "caitlinjee"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 15,
+        "author": {
+          "gitId": "caitlinjee"
+        },
+        "content": "/**"
+      },
+      {
+        "lineNumber": 16,
+        "author": {
+          "gitId": "caitlinjee"
+        },
+        "content": " * Lists all recipes in the recipe collection with the user\u0027s ingredients to the user."
+      },
+      {
+        "lineNumber": 17,
+        "author": {
+          "gitId": "caitlinjee"
+        },
+        "content": " */"
+      },
+      {
+        "lineNumber": 18,
+        "author": {
+          "gitId": "caitlinjee"
+        },
+        "content": "public class RecommendCommand extends Command {"
+      },
+      {
+        "lineNumber": 19,
+        "author": {
+          "gitId": "caitlinjee"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 20,
+        "author": {
+          "gitId": "caitlinjee"
+        },
+        "content": "    public static final String COMMAND_WORD \u003d \"recommend\";"
+      },
+      {
+        "lineNumber": 21,
+        "author": {
+          "gitId": "caitlinjee"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 22,
+        "author": {
+          "gitId": "caitlinjee"
+        },
+        "content": "    public static final String MESSAGE_SUCCESS \u003d \"Recommended recipes (according to fridge)\" + \"\\n\";"
+      },
+      {
+        "lineNumber": 23,
+        "author": {
+          "gitId": "caitlinjee"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 24,
+        "author": {
+          "gitId": "caitlinjee"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 25,
+        "author": {
+          "gitId": "caitlinjee"
+        },
+        "content": "    @Override"
+      },
+      {
+        "lineNumber": 26,
+        "author": {
+          "gitId": "caitlinjee"
+        },
+        "content": "    public CommandResult execute(Model model) {"
+      },
+      {
+        "lineNumber": 27,
+        "author": {
+          "gitId": "caitlinjee"
+        },
+        "content": "        requireNonNull(model);"
+      },
+      {
+        "lineNumber": 28,
+        "author": {
+          "gitId": "caitlinjee"
+        },
+        "content": "        RecommendPredicate pred \u003d new RecommendPredicate(getIngredients(model));"
+      },
+      {
+        "lineNumber": 29,
+        "author": {
+          "gitId": "caitlinjee"
+        },
+        "content": "        model.updateFilteredRecipeList(pred);"
+      },
+      {
+        "lineNumber": 30,
+        "author": {
+          "gitId": "caitlinjee"
+        },
+        "content": "        ObservableList\u003cRecipe\u003e recipes \u003d model.getFilteredRecipeList();"
+      },
+      {
+        "lineNumber": 31,
+        "author": {
+          "gitId": "caitlinjee"
+        },
+        "content": "        StringBuilder builder \u003d new StringBuilder();"
+      },
+      {
+        "lineNumber": 32,
+        "author": {
+          "gitId": "caitlinjee"
+        },
+        "content": "        for (int i \u003d 0; i \u003c recipes.size(); i++) {"
+      },
+      {
+        "lineNumber": 33,
+        "author": {
+          "gitId": "caitlinjee"
+        },
+        "content": "            builder.append((i + 1) + \". \" + recipes.get(i).toString() + \"\\n\");"
+      },
+      {
+        "lineNumber": 34,
+        "author": {
+          "gitId": "caitlinjee"
+        },
+        "content": "        }"
+      },
+      {
+        "lineNumber": 35,
+        "author": {
+          "gitId": "caitlinjee"
+        },
+        "content": "        return new CommandResult(MESSAGE_SUCCESS + builder.toString(), false, false, true, false, false);"
+      },
+      {
+        "lineNumber": 36,
+        "author": {
+          "gitId": "caitlinjee"
+        },
+        "content": "    }"
+      },
+      {
+        "lineNumber": 37,
+        "author": {
+          "gitId": "caitlinjee"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 38,
+        "author": {
+          "gitId": "caitlinjee"
+        },
+        "content": "    /**"
+      },
+      {
+        "lineNumber": 39,
+        "author": {
+          "gitId": "caitlinjee"
+        },
+        "content": "     * Gets all the ingredients in the user\u0027s fridge"
+      },
+      {
+        "lineNumber": 40,
+        "author": {
+          "gitId": "caitlinjee"
+        },
+        "content": "     * @param model the model to update"
+      },
+      {
+        "lineNumber": 41,
+        "author": {
+          "gitId": "caitlinjee"
+        },
+        "content": "     * @return a list of the ingredients in the user\u0027s fridge"
+      },
+      {
+        "lineNumber": 42,
+        "author": {
+          "gitId": "caitlinjee"
+        },
+        "content": "     */"
+      },
+      {
+        "lineNumber": 43,
+        "author": {
+          "gitId": "caitlinjee"
+        },
+        "content": "    private List\u003cString\u003e getIngredients(Model model) {"
+      },
+      {
+        "lineNumber": 44,
+        "author": {
+          "gitId": "caitlinjee"
+        },
+        "content": "        requireNonNull(model);"
+      },
+      {
+        "lineNumber": 45,
+        "author": {
+          "gitId": "caitlinjee"
+        },
+        "content": "        model.updateFilteredIngredientList(PREDICATE_SHOW_ALL_INGREDIENTS);"
+      },
+      {
+        "lineNumber": 46,
+        "author": {
+          "gitId": "caitlinjee"
+        },
+        "content": "        ObservableList\u003cIngredient\u003e ingredients \u003d model.getFilteredIngredientList();"
+      },
+      {
+        "lineNumber": 47,
+        "author": {
+          "gitId": "caitlinjee"
+        },
+        "content": "        ArrayList\u003cString\u003e keywords \u003d new ArrayList\u003c\u003e();"
+      },
+      {
+        "lineNumber": 48,
+        "author": {
+          "gitId": "caitlinjee"
+        },
+        "content": "        for (int i \u003d 0; i \u003c ingredients.size(); i++) {"
+      },
+      {
+        "lineNumber": 49,
+        "author": {
+          "gitId": "caitlinjee"
+        },
+        "content": "            keywords.add(ingredients.get(i).getValue());"
+      },
+      {
+        "lineNumber": 50,
+        "author": {
+          "gitId": "caitlinjee"
+        },
+        "content": "        }"
+      },
+      {
+        "lineNumber": 51,
+        "author": {
+          "gitId": "caitlinjee"
+        },
+        "content": "        return keywords;"
+      },
+      {
+        "lineNumber": 52,
+        "author": {
+          "gitId": "caitlinjee"
+        },
+        "content": "    }"
+      },
+      {
+        "lineNumber": 53,
+        "author": {
+          "gitId": "caitlinjee"
+        },
+        "content": "}"
+      }
+    ],
+    "authorContributionMap": {
+      "caitlinjee": 53
+    }
+  },
+  {
     "path": "src/main/java/seedu/address/logic/commands/SearchIngredientCommand.java",
     "fileType": "functional-code",
     "lines": [
@@ -22590,9 +22971,9 @@
       {
         "lineNumber": 7,
         "author": {
-          "gitId": "daongochieu2810"
+          "gitId": "caitlinjee"
         },
-        "content": "import seedu.address.model.recipe.NameContainsKeywordsPredicate;"
+        "content": "import seedu.address.model.recipe.RecipeContainsKeywordsPredicate;"
       },
       {
         "lineNumber": 8,
@@ -22660,187 +23041,208 @@
       {
         "lineNumber": 17,
         "author": {
-          "gitId": "daongochieu2810"
+          "gitId": "caitlinjee"
         },
-        "content": "    public static final String MESSAGE_USAGE \u003d COMMAND_WORD + \": Finds all recipes whose names contain any of \""
+        "content": "    public static final String MESSAGE_USAGE \u003d COMMAND_WORD + \": Finds all recipes that contains all the specified \""
       },
       {
         "lineNumber": 18,
         "author": {
-          "gitId": "-"
+          "gitId": "caitlinjee"
         },
-        "content": "            + \"the specified keywords (case-insensitive) and displays them as a list with index numbers.\\n\""
+        "content": "            + \"ingredients OR whose names OR tags contain any of \""
       },
       {
         "lineNumber": 19,
         "author": {
           "gitId": "-"
         },
-        "content": "            + \"Parameters: KEYWORD [MORE_KEYWORDS]...\\n\""
+        "content": "            + \"the specified keywords (case-insensitive) and displays them as a list with index numbers.\\n\""
       },
       {
         "lineNumber": 20,
         "author": {
-          "gitId": "TianYong-Goh"
+          "gitId": "-"
         },
-        "content": "            + \"Example: \" + COMMAND_WORD + \" n/salad\";"
+        "content": "            + \"Parameters: KEYWORD [MORE_KEYWORDS]...\\n\""
       },
       {
         "lineNumber": 21,
         "author": {
-          "gitId": "-"
+          "gitId": "caitlinjee"
         },
-        "content": ""
+        "content": "            + \"Example: \" + COMMAND_WORD + \" n/salad\""
       },
       {
         "lineNumber": 22,
         "author": {
-          "gitId": "-"
+          "gitId": "caitlinjee"
         },
-        "content": "    private final NameContainsKeywordsPredicate predicate;"
+        "content": "            + \" OR \" + COMMAND_WORD + \" i/butter cheese\""
       },
       {
         "lineNumber": 23,
+        "author": {
+          "gitId": "caitlinjee"
+        },
+        "content": "            + \" OR \" + COMMAND_WORD + \" t/healthy\";"
+      },
+      {
+        "lineNumber": 24,
         "author": {
           "gitId": "-"
         },
         "content": ""
       },
       {
-        "lineNumber": 24,
-        "author": {
-          "gitId": "TianYong-Goh"
-        },
-        "content": "    public SearchRecipeCommand(NameContainsKeywordsPredicate predicate) {"
-      },
-      {
         "lineNumber": 25,
         "author": {
-          "gitId": "-"
+          "gitId": "caitlinjee"
         },
-        "content": "        this.predicate \u003d predicate;"
+        "content": "    private final RecipeContainsKeywordsPredicate predicate;"
       },
       {
         "lineNumber": 26,
         "author": {
           "gitId": "-"
         },
-        "content": "    }"
+        "content": ""
       },
       {
         "lineNumber": 27,
         "author": {
-          "gitId": "-"
+          "gitId": "caitlinjee"
         },
-        "content": ""
+        "content": "    public SearchRecipeCommand(RecipeContainsKeywordsPredicate predicate) {"
       },
       {
         "lineNumber": 28,
         "author": {
           "gitId": "-"
         },
-        "content": "    @Override"
+        "content": "        this.predicate \u003d predicate;"
       },
       {
         "lineNumber": 29,
         "author": {
           "gitId": "-"
         },
-        "content": "    public CommandResult execute(Model model) {"
+        "content": "    }"
       },
       {
         "lineNumber": 30,
         "author": {
           "gitId": "-"
         },
-        "content": "        requireNonNull(model);"
-      },
-      {
-        "lineNumber": 31,
-        "author": {
-          "gitId": "daongochieu2810"
-        },
-        "content": "        model.updateFilteredRecipeList(predicate);"
-      },
-      {
-        "lineNumber": 32,
-        "author": {
-          "gitId": "-"
-        },
-        "content": "        return new CommandResult("
-      },
-      {
-        "lineNumber": 33,
-        "author": {
-          "gitId": "daongochieu2810"
-        },
-        "content": "                String.format(Messages.MESSAGE_RECIPES_LISTED_OVERVIEW, model.getFilteredRecipeList().size()),"
-      },
-      {
-        "lineNumber": 34,
-        "author": {
-          "gitId": "TianYong-Goh"
-        },
-        "content": "                false, false, true, false, false);"
-      },
-      {
-        "lineNumber": 35,
-        "author": {
-          "gitId": "-"
-        },
-        "content": "    }"
-      },
-      {
-        "lineNumber": 36,
-        "author": {
-          "gitId": "-"
-        },
         "content": ""
       },
       {
-        "lineNumber": 37,
+        "lineNumber": 31,
         "author": {
           "gitId": "-"
         },
         "content": "    @Override"
       },
       {
+        "lineNumber": 32,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "    public CommandResult execute(Model model) {"
+      },
+      {
+        "lineNumber": 33,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "        requireNonNull(model);"
+      },
+      {
+        "lineNumber": 34,
+        "author": {
+          "gitId": "daongochieu2810"
+        },
+        "content": "        model.updateFilteredRecipeList(predicate);"
+      },
+      {
+        "lineNumber": 35,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "        return new CommandResult("
+      },
+      {
+        "lineNumber": 36,
+        "author": {
+          "gitId": "daongochieu2810"
+        },
+        "content": "                String.format(Messages.MESSAGE_RECIPES_LISTED_OVERVIEW, model.getFilteredRecipeList().size()),"
+      },
+      {
+        "lineNumber": 37,
+        "author": {
+          "gitId": "TianYong-Goh"
+        },
+        "content": "                false, false, true, false, false);"
+      },
+      {
         "lineNumber": 38,
-        "author": {
-          "gitId": "-"
-        },
-        "content": "    public boolean equals(Object other) {"
-      },
-      {
-        "lineNumber": 39,
-        "author": {
-          "gitId": "-"
-        },
-        "content": "        return other \u003d\u003d this // short circuit if same object"
-      },
-      {
-        "lineNumber": 40,
-        "author": {
-          "gitId": "TianYong-Goh"
-        },
-        "content": "                || (other instanceof SearchRecipeCommand // instanceof handles nulls"
-      },
-      {
-        "lineNumber": 41,
-        "author": {
-          "gitId": "TianYong-Goh"
-        },
-        "content": "                \u0026\u0026 predicate.equals(((SearchRecipeCommand) other).predicate)); // state check"
-      },
-      {
-        "lineNumber": 42,
         "author": {
           "gitId": "-"
         },
         "content": "    }"
       },
       {
+        "lineNumber": 39,
+        "author": {
+          "gitId": "-"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 40,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "    @Override"
+      },
+      {
+        "lineNumber": 41,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "    public boolean equals(Object other) {"
+      },
+      {
+        "lineNumber": 42,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "        return other \u003d\u003d this // short circuit if same object"
+      },
+      {
         "lineNumber": 43,
+        "author": {
+          "gitId": "TianYong-Goh"
+        },
+        "content": "                || (other instanceof SearchRecipeCommand // instanceof handles nulls"
+      },
+      {
+        "lineNumber": 44,
+        "author": {
+          "gitId": "TianYong-Goh"
+        },
+        "content": "                \u0026\u0026 predicate.equals(((SearchRecipeCommand) other).predicate)); // state check"
+      },
+      {
+        "lineNumber": 45,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "    }"
+      },
+      {
+        "lineNumber": 46,
         "author": {
           "gitId": "-"
         },
@@ -22848,9 +23250,10 @@
       }
     ],
     "authorContributionMap": {
-      "TianYong-Goh": 8,
-      "daongochieu2810": 4,
-      "-": 31
+      "TianYong-Goh": 6,
+      "daongochieu2810": 2,
+      "caitlinjee": 8,
+      "-": 30
     }
   },
   {
@@ -27153,93 +27556,93 @@
       {
         "lineNumber": 4,
         "author": {
+          "gitId": "caitlinjee"
+        },
+        "content": "import static seedu.address.logic.parser.CliSyntax.PREFIX_INGREDIENT;"
+      },
+      {
+        "lineNumber": 5,
+        "author": {
           "gitId": "TianYong-Goh"
         },
         "content": "import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;"
       },
       {
-        "lineNumber": 5,
-        "author": {
-          "gitId": "-"
-        },
-        "content": ""
-      },
-      {
         "lineNumber": 6,
         "author": {
-          "gitId": "-"
+          "gitId": "caitlinjee"
         },
-        "content": "import java.util.Arrays;"
+        "content": "import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG;"
       },
       {
         "lineNumber": 7,
         "author": {
-          "gitId": "TianYong-Goh"
+          "gitId": "-"
         },
-        "content": "import java.util.stream.Stream;"
+        "content": ""
       },
       {
         "lineNumber": 8,
         "author": {
           "gitId": "-"
         },
-        "content": ""
+        "content": "import java.util.Arrays;"
       },
       {
         "lineNumber": 9,
         "author": {
           "gitId": "TianYong-Goh"
         },
-        "content": "import seedu.address.logic.commands.SearchRecipeCommand;"
+        "content": "import java.util.stream.Stream;"
       },
       {
         "lineNumber": 10,
         "author": {
           "gitId": "-"
         },
-        "content": "import seedu.address.logic.parser.exceptions.ParseException;"
+        "content": ""
       },
       {
         "lineNumber": 11,
         "author": {
-          "gitId": "daongochieu2810"
+          "gitId": "TianYong-Goh"
         },
-        "content": "import seedu.address.model.recipe.NameContainsKeywordsPredicate;"
+        "content": "import seedu.address.logic.commands.SearchRecipeCommand;"
       },
       {
         "lineNumber": 12,
         "author": {
           "gitId": "-"
         },
-        "content": ""
+        "content": "import seedu.address.logic.parser.exceptions.ParseException;"
       },
       {
         "lineNumber": 13,
         "author": {
-          "gitId": "-"
+          "gitId": "daongochieu2810"
         },
-        "content": "/**"
+        "content": "import seedu.address.model.recipe.NameContainsKeywordsPredicate;"
       },
       {
         "lineNumber": 14,
         "author": {
-          "gitId": "-"
+          "gitId": "caitlinjee"
         },
-        "content": " * Parses input arguments and creates a new FindCommand object"
+        "content": "import seedu.address.model.recipe.RecipeContainsIngredientsPredicate;"
       },
       {
         "lineNumber": 15,
         "author": {
-          "gitId": "-"
+          "gitId": "caitlinjee"
         },
-        "content": " */"
+        "content": "import seedu.address.model.recipe.RecipeContainsKeywordsPredicate;"
       },
       {
         "lineNumber": 16,
         "author": {
-          "gitId": "TianYong-Goh"
+          "gitId": "caitlinjee"
         },
-        "content": "public class SearchRecipeCommandParser implements Parser\u003cSearchRecipeCommand\u003e {"
+        "content": "import seedu.address.model.recipe.TagContainsKeywordsPredicate;"
       },
       {
         "lineNumber": 17,
@@ -27253,91 +27656,91 @@
         "author": {
           "gitId": "-"
         },
-        "content": "    /**"
+        "content": "/**"
       },
       {
         "lineNumber": 19,
         "author": {
           "gitId": "-"
         },
-        "content": "     * Parses the given {@code String} of arguments in the context of the FindCommand"
+        "content": " * Parses input arguments and creates a new FindCommand object"
       },
       {
         "lineNumber": 20,
         "author": {
           "gitId": "-"
         },
-        "content": "     * and returns a FindCommand object for execution."
+        "content": " */"
       },
       {
         "lineNumber": 21,
         "author": {
-          "gitId": "-"
+          "gitId": "TianYong-Goh"
         },
-        "content": "     * @throws ParseException if the user input does not conform the expected format"
+        "content": "public class SearchRecipeCommandParser implements Parser\u003cSearchRecipeCommand\u003e {"
       },
       {
         "lineNumber": 22,
         "author": {
           "gitId": "-"
         },
-        "content": "     */"
+        "content": ""
       },
       {
         "lineNumber": 23,
         "author": {
-          "gitId": "TianYong-Goh"
+          "gitId": "-"
         },
-        "content": "    public SearchRecipeCommand parse(String args) throws ParseException {"
+        "content": "    /**"
       },
       {
         "lineNumber": 24,
         "author": {
-          "gitId": "TianYong-Goh"
+          "gitId": "-"
         },
-        "content": "        ArgumentMultimap argMultimap \u003d"
+        "content": "     * Parses the given {@code String} of arguments in the context of the FindCommand"
       },
       {
         "lineNumber": 25,
         "author": {
-          "gitId": "TianYong-Goh"
+          "gitId": "-"
         },
-        "content": "                ArgumentTokenizer.tokenize(args, PREFIX_NAME);"
+        "content": "     * and returns a FindCommand object for execution."
       },
       {
         "lineNumber": 26,
         "author": {
-          "gitId": "TianYong-Goh"
+          "gitId": "-"
         },
-        "content": ""
+        "content": "     * @throws ParseException if the user input does not conform the expected format"
       },
       {
         "lineNumber": 27,
         "author": {
-          "gitId": "TianYong-Goh"
+          "gitId": "-"
         },
-        "content": "        if (!arePrefixesPresent(argMultimap, PREFIX_NAME)"
+        "content": "     */"
       },
       {
         "lineNumber": 28,
         "author": {
           "gitId": "TianYong-Goh"
         },
-        "content": "                || !argMultimap.getPreamble().isEmpty()) {"
+        "content": "    public SearchRecipeCommand parse(String args) throws ParseException {"
       },
       {
         "lineNumber": 29,
         "author": {
           "gitId": "TianYong-Goh"
         },
-        "content": "            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, SearchRecipeCommand.MESSAGE_USAGE));"
+        "content": "        ArgumentMultimap argMultimap \u003d"
       },
       {
         "lineNumber": 30,
         "author": {
-          "gitId": "TianYong-Goh"
+          "gitId": "caitlinjee"
         },
-        "content": "        }"
+        "content": "                ArgumentTokenizer.tokenize(args, PREFIX_NAME, PREFIX_TAG, PREFIX_INGREDIENT);"
       },
       {
         "lineNumber": 31,
@@ -27349,152 +27752,425 @@
       {
         "lineNumber": 32,
         "author": {
-          "gitId": "TianYong-Goh"
+          "gitId": "caitlinjee"
         },
-        "content": "        String name \u003d argMultimap.getValue(PREFIX_NAME).get();"
+        "content": "        if ((!arePrefixesPresent(argMultimap, PREFIX_NAME) \u0026\u0026 !arePrefixesPresent(argMultimap, PREFIX_TAG)"
       },
       {
         "lineNumber": 33,
         "author": {
-          "gitId": "TianYong-Goh"
+          "gitId": "caitlinjee"
         },
-        "content": ""
+        "content": "                \u0026\u0026 !arePrefixesPresent(argMultimap, PREFIX_INGREDIENT))"
       },
       {
         "lineNumber": 34,
         "author": {
           "gitId": "TianYong-Goh"
         },
-        "content": "        String trimmedArgs \u003d name.trim();"
+        "content": "                || !argMultimap.getPreamble().isEmpty()) {"
       },
       {
         "lineNumber": 35,
         "author": {
-          "gitId": "-"
+          "gitId": "TianYong-Goh"
         },
-        "content": "        if (trimmedArgs.isEmpty()) {"
+        "content": "            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, SearchRecipeCommand.MESSAGE_USAGE));"
       },
       {
         "lineNumber": 36,
         "author": {
-          "gitId": "-"
+          "gitId": "TianYong-Goh"
         },
-        "content": "            throw new ParseException("
+        "content": "        }"
       },
       {
         "lineNumber": 37,
         "author": {
           "gitId": "TianYong-Goh"
         },
-        "content": "                    String.format(MESSAGE_INVALID_COMMAND_FORMAT, SearchRecipeCommand.MESSAGE_USAGE));"
+        "content": ""
       },
       {
         "lineNumber": 38,
         "author": {
-          "gitId": "-"
+          "gitId": "caitlinjee"
         },
-        "content": "        }"
+        "content": "        String name \u003d argMultimap.getValue(PREFIX_NAME).isPresent() ? argMultimap.getValue(PREFIX_NAME).get() : \"\";"
       },
       {
         "lineNumber": 39,
         "author": {
-          "gitId": "-"
+          "gitId": "caitlinjee"
         },
-        "content": ""
+        "content": "        String tag \u003d argMultimap.getValue(PREFIX_TAG).isPresent() ? argMultimap.getValue(PREFIX_TAG).get() : \"\";"
       },
       {
         "lineNumber": 40,
         "author": {
-          "gitId": "-"
+          "gitId": "caitlinjee"
         },
-        "content": "        String[] nameKeywords \u003d trimmedArgs.split(\"\\\\s+\");"
+        "content": "        String ingredient \u003d argMultimap.getValue(PREFIX_INGREDIENT).isPresent()"
       },
       {
         "lineNumber": 41,
         "author": {
-          "gitId": "-"
+          "gitId": "caitlinjee"
         },
-        "content": ""
+        "content": "                ? argMultimap.getValue(PREFIX_INGREDIENT).get() : \"\";"
       },
       {
         "lineNumber": 42,
         "author": {
           "gitId": "TianYong-Goh"
         },
-        "content": "        return new SearchRecipeCommand(new NameContainsKeywordsPredicate(Arrays.asList(nameKeywords)));"
+        "content": ""
       },
       {
         "lineNumber": 43,
         "author": {
-          "gitId": "-"
+          "gitId": "caitlinjee"
         },
-        "content": "    }"
+        "content": "        String trimmedName \u003d name.trim();"
       },
       {
         "lineNumber": 44,
         "author": {
-          "gitId": "-"
+          "gitId": "caitlinjee"
         },
-        "content": ""
+        "content": "        String trimmedTag \u003d tag.trim();"
       },
       {
         "lineNumber": 45,
         "author": {
-          "gitId": "TianYong-Goh"
+          "gitId": "caitlinjee"
         },
-        "content": "    /**"
+        "content": "        String trimmedIngredient \u003d ingredient.trim();"
       },
       {
         "lineNumber": 46,
         "author": {
-          "gitId": "TianYong-Goh"
+          "gitId": "caitlinjee"
         },
-        "content": "     * Returns true if none of the prefixes contains empty {@code Optional} values in the given"
+        "content": ""
       },
       {
         "lineNumber": 47,
         "author": {
-          "gitId": "TianYong-Goh"
+          "gitId": "caitlinjee"
         },
-        "content": "     * {@code ArgumentMultimap}."
+        "content": "        if (trimmedName.isEmpty() \u0026\u0026 trimmedTag.isEmpty() \u0026\u0026 trimmedIngredient.isEmpty()) {"
       },
       {
         "lineNumber": 48,
         "author": {
-          "gitId": "TianYong-Goh"
+          "gitId": "-"
         },
-        "content": "     */"
+        "content": "            throw new ParseException("
       },
       {
         "lineNumber": 49,
         "author": {
           "gitId": "TianYong-Goh"
         },
-        "content": "    private static boolean arePrefixesPresent(ArgumentMultimap argumentMultimap, Prefix... prefixes) {"
+        "content": "                    String.format(MESSAGE_INVALID_COMMAND_FORMAT, SearchRecipeCommand.MESSAGE_USAGE));"
       },
       {
         "lineNumber": 50,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "        }"
+      },
+      {
+        "lineNumber": 51,
+        "author": {
+          "gitId": "-"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 52,
+        "author": {
+          "gitId": "caitlinjee"
+        },
+        "content": "        RecipeContainsKeywordsPredicate predicate \u003d parsePredicates(trimmedName, trimmedTag, trimmedIngredient);"
+      },
+      {
+        "lineNumber": 53,
+        "author": {
+          "gitId": "-"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 54,
+        "author": {
+          "gitId": "caitlinjee"
+        },
+        "content": "        return new SearchRecipeCommand(predicate);"
+      },
+      {
+        "lineNumber": 55,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "    }"
+      },
+      {
+        "lineNumber": 56,
+        "author": {
+          "gitId": "-"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 57,
+        "author": {
+          "gitId": "TianYong-Goh"
+        },
+        "content": "    /**"
+      },
+      {
+        "lineNumber": 58,
+        "author": {
+          "gitId": "TianYong-Goh"
+        },
+        "content": "     * Returns true if none of the prefixes contains empty {@code Optional} values in the given"
+      },
+      {
+        "lineNumber": 59,
+        "author": {
+          "gitId": "TianYong-Goh"
+        },
+        "content": "     * {@code ArgumentMultimap}."
+      },
+      {
+        "lineNumber": 60,
+        "author": {
+          "gitId": "TianYong-Goh"
+        },
+        "content": "     */"
+      },
+      {
+        "lineNumber": 61,
+        "author": {
+          "gitId": "TianYong-Goh"
+        },
+        "content": "    private static boolean arePrefixesPresent(ArgumentMultimap argumentMultimap, Prefix... prefixes) {"
+      },
+      {
+        "lineNumber": 62,
         "author": {
           "gitId": "TianYong-Goh"
         },
         "content": "        return Stream.of(prefixes).allMatch(prefix -\u003e argumentMultimap.getValue(prefix).isPresent());"
       },
       {
-        "lineNumber": 51,
+        "lineNumber": 63,
         "author": {
           "gitId": "TianYong-Goh"
         },
         "content": "    }"
       },
       {
-        "lineNumber": 52,
+        "lineNumber": 64,
         "author": {
           "gitId": "TianYong-Goh"
         },
         "content": ""
       },
       {
-        "lineNumber": 53,
+        "lineNumber": 65,
+        "author": {
+          "gitId": "caitlinjee"
+        },
+        "content": "    /**"
+      },
+      {
+        "lineNumber": 66,
+        "author": {
+          "gitId": "caitlinjee"
+        },
+        "content": "     * Parses the values to be searched to determine the type of predicate to return"
+      },
+      {
+        "lineNumber": 67,
+        "author": {
+          "gitId": "caitlinjee"
+        },
+        "content": "     * @param trimmedName the name to be searched, if present"
+      },
+      {
+        "lineNumber": 68,
+        "author": {
+          "gitId": "caitlinjee"
+        },
+        "content": "     * @param trimmedTag the tag to be searched, if present"
+      },
+      {
+        "lineNumber": 69,
+        "author": {
+          "gitId": "caitlinjee"
+        },
+        "content": "     * @param trimmedIngredient the ingredient to be searched, if present"
+      },
+      {
+        "lineNumber": 70,
+        "author": {
+          "gitId": "caitlinjee"
+        },
+        "content": "     * @return the suitable subclass of RecipeContainsKeywordsPredicate"
+      },
+      {
+        "lineNumber": 71,
+        "author": {
+          "gitId": "caitlinjee"
+        },
+        "content": "     * @throws ParseException if the user input does not conform the expected format"
+      },
+      {
+        "lineNumber": 72,
+        "author": {
+          "gitId": "caitlinjee"
+        },
+        "content": "     */"
+      },
+      {
+        "lineNumber": 73,
+        "author": {
+          "gitId": "caitlinjee"
+        },
+        "content": "    private RecipeContainsKeywordsPredicate parsePredicates(String trimmedName, String trimmedTag,"
+      },
+      {
+        "lineNumber": 74,
+        "author": {
+          "gitId": "caitlinjee"
+        },
+        "content": "                                                            String trimmedIngredient)"
+      },
+      {
+        "lineNumber": 75,
+        "author": {
+          "gitId": "caitlinjee"
+        },
+        "content": "            throws ParseException {"
+      },
+      {
+        "lineNumber": 76,
+        "author": {
+          "gitId": "caitlinjee"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 77,
+        "author": {
+          "gitId": "caitlinjee"
+        },
+        "content": "        if (!trimmedName.isEmpty()) {"
+      },
+      {
+        "lineNumber": 78,
+        "author": {
+          "gitId": "caitlinjee"
+        },
+        "content": "            String[] nameKeywords \u003d trimmedName.split(\"\\\\s+\");"
+      },
+      {
+        "lineNumber": 79,
+        "author": {
+          "gitId": "caitlinjee"
+        },
+        "content": "            return new NameContainsKeywordsPredicate(Arrays.asList(nameKeywords));"
+      },
+      {
+        "lineNumber": 80,
+        "author": {
+          "gitId": "caitlinjee"
+        },
+        "content": "        } else if (!trimmedTag.isEmpty()) {"
+      },
+      {
+        "lineNumber": 81,
+        "author": {
+          "gitId": "caitlinjee"
+        },
+        "content": "            String[] tagKeywords \u003d trimmedTag.split(\"\\\\s+\");"
+      },
+      {
+        "lineNumber": 82,
+        "author": {
+          "gitId": "caitlinjee"
+        },
+        "content": "            return new TagContainsKeywordsPredicate(Arrays.asList(tagKeywords));"
+      },
+      {
+        "lineNumber": 83,
+        "author": {
+          "gitId": "caitlinjee"
+        },
+        "content": "        } else if (!trimmedIngredient.isEmpty()) {"
+      },
+      {
+        "lineNumber": 84,
+        "author": {
+          "gitId": "caitlinjee"
+        },
+        "content": "            String[] ingredientKeywords \u003d trimmedIngredient.split(\"\\\\s+\");"
+      },
+      {
+        "lineNumber": 85,
+        "author": {
+          "gitId": "caitlinjee"
+        },
+        "content": "            return new RecipeContainsIngredientsPredicate(Arrays.asList(ingredientKeywords));"
+      },
+      {
+        "lineNumber": 86,
+        "author": {
+          "gitId": "caitlinjee"
+        },
+        "content": "        } else {"
+      },
+      {
+        "lineNumber": 87,
+        "author": {
+          "gitId": "caitlinjee"
+        },
+        "content": "            throw new ParseException("
+      },
+      {
+        "lineNumber": 88,
+        "author": {
+          "gitId": "caitlinjee"
+        },
+        "content": "                    String.format(MESSAGE_INVALID_COMMAND_FORMAT, SearchRecipeCommand.MESSAGE_USAGE));"
+      },
+      {
+        "lineNumber": 89,
+        "author": {
+          "gitId": "caitlinjee"
+        },
+        "content": "        }"
+      },
+      {
+        "lineNumber": 90,
+        "author": {
+          "gitId": "caitlinjee"
+        },
+        "content": "    }"
+      },
+      {
+        "lineNumber": 91,
+        "author": {
+          "gitId": "caitlinjee"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 92,
         "author": {
           "gitId": "-"
         },
@@ -27502,9 +28178,10 @@
       }
     ],
     "authorContributionMap": {
-      "TianYong-Goh": 26,
+      "TianYong-Goh": 21,
       "daongochieu2810": 1,
-      "-": 26
+      "caitlinjee": 46,
+      "-": 24
     }
   },
   {
@@ -27670,570 +28347,598 @@
         "author": {
           "gitId": "caitlinjee"
         },
-        "content": "import seedu.address.logic.commands.SearchIngredientCommand;"
+        "content": "import seedu.address.logic.commands.RecommendCommand;"
       },
       {
         "lineNumber": 24,
+        "author": {
+          "gitId": "caitlinjee"
+        },
+        "content": "import seedu.address.logic.commands.SearchIngredientCommand;"
+      },
+      {
+        "lineNumber": 25,
         "author": {
           "gitId": "TianYong-Goh"
         },
         "content": "import seedu.address.logic.commands.SearchRecipeCommand;"
       },
       {
-        "lineNumber": 25,
+        "lineNumber": 26,
         "author": {
           "gitId": "-"
         },
         "content": "import seedu.address.logic.parser.exceptions.ParseException;"
       },
       {
-        "lineNumber": 26,
-        "author": {
-          "gitId": "-"
-        },
-        "content": ""
-      },
-      {
         "lineNumber": 27,
         "author": {
           "gitId": "-"
         },
-        "content": "/**"
+        "content": ""
       },
       {
         "lineNumber": 28,
         "author": {
           "gitId": "-"
         },
-        "content": " * Parses user input."
+        "content": "/**"
       },
       {
         "lineNumber": 29,
         "author": {
           "gitId": "-"
         },
-        "content": " */"
+        "content": " * Parses user input."
       },
       {
         "lineNumber": 30,
+        "author": {
+          "gitId": "-"
+        },
+        "content": " */"
+      },
+      {
+        "lineNumber": 31,
         "author": {
           "gitId": "daongochieu2810"
         },
         "content": "public class WishfulShrinkingParser {"
       },
       {
-        "lineNumber": 31,
-        "author": {
-          "gitId": "-"
-        },
-        "content": ""
-      },
-      {
         "lineNumber": 32,
         "author": {
           "gitId": "-"
         },
-        "content": "    /**"
+        "content": ""
       },
       {
         "lineNumber": 33,
         "author": {
           "gitId": "-"
         },
-        "content": "     * Used for initial separation of command word and args."
+        "content": "    /**"
       },
       {
         "lineNumber": 34,
         "author": {
           "gitId": "-"
         },
-        "content": "     */"
+        "content": "     * Used for initial separation of command word and args."
       },
       {
         "lineNumber": 35,
         "author": {
           "gitId": "-"
         },
-        "content": "    private static final Pattern BASIC_COMMAND_FORMAT \u003d Pattern.compile(\"(?\u003ccommandWord\u003e\\\\S+)(?\u003carguments\u003e.*)\");"
+        "content": "     */"
       },
       {
         "lineNumber": 36,
         "author": {
           "gitId": "-"
         },
-        "content": ""
+        "content": "    private static final Pattern BASIC_COMMAND_FORMAT \u003d Pattern.compile(\"(?\u003ccommandWord\u003e\\\\S+)(?\u003carguments\u003e.*)\");"
       },
       {
         "lineNumber": 37,
         "author": {
           "gitId": "-"
         },
-        "content": "    /**"
+        "content": ""
       },
       {
         "lineNumber": 38,
         "author": {
           "gitId": "-"
         },
-        "content": "     * Parses user input into command for execution."
+        "content": "    /**"
       },
       {
         "lineNumber": 39,
         "author": {
           "gitId": "-"
         },
-        "content": "     *"
+        "content": "     * Parses user input into command for execution."
       },
       {
         "lineNumber": 40,
         "author": {
           "gitId": "-"
         },
-        "content": "     * @param userInput full user input string"
+        "content": "     *"
       },
       {
         "lineNumber": 41,
         "author": {
           "gitId": "-"
         },
-        "content": "     * @return the command based on the user input"
+        "content": "     * @param userInput full user input string"
       },
       {
         "lineNumber": 42,
         "author": {
           "gitId": "-"
         },
-        "content": "     * @throws ParseException if the user input does not conform the expected format"
+        "content": "     * @return the command based on the user input"
       },
       {
         "lineNumber": 43,
         "author": {
           "gitId": "-"
         },
-        "content": "     */"
+        "content": "     * @throws ParseException if the user input does not conform the expected format"
       },
       {
         "lineNumber": 44,
         "author": {
           "gitId": "-"
         },
-        "content": "    public Command parseCommand(String userInput) throws ParseException {"
+        "content": "     */"
       },
       {
         "lineNumber": 45,
         "author": {
           "gitId": "-"
         },
-        "content": "        final Matcher matcher \u003d BASIC_COMMAND_FORMAT.matcher(userInput.trim());"
+        "content": "    public Command parseCommand(String userInput) throws ParseException {"
       },
       {
         "lineNumber": 46,
         "author": {
           "gitId": "-"
         },
-        "content": "        if (!matcher.matches()) {"
+        "content": "        final Matcher matcher \u003d BASIC_COMMAND_FORMAT.matcher(userInput.trim());"
       },
       {
         "lineNumber": 47,
         "author": {
           "gitId": "-"
         },
-        "content": "            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, HelpCommand.MESSAGE_USAGE));"
+        "content": "        if (!matcher.matches()) {"
       },
       {
         "lineNumber": 48,
         "author": {
           "gitId": "-"
         },
-        "content": "        }"
+        "content": "            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, HelpCommand.MESSAGE_USAGE));"
       },
       {
         "lineNumber": 49,
         "author": {
           "gitId": "-"
         },
-        "content": ""
+        "content": "        }"
       },
       {
         "lineNumber": 50,
         "author": {
           "gitId": "-"
         },
-        "content": "        final String commandWord \u003d matcher.group(\"commandWord\");"
+        "content": ""
       },
       {
         "lineNumber": 51,
         "author": {
           "gitId": "-"
         },
-        "content": "        final String arguments \u003d matcher.group(\"arguments\");"
+        "content": "        final String commandWord \u003d matcher.group(\"commandWord\");"
       },
       {
         "lineNumber": 52,
         "author": {
           "gitId": "-"
         },
-        "content": "        switch (commandWord) {"
+        "content": "        final String arguments \u003d matcher.group(\"arguments\");"
       },
       {
         "lineNumber": 53,
         "author": {
           "gitId": "-"
         },
-        "content": ""
+        "content": "        switch (commandWord) {"
       },
       {
         "lineNumber": 54,
         "author": {
-          "gitId": "daongochieu2810"
+          "gitId": "-"
         },
-        "content": "        case AddRecipeCommand.COMMAND_WORD:"
+        "content": ""
       },
       {
         "lineNumber": 55,
         "author": {
           "gitId": "daongochieu2810"
         },
-        "content": "            return new AddRecipeCommandParser().parse(arguments);"
+        "content": "        case AddRecipeCommand.COMMAND_WORD:"
       },
       {
         "lineNumber": 56,
         "author": {
-          "gitId": "-"
+          "gitId": "daongochieu2810"
         },
-        "content": ""
+        "content": "            return new AddRecipeCommandParser().parse(arguments);"
       },
       {
         "lineNumber": 57,
         "author": {
-          "gitId": "caitlinjee"
+          "gitId": "-"
         },
-        "content": "        case AddIngredientCommand.COMMAND_WORD:"
+        "content": ""
       },
       {
         "lineNumber": 58,
         "author": {
           "gitId": "caitlinjee"
         },
-        "content": "            return new AddIngredientCommandParser().parse(arguments);"
+        "content": "        case AddIngredientCommand.COMMAND_WORD:"
       },
       {
         "lineNumber": 59,
         "author": {
           "gitId": "caitlinjee"
         },
-        "content": ""
+        "content": "            return new AddIngredientCommandParser().parse(arguments);"
       },
       {
         "lineNumber": 60,
         "author": {
-          "gitId": "TianYong-Goh"
+          "gitId": "caitlinjee"
         },
-        "content": "        case EatRecipeCommand.COMMAND_WORD:"
+        "content": ""
       },
       {
         "lineNumber": 61,
         "author": {
           "gitId": "TianYong-Goh"
         },
-        "content": "            return new EatRecipeCommandParser().parse(arguments);"
+        "content": "        case EatRecipeCommand.COMMAND_WORD:"
       },
       {
         "lineNumber": 62,
         "author": {
-          "gitId": "-"
+          "gitId": "TianYong-Goh"
         },
-        "content": ""
+        "content": "            return new EatRecipeCommandParser().parse(arguments);"
       },
       {
         "lineNumber": 63,
         "author": {
-          "gitId": "-"
+          "gitId": "TianYong-Goh"
         },
-        "content": "        case EditCommand.COMMAND_WORD:"
+        "content": ""
       },
       {
         "lineNumber": 64,
         "author": {
           "gitId": "-"
         },
-        "content": "            return new EditCommandParser().parse(arguments);"
+        "content": "        case EditCommand.COMMAND_WORD:"
       },
       {
         "lineNumber": 65,
         "author": {
           "gitId": "-"
         },
-        "content": ""
+        "content": "            return new EditCommandParser().parse(arguments);"
       },
       {
         "lineNumber": 66,
         "author": {
-          "gitId": "oliviajohansen"
+          "gitId": "-"
         },
-        "content": "        case DeleteIngredientCommand.COMMAND_WORD:"
+        "content": ""
       },
       {
         "lineNumber": 67,
         "author": {
           "gitId": "oliviajohansen"
         },
-        "content": "            return new DeleteIngredientCommandParser().parse(arguments);"
+        "content": "        case DeleteIngredientCommand.COMMAND_WORD:"
       },
       {
         "lineNumber": 68,
         "author": {
           "gitId": "oliviajohansen"
         },
-        "content": ""
+        "content": "            return new DeleteIngredientCommandParser().parse(arguments);"
       },
       {
         "lineNumber": 69,
         "author": {
-          "gitId": "jiaqi20"
+          "gitId": "oliviajohansen"
         },
-        "content": "        case DeleteRecipeCommand.COMMAND_WORD:"
+        "content": ""
       },
       {
         "lineNumber": 70,
         "author": {
           "gitId": "jiaqi20"
         },
-        "content": "            return new DeleteRecipeCommandParser().parse(arguments);"
+        "content": "        case DeleteRecipeCommand.COMMAND_WORD:"
       },
       {
         "lineNumber": 71,
         "author": {
-          "gitId": "-"
+          "gitId": "jiaqi20"
         },
-        "content": ""
+        "content": "            return new DeleteRecipeCommandParser().parse(arguments);"
       },
       {
         "lineNumber": 72,
         "author": {
-          "gitId": "caitlinjee"
+          "gitId": "-"
         },
-        "content": "        case DeleteConsumptionCommand.COMMAND_WORD:"
+        "content": ""
       },
       {
         "lineNumber": 73,
         "author": {
           "gitId": "caitlinjee"
         },
-        "content": "            return new DeleteConsumptionCommandParser().parse(arguments);"
+        "content": "        case DeleteConsumptionCommand.COMMAND_WORD:"
       },
       {
         "lineNumber": 74,
         "author": {
-          "gitId": "-"
+          "gitId": "caitlinjee"
         },
-        "content": ""
+        "content": "            return new DeleteConsumptionCommandParser().parse(arguments);"
       },
       {
         "lineNumber": 75,
         "author": {
-          "gitId": "-"
+          "gitId": "caitlinjee"
         },
-        "content": "        case ClearCommand.COMMAND_WORD:"
+        "content": ""
       },
       {
         "lineNumber": 76,
         "author": {
           "gitId": "-"
         },
-        "content": "            return new ClearCommand();"
+        "content": "        case ClearCommand.COMMAND_WORD:"
       },
       {
         "lineNumber": 77,
         "author": {
           "gitId": "-"
         },
-        "content": ""
+        "content": "            return new ClearCommand();"
       },
       {
         "lineNumber": 78,
         "author": {
-          "gitId": "TianYong-Goh"
+          "gitId": "-"
         },
-        "content": "        case SearchRecipeCommand.COMMAND_WORD:"
+        "content": ""
       },
       {
         "lineNumber": 79,
         "author": {
           "gitId": "TianYong-Goh"
         },
-        "content": "            return new SearchRecipeCommandParser().parse(arguments);"
+        "content": "        case SearchRecipeCommand.COMMAND_WORD:"
       },
       {
         "lineNumber": 80,
         "author": {
-          "gitId": "-"
+          "gitId": "TianYong-Goh"
         },
-        "content": ""
+        "content": "            return new SearchRecipeCommandParser().parse(arguments);"
       },
       {
         "lineNumber": 81,
         "author": {
-          "gitId": "caitlinjee"
+          "gitId": "-"
         },
-        "content": "        case SearchIngredientCommand.COMMAND_WORD:"
+        "content": ""
       },
       {
         "lineNumber": 82,
         "author": {
           "gitId": "caitlinjee"
         },
-        "content": "            return new SearchIngredientCommandParser().parse(arguments);"
+        "content": "        case SearchIngredientCommand.COMMAND_WORD:"
       },
       {
         "lineNumber": 83,
         "author": {
           "gitId": "caitlinjee"
         },
-        "content": ""
+        "content": "            return new SearchIngredientCommandParser().parse(arguments);"
       },
       {
         "lineNumber": 84,
         "author": {
-          "gitId": "TianYong-Goh"
+          "gitId": "caitlinjee"
         },
-        "content": "        case ListIngredientsCommand.COMMAND_WORD:"
+        "content": ""
       },
       {
         "lineNumber": 85,
         "author": {
           "gitId": "TianYong-Goh"
         },
-        "content": "            return new ListIngredientsCommand();"
+        "content": "        case ListIngredientsCommand.COMMAND_WORD:"
       },
       {
         "lineNumber": 86,
         "author": {
           "gitId": "TianYong-Goh"
         },
-        "content": ""
+        "content": "            return new ListIngredientsCommand();"
       },
       {
         "lineNumber": 87,
         "author": {
-          "gitId": "jiaqi20"
+          "gitId": "TianYong-Goh"
         },
-        "content": "        case ListRecipesCommand.COMMAND_WORD:"
+        "content": ""
       },
       {
         "lineNumber": 88,
         "author": {
           "gitId": "jiaqi20"
         },
-        "content": "            return new ListRecipesCommand();"
+        "content": "        case ListRecipesCommand.COMMAND_WORD:"
       },
       {
         "lineNumber": 89,
         "author": {
-          "gitId": "-"
+          "gitId": "jiaqi20"
         },
-        "content": ""
+        "content": "            return new ListRecipesCommand();"
       },
       {
         "lineNumber": 90,
         "author": {
-          "gitId": "TianYong-Goh"
+          "gitId": "-"
         },
-        "content": "        case ListConsumptionCommand.COMMAND_WORD:"
+        "content": ""
       },
       {
         "lineNumber": 91,
         "author": {
           "gitId": "TianYong-Goh"
         },
-        "content": "            return new ListConsumptionCommand();"
+        "content": "        case ListConsumptionCommand.COMMAND_WORD:"
       },
       {
         "lineNumber": 92,
         "author": {
-          "gitId": "-"
+          "gitId": "TianYong-Goh"
         },
-        "content": ""
+        "content": "            return new ListConsumptionCommand();"
       },
       {
         "lineNumber": 93,
         "author": {
-          "gitId": "-"
-        },
-        "content": "        case ExitCommand.COMMAND_WORD:"
-      },
-      {
-        "lineNumber": 94,
-        "author": {
-          "gitId": "-"
-        },
-        "content": "            return new ExitCommand();"
-      },
-      {
-        "lineNumber": 95,
-        "author": {
-          "gitId": "-"
+          "gitId": "TianYong-Goh"
         },
         "content": ""
       },
       {
+        "lineNumber": 94,
+        "author": {
+          "gitId": "caitlinjee"
+        },
+        "content": "        case RecommendCommand.COMMAND_WORD:"
+      },
+      {
+        "lineNumber": 95,
+        "author": {
+          "gitId": "caitlinjee"
+        },
+        "content": "            return new RecommendCommand();"
+      },
+      {
         "lineNumber": 96,
         "author": {
-          "gitId": "-"
+          "gitId": "caitlinjee"
         },
-        "content": "        case HelpCommand.COMMAND_WORD:"
+        "content": ""
       },
       {
         "lineNumber": 97,
         "author": {
           "gitId": "-"
         },
-        "content": "            return new HelpCommand();"
+        "content": "        case ExitCommand.COMMAND_WORD:"
       },
       {
         "lineNumber": 98,
         "author": {
           "gitId": "-"
         },
-        "content": ""
+        "content": "            return new ExitCommand();"
       },
       {
         "lineNumber": 99,
         "author": {
-          "gitId": "-"
+          "gitId": "daongochieu2810"
         },
-        "content": "        default:"
+        "content": ""
       },
       {
         "lineNumber": 100,
         "author": {
           "gitId": "-"
         },
-        "content": "            throw new ParseException(MESSAGE_UNKNOWN_COMMAND);"
+        "content": "        case HelpCommand.COMMAND_WORD:"
       },
       {
         "lineNumber": 101,
         "author": {
           "gitId": "-"
         },
-        "content": "        }"
+        "content": "            return new HelpCommand();"
       },
       {
         "lineNumber": 102,
         "author": {
-          "gitId": "-"
+          "gitId": "daongochieu2810"
         },
-        "content": "    }"
+        "content": ""
       },
       {
         "lineNumber": 103,
         "author": {
           "gitId": "-"
         },
-        "content": ""
+        "content": "        default:"
       },
       {
         "lineNumber": 104,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "            throw new ParseException(MESSAGE_UNKNOWN_COMMAND);"
+      },
+      {
+        "lineNumber": 105,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "        }"
+      },
+      {
+        "lineNumber": 106,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "    }"
+      },
+      {
+        "lineNumber": 107,
+        "author": {
+          "gitId": "-"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 108,
         "author": {
           "gitId": "-"
         },
@@ -28241,12 +28946,12 @@
       }
     ],
     "authorContributionMap": {
-      "TianYong-Goh": 12,
-      "daongochieu2810": 4,
+      "TianYong-Goh": 14,
+      "daongochieu2810": 6,
       "jiaqi20": 6,
       "oliviajohansen": 5,
-      "caitlinjee": 11,
-      "-": 66
+      "caitlinjee": 16,
+      "-": 61
     }
   },
   {
@@ -36719,16 +37424,16 @@
       {
         "lineNumber": 11,
         "author": {
-          "gitId": "daongochieu2810"
+          "gitId": "caitlinjee"
         },
-        "content": "public class NameContainsKeywordsPredicate implements Predicate\u003cRecipe\u003e {"
+        "content": "public class NameContainsKeywordsPredicate extends RecipeContainsKeywordsPredicate"
       },
       {
         "lineNumber": 12,
         "author": {
-          "gitId": "-"
+          "gitId": "caitlinjee"
         },
-        "content": "    private final List\u003cString\u003e keywords;"
+        "content": "        implements Predicate\u003cRecipe\u003e {"
       },
       {
         "lineNumber": 13,
@@ -36747,9 +37452,9 @@
       {
         "lineNumber": 15,
         "author": {
-          "gitId": "-"
+          "gitId": "caitlinjee"
         },
-        "content": "        this.keywords \u003d keywords;"
+        "content": "        super(keywords);"
       },
       {
         "lineNumber": 16,
@@ -36865,8 +37570,9 @@
       }
     ],
     "authorContributionMap": {
-      "daongochieu2810": 5,
-      "-": 26
+      "daongochieu2810": 4,
+      "caitlinjee": 3,
+      "-": 24
     }
   },
   {
@@ -37839,6 +38545,994 @@
       "jiaqi20": 19,
       "oliviajohansen": 1,
       "caitlinjee": 25
+    }
+  },
+  {
+    "path": "src/main/java/seedu/address/model/recipe/RecipeContainsIngredientsPredicate.java",
+    "fileType": "functional-code",
+    "lines": [
+      {
+        "lineNumber": 1,
+        "author": {
+          "gitId": "caitlinjee"
+        },
+        "content": "package seedu.address.model.recipe;"
+      },
+      {
+        "lineNumber": 2,
+        "author": {
+          "gitId": "caitlinjee"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 3,
+        "author": {
+          "gitId": "caitlinjee"
+        },
+        "content": "import java.util.List;"
+      },
+      {
+        "lineNumber": 4,
+        "author": {
+          "gitId": "caitlinjee"
+        },
+        "content": "import java.util.function.Predicate;"
+      },
+      {
+        "lineNumber": 5,
+        "author": {
+          "gitId": "caitlinjee"
+        },
+        "content": "import java.util.stream.Collectors;"
+      },
+      {
+        "lineNumber": 6,
+        "author": {
+          "gitId": "caitlinjee"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 7,
+        "author": {
+          "gitId": "caitlinjee"
+        },
+        "content": "import seedu.address.commons.util.StringUtil;"
+      },
+      {
+        "lineNumber": 8,
+        "author": {
+          "gitId": "caitlinjee"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 9,
+        "author": {
+          "gitId": "caitlinjee"
+        },
+        "content": "/**"
+      },
+      {
+        "lineNumber": 10,
+        "author": {
+          "gitId": "caitlinjee"
+        },
+        "content": " * Tests that a {@code Recipe}\u0027s {@code ingredients} matches any of the keywords given."
+      },
+      {
+        "lineNumber": 11,
+        "author": {
+          "gitId": "caitlinjee"
+        },
+        "content": " */"
+      },
+      {
+        "lineNumber": 12,
+        "author": {
+          "gitId": "caitlinjee"
+        },
+        "content": "public class RecipeContainsIngredientsPredicate extends RecipeContainsKeywordsPredicate"
+      },
+      {
+        "lineNumber": 13,
+        "author": {
+          "gitId": "caitlinjee"
+        },
+        "content": "        implements Predicate\u003cRecipe\u003e {"
+      },
+      {
+        "lineNumber": 14,
+        "author": {
+          "gitId": "caitlinjee"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 15,
+        "author": {
+          "gitId": "caitlinjee"
+        },
+        "content": "    public RecipeContainsIngredientsPredicate(List\u003cString\u003e keywords) {"
+      },
+      {
+        "lineNumber": 16,
+        "author": {
+          "gitId": "caitlinjee"
+        },
+        "content": "        super(keywords);"
+      },
+      {
+        "lineNumber": 17,
+        "author": {
+          "gitId": "caitlinjee"
+        },
+        "content": "    }"
+      },
+      {
+        "lineNumber": 18,
+        "author": {
+          "gitId": "caitlinjee"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 19,
+        "author": {
+          "gitId": "caitlinjee"
+        },
+        "content": "    @Override"
+      },
+      {
+        "lineNumber": 20,
+        "author": {
+          "gitId": "caitlinjee"
+        },
+        "content": "    public boolean test(Recipe recipe) {"
+      },
+      {
+        "lineNumber": 21,
+        "author": {
+          "gitId": "caitlinjee"
+        },
+        "content": "        String ingredients \u003d recipe.getIngredient().stream().map(Object::toString).collect(Collectors.joining(\",\"));"
+      },
+      {
+        "lineNumber": 22,
+        "author": {
+          "gitId": "caitlinjee"
+        },
+        "content": "        return keywords.stream()"
+      },
+      {
+        "lineNumber": 23,
+        "author": {
+          "gitId": "caitlinjee"
+        },
+        "content": "                .allMatch(keyword -\u003e StringUtil.containsWordIgnoreCase(ingredients, keyword));"
+      },
+      {
+        "lineNumber": 24,
+        "author": {
+          "gitId": "caitlinjee"
+        },
+        "content": "    }"
+      },
+      {
+        "lineNumber": 25,
+        "author": {
+          "gitId": "caitlinjee"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 26,
+        "author": {
+          "gitId": "caitlinjee"
+        },
+        "content": "    @Override"
+      },
+      {
+        "lineNumber": 27,
+        "author": {
+          "gitId": "caitlinjee"
+        },
+        "content": "    public boolean equals(Object other) {"
+      },
+      {
+        "lineNumber": 28,
+        "author": {
+          "gitId": "caitlinjee"
+        },
+        "content": "        return other \u003d\u003d this // short circuit if same object"
+      },
+      {
+        "lineNumber": 29,
+        "author": {
+          "gitId": "caitlinjee"
+        },
+        "content": "                || (other instanceof RecipeContainsIngredientsPredicate // instanceof handles nulls"
+      },
+      {
+        "lineNumber": 30,
+        "author": {
+          "gitId": "caitlinjee"
+        },
+        "content": "                \u0026\u0026 keywords.equals(((RecipeContainsIngredientsPredicate) other).keywords)); // state check"
+      },
+      {
+        "lineNumber": 31,
+        "author": {
+          "gitId": "caitlinjee"
+        },
+        "content": "    }"
+      },
+      {
+        "lineNumber": 32,
+        "author": {
+          "gitId": "caitlinjee"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 33,
+        "author": {
+          "gitId": "caitlinjee"
+        },
+        "content": "}"
+      }
+    ],
+    "authorContributionMap": {
+      "caitlinjee": 33
+    }
+  },
+  {
+    "path": "src/main/java/seedu/address/model/recipe/RecipeContainsKeywordsPredicate.java",
+    "fileType": "functional-code",
+    "lines": [
+      {
+        "lineNumber": 1,
+        "author": {
+          "gitId": "caitlinjee"
+        },
+        "content": "package seedu.address.model.recipe;"
+      },
+      {
+        "lineNumber": 2,
+        "author": {
+          "gitId": "caitlinjee"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 3,
+        "author": {
+          "gitId": "caitlinjee"
+        },
+        "content": "import java.util.List;"
+      },
+      {
+        "lineNumber": 4,
+        "author": {
+          "gitId": "caitlinjee"
+        },
+        "content": "import java.util.function.Predicate;"
+      },
+      {
+        "lineNumber": 5,
+        "author": {
+          "gitId": "caitlinjee"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 6,
+        "author": {
+          "gitId": "caitlinjee"
+        },
+        "content": "import seedu.address.commons.util.StringUtil;"
+      },
+      {
+        "lineNumber": 7,
+        "author": {
+          "gitId": "caitlinjee"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 8,
+        "author": {
+          "gitId": "caitlinjee"
+        },
+        "content": "/**"
+      },
+      {
+        "lineNumber": 9,
+        "author": {
+          "gitId": "caitlinjee"
+        },
+        "content": " * Tests that a {@code Recipe}\u0027s {@code attributes} matches any of the keywords given."
+      },
+      {
+        "lineNumber": 10,
+        "author": {
+          "gitId": "caitlinjee"
+        },
+        "content": " */"
+      },
+      {
+        "lineNumber": 11,
+        "author": {
+          "gitId": "caitlinjee"
+        },
+        "content": "public class RecipeContainsKeywordsPredicate implements Predicate\u003cRecipe\u003e {"
+      },
+      {
+        "lineNumber": 12,
+        "author": {
+          "gitId": "caitlinjee"
+        },
+        "content": "    protected final List\u003cString\u003e keywords;"
+      },
+      {
+        "lineNumber": 13,
+        "author": {
+          "gitId": "caitlinjee"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 14,
+        "author": {
+          "gitId": "caitlinjee"
+        },
+        "content": "    public RecipeContainsKeywordsPredicate(List\u003cString\u003e keywords) {"
+      },
+      {
+        "lineNumber": 15,
+        "author": {
+          "gitId": "caitlinjee"
+        },
+        "content": "        this.keywords \u003d keywords;"
+      },
+      {
+        "lineNumber": 16,
+        "author": {
+          "gitId": "caitlinjee"
+        },
+        "content": "    }"
+      },
+      {
+        "lineNumber": 17,
+        "author": {
+          "gitId": "caitlinjee"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 18,
+        "author": {
+          "gitId": "caitlinjee"
+        },
+        "content": "    @Override"
+      },
+      {
+        "lineNumber": 19,
+        "author": {
+          "gitId": "caitlinjee"
+        },
+        "content": "    public boolean test(Recipe recipe) {"
+      },
+      {
+        "lineNumber": 20,
+        "author": {
+          "gitId": "caitlinjee"
+        },
+        "content": "        return keywords.stream()"
+      },
+      {
+        "lineNumber": 21,
+        "author": {
+          "gitId": "caitlinjee"
+        },
+        "content": "                .anyMatch(keyword -\u003e StringUtil.containsWordIgnoreCase(recipe.getName().fullName, keyword));"
+      },
+      {
+        "lineNumber": 22,
+        "author": {
+          "gitId": "caitlinjee"
+        },
+        "content": "    }"
+      },
+      {
+        "lineNumber": 23,
+        "author": {
+          "gitId": "caitlinjee"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 24,
+        "author": {
+          "gitId": "caitlinjee"
+        },
+        "content": "    @Override"
+      },
+      {
+        "lineNumber": 25,
+        "author": {
+          "gitId": "caitlinjee"
+        },
+        "content": "    public boolean equals(Object other) {"
+      },
+      {
+        "lineNumber": 26,
+        "author": {
+          "gitId": "caitlinjee"
+        },
+        "content": "        return other \u003d\u003d this // short circuit if same object"
+      },
+      {
+        "lineNumber": 27,
+        "author": {
+          "gitId": "caitlinjee"
+        },
+        "content": "                || (other instanceof RecipeContainsKeywordsPredicate // instanceof handles nulls"
+      },
+      {
+        "lineNumber": 28,
+        "author": {
+          "gitId": "caitlinjee"
+        },
+        "content": "                \u0026\u0026 keywords.equals(((RecipeContainsKeywordsPredicate) other).keywords)); // state check"
+      },
+      {
+        "lineNumber": 29,
+        "author": {
+          "gitId": "caitlinjee"
+        },
+        "content": "    }"
+      },
+      {
+        "lineNumber": 30,
+        "author": {
+          "gitId": "caitlinjee"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 31,
+        "author": {
+          "gitId": "caitlinjee"
+        },
+        "content": "}"
+      }
+    ],
+    "authorContributionMap": {
+      "caitlinjee": 31
+    }
+  },
+  {
+    "path": "src/main/java/seedu/address/model/recipe/RecommendPredicate.java",
+    "fileType": "functional-code",
+    "lines": [
+      {
+        "lineNumber": 1,
+        "author": {
+          "gitId": "caitlinjee"
+        },
+        "content": "package seedu.address.model.recipe;"
+      },
+      {
+        "lineNumber": 2,
+        "author": {
+          "gitId": "caitlinjee"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 3,
+        "author": {
+          "gitId": "caitlinjee"
+        },
+        "content": "import static java.util.stream.Collectors.toList;"
+      },
+      {
+        "lineNumber": 4,
+        "author": {
+          "gitId": "caitlinjee"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 5,
+        "author": {
+          "gitId": "caitlinjee"
+        },
+        "content": "import java.util.List;"
+      },
+      {
+        "lineNumber": 6,
+        "author": {
+          "gitId": "caitlinjee"
+        },
+        "content": "import java.util.function.Predicate;"
+      },
+      {
+        "lineNumber": 7,
+        "author": {
+          "gitId": "caitlinjee"
+        },
+        "content": "import java.util.stream.Collectors;"
+      },
+      {
+        "lineNumber": 8,
+        "author": {
+          "gitId": "caitlinjee"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 9,
+        "author": {
+          "gitId": "caitlinjee"
+        },
+        "content": "import seedu.address.commons.util.StringUtil;"
+      },
+      {
+        "lineNumber": 10,
+        "author": {
+          "gitId": "caitlinjee"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 11,
+        "author": {
+          "gitId": "caitlinjee"
+        },
+        "content": "/**"
+      },
+      {
+        "lineNumber": 12,
+        "author": {
+          "gitId": "caitlinjee"
+        },
+        "content": " * Tests that a {@code Recipe}\u0027s {@code ingredients} matches all of the ingredients in the user\u0027s fridge."
+      },
+      {
+        "lineNumber": 13,
+        "author": {
+          "gitId": "caitlinjee"
+        },
+        "content": " */"
+      },
+      {
+        "lineNumber": 14,
+        "author": {
+          "gitId": "caitlinjee"
+        },
+        "content": "public class RecommendPredicate extends RecipeContainsKeywordsPredicate"
+      },
+      {
+        "lineNumber": 15,
+        "author": {
+          "gitId": "caitlinjee"
+        },
+        "content": "        implements Predicate\u003cRecipe\u003e {"
+      },
+      {
+        "lineNumber": 16,
+        "author": {
+          "gitId": "caitlinjee"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 17,
+        "author": {
+          "gitId": "caitlinjee"
+        },
+        "content": "    public RecommendPredicate(List\u003cString\u003e keywords) {"
+      },
+      {
+        "lineNumber": 18,
+        "author": {
+          "gitId": "caitlinjee"
+        },
+        "content": "        super(keywords);"
+      },
+      {
+        "lineNumber": 19,
+        "author": {
+          "gitId": "caitlinjee"
+        },
+        "content": "    }"
+      },
+      {
+        "lineNumber": 20,
+        "author": {
+          "gitId": "caitlinjee"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 21,
+        "author": {
+          "gitId": "caitlinjee"
+        },
+        "content": "    @Override"
+      },
+      {
+        "lineNumber": 22,
+        "author": {
+          "gitId": "caitlinjee"
+        },
+        "content": "    public boolean test(Recipe recipe) {"
+      },
+      {
+        "lineNumber": 23,
+        "author": {
+          "gitId": "caitlinjee"
+        },
+        "content": "        List\u003cString\u003e ingredients \u003d"
+      },
+      {
+        "lineNumber": 24,
+        "author": {
+          "gitId": "caitlinjee"
+        },
+        "content": "                recipe.getIngredient().stream().map(x -\u003e x.getValue().replaceAll(\"\\\\s+\", \"\"))"
+      },
+      {
+        "lineNumber": 25,
+        "author": {
+          "gitId": "caitlinjee"
+        },
+        "content": "                        .collect(toList());"
+      },
+      {
+        "lineNumber": 26,
+        "author": {
+          "gitId": "caitlinjee"
+        },
+        "content": "        String str \u003d keywords.stream().map(Object::toString).map(x -\u003e x.replaceAll(\"\\\\s+\", \"\"))"
+      },
+      {
+        "lineNumber": 27,
+        "author": {
+          "gitId": "caitlinjee"
+        },
+        "content": "                .collect(Collectors.joining(\" \"));"
+      },
+      {
+        "lineNumber": 28,
+        "author": {
+          "gitId": "caitlinjee"
+        },
+        "content": "        return ingredients.stream()"
+      },
+      {
+        "lineNumber": 29,
+        "author": {
+          "gitId": "caitlinjee"
+        },
+        "content": "                .allMatch(ingredient -\u003e StringUtil.containsWordIgnoreCase(str, ingredient));"
+      },
+      {
+        "lineNumber": 30,
+        "author": {
+          "gitId": "caitlinjee"
+        },
+        "content": "    }"
+      },
+      {
+        "lineNumber": 31,
+        "author": {
+          "gitId": "caitlinjee"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 32,
+        "author": {
+          "gitId": "caitlinjee"
+        },
+        "content": "    @Override"
+      },
+      {
+        "lineNumber": 33,
+        "author": {
+          "gitId": "caitlinjee"
+        },
+        "content": "    public boolean equals(Object other) {"
+      },
+      {
+        "lineNumber": 34,
+        "author": {
+          "gitId": "caitlinjee"
+        },
+        "content": "        return other \u003d\u003d this // short circuit if same object"
+      },
+      {
+        "lineNumber": 35,
+        "author": {
+          "gitId": "caitlinjee"
+        },
+        "content": "                || (other instanceof RecommendPredicate // instanceof handles nulls"
+      },
+      {
+        "lineNumber": 36,
+        "author": {
+          "gitId": "caitlinjee"
+        },
+        "content": "                \u0026\u0026 keywords.equals(((RecommendPredicate) other).keywords)); // state check"
+      },
+      {
+        "lineNumber": 37,
+        "author": {
+          "gitId": "caitlinjee"
+        },
+        "content": "    }"
+      },
+      {
+        "lineNumber": 38,
+        "author": {
+          "gitId": "caitlinjee"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 39,
+        "author": {
+          "gitId": "caitlinjee"
+        },
+        "content": "}"
+      }
+    ],
+    "authorContributionMap": {
+      "caitlinjee": 39
+    }
+  },
+  {
+    "path": "src/main/java/seedu/address/model/recipe/TagContainsKeywordsPredicate.java",
+    "fileType": "functional-code",
+    "lines": [
+      {
+        "lineNumber": 1,
+        "author": {
+          "gitId": "caitlinjee"
+        },
+        "content": "package seedu.address.model.recipe;"
+      },
+      {
+        "lineNumber": 2,
+        "author": {
+          "gitId": "caitlinjee"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 3,
+        "author": {
+          "gitId": "caitlinjee"
+        },
+        "content": "import java.util.List;"
+      },
+      {
+        "lineNumber": 4,
+        "author": {
+          "gitId": "caitlinjee"
+        },
+        "content": "import java.util.function.Predicate;"
+      },
+      {
+        "lineNumber": 5,
+        "author": {
+          "gitId": "caitlinjee"
+        },
+        "content": "import java.util.stream.Collectors;"
+      },
+      {
+        "lineNumber": 6,
+        "author": {
+          "gitId": "caitlinjee"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 7,
+        "author": {
+          "gitId": "caitlinjee"
+        },
+        "content": "import seedu.address.commons.util.StringUtil;"
+      },
+      {
+        "lineNumber": 8,
+        "author": {
+          "gitId": "caitlinjee"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 9,
+        "author": {
+          "gitId": "caitlinjee"
+        },
+        "content": "/**"
+      },
+      {
+        "lineNumber": 10,
+        "author": {
+          "gitId": "caitlinjee"
+        },
+        "content": " * Tests that a {@code Recipe}\u0027s {@code tags} matches any of the keywords given."
+      },
+      {
+        "lineNumber": 11,
+        "author": {
+          "gitId": "caitlinjee"
+        },
+        "content": " */"
+      },
+      {
+        "lineNumber": 12,
+        "author": {
+          "gitId": "caitlinjee"
+        },
+        "content": "public class TagContainsKeywordsPredicate extends RecipeContainsKeywordsPredicate"
+      },
+      {
+        "lineNumber": 13,
+        "author": {
+          "gitId": "caitlinjee"
+        },
+        "content": "        implements Predicate\u003cRecipe\u003e {"
+      },
+      {
+        "lineNumber": 14,
+        "author": {
+          "gitId": "caitlinjee"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 15,
+        "author": {
+          "gitId": "caitlinjee"
+        },
+        "content": "    public TagContainsKeywordsPredicate(List\u003cString\u003e keywords) {"
+      },
+      {
+        "lineNumber": 16,
+        "author": {
+          "gitId": "caitlinjee"
+        },
+        "content": "        super(keywords);"
+      },
+      {
+        "lineNumber": 17,
+        "author": {
+          "gitId": "caitlinjee"
+        },
+        "content": "    }"
+      },
+      {
+        "lineNumber": 18,
+        "author": {
+          "gitId": "caitlinjee"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 19,
+        "author": {
+          "gitId": "caitlinjee"
+        },
+        "content": "    @Override"
+      },
+      {
+        "lineNumber": 20,
+        "author": {
+          "gitId": "caitlinjee"
+        },
+        "content": "    public boolean test(Recipe recipe) {"
+      },
+      {
+        "lineNumber": 21,
+        "author": {
+          "gitId": "caitlinjee"
+        },
+        "content": "        String tags \u003d recipe.getTags().stream().map(Object::toString).collect(Collectors.joining(\",\"));"
+      },
+      {
+        "lineNumber": 22,
+        "author": {
+          "gitId": "caitlinjee"
+        },
+        "content": "        return keywords.stream()"
+      },
+      {
+        "lineNumber": 23,
+        "author": {
+          "gitId": "caitlinjee"
+        },
+        "content": "                .anyMatch(keyword -\u003e StringUtil.containsWordIgnoreCase(tags, keyword));"
+      },
+      {
+        "lineNumber": 24,
+        "author": {
+          "gitId": "caitlinjee"
+        },
+        "content": "    }"
+      },
+      {
+        "lineNumber": 25,
+        "author": {
+          "gitId": "caitlinjee"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 26,
+        "author": {
+          "gitId": "caitlinjee"
+        },
+        "content": "    @Override"
+      },
+      {
+        "lineNumber": 27,
+        "author": {
+          "gitId": "caitlinjee"
+        },
+        "content": "    public boolean equals(Object other) {"
+      },
+      {
+        "lineNumber": 28,
+        "author": {
+          "gitId": "caitlinjee"
+        },
+        "content": "        return other \u003d\u003d this // short circuit if same object"
+      },
+      {
+        "lineNumber": 29,
+        "author": {
+          "gitId": "caitlinjee"
+        },
+        "content": "                || (other instanceof TagContainsKeywordsPredicate // instanceof handles nulls"
+      },
+      {
+        "lineNumber": 30,
+        "author": {
+          "gitId": "caitlinjee"
+        },
+        "content": "                \u0026\u0026 keywords.equals(((TagContainsKeywordsPredicate) other).keywords)); // state check"
+      },
+      {
+        "lineNumber": 31,
+        "author": {
+          "gitId": "caitlinjee"
+        },
+        "content": "    }"
+      },
+      {
+        "lineNumber": 32,
+        "author": {
+          "gitId": "caitlinjee"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 33,
+        "author": {
+          "gitId": "caitlinjee"
+        },
+        "content": "}"
+      }
+    ],
+    "authorContributionMap": {
+      "caitlinjee": 33
     }
   },
   {
