@@ -57451,6 +57451,1009 @@
     }
   },
   {
+    "path": "src/main/java/seedu/address/model/util/DateTime.java",
+    "fileType": "functional-code",
+    "lines": [
+      {
+        "lineNumber": 1,
+        "author": {
+          "gitId": "MerlinLim"
+        },
+        "content": "package seedu.address.model.util;"
+      },
+      {
+        "lineNumber": 2,
+        "author": {
+          "gitId": "MerlinLim"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 3,
+        "author": {
+          "gitId": "MerlinLim"
+        },
+        "content": "import static java.util.Objects.requireNonNull;"
+      },
+      {
+        "lineNumber": 4,
+        "author": {
+          "gitId": "MerlinLim"
+        },
+        "content": "import static seedu.address.commons.util.AppUtil.checkArgument;"
+      },
+      {
+        "lineNumber": 5,
+        "author": {
+          "gitId": "MerlinLim"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 6,
+        "author": {
+          "gitId": "MerlinLim"
+        },
+        "content": "import java.time.LocalDate;"
+      },
+      {
+        "lineNumber": 7,
+        "author": {
+          "gitId": "MerlinLim"
+        },
+        "content": "import java.time.LocalDateTime;"
+      },
+      {
+        "lineNumber": 8,
+        "author": {
+          "gitId": "MerlinLim"
+        },
+        "content": "import java.time.format.DateTimeFormatter;"
+      },
+      {
+        "lineNumber": 9,
+        "author": {
+          "gitId": "MerlinLim"
+        },
+        "content": "import java.time.temporal.TemporalAccessor;"
+      },
+      {
+        "lineNumber": 10,
+        "author": {
+          "gitId": "MerlinLim"
+        },
+        "content": "import java.util.Optional;"
+      },
+      {
+        "lineNumber": 11,
+        "author": {
+          "gitId": "MerlinLim"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 12,
+        "author": {
+          "gitId": "MerlinLim"
+        },
+        "content": "public class DateTime implements Comparable\u003cDateTime\u003e {"
+      },
+      {
+        "lineNumber": 13,
+        "author": {
+          "gitId": "MerlinLim"
+        },
+        "content": "    public static final String TIME_REGEX \u003d \"(([0-1]\\\\d)|(2[0-3])):([0-5]\\\\d)\";"
+      },
+      {
+        "lineNumber": 14,
+        "author": {
+          "gitId": "MerlinLim"
+        },
+        "content": "    public static final String DATE_REGEX \u003d \"(([0-2]\\\\d)|(3[0-1]))-((0[1-9])|(1[0-2]))-(\\\\d{4})\";"
+      },
+      {
+        "lineNumber": 15,
+        "author": {
+          "gitId": "MerlinLim"
+        },
+        "content": "    public static final String MESSAGE_CONSTRAINTS \u003d"
+      },
+      {
+        "lineNumber": 16,
+        "author": {
+          "gitId": "MerlinLim"
+        },
+        "content": "            \"Dates should be in the format of DD-MM-YYYY or DD-MM-YYYY HH:mm, \""
+      },
+      {
+        "lineNumber": 17,
+        "author": {
+          "gitId": "MerlinLim"
+        },
+        "content": "                    + \"and should not be blank. Note: Single digit month, day, and \""
+      },
+      {
+        "lineNumber": 18,
+        "author": {
+          "gitId": "MerlinLim"
+        },
+        "content": "                    + \"minute must start with a leading zero.\";"
+      },
+      {
+        "lineNumber": 19,
+        "author": {
+          "gitId": "MerlinLim"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 20,
+        "author": {
+          "gitId": "MerlinLim"
+        },
+        "content": "    public static final String VALIDATION_REGEX \u003d String.format(\"%s(\\\\s(%s))?\","
+      },
+      {
+        "lineNumber": 21,
+        "author": {
+          "gitId": "MerlinLim"
+        },
+        "content": "            DATE_REGEX, TIME_REGEX);"
+      },
+      {
+        "lineNumber": 22,
+        "author": {
+          "gitId": "MerlinLim"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 23,
+        "author": {
+          "gitId": "MerlinLim"
+        },
+        "content": "    public static final DateTimeFormatter DATE_TIME_FORMATTER \u003d"
+      },
+      {
+        "lineNumber": 24,
+        "author": {
+          "gitId": "MerlinLim"
+        },
+        "content": "            DateTimeFormatter.ofPattern(\"dd-MM-yyyy[ HH:mm]\");"
+      },
+      {
+        "lineNumber": 25,
+        "author": {
+          "gitId": "MerlinLim"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 26,
+        "author": {
+          "gitId": "MerlinLim"
+        },
+        "content": "    public static final String EMPTY_DATETIME_VALUE_STRING \u003d \"-\";"
+      },
+      {
+        "lineNumber": 27,
+        "author": {
+          "gitId": "MerlinLim"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 28,
+        "author": {
+          "gitId": "MerlinLim"
+        },
+        "content": "    public final Optional\u003cLocalDateTime\u003e value;"
+      },
+      {
+        "lineNumber": 29,
+        "author": {
+          "gitId": "MerlinLim"
+        },
+        "content": "    public final String valueString;"
+      },
+      {
+        "lineNumber": 30,
+        "author": {
+          "gitId": "MerlinLim"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 31,
+        "author": {
+          "gitId": "MerlinLim"
+        },
+        "content": "    /**"
+      },
+      {
+        "lineNumber": 32,
+        "author": {
+          "gitId": "MerlinLim"
+        },
+        "content": "     * Constructs a {@code date}."
+      },
+      {
+        "lineNumber": 33,
+        "author": {
+          "gitId": "MerlinLim"
+        },
+        "content": "     *"
+      },
+      {
+        "lineNumber": 34,
+        "author": {
+          "gitId": "MerlinLim"
+        },
+        "content": "     * @param date A valid date."
+      },
+      {
+        "lineNumber": 35,
+        "author": {
+          "gitId": "MerlinLim"
+        },
+        "content": "     */"
+      },
+      {
+        "lineNumber": 36,
+        "author": {
+          "gitId": "MerlinLim"
+        },
+        "content": "    public DateTime(String date) {"
+      },
+      {
+        "lineNumber": 37,
+        "author": {
+          "gitId": "MerlinLim"
+        },
+        "content": "        requireNonNull(date);"
+      },
+      {
+        "lineNumber": 38,
+        "author": {
+          "gitId": "MerlinLim"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 39,
+        "author": {
+          "gitId": "MerlinLim"
+        },
+        "content": "        // Check for constraints"
+      },
+      {
+        "lineNumber": 40,
+        "author": {
+          "gitId": "MerlinLim"
+        },
+        "content": "        checkArgument(isValidDateTime(date), MESSAGE_CONSTRAINTS);"
+      },
+      {
+        "lineNumber": 41,
+        "author": {
+          "gitId": "MerlinLim"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 42,
+        "author": {
+          "gitId": "MerlinLim"
+        },
+        "content": "        // Parse value"
+      },
+      {
+        "lineNumber": 43,
+        "author": {
+          "gitId": "MerlinLim"
+        },
+        "content": "        TemporalAccessor temporalAccessor \u003d DATE_TIME_FORMATTER.parseBest(date,"
+      },
+      {
+        "lineNumber": 44,
+        "author": {
+          "gitId": "MerlinLim"
+        },
+        "content": "                LocalDateTime::from, LocalDate::from);"
+      },
+      {
+        "lineNumber": 45,
+        "author": {
+          "gitId": "MerlinLim"
+        },
+        "content": "        if (temporalAccessor instanceof LocalDateTime) {"
+      },
+      {
+        "lineNumber": 46,
+        "author": {
+          "gitId": "MerlinLim"
+        },
+        "content": "            LocalDateTime dateTimeParsed \u003d (LocalDateTime) temporalAccessor;"
+      },
+      {
+        "lineNumber": 47,
+        "author": {
+          "gitId": "MerlinLim"
+        },
+        "content": "            this.value \u003d Optional.of(dateTimeParsed);"
+      },
+      {
+        "lineNumber": 48,
+        "author": {
+          "gitId": "MerlinLim"
+        },
+        "content": "            this.valueString \u003d dateTimeParsed.format(DATE_TIME_FORMATTER);"
+      },
+      {
+        "lineNumber": 49,
+        "author": {
+          "gitId": "MerlinLim"
+        },
+        "content": "        } else {"
+      },
+      {
+        "lineNumber": 50,
+        "author": {
+          "gitId": "MerlinLim"
+        },
+        "content": "            LocalDate dateParsed \u003d (LocalDate) temporalAccessor;"
+      },
+      {
+        "lineNumber": 51,
+        "author": {
+          "gitId": "MerlinLim"
+        },
+        "content": "            this.value \u003d Optional.of((dateParsed).atStartOfDay());"
+      },
+      {
+        "lineNumber": 52,
+        "author": {
+          "gitId": "MerlinLim"
+        },
+        "content": "            this.valueString \u003d dateParsed.format(DATE_TIME_FORMATTER);"
+      },
+      {
+        "lineNumber": 53,
+        "author": {
+          "gitId": "MerlinLim"
+        },
+        "content": "        }"
+      },
+      {
+        "lineNumber": 54,
+        "author": {
+          "gitId": "MerlinLim"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 55,
+        "author": {
+          "gitId": "MerlinLim"
+        },
+        "content": "    }"
+      },
+      {
+        "lineNumber": 56,
+        "author": {
+          "gitId": "MerlinLim"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 57,
+        "author": {
+          "gitId": "MerlinLim"
+        },
+        "content": "    /**"
+      },
+      {
+        "lineNumber": 58,
+        "author": {
+          "gitId": "MerlinLim"
+        },
+        "content": "     * Constructs a {@code date}."
+      },
+      {
+        "lineNumber": 59,
+        "author": {
+          "gitId": "MerlinLim"
+        },
+        "content": "     *"
+      },
+      {
+        "lineNumber": 60,
+        "author": {
+          "gitId": "MerlinLim"
+        },
+        "content": "     * @param date A valid optional DateTime."
+      },
+      {
+        "lineNumber": 61,
+        "author": {
+          "gitId": "MerlinLim"
+        },
+        "content": "     */"
+      },
+      {
+        "lineNumber": 62,
+        "author": {
+          "gitId": "MerlinLim"
+        },
+        "content": "    public DateTime(Optional\u003cString\u003e date) {"
+      },
+      {
+        "lineNumber": 63,
+        "author": {
+          "gitId": "MerlinLim"
+        },
+        "content": "        // Check for constraints"
+      },
+      {
+        "lineNumber": 64,
+        "author": {
+          "gitId": "MerlinLim"
+        },
+        "content": "        date.ifPresent(d -\u003e checkArgument(isValidDateTime(d), MESSAGE_CONSTRAINTS));"
+      },
+      {
+        "lineNumber": 65,
+        "author": {
+          "gitId": "MerlinLim"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 66,
+        "author": {
+          "gitId": "MerlinLim"
+        },
+        "content": "        //Parse value"
+      },
+      {
+        "lineNumber": 67,
+        "author": {
+          "gitId": "MerlinLim"
+        },
+        "content": "        Optional\u003cTemporalAccessor\u003e temporalAccessor \u003d date.map(d -\u003e DATE_TIME_FORMATTER"
+      },
+      {
+        "lineNumber": 68,
+        "author": {
+          "gitId": "MerlinLim"
+        },
+        "content": "                .parseBest(d, LocalDateTime::from, LocalDate::from));"
+      },
+      {
+        "lineNumber": 69,
+        "author": {
+          "gitId": "MerlinLim"
+        },
+        "content": "        Optional\u003cLocalDateTime\u003e dateTimeParsed \u003d temporalAccessor"
+      },
+      {
+        "lineNumber": 70,
+        "author": {
+          "gitId": "MerlinLim"
+        },
+        "content": "                .filter(t -\u003e t instanceof LocalDateTime)"
+      },
+      {
+        "lineNumber": 71,
+        "author": {
+          "gitId": "MerlinLim"
+        },
+        "content": "                .map(t -\u003e ((LocalDateTime) t));"
+      },
+      {
+        "lineNumber": 72,
+        "author": {
+          "gitId": "MerlinLim"
+        },
+        "content": "        Optional\u003cLocalDate\u003e dateParsed \u003d temporalAccessor"
+      },
+      {
+        "lineNumber": 73,
+        "author": {
+          "gitId": "MerlinLim"
+        },
+        "content": "                .filter(t -\u003e t instanceof LocalDate)"
+      },
+      {
+        "lineNumber": 74,
+        "author": {
+          "gitId": "MerlinLim"
+        },
+        "content": "                .map(t -\u003e ((LocalDate) t));"
+      },
+      {
+        "lineNumber": 75,
+        "author": {
+          "gitId": "MerlinLim"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 76,
+        "author": {
+          "gitId": "MerlinLim"
+        },
+        "content": "        if (dateTimeParsed.isPresent()) {"
+      },
+      {
+        "lineNumber": 77,
+        "author": {
+          "gitId": "MerlinLim"
+        },
+        "content": "            this.value \u003d dateTimeParsed;"
+      },
+      {
+        "lineNumber": 78,
+        "author": {
+          "gitId": "MerlinLim"
+        },
+        "content": "            this.valueString \u003d dateTimeParsed"
+      },
+      {
+        "lineNumber": 79,
+        "author": {
+          "gitId": "MerlinLim"
+        },
+        "content": "                    .map(dt -\u003e dt.format(DATE_TIME_FORMATTER))"
+      },
+      {
+        "lineNumber": 80,
+        "author": {
+          "gitId": "MerlinLim"
+        },
+        "content": "                    .orElse(EMPTY_DATETIME_VALUE_STRING);"
+      },
+      {
+        "lineNumber": 81,
+        "author": {
+          "gitId": "MerlinLim"
+        },
+        "content": "        } else {"
+      },
+      {
+        "lineNumber": 82,
+        "author": {
+          "gitId": "MerlinLim"
+        },
+        "content": "            this.value \u003d dateParsed.map(LocalDate::atStartOfDay);"
+      },
+      {
+        "lineNumber": 83,
+        "author": {
+          "gitId": "MerlinLim"
+        },
+        "content": "            this.valueString \u003d dateParsed"
+      },
+      {
+        "lineNumber": 84,
+        "author": {
+          "gitId": "MerlinLim"
+        },
+        "content": "                    .map(dt -\u003e dt.format(DATE_TIME_FORMATTER))"
+      },
+      {
+        "lineNumber": 85,
+        "author": {
+          "gitId": "MerlinLim"
+        },
+        "content": "                    .orElse(EMPTY_DATETIME_VALUE_STRING);"
+      },
+      {
+        "lineNumber": 86,
+        "author": {
+          "gitId": "MerlinLim"
+        },
+        "content": "        }"
+      },
+      {
+        "lineNumber": 87,
+        "author": {
+          "gitId": "MerlinLim"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 88,
+        "author": {
+          "gitId": "MerlinLim"
+        },
+        "content": "    }"
+      },
+      {
+        "lineNumber": 89,
+        "author": {
+          "gitId": "MerlinLim"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 90,
+        "author": {
+          "gitId": "MerlinLim"
+        },
+        "content": "    /**"
+      },
+      {
+        "lineNumber": 91,
+        "author": {
+          "gitId": "MerlinLim"
+        },
+        "content": "     * Returns true if a given string is a valid DateTime."
+      },
+      {
+        "lineNumber": 92,
+        "author": {
+          "gitId": "MerlinLim"
+        },
+        "content": "     *"
+      },
+      {
+        "lineNumber": 93,
+        "author": {
+          "gitId": "MerlinLim"
+        },
+        "content": "     * @param test string to test."
+      },
+      {
+        "lineNumber": 94,
+        "author": {
+          "gitId": "MerlinLim"
+        },
+        "content": "     * @return result of match."
+      },
+      {
+        "lineNumber": 95,
+        "author": {
+          "gitId": "MerlinLim"
+        },
+        "content": "     */"
+      },
+      {
+        "lineNumber": 96,
+        "author": {
+          "gitId": "MerlinLim"
+        },
+        "content": "    public static boolean isValidDateTime(String test) {"
+      },
+      {
+        "lineNumber": 97,
+        "author": {
+          "gitId": "MerlinLim"
+        },
+        "content": "        return test.matches(VALIDATION_REGEX);"
+      },
+      {
+        "lineNumber": 98,
+        "author": {
+          "gitId": "MerlinLim"
+        },
+        "content": "    }"
+      },
+      {
+        "lineNumber": 99,
+        "author": {
+          "gitId": "MerlinLim"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 100,
+        "author": {
+          "gitId": "MerlinLim"
+        },
+        "content": "    /**"
+      },
+      {
+        "lineNumber": 101,
+        "author": {
+          "gitId": "MerlinLim"
+        },
+        "content": "     * Checks is DateTime exists."
+      },
+      {
+        "lineNumber": 102,
+        "author": {
+          "gitId": "MerlinLim"
+        },
+        "content": "     *"
+      },
+      {
+        "lineNumber": 103,
+        "author": {
+          "gitId": "MerlinLim"
+        },
+        "content": "     * @return true if value in DateTime exists."
+      },
+      {
+        "lineNumber": 104,
+        "author": {
+          "gitId": "MerlinLim"
+        },
+        "content": "     */"
+      },
+      {
+        "lineNumber": 105,
+        "author": {
+          "gitId": "MerlinLim"
+        },
+        "content": "    public boolean isEmpty() {"
+      },
+      {
+        "lineNumber": 106,
+        "author": {
+          "gitId": "MerlinLim"
+        },
+        "content": "        return this.value.isEmpty();"
+      },
+      {
+        "lineNumber": 107,
+        "author": {
+          "gitId": "MerlinLim"
+        },
+        "content": "    }"
+      },
+      {
+        "lineNumber": 108,
+        "author": {
+          "gitId": "MerlinLim"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 109,
+        "author": {
+          "gitId": "MerlinLim"
+        },
+        "content": "    @Override"
+      },
+      {
+        "lineNumber": 110,
+        "author": {
+          "gitId": "MerlinLim"
+        },
+        "content": "    public int compareTo(DateTime o) {"
+      },
+      {
+        "lineNumber": 111,
+        "author": {
+          "gitId": "MerlinLim"
+        },
+        "content": "        if (value.isEmpty() \u0026\u0026 o.isEmpty()) {"
+      },
+      {
+        "lineNumber": 112,
+        "author": {
+          "gitId": "MerlinLim"
+        },
+        "content": "            return 0;"
+      },
+      {
+        "lineNumber": 113,
+        "author": {
+          "gitId": "MerlinLim"
+        },
+        "content": "        } else {"
+      },
+      {
+        "lineNumber": 114,
+        "author": {
+          "gitId": "MerlinLim"
+        },
+        "content": "            return this.value.map(v1 -\u003e"
+      },
+      {
+        "lineNumber": 115,
+        "author": {
+          "gitId": "MerlinLim"
+        },
+        "content": "                    o.value.map(v2-\u003e v1.compareTo(v2)).orElse(-1))"
+      },
+      {
+        "lineNumber": 116,
+        "author": {
+          "gitId": "MerlinLim"
+        },
+        "content": "                    .orElse(1);"
+      },
+      {
+        "lineNumber": 117,
+        "author": {
+          "gitId": "MerlinLim"
+        },
+        "content": "        }"
+      },
+      {
+        "lineNumber": 118,
+        "author": {
+          "gitId": "MerlinLim"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 119,
+        "author": {
+          "gitId": "MerlinLim"
+        },
+        "content": "    }"
+      },
+      {
+        "lineNumber": 120,
+        "author": {
+          "gitId": "MerlinLim"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 121,
+        "author": {
+          "gitId": "MerlinLim"
+        },
+        "content": "    @Override"
+      },
+      {
+        "lineNumber": 122,
+        "author": {
+          "gitId": "MerlinLim"
+        },
+        "content": "    public boolean equals(Object other) {"
+      },
+      {
+        "lineNumber": 123,
+        "author": {
+          "gitId": "MerlinLim"
+        },
+        "content": "        return other \u003d\u003d this // short circuit if same object"
+      },
+      {
+        "lineNumber": 124,
+        "author": {
+          "gitId": "MerlinLim"
+        },
+        "content": "                || (other instanceof DateTime) // instanceof handles nulls"
+      },
+      {
+        "lineNumber": 125,
+        "author": {
+          "gitId": "MerlinLim"
+        },
+        "content": "                \u0026\u0026 ((value.isEmpty() \u0026\u0026 ((DateTime) other).value.isEmpty()) //if v1 and v2 empty, return true"
+      },
+      {
+        "lineNumber": 126,
+        "author": {
+          "gitId": "MerlinLim"
+        },
+        "content": "                || value.map(v1 -\u003e ((DateTime) other)"
+      },
+      {
+        "lineNumber": 127,
+        "author": {
+          "gitId": "MerlinLim"
+        },
+        "content": "                .value.map(v2-\u003e v1.equals(v2))"
+      },
+      {
+        "lineNumber": 128,
+        "author": {
+          "gitId": "MerlinLim"
+        },
+        "content": "                .orElse(false)) // if v2 not present, return false"
+      },
+      {
+        "lineNumber": 129,
+        "author": {
+          "gitId": "MerlinLim"
+        },
+        "content": "                .orElse(false)); // if v1 not present return false"
+      },
+      {
+        "lineNumber": 130,
+        "author": {
+          "gitId": "MerlinLim"
+        },
+        "content": "    }"
+      },
+      {
+        "lineNumber": 131,
+        "author": {
+          "gitId": "MerlinLim"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 132,
+        "author": {
+          "gitId": "MerlinLim"
+        },
+        "content": "    @Override"
+      },
+      {
+        "lineNumber": 133,
+        "author": {
+          "gitId": "MerlinLim"
+        },
+        "content": "    public String toString() {"
+      },
+      {
+        "lineNumber": 134,
+        "author": {
+          "gitId": "MerlinLim"
+        },
+        "content": "        return valueString;"
+      },
+      {
+        "lineNumber": 135,
+        "author": {
+          "gitId": "MerlinLim"
+        },
+        "content": "    }"
+      },
+      {
+        "lineNumber": 136,
+        "author": {
+          "gitId": "MerlinLim"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 137,
+        "author": {
+          "gitId": "MerlinLim"
+        },
+        "content": "    @Override"
+      },
+      {
+        "lineNumber": 138,
+        "author": {
+          "gitId": "MerlinLim"
+        },
+        "content": "    public int hashCode() {"
+      },
+      {
+        "lineNumber": 139,
+        "author": {
+          "gitId": "MerlinLim"
+        },
+        "content": "        return value.hashCode();"
+      },
+      {
+        "lineNumber": 140,
+        "author": {
+          "gitId": "MerlinLim"
+        },
+        "content": "    }"
+      },
+      {
+        "lineNumber": 141,
+        "author": {
+          "gitId": "MerlinLim"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 142,
+        "author": {
+          "gitId": "MerlinLim"
+        },
+        "content": "}"
+      }
+    ],
+    "authorContributionMap": {
+      "MerlinLim": 142
+    }
+  },
+  {
     "path": "src/main/java/seedu/address/model/util/Description.java",
     "fileType": "functional-code",
     "lines": [
@@ -101400,6 +102403,596 @@
     "authorContributionMap": {
       "chrystalquek": 1,
       "-": 25
+    }
+  },
+  {
+    "path": "src/test/java/seedu/address/model/util/DateTimeTest.java",
+    "fileType": "test-code",
+    "lines": [
+      {
+        "lineNumber": 1,
+        "author": {
+          "gitId": "MerlinLim"
+        },
+        "content": "package seedu.address.model.util;"
+      },
+      {
+        "lineNumber": 2,
+        "author": {
+          "gitId": "MerlinLim"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 3,
+        "author": {
+          "gitId": "MerlinLim"
+        },
+        "content": "import static org.junit.jupiter.api.Assertions.assertEquals;"
+      },
+      {
+        "lineNumber": 4,
+        "author": {
+          "gitId": "MerlinLim"
+        },
+        "content": "import static org.junit.jupiter.api.Assertions.assertTrue;"
+      },
+      {
+        "lineNumber": 5,
+        "author": {
+          "gitId": "MerlinLim"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 6,
+        "author": {
+          "gitId": "MerlinLim"
+        },
+        "content": "import java.util.Optional;"
+      },
+      {
+        "lineNumber": 7,
+        "author": {
+          "gitId": "MerlinLim"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 8,
+        "author": {
+          "gitId": "MerlinLim"
+        },
+        "content": "import org.junit.jupiter.api.Test;"
+      },
+      {
+        "lineNumber": 9,
+        "author": {
+          "gitId": "MerlinLim"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 10,
+        "author": {
+          "gitId": "MerlinLim"
+        },
+        "content": "class DateTimeTest {"
+      },
+      {
+        "lineNumber": 11,
+        "author": {
+          "gitId": "MerlinLim"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 12,
+        "author": {
+          "gitId": "MerlinLim"
+        },
+        "content": "    public static final String VALID_SAMPLE_A \u003d \"30-11-2020 10:00\";"
+      },
+      {
+        "lineNumber": 13,
+        "author": {
+          "gitId": "MerlinLim"
+        },
+        "content": "    public static final String VALID_DATE_A \u003d \"30-11-2020\";"
+      },
+      {
+        "lineNumber": 14,
+        "author": {
+          "gitId": "MerlinLim"
+        },
+        "content": "    public static final String VALID_SAMPLE_B \u003d \"31-11-2020 23:00\";"
+      },
+      {
+        "lineNumber": 15,
+        "author": {
+          "gitId": "MerlinLim"
+        },
+        "content": "    public static final String VALID_DATE_B \u003d \"30-02-2020\";"
+      },
+      {
+        "lineNumber": 16,
+        "author": {
+          "gitId": "MerlinLim"
+        },
+        "content": "    public static final String VALID_DATE_C \u003d \"29-02-2019\";"
+      },
+      {
+        "lineNumber": 17,
+        "author": {
+          "gitId": "MerlinLim"
+        },
+        "content": "    public static final String TIME_A \u003d \"23:00\";"
+      },
+      {
+        "lineNumber": 18,
+        "author": {
+          "gitId": "MerlinLim"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 19,
+        "author": {
+          "gitId": "MerlinLim"
+        },
+        "content": "    @Test"
+      },
+      {
+        "lineNumber": 20,
+        "author": {
+          "gitId": "MerlinLim"
+        },
+        "content": "    void isValidDateTimeSuccess() {"
+      },
+      {
+        "lineNumber": 21,
+        "author": {
+          "gitId": "MerlinLim"
+        },
+        "content": "        assertTrue(TIME_A.matches(DateTime.TIME_REGEX));"
+      },
+      {
+        "lineNumber": 22,
+        "author": {
+          "gitId": "MerlinLim"
+        },
+        "content": "        assertTrue(VALID_DATE_A.matches(DateTime.DATE_REGEX));"
+      },
+      {
+        "lineNumber": 23,
+        "author": {
+          "gitId": "MerlinLim"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 24,
+        "author": {
+          "gitId": "MerlinLim"
+        },
+        "content": "        // Date no Time"
+      },
+      {
+        "lineNumber": 25,
+        "author": {
+          "gitId": "MerlinLim"
+        },
+        "content": "        assertTrue(DateTime.isValidDateTime(VALID_DATE_A));"
+      },
+      {
+        "lineNumber": 26,
+        "author": {
+          "gitId": "MerlinLim"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 27,
+        "author": {
+          "gitId": "MerlinLim"
+        },
+        "content": "        // Date and Time"
+      },
+      {
+        "lineNumber": 28,
+        "author": {
+          "gitId": "MerlinLim"
+        },
+        "content": "        assertTrue(DateTime.isValidDateTime(VALID_SAMPLE_A));"
+      },
+      {
+        "lineNumber": 29,
+        "author": {
+          "gitId": "MerlinLim"
+        },
+        "content": "    }"
+      },
+      {
+        "lineNumber": 30,
+        "author": {
+          "gitId": "MerlinLim"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 31,
+        "author": {
+          "gitId": "MerlinLim"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 32,
+        "author": {
+          "gitId": "MerlinLim"
+        },
+        "content": "    @Test"
+      },
+      {
+        "lineNumber": 33,
+        "author": {
+          "gitId": "MerlinLim"
+        },
+        "content": "    void parseSuccess() {"
+      },
+      {
+        "lineNumber": 34,
+        "author": {
+          "gitId": "MerlinLim"
+        },
+        "content": "        DateTime dt \u003d new DateTime(VALID_SAMPLE_A);"
+      },
+      {
+        "lineNumber": 35,
+        "author": {
+          "gitId": "MerlinLim"
+        },
+        "content": "        assertEquals(VALID_SAMPLE_A, dt.toString());"
+      },
+      {
+        "lineNumber": 36,
+        "author": {
+          "gitId": "MerlinLim"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 37,
+        "author": {
+          "gitId": "MerlinLim"
+        },
+        "content": "        DateTime dtNoTime \u003d new DateTime(VALID_DATE_A);"
+      },
+      {
+        "lineNumber": 38,
+        "author": {
+          "gitId": "MerlinLim"
+        },
+        "content": "        assertEquals(VALID_DATE_A, dtNoTime.toString());"
+      },
+      {
+        "lineNumber": 39,
+        "author": {
+          "gitId": "MerlinLim"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 40,
+        "author": {
+          "gitId": "MerlinLim"
+        },
+        "content": "        //Optional"
+      },
+      {
+        "lineNumber": 41,
+        "author": {
+          "gitId": "MerlinLim"
+        },
+        "content": "        dt \u003d new DateTime(Optional.of(VALID_SAMPLE_A));"
+      },
+      {
+        "lineNumber": 42,
+        "author": {
+          "gitId": "MerlinLim"
+        },
+        "content": "        assertEquals(VALID_SAMPLE_A, dt.toString());"
+      },
+      {
+        "lineNumber": 43,
+        "author": {
+          "gitId": "MerlinLim"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 44,
+        "author": {
+          "gitId": "MerlinLim"
+        },
+        "content": "        dtNoTime \u003d new DateTime(Optional.of(VALID_DATE_A));"
+      },
+      {
+        "lineNumber": 45,
+        "author": {
+          "gitId": "MerlinLim"
+        },
+        "content": "        assertEquals(VALID_DATE_A, dtNoTime.toString());"
+      },
+      {
+        "lineNumber": 46,
+        "author": {
+          "gitId": "MerlinLim"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 47,
+        "author": {
+          "gitId": "MerlinLim"
+        },
+        "content": "        //Optional Empty"
+      },
+      {
+        "lineNumber": 48,
+        "author": {
+          "gitId": "MerlinLim"
+        },
+        "content": "        assertEquals(\"-\", new DateTime(Optional.empty()).toString());"
+      },
+      {
+        "lineNumber": 49,
+        "author": {
+          "gitId": "MerlinLim"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 50,
+        "author": {
+          "gitId": "MerlinLim"
+        },
+        "content": "    }"
+      },
+      {
+        "lineNumber": 51,
+        "author": {
+          "gitId": "MerlinLim"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 52,
+        "author": {
+          "gitId": "MerlinLim"
+        },
+        "content": "    @Test"
+      },
+      {
+        "lineNumber": 53,
+        "author": {
+          "gitId": "MerlinLim"
+        },
+        "content": "    void resolveOverflowParseSuccess() {"
+      },
+      {
+        "lineNumber": 54,
+        "author": {
+          "gitId": "MerlinLim"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 55,
+        "author": {
+          "gitId": "MerlinLim"
+        },
+        "content": "        DateTime resolveA \u003d new DateTime(VALID_SAMPLE_B);"
+      },
+      {
+        "lineNumber": 56,
+        "author": {
+          "gitId": "MerlinLim"
+        },
+        "content": "        assertEquals(\"30-11-2020 23:00\", resolveA.toString());"
+      },
+      {
+        "lineNumber": 57,
+        "author": {
+          "gitId": "MerlinLim"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 58,
+        "author": {
+          "gitId": "MerlinLim"
+        },
+        "content": "        DateTime resolveB \u003d new DateTime(VALID_DATE_B);"
+      },
+      {
+        "lineNumber": 59,
+        "author": {
+          "gitId": "MerlinLim"
+        },
+        "content": "        assertEquals(\"29-02-2020\", resolveB.toString());"
+      },
+      {
+        "lineNumber": 60,
+        "author": {
+          "gitId": "MerlinLim"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 61,
+        "author": {
+          "gitId": "MerlinLim"
+        },
+        "content": "        DateTime resolveC \u003d new DateTime(VALID_DATE_C);"
+      },
+      {
+        "lineNumber": 62,
+        "author": {
+          "gitId": "MerlinLim"
+        },
+        "content": "        assertEquals(\"28-02-2019\", resolveC.toString());"
+      },
+      {
+        "lineNumber": 63,
+        "author": {
+          "gitId": "MerlinLim"
+        },
+        "content": "    }"
+      },
+      {
+        "lineNumber": 64,
+        "author": {
+          "gitId": "MerlinLim"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 65,
+        "author": {
+          "gitId": "MerlinLim"
+        },
+        "content": "    @Test"
+      },
+      {
+        "lineNumber": 66,
+        "author": {
+          "gitId": "MerlinLim"
+        },
+        "content": "    void compareSuccess() {"
+      },
+      {
+        "lineNumber": 67,
+        "author": {
+          "gitId": "MerlinLim"
+        },
+        "content": "        DateTime a \u003d new DateTime(VALID_SAMPLE_A);"
+      },
+      {
+        "lineNumber": 68,
+        "author": {
+          "gitId": "MerlinLim"
+        },
+        "content": "        DateTime b \u003d new DateTime(VALID_SAMPLE_B);"
+      },
+      {
+        "lineNumber": 69,
+        "author": {
+          "gitId": "MerlinLim"
+        },
+        "content": "        DateTime c \u003d new DateTime(VALID_DATE_A);"
+      },
+      {
+        "lineNumber": 70,
+        "author": {
+          "gitId": "MerlinLim"
+        },
+        "content": "        DateTime a1 \u003d new DateTime(Optional.empty());"
+      },
+      {
+        "lineNumber": 71,
+        "author": {
+          "gitId": "MerlinLim"
+        },
+        "content": "        assertEquals(a.compareTo(b), -1);"
+      },
+      {
+        "lineNumber": 72,
+        "author": {
+          "gitId": "MerlinLim"
+        },
+        "content": "        assertEquals(a.compareTo(a), 0);"
+      },
+      {
+        "lineNumber": 73,
+        "author": {
+          "gitId": "MerlinLim"
+        },
+        "content": "        assertEquals(a.compareTo(c), 1);"
+      },
+      {
+        "lineNumber": 74,
+        "author": {
+          "gitId": "MerlinLim"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 75,
+        "author": {
+          "gitId": "MerlinLim"
+        },
+        "content": "        //Compare Empty Optionals"
+      },
+      {
+        "lineNumber": 76,
+        "author": {
+          "gitId": "MerlinLim"
+        },
+        "content": "        //Empty Optionals have highest priority"
+      },
+      {
+        "lineNumber": 77,
+        "author": {
+          "gitId": "MerlinLim"
+        },
+        "content": "        assertEquals(a1.compareTo(a), 1);"
+      },
+      {
+        "lineNumber": 78,
+        "author": {
+          "gitId": "MerlinLim"
+        },
+        "content": "        assertEquals(a.compareTo(a1), -1);"
+      },
+      {
+        "lineNumber": 79,
+        "author": {
+          "gitId": "MerlinLim"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 80,
+        "author": {
+          "gitId": "MerlinLim"
+        },
+        "content": "        //Both are Empty Optionals"
+      },
+      {
+        "lineNumber": 81,
+        "author": {
+          "gitId": "MerlinLim"
+        },
+        "content": "        assertEquals(a1.compareTo(a1), 0);"
+      },
+      {
+        "lineNumber": 82,
+        "author": {
+          "gitId": "MerlinLim"
+        },
+        "content": "    }"
+      },
+      {
+        "lineNumber": 83,
+        "author": {
+          "gitId": "MerlinLim"
+        },
+        "content": "}"
+      }
+    ],
+    "authorContributionMap": {
+      "MerlinLim": 83
     }
   },
   {
