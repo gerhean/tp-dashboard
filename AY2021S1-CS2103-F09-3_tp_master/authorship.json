@@ -13267,6 +13267,1297 @@
     }
   },
   {
+    "path": "src/main/java/seedu/address/MainApp.java",
+    "fileType": "functional-code",
+    "lines": [
+      {
+        "lineNumber": 1,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "package seedu.address;"
+      },
+      {
+        "lineNumber": 2,
+        "author": {
+          "gitId": "-"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 3,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "import java.io.IOException;"
+      },
+      {
+        "lineNumber": 4,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "import java.nio.file.Path;"
+      },
+      {
+        "lineNumber": 5,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "import java.util.Optional;"
+      },
+      {
+        "lineNumber": 6,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "import java.util.logging.Logger;"
+      },
+      {
+        "lineNumber": 7,
+        "author": {
+          "gitId": "-"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 8,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "import javafx.application.Application;"
+      },
+      {
+        "lineNumber": 9,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "import javafx.stage.Stage;"
+      },
+      {
+        "lineNumber": 10,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "import seedu.address.commons.core.Config;"
+      },
+      {
+        "lineNumber": 11,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "import seedu.address.commons.core.LogsCenter;"
+      },
+      {
+        "lineNumber": 12,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "import seedu.address.commons.core.Version;"
+      },
+      {
+        "lineNumber": 13,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "import seedu.address.commons.exceptions.DataConversionException;"
+      },
+      {
+        "lineNumber": 14,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "import seedu.address.commons.util.ConfigUtil;"
+      },
+      {
+        "lineNumber": 15,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "import seedu.address.commons.util.StringUtil;"
+      },
+      {
+        "lineNumber": 16,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "import seedu.address.logic.Logic;"
+      },
+      {
+        "lineNumber": 17,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "import seedu.address.logic.LogicManager;"
+      },
+      {
+        "lineNumber": 18,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "import seedu.address.model.AddressBook;"
+      },
+      {
+        "lineNumber": 19,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "import seedu.address.model.Model;"
+      },
+      {
+        "lineNumber": 20,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "import seedu.address.model.ModelManager;"
+      },
+      {
+        "lineNumber": 21,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "import seedu.address.model.ReadOnlyAddressBook;"
+      },
+      {
+        "lineNumber": 22,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "import seedu.address.model.ReadOnlyUserPrefs;"
+      },
+      {
+        "lineNumber": 23,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "import seedu.address.model.UserPrefs;"
+      },
+      {
+        "lineNumber": 24,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "import seedu.address.model.util.SampleDataUtil;"
+      },
+      {
+        "lineNumber": 25,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "import seedu.address.storage.AddressBookStorage;"
+      },
+      {
+        "lineNumber": 26,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "import seedu.address.storage.JsonAddressBookStorage;"
+      },
+      {
+        "lineNumber": 27,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "import seedu.address.storage.JsonUserPrefsStorage;"
+      },
+      {
+        "lineNumber": 28,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "import seedu.address.storage.Storage;"
+      },
+      {
+        "lineNumber": 29,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "import seedu.address.storage.StorageManager;"
+      },
+      {
+        "lineNumber": 30,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "import seedu.address.storage.UserPrefsStorage;"
+      },
+      {
+        "lineNumber": 31,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "import seedu.address.ui.Ui;"
+      },
+      {
+        "lineNumber": 32,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "import seedu.address.ui.UiManager;"
+      },
+      {
+        "lineNumber": 33,
+        "author": {
+          "gitId": "-"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 34,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "/**"
+      },
+      {
+        "lineNumber": 35,
+        "author": {
+          "gitId": "-"
+        },
+        "content": " * Runs the application."
+      },
+      {
+        "lineNumber": 36,
+        "author": {
+          "gitId": "-"
+        },
+        "content": " */"
+      },
+      {
+        "lineNumber": 37,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "public class MainApp extends Application {"
+      },
+      {
+        "lineNumber": 38,
+        "author": {
+          "gitId": "-"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 39,
+        "author": {
+          "gitId": "Stefan-Jiang"
+        },
+        "content": "    public static final Version VERSION \u003d new Version(1, 2, 1, true);"
+      },
+      {
+        "lineNumber": 40,
+        "author": {
+          "gitId": "-"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 41,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "    private static final Logger logger \u003d LogsCenter.getLogger(MainApp.class);"
+      },
+      {
+        "lineNumber": 42,
+        "author": {
+          "gitId": "-"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 43,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "    protected Ui ui;"
+      },
+      {
+        "lineNumber": 44,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "    protected Logic logic;"
+      },
+      {
+        "lineNumber": 45,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "    protected Storage storage;"
+      },
+      {
+        "lineNumber": 46,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "    protected Model model;"
+      },
+      {
+        "lineNumber": 47,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "    protected Config config;"
+      },
+      {
+        "lineNumber": 48,
+        "author": {
+          "gitId": "-"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 49,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "    @Override"
+      },
+      {
+        "lineNumber": 50,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "    public void init() throws Exception {"
+      },
+      {
+        "lineNumber": 51,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "        logger.info(\"\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d[ Initializing AddressBook ]\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\");"
+      },
+      {
+        "lineNumber": 52,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "        super.init();"
+      },
+      {
+        "lineNumber": 53,
+        "author": {
+          "gitId": "-"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 54,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "        AppParameters appParameters \u003d AppParameters.parse(getParameters());"
+      },
+      {
+        "lineNumber": 55,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "        config \u003d initConfig(appParameters.getConfigPath());"
+      },
+      {
+        "lineNumber": 56,
+        "author": {
+          "gitId": "-"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 57,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "        UserPrefsStorage userPrefsStorage \u003d new JsonUserPrefsStorage(config.getUserPrefsFilePath());"
+      },
+      {
+        "lineNumber": 58,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "        UserPrefs userPrefs \u003d initPrefs(userPrefsStorage);"
+      },
+      {
+        "lineNumber": 59,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "        AddressBookStorage addressBookStorage \u003d new JsonAddressBookStorage(userPrefs.getAddressBookFilePath());"
+      },
+      {
+        "lineNumber": 60,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "        storage \u003d new StorageManager(addressBookStorage, userPrefsStorage);"
+      },
+      {
+        "lineNumber": 61,
+        "author": {
+          "gitId": "-"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 62,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "        initLogging(config);"
+      },
+      {
+        "lineNumber": 63,
+        "author": {
+          "gitId": "-"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 64,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "        model \u003d initModelManager(storage, userPrefs);"
+      },
+      {
+        "lineNumber": 65,
+        "author": {
+          "gitId": "-"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 66,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "        logic \u003d new LogicManager(model, storage);"
+      },
+      {
+        "lineNumber": 67,
+        "author": {
+          "gitId": "-"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 68,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "        ui \u003d new UiManager(logic);"
+      },
+      {
+        "lineNumber": 69,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "    }"
+      },
+      {
+        "lineNumber": 70,
+        "author": {
+          "gitId": "-"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 71,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "    /**"
+      },
+      {
+        "lineNumber": 72,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "     * Returns a {@code ModelManager} with the data from {@code storage}\u0027s address book and {@code userPrefs}. \u003cbr\u003e"
+      },
+      {
+        "lineNumber": 73,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "     * The data from the sample address book will be used instead if {@code storage}\u0027s address book is not found,"
+      },
+      {
+        "lineNumber": 74,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "     * or an empty address book will be used instead if errors occur when reading {@code storage}\u0027s address book."
+      },
+      {
+        "lineNumber": 75,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "     */"
+      },
+      {
+        "lineNumber": 76,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "    private Model initModelManager(Storage storage, ReadOnlyUserPrefs userPrefs) {"
+      },
+      {
+        "lineNumber": 77,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "        Optional\u003cReadOnlyAddressBook\u003e addressBookOptional;"
+      },
+      {
+        "lineNumber": 78,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "        ReadOnlyAddressBook initialData;"
+      },
+      {
+        "lineNumber": 79,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "        try {"
+      },
+      {
+        "lineNumber": 80,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "            addressBookOptional \u003d storage.readAddressBook();"
+      },
+      {
+        "lineNumber": 81,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "            if (!addressBookOptional.isPresent()) {"
+      },
+      {
+        "lineNumber": 82,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "                logger.info(\"Data file not found. Will be starting with a sample AddressBook\");"
+      },
+      {
+        "lineNumber": 83,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "            }"
+      },
+      {
+        "lineNumber": 84,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "            initialData \u003d addressBookOptional.orElseGet(SampleDataUtil::getSampleAddressBook);"
+      },
+      {
+        "lineNumber": 85,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "        } catch (DataConversionException e) {"
+      },
+      {
+        "lineNumber": 86,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "            logger.warning(\"Data file not in the correct format. Will be starting with an empty AddressBook\");"
+      },
+      {
+        "lineNumber": 87,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "            initialData \u003d new AddressBook();"
+      },
+      {
+        "lineNumber": 88,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "        } catch (IOException e) {"
+      },
+      {
+        "lineNumber": 89,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "            logger.warning(\"Problem while reading from the file. Will be starting with an empty AddressBook\");"
+      },
+      {
+        "lineNumber": 90,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "            initialData \u003d new AddressBook();"
+      },
+      {
+        "lineNumber": 91,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "        }"
+      },
+      {
+        "lineNumber": 92,
+        "author": {
+          "gitId": "-"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 93,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "        return new ModelManager(initialData, userPrefs);"
+      },
+      {
+        "lineNumber": 94,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "    }"
+      },
+      {
+        "lineNumber": 95,
+        "author": {
+          "gitId": "-"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 96,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "    private void initLogging(Config config) {"
+      },
+      {
+        "lineNumber": 97,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "        LogsCenter.init(config);"
+      },
+      {
+        "lineNumber": 98,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "    }"
+      },
+      {
+        "lineNumber": 99,
+        "author": {
+          "gitId": "-"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 100,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "    /**"
+      },
+      {
+        "lineNumber": 101,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "     * Returns a {@code Config} using the file at {@code configFilePath}. \u003cbr\u003e"
+      },
+      {
+        "lineNumber": 102,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "     * The default file path {@code Config#DEFAULT_CONFIG_FILE} will be used instead"
+      },
+      {
+        "lineNumber": 103,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "     * if {@code configFilePath} is null."
+      },
+      {
+        "lineNumber": 104,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "     */"
+      },
+      {
+        "lineNumber": 105,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "    protected Config initConfig(Path configFilePath) {"
+      },
+      {
+        "lineNumber": 106,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "        Config initializedConfig;"
+      },
+      {
+        "lineNumber": 107,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "        Path configFilePathUsed;"
+      },
+      {
+        "lineNumber": 108,
+        "author": {
+          "gitId": "-"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 109,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "        configFilePathUsed \u003d Config.DEFAULT_CONFIG_FILE;"
+      },
+      {
+        "lineNumber": 110,
+        "author": {
+          "gitId": "-"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 111,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "        if (configFilePath !\u003d null) {"
+      },
+      {
+        "lineNumber": 112,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "            logger.info(\"Custom Config file specified \" + configFilePath);"
+      },
+      {
+        "lineNumber": 113,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "            configFilePathUsed \u003d configFilePath;"
+      },
+      {
+        "lineNumber": 114,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "        }"
+      },
+      {
+        "lineNumber": 115,
+        "author": {
+          "gitId": "-"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 116,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "        logger.info(\"Using config file : \" + configFilePathUsed);"
+      },
+      {
+        "lineNumber": 117,
+        "author": {
+          "gitId": "-"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 118,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "        try {"
+      },
+      {
+        "lineNumber": 119,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "            Optional\u003cConfig\u003e configOptional \u003d ConfigUtil.readConfig(configFilePathUsed);"
+      },
+      {
+        "lineNumber": 120,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "            initializedConfig \u003d configOptional.orElse(new Config());"
+      },
+      {
+        "lineNumber": 121,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "        } catch (DataConversionException e) {"
+      },
+      {
+        "lineNumber": 122,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "            logger.warning(\"Config file at \" + configFilePathUsed + \" is not in the correct format. \""
+      },
+      {
+        "lineNumber": 123,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "                    + \"Using default config properties\");"
+      },
+      {
+        "lineNumber": 124,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "            initializedConfig \u003d new Config();"
+      },
+      {
+        "lineNumber": 125,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "        }"
+      },
+      {
+        "lineNumber": 126,
+        "author": {
+          "gitId": "-"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 127,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "        //Update config file in case it was missing to begin with or there are new/unused fields"
+      },
+      {
+        "lineNumber": 128,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "        try {"
+      },
+      {
+        "lineNumber": 129,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "            ConfigUtil.saveConfig(initializedConfig, configFilePathUsed);"
+      },
+      {
+        "lineNumber": 130,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "        } catch (IOException e) {"
+      },
+      {
+        "lineNumber": 131,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "            logger.warning(\"Failed to save config file : \" + StringUtil.getDetails(e));"
+      },
+      {
+        "lineNumber": 132,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "        }"
+      },
+      {
+        "lineNumber": 133,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "        return initializedConfig;"
+      },
+      {
+        "lineNumber": 134,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "    }"
+      },
+      {
+        "lineNumber": 135,
+        "author": {
+          "gitId": "-"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 136,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "    /**"
+      },
+      {
+        "lineNumber": 137,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "     * Returns a {@code UserPrefs} using the file at {@code storage}\u0027s user prefs file path,"
+      },
+      {
+        "lineNumber": 138,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "     * or a new {@code UserPrefs} with default configuration if errors occur when"
+      },
+      {
+        "lineNumber": 139,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "     * reading from the file."
+      },
+      {
+        "lineNumber": 140,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "     */"
+      },
+      {
+        "lineNumber": 141,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "    protected UserPrefs initPrefs(UserPrefsStorage storage) {"
+      },
+      {
+        "lineNumber": 142,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "        Path prefsFilePath \u003d storage.getUserPrefsFilePath();"
+      },
+      {
+        "lineNumber": 143,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "        logger.info(\"Using prefs file : \" + prefsFilePath);"
+      },
+      {
+        "lineNumber": 144,
+        "author": {
+          "gitId": "-"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 145,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "        UserPrefs initializedPrefs;"
+      },
+      {
+        "lineNumber": 146,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "        try {"
+      },
+      {
+        "lineNumber": 147,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "            Optional\u003cUserPrefs\u003e prefsOptional \u003d storage.readUserPrefs();"
+      },
+      {
+        "lineNumber": 148,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "            initializedPrefs \u003d prefsOptional.orElse(new UserPrefs());"
+      },
+      {
+        "lineNumber": 149,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "        } catch (DataConversionException e) {"
+      },
+      {
+        "lineNumber": 150,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "            logger.warning(\"UserPrefs file at \" + prefsFilePath + \" is not in the correct format. \""
+      },
+      {
+        "lineNumber": 151,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "                    + \"Using default user prefs\");"
+      },
+      {
+        "lineNumber": 152,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "            initializedPrefs \u003d new UserPrefs();"
+      },
+      {
+        "lineNumber": 153,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "        } catch (IOException e) {"
+      },
+      {
+        "lineNumber": 154,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "            logger.warning(\"Problem while reading from the file. Will be starting with an empty AddressBook\");"
+      },
+      {
+        "lineNumber": 155,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "            initializedPrefs \u003d new UserPrefs();"
+      },
+      {
+        "lineNumber": 156,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "        }"
+      },
+      {
+        "lineNumber": 157,
+        "author": {
+          "gitId": "-"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 158,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "        //Update prefs file in case it was missing to begin with or there are new/unused fields"
+      },
+      {
+        "lineNumber": 159,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "        try {"
+      },
+      {
+        "lineNumber": 160,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "            storage.saveUserPrefs(initializedPrefs);"
+      },
+      {
+        "lineNumber": 161,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "        } catch (IOException e) {"
+      },
+      {
+        "lineNumber": 162,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "            logger.warning(\"Failed to save config file : \" + StringUtil.getDetails(e));"
+      },
+      {
+        "lineNumber": 163,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "        }"
+      },
+      {
+        "lineNumber": 164,
+        "author": {
+          "gitId": "-"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 165,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "        return initializedPrefs;"
+      },
+      {
+        "lineNumber": 166,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "    }"
+      },
+      {
+        "lineNumber": 167,
+        "author": {
+          "gitId": "-"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 168,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "    @Override"
+      },
+      {
+        "lineNumber": 169,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "    public void start(Stage primaryStage) {"
+      },
+      {
+        "lineNumber": 170,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "        logger.info(\"Starting AddressBook \" + MainApp.VERSION);"
+      },
+      {
+        "lineNumber": 171,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "        ui.start(primaryStage);"
+      },
+      {
+        "lineNumber": 172,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "    }"
+      },
+      {
+        "lineNumber": 173,
+        "author": {
+          "gitId": "-"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 174,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "    @Override"
+      },
+      {
+        "lineNumber": 175,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "    public void stop() {"
+      },
+      {
+        "lineNumber": 176,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "        logger.info(\"\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d [ Stopping Address Book ] \u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\");"
+      },
+      {
+        "lineNumber": 177,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "        try {"
+      },
+      {
+        "lineNumber": 178,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "            storage.saveUserPrefs(model.getUserPrefs());"
+      },
+      {
+        "lineNumber": 179,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "        } catch (IOException e) {"
+      },
+      {
+        "lineNumber": 180,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "            logger.severe(\"Failed to save preferences \" + StringUtil.getDetails(e));"
+      },
+      {
+        "lineNumber": 181,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "        }"
+      },
+      {
+        "lineNumber": 182,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "    }"
+      },
+      {
+        "lineNumber": 183,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "}"
+      }
+    ],
+    "authorContributionMap": {
+      "Stefan-Jiang": 1,
+      "-": 182
+    }
+  },
+  {
     "path": "src/main/java/seedu/address/commons/core/Messages.java",
     "fileType": "functional-code",
     "lines": [
@@ -37452,6 +38743,1543 @@
     }
   },
   {
+    "path": "src/main/java/seedu/address/ui/BookCardWithCover.java",
+    "fileType": "functional-code",
+    "lines": [
+      {
+        "lineNumber": 1,
+        "author": {
+          "gitId": "HCY123902"
+        },
+        "content": "package seedu.address.ui;"
+      },
+      {
+        "lineNumber": 2,
+        "author": {
+          "gitId": "HCY123902"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 3,
+        "author": {
+          "gitId": "HCY123902"
+        },
+        "content": "import java.util.Comparator;"
+      },
+      {
+        "lineNumber": 4,
+        "author": {
+          "gitId": "HCY123902"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 5,
+        "author": {
+          "gitId": "HCY123902"
+        },
+        "content": "import javafx.fxml.FXML;"
+      },
+      {
+        "lineNumber": 6,
+        "author": {
+          "gitId": "HCY123902"
+        },
+        "content": "import javafx.scene.control.Label;"
+      },
+      {
+        "lineNumber": 7,
+        "author": {
+          "gitId": "HCY123902"
+        },
+        "content": "import javafx.scene.image.ImageView;"
+      },
+      {
+        "lineNumber": 8,
+        "author": {
+          "gitId": "HCY123902"
+        },
+        "content": "import javafx.scene.layout.FlowPane;"
+      },
+      {
+        "lineNumber": 9,
+        "author": {
+          "gitId": "HCY123902"
+        },
+        "content": "import javafx.scene.layout.HBox;"
+      },
+      {
+        "lineNumber": 10,
+        "author": {
+          "gitId": "HCY123902"
+        },
+        "content": "import javafx.scene.layout.Region;"
+      },
+      {
+        "lineNumber": 11,
+        "author": {
+          "gitId": "HCY123902"
+        },
+        "content": "import seedu.address.model.book.Book;"
+      },
+      {
+        "lineNumber": 12,
+        "author": {
+          "gitId": "HCY123902"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 13,
+        "author": {
+          "gitId": "HCY123902"
+        },
+        "content": "/**"
+      },
+      {
+        "lineNumber": 14,
+        "author": {
+          "gitId": "HCY123902"
+        },
+        "content": " * An UI component that displays information of a {@code Book} with book cover."
+      },
+      {
+        "lineNumber": 15,
+        "author": {
+          "gitId": "HCY123902"
+        },
+        "content": " */"
+      },
+      {
+        "lineNumber": 16,
+        "author": {
+          "gitId": "HCY123902"
+        },
+        "content": "public class BookCardWithCover extends UiPart\u003cRegion\u003e {"
+      },
+      {
+        "lineNumber": 17,
+        "author": {
+          "gitId": "HCY123902"
+        },
+        "content": "    private static final String FXML \u003d \"BookListCardWithCover.fxml\";"
+      },
+      {
+        "lineNumber": 18,
+        "author": {
+          "gitId": "HCY123902"
+        },
+        "content": "    private static final BookCoverManager BOOK_COVER_MANAGER \u003d new BookCoverManager();"
+      },
+      {
+        "lineNumber": 19,
+        "author": {
+          "gitId": "HCY123902"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 20,
+        "author": {
+          "gitId": "HCY123902"
+        },
+        "content": "    /**"
+      },
+      {
+        "lineNumber": 21,
+        "author": {
+          "gitId": "HCY123902"
+        },
+        "content": "     * Note: Certain keywords such as \"location\" and \"resources\" are reserved keywords in JavaFX."
+      },
+      {
+        "lineNumber": 22,
+        "author": {
+          "gitId": "HCY123902"
+        },
+        "content": "     * As a consequence, UI elements\u0027 variable names cannot be set to such keywords"
+      },
+      {
+        "lineNumber": 23,
+        "author": {
+          "gitId": "HCY123902"
+        },
+        "content": "     * or an exception will be thrown by JavaFX during runtime."
+      },
+      {
+        "lineNumber": 24,
+        "author": {
+          "gitId": "HCY123902"
+        },
+        "content": "     *"
+      },
+      {
+        "lineNumber": 25,
+        "author": {
+          "gitId": "HCY123902"
+        },
+        "content": "     * @see \u003ca href\u003d\"https://github.com/se-edu/addressbook-level4/issues/336\"\u003eThe issue on AddressBook level 4\u003c/a\u003e"
+      },
+      {
+        "lineNumber": 26,
+        "author": {
+          "gitId": "HCY123902"
+        },
+        "content": "     */"
+      },
+      {
+        "lineNumber": 27,
+        "author": {
+          "gitId": "HCY123902"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 28,
+        "author": {
+          "gitId": "HCY123902"
+        },
+        "content": "    public final Book book;"
+      },
+      {
+        "lineNumber": 29,
+        "author": {
+          "gitId": "HCY123902"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 30,
+        "author": {
+          "gitId": "HCY123902"
+        },
+        "content": "    @javafx.fxml.FXML"
+      },
+      {
+        "lineNumber": 31,
+        "author": {
+          "gitId": "HCY123902"
+        },
+        "content": "    private HBox cardPane;"
+      },
+      {
+        "lineNumber": 32,
+        "author": {
+          "gitId": "HCY123902"
+        },
+        "content": "    @FXML"
+      },
+      {
+        "lineNumber": 33,
+        "author": {
+          "gitId": "HCY123902"
+        },
+        "content": "    private Label name;"
+      },
+      {
+        "lineNumber": 34,
+        "author": {
+          "gitId": "HCY123902"
+        },
+        "content": "    @FXML"
+      },
+      {
+        "lineNumber": 35,
+        "author": {
+          "gitId": "HCY123902"
+        },
+        "content": "    private Label id;"
+      },
+      {
+        "lineNumber": 36,
+        "author": {
+          "gitId": "HCY123902"
+        },
+        "content": "    @FXML"
+      },
+      {
+        "lineNumber": 37,
+        "author": {
+          "gitId": "HCY123902"
+        },
+        "content": "    private Label isbn;"
+      },
+      {
+        "lineNumber": 38,
+        "author": {
+          "gitId": "HCY123902"
+        },
+        "content": "    @FXML"
+      },
+      {
+        "lineNumber": 39,
+        "author": {
+          "gitId": "HCY123902"
+        },
+        "content": "    private Label address;"
+      },
+      {
+        "lineNumber": 40,
+        "author": {
+          "gitId": "HCY123902"
+        },
+        "content": "    @FXML"
+      },
+      {
+        "lineNumber": 41,
+        "author": {
+          "gitId": "HCY123902"
+        },
+        "content": "    private Label email;"
+      },
+      {
+        "lineNumber": 42,
+        "author": {
+          "gitId": "HCY123902"
+        },
+        "content": "    @FXML"
+      },
+      {
+        "lineNumber": 43,
+        "author": {
+          "gitId": "HCY123902"
+        },
+        "content": "    private Label times;"
+      },
+      {
+        "lineNumber": 44,
+        "author": {
+          "gitId": "HCY123902"
+        },
+        "content": "    @FXML"
+      },
+      {
+        "lineNumber": 45,
+        "author": {
+          "gitId": "HCY123902"
+        },
+        "content": "    private FlowPane categories;"
+      },
+      {
+        "lineNumber": 46,
+        "author": {
+          "gitId": "HCY123902"
+        },
+        "content": "    @FXML"
+      },
+      {
+        "lineNumber": 47,
+        "author": {
+          "gitId": "HCY123902"
+        },
+        "content": "    private Label author;"
+      },
+      {
+        "lineNumber": 48,
+        "author": {
+          "gitId": "HCY123902"
+        },
+        "content": "    @FXML"
+      },
+      {
+        "lineNumber": 49,
+        "author": {
+          "gitId": "HCY123902"
+        },
+        "content": "    private Label publisher;"
+      },
+      {
+        "lineNumber": 50,
+        "author": {
+          "gitId": "HCY123902"
+        },
+        "content": "    @FXML"
+      },
+      {
+        "lineNumber": 51,
+        "author": {
+          "gitId": "HCY123902"
+        },
+        "content": "    private ImageView cover;"
+      },
+      {
+        "lineNumber": 52,
+        "author": {
+          "gitId": "HCY123902"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 53,
+        "author": {
+          "gitId": "HCY123902"
+        },
+        "content": "    /**"
+      },
+      {
+        "lineNumber": 54,
+        "author": {
+          "gitId": "HCY123902"
+        },
+        "content": "     * Creates a {@code BookCardWithCover} with the given {@code Book} and index to display."
+      },
+      {
+        "lineNumber": 55,
+        "author": {
+          "gitId": "HCY123902"
+        },
+        "content": "     *"
+      },
+      {
+        "lineNumber": 56,
+        "author": {
+          "gitId": "HCY123902"
+        },
+        "content": "     * @param book The corresponding book."
+      },
+      {
+        "lineNumber": 57,
+        "author": {
+          "gitId": "HCY123902"
+        },
+        "content": "     * @param displayedIndex The number corresponding to the order of the book."
+      },
+      {
+        "lineNumber": 58,
+        "author": {
+          "gitId": "HCY123902"
+        },
+        "content": "     */"
+      },
+      {
+        "lineNumber": 59,
+        "author": {
+          "gitId": "HCY123902"
+        },
+        "content": "    public BookCardWithCover(Book book, int displayedIndex) {"
+      },
+      {
+        "lineNumber": 60,
+        "author": {
+          "gitId": "HCY123902"
+        },
+        "content": "        super(FXML);"
+      },
+      {
+        "lineNumber": 61,
+        "author": {
+          "gitId": "HCY123902"
+        },
+        "content": "        this.book \u003d book;"
+      },
+      {
+        "lineNumber": 62,
+        "author": {
+          "gitId": "HCY123902"
+        },
+        "content": "        id.setText(displayedIndex + \". \");"
+      },
+      {
+        "lineNumber": 63,
+        "author": {
+          "gitId": "HCY123902"
+        },
+        "content": "        name.setText(book.getName().fullName);"
+      },
+      {
+        "lineNumber": 64,
+        "author": {
+          "gitId": "HCY123902"
+        },
+        "content": "        isbn.setText(\"isbn: \" + book.getIsbn().value);"
+      },
+      {
+        "lineNumber": 65,
+        "author": {
+          "gitId": "HCY123902"
+        },
+        "content": "        address.setText(book.getAddress().value);"
+      },
+      {
+        "lineNumber": 66,
+        "author": {
+          "gitId": "HCY123902"
+        },
+        "content": "        email.setText(\"contact: \" + book.getEmail().value);"
+      },
+      {
+        "lineNumber": 67,
+        "author": {
+          "gitId": "HCY123902"
+        },
+        "content": "        times.setText(\"Number of time: \" + book.getTimes().value);"
+      },
+      {
+        "lineNumber": 68,
+        "author": {
+          "gitId": "HCY123902"
+        },
+        "content": "        book.getCategories().stream()"
+      },
+      {
+        "lineNumber": 69,
+        "author": {
+          "gitId": "HCY123902"
+        },
+        "content": "                .sorted(Comparator.comparing(category -\u003e category.categoryName))"
+      },
+      {
+        "lineNumber": 70,
+        "author": {
+          "gitId": "HCY123902"
+        },
+        "content": "                .forEach(category -\u003e categories.getChildren().add(new Label(category.categoryName)));"
+      },
+      {
+        "lineNumber": 71,
+        "author": {
+          "gitId": "HCY123902"
+        },
+        "content": "        author.setText(\"author: \" + book.getAuthor().author);"
+      },
+      {
+        "lineNumber": 72,
+        "author": {
+          "gitId": "HCY123902"
+        },
+        "content": "        publisher.setText(\"publisher: \" + book.getPublisher().publisher);"
+      },
+      {
+        "lineNumber": 73,
+        "author": {
+          "gitId": "HCY123902"
+        },
+        "content": "        cover.setImage(BOOK_COVER_MANAGER.getCategoryBookCover(book.getName().fullName, book.getCategories()));"
+      },
+      {
+        "lineNumber": 74,
+        "author": {
+          "gitId": "HCY123902"
+        },
+        "content": "        cover.setPreserveRatio(false);"
+      },
+      {
+        "lineNumber": 75,
+        "author": {
+          "gitId": "HCY123902"
+        },
+        "content": "    }"
+      },
+      {
+        "lineNumber": 76,
+        "author": {
+          "gitId": "HCY123902"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 77,
+        "author": {
+          "gitId": "HCY123902"
+        },
+        "content": "    @Override"
+      },
+      {
+        "lineNumber": 78,
+        "author": {
+          "gitId": "HCY123902"
+        },
+        "content": "    public boolean equals(Object other) {"
+      },
+      {
+        "lineNumber": 79,
+        "author": {
+          "gitId": "HCY123902"
+        },
+        "content": "        // short circuit if same object"
+      },
+      {
+        "lineNumber": 80,
+        "author": {
+          "gitId": "HCY123902"
+        },
+        "content": "        if (other \u003d\u003d this) {"
+      },
+      {
+        "lineNumber": 81,
+        "author": {
+          "gitId": "HCY123902"
+        },
+        "content": "            return true;"
+      },
+      {
+        "lineNumber": 82,
+        "author": {
+          "gitId": "HCY123902"
+        },
+        "content": "        }"
+      },
+      {
+        "lineNumber": 83,
+        "author": {
+          "gitId": "HCY123902"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 84,
+        "author": {
+          "gitId": "HCY123902"
+        },
+        "content": "        // instanceof handles nulls"
+      },
+      {
+        "lineNumber": 85,
+        "author": {
+          "gitId": "HCY123902"
+        },
+        "content": "        if (!(other instanceof BookCardWithCover)) {"
+      },
+      {
+        "lineNumber": 86,
+        "author": {
+          "gitId": "HCY123902"
+        },
+        "content": "            return false;"
+      },
+      {
+        "lineNumber": 87,
+        "author": {
+          "gitId": "HCY123902"
+        },
+        "content": "        }"
+      },
+      {
+        "lineNumber": 88,
+        "author": {
+          "gitId": "HCY123902"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 89,
+        "author": {
+          "gitId": "HCY123902"
+        },
+        "content": "        // state check"
+      },
+      {
+        "lineNumber": 90,
+        "author": {
+          "gitId": "HCY123902"
+        },
+        "content": "        BookCardWithCover card \u003d (BookCardWithCover) other;"
+      },
+      {
+        "lineNumber": 91,
+        "author": {
+          "gitId": "HCY123902"
+        },
+        "content": "        return id.getText().equals(card.id.getText())"
+      },
+      {
+        "lineNumber": 92,
+        "author": {
+          "gitId": "HCY123902"
+        },
+        "content": "                \u0026\u0026 book.equals(card.book);"
+      },
+      {
+        "lineNumber": 93,
+        "author": {
+          "gitId": "HCY123902"
+        },
+        "content": "    }"
+      },
+      {
+        "lineNumber": 94,
+        "author": {
+          "gitId": "HCY123902"
+        },
+        "content": "}"
+      }
+    ],
+    "authorContributionMap": {
+      "HCY123902": 94
+    }
+  },
+  {
+    "path": "src/main/java/seedu/address/ui/BookCoverManager.java",
+    "fileType": "functional-code",
+    "lines": [
+      {
+        "lineNumber": 1,
+        "author": {
+          "gitId": "HCY123902"
+        },
+        "content": "package seedu.address.ui;"
+      },
+      {
+        "lineNumber": 2,
+        "author": {
+          "gitId": "HCY123902"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 3,
+        "author": {
+          "gitId": "HCY123902"
+        },
+        "content": "import java.util.HashMap;"
+      },
+      {
+        "lineNumber": 4,
+        "author": {
+          "gitId": "HCY123902"
+        },
+        "content": "import java.util.Set;"
+      },
+      {
+        "lineNumber": 5,
+        "author": {
+          "gitId": "HCY123902"
+        },
+        "content": "import java.util.stream.Collectors;"
+      },
+      {
+        "lineNumber": 6,
+        "author": {
+          "gitId": "HCY123902"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 7,
+        "author": {
+          "gitId": "HCY123902"
+        },
+        "content": "import javafx.scene.image.Image;"
+      },
+      {
+        "lineNumber": 8,
+        "author": {
+          "gitId": "HCY123902"
+        },
+        "content": "import seedu.address.model.category.Category;"
+      },
+      {
+        "lineNumber": 9,
+        "author": {
+          "gitId": "HCY123902"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 10,
+        "author": {
+          "gitId": "HCY123902"
+        },
+        "content": "/**"
+      },
+      {
+        "lineNumber": 11,
+        "author": {
+          "gitId": "HCY123902"
+        },
+        "content": " * An UI component that returns the book cover of the {@code Book}."
+      },
+      {
+        "lineNumber": 12,
+        "author": {
+          "gitId": "HCY123902"
+        },
+        "content": " */"
+      },
+      {
+        "lineNumber": 13,
+        "author": {
+          "gitId": "HCY123902"
+        },
+        "content": "public class BookCoverManager {"
+      },
+      {
+        "lineNumber": 14,
+        "author": {
+          "gitId": "HCY123902"
+        },
+        "content": "    public static final String GENERAL \u003d \"General\";"
+      },
+      {
+        "lineNumber": 15,
+        "author": {
+          "gitId": "HCY123902"
+        },
+        "content": "    public static final String SCIENCE \u003d \"Science\";"
+      },
+      {
+        "lineNumber": 16,
+        "author": {
+          "gitId": "HCY123902"
+        },
+        "content": "    public static final String HISTORY \u003d \"History\";"
+      },
+      {
+        "lineNumber": 17,
+        "author": {
+          "gitId": "HCY123902"
+        },
+        "content": "    public static final String NOVEL \u003d \"Novels\";"
+      },
+      {
+        "lineNumber": 18,
+        "author": {
+          "gitId": "HCY123902"
+        },
+        "content": "    public static final String PHYSICS \u003d \"Physics\";"
+      },
+      {
+        "lineNumber": 19,
+        "author": {
+          "gitId": "HCY123902"
+        },
+        "content": "    public static final String CHEMISTRY \u003d \"Chemistry\";"
+      },
+      {
+        "lineNumber": 20,
+        "author": {
+          "gitId": "HCY123902"
+        },
+        "content": "    public static final String MATHEMATICS \u003d \"Mathematics\";"
+      },
+      {
+        "lineNumber": 21,
+        "author": {
+          "gitId": "HCY123902"
+        },
+        "content": "    public static final String MODERN_WAR \u003d \"ModernWar\";"
+      },
+      {
+        "lineNumber": 22,
+        "author": {
+          "gitId": "HCY123902"
+        },
+        "content": "    public static final String ANCIENT_WAR \u003d \"AncientWar\";"
+      },
+      {
+        "lineNumber": 23,
+        "author": {
+          "gitId": "HCY123902"
+        },
+        "content": "    public static final String MODERN_HISTORY \u003d \"ModernHistory\";"
+      },
+      {
+        "lineNumber": 24,
+        "author": {
+          "gitId": "HCY123902"
+        },
+        "content": "    public static final String ANCIENT_HISTORY \u003d \"AncientHistory\";"
+      },
+      {
+        "lineNumber": 25,
+        "author": {
+          "gitId": "HCY123902"
+        },
+        "content": "    public static final HashMap\u003cString, String[]\u003e CATEGORY_MAP \u003d new HashMap\u003c\u003e();"
+      },
+      {
+        "lineNumber": 26,
+        "author": {
+          "gitId": "HCY123902"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 27,
+        "author": {
+          "gitId": "HCY123902"
+        },
+        "content": "    private static final String[] GENERAL_COVER \u003d new String[]{\"/images/general.jpg\", \"/images/general2.jpg\"};"
+      },
+      {
+        "lineNumber": 28,
+        "author": {
+          "gitId": "HCY123902"
+        },
+        "content": "    private static final String[] SCIENCE_COVER \u003d new String[]{"
+      },
+      {
+        "lineNumber": 29,
+        "author": {
+          "gitId": "HCY123902"
+        },
+        "content": "        \"/images/science.jpg\","
+      },
+      {
+        "lineNumber": 30,
+        "author": {
+          "gitId": "HCY123902"
+        },
+        "content": "        \"/images/science2.jpg\","
+      },
+      {
+        "lineNumber": 31,
+        "author": {
+          "gitId": "HCY123902"
+        },
+        "content": "        \"/images/science3.jpg\","
+      },
+      {
+        "lineNumber": 32,
+        "author": {
+          "gitId": "HCY123902"
+        },
+        "content": "        \"/images/science4.jpg\""
+      },
+      {
+        "lineNumber": 33,
+        "author": {
+          "gitId": "HCY123902"
+        },
+        "content": "    };"
+      },
+      {
+        "lineNumber": 34,
+        "author": {
+          "gitId": "HCY123902"
+        },
+        "content": "    private static final String[] HISTORY_COVER \u003d new String[]{\"/images/history.jpg\", \"/images/history1.jpg\"};"
+      },
+      {
+        "lineNumber": 35,
+        "author": {
+          "gitId": "HCY123902"
+        },
+        "content": "    private static final String[] NOVEL_COVER \u003d new String[]{"
+      },
+      {
+        "lineNumber": 36,
+        "author": {
+          "gitId": "HCY123902"
+        },
+        "content": "        \"/images/novel.jpg\","
+      },
+      {
+        "lineNumber": 37,
+        "author": {
+          "gitId": "HCY123902"
+        },
+        "content": "        \"/images/novel2.jpg\","
+      },
+      {
+        "lineNumber": 38,
+        "author": {
+          "gitId": "HCY123902"
+        },
+        "content": "        \"/images/novel3.jpg\""
+      },
+      {
+        "lineNumber": 39,
+        "author": {
+          "gitId": "HCY123902"
+        },
+        "content": "    };"
+      },
+      {
+        "lineNumber": 40,
+        "author": {
+          "gitId": "HCY123902"
+        },
+        "content": "    private static final String[] PHYSICS_COVER \u003d new String[]{"
+      },
+      {
+        "lineNumber": 41,
+        "author": {
+          "gitId": "HCY123902"
+        },
+        "content": "        \"/images/physics.jpg\","
+      },
+      {
+        "lineNumber": 42,
+        "author": {
+          "gitId": "HCY123902"
+        },
+        "content": "        \"/images/physics2.jpg\","
+      },
+      {
+        "lineNumber": 43,
+        "author": {
+          "gitId": "HCY123902"
+        },
+        "content": "        \"/images/physics3.jpg\","
+      },
+      {
+        "lineNumber": 44,
+        "author": {
+          "gitId": "HCY123902"
+        },
+        "content": "        \"/images/physics4.jpg\""
+      },
+      {
+        "lineNumber": 45,
+        "author": {
+          "gitId": "HCY123902"
+        },
+        "content": "    };"
+      },
+      {
+        "lineNumber": 46,
+        "author": {
+          "gitId": "HCY123902"
+        },
+        "content": "    private static final String[] CHEMISTRY_COVER \u003d new String[]{\"/images/chemistry.jpg\", \"/images/chemistry2.jpg\"};"
+      },
+      {
+        "lineNumber": 47,
+        "author": {
+          "gitId": "HCY123902"
+        },
+        "content": "    private static final String[] MATHEMATICS_COVER \u003d new String[]{\"/images/mathematics.jpg\"};"
+      },
+      {
+        "lineNumber": 48,
+        "author": {
+          "gitId": "HCY123902"
+        },
+        "content": "    private static final String[] MODERN_WAR_COVER \u003d new String[]{\"/images/modernWar.jpg\"};"
+      },
+      {
+        "lineNumber": 49,
+        "author": {
+          "gitId": "HCY123902"
+        },
+        "content": "    private static final String[] ANCIENT_WAR_COVER \u003d new String[]{\"/images/ancientWar.jpg\"};"
+      },
+      {
+        "lineNumber": 50,
+        "author": {
+          "gitId": "HCY123902"
+        },
+        "content": "    private static final String[] MODERN_HISTORY_COVER \u003d new String[]{\"/images/modernHistory.jpg\"};"
+      },
+      {
+        "lineNumber": 51,
+        "author": {
+          "gitId": "HCY123902"
+        },
+        "content": "    private static final String[] ANCIENT_HISTORY_COVER \u003d new String[]{\"/images/ancientHistory.jpg\"};"
+      },
+      {
+        "lineNumber": 52,
+        "author": {
+          "gitId": "HCY123902"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 53,
+        "author": {
+          "gitId": "HCY123902"
+        },
+        "content": "    /**"
+      },
+      {
+        "lineNumber": 54,
+        "author": {
+          "gitId": "HCY123902"
+        },
+        "content": "     * Creates a new {@code BookCoverManager}."
+      },
+      {
+        "lineNumber": 55,
+        "author": {
+          "gitId": "HCY123902"
+        },
+        "content": "     */"
+      },
+      {
+        "lineNumber": 56,
+        "author": {
+          "gitId": "HCY123902"
+        },
+        "content": "    public BookCoverManager() {"
+      },
+      {
+        "lineNumber": 57,
+        "author": {
+          "gitId": "HCY123902"
+        },
+        "content": "        CATEGORY_MAP.putIfAbsent(GENERAL, GENERAL_COVER);"
+      },
+      {
+        "lineNumber": 58,
+        "author": {
+          "gitId": "HCY123902"
+        },
+        "content": "        CATEGORY_MAP.putIfAbsent(SCIENCE, SCIENCE_COVER);"
+      },
+      {
+        "lineNumber": 59,
+        "author": {
+          "gitId": "HCY123902"
+        },
+        "content": "        CATEGORY_MAP.putIfAbsent(HISTORY, HISTORY_COVER);"
+      },
+      {
+        "lineNumber": 60,
+        "author": {
+          "gitId": "HCY123902"
+        },
+        "content": "        CATEGORY_MAP.putIfAbsent(NOVEL, NOVEL_COVER);"
+      },
+      {
+        "lineNumber": 61,
+        "author": {
+          "gitId": "HCY123902"
+        },
+        "content": "        CATEGORY_MAP.putIfAbsent(PHYSICS, PHYSICS_COVER);"
+      },
+      {
+        "lineNumber": 62,
+        "author": {
+          "gitId": "HCY123902"
+        },
+        "content": "        CATEGORY_MAP.putIfAbsent(CHEMISTRY, CHEMISTRY_COVER);"
+      },
+      {
+        "lineNumber": 63,
+        "author": {
+          "gitId": "HCY123902"
+        },
+        "content": "        CATEGORY_MAP.putIfAbsent(MATHEMATICS, MATHEMATICS_COVER);"
+      },
+      {
+        "lineNumber": 64,
+        "author": {
+          "gitId": "HCY123902"
+        },
+        "content": "        CATEGORY_MAP.putIfAbsent(MODERN_WAR, MODERN_WAR_COVER);"
+      },
+      {
+        "lineNumber": 65,
+        "author": {
+          "gitId": "HCY123902"
+        },
+        "content": "        CATEGORY_MAP.putIfAbsent(ANCIENT_WAR, ANCIENT_WAR_COVER);"
+      },
+      {
+        "lineNumber": 66,
+        "author": {
+          "gitId": "HCY123902"
+        },
+        "content": "        CATEGORY_MAP.putIfAbsent(MODERN_HISTORY, MODERN_HISTORY_COVER);"
+      },
+      {
+        "lineNumber": 67,
+        "author": {
+          "gitId": "HCY123902"
+        },
+        "content": "        CATEGORY_MAP.putIfAbsent(ANCIENT_HISTORY, ANCIENT_HISTORY_COVER);"
+      },
+      {
+        "lineNumber": 68,
+        "author": {
+          "gitId": "HCY123902"
+        },
+        "content": "    }"
+      },
+      {
+        "lineNumber": 69,
+        "author": {
+          "gitId": "HCY123902"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 70,
+        "author": {
+          "gitId": "HCY123902"
+        },
+        "content": "    /**"
+      },
+      {
+        "lineNumber": 71,
+        "author": {
+          "gitId": "HCY123902"
+        },
+        "content": "     * Returns a corresponding book cover image according to the set of categories of the book and"
+      },
+      {
+        "lineNumber": 72,
+        "author": {
+          "gitId": "HCY123902"
+        },
+        "content": "     * the name of the book."
+      },
+      {
+        "lineNumber": 73,
+        "author": {
+          "gitId": "HCY123902"
+        },
+        "content": "     *"
+      },
+      {
+        "lineNumber": 74,
+        "author": {
+          "gitId": "HCY123902"
+        },
+        "content": "     * @param bookName The name of the book."
+      },
+      {
+        "lineNumber": 75,
+        "author": {
+          "gitId": "HCY123902"
+        },
+        "content": "     * @param categorySet The set of categories of the book."
+      },
+      {
+        "lineNumber": 76,
+        "author": {
+          "gitId": "HCY123902"
+        },
+        "content": "     * @return The corresponding book cover of the book."
+      },
+      {
+        "lineNumber": 77,
+        "author": {
+          "gitId": "HCY123902"
+        },
+        "content": "     */"
+      },
+      {
+        "lineNumber": 78,
+        "author": {
+          "gitId": "HCY123902"
+        },
+        "content": "    public Image getCategoryBookCover(String bookName, Set\u003cCategory\u003e categorySet) {"
+      },
+      {
+        "lineNumber": 79,
+        "author": {
+          "gitId": "HCY123902"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 80,
+        "author": {
+          "gitId": "HCY123902"
+        },
+        "content": "        if (categorySet \u003d\u003d null || categorySet.size() \u003d\u003d 0) {"
+      },
+      {
+        "lineNumber": 81,
+        "author": {
+          "gitId": "HCY123902"
+        },
+        "content": "            int number \u003d (bookName.hashCode() % GENERAL_COVER.length);"
+      },
+      {
+        "lineNumber": 82,
+        "author": {
+          "gitId": "HCY123902"
+        },
+        "content": "            return new Image(this.getClass().getResourceAsStream((CATEGORY_MAP.get(GENERAL))[number]));"
+      },
+      {
+        "lineNumber": 83,
+        "author": {
+          "gitId": "HCY123902"
+        },
+        "content": "        }"
+      },
+      {
+        "lineNumber": 84,
+        "author": {
+          "gitId": "HCY123902"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 85,
+        "author": {
+          "gitId": "HCY123902"
+        },
+        "content": "        Set\u003cString\u003e categoryNames \u003d categorySet.stream()"
+      },
+      {
+        "lineNumber": 86,
+        "author": {
+          "gitId": "HCY123902"
+        },
+        "content": "                .map(category -\u003e category.categoryName.toUpperCase())"
+      },
+      {
+        "lineNumber": 87,
+        "author": {
+          "gitId": "HCY123902"
+        },
+        "content": "                .collect(Collectors.toSet());"
+      },
+      {
+        "lineNumber": 88,
+        "author": {
+          "gitId": "HCY123902"
+        },
+        "content": "        if (categoryNames.contains(PHYSICS.toUpperCase())) {"
+      },
+      {
+        "lineNumber": 89,
+        "author": {
+          "gitId": "HCY123902"
+        },
+        "content": "            int number \u003d Math.abs(bookName.hashCode() % PHYSICS_COVER.length);"
+      },
+      {
+        "lineNumber": 90,
+        "author": {
+          "gitId": "HCY123902"
+        },
+        "content": "            return new Image(this.getClass().getResourceAsStream((CATEGORY_MAP.get(PHYSICS))[number]));"
+      },
+      {
+        "lineNumber": 91,
+        "author": {
+          "gitId": "HCY123902"
+        },
+        "content": "        } else if (categoryNames.contains(CHEMISTRY.toUpperCase())) {"
+      },
+      {
+        "lineNumber": 92,
+        "author": {
+          "gitId": "HCY123902"
+        },
+        "content": "            int number \u003d Math.abs(bookName.hashCode() % CHEMISTRY_COVER.length);"
+      },
+      {
+        "lineNumber": 93,
+        "author": {
+          "gitId": "HCY123902"
+        },
+        "content": "            return new Image(this.getClass().getResourceAsStream((CATEGORY_MAP.get(CHEMISTRY))[number]));"
+      },
+      {
+        "lineNumber": 94,
+        "author": {
+          "gitId": "HCY123902"
+        },
+        "content": "        } else if (categoryNames.contains(MATHEMATICS.toUpperCase())) {"
+      },
+      {
+        "lineNumber": 95,
+        "author": {
+          "gitId": "HCY123902"
+        },
+        "content": "            int number \u003d Math.abs(bookName.hashCode() % MATHEMATICS_COVER.length);"
+      },
+      {
+        "lineNumber": 96,
+        "author": {
+          "gitId": "HCY123902"
+        },
+        "content": "            return new Image(this.getClass().getResourceAsStream((CATEGORY_MAP.get(MATHEMATICS))[number]));"
+      },
+      {
+        "lineNumber": 97,
+        "author": {
+          "gitId": "HCY123902"
+        },
+        "content": "        } else if (categoryNames.contains(MODERN_WAR.toUpperCase())) {"
+      },
+      {
+        "lineNumber": 98,
+        "author": {
+          "gitId": "HCY123902"
+        },
+        "content": "            int number \u003d Math.abs(bookName.hashCode() % MODERN_WAR_COVER.length);"
+      },
+      {
+        "lineNumber": 99,
+        "author": {
+          "gitId": "HCY123902"
+        },
+        "content": "            return new Image(this.getClass().getResourceAsStream((CATEGORY_MAP.get(MODERN_WAR))[number]));"
+      },
+      {
+        "lineNumber": 100,
+        "author": {
+          "gitId": "HCY123902"
+        },
+        "content": "        } else if (categoryNames.contains(ANCIENT_WAR.toUpperCase())) {"
+      },
+      {
+        "lineNumber": 101,
+        "author": {
+          "gitId": "HCY123902"
+        },
+        "content": "            int number \u003d Math.abs(bookName.hashCode() % ANCIENT_WAR_COVER.length);"
+      },
+      {
+        "lineNumber": 102,
+        "author": {
+          "gitId": "HCY123902"
+        },
+        "content": "            return new Image(this.getClass().getResourceAsStream((CATEGORY_MAP.get(ANCIENT_WAR))[number]));"
+      },
+      {
+        "lineNumber": 103,
+        "author": {
+          "gitId": "HCY123902"
+        },
+        "content": "        } else if (categoryNames.contains(MODERN_HISTORY.toUpperCase())) {"
+      },
+      {
+        "lineNumber": 104,
+        "author": {
+          "gitId": "HCY123902"
+        },
+        "content": "            int number \u003d Math.abs(bookName.hashCode() % MODERN_HISTORY_COVER.length);"
+      },
+      {
+        "lineNumber": 105,
+        "author": {
+          "gitId": "HCY123902"
+        },
+        "content": "            return new Image(this.getClass().getResourceAsStream((CATEGORY_MAP.get(MODERN_HISTORY))[number]));"
+      },
+      {
+        "lineNumber": 106,
+        "author": {
+          "gitId": "HCY123902"
+        },
+        "content": "        } else if (categoryNames.contains(ANCIENT_HISTORY.toUpperCase())) {"
+      },
+      {
+        "lineNumber": 107,
+        "author": {
+          "gitId": "HCY123902"
+        },
+        "content": "            int number \u003d Math.abs(bookName.hashCode() % ANCIENT_HISTORY_COVER.length);"
+      },
+      {
+        "lineNumber": 108,
+        "author": {
+          "gitId": "HCY123902"
+        },
+        "content": "            return new Image(this.getClass().getResourceAsStream((CATEGORY_MAP.get(ANCIENT_HISTORY))[number]));"
+      },
+      {
+        "lineNumber": 109,
+        "author": {
+          "gitId": "HCY123902"
+        },
+        "content": "        } else if (categoryNames.contains(SCIENCE.toUpperCase())) {"
+      },
+      {
+        "lineNumber": 110,
+        "author": {
+          "gitId": "HCY123902"
+        },
+        "content": "            int number \u003d Math.abs(bookName.hashCode() % SCIENCE_COVER.length);"
+      },
+      {
+        "lineNumber": 111,
+        "author": {
+          "gitId": "HCY123902"
+        },
+        "content": "            return new Image(this.getClass().getResourceAsStream((CATEGORY_MAP.get(SCIENCE))[number]));"
+      },
+      {
+        "lineNumber": 112,
+        "author": {
+          "gitId": "HCY123902"
+        },
+        "content": "        } else if (categoryNames.contains(HISTORY.toUpperCase())) {"
+      },
+      {
+        "lineNumber": 113,
+        "author": {
+          "gitId": "HCY123902"
+        },
+        "content": "            int number \u003d Math.abs(bookName.hashCode() % HISTORY_COVER.length);"
+      },
+      {
+        "lineNumber": 114,
+        "author": {
+          "gitId": "HCY123902"
+        },
+        "content": "            return new Image(this.getClass().getResourceAsStream((CATEGORY_MAP.get(HISTORY))[number]));"
+      },
+      {
+        "lineNumber": 115,
+        "author": {
+          "gitId": "HCY123902"
+        },
+        "content": "        } else if (categoryNames.contains(NOVEL.toUpperCase())) {"
+      },
+      {
+        "lineNumber": 116,
+        "author": {
+          "gitId": "HCY123902"
+        },
+        "content": "            int number \u003d Math.abs(bookName.hashCode() % NOVEL_COVER.length);"
+      },
+      {
+        "lineNumber": 117,
+        "author": {
+          "gitId": "HCY123902"
+        },
+        "content": "            return new Image(this.getClass().getResourceAsStream((CATEGORY_MAP.get(NOVEL))[number]));"
+      },
+      {
+        "lineNumber": 118,
+        "author": {
+          "gitId": "HCY123902"
+        },
+        "content": "        } else {"
+      },
+      {
+        "lineNumber": 119,
+        "author": {
+          "gitId": "HCY123902"
+        },
+        "content": "            int number \u003d Math.abs(bookName.hashCode() % GENERAL_COVER.length);"
+      },
+      {
+        "lineNumber": 120,
+        "author": {
+          "gitId": "HCY123902"
+        },
+        "content": "            return new Image(this.getClass().getResourceAsStream((CATEGORY_MAP.get(GENERAL))[number]));"
+      },
+      {
+        "lineNumber": 121,
+        "author": {
+          "gitId": "HCY123902"
+        },
+        "content": "        }"
+      },
+      {
+        "lineNumber": 122,
+        "author": {
+          "gitId": "HCY123902"
+        },
+        "content": "    }"
+      },
+      {
+        "lineNumber": 123,
+        "author": {
+          "gitId": "HCY123902"
+        },
+        "content": "}"
+      }
+    ],
+    "authorContributionMap": {
+      "HCY123902": 123
+    }
+  },
+  {
     "path": "src/main/java/seedu/address/ui/BookListPanel.java",
     "fileType": "functional-code",
     "lines": [
@@ -37822,61 +40650,68 @@
       {
         "lineNumber": 53,
         "author": {
-          "gitId": "richardcom"
+          "gitId": "HCY123902"
         },
-        "content": "                    setGraphic(new BookCard(book, getIndex() + 1).getRoot());"
+        "content": "                    //setGraphic(new BookCard(book, getIndex() + 1).getRoot());"
       },
       {
         "lineNumber": 54,
         "author": {
-          "gitId": "richardcom"
+          "gitId": "HCY123902"
         },
-        "content": "                } else {"
+        "content": "                    setGraphic(new BookCardWithCover(book, getIndex() + 1).getRoot());"
       },
       {
         "lineNumber": 55,
         "author": {
           "gitId": "richardcom"
         },
-        "content": "                    //System.out.println(\"In book list panel, the mode is detail mode\");"
+        "content": "                } else {"
       },
       {
         "lineNumber": 56,
         "author": {
           "gitId": "richardcom"
         },
-        "content": "                    setGraphic(new LibraryBookDetailCard(book, getIndex() + 1).getRoot());"
+        "content": "                    //System.out.println(\"In book list panel, the mode is detail mode\");"
       },
       {
         "lineNumber": 57,
         "author": {
           "gitId": "richardcom"
         },
-        "content": "                }"
+        "content": "                    setGraphic(new LibraryBookDetailCard(book, getIndex() + 1).getRoot());"
       },
       {
         "lineNumber": 58,
         "author": {
           "gitId": "richardcom"
         },
-        "content": "            }"
+        "content": "                }"
       },
       {
         "lineNumber": 59,
         "author": {
           "gitId": "richardcom"
         },
-        "content": "        }"
+        "content": "            }"
       },
       {
         "lineNumber": 60,
         "author": {
           "gitId": "richardcom"
         },
-        "content": "    }"
+        "content": "        }"
       },
       {
         "lineNumber": 61,
+        "author": {
+          "gitId": "richardcom"
+        },
+        "content": "    }"
+      },
+      {
+        "lineNumber": 62,
         "author": {
           "gitId": "richardcom"
         },
@@ -37884,7 +40719,8 @@
       }
     ],
     "authorContributionMap": {
-      "richardcom": 61
+      "richardcom": 60,
+      "HCY123902": 2
     }
   },
   {
@@ -37938,140 +40774,140 @@
         "author": {
           "gitId": "HCY123902"
         },
-        "content": "import javafx.scene.layout.FlowPane;"
+        "content": "import javafx.scene.image.ImageView;"
       },
       {
         "lineNumber": 8,
         "author": {
           "gitId": "HCY123902"
         },
-        "content": "import javafx.scene.layout.HBox;"
+        "content": "import javafx.scene.layout.FlowPane;"
       },
       {
         "lineNumber": 9,
         "author": {
           "gitId": "HCY123902"
         },
-        "content": "import javafx.scene.layout.Region;"
+        "content": "import javafx.scene.layout.HBox;"
       },
       {
         "lineNumber": 10,
+        "author": {
+          "gitId": "HCY123902"
+        },
+        "content": "import javafx.scene.layout.Region;"
+      },
+      {
+        "lineNumber": 11,
         "author": {
           "gitId": "richardcom"
         },
         "content": "import seedu.address.model.book.Book;"
       },
       {
-        "lineNumber": 11,
+        "lineNumber": 12,
         "author": {
           "gitId": "HCY123902"
         },
         "content": ""
       },
       {
-        "lineNumber": 12,
+        "lineNumber": 13,
         "author": {
           "gitId": "HCY123902"
         },
         "content": "/**"
       },
       {
-        "lineNumber": 13,
+        "lineNumber": 14,
         "author": {
           "gitId": "richardcom"
         },
         "content": " * An UI component that displays detailed information of a {@code Book}."
       },
       {
-        "lineNumber": 14,
+        "lineNumber": 15,
         "author": {
           "gitId": "HCY123902"
         },
         "content": " */"
       },
       {
-        "lineNumber": 15,
+        "lineNumber": 16,
         "author": {
           "gitId": "HCY123902"
         },
         "content": "public class LibraryBookDetailCard extends UiPart\u003cRegion\u003e {"
       },
       {
-        "lineNumber": 16,
+        "lineNumber": 17,
         "author": {
           "gitId": "HCY123902"
         },
         "content": "    private static final String FXML \u003d \"LibraryBookDetailCard.fxml\";"
       },
       {
-        "lineNumber": 17,
-        "author": {
-          "gitId": "HCY123902"
-        },
-        "content": ""
-      },
-      {
         "lineNumber": 18,
         "author": {
           "gitId": "HCY123902"
         },
-        "content": "    /**"
+        "content": "    private static final BookCoverManager BOOK_COVER_MANAGER \u003d new BookCoverManager();"
       },
       {
         "lineNumber": 19,
         "author": {
           "gitId": "HCY123902"
         },
-        "content": "     * Note: Certain keywords such as \"location\" and \"resources\" are reserved keywords in JavaFX."
+        "content": ""
       },
       {
         "lineNumber": 20,
         "author": {
           "gitId": "HCY123902"
         },
-        "content": "     * As a consequence, UI elements\u0027 variable names cannot be set to such keywords"
+        "content": "    /**"
       },
       {
         "lineNumber": 21,
         "author": {
           "gitId": "HCY123902"
         },
-        "content": "     * or an exception will be thrown by JavaFX during runtime."
+        "content": "     * Note: Certain keywords such as \"location\" and \"resources\" are reserved keywords in JavaFX."
       },
       {
         "lineNumber": 22,
         "author": {
           "gitId": "HCY123902"
         },
-        "content": "     *"
+        "content": "     * As a consequence, UI elements\u0027 variable names cannot be set to such keywords"
       },
       {
         "lineNumber": 23,
         "author": {
           "gitId": "HCY123902"
         },
-        "content": "     * @see \u003ca href\u003d\"https://github.com/se-edu/addressbook-level4/issues/336\"\u003eThe issue on AddressBook level 4\u003c/a\u003e"
+        "content": "     * or an exception will be thrown by JavaFX during runtime."
       },
       {
         "lineNumber": 24,
         "author": {
           "gitId": "HCY123902"
         },
-        "content": "     */"
+        "content": "     *"
       },
       {
         "lineNumber": 25,
         "author": {
           "gitId": "HCY123902"
         },
-        "content": ""
+        "content": "     * @see \u003ca href\u003d\"https://github.com/se-edu/addressbook-level4/issues/336\"\u003eThe issue on AddressBook level 4\u003c/a\u003e"
       },
       {
         "lineNumber": 26,
         "author": {
-          "gitId": "richardcom"
+          "gitId": "HCY123902"
         },
-        "content": "    public final Book book;"
+        "content": "     */"
       },
       {
         "lineNumber": 27,
@@ -38083,30 +40919,30 @@
       {
         "lineNumber": 28,
         "author": {
-          "gitId": "HCY123902"
+          "gitId": "richardcom"
         },
-        "content": "    @javafx.fxml.FXML"
+        "content": "    public final Book book;"
       },
       {
         "lineNumber": 29,
         "author": {
           "gitId": "HCY123902"
         },
-        "content": "    private HBox cardPane;"
+        "content": ""
       },
       {
         "lineNumber": 30,
         "author": {
           "gitId": "HCY123902"
         },
-        "content": "    @FXML"
+        "content": "    @javafx.fxml.FXML"
       },
       {
         "lineNumber": 31,
         "author": {
           "gitId": "HCY123902"
         },
-        "content": "    private Label name;"
+        "content": "    private HBox cardPane;"
       },
       {
         "lineNumber": 32,
@@ -38120,7 +40956,7 @@
         "author": {
           "gitId": "HCY123902"
         },
-        "content": "    private Label id;"
+        "content": "    private Label name;"
       },
       {
         "lineNumber": 34,
@@ -38134,7 +40970,7 @@
         "author": {
           "gitId": "HCY123902"
         },
-        "content": "    private Label isbn;"
+        "content": "    private Label id;"
       },
       {
         "lineNumber": 36,
@@ -38148,7 +40984,7 @@
         "author": {
           "gitId": "HCY123902"
         },
-        "content": "    private Label address;"
+        "content": "    private Label isbn;"
       },
       {
         "lineNumber": 38,
@@ -38162,7 +40998,7 @@
         "author": {
           "gitId": "HCY123902"
         },
-        "content": "    private Label email;"
+        "content": "    private Label author;"
       },
       {
         "lineNumber": 40,
@@ -38176,7 +41012,7 @@
         "author": {
           "gitId": "HCY123902"
         },
-        "content": "    private Label times;"
+        "content": "    private FlowPane categories;"
       },
       {
         "lineNumber": 42,
@@ -38190,7 +41026,7 @@
         "author": {
           "gitId": "HCY123902"
         },
-        "content": "    private Label author;"
+        "content": "    private FlowPane stocking;"
       },
       {
         "lineNumber": 44,
@@ -38204,311 +41040,290 @@
         "author": {
           "gitId": "HCY123902"
         },
-        "content": "    private FlowPane categories;"
+        "content": "    private ImageView cover;"
       },
       {
         "lineNumber": 46,
         "author": {
           "gitId": "HCY123902"
         },
-        "content": "    @FXML"
+        "content": ""
       },
       {
         "lineNumber": 47,
         "author": {
           "gitId": "HCY123902"
         },
-        "content": "    private FlowPane stocking;"
-      },
-      {
-        "lineNumber": 48,
-        "author": {
-          "gitId": "HCY123902"
-        },
-        "content": ""
-      },
-      {
-        "lineNumber": 49,
-        "author": {
-          "gitId": "HCY123902"
-        },
         "content": "    /**"
       },
       {
-        "lineNumber": 50,
+        "lineNumber": 48,
         "author": {
           "gitId": "richardcom"
         },
         "content": "     * Creates a {@code BookCode} with the given {@code Book} and index to display."
       },
       {
-        "lineNumber": 51,
+        "lineNumber": 49,
         "author": {
           "gitId": "HCY123902"
         },
         "content": "     */"
       },
       {
-        "lineNumber": 52,
+        "lineNumber": 50,
         "author": {
           "gitId": "richardcom"
         },
         "content": "    public LibraryBookDetailCard(Book book, int displayedIndex) {"
       },
       {
-        "lineNumber": 53,
+        "lineNumber": 51,
         "author": {
           "gitId": "HCY123902"
         },
         "content": "        super(FXML);"
       },
       {
-        "lineNumber": 54,
+        "lineNumber": 52,
         "author": {
           "gitId": "richardcom"
         },
         "content": "        this.book \u003d book;"
       },
       {
-        "lineNumber": 55,
+        "lineNumber": 53,
         "author": {
           "gitId": "HCY123902"
         },
         "content": "        id.setText(displayedIndex + \". \");"
       },
       {
-        "lineNumber": 56,
+        "lineNumber": 54,
         "author": {
           "gitId": "richardcom"
         },
         "content": "        name.setText(book.getName().fullName);"
       },
       {
-        "lineNumber": 57,
+        "lineNumber": 55,
         "author": {
-          "gitId": "richardcom"
+          "gitId": "HCY123902"
         },
-        "content": "        isbn.setText(book.getIsbn().value);"
+        "content": "        isbn.setText(\"isbn: \" + book.getIsbn().value);"
       },
       {
-        "lineNumber": 58,
-        "author": {
-          "gitId": "richardcom"
-        },
-        "content": "        address.setText(book.getAddress().value);"
-      },
-      {
-        "lineNumber": 59,
-        "author": {
-          "gitId": "richardcom"
-        },
-        "content": "        email.setText(book.getEmail().value);"
-      },
-      {
-        "lineNumber": 60,
-        "author": {
-          "gitId": "richardcom"
-        },
-        "content": "        times.setText(book.getTimes().value);"
-      },
-      {
-        "lineNumber": 61,
+        "lineNumber": 56,
         "author": {
           "gitId": "richardcom"
         },
         "content": "        book.getCategories().stream()"
       },
       {
-        "lineNumber": 62,
+        "lineNumber": 57,
         "author": {
           "gitId": "HCY123902"
         },
         "content": "                .sorted(Comparator.comparing(category -\u003e category.categoryName))"
       },
       {
-        "lineNumber": 63,
+        "lineNumber": 58,
         "author": {
           "gitId": "HCY123902"
         },
         "content": "                .forEach(category -\u003e categories.getChildren().add(new Label(category.categoryName)));"
       },
       {
-        "lineNumber": 64,
+        "lineNumber": 59,
         "author": {
           "gitId": "richardcom"
         },
         "content": "        book.getStocking().storage.forEach((location, storage) -\u003e {"
       },
       {
-        "lineNumber": 65,
+        "lineNumber": 60,
         "author": {
           "gitId": "HCY123902"
         },
         "content": "            if (storage \u003e 0) {"
       },
       {
-        "lineNumber": 66,
+        "lineNumber": 61,
         "author": {
           "gitId": "HCY123902"
         },
         "content": "                stocking.getChildren().add(new Label(location + \": \" + storage + \" \"));"
       },
       {
-        "lineNumber": 67,
+        "lineNumber": 62,
         "author": {
           "gitId": "HCY123902"
         },
         "content": "            }"
       },
       {
-        "lineNumber": 68,
+        "lineNumber": 63,
         "author": {
           "gitId": "HCY123902"
         },
         "content": "        });"
       },
       {
-        "lineNumber": 69,
+        "lineNumber": 64,
         "author": {
-          "gitId": "richardcom"
+          "gitId": "HCY123902"
         },
-        "content": "        author.setText(book.getAuthor().author);"
+        "content": "        author.setText(\"author: \" + book.getAuthor().author);"
       },
       {
-        "lineNumber": 70,
+        "lineNumber": 65,
+        "author": {
+          "gitId": "HCY123902"
+        },
+        "content": "        cover.setImage(BOOK_COVER_MANAGER.getCategoryBookCover(book.getName().fullName, book.getCategories()));"
+      },
+      {
+        "lineNumber": 66,
+        "author": {
+          "gitId": "HCY123902"
+        },
+        "content": "        cover.setPreserveRatio(false);"
+      },
+      {
+        "lineNumber": 67,
         "author": {
           "gitId": "HCY123902"
         },
         "content": "    }"
       },
       {
-        "lineNumber": 71,
+        "lineNumber": 68,
         "author": {
           "gitId": "HCY123902"
         },
         "content": ""
       },
       {
-        "lineNumber": 72,
+        "lineNumber": 69,
         "author": {
           "gitId": "HCY123902"
         },
         "content": "    @Override"
       },
       {
-        "lineNumber": 73,
+        "lineNumber": 70,
         "author": {
           "gitId": "HCY123902"
         },
         "content": "    public boolean equals(Object other) {"
       },
       {
-        "lineNumber": 74,
+        "lineNumber": 71,
         "author": {
           "gitId": "HCY123902"
         },
         "content": "        // short circuit if same object"
       },
       {
-        "lineNumber": 75,
+        "lineNumber": 72,
         "author": {
           "gitId": "HCY123902"
         },
         "content": "        if (other \u003d\u003d this) {"
       },
       {
-        "lineNumber": 76,
+        "lineNumber": 73,
         "author": {
           "gitId": "HCY123902"
         },
         "content": "            return true;"
       },
       {
-        "lineNumber": 77,
+        "lineNumber": 74,
         "author": {
           "gitId": "HCY123902"
         },
         "content": "        }"
       },
       {
-        "lineNumber": 78,
+        "lineNumber": 75,
         "author": {
           "gitId": "HCY123902"
         },
         "content": ""
       },
       {
-        "lineNumber": 79,
+        "lineNumber": 76,
         "author": {
           "gitId": "HCY123902"
         },
         "content": "        // instanceof handles nulls"
       },
       {
-        "lineNumber": 80,
+        "lineNumber": 77,
         "author": {
           "gitId": "HCY123902"
         },
         "content": "        if (!(other instanceof LibraryBookDetailCard)) {"
       },
       {
-        "lineNumber": 81,
+        "lineNumber": 78,
         "author": {
           "gitId": "HCY123902"
         },
         "content": "            return false;"
       },
       {
-        "lineNumber": 82,
+        "lineNumber": 79,
         "author": {
           "gitId": "HCY123902"
         },
         "content": "        }"
       },
       {
-        "lineNumber": 83,
+        "lineNumber": 80,
         "author": {
           "gitId": "HCY123902"
         },
         "content": ""
       },
       {
-        "lineNumber": 84,
+        "lineNumber": 81,
         "author": {
           "gitId": "HCY123902"
         },
         "content": "        // state check"
       },
       {
-        "lineNumber": 85,
+        "lineNumber": 82,
         "author": {
           "gitId": "HCY123902"
         },
         "content": "        LibraryBookDetailCard card \u003d (LibraryBookDetailCard) other;"
       },
       {
-        "lineNumber": 86,
+        "lineNumber": 83,
         "author": {
           "gitId": "HCY123902"
         },
         "content": "        return id.getText().equals(card.id.getText())"
       },
       {
-        "lineNumber": 87,
+        "lineNumber": 84,
         "author": {
           "gitId": "richardcom"
         },
         "content": "                \u0026\u0026 book.equals(card.book);"
       },
       {
-        "lineNumber": 88,
+        "lineNumber": 85,
         "author": {
           "gitId": "HCY123902"
         },
         "content": "    }"
       },
       {
-        "lineNumber": 89,
+        "lineNumber": 86,
         "author": {
           "gitId": "HCY123902"
         },
@@ -38516,8 +41331,8 @@
       }
     ],
     "authorContributionMap": {
-      "richardcom": 15,
-      "HCY123902": 74
+      "richardcom": 10,
+      "HCY123902": 76
     }
   },
   {
@@ -40261,6 +43076,358 @@
     }
   },
   {
+    "path": "src/main/resources/view/BookListCardWithCover.fxml",
+    "fileType": "functional-code",
+    "lines": [
+      {
+        "lineNumber": 1,
+        "author": {
+          "gitId": "HCY123902"
+        },
+        "content": "\u003c?xml version\u003d\"1.0\" encoding\u003d\"UTF-8\"?\u003e"
+      },
+      {
+        "lineNumber": 2,
+        "author": {
+          "gitId": "HCY123902"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 3,
+        "author": {
+          "gitId": "HCY123902"
+        },
+        "content": "\u003c?import javafx.geometry.Insets?\u003e"
+      },
+      {
+        "lineNumber": 4,
+        "author": {
+          "gitId": "HCY123902"
+        },
+        "content": "\u003c?import javafx.scene.control.Label?\u003e"
+      },
+      {
+        "lineNumber": 5,
+        "author": {
+          "gitId": "HCY123902"
+        },
+        "content": "\u003c?import javafx.scene.layout.ColumnConstraints?\u003e"
+      },
+      {
+        "lineNumber": 6,
+        "author": {
+          "gitId": "HCY123902"
+        },
+        "content": "\u003c?import javafx.scene.layout.FlowPane?\u003e"
+      },
+      {
+        "lineNumber": 7,
+        "author": {
+          "gitId": "HCY123902"
+        },
+        "content": "\u003c?import javafx.scene.layout.GridPane?\u003e"
+      },
+      {
+        "lineNumber": 8,
+        "author": {
+          "gitId": "HCY123902"
+        },
+        "content": "\u003c?import javafx.scene.layout.HBox?\u003e"
+      },
+      {
+        "lineNumber": 9,
+        "author": {
+          "gitId": "HCY123902"
+        },
+        "content": "\u003c?import javafx.scene.layout.Region?\u003e"
+      },
+      {
+        "lineNumber": 10,
+        "author": {
+          "gitId": "HCY123902"
+        },
+        "content": "\u003c?import javafx.scene.layout.VBox?\u003e"
+      },
+      {
+        "lineNumber": 11,
+        "author": {
+          "gitId": "HCY123902"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 12,
+        "author": {
+          "gitId": "HCY123902"
+        },
+        "content": "\u003c?import javafx.scene.layout.StackPane?\u003e"
+      },
+      {
+        "lineNumber": 13,
+        "author": {
+          "gitId": "HCY123902"
+        },
+        "content": "\u003c?import javafx.scene.image.ImageView?\u003e"
+      },
+      {
+        "lineNumber": 14,
+        "author": {
+          "gitId": "HCY123902"
+        },
+        "content": "\u003cHBox id\u003d\"cardPane\" fx:id\u003d\"cardPane\" xmlns\u003d\"http://javafx.com/javafx/8\" xmlns:fx\u003d\"http://javafx.com/fxml/1\"\u003e"
+      },
+      {
+        "lineNumber": 15,
+        "author": {
+          "gitId": "HCY123902"
+        },
+        "content": "    \u003cStackPane alignment\u003d\"CENTER_LEFT\" minHeight\u003d\"100\" maxWidth\u003d\"80\" \u003e"
+      },
+      {
+        "lineNumber": 16,
+        "author": {
+          "gitId": "HCY123902"
+        },
+        "content": "        \u003cpadding\u003e"
+      },
+      {
+        "lineNumber": 17,
+        "author": {
+          "gitId": "HCY123902"
+        },
+        "content": "            \u003cInsets top\u003d\"5.0\" bottom\u003d\"5.0\" left\u003d\"35.0\" right\u003d\"5.0\"/\u003e"
+      },
+      {
+        "lineNumber": 18,
+        "author": {
+          "gitId": "HCY123902"
+        },
+        "content": "        \u003c/padding\u003e"
+      },
+      {
+        "lineNumber": 19,
+        "author": {
+          "gitId": "HCY123902"
+        },
+        "content": "        \u003cchildren\u003e"
+      },
+      {
+        "lineNumber": 20,
+        "author": {
+          "gitId": "HCY123902"
+        },
+        "content": "            \u003cImageView fx:id\u003d\"cover\" fitHeight\u003d\"105.0\" fitWidth\u003d\"70.0\" pickOnBounds\u003d\"true\" preserveRatio\u003d\"true\" /\u003e"
+      },
+      {
+        "lineNumber": 21,
+        "author": {
+          "gitId": "HCY123902"
+        },
+        "content": "        \u003c/children\u003e"
+      },
+      {
+        "lineNumber": 22,
+        "author": {
+          "gitId": "HCY123902"
+        },
+        "content": "    \u003c/StackPane\u003e"
+      },
+      {
+        "lineNumber": 23,
+        "author": {
+          "gitId": "HCY123902"
+        },
+        "content": "    \u003cGridPane HBox.hgrow\u003d\"ALWAYS\" alignment\u003d\"CENTER_LEFT\" hgap\u003d\"5\" vgap\u003d\"5\"\u003e"
+      },
+      {
+        "lineNumber": 24,
+        "author": {
+          "gitId": "HCY123902"
+        },
+        "content": "        \u003ccolumnConstraints\u003e"
+      },
+      {
+        "lineNumber": 25,
+        "author": {
+          "gitId": "HCY123902"
+        },
+        "content": "            \u003cColumnConstraints hgrow\u003d\"SOMETIMES\" minWidth\u003d\"10\" /\u003e"
+      },
+      {
+        "lineNumber": 26,
+        "author": {
+          "gitId": "HCY123902"
+        },
+        "content": "        \u003c/columnConstraints\u003e"
+      },
+      {
+        "lineNumber": 27,
+        "author": {
+          "gitId": "HCY123902"
+        },
+        "content": "        \u003cVBox alignment\u003d\"CENTER_LEFT\" minHeight\u003d\"105\" GridPane.columnIndex\u003d\"0\"\u003e"
+      },
+      {
+        "lineNumber": 28,
+        "author": {
+          "gitId": "HCY123902"
+        },
+        "content": "            \u003cpadding\u003e"
+      },
+      {
+        "lineNumber": 29,
+        "author": {
+          "gitId": "HCY123902"
+        },
+        "content": "                \u003cInsets top\u003d\"5\" right\u003d\"5\" bottom\u003d\"5\" left\u003d\"30\" /\u003e"
+      },
+      {
+        "lineNumber": 30,
+        "author": {
+          "gitId": "HCY123902"
+        },
+        "content": "            \u003c/padding\u003e"
+      },
+      {
+        "lineNumber": 31,
+        "author": {
+          "gitId": "HCY123902"
+        },
+        "content": "            \u003cHBox spacing\u003d\"5\" alignment\u003d\"CENTER_LEFT\"\u003e"
+      },
+      {
+        "lineNumber": 32,
+        "author": {
+          "gitId": "HCY123902"
+        },
+        "content": "                \u003cLabel fx:id\u003d\"id\" styleClass\u003d\"cell_big_label\"\u003e"
+      },
+      {
+        "lineNumber": 33,
+        "author": {
+          "gitId": "HCY123902"
+        },
+        "content": "                    \u003cminWidth\u003e"
+      },
+      {
+        "lineNumber": 34,
+        "author": {
+          "gitId": "HCY123902"
+        },
+        "content": "                        \u003c!-- Ensures that the label text is never truncated --\u003e"
+      },
+      {
+        "lineNumber": 35,
+        "author": {
+          "gitId": "HCY123902"
+        },
+        "content": "                        \u003cRegion fx:constant\u003d\"USE_PREF_SIZE\" /\u003e"
+      },
+      {
+        "lineNumber": 36,
+        "author": {
+          "gitId": "HCY123902"
+        },
+        "content": "                    \u003c/minWidth\u003e"
+      },
+      {
+        "lineNumber": 37,
+        "author": {
+          "gitId": "HCY123902"
+        },
+        "content": "                \u003c/Label\u003e"
+      },
+      {
+        "lineNumber": 38,
+        "author": {
+          "gitId": "HCY123902"
+        },
+        "content": "                \u003cLabel fx:id\u003d\"name\" text\u003d\"\\$first\" styleClass\u003d\"cell_big_label\" /\u003e"
+      },
+      {
+        "lineNumber": 39,
+        "author": {
+          "gitId": "HCY123902"
+        },
+        "content": "            \u003c/HBox\u003e"
+      },
+      {
+        "lineNumber": 40,
+        "author": {
+          "gitId": "HCY123902"
+        },
+        "content": "            \u003cFlowPane fx:id\u003d\"categories\"/\u003e"
+      },
+      {
+        "lineNumber": 41,
+        "author": {
+          "gitId": "HCY123902"
+        },
+        "content": "            \u003cLabel fx:id\u003d\"isbn\" styleClass\u003d\"cell_small_label\" text\u003d\"\\$isbn\" /\u003e"
+      },
+      {
+        "lineNumber": 42,
+        "author": {
+          "gitId": "HCY123902"
+        },
+        "content": "            \u003cLabel fx:id\u003d\"address\" styleClass\u003d\"cell_small_label\" text\u003d\"\\$address\" /\u003e"
+      },
+      {
+        "lineNumber": 43,
+        "author": {
+          "gitId": "HCY123902"
+        },
+        "content": "            \u003cLabel fx:id\u003d\"email\" styleClass\u003d\"cell_small_label\" text\u003d\"\\$email\" /\u003e"
+      },
+      {
+        "lineNumber": 44,
+        "author": {
+          "gitId": "HCY123902"
+        },
+        "content": "            \u003cLabel fx:id\u003d\"author\" styleClass\u003d\"cell_small_label\" text\u003d\"\\$author\" /\u003e"
+      },
+      {
+        "lineNumber": 45,
+        "author": {
+          "gitId": "HCY123902"
+        },
+        "content": "            \u003cLabel fx:id\u003d\"publisher\" styleClass\u003d\"cell_small_label\" text\u003d\"\\$publisher\" /\u003e"
+      },
+      {
+        "lineNumber": 46,
+        "author": {
+          "gitId": "HCY123902"
+        },
+        "content": "            \u003cLabel fx:id\u003d\"times\" styleClass\u003d\"cell_small_label\" text\u003d\"\\$times\" /\u003e"
+      },
+      {
+        "lineNumber": 47,
+        "author": {
+          "gitId": "HCY123902"
+        },
+        "content": "        \u003c/VBox\u003e"
+      },
+      {
+        "lineNumber": 48,
+        "author": {
+          "gitId": "HCY123902"
+        },
+        "content": "    \u003c/GridPane\u003e"
+      },
+      {
+        "lineNumber": 49,
+        "author": {
+          "gitId": "HCY123902"
+        },
+        "content": "\u003c/HBox\u003e"
+      }
+    ],
+    "authorContributionMap": {
+      "HCY123902": 49
+    }
+  },
+  {
     "path": "src/main/resources/view/BookListPanel.fxml",
     "fileType": "functional-code",
     "lines": [
@@ -40412,192 +43579,241 @@
         "author": {
           "gitId": "HCY123902"
         },
-        "content": "\u003cHBox id\u003d\"cardPane\" fx:id\u003d\"cardPane\" xmlns\u003d\"http://javafx.com/javafx/8\" xmlns:fx\u003d\"http://javafx.com/fxml/1\"\u003e"
+        "content": "\u003c?import javafx.scene.layout.StackPane?\u003e"
       },
       {
         "lineNumber": 13,
         "author": {
           "gitId": "HCY123902"
         },
-        "content": "    \u003cGridPane HBox.hgrow\u003d\"ALWAYS\"\u003e"
+        "content": "\u003c?import javafx.scene.image.ImageView?\u003e"
       },
       {
         "lineNumber": 14,
         "author": {
           "gitId": "HCY123902"
         },
-        "content": "        \u003ccolumnConstraints\u003e"
+        "content": "\u003cHBox id\u003d\"cardPane\" fx:id\u003d\"cardPane\" xmlns\u003d\"http://javafx.com/javafx/8\" xmlns:fx\u003d\"http://javafx.com/fxml/1\"\u003e"
       },
       {
         "lineNumber": 15,
         "author": {
           "gitId": "HCY123902"
         },
-        "content": "            \u003cColumnConstraints hgrow\u003d\"SOMETIMES\" minWidth\u003d\"10\" prefWidth\u003d\"150\" /\u003e"
+        "content": "    \u003cStackPane alignment\u003d\"CENTER_LEFT\" minHeight\u003d\"100\" maxWidth\u003d\"80\" \u003e"
       },
       {
         "lineNumber": 16,
         "author": {
           "gitId": "HCY123902"
         },
-        "content": "        \u003c/columnConstraints\u003e"
+        "content": "        \u003cpadding\u003e"
       },
       {
         "lineNumber": 17,
         "author": {
           "gitId": "HCY123902"
         },
-        "content": "        \u003cVBox alignment\u003d\"CENTER_LEFT\" minHeight\u003d\"105\" GridPane.columnIndex\u003d\"0\"\u003e"
+        "content": "            \u003cInsets top\u003d\"5.0\" bottom\u003d\"5.0\" left\u003d\"35.0\" right\u003d\"5.0\"/\u003e"
       },
       {
         "lineNumber": 18,
         "author": {
           "gitId": "HCY123902"
         },
-        "content": "            \u003cpadding\u003e"
+        "content": "        \u003c/padding\u003e"
       },
       {
         "lineNumber": 19,
         "author": {
           "gitId": "HCY123902"
         },
-        "content": "                \u003cInsets top\u003d\"5\" right\u003d\"5\" bottom\u003d\"5\" left\u003d\"15\" /\u003e"
+        "content": "        \u003cchildren\u003e"
       },
       {
         "lineNumber": 20,
         "author": {
           "gitId": "HCY123902"
         },
-        "content": "            \u003c/padding\u003e"
+        "content": "            \u003cImageView fx:id\u003d\"cover\" fitHeight\u003d\"105.0\" fitWidth\u003d\"70.0\" pickOnBounds\u003d\"true\" preserveRatio\u003d\"true\" /\u003e"
       },
       {
         "lineNumber": 21,
         "author": {
           "gitId": "HCY123902"
         },
-        "content": "            \u003cHBox spacing\u003d\"5\" alignment\u003d\"CENTER_LEFT\"\u003e"
+        "content": "        \u003c/children\u003e"
       },
       {
         "lineNumber": 22,
         "author": {
           "gitId": "HCY123902"
         },
-        "content": "                \u003cLabel fx:id\u003d\"id\" styleClass\u003d\"cell_big_label\"\u003e"
+        "content": "    \u003c/StackPane\u003e"
       },
       {
         "lineNumber": 23,
         "author": {
           "gitId": "HCY123902"
         },
-        "content": "                    \u003cminWidth\u003e"
+        "content": "    \u003cGridPane HBox.hgrow\u003d\"ALWAYS\"\u003e"
       },
       {
         "lineNumber": 24,
         "author": {
           "gitId": "HCY123902"
         },
-        "content": "                        \u003c!-- Ensures that the label text is never truncated --\u003e"
+        "content": "        \u003ccolumnConstraints\u003e"
       },
       {
         "lineNumber": 25,
         "author": {
           "gitId": "HCY123902"
         },
-        "content": "                        \u003cRegion fx:constant\u003d\"USE_PREF_SIZE\" /\u003e"
+        "content": "            \u003cColumnConstraints hgrow\u003d\"SOMETIMES\" minWidth\u003d\"10\" prefWidth\u003d\"150\" /\u003e"
       },
       {
         "lineNumber": 26,
         "author": {
           "gitId": "HCY123902"
         },
-        "content": "                    \u003c/minWidth\u003e"
+        "content": "        \u003c/columnConstraints\u003e"
       },
       {
         "lineNumber": 27,
         "author": {
           "gitId": "HCY123902"
         },
-        "content": "                \u003c/Label\u003e"
+        "content": "        \u003cVBox alignment\u003d\"CENTER_LEFT\" minHeight\u003d\"105\" GridPane.columnIndex\u003d\"0\"\u003e"
       },
       {
         "lineNumber": 28,
         "author": {
           "gitId": "HCY123902"
         },
-        "content": "                \u003cLabel fx:id\u003d\"name\" text\u003d\"\\$first\" styleClass\u003d\"cell_big_label\" /\u003e"
+        "content": "            \u003cpadding\u003e"
       },
       {
         "lineNumber": 29,
         "author": {
           "gitId": "HCY123902"
         },
-        "content": "            \u003c/HBox\u003e"
+        "content": "                \u003cInsets top\u003d\"5\" right\u003d\"5\" bottom\u003d\"5\" left\u003d\"30\" /\u003e"
       },
       {
         "lineNumber": 30,
         "author": {
           "gitId": "HCY123902"
         },
-        "content": "            \u003cFlowPane fx:id\u003d\"categories\" /\u003e"
+        "content": "            \u003c/padding\u003e"
       },
       {
         "lineNumber": 31,
         "author": {
           "gitId": "HCY123902"
         },
-        "content": "            \u003cFlowPane fx:id\u003d\"stocking\" orientation\u003d\"VERTICAL\" prefHeight\u003d\"50\" maxHeight\u003d\"1000\"/\u003e"
+        "content": "            \u003cHBox spacing\u003d\"5\" alignment\u003d\"CENTER_LEFT\"\u003e"
       },
       {
         "lineNumber": 32,
         "author": {
           "gitId": "HCY123902"
         },
-        "content": "            \u003cLabel fx:id\u003d\"isbn\" styleClass\u003d\"cell_small_label\" text\u003d\"\\$phone\" /\u003e"
+        "content": "                \u003cLabel fx:id\u003d\"id\" styleClass\u003d\"cell_big_label\"\u003e"
       },
       {
         "lineNumber": 33,
         "author": {
           "gitId": "HCY123902"
         },
-        "content": "            \u003cLabel fx:id\u003d\"address\" styleClass\u003d\"cell_small_label\" text\u003d\"\\$address\" /\u003e"
+        "content": "                    \u003cminWidth\u003e"
       },
       {
         "lineNumber": 34,
         "author": {
           "gitId": "HCY123902"
         },
-        "content": "            \u003cLabel fx:id\u003d\"email\" styleClass\u003d\"cell_small_label\" text\u003d\"\\$email\" /\u003e"
+        "content": "                        \u003c!-- Ensures that the label text is never truncated --\u003e"
       },
       {
         "lineNumber": 35,
         "author": {
           "gitId": "HCY123902"
         },
-        "content": "            \u003cLabel fx:id\u003d\"author\" styleClass\u003d\"cell_small_label\" text\u003d\"\\$author\" /\u003e"
+        "content": "                        \u003cRegion fx:constant\u003d\"USE_PREF_SIZE\" /\u003e"
       },
       {
         "lineNumber": 36,
         "author": {
           "gitId": "HCY123902"
         },
-        "content": "            \u003cLabel fx:id\u003d\"times\" styleClass\u003d\"cell_small_label\" text\u003d\"\\$times\" /\u003e"
+        "content": "                    \u003c/minWidth\u003e"
       },
       {
         "lineNumber": 37,
         "author": {
           "gitId": "HCY123902"
         },
-        "content": "        \u003c/VBox\u003e"
+        "content": "                \u003c/Label\u003e"
       },
       {
         "lineNumber": 38,
         "author": {
           "gitId": "HCY123902"
         },
-        "content": "    \u003c/GridPane\u003e"
+        "content": "                \u003cLabel fx:id\u003d\"name\" text\u003d\"\\$first\" styleClass\u003d\"cell_big_label\" /\u003e"
       },
       {
         "lineNumber": 39,
+        "author": {
+          "gitId": "HCY123902"
+        },
+        "content": "            \u003c/HBox\u003e"
+      },
+      {
+        "lineNumber": 40,
+        "author": {
+          "gitId": "HCY123902"
+        },
+        "content": "            \u003cFlowPane fx:id\u003d\"categories\" /\u003e"
+      },
+      {
+        "lineNumber": 41,
+        "author": {
+          "gitId": "HCY123902"
+        },
+        "content": "            \u003cFlowPane fx:id\u003d\"stocking\" orientation\u003d\"VERTICAL\" prefHeight\u003d\"50\" maxHeight\u003d\"1000\"/\u003e"
+      },
+      {
+        "lineNumber": 42,
+        "author": {
+          "gitId": "HCY123902"
+        },
+        "content": "            \u003cLabel fx:id\u003d\"isbn\" styleClass\u003d\"cell_small_label\" text\u003d\"\\$phone\" /\u003e"
+      },
+      {
+        "lineNumber": 43,
+        "author": {
+          "gitId": "HCY123902"
+        },
+        "content": "            \u003cLabel fx:id\u003d\"author\" styleClass\u003d\"cell_small_label\" text\u003d\"\\$author\" /\u003e"
+      },
+      {
+        "lineNumber": 44,
+        "author": {
+          "gitId": "HCY123902"
+        },
+        "content": "        \u003c/VBox\u003e"
+      },
+      {
+        "lineNumber": 45,
+        "author": {
+          "gitId": "HCY123902"
+        },
+        "content": "    \u003c/GridPane\u003e"
+      },
+      {
+        "lineNumber": 46,
         "author": {
           "gitId": "HCY123902"
         },
@@ -40605,7 +43821,7 @@
       }
     ],
     "authorContributionMap": {
-      "HCY123902": 39
+      "HCY123902": 46
     }
   },
   {
