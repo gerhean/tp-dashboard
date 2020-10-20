@@ -12303,54 +12303,68 @@
       {
         "lineNumber": 26,
         "author": {
-          "gitId": "dianneloh9"
+          "gitId": "munharsha"
         },
-        "content": ""
+        "content": "    public static final String MESSAGE_MEETINGS_LISTED_OVERVIEW \u003d \"%1$d meetings listed!\";"
       },
       {
         "lineNumber": 27,
         "author": {
-          "gitId": "Marcon2509"
+          "gitId": "munharsha"
         },
-        "content": "    // ------------------------- BID -------------------------"
+        "content": ""
       },
       {
         "lineNumber": 28,
         "author": {
-          "gitId": "Marcon2509"
+          "gitId": "dianneloh9"
         },
-        "content": "    public static final String MESSAGE_INVALID_BID_DISPLAYED_INDEX \u003d \"The bid index provided is invalid\";"
+        "content": ""
       },
       {
         "lineNumber": 29,
         "author": {
           "gitId": "Marcon2509"
         },
-        "content": "    public static final String MESSAGE_INVALID_COMMAND_INPUT \u003d \"Invalid command input! \\n%1$s\";"
+        "content": "    // ------------------------- BID -------------------------"
       },
       {
         "lineNumber": 30,
         "author": {
           "gitId": "Marcon2509"
         },
-        "content": "    public static final String MESSAGE_BIDS_LISTED_OVERVIEW \u003d \"%1$d bids listed!\";"
+        "content": "    public static final String MESSAGE_INVALID_BID_DISPLAYED_INDEX \u003d \"The bid index provided is invalid\";"
       },
       {
         "lineNumber": 31,
         "author": {
           "gitId": "Marcon2509"
         },
-        "content": "    public static final String MESSAGE_BIDS_LISTED_FAILURE \u003d \"Unable to find any related Bids. Displaying full list.\";"
+        "content": "    public static final String MESSAGE_INVALID_COMMAND_INPUT \u003d \"Invalid command input! \\n%1$s\";"
       },
       {
         "lineNumber": 32,
         "author": {
           "gitId": "Marcon2509"
         },
-        "content": ""
+        "content": "    public static final String MESSAGE_BIDS_LISTED_OVERVIEW \u003d \"%1$d bids listed!\";"
       },
       {
         "lineNumber": 33,
+        "author": {
+          "gitId": "Marcon2509"
+        },
+        "content": "    public static final String MESSAGE_BIDS_LISTED_FAILURE \u003d \"Unable to find any related Bids. Displaying full list.\";"
+      },
+      {
+        "lineNumber": 34,
+        "author": {
+          "gitId": "Marcon2509"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 35,
         "author": {
           "gitId": "-"
         },
@@ -12361,6 +12375,7 @@
       "Marcon2509": 6,
       "kormingsoon": 8,
       "dianneloh9": 6,
+      "munharsha": 2,
       "-": 13
     }
   },
@@ -20699,6 +20714,1451 @@
     }
   },
   {
+    "path": "src/main/java/seedu/address/logic/commands/EditMeetingCommand.java",
+    "fileType": "functional-code",
+    "lines": [
+      {
+        "lineNumber": 1,
+        "author": {
+          "gitId": "Christopher-LM"
+        },
+        "content": "package seedu.address.logic.commands;"
+      },
+      {
+        "lineNumber": 2,
+        "author": {
+          "gitId": "Christopher-LM"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 3,
+        "author": {
+          "gitId": "Christopher-LM"
+        },
+        "content": "import static java.util.Objects.requireNonNull;"
+      },
+      {
+        "lineNumber": 4,
+        "author": {
+          "gitId": "Christopher-LM"
+        },
+        "content": "import static seedu.address.logic.parser.CliSyntax.PREFIX_CALENDAR_BIDDER_ID;"
+      },
+      {
+        "lineNumber": 5,
+        "author": {
+          "gitId": "Christopher-LM"
+        },
+        "content": "import static seedu.address.logic.parser.CliSyntax.PREFIX_CALENDAR_PROPERTY_ID;"
+      },
+      {
+        "lineNumber": 6,
+        "author": {
+          "gitId": "Christopher-LM"
+        },
+        "content": "import static seedu.address.logic.parser.CliSyntax.PREFIX_CALENDAR_TIME;"
+      },
+      {
+        "lineNumber": 7,
+        "author": {
+          "gitId": "Christopher-LM"
+        },
+        "content": "import static seedu.address.logic.parser.CliSyntax.PREFIX_CALENDAR_VENUE;"
+      },
+      {
+        "lineNumber": 8,
+        "author": {
+          "gitId": "Christopher-LM"
+        },
+        "content": "import static seedu.address.model.Model.PREDICATE_SHOW_ALL_MEETINGS;"
+      },
+      {
+        "lineNumber": 9,
+        "author": {
+          "gitId": "Christopher-LM"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 10,
+        "author": {
+          "gitId": "Christopher-LM"
+        },
+        "content": "import java.util.List;"
+      },
+      {
+        "lineNumber": 11,
+        "author": {
+          "gitId": "Christopher-LM"
+        },
+        "content": "import java.util.Optional;"
+      },
+      {
+        "lineNumber": 12,
+        "author": {
+          "gitId": "Christopher-LM"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 13,
+        "author": {
+          "gitId": "Christopher-LM"
+        },
+        "content": "import seedu.address.commons.core.Messages;"
+      },
+      {
+        "lineNumber": 14,
+        "author": {
+          "gitId": "Christopher-LM"
+        },
+        "content": "import seedu.address.commons.core.index.Index;"
+      },
+      {
+        "lineNumber": 15,
+        "author": {
+          "gitId": "Christopher-LM"
+        },
+        "content": "import seedu.address.commons.util.CollectionUtil;"
+      },
+      {
+        "lineNumber": 16,
+        "author": {
+          "gitId": "Christopher-LM"
+        },
+        "content": "import seedu.address.logic.commands.exceptions.CommandException;"
+      },
+      {
+        "lineNumber": 17,
+        "author": {
+          "gitId": "Christopher-LM"
+        },
+        "content": "import seedu.address.model.Model;"
+      },
+      {
+        "lineNumber": 18,
+        "author": {
+          "gitId": "Christopher-LM"
+        },
+        "content": "import seedu.address.model.calendar.CalendarBidderId;"
+      },
+      {
+        "lineNumber": 19,
+        "author": {
+          "gitId": "Christopher-LM"
+        },
+        "content": "import seedu.address.model.calendar.CalendarMeeting;"
+      },
+      {
+        "lineNumber": 20,
+        "author": {
+          "gitId": "Christopher-LM"
+        },
+        "content": "import seedu.address.model.calendar.CalendarPropertyId;"
+      },
+      {
+        "lineNumber": 21,
+        "author": {
+          "gitId": "Christopher-LM"
+        },
+        "content": "import seedu.address.model.calendar.CalendarTime;"
+      },
+      {
+        "lineNumber": 22,
+        "author": {
+          "gitId": "Christopher-LM"
+        },
+        "content": "import seedu.address.model.calendar.CalendarVenue;"
+      },
+      {
+        "lineNumber": 23,
+        "author": {
+          "gitId": "Christopher-LM"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 24,
+        "author": {
+          "gitId": "Christopher-LM"
+        },
+        "content": "/**"
+      },
+      {
+        "lineNumber": 25,
+        "author": {
+          "gitId": "Christopher-LM"
+        },
+        "content": " * Edits the details of an existing person in the address book."
+      },
+      {
+        "lineNumber": 26,
+        "author": {
+          "gitId": "Christopher-LM"
+        },
+        "content": " */"
+      },
+      {
+        "lineNumber": 27,
+        "author": {
+          "gitId": "Christopher-LM"
+        },
+        "content": "public class EditMeetingCommand extends Command {"
+      },
+      {
+        "lineNumber": 28,
+        "author": {
+          "gitId": "Christopher-LM"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 29,
+        "author": {
+          "gitId": "Christopher-LM"
+        },
+        "content": "    public static final String COMMAND_WORD \u003d \"edit-m\";"
+      },
+      {
+        "lineNumber": 30,
+        "author": {
+          "gitId": "Christopher-LM"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 31,
+        "author": {
+          "gitId": "Christopher-LM"
+        },
+        "content": "    public static final String MESSAGE_USAGE \u003d COMMAND_WORD + \": Edits the details of the meeting identified \""
+      },
+      {
+        "lineNumber": 32,
+        "author": {
+          "gitId": "Christopher-LM"
+        },
+        "content": "            + \"by the index number used in the displayed meeting list. \""
+      },
+      {
+        "lineNumber": 33,
+        "author": {
+          "gitId": "Christopher-LM"
+        },
+        "content": "            + \"Existing values will be overwritten by the input values.\\n\""
+      },
+      {
+        "lineNumber": 34,
+        "author": {
+          "gitId": "Christopher-LM"
+        },
+        "content": "            + \"Parameters: INDEX (must be a positive integer) \""
+      },
+      {
+        "lineNumber": 35,
+        "author": {
+          "gitId": "Christopher-LM"
+        },
+        "content": "            + \"[\" + PREFIX_CALENDAR_BIDDER_ID + \"B-ID] \""
+      },
+      {
+        "lineNumber": 36,
+        "author": {
+          "gitId": "Christopher-LM"
+        },
+        "content": "            + \"[\" + PREFIX_CALENDAR_PROPERTY_ID + \"P-ID] \""
+      },
+      {
+        "lineNumber": 37,
+        "author": {
+          "gitId": "Christopher-LM"
+        },
+        "content": "            + \"[\" + PREFIX_CALENDAR_TIME + \"TIME] \""
+      },
+      {
+        "lineNumber": 38,
+        "author": {
+          "gitId": "Christopher-LM"
+        },
+        "content": "            + \"[\" + PREFIX_CALENDAR_VENUE + \"VENUE]...\\n\""
+      },
+      {
+        "lineNumber": 39,
+        "author": {
+          "gitId": "Christopher-LM"
+        },
+        "content": "            + \"Example: \" + COMMAND_WORD + \" 1 \""
+      },
+      {
+        "lineNumber": 40,
+        "author": {
+          "gitId": "Christopher-LM"
+        },
+        "content": "            + PREFIX_CALENDAR_VENUE + \"EUNOS \";"
+      },
+      {
+        "lineNumber": 41,
+        "author": {
+          "gitId": "Christopher-LM"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 42,
+        "author": {
+          "gitId": "Christopher-LM"
+        },
+        "content": "    public static final String MESSAGE_EDIT_MEETING_SUCCESS \u003d \"Edited Meeting: %1$s\";"
+      },
+      {
+        "lineNumber": 43,
+        "author": {
+          "gitId": "Christopher-LM"
+        },
+        "content": "    public static final String MESSAGE_NOT_EDITED \u003d \"At least one field to edit must be provided.\";"
+      },
+      {
+        "lineNumber": 44,
+        "author": {
+          "gitId": "Christopher-LM"
+        },
+        "content": "    public static final String MESSAGE_DUPLICATE_MEETING \u003d \"This meeting already exists in the address book.\";"
+      },
+      {
+        "lineNumber": 45,
+        "author": {
+          "gitId": "Christopher-LM"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 46,
+        "author": {
+          "gitId": "Christopher-LM"
+        },
+        "content": "    private final Index index;"
+      },
+      {
+        "lineNumber": 47,
+        "author": {
+          "gitId": "Christopher-LM"
+        },
+        "content": "    private final EditMeetingDescriptor editMeetingDescriptor;"
+      },
+      {
+        "lineNumber": 48,
+        "author": {
+          "gitId": "Christopher-LM"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 49,
+        "author": {
+          "gitId": "Christopher-LM"
+        },
+        "content": "    /**"
+      },
+      {
+        "lineNumber": 50,
+        "author": {
+          "gitId": "Christopher-LM"
+        },
+        "content": "     * @param index of the person in the filtered person list to edit"
+      },
+      {
+        "lineNumber": 51,
+        "author": {
+          "gitId": "Christopher-LM"
+        },
+        "content": "     * @param editMeetingDescriptor details to edit the person with"
+      },
+      {
+        "lineNumber": 52,
+        "author": {
+          "gitId": "Christopher-LM"
+        },
+        "content": "     */"
+      },
+      {
+        "lineNumber": 53,
+        "author": {
+          "gitId": "Christopher-LM"
+        },
+        "content": "    public EditMeetingCommand(Index index, EditMeetingDescriptor editMeetingDescriptor) {"
+      },
+      {
+        "lineNumber": 54,
+        "author": {
+          "gitId": "Christopher-LM"
+        },
+        "content": "        requireNonNull(index);"
+      },
+      {
+        "lineNumber": 55,
+        "author": {
+          "gitId": "Christopher-LM"
+        },
+        "content": "        requireNonNull(editMeetingDescriptor);"
+      },
+      {
+        "lineNumber": 56,
+        "author": {
+          "gitId": "Christopher-LM"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 57,
+        "author": {
+          "gitId": "Christopher-LM"
+        },
+        "content": "        this.index \u003d index;"
+      },
+      {
+        "lineNumber": 58,
+        "author": {
+          "gitId": "Christopher-LM"
+        },
+        "content": "        this.editMeetingDescriptor \u003d new EditMeetingDescriptor(editMeetingDescriptor);"
+      },
+      {
+        "lineNumber": 59,
+        "author": {
+          "gitId": "Christopher-LM"
+        },
+        "content": "    }"
+      },
+      {
+        "lineNumber": 60,
+        "author": {
+          "gitId": "Christopher-LM"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 61,
+        "author": {
+          "gitId": "Christopher-LM"
+        },
+        "content": "    @Override"
+      },
+      {
+        "lineNumber": 62,
+        "author": {
+          "gitId": "Christopher-LM"
+        },
+        "content": "    public CommandResult execute(Model model) throws CommandException {"
+      },
+      {
+        "lineNumber": 63,
+        "author": {
+          "gitId": "Christopher-LM"
+        },
+        "content": "        requireNonNull(model);"
+      },
+      {
+        "lineNumber": 64,
+        "author": {
+          "gitId": "Christopher-LM"
+        },
+        "content": "        List\u003cCalendarMeeting\u003e lastShownList \u003d model.getFilteredMeetingList();"
+      },
+      {
+        "lineNumber": 65,
+        "author": {
+          "gitId": "Christopher-LM"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 66,
+        "author": {
+          "gitId": "Christopher-LM"
+        },
+        "content": "        if (index.getZeroBased() \u003e\u003d lastShownList.size()) {"
+      },
+      {
+        "lineNumber": 67,
+        "author": {
+          "gitId": "Christopher-LM"
+        },
+        "content": "            throw new CommandException(Messages.MESSAGE_INVALID_MEETING_DISPLAYED_INDEX);"
+      },
+      {
+        "lineNumber": 68,
+        "author": {
+          "gitId": "Christopher-LM"
+        },
+        "content": "        }"
+      },
+      {
+        "lineNumber": 69,
+        "author": {
+          "gitId": "Christopher-LM"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 70,
+        "author": {
+          "gitId": "Christopher-LM"
+        },
+        "content": "        CalendarMeeting meetingToEdit \u003d lastShownList.get(index.getZeroBased());"
+      },
+      {
+        "lineNumber": 71,
+        "author": {
+          "gitId": "Christopher-LM"
+        },
+        "content": "        CalendarMeeting editedMeeting \u003d createEditedMeeting(meetingToEdit, editMeetingDescriptor);"
+      },
+      {
+        "lineNumber": 72,
+        "author": {
+          "gitId": "Christopher-LM"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 73,
+        "author": {
+          "gitId": "munharsha"
+        },
+        "content": "        if (!meetingToEdit.equals(editedMeeting) \u0026\u0026 model.hasMeeting(editedMeeting)) {"
+      },
+      {
+        "lineNumber": 74,
+        "author": {
+          "gitId": "Christopher-LM"
+        },
+        "content": "            throw new CommandException(MESSAGE_DUPLICATE_MEETING);"
+      },
+      {
+        "lineNumber": 75,
+        "author": {
+          "gitId": "Christopher-LM"
+        },
+        "content": "        }"
+      },
+      {
+        "lineNumber": 76,
+        "author": {
+          "gitId": "Christopher-LM"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 77,
+        "author": {
+          "gitId": "Christopher-LM"
+        },
+        "content": "        model.setMeeting(meetingToEdit, editedMeeting);"
+      },
+      {
+        "lineNumber": 78,
+        "author": {
+          "gitId": "Christopher-LM"
+        },
+        "content": "        model.updateFilteredMeetingList(PREDICATE_SHOW_ALL_MEETINGS);"
+      },
+      {
+        "lineNumber": 79,
+        "author": {
+          "gitId": "Christopher-LM"
+        },
+        "content": "        return new CommandResult(String.format(MESSAGE_EDIT_MEETING_SUCCESS, editedMeeting))"
+      },
+      {
+        "lineNumber": 80,
+        "author": {
+          "gitId": "Christopher-LM"
+        },
+        "content": "                .setEntity(EntityType.MEETING);"
+      },
+      {
+        "lineNumber": 81,
+        "author": {
+          "gitId": "Christopher-LM"
+        },
+        "content": "    }"
+      },
+      {
+        "lineNumber": 82,
+        "author": {
+          "gitId": "Christopher-LM"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 83,
+        "author": {
+          "gitId": "Christopher-LM"
+        },
+        "content": "    /**"
+      },
+      {
+        "lineNumber": 84,
+        "author": {
+          "gitId": "Christopher-LM"
+        },
+        "content": "     * Creates and returns a {@code Person} with the details of {@code personToEdit}"
+      },
+      {
+        "lineNumber": 85,
+        "author": {
+          "gitId": "Christopher-LM"
+        },
+        "content": "     * edited with {@code editPersonDescriptor}."
+      },
+      {
+        "lineNumber": 86,
+        "author": {
+          "gitId": "Christopher-LM"
+        },
+        "content": "     */"
+      },
+      {
+        "lineNumber": 87,
+        "author": {
+          "gitId": "Christopher-LM"
+        },
+        "content": "    private static CalendarMeeting createEditedMeeting(CalendarMeeting meetingToEdit,"
+      },
+      {
+        "lineNumber": 88,
+        "author": {
+          "gitId": "Christopher-LM"
+        },
+        "content": "                                                       EditMeetingDescriptor editMeetingDescriptor) {"
+      },
+      {
+        "lineNumber": 89,
+        "author": {
+          "gitId": "Christopher-LM"
+        },
+        "content": "        assert meetingToEdit !\u003d null;"
+      },
+      {
+        "lineNumber": 90,
+        "author": {
+          "gitId": "Christopher-LM"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 91,
+        "author": {
+          "gitId": "Christopher-LM"
+        },
+        "content": "        CalendarBidderId updatedBidderId \u003d"
+      },
+      {
+        "lineNumber": 92,
+        "author": {
+          "gitId": "Christopher-LM"
+        },
+        "content": "                editMeetingDescriptor.getCalendarBidderId().orElse(meetingToEdit.getCalendarBidderId());"
+      },
+      {
+        "lineNumber": 93,
+        "author": {
+          "gitId": "Christopher-LM"
+        },
+        "content": "        CalendarPropertyId updatedPropertyId \u003d"
+      },
+      {
+        "lineNumber": 94,
+        "author": {
+          "gitId": "Christopher-LM"
+        },
+        "content": "                editMeetingDescriptor.getCalendarPropertyId().orElse(meetingToEdit.getCalendarPropertyId());"
+      },
+      {
+        "lineNumber": 95,
+        "author": {
+          "gitId": "Christopher-LM"
+        },
+        "content": "        CalendarVenue updatedVenue \u003d"
+      },
+      {
+        "lineNumber": 96,
+        "author": {
+          "gitId": "Christopher-LM"
+        },
+        "content": "                editMeetingDescriptor.getCalendarVenue().orElse(meetingToEdit.getCalendarVenue());"
+      },
+      {
+        "lineNumber": 97,
+        "author": {
+          "gitId": "Christopher-LM"
+        },
+        "content": "        CalendarTime updatedTime \u003d"
+      },
+      {
+        "lineNumber": 98,
+        "author": {
+          "gitId": "Christopher-LM"
+        },
+        "content": "                editMeetingDescriptor.getCalendarTime().orElse(meetingToEdit.getCalendarTime());"
+      },
+      {
+        "lineNumber": 99,
+        "author": {
+          "gitId": "Christopher-LM"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 100,
+        "author": {
+          "gitId": "Christopher-LM"
+        },
+        "content": "        String typeMeeting \u003d meetingToEdit.checkMeetingType();"
+      },
+      {
+        "lineNumber": 101,
+        "author": {
+          "gitId": "Christopher-LM"
+        },
+        "content": "        return meetingToEdit.createMeeting(typeMeeting, updatedBidderId, updatedPropertyId, updatedTime, updatedVenue);"
+      },
+      {
+        "lineNumber": 102,
+        "author": {
+          "gitId": "Christopher-LM"
+        },
+        "content": "    }"
+      },
+      {
+        "lineNumber": 103,
+        "author": {
+          "gitId": "Christopher-LM"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 104,
+        "author": {
+          "gitId": "Christopher-LM"
+        },
+        "content": "    @Override"
+      },
+      {
+        "lineNumber": 105,
+        "author": {
+          "gitId": "Christopher-LM"
+        },
+        "content": "    public boolean equals(Object other) {"
+      },
+      {
+        "lineNumber": 106,
+        "author": {
+          "gitId": "Christopher-LM"
+        },
+        "content": "        // short circuit if same object"
+      },
+      {
+        "lineNumber": 107,
+        "author": {
+          "gitId": "Christopher-LM"
+        },
+        "content": "        if (other \u003d\u003d this) {"
+      },
+      {
+        "lineNumber": 108,
+        "author": {
+          "gitId": "Christopher-LM"
+        },
+        "content": "            return true;"
+      },
+      {
+        "lineNumber": 109,
+        "author": {
+          "gitId": "Christopher-LM"
+        },
+        "content": "        }"
+      },
+      {
+        "lineNumber": 110,
+        "author": {
+          "gitId": "Christopher-LM"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 111,
+        "author": {
+          "gitId": "Christopher-LM"
+        },
+        "content": "        // instanceof handles nulls"
+      },
+      {
+        "lineNumber": 112,
+        "author": {
+          "gitId": "Christopher-LM"
+        },
+        "content": "        if (!(other instanceof EditMeetingCommand)) {"
+      },
+      {
+        "lineNumber": 113,
+        "author": {
+          "gitId": "Christopher-LM"
+        },
+        "content": "            return false;"
+      },
+      {
+        "lineNumber": 114,
+        "author": {
+          "gitId": "Christopher-LM"
+        },
+        "content": "        }"
+      },
+      {
+        "lineNumber": 115,
+        "author": {
+          "gitId": "Christopher-LM"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 116,
+        "author": {
+          "gitId": "Christopher-LM"
+        },
+        "content": "        // state check"
+      },
+      {
+        "lineNumber": 117,
+        "author": {
+          "gitId": "Christopher-LM"
+        },
+        "content": "        EditMeetingCommand e \u003d (EditMeetingCommand) other;"
+      },
+      {
+        "lineNumber": 118,
+        "author": {
+          "gitId": "Christopher-LM"
+        },
+        "content": "        return index.equals(e.index)"
+      },
+      {
+        "lineNumber": 119,
+        "author": {
+          "gitId": "Christopher-LM"
+        },
+        "content": "                \u0026\u0026 editMeetingDescriptor.equals(e.editMeetingDescriptor);"
+      },
+      {
+        "lineNumber": 120,
+        "author": {
+          "gitId": "Christopher-LM"
+        },
+        "content": "    }"
+      },
+      {
+        "lineNumber": 121,
+        "author": {
+          "gitId": "Christopher-LM"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 122,
+        "author": {
+          "gitId": "Christopher-LM"
+        },
+        "content": "    /**"
+      },
+      {
+        "lineNumber": 123,
+        "author": {
+          "gitId": "Christopher-LM"
+        },
+        "content": "     * Stores the details to edit the person with. Each non-empty field value will replace the"
+      },
+      {
+        "lineNumber": 124,
+        "author": {
+          "gitId": "Christopher-LM"
+        },
+        "content": "     * corresponding field value of the person."
+      },
+      {
+        "lineNumber": 125,
+        "author": {
+          "gitId": "Christopher-LM"
+        },
+        "content": "     */"
+      },
+      {
+        "lineNumber": 126,
+        "author": {
+          "gitId": "Christopher-LM"
+        },
+        "content": "    public static class EditMeetingDescriptor {"
+      },
+      {
+        "lineNumber": 127,
+        "author": {
+          "gitId": "Christopher-LM"
+        },
+        "content": "        private CalendarBidderId bidderId;"
+      },
+      {
+        "lineNumber": 128,
+        "author": {
+          "gitId": "Christopher-LM"
+        },
+        "content": "        private CalendarPropertyId propertyId;"
+      },
+      {
+        "lineNumber": 129,
+        "author": {
+          "gitId": "Christopher-LM"
+        },
+        "content": "        private CalendarTime time;"
+      },
+      {
+        "lineNumber": 130,
+        "author": {
+          "gitId": "Christopher-LM"
+        },
+        "content": "        private CalendarVenue venue;"
+      },
+      {
+        "lineNumber": 131,
+        "author": {
+          "gitId": "Christopher-LM"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 132,
+        "author": {
+          "gitId": "Christopher-LM"
+        },
+        "content": "        public EditMeetingDescriptor() {}"
+      },
+      {
+        "lineNumber": 133,
+        "author": {
+          "gitId": "Christopher-LM"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 134,
+        "author": {
+          "gitId": "Christopher-LM"
+        },
+        "content": "        /**"
+      },
+      {
+        "lineNumber": 135,
+        "author": {
+          "gitId": "Christopher-LM"
+        },
+        "content": "         * Copy constructor."
+      },
+      {
+        "lineNumber": 136,
+        "author": {
+          "gitId": "Christopher-LM"
+        },
+        "content": "         * A defensive copy of {@code tags} is used internally."
+      },
+      {
+        "lineNumber": 137,
+        "author": {
+          "gitId": "Christopher-LM"
+        },
+        "content": "         */"
+      },
+      {
+        "lineNumber": 138,
+        "author": {
+          "gitId": "Christopher-LM"
+        },
+        "content": "        public EditMeetingDescriptor(EditMeetingDescriptor toCopy) {"
+      },
+      {
+        "lineNumber": 139,
+        "author": {
+          "gitId": "Christopher-LM"
+        },
+        "content": "            setCalendarBidderId(toCopy.bidderId);"
+      },
+      {
+        "lineNumber": 140,
+        "author": {
+          "gitId": "Christopher-LM"
+        },
+        "content": "            setCalendarPropertyId(toCopy.propertyId);"
+      },
+      {
+        "lineNumber": 141,
+        "author": {
+          "gitId": "Christopher-LM"
+        },
+        "content": "            setCalendarVenue(toCopy.venue);"
+      },
+      {
+        "lineNumber": 142,
+        "author": {
+          "gitId": "Christopher-LM"
+        },
+        "content": "            setCalendarTime(toCopy.time);"
+      },
+      {
+        "lineNumber": 143,
+        "author": {
+          "gitId": "Christopher-LM"
+        },
+        "content": "        }"
+      },
+      {
+        "lineNumber": 144,
+        "author": {
+          "gitId": "Christopher-LM"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 145,
+        "author": {
+          "gitId": "Christopher-LM"
+        },
+        "content": "        /**"
+      },
+      {
+        "lineNumber": 146,
+        "author": {
+          "gitId": "Christopher-LM"
+        },
+        "content": "         * Returns true if at least one field is edited."
+      },
+      {
+        "lineNumber": 147,
+        "author": {
+          "gitId": "Christopher-LM"
+        },
+        "content": "         */"
+      },
+      {
+        "lineNumber": 148,
+        "author": {
+          "gitId": "Christopher-LM"
+        },
+        "content": "        public boolean isAnyFieldEdited() {"
+      },
+      {
+        "lineNumber": 149,
+        "author": {
+          "gitId": "Christopher-LM"
+        },
+        "content": "            return CollectionUtil.isAnyNonNull(bidderId, propertyId, venue, time);"
+      },
+      {
+        "lineNumber": 150,
+        "author": {
+          "gitId": "Christopher-LM"
+        },
+        "content": "        }"
+      },
+      {
+        "lineNumber": 151,
+        "author": {
+          "gitId": "Christopher-LM"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 152,
+        "author": {
+          "gitId": "Christopher-LM"
+        },
+        "content": "        public void setCalendarBidderId(CalendarBidderId bidderId) {"
+      },
+      {
+        "lineNumber": 153,
+        "author": {
+          "gitId": "Christopher-LM"
+        },
+        "content": "            this.bidderId \u003d bidderId;"
+      },
+      {
+        "lineNumber": 154,
+        "author": {
+          "gitId": "Christopher-LM"
+        },
+        "content": "        }"
+      },
+      {
+        "lineNumber": 155,
+        "author": {
+          "gitId": "Christopher-LM"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 156,
+        "author": {
+          "gitId": "Christopher-LM"
+        },
+        "content": "        public Optional\u003cCalendarBidderId\u003e getCalendarBidderId() {"
+      },
+      {
+        "lineNumber": 157,
+        "author": {
+          "gitId": "Christopher-LM"
+        },
+        "content": "            return Optional.ofNullable(bidderId);"
+      },
+      {
+        "lineNumber": 158,
+        "author": {
+          "gitId": "Christopher-LM"
+        },
+        "content": "        }"
+      },
+      {
+        "lineNumber": 159,
+        "author": {
+          "gitId": "Christopher-LM"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 160,
+        "author": {
+          "gitId": "Christopher-LM"
+        },
+        "content": "        public void setCalendarPropertyId(CalendarPropertyId propertyId) {"
+      },
+      {
+        "lineNumber": 161,
+        "author": {
+          "gitId": "Christopher-LM"
+        },
+        "content": "            this.propertyId \u003d propertyId;"
+      },
+      {
+        "lineNumber": 162,
+        "author": {
+          "gitId": "Christopher-LM"
+        },
+        "content": "        }"
+      },
+      {
+        "lineNumber": 163,
+        "author": {
+          "gitId": "Christopher-LM"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 164,
+        "author": {
+          "gitId": "Christopher-LM"
+        },
+        "content": "        public Optional\u003cCalendarPropertyId\u003e getCalendarPropertyId() {"
+      },
+      {
+        "lineNumber": 165,
+        "author": {
+          "gitId": "Christopher-LM"
+        },
+        "content": "            return Optional.ofNullable(propertyId);"
+      },
+      {
+        "lineNumber": 166,
+        "author": {
+          "gitId": "Christopher-LM"
+        },
+        "content": "        }"
+      },
+      {
+        "lineNumber": 167,
+        "author": {
+          "gitId": "Christopher-LM"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 168,
+        "author": {
+          "gitId": "Christopher-LM"
+        },
+        "content": "        public void setCalendarVenue(CalendarVenue venue) {"
+      },
+      {
+        "lineNumber": 169,
+        "author": {
+          "gitId": "Christopher-LM"
+        },
+        "content": "            this.venue \u003d venue;"
+      },
+      {
+        "lineNumber": 170,
+        "author": {
+          "gitId": "Christopher-LM"
+        },
+        "content": "        }"
+      },
+      {
+        "lineNumber": 171,
+        "author": {
+          "gitId": "Christopher-LM"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 172,
+        "author": {
+          "gitId": "Christopher-LM"
+        },
+        "content": "        public Optional\u003cCalendarVenue\u003e getCalendarVenue() {"
+      },
+      {
+        "lineNumber": 173,
+        "author": {
+          "gitId": "Christopher-LM"
+        },
+        "content": "            return Optional.ofNullable(venue);"
+      },
+      {
+        "lineNumber": 174,
+        "author": {
+          "gitId": "Christopher-LM"
+        },
+        "content": "        }"
+      },
+      {
+        "lineNumber": 175,
+        "author": {
+          "gitId": "Christopher-LM"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 176,
+        "author": {
+          "gitId": "Christopher-LM"
+        },
+        "content": "        public void setCalendarTime(CalendarTime time) {"
+      },
+      {
+        "lineNumber": 177,
+        "author": {
+          "gitId": "Christopher-LM"
+        },
+        "content": "            this.time \u003d time;"
+      },
+      {
+        "lineNumber": 178,
+        "author": {
+          "gitId": "Christopher-LM"
+        },
+        "content": "        }"
+      },
+      {
+        "lineNumber": 179,
+        "author": {
+          "gitId": "Christopher-LM"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 180,
+        "author": {
+          "gitId": "Christopher-LM"
+        },
+        "content": "        public Optional\u003cCalendarTime\u003e getCalendarTime() {"
+      },
+      {
+        "lineNumber": 181,
+        "author": {
+          "gitId": "Christopher-LM"
+        },
+        "content": "            return Optional.ofNullable(time);"
+      },
+      {
+        "lineNumber": 182,
+        "author": {
+          "gitId": "Christopher-LM"
+        },
+        "content": "        }"
+      },
+      {
+        "lineNumber": 183,
+        "author": {
+          "gitId": "Christopher-LM"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 184,
+        "author": {
+          "gitId": "Christopher-LM"
+        },
+        "content": "        @Override"
+      },
+      {
+        "lineNumber": 185,
+        "author": {
+          "gitId": "Christopher-LM"
+        },
+        "content": "        public boolean equals(Object other) {"
+      },
+      {
+        "lineNumber": 186,
+        "author": {
+          "gitId": "Christopher-LM"
+        },
+        "content": "            // short circuit if same object"
+      },
+      {
+        "lineNumber": 187,
+        "author": {
+          "gitId": "Christopher-LM"
+        },
+        "content": "            if (other \u003d\u003d this) {"
+      },
+      {
+        "lineNumber": 188,
+        "author": {
+          "gitId": "Christopher-LM"
+        },
+        "content": "                return true;"
+      },
+      {
+        "lineNumber": 189,
+        "author": {
+          "gitId": "Christopher-LM"
+        },
+        "content": "            }"
+      },
+      {
+        "lineNumber": 190,
+        "author": {
+          "gitId": "Christopher-LM"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 191,
+        "author": {
+          "gitId": "Christopher-LM"
+        },
+        "content": "            // instanceof handles nulls"
+      },
+      {
+        "lineNumber": 192,
+        "author": {
+          "gitId": "Christopher-LM"
+        },
+        "content": "            if (!(other instanceof EditMeetingDescriptor)) {"
+      },
+      {
+        "lineNumber": 193,
+        "author": {
+          "gitId": "Christopher-LM"
+        },
+        "content": "                return false;"
+      },
+      {
+        "lineNumber": 194,
+        "author": {
+          "gitId": "Christopher-LM"
+        },
+        "content": "            }"
+      },
+      {
+        "lineNumber": 195,
+        "author": {
+          "gitId": "Christopher-LM"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 196,
+        "author": {
+          "gitId": "Christopher-LM"
+        },
+        "content": "            // state check"
+      },
+      {
+        "lineNumber": 197,
+        "author": {
+          "gitId": "Christopher-LM"
+        },
+        "content": "            EditMeetingDescriptor e \u003d (EditMeetingDescriptor) other;"
+      },
+      {
+        "lineNumber": 198,
+        "author": {
+          "gitId": "Christopher-LM"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 199,
+        "author": {
+          "gitId": "Christopher-LM"
+        },
+        "content": "            return getCalendarBidderId().equals(e.getCalendarBidderId())"
+      },
+      {
+        "lineNumber": 200,
+        "author": {
+          "gitId": "Christopher-LM"
+        },
+        "content": "                    \u0026\u0026 getCalendarPropertyId().equals(e.getCalendarPropertyId())"
+      },
+      {
+        "lineNumber": 201,
+        "author": {
+          "gitId": "Christopher-LM"
+        },
+        "content": "                    \u0026\u0026 getCalendarVenue().equals(e.getCalendarVenue())"
+      },
+      {
+        "lineNumber": 202,
+        "author": {
+          "gitId": "Christopher-LM"
+        },
+        "content": "                    \u0026\u0026 getCalendarTime().equals(e.getCalendarTime());"
+      },
+      {
+        "lineNumber": 203,
+        "author": {
+          "gitId": "Christopher-LM"
+        },
+        "content": "        }"
+      },
+      {
+        "lineNumber": 204,
+        "author": {
+          "gitId": "Christopher-LM"
+        },
+        "content": "    }"
+      },
+      {
+        "lineNumber": 205,
+        "author": {
+          "gitId": "Christopher-LM"
+        },
+        "content": "}"
+      }
+    ],
+    "authorContributionMap": {
+      "Christopher-LM": 204,
+      "munharsha": 1
+    }
+  },
+  {
     "path": "src/main/java/seedu/address/logic/commands/EntityType.java",
     "fileType": "functional-code",
     "lines": [
@@ -20740,6 +22200,603 @@
     ],
     "authorContributionMap": {
       "kormingsoon": 5
+    }
+  },
+  {
+    "path": "src/main/java/seedu/address/logic/commands/FindMeetingCommand.java",
+    "fileType": "functional-code",
+    "lines": [
+      {
+        "lineNumber": 1,
+        "author": {
+          "gitId": "munharsha"
+        },
+        "content": "package seedu.address.logic.commands;"
+      },
+      {
+        "lineNumber": 2,
+        "author": {
+          "gitId": "munharsha"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 3,
+        "author": {
+          "gitId": "munharsha"
+        },
+        "content": "import static java.util.Objects.requireNonNull;"
+      },
+      {
+        "lineNumber": 4,
+        "author": {
+          "gitId": "munharsha"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 5,
+        "author": {
+          "gitId": "munharsha"
+        },
+        "content": "import seedu.address.commons.core.Messages;"
+      },
+      {
+        "lineNumber": 6,
+        "author": {
+          "gitId": "munharsha"
+        },
+        "content": "import seedu.address.model.Model;"
+      },
+      {
+        "lineNumber": 7,
+        "author": {
+          "gitId": "munharsha"
+        },
+        "content": "import seedu.address.model.calendar.BidderIdContainsKeywordsPredicate;"
+      },
+      {
+        "lineNumber": 8,
+        "author": {
+          "gitId": "munharsha"
+        },
+        "content": "import seedu.address.model.calendar.PropertyIdContainsKeywordsPredicate;"
+      },
+      {
+        "lineNumber": 9,
+        "author": {
+          "gitId": "munharsha"
+        },
+        "content": "import seedu.address.model.calendar.TimeContainsKeywordsPredicate;"
+      },
+      {
+        "lineNumber": 10,
+        "author": {
+          "gitId": "munharsha"
+        },
+        "content": "import seedu.address.model.calendar.VenueContainsKeywordsPredicate;"
+      },
+      {
+        "lineNumber": 11,
+        "author": {
+          "gitId": "munharsha"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 12,
+        "author": {
+          "gitId": "munharsha"
+        },
+        "content": "/**"
+      },
+      {
+        "lineNumber": 13,
+        "author": {
+          "gitId": "munharsha"
+        },
+        "content": " * Finds and lists all meetings in meeting book whose name contains any of the argument keywords."
+      },
+      {
+        "lineNumber": 14,
+        "author": {
+          "gitId": "munharsha"
+        },
+        "content": " * Keyword matching is case insensitive."
+      },
+      {
+        "lineNumber": 15,
+        "author": {
+          "gitId": "munharsha"
+        },
+        "content": " */"
+      },
+      {
+        "lineNumber": 16,
+        "author": {
+          "gitId": "munharsha"
+        },
+        "content": "public class FindMeetingCommand extends Command {"
+      },
+      {
+        "lineNumber": 17,
+        "author": {
+          "gitId": "munharsha"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 18,
+        "author": {
+          "gitId": "munharsha"
+        },
+        "content": "    public static final String COMMAND_WORD \u003d \"find-m\";"
+      },
+      {
+        "lineNumber": 19,
+        "author": {
+          "gitId": "munharsha"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 20,
+        "author": {
+          "gitId": "munharsha"
+        },
+        "content": "    public static final String MESSAGE_USAGE \u003d COMMAND_WORD + \": Finds all meetings whose venues contain any of \""
+      },
+      {
+        "lineNumber": 21,
+        "author": {
+          "gitId": "munharsha"
+        },
+        "content": "            + \"the specified keywords (case-insensitive) and displays them as a list with index numbers.\\n\""
+      },
+      {
+        "lineNumber": 22,
+        "author": {
+          "gitId": "munharsha"
+        },
+        "content": "            + \"Parameters: \u003c/v /b /p /t\u003e [MORE_KEYWORDS]...\\n\""
+      },
+      {
+        "lineNumber": 23,
+        "author": {
+          "gitId": "munharsha"
+        },
+        "content": "            + \"Example: \" + COMMAND_WORD + \"/v bedok\\n\""
+      },
+      {
+        "lineNumber": 24,
+        "author": {
+          "gitId": "munharsha"
+        },
+        "content": "            + \"Example: \" + COMMAND_WORD + \"/t 2300hrs\\n\""
+      },
+      {
+        "lineNumber": 25,
+        "author": {
+          "gitId": "munharsha"
+        },
+        "content": "            + \"Example: \" + COMMAND_WORD + \"/b b10\\n\""
+      },
+      {
+        "lineNumber": 26,
+        "author": {
+          "gitId": "munharsha"
+        },
+        "content": "            + \"Example: \" + COMMAND_WORD + \"/p p10\\n\";"
+      },
+      {
+        "lineNumber": 27,
+        "author": {
+          "gitId": "munharsha"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 28,
+        "author": {
+          "gitId": "munharsha"
+        },
+        "content": "    private final VenueContainsKeywordsPredicate venuePredicate;"
+      },
+      {
+        "lineNumber": 29,
+        "author": {
+          "gitId": "munharsha"
+        },
+        "content": "    private final TimeContainsKeywordsPredicate timePredicate;"
+      },
+      {
+        "lineNumber": 30,
+        "author": {
+          "gitId": "munharsha"
+        },
+        "content": "    private final BidderIdContainsKeywordsPredicate bidderIdPredicate;"
+      },
+      {
+        "lineNumber": 31,
+        "author": {
+          "gitId": "munharsha"
+        },
+        "content": "    private final PropertyIdContainsKeywordsPredicate propertyIdPredicate;"
+      },
+      {
+        "lineNumber": 32,
+        "author": {
+          "gitId": "munharsha"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 33,
+        "author": {
+          "gitId": "munharsha"
+        },
+        "content": "    /**"
+      },
+      {
+        "lineNumber": 34,
+        "author": {
+          "gitId": "munharsha"
+        },
+        "content": "     * Finds and lists all meetings in meeting book whose name contains any of the argument keywords."
+      },
+      {
+        "lineNumber": 35,
+        "author": {
+          "gitId": "munharsha"
+        },
+        "content": "     * Keyword matching is case insensitive."
+      },
+      {
+        "lineNumber": 36,
+        "author": {
+          "gitId": "munharsha"
+        },
+        "content": "     */"
+      },
+      {
+        "lineNumber": 37,
+        "author": {
+          "gitId": "munharsha"
+        },
+        "content": "    public FindMeetingCommand(VenueContainsKeywordsPredicate venuePredicate,"
+      },
+      {
+        "lineNumber": 38,
+        "author": {
+          "gitId": "munharsha"
+        },
+        "content": "                              TimeContainsKeywordsPredicate timePredicate,"
+      },
+      {
+        "lineNumber": 39,
+        "author": {
+          "gitId": "munharsha"
+        },
+        "content": "                              BidderIdContainsKeywordsPredicate bidderIdPredicate,"
+      },
+      {
+        "lineNumber": 40,
+        "author": {
+          "gitId": "munharsha"
+        },
+        "content": "                              PropertyIdContainsKeywordsPredicate propertyIdPredicate) {"
+      },
+      {
+        "lineNumber": 41,
+        "author": {
+          "gitId": "munharsha"
+        },
+        "content": "        this.venuePredicate \u003d venuePredicate;"
+      },
+      {
+        "lineNumber": 42,
+        "author": {
+          "gitId": "munharsha"
+        },
+        "content": "        this.timePredicate \u003d timePredicate;"
+      },
+      {
+        "lineNumber": 43,
+        "author": {
+          "gitId": "munharsha"
+        },
+        "content": "        this.bidderIdPredicate \u003d bidderIdPredicate;"
+      },
+      {
+        "lineNumber": 44,
+        "author": {
+          "gitId": "munharsha"
+        },
+        "content": "        this.propertyIdPredicate \u003d propertyIdPredicate;"
+      },
+      {
+        "lineNumber": 45,
+        "author": {
+          "gitId": "munharsha"
+        },
+        "content": "    }"
+      },
+      {
+        "lineNumber": 46,
+        "author": {
+          "gitId": "munharsha"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 47,
+        "author": {
+          "gitId": "munharsha"
+        },
+        "content": "    @Override"
+      },
+      {
+        "lineNumber": 48,
+        "author": {
+          "gitId": "munharsha"
+        },
+        "content": "    public CommandResult execute(Model model) {"
+      },
+      {
+        "lineNumber": 49,
+        "author": {
+          "gitId": "munharsha"
+        },
+        "content": "        requireNonNull(model);"
+      },
+      {
+        "lineNumber": 50,
+        "author": {
+          "gitId": "munharsha"
+        },
+        "content": "        if (venuePredicate !\u003d null) {"
+      },
+      {
+        "lineNumber": 51,
+        "author": {
+          "gitId": "munharsha"
+        },
+        "content": "            model.updateFilteredMeetingList(venuePredicate);"
+      },
+      {
+        "lineNumber": 52,
+        "author": {
+          "gitId": "munharsha"
+        },
+        "content": "            return new CommandResult("
+      },
+      {
+        "lineNumber": 53,
+        "author": {
+          "gitId": "munharsha"
+        },
+        "content": "                    String.format(Messages.MESSAGE_MEETINGS_LISTED_OVERVIEW,"
+      },
+      {
+        "lineNumber": 54,
+        "author": {
+          "gitId": "munharsha"
+        },
+        "content": "                            model.getFilteredMeetingList().size())).setEntity(EntityType.MEETING);"
+      },
+      {
+        "lineNumber": 55,
+        "author": {
+          "gitId": "munharsha"
+        },
+        "content": "        } else if (timePredicate !\u003d null) {"
+      },
+      {
+        "lineNumber": 56,
+        "author": {
+          "gitId": "munharsha"
+        },
+        "content": "            model.updateFilteredMeetingList(timePredicate);"
+      },
+      {
+        "lineNumber": 57,
+        "author": {
+          "gitId": "munharsha"
+        },
+        "content": "            return new CommandResult("
+      },
+      {
+        "lineNumber": 58,
+        "author": {
+          "gitId": "munharsha"
+        },
+        "content": "                    String.format(Messages.MESSAGE_MEETINGS_LISTED_OVERVIEW,"
+      },
+      {
+        "lineNumber": 59,
+        "author": {
+          "gitId": "munharsha"
+        },
+        "content": "                            model.getFilteredMeetingList().size())).setEntity(EntityType.MEETING);"
+      },
+      {
+        "lineNumber": 60,
+        "author": {
+          "gitId": "munharsha"
+        },
+        "content": "        } else if (bidderIdPredicate !\u003d null) {"
+      },
+      {
+        "lineNumber": 61,
+        "author": {
+          "gitId": "munharsha"
+        },
+        "content": "            model.updateFilteredMeetingList(bidderIdPredicate);"
+      },
+      {
+        "lineNumber": 62,
+        "author": {
+          "gitId": "munharsha"
+        },
+        "content": "            return new CommandResult("
+      },
+      {
+        "lineNumber": 63,
+        "author": {
+          "gitId": "munharsha"
+        },
+        "content": "                    String.format(Messages.MESSAGE_MEETINGS_LISTED_OVERVIEW,"
+      },
+      {
+        "lineNumber": 64,
+        "author": {
+          "gitId": "munharsha"
+        },
+        "content": "                            model.getFilteredMeetingList().size())).setEntity(EntityType.MEETING);"
+      },
+      {
+        "lineNumber": 65,
+        "author": {
+          "gitId": "munharsha"
+        },
+        "content": "        } else if (propertyIdPredicate !\u003d null) {"
+      },
+      {
+        "lineNumber": 66,
+        "author": {
+          "gitId": "munharsha"
+        },
+        "content": "            model.updateFilteredMeetingList(propertyIdPredicate);"
+      },
+      {
+        "lineNumber": 67,
+        "author": {
+          "gitId": "munharsha"
+        },
+        "content": "            return new CommandResult("
+      },
+      {
+        "lineNumber": 68,
+        "author": {
+          "gitId": "munharsha"
+        },
+        "content": "                    String.format(Messages.MESSAGE_MEETINGS_LISTED_OVERVIEW,"
+      },
+      {
+        "lineNumber": 69,
+        "author": {
+          "gitId": "munharsha"
+        },
+        "content": "                            model.getFilteredMeetingList().size())).setEntity(EntityType.MEETING);"
+      },
+      {
+        "lineNumber": 70,
+        "author": {
+          "gitId": "munharsha"
+        },
+        "content": "        } else {"
+      },
+      {
+        "lineNumber": 71,
+        "author": {
+          "gitId": "munharsha"
+        },
+        "content": "            return null;"
+      },
+      {
+        "lineNumber": 72,
+        "author": {
+          "gitId": "munharsha"
+        },
+        "content": "        }"
+      },
+      {
+        "lineNumber": 73,
+        "author": {
+          "gitId": "munharsha"
+        },
+        "content": "    }"
+      },
+      {
+        "lineNumber": 74,
+        "author": {
+          "gitId": "munharsha"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 75,
+        "author": {
+          "gitId": "munharsha"
+        },
+        "content": "    @Override"
+      },
+      {
+        "lineNumber": 76,
+        "author": {
+          "gitId": "munharsha"
+        },
+        "content": "    public boolean equals(Object other) {"
+      },
+      {
+        "lineNumber": 77,
+        "author": {
+          "gitId": "munharsha"
+        },
+        "content": "        return other \u003d\u003d this // short circuit if same object"
+      },
+      {
+        "lineNumber": 78,
+        "author": {
+          "gitId": "munharsha"
+        },
+        "content": "                || (other instanceof FindMeetingCommand // instanceof handles nulls"
+      },
+      {
+        "lineNumber": 79,
+        "author": {
+          "gitId": "munharsha"
+        },
+        "content": "                \u0026\u0026 venuePredicate.equals(((FindMeetingCommand) other).venuePredicate)"
+      },
+      {
+        "lineNumber": 80,
+        "author": {
+          "gitId": "munharsha"
+        },
+        "content": "                \u0026\u0026 timePredicate.equals(((FindMeetingCommand) other).timePredicate)"
+      },
+      {
+        "lineNumber": 81,
+        "author": {
+          "gitId": "munharsha"
+        },
+        "content": "                \u0026\u0026 bidderIdPredicate.equals(((FindMeetingCommand) other).bidderIdPredicate)"
+      },
+      {
+        "lineNumber": 82,
+        "author": {
+          "gitId": "munharsha"
+        },
+        "content": "                \u0026\u0026 propertyIdPredicate.equals(((FindMeetingCommand) other).propertyIdPredicate)); // state check"
+      },
+      {
+        "lineNumber": 83,
+        "author": {
+          "gitId": "munharsha"
+        },
+        "content": "    }"
+      },
+      {
+        "lineNumber": 84,
+        "author": {
+          "gitId": "munharsha"
+        },
+        "content": "}"
+      }
+    ],
+    "authorContributionMap": {
+      "munharsha": 84
     }
   },
   {
@@ -20833,9 +22890,9 @@
       {
         "lineNumber": 13,
         "author": {
-          "gitId": "Christopher-LM"
+          "gitId": "munharsha"
         },
-        "content": "    public static final String COMMAND_WORD \u003d \"list\";"
+        "content": "    public static final String COMMAND_WORD \u003d \"list-m\";"
       },
       {
         "lineNumber": 14,
@@ -20910,149 +22967,8 @@
     ],
     "authorContributionMap": {
       "kormingsoon": 1,
-      "Christopher-LM": 22
-    }
-  },
-  {
-    "path": "src/main/java/seedu/address/logic/commands/ViewCalendarCommand.java",
-    "fileType": "functional-code",
-    "lines": [
-      {
-        "lineNumber": 1,
-        "author": {
-          "gitId": "Christopher-LM"
-        },
-        "content": "package seedu.address.logic.commands;"
-      },
-      {
-        "lineNumber": 2,
-        "author": {
-          "gitId": "Christopher-LM"
-        },
-        "content": ""
-      },
-      {
-        "lineNumber": 3,
-        "author": {
-          "gitId": "Christopher-LM"
-        },
-        "content": "import seedu.address.logic.commands.exceptions.CommandException;"
-      },
-      {
-        "lineNumber": 4,
-        "author": {
-          "gitId": "Christopher-LM"
-        },
-        "content": "import seedu.address.model.Model;"
-      },
-      {
-        "lineNumber": 5,
-        "author": {
-          "gitId": "Christopher-LM"
-        },
-        "content": ""
-      },
-      {
-        "lineNumber": 6,
-        "author": {
-          "gitId": "Christopher-LM"
-        },
-        "content": "/**"
-      },
-      {
-        "lineNumber": 7,
-        "author": {
-          "gitId": "Christopher-LM"
-        },
-        "content": " * Views the list of meetings in the calendar."
-      },
-      {
-        "lineNumber": 8,
-        "author": {
-          "gitId": "Christopher-LM"
-        },
-        "content": " */"
-      },
-      {
-        "lineNumber": 9,
-        "author": {
-          "gitId": "Christopher-LM"
-        },
-        "content": "public class ViewCalendarCommand extends Command {"
-      },
-      {
-        "lineNumber": 10,
-        "author": {
-          "gitId": "Christopher-LM"
-        },
-        "content": ""
-      },
-      {
-        "lineNumber": 11,
-        "author": {
-          "gitId": "Christopher-LM"
-        },
-        "content": "    public static final String COMMAND_WORD \u003d \"view\";"
-      },
-      {
-        "lineNumber": 12,
-        "author": {
-          "gitId": "Christopher-LM"
-        },
-        "content": ""
-      },
-      {
-        "lineNumber": 13,
-        "author": {
-          "gitId": "Christopher-LM"
-        },
-        "content": "    public static final String MESSAGE_SUCCESS \u003d \"Viewed all meetings\";"
-      },
-      {
-        "lineNumber": 14,
-        "author": {
-          "gitId": "Christopher-LM"
-        },
-        "content": ""
-      },
-      {
-        "lineNumber": 15,
-        "author": {
-          "gitId": "Christopher-LM"
-        },
-        "content": "    @Override"
-      },
-      {
-        "lineNumber": 16,
-        "author": {
-          "gitId": "Christopher-LM"
-        },
-        "content": "    public CommandResult execute(Model model) throws CommandException {"
-      },
-      {
-        "lineNumber": 17,
-        "author": {
-          "gitId": "Christopher-LM"
-        },
-        "content": "        return null;"
-      },
-      {
-        "lineNumber": 18,
-        "author": {
-          "gitId": "Christopher-LM"
-        },
-        "content": "    }"
-      },
-      {
-        "lineNumber": 19,
-        "author": {
-          "gitId": "Christopher-LM"
-        },
-        "content": "}"
-      }
-    ],
-    "authorContributionMap": {
-      "Christopher-LM": 19
+      "Christopher-LM": 21,
+      "munharsha": 1
     }
   },
   {
@@ -31832,471 +33748,471 @@
       {
         "lineNumber": 16,
         "author": {
-          "gitId": "-"
+          "gitId": "Christopher-LM"
         },
-        "content": "import seedu.address.logic.commands.ExitCommand;"
+        "content": "import seedu.address.logic.commands.EditMeetingCommand;"
       },
       {
         "lineNumber": 17,
         "author": {
           "gitId": "-"
         },
-        "content": "import seedu.address.logic.commands.FindCommand;"
+        "content": "import seedu.address.logic.commands.ExitCommand;"
       },
       {
         "lineNumber": 18,
         "author": {
           "gitId": "-"
         },
-        "content": "import seedu.address.logic.commands.HelpCommand;"
+        "content": "import seedu.address.logic.commands.FindCommand;"
       },
       {
         "lineNumber": 19,
+        "author": {
+          "gitId": "munharsha"
+        },
+        "content": "import seedu.address.logic.commands.FindMeetingCommand;"
+      },
+      {
+        "lineNumber": 20,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "import seedu.address.logic.commands.HelpCommand;"
+      },
+      {
+        "lineNumber": 21,
         "author": {
           "gitId": "-"
         },
         "content": "import seedu.address.logic.commands.ListCommand;"
       },
       {
-        "lineNumber": 20,
-        "author": {
-          "gitId": "Marcon2509"
-        },
-        "content": "import seedu.address.logic.commands.bidcommands.AddBidCommand;"
-      },
-      {
-        "lineNumber": 21,
-        "author": {
-          "gitId": "Marcon2509"
-        },
-        "content": "import seedu.address.logic.commands.bidcommands.DeleteBidCommand;"
-      },
-      {
         "lineNumber": 22,
         "author": {
-          "gitId": "Marcon2509"
+          "gitId": "munharsha"
         },
-        "content": "import seedu.address.logic.commands.bidcommands.EditBidCommand;"
+        "content": "import seedu.address.logic.commands.ListMeetingCommand;"
       },
       {
         "lineNumber": 23,
         "author": {
           "gitId": "Marcon2509"
         },
-        "content": "import seedu.address.logic.commands.bidcommands.FindBidCommand;"
+        "content": "import seedu.address.logic.commands.bidcommands.AddBidCommand;"
       },
       {
         "lineNumber": 24,
         "author": {
           "gitId": "Marcon2509"
         },
-        "content": "import seedu.address.logic.commands.bidcommands.ListBidCommand;"
+        "content": "import seedu.address.logic.commands.bidcommands.DeleteBidCommand;"
       },
       {
         "lineNumber": 25,
         "author": {
-          "gitId": "kormingsoon"
+          "gitId": "Marcon2509"
         },
-        "content": "import seedu.address.logic.commands.biddercommands.AddBidderCommand;"
+        "content": "import seedu.address.logic.commands.bidcommands.EditBidCommand;"
       },
       {
         "lineNumber": 26,
         "author": {
-          "gitId": "kormingsoon"
+          "gitId": "Marcon2509"
         },
-        "content": "import seedu.address.logic.commands.biddercommands.DeleteBidderCommand;"
+        "content": "import seedu.address.logic.commands.bidcommands.FindBidCommand;"
       },
       {
         "lineNumber": 27,
         "author": {
-          "gitId": "kormingsoon"
+          "gitId": "Marcon2509"
         },
-        "content": "import seedu.address.logic.commands.biddercommands.EditBidderCommand;"
+        "content": "import seedu.address.logic.commands.bidcommands.ListBidCommand;"
       },
       {
         "lineNumber": 28,
         "author": {
           "gitId": "kormingsoon"
         },
-        "content": "import seedu.address.logic.commands.biddercommands.FindBidderCommand;"
+        "content": "import seedu.address.logic.commands.biddercommands.AddBidderCommand;"
       },
       {
         "lineNumber": 29,
         "author": {
           "gitId": "kormingsoon"
         },
-        "content": "import seedu.address.logic.commands.biddercommands.ListBidderCommand;"
+        "content": "import seedu.address.logic.commands.biddercommands.DeleteBidderCommand;"
       },
       {
         "lineNumber": 30,
         "author": {
           "gitId": "kormingsoon"
         },
-        "content": "import seedu.address.logic.commands.property.AddPropertyCommand;"
+        "content": "import seedu.address.logic.commands.biddercommands.EditBidderCommand;"
       },
       {
         "lineNumber": 31,
         "author": {
-          "gitId": "dianneloh9"
+          "gitId": "kormingsoon"
         },
-        "content": "import seedu.address.logic.commands.property.DeletePropertyCommand;"
+        "content": "import seedu.address.logic.commands.biddercommands.FindBidderCommand;"
       },
       {
         "lineNumber": 32,
         "author": {
-          "gitId": "dianneloh9"
+          "gitId": "kormingsoon"
         },
-        "content": "import seedu.address.logic.commands.property.ListPropertyCommand;"
+        "content": "import seedu.address.logic.commands.biddercommands.ListBidderCommand;"
       },
       {
         "lineNumber": 33,
         "author": {
           "gitId": "kormingsoon"
         },
-        "content": "import seedu.address.logic.commands.sellercommands.AddSellerCommand;"
+        "content": "import seedu.address.logic.commands.property.AddPropertyCommand;"
       },
       {
         "lineNumber": 34,
         "author": {
-          "gitId": "kormingsoon"
+          "gitId": "dianneloh9"
         },
-        "content": "import seedu.address.logic.commands.sellercommands.DeleteSellerCommand;"
+        "content": "import seedu.address.logic.commands.property.DeletePropertyCommand;"
       },
       {
         "lineNumber": 35,
         "author": {
-          "gitId": "kormingsoon"
+          "gitId": "dianneloh9"
         },
-        "content": "import seedu.address.logic.commands.sellercommands.EditSellerCommand;"
+        "content": "import seedu.address.logic.commands.property.ListPropertyCommand;"
       },
       {
         "lineNumber": 36,
         "author": {
           "gitId": "kormingsoon"
         },
-        "content": "import seedu.address.logic.commands.sellercommands.FindSellerCommand;"
+        "content": "import seedu.address.logic.commands.sellercommands.AddSellerCommand;"
       },
       {
         "lineNumber": 37,
         "author": {
           "gitId": "kormingsoon"
         },
-        "content": "import seedu.address.logic.commands.sellercommands.ListSellerCommand;"
+        "content": "import seedu.address.logic.commands.sellercommands.DeleteSellerCommand;"
       },
       {
         "lineNumber": 38,
         "author": {
           "gitId": "kormingsoon"
         },
-        "content": "import seedu.address.logic.parser.bidderparser.AddBidderCommandParser;"
+        "content": "import seedu.address.logic.commands.sellercommands.EditSellerCommand;"
       },
       {
         "lineNumber": 39,
         "author": {
           "gitId": "kormingsoon"
         },
-        "content": "import seedu.address.logic.parser.bidderparser.DeleteBidderCommandParser;"
+        "content": "import seedu.address.logic.commands.sellercommands.FindSellerCommand;"
       },
       {
         "lineNumber": 40,
         "author": {
           "gitId": "kormingsoon"
         },
-        "content": "import seedu.address.logic.parser.bidderparser.EditBidderCommandParser;"
+        "content": "import seedu.address.logic.commands.sellercommands.ListSellerCommand;"
       },
       {
         "lineNumber": 41,
         "author": {
           "gitId": "kormingsoon"
         },
-        "content": "import seedu.address.logic.parser.bidderparser.FindBidderCommandParser;"
+        "content": "import seedu.address.logic.parser.bidderparser.AddBidderCommandParser;"
       },
       {
         "lineNumber": 42,
         "author": {
-          "gitId": "Marcon2509"
+          "gitId": "kormingsoon"
         },
-        "content": "import seedu.address.logic.parser.bidparser.AddBidCommandParser;"
+        "content": "import seedu.address.logic.parser.bidderparser.DeleteBidderCommandParser;"
       },
       {
         "lineNumber": 43,
         "author": {
-          "gitId": "Marcon2509"
+          "gitId": "kormingsoon"
         },
-        "content": "import seedu.address.logic.parser.bidparser.DeleteBidCommandParser;"
+        "content": "import seedu.address.logic.parser.bidderparser.EditBidderCommandParser;"
       },
       {
         "lineNumber": 44,
         "author": {
-          "gitId": "Marcon2509"
+          "gitId": "kormingsoon"
         },
-        "content": "import seedu.address.logic.parser.bidparser.EditBidCommandParser;"
+        "content": "import seedu.address.logic.parser.bidderparser.FindBidderCommandParser;"
       },
       {
         "lineNumber": 45,
         "author": {
           "gitId": "Marcon2509"
         },
-        "content": "import seedu.address.logic.parser.bidparser.FindBidCommandParser;"
+        "content": "import seedu.address.logic.parser.bidparser.AddBidCommandParser;"
       },
       {
         "lineNumber": 46,
+        "author": {
+          "gitId": "Marcon2509"
+        },
+        "content": "import seedu.address.logic.parser.bidparser.DeleteBidCommandParser;"
+      },
+      {
+        "lineNumber": 47,
+        "author": {
+          "gitId": "Marcon2509"
+        },
+        "content": "import seedu.address.logic.parser.bidparser.EditBidCommandParser;"
+      },
+      {
+        "lineNumber": 48,
+        "author": {
+          "gitId": "Marcon2509"
+        },
+        "content": "import seedu.address.logic.parser.bidparser.FindBidCommandParser;"
+      },
+      {
+        "lineNumber": 49,
         "author": {
           "gitId": "-"
         },
         "content": "import seedu.address.logic.parser.exceptions.ParseException;"
       },
       {
-        "lineNumber": 47,
+        "lineNumber": 50,
         "author": {
           "gitId": "kormingsoon"
         },
         "content": "import seedu.address.logic.parser.property.AddPropertyCommandParser;"
       },
       {
-        "lineNumber": 48,
+        "lineNumber": 51,
         "author": {
           "gitId": "dianneloh9"
         },
         "content": "import seedu.address.logic.parser.property.DeletePropertyCommandParser;"
       },
       {
-        "lineNumber": 49,
+        "lineNumber": 52,
         "author": {
           "gitId": "kormingsoon"
         },
         "content": "import seedu.address.logic.parser.sellerparser.AddSellerCommandParser;"
       },
       {
-        "lineNumber": 50,
+        "lineNumber": 53,
         "author": {
           "gitId": "kormingsoon"
         },
         "content": "import seedu.address.logic.parser.sellerparser.DeleteSellerCommandParser;"
       },
       {
-        "lineNumber": 51,
+        "lineNumber": 54,
         "author": {
           "gitId": "kormingsoon"
         },
         "content": "import seedu.address.logic.parser.sellerparser.EditSellerCommandParser;"
       },
       {
-        "lineNumber": 52,
+        "lineNumber": 55,
         "author": {
           "gitId": "kormingsoon"
         },
         "content": "import seedu.address.logic.parser.sellerparser.FindSellerCommandParser;"
       },
       {
-        "lineNumber": 53,
-        "author": {
-          "gitId": "-"
-        },
-        "content": ""
-      },
-      {
-        "lineNumber": 54,
-        "author": {
-          "gitId": "-"
-        },
-        "content": "/**"
-      },
-      {
-        "lineNumber": 55,
-        "author": {
-          "gitId": "-"
-        },
-        "content": " * Parses user input."
-      },
-      {
         "lineNumber": 56,
         "author": {
           "gitId": "-"
         },
-        "content": " */"
+        "content": ""
       },
       {
         "lineNumber": 57,
         "author": {
           "gitId": "-"
         },
-        "content": "public class AddressBookParser {"
+        "content": "/**"
       },
       {
         "lineNumber": 58,
         "author": {
           "gitId": "-"
         },
-        "content": ""
+        "content": " * Parses user input."
       },
       {
         "lineNumber": 59,
         "author": {
           "gitId": "-"
         },
-        "content": "    /**"
+        "content": " */"
       },
       {
         "lineNumber": 60,
         "author": {
           "gitId": "-"
         },
-        "content": "     * Used for initial separation of command word and args."
+        "content": "public class AddressBookParser {"
       },
       {
         "lineNumber": 61,
         "author": {
           "gitId": "-"
         },
-        "content": "     */"
+        "content": ""
       },
       {
         "lineNumber": 62,
         "author": {
           "gitId": "-"
         },
-        "content": "    private static final Pattern BASIC_COMMAND_FORMAT \u003d Pattern.compile(\"(?\u003ccommandWord\u003e\\\\S+)(?\u003carguments\u003e.*)\");"
+        "content": "    /**"
       },
       {
         "lineNumber": 63,
         "author": {
           "gitId": "-"
         },
-        "content": ""
+        "content": "     * Used for initial separation of command word and args."
       },
       {
         "lineNumber": 64,
         "author": {
           "gitId": "-"
         },
-        "content": "    /**"
+        "content": "     */"
       },
       {
         "lineNumber": 65,
         "author": {
           "gitId": "-"
         },
-        "content": "     * Parses user input into command for execution."
+        "content": "    private static final Pattern BASIC_COMMAND_FORMAT \u003d Pattern.compile(\"(?\u003ccommandWord\u003e\\\\S+)(?\u003carguments\u003e.*)\");"
       },
       {
         "lineNumber": 66,
         "author": {
           "gitId": "-"
         },
-        "content": "     *"
+        "content": ""
       },
       {
         "lineNumber": 67,
         "author": {
           "gitId": "-"
         },
-        "content": "     * @param userInput full user input string"
+        "content": "    /**"
       },
       {
         "lineNumber": 68,
         "author": {
           "gitId": "-"
         },
-        "content": "     * @return the command based on the user input"
+        "content": "     * Parses user input into command for execution."
       },
       {
         "lineNumber": 69,
         "author": {
           "gitId": "-"
         },
-        "content": "     * @throws ParseException if the user input does not conform the expected format"
+        "content": "     *"
       },
       {
         "lineNumber": 70,
         "author": {
           "gitId": "-"
         },
-        "content": "     */"
+        "content": "     * @param userInput full user input string"
       },
       {
         "lineNumber": 71,
         "author": {
           "gitId": "-"
         },
-        "content": "    public Command parseCommand(String userInput) throws ParseException {"
+        "content": "     * @return the command based on the user input"
       },
       {
         "lineNumber": 72,
         "author": {
           "gitId": "-"
         },
-        "content": "        final Matcher matcher \u003d BASIC_COMMAND_FORMAT.matcher(userInput.trim());"
+        "content": "     * @throws ParseException if the user input does not conform the expected format"
       },
       {
         "lineNumber": 73,
         "author": {
           "gitId": "-"
         },
-        "content": "        if (!matcher.matches()) {"
+        "content": "     */"
       },
       {
         "lineNumber": 74,
         "author": {
           "gitId": "-"
         },
-        "content": "            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, HelpCommand.MESSAGE_USAGE));"
+        "content": "    public Command parseCommand(String userInput) throws ParseException {"
       },
       {
         "lineNumber": 75,
         "author": {
           "gitId": "-"
         },
-        "content": "        }"
+        "content": "        final Matcher matcher \u003d BASIC_COMMAND_FORMAT.matcher(userInput.trim());"
       },
       {
         "lineNumber": 76,
         "author": {
           "gitId": "-"
         },
-        "content": ""
+        "content": "        if (!matcher.matches()) {"
       },
       {
         "lineNumber": 77,
         "author": {
           "gitId": "-"
         },
-        "content": "        final String commandWord \u003d matcher.group(\"commandWord\");"
+        "content": "            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, HelpCommand.MESSAGE_USAGE));"
       },
       {
         "lineNumber": 78,
         "author": {
           "gitId": "-"
         },
-        "content": "        final String arguments \u003d matcher.group(\"arguments\");"
+        "content": "        }"
       },
       {
         "lineNumber": 79,
         "author": {
           "gitId": "-"
         },
-        "content": "        switch (commandWord) {"
+        "content": ""
       },
       {
         "lineNumber": 80,
         "author": {
           "gitId": "-"
         },
-        "content": ""
+        "content": "        final String commandWord \u003d matcher.group(\"commandWord\");"
       },
       {
         "lineNumber": 81,
         "author": {
           "gitId": "-"
         },
-        "content": "        case AddCommand.COMMAND_WORD:"
+        "content": "        final String arguments \u003d matcher.group(\"arguments\");"
       },
       {
         "lineNumber": 82,
         "author": {
           "gitId": "-"
         },
-        "content": "            return new AddCommandParser().parse(arguments);"
+        "content": "        switch (commandWord) {"
       },
       {
         "lineNumber": 83,
@@ -32310,14 +34226,14 @@
         "author": {
           "gitId": "-"
         },
-        "content": "        case EditCommand.COMMAND_WORD:"
+        "content": "        case AddCommand.COMMAND_WORD:"
       },
       {
         "lineNumber": 85,
         "author": {
           "gitId": "-"
         },
-        "content": "            return new EditCommandParser().parse(arguments);"
+        "content": "            return new AddCommandParser().parse(arguments);"
       },
       {
         "lineNumber": 86,
@@ -32331,14 +34247,14 @@
         "author": {
           "gitId": "-"
         },
-        "content": "        case DeleteCommand.COMMAND_WORD:"
+        "content": "        case EditCommand.COMMAND_WORD:"
       },
       {
         "lineNumber": 88,
         "author": {
           "gitId": "-"
         },
-        "content": "            return new DeleteCommandParser().parse(arguments);"
+        "content": "            return new EditCommandParser().parse(arguments);"
       },
       {
         "lineNumber": 89,
@@ -32352,14 +34268,14 @@
         "author": {
           "gitId": "-"
         },
-        "content": "        case ClearCommand.COMMAND_WORD:"
+        "content": "        case DeleteCommand.COMMAND_WORD:"
       },
       {
         "lineNumber": 91,
         "author": {
           "gitId": "-"
         },
-        "content": "            return new ClearCommand();"
+        "content": "            return new DeleteCommandParser().parse(arguments);"
       },
       {
         "lineNumber": 92,
@@ -32373,14 +34289,14 @@
         "author": {
           "gitId": "-"
         },
-        "content": "        case FindCommand.COMMAND_WORD:"
+        "content": "        case ClearCommand.COMMAND_WORD:"
       },
       {
         "lineNumber": 94,
         "author": {
           "gitId": "-"
         },
-        "content": "            return new FindCommandParser().parse(arguments);"
+        "content": "            return new ClearCommand();"
       },
       {
         "lineNumber": 95,
@@ -32394,14 +34310,14 @@
         "author": {
           "gitId": "-"
         },
-        "content": "        case ListCommand.COMMAND_WORD:"
+        "content": "        case FindCommand.COMMAND_WORD:"
       },
       {
         "lineNumber": 97,
         "author": {
           "gitId": "-"
         },
-        "content": "            return new ListCommand();"
+        "content": "            return new FindCommandParser().parse(arguments);"
       },
       {
         "lineNumber": 98,
@@ -32415,14 +34331,14 @@
         "author": {
           "gitId": "-"
         },
-        "content": "        case ExitCommand.COMMAND_WORD:"
+        "content": "        case ListCommand.COMMAND_WORD:"
       },
       {
         "lineNumber": 100,
         "author": {
           "gitId": "-"
         },
-        "content": "            return new ExitCommand();"
+        "content": "            return new ListCommand();"
       },
       {
         "lineNumber": 101,
@@ -32436,82 +34352,82 @@
         "author": {
           "gitId": "-"
         },
-        "content": "        case HelpCommand.COMMAND_WORD:"
+        "content": "        case ExitCommand.COMMAND_WORD:"
       },
       {
         "lineNumber": 103,
         "author": {
           "gitId": "-"
         },
-        "content": "            return new HelpCommand();"
+        "content": "            return new ExitCommand();"
       },
       {
         "lineNumber": 104,
         "author": {
-          "gitId": "Marcon2509"
+          "gitId": "-"
         },
-        "content": "        // -------------------- BID ------------------- //"
+        "content": ""
       },
       {
         "lineNumber": 105,
         "author": {
-          "gitId": "Marcon2509"
+          "gitId": "-"
         },
-        "content": "        case AddBidCommand.COMMAND_WORD:"
+        "content": "        case HelpCommand.COMMAND_WORD:"
       },
       {
         "lineNumber": 106,
         "author": {
-          "gitId": "Marcon2509"
+          "gitId": "-"
         },
-        "content": "            return new AddBidCommandParser().parse(arguments);"
+        "content": "            return new HelpCommand();"
       },
       {
         "lineNumber": 107,
         "author": {
           "gitId": "Marcon2509"
         },
-        "content": ""
+        "content": "        // -------------------- BID ------------------- //"
       },
       {
         "lineNumber": 108,
         "author": {
-          "gitId": "dianneloh9"
+          "gitId": "Marcon2509"
         },
-        "content": "        case ListBidCommand.COMMAND_WORD:"
+        "content": "        case AddBidCommand.COMMAND_WORD:"
       },
       {
         "lineNumber": 109,
         "author": {
-          "gitId": "dianneloh9"
+          "gitId": "Marcon2509"
         },
-        "content": "            return new ListBidCommand();"
+        "content": "            return new AddBidCommandParser().parse(arguments);"
       },
       {
         "lineNumber": 110,
         "author": {
-          "gitId": "dianneloh9"
+          "gitId": "Marcon2509"
         },
         "content": ""
       },
       {
         "lineNumber": 111,
         "author": {
-          "gitId": "Marcon2509"
+          "gitId": "dianneloh9"
         },
-        "content": "        case DeleteBidCommand.COMMAND_WORD:"
+        "content": "        case ListBidCommand.COMMAND_WORD:"
       },
       {
         "lineNumber": 112,
         "author": {
-          "gitId": "Marcon2509"
+          "gitId": "dianneloh9"
         },
-        "content": "            return new DeleteBidCommandParser().parse(arguments);"
+        "content": "            return new ListBidCommand();"
       },
       {
         "lineNumber": 113,
         "author": {
-          "gitId": "Marcon2509"
+          "gitId": "dianneloh9"
         },
         "content": ""
       },
@@ -32520,14 +34436,14 @@
         "author": {
           "gitId": "Marcon2509"
         },
-        "content": "        case EditBidCommand.COMMAND_WORD:"
+        "content": "        case DeleteBidCommand.COMMAND_WORD:"
       },
       {
         "lineNumber": 115,
         "author": {
           "gitId": "Marcon2509"
         },
-        "content": "            return new EditBidCommandParser().parse(arguments);"
+        "content": "            return new DeleteBidCommandParser().parse(arguments);"
       },
       {
         "lineNumber": 116,
@@ -32541,14 +34457,14 @@
         "author": {
           "gitId": "Marcon2509"
         },
-        "content": "        case FindBidCommand.COMMAND_WORD:"
+        "content": "        case EditBidCommand.COMMAND_WORD:"
       },
       {
         "lineNumber": 118,
         "author": {
           "gitId": "Marcon2509"
         },
-        "content": "            return new FindBidCommandParser().parse(arguments);"
+        "content": "            return new EditBidCommandParser().parse(arguments);"
       },
       {
         "lineNumber": 119,
@@ -32562,201 +34478,201 @@
         "author": {
           "gitId": "Marcon2509"
         },
-        "content": "        // -------------------- MEETING ------------------- //"
+        "content": "        case FindBidCommand.COMMAND_WORD:"
       },
       {
         "lineNumber": 121,
         "author": {
-          "gitId": "Christopher-LM"
+          "gitId": "Marcon2509"
         },
-        "content": "        case AddMeetingCommand.COMMAND_WORD:"
+        "content": "            return new FindBidCommandParser().parse(arguments);"
       },
       {
         "lineNumber": 122,
         "author": {
-          "gitId": "Christopher-LM"
+          "gitId": "Marcon2509"
         },
-        "content": "            return new AddMeetingCommandParser().parse(arguments);"
+        "content": ""
       },
       {
         "lineNumber": 123,
         "author": {
-          "gitId": "Christopher-LM"
+          "gitId": "Marcon2509"
         },
-        "content": ""
+        "content": "        // -------------------- MEETING ------------------- //"
       },
       {
         "lineNumber": 124,
         "author": {
           "gitId": "Christopher-LM"
         },
-        "content": "        case DeleteMeetingCommand.COMMAND_WORD:"
+        "content": "        case AddMeetingCommand.COMMAND_WORD:"
       },
       {
         "lineNumber": 125,
         "author": {
           "gitId": "Christopher-LM"
         },
-        "content": "            return new DeleteMeetingCommandParser().parse(arguments);"
+        "content": "            return new AddMeetingCommandParser().parse(arguments);"
       },
       {
         "lineNumber": 126,
         "author": {
-          "gitId": "Marcon2509"
+          "gitId": "Christopher-LM"
         },
-        "content": "        // -------------------- PROPERTY ------------------- //"
+        "content": ""
       },
       {
         "lineNumber": 127,
         "author": {
-          "gitId": "dianneloh9"
+          "gitId": "Christopher-LM"
         },
-        "content": "        case AddPropertyCommand.COMMAND_WORD:"
+        "content": "        case DeleteMeetingCommand.COMMAND_WORD:"
       },
       {
         "lineNumber": 128,
         "author": {
-          "gitId": "dianneloh9"
+          "gitId": "Christopher-LM"
         },
-        "content": "            return new AddPropertyCommandParser().parse(arguments);"
+        "content": "            return new DeleteMeetingCommandParser().parse(arguments);"
       },
       {
         "lineNumber": 129,
         "author": {
-          "gitId": "dianneloh9"
+          "gitId": "Christopher-LM"
         },
         "content": ""
       },
       {
         "lineNumber": 130,
         "author": {
-          "gitId": "dianneloh9"
+          "gitId": "Christopher-LM"
         },
-        "content": "        case DeletePropertyCommand.COMMAND_WORD:"
+        "content": "        case EditMeetingCommand.COMMAND_WORD:"
       },
       {
         "lineNumber": 131,
         "author": {
-          "gitId": "dianneloh9"
+          "gitId": "Christopher-LM"
         },
-        "content": "            return new DeletePropertyCommandParser().parse(arguments);"
+        "content": "            return new EditMeetingCommandParser().parse(arguments);"
       },
       {
         "lineNumber": 132,
         "author": {
-          "gitId": "dianneloh9"
+          "gitId": "Christopher-LM"
         },
         "content": ""
       },
       {
         "lineNumber": 133,
         "author": {
-          "gitId": "dianneloh9"
+          "gitId": "munharsha"
         },
-        "content": "        case ListPropertyCommand.COMMAND_WORD:"
+        "content": "        case ListMeetingCommand.COMMAND_WORD:"
       },
       {
         "lineNumber": 134,
         "author": {
-          "gitId": "dianneloh9"
+          "gitId": "munharsha"
         },
-        "content": "            return new ListPropertyCommand();"
+        "content": "            return new ListMeetingCommand();"
       },
       {
         "lineNumber": 135,
         "author": {
-          "gitId": "dianneloh9"
+          "gitId": "munharsha"
         },
         "content": ""
       },
       {
         "lineNumber": 136,
         "author": {
-          "gitId": "kormingsoon"
+          "gitId": "munharsha"
         },
-        "content": "        // -------------------- BIDDER ------------------- //"
+        "content": "        case FindMeetingCommand.COMMAND_WORD:"
       },
       {
         "lineNumber": 137,
         "author": {
-          "gitId": "kormingsoon"
+          "gitId": "munharsha"
         },
-        "content": "        case AddBidderCommand.COMMAND_WORD:"
+        "content": "            return new FindMeetingCommandParser().parse(arguments);"
       },
       {
         "lineNumber": 138,
         "author": {
-          "gitId": "kormingsoon"
-        },
-        "content": "            return new AddBidderCommandParser().parse(arguments);"
-      },
-      {
-        "lineNumber": 139,
-        "author": {
-          "gitId": "kormingsoon"
+          "gitId": "munharsha"
         },
         "content": ""
       },
       {
+        "lineNumber": 139,
+        "author": {
+          "gitId": "Marcon2509"
+        },
+        "content": "        // -------------------- PROPERTY ------------------- //"
+      },
+      {
         "lineNumber": 140,
         "author": {
-          "gitId": "kormingsoon"
+          "gitId": "dianneloh9"
         },
-        "content": "        case ListBidderCommand.COMMAND_WORD:"
+        "content": "        case AddPropertyCommand.COMMAND_WORD:"
       },
       {
         "lineNumber": 141,
         "author": {
-          "gitId": "kormingsoon"
+          "gitId": "dianneloh9"
         },
-        "content": "            return new ListBidderCommand();"
+        "content": "            return new AddPropertyCommandParser().parse(arguments);"
       },
       {
         "lineNumber": 142,
         "author": {
-          "gitId": "kormingsoon"
+          "gitId": "dianneloh9"
         },
         "content": ""
       },
       {
         "lineNumber": 143,
         "author": {
-          "gitId": "kormingsoon"
+          "gitId": "dianneloh9"
         },
-        "content": "        case DeleteBidderCommand.COMMAND_WORD:"
+        "content": "        case DeletePropertyCommand.COMMAND_WORD:"
       },
       {
         "lineNumber": 144,
         "author": {
-          "gitId": "kormingsoon"
+          "gitId": "dianneloh9"
         },
-        "content": "            return new DeleteBidderCommandParser().parse(arguments);"
+        "content": "            return new DeletePropertyCommandParser().parse(arguments);"
       },
       {
         "lineNumber": 145,
         "author": {
-          "gitId": "kormingsoon"
+          "gitId": "dianneloh9"
         },
         "content": ""
       },
       {
         "lineNumber": 146,
         "author": {
-          "gitId": "kormingsoon"
+          "gitId": "dianneloh9"
         },
-        "content": "        case FindBidderCommand.COMMAND_WORD:"
+        "content": "        case ListPropertyCommand.COMMAND_WORD:"
       },
       {
         "lineNumber": 147,
         "author": {
-          "gitId": "kormingsoon"
+          "gitId": "dianneloh9"
         },
-        "content": "            return new FindBidderCommandParser().parse(arguments);"
+        "content": "            return new ListPropertyCommand();"
       },
       {
         "lineNumber": 148,
         "author": {
-          "gitId": "kormingsoon"
+          "gitId": "dianneloh9"
         },
         "content": ""
       },
@@ -32765,178 +34681,269 @@
         "author": {
           "gitId": "kormingsoon"
         },
-        "content": "        case EditBidderCommand.COMMAND_WORD:"
+        "content": "        // -------------------- BIDDER ------------------- //"
       },
       {
         "lineNumber": 150,
         "author": {
           "gitId": "kormingsoon"
         },
-        "content": "            return new EditBidderCommandParser().parse(arguments);"
+        "content": "        case AddBidderCommand.COMMAND_WORD:"
       },
       {
         "lineNumber": 151,
         "author": {
           "gitId": "kormingsoon"
         },
-        "content": ""
+        "content": "            return new AddBidderCommandParser().parse(arguments);"
       },
       {
         "lineNumber": 152,
         "author": {
           "gitId": "kormingsoon"
         },
-        "content": "        // -------------------- SELLER ------------------- //"
+        "content": ""
       },
       {
         "lineNumber": 153,
         "author": {
           "gitId": "kormingsoon"
         },
-        "content": ""
+        "content": "        case ListBidderCommand.COMMAND_WORD:"
       },
       {
         "lineNumber": 154,
         "author": {
           "gitId": "kormingsoon"
         },
-        "content": "        case AddSellerCommand.COMMAND_WORD:"
+        "content": "            return new ListBidderCommand();"
       },
       {
         "lineNumber": 155,
         "author": {
           "gitId": "kormingsoon"
         },
-        "content": "            return new AddSellerCommandParser().parse(arguments);"
+        "content": ""
       },
       {
         "lineNumber": 156,
         "author": {
           "gitId": "kormingsoon"
         },
-        "content": ""
+        "content": "        case DeleteBidderCommand.COMMAND_WORD:"
       },
       {
         "lineNumber": 157,
         "author": {
           "gitId": "kormingsoon"
         },
-        "content": "        case ListSellerCommand.COMMAND_WORD:"
+        "content": "            return new DeleteBidderCommandParser().parse(arguments);"
       },
       {
         "lineNumber": 158,
         "author": {
           "gitId": "kormingsoon"
         },
-        "content": "            return new ListSellerCommand();"
+        "content": ""
       },
       {
         "lineNumber": 159,
         "author": {
           "gitId": "kormingsoon"
         },
-        "content": ""
+        "content": "        case FindBidderCommand.COMMAND_WORD:"
       },
       {
         "lineNumber": 160,
         "author": {
           "gitId": "kormingsoon"
         },
-        "content": "        case DeleteSellerCommand.COMMAND_WORD:"
+        "content": "            return new FindBidderCommandParser().parse(arguments);"
       },
       {
         "lineNumber": 161,
         "author": {
           "gitId": "kormingsoon"
         },
-        "content": "            return new DeleteSellerCommandParser().parse(arguments);"
+        "content": ""
       },
       {
         "lineNumber": 162,
         "author": {
           "gitId": "kormingsoon"
         },
-        "content": ""
+        "content": "        case EditBidderCommand.COMMAND_WORD:"
       },
       {
         "lineNumber": 163,
         "author": {
           "gitId": "kormingsoon"
         },
-        "content": "        case FindSellerCommand.COMMAND_WORD:"
+        "content": "            return new EditBidderCommandParser().parse(arguments);"
       },
       {
         "lineNumber": 164,
         "author": {
           "gitId": "kormingsoon"
         },
-        "content": "            return new FindSellerCommandParser().parse(arguments);"
+        "content": ""
       },
       {
         "lineNumber": 165,
         "author": {
           "gitId": "kormingsoon"
         },
-        "content": ""
+        "content": "        // -------------------- SELLER ------------------- //"
       },
       {
         "lineNumber": 166,
         "author": {
           "gitId": "kormingsoon"
         },
-        "content": "        case EditSellerCommand.COMMAND_WORD:"
+        "content": ""
       },
       {
         "lineNumber": 167,
         "author": {
           "gitId": "kormingsoon"
         },
-        "content": "            return new EditSellerCommandParser().parse(arguments);"
+        "content": "        case AddSellerCommand.COMMAND_WORD:"
       },
       {
         "lineNumber": 168,
+        "author": {
+          "gitId": "kormingsoon"
+        },
+        "content": "            return new AddSellerCommandParser().parse(arguments);"
+      },
+      {
+        "lineNumber": 169,
+        "author": {
+          "gitId": "kormingsoon"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 170,
+        "author": {
+          "gitId": "kormingsoon"
+        },
+        "content": "        case ListSellerCommand.COMMAND_WORD:"
+      },
+      {
+        "lineNumber": 171,
+        "author": {
+          "gitId": "kormingsoon"
+        },
+        "content": "            return new ListSellerCommand();"
+      },
+      {
+        "lineNumber": 172,
+        "author": {
+          "gitId": "kormingsoon"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 173,
+        "author": {
+          "gitId": "kormingsoon"
+        },
+        "content": "        case DeleteSellerCommand.COMMAND_WORD:"
+      },
+      {
+        "lineNumber": 174,
+        "author": {
+          "gitId": "kormingsoon"
+        },
+        "content": "            return new DeleteSellerCommandParser().parse(arguments);"
+      },
+      {
+        "lineNumber": 175,
+        "author": {
+          "gitId": "kormingsoon"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 176,
+        "author": {
+          "gitId": "kormingsoon"
+        },
+        "content": "        case FindSellerCommand.COMMAND_WORD:"
+      },
+      {
+        "lineNumber": 177,
+        "author": {
+          "gitId": "kormingsoon"
+        },
+        "content": "            return new FindSellerCommandParser().parse(arguments);"
+      },
+      {
+        "lineNumber": 178,
+        "author": {
+          "gitId": "kormingsoon"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 179,
+        "author": {
+          "gitId": "kormingsoon"
+        },
+        "content": "        case EditSellerCommand.COMMAND_WORD:"
+      },
+      {
+        "lineNumber": 180,
+        "author": {
+          "gitId": "kormingsoon"
+        },
+        "content": "            return new EditSellerCommandParser().parse(arguments);"
+      },
+      {
+        "lineNumber": 181,
         "author": {
           "gitId": "-"
         },
         "content": ""
       },
       {
-        "lineNumber": 169,
+        "lineNumber": 182,
         "author": {
           "gitId": "-"
         },
         "content": "        default:"
       },
       {
-        "lineNumber": 170,
+        "lineNumber": 183,
         "author": {
           "gitId": "-"
         },
         "content": "            throw new ParseException(MESSAGE_UNKNOWN_COMMAND);"
       },
       {
-        "lineNumber": 171,
+        "lineNumber": 184,
         "author": {
           "gitId": "-"
         },
         "content": "        }"
       },
       {
-        "lineNumber": 172,
+        "lineNumber": 185,
         "author": {
           "gitId": "-"
         },
         "content": "    }"
       },
       {
-        "lineNumber": 173,
+        "lineNumber": 186,
         "author": {
           "gitId": "-"
         },
         "content": ""
       },
       {
-        "lineNumber": 174,
+        "lineNumber": 187,
         "author": {
           "gitId": "-"
         },
@@ -32947,7 +34954,8 @@
       "Marcon2509": 24,
       "kormingsoon": 52,
       "dianneloh9": 15,
-      "Christopher-LM": 7,
+      "Christopher-LM": 12,
+      "munharsha": 8,
       "-": 76
     }
   },
@@ -34340,6 +36348,983 @@
     "authorContributionMap": {
       "kormingsoon": 2,
       "-": 73
+    }
+  },
+  {
+    "path": "src/main/java/seedu/address/logic/parser/EditMeetingCommandParser.java",
+    "fileType": "functional-code",
+    "lines": [
+      {
+        "lineNumber": 1,
+        "author": {
+          "gitId": "Christopher-LM"
+        },
+        "content": "package seedu.address.logic.parser;"
+      },
+      {
+        "lineNumber": 2,
+        "author": {
+          "gitId": "Christopher-LM"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 3,
+        "author": {
+          "gitId": "Christopher-LM"
+        },
+        "content": "import static java.util.Objects.requireNonNull;"
+      },
+      {
+        "lineNumber": 4,
+        "author": {
+          "gitId": "Christopher-LM"
+        },
+        "content": "import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;"
+      },
+      {
+        "lineNumber": 5,
+        "author": {
+          "gitId": "Christopher-LM"
+        },
+        "content": "import static seedu.address.logic.parser.CliSyntax.PREFIX_CALENDAR_BIDDER_ID;"
+      },
+      {
+        "lineNumber": 6,
+        "author": {
+          "gitId": "Christopher-LM"
+        },
+        "content": "import static seedu.address.logic.parser.CliSyntax.PREFIX_CALENDAR_PROPERTY_ID;"
+      },
+      {
+        "lineNumber": 7,
+        "author": {
+          "gitId": "Christopher-LM"
+        },
+        "content": "import static seedu.address.logic.parser.CliSyntax.PREFIX_CALENDAR_TIME;"
+      },
+      {
+        "lineNumber": 8,
+        "author": {
+          "gitId": "Christopher-LM"
+        },
+        "content": "import static seedu.address.logic.parser.CliSyntax.PREFIX_CALENDAR_TYPE;"
+      },
+      {
+        "lineNumber": 9,
+        "author": {
+          "gitId": "Christopher-LM"
+        },
+        "content": "import static seedu.address.logic.parser.CliSyntax.PREFIX_CALENDAR_VENUE;"
+      },
+      {
+        "lineNumber": 10,
+        "author": {
+          "gitId": "Christopher-LM"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 11,
+        "author": {
+          "gitId": "Christopher-LM"
+        },
+        "content": "import seedu.address.commons.core.index.Index;"
+      },
+      {
+        "lineNumber": 12,
+        "author": {
+          "gitId": "Christopher-LM"
+        },
+        "content": "import seedu.address.logic.commands.EditMeetingCommand;"
+      },
+      {
+        "lineNumber": 13,
+        "author": {
+          "gitId": "Christopher-LM"
+        },
+        "content": "import seedu.address.logic.commands.EditMeetingCommand.EditMeetingDescriptor;"
+      },
+      {
+        "lineNumber": 14,
+        "author": {
+          "gitId": "Christopher-LM"
+        },
+        "content": "import seedu.address.logic.parser.exceptions.ParseException;"
+      },
+      {
+        "lineNumber": 15,
+        "author": {
+          "gitId": "Christopher-LM"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 16,
+        "author": {
+          "gitId": "Christopher-LM"
+        },
+        "content": "/**"
+      },
+      {
+        "lineNumber": 17,
+        "author": {
+          "gitId": "Christopher-LM"
+        },
+        "content": " * Parses input arguments and creates a new EditCommand object"
+      },
+      {
+        "lineNumber": 18,
+        "author": {
+          "gitId": "Christopher-LM"
+        },
+        "content": " */"
+      },
+      {
+        "lineNumber": 19,
+        "author": {
+          "gitId": "Christopher-LM"
+        },
+        "content": "public class EditMeetingCommandParser implements Parser\u003cEditMeetingCommand\u003e {"
+      },
+      {
+        "lineNumber": 20,
+        "author": {
+          "gitId": "Christopher-LM"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 21,
+        "author": {
+          "gitId": "Christopher-LM"
+        },
+        "content": "    /**"
+      },
+      {
+        "lineNumber": 22,
+        "author": {
+          "gitId": "Christopher-LM"
+        },
+        "content": "     * Parses the given {@code String} of arguments in the context of the EditCommand"
+      },
+      {
+        "lineNumber": 23,
+        "author": {
+          "gitId": "Christopher-LM"
+        },
+        "content": "     * and returns an EditCommand object for execution."
+      },
+      {
+        "lineNumber": 24,
+        "author": {
+          "gitId": "Christopher-LM"
+        },
+        "content": "     * @throws ParseException if the user input does not conform the expected format"
+      },
+      {
+        "lineNumber": 25,
+        "author": {
+          "gitId": "Christopher-LM"
+        },
+        "content": "     */"
+      },
+      {
+        "lineNumber": 26,
+        "author": {
+          "gitId": "Christopher-LM"
+        },
+        "content": "    public EditMeetingCommand parse(String args) throws ParseException {"
+      },
+      {
+        "lineNumber": 27,
+        "author": {
+          "gitId": "Christopher-LM"
+        },
+        "content": "        requireNonNull(args);"
+      },
+      {
+        "lineNumber": 28,
+        "author": {
+          "gitId": "Christopher-LM"
+        },
+        "content": "        ArgumentMultimap argMultimap \u003d"
+      },
+      {
+        "lineNumber": 29,
+        "author": {
+          "gitId": "Christopher-LM"
+        },
+        "content": "                ArgumentTokenizer.tokenize(args, PREFIX_CALENDAR_TYPE, PREFIX_CALENDAR_BIDDER_ID,"
+      },
+      {
+        "lineNumber": 30,
+        "author": {
+          "gitId": "Christopher-LM"
+        },
+        "content": "                        PREFIX_CALENDAR_PROPERTY_ID, PREFIX_CALENDAR_VENUE, PREFIX_CALENDAR_TIME);"
+      },
+      {
+        "lineNumber": 31,
+        "author": {
+          "gitId": "Christopher-LM"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 32,
+        "author": {
+          "gitId": "Christopher-LM"
+        },
+        "content": "        Index index;"
+      },
+      {
+        "lineNumber": 33,
+        "author": {
+          "gitId": "Christopher-LM"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 34,
+        "author": {
+          "gitId": "Christopher-LM"
+        },
+        "content": "        try {"
+      },
+      {
+        "lineNumber": 35,
+        "author": {
+          "gitId": "Christopher-LM"
+        },
+        "content": "            index \u003d ParserUtil.parseIndex(argMultimap.getPreamble());"
+      },
+      {
+        "lineNumber": 36,
+        "author": {
+          "gitId": "Christopher-LM"
+        },
+        "content": "        } catch (ParseException pe) {"
+      },
+      {
+        "lineNumber": 37,
+        "author": {
+          "gitId": "Christopher-LM"
+        },
+        "content": "            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT,"
+      },
+      {
+        "lineNumber": 38,
+        "author": {
+          "gitId": "Christopher-LM"
+        },
+        "content": "                    EditMeetingCommand.MESSAGE_USAGE), pe);"
+      },
+      {
+        "lineNumber": 39,
+        "author": {
+          "gitId": "Christopher-LM"
+        },
+        "content": "        }"
+      },
+      {
+        "lineNumber": 40,
+        "author": {
+          "gitId": "Christopher-LM"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 41,
+        "author": {
+          "gitId": "Christopher-LM"
+        },
+        "content": "        EditMeetingDescriptor editMeetingDescriptor \u003d new EditMeetingDescriptor();"
+      },
+      {
+        "lineNumber": 42,
+        "author": {
+          "gitId": "Christopher-LM"
+        },
+        "content": "        if (argMultimap.getValue(PREFIX_CALENDAR_BIDDER_ID).isPresent()) {"
+      },
+      {
+        "lineNumber": 43,
+        "author": {
+          "gitId": "Christopher-LM"
+        },
+        "content": "            editMeetingDescriptor.setCalendarBidderId(ParserUtil.parseCalendarBidderId("
+      },
+      {
+        "lineNumber": 44,
+        "author": {
+          "gitId": "Christopher-LM"
+        },
+        "content": "                    argMultimap.getValue(PREFIX_CALENDAR_BIDDER_ID).get()));"
+      },
+      {
+        "lineNumber": 45,
+        "author": {
+          "gitId": "Christopher-LM"
+        },
+        "content": "        }"
+      },
+      {
+        "lineNumber": 46,
+        "author": {
+          "gitId": "Christopher-LM"
+        },
+        "content": "        if (argMultimap.getValue(PREFIX_CALENDAR_PROPERTY_ID).isPresent()) {"
+      },
+      {
+        "lineNumber": 47,
+        "author": {
+          "gitId": "Christopher-LM"
+        },
+        "content": "            editMeetingDescriptor.setCalendarPropertyId(ParserUtil.parseCalendarPropertyId("
+      },
+      {
+        "lineNumber": 48,
+        "author": {
+          "gitId": "Christopher-LM"
+        },
+        "content": "                    argMultimap.getValue(PREFIX_CALENDAR_PROPERTY_ID).get()));"
+      },
+      {
+        "lineNumber": 49,
+        "author": {
+          "gitId": "Christopher-LM"
+        },
+        "content": "        }"
+      },
+      {
+        "lineNumber": 50,
+        "author": {
+          "gitId": "Christopher-LM"
+        },
+        "content": "        if (argMultimap.getValue(PREFIX_CALENDAR_VENUE).isPresent()) {"
+      },
+      {
+        "lineNumber": 51,
+        "author": {
+          "gitId": "Christopher-LM"
+        },
+        "content": "            editMeetingDescriptor.setCalendarVenue(ParserUtil.parseCalendarVenue("
+      },
+      {
+        "lineNumber": 52,
+        "author": {
+          "gitId": "Christopher-LM"
+        },
+        "content": "                    argMultimap.getValue(PREFIX_CALENDAR_VENUE).get()));"
+      },
+      {
+        "lineNumber": 53,
+        "author": {
+          "gitId": "Christopher-LM"
+        },
+        "content": "        }"
+      },
+      {
+        "lineNumber": 54,
+        "author": {
+          "gitId": "Christopher-LM"
+        },
+        "content": "        if (argMultimap.getValue(PREFIX_CALENDAR_TIME).isPresent()) {"
+      },
+      {
+        "lineNumber": 55,
+        "author": {
+          "gitId": "Christopher-LM"
+        },
+        "content": "            editMeetingDescriptor.setCalendarTime(ParserUtil.parseCalendarTime("
+      },
+      {
+        "lineNumber": 56,
+        "author": {
+          "gitId": "Christopher-LM"
+        },
+        "content": "                    argMultimap.getValue(PREFIX_CALENDAR_TIME).get()));"
+      },
+      {
+        "lineNumber": 57,
+        "author": {
+          "gitId": "Christopher-LM"
+        },
+        "content": "        }"
+      },
+      {
+        "lineNumber": 58,
+        "author": {
+          "gitId": "Christopher-LM"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 59,
+        "author": {
+          "gitId": "Christopher-LM"
+        },
+        "content": "        if (!editMeetingDescriptor.isAnyFieldEdited()) {"
+      },
+      {
+        "lineNumber": 60,
+        "author": {
+          "gitId": "Christopher-LM"
+        },
+        "content": "            throw new ParseException(EditMeetingCommand.MESSAGE_NOT_EDITED);"
+      },
+      {
+        "lineNumber": 61,
+        "author": {
+          "gitId": "Christopher-LM"
+        },
+        "content": "        }"
+      },
+      {
+        "lineNumber": 62,
+        "author": {
+          "gitId": "Christopher-LM"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 63,
+        "author": {
+          "gitId": "Christopher-LM"
+        },
+        "content": "        return new EditMeetingCommand(index, editMeetingDescriptor);"
+      },
+      {
+        "lineNumber": 64,
+        "author": {
+          "gitId": "Christopher-LM"
+        },
+        "content": "    }"
+      },
+      {
+        "lineNumber": 65,
+        "author": {
+          "gitId": "Christopher-LM"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 66,
+        "author": {
+          "gitId": "Christopher-LM"
+        },
+        "content": "}"
+      }
+    ],
+    "authorContributionMap": {
+      "Christopher-LM": 66
+    }
+  },
+  {
+    "path": "src/main/java/seedu/address/logic/parser/FindMeetingCommandParser.java",
+    "fileType": "functional-code",
+    "lines": [
+      {
+        "lineNumber": 1,
+        "author": {
+          "gitId": "munharsha"
+        },
+        "content": "package seedu.address.logic.parser;"
+      },
+      {
+        "lineNumber": 2,
+        "author": {
+          "gitId": "munharsha"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 3,
+        "author": {
+          "gitId": "munharsha"
+        },
+        "content": "import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;"
+      },
+      {
+        "lineNumber": 4,
+        "author": {
+          "gitId": "munharsha"
+        },
+        "content": "import static seedu.address.logic.parser.CliSyntax.PREFIX_CALENDAR_BIDDER_ID;"
+      },
+      {
+        "lineNumber": 5,
+        "author": {
+          "gitId": "munharsha"
+        },
+        "content": "import static seedu.address.logic.parser.CliSyntax.PREFIX_CALENDAR_PROPERTY_ID;"
+      },
+      {
+        "lineNumber": 6,
+        "author": {
+          "gitId": "munharsha"
+        },
+        "content": "import static seedu.address.logic.parser.CliSyntax.PREFIX_CALENDAR_TIME;"
+      },
+      {
+        "lineNumber": 7,
+        "author": {
+          "gitId": "munharsha"
+        },
+        "content": "import static seedu.address.logic.parser.CliSyntax.PREFIX_CALENDAR_TYPE;"
+      },
+      {
+        "lineNumber": 8,
+        "author": {
+          "gitId": "munharsha"
+        },
+        "content": "import static seedu.address.logic.parser.CliSyntax.PREFIX_CALENDAR_VENUE;"
+      },
+      {
+        "lineNumber": 9,
+        "author": {
+          "gitId": "munharsha"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 10,
+        "author": {
+          "gitId": "munharsha"
+        },
+        "content": "import java.util.Arrays;"
+      },
+      {
+        "lineNumber": 11,
+        "author": {
+          "gitId": "munharsha"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 12,
+        "author": {
+          "gitId": "munharsha"
+        },
+        "content": "import seedu.address.logic.commands.FindMeetingCommand;"
+      },
+      {
+        "lineNumber": 13,
+        "author": {
+          "gitId": "munharsha"
+        },
+        "content": "import seedu.address.logic.parser.exceptions.ParseException;"
+      },
+      {
+        "lineNumber": 14,
+        "author": {
+          "gitId": "munharsha"
+        },
+        "content": "import seedu.address.model.calendar.BidderIdContainsKeywordsPredicate;"
+      },
+      {
+        "lineNumber": 15,
+        "author": {
+          "gitId": "munharsha"
+        },
+        "content": "import seedu.address.model.calendar.CalendarBidderId;"
+      },
+      {
+        "lineNumber": 16,
+        "author": {
+          "gitId": "munharsha"
+        },
+        "content": "import seedu.address.model.calendar.CalendarPropertyId;"
+      },
+      {
+        "lineNumber": 17,
+        "author": {
+          "gitId": "munharsha"
+        },
+        "content": "import seedu.address.model.calendar.CalendarTime;"
+      },
+      {
+        "lineNumber": 18,
+        "author": {
+          "gitId": "munharsha"
+        },
+        "content": "import seedu.address.model.calendar.CalendarVenue;"
+      },
+      {
+        "lineNumber": 19,
+        "author": {
+          "gitId": "munharsha"
+        },
+        "content": "import seedu.address.model.calendar.PropertyIdContainsKeywordsPredicate;"
+      },
+      {
+        "lineNumber": 20,
+        "author": {
+          "gitId": "munharsha"
+        },
+        "content": "import seedu.address.model.calendar.TimeContainsKeywordsPredicate;"
+      },
+      {
+        "lineNumber": 21,
+        "author": {
+          "gitId": "munharsha"
+        },
+        "content": "import seedu.address.model.calendar.VenueContainsKeywordsPredicate;"
+      },
+      {
+        "lineNumber": 22,
+        "author": {
+          "gitId": "munharsha"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 23,
+        "author": {
+          "gitId": "munharsha"
+        },
+        "content": "/**"
+      },
+      {
+        "lineNumber": 24,
+        "author": {
+          "gitId": "munharsha"
+        },
+        "content": " * Parses input arguments and creates a new FindCommand object"
+      },
+      {
+        "lineNumber": 25,
+        "author": {
+          "gitId": "munharsha"
+        },
+        "content": " */"
+      },
+      {
+        "lineNumber": 26,
+        "author": {
+          "gitId": "munharsha"
+        },
+        "content": "public class FindMeetingCommandParser implements Parser\u003cFindMeetingCommand\u003e {"
+      },
+      {
+        "lineNumber": 27,
+        "author": {
+          "gitId": "munharsha"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 28,
+        "author": {
+          "gitId": "munharsha"
+        },
+        "content": "    /**"
+      },
+      {
+        "lineNumber": 29,
+        "author": {
+          "gitId": "munharsha"
+        },
+        "content": "     * Parses the given {@code String} of arguments in the context of the FindCommand"
+      },
+      {
+        "lineNumber": 30,
+        "author": {
+          "gitId": "munharsha"
+        },
+        "content": "     * and returns a FindCommand object for execution."
+      },
+      {
+        "lineNumber": 31,
+        "author": {
+          "gitId": "munharsha"
+        },
+        "content": "     * @throws ParseException if the user input does not conform the expected format"
+      },
+      {
+        "lineNumber": 32,
+        "author": {
+          "gitId": "munharsha"
+        },
+        "content": "     */"
+      },
+      {
+        "lineNumber": 33,
+        "author": {
+          "gitId": "munharsha"
+        },
+        "content": "    public FindMeetingCommand parse(String args) throws ParseException {"
+      },
+      {
+        "lineNumber": 34,
+        "author": {
+          "gitId": "munharsha"
+        },
+        "content": "        ArgumentMultimap argMultimap \u003d"
+      },
+      {
+        "lineNumber": 35,
+        "author": {
+          "gitId": "munharsha"
+        },
+        "content": "                ArgumentTokenizer.tokenize(args, PREFIX_CALENDAR_TYPE, PREFIX_CALENDAR_BIDDER_ID,"
+      },
+      {
+        "lineNumber": 36,
+        "author": {
+          "gitId": "munharsha"
+        },
+        "content": "                        PREFIX_CALENDAR_PROPERTY_ID, PREFIX_CALENDAR_VENUE, PREFIX_CALENDAR_TIME);"
+      },
+      {
+        "lineNumber": 37,
+        "author": {
+          "gitId": "munharsha"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 38,
+        "author": {
+          "gitId": "munharsha"
+        },
+        "content": "        try {"
+      },
+      {
+        "lineNumber": 39,
+        "author": {
+          "gitId": "munharsha"
+        },
+        "content": "            if (argMultimap.getValue(PREFIX_CALENDAR_VENUE).isPresent()) {"
+      },
+      {
+        "lineNumber": 40,
+        "author": {
+          "gitId": "munharsha"
+        },
+        "content": "                CalendarVenue venue \u003d ParserUtil.parseCalendarVenue(argMultimap.getValue(PREFIX_CALENDAR_VENUE).get());"
+      },
+      {
+        "lineNumber": 41,
+        "author": {
+          "gitId": "munharsha"
+        },
+        "content": "                return new FindMeetingCommand("
+      },
+      {
+        "lineNumber": 42,
+        "author": {
+          "gitId": "munharsha"
+        },
+        "content": "                        new VenueContainsKeywordsPredicate(Arrays.asList(venue.venue.split(\"\\\\s+\"))),"
+      },
+      {
+        "lineNumber": 43,
+        "author": {
+          "gitId": "munharsha"
+        },
+        "content": "                        null, null, null);"
+      },
+      {
+        "lineNumber": 44,
+        "author": {
+          "gitId": "munharsha"
+        },
+        "content": "            } else if (argMultimap.getValue(PREFIX_CALENDAR_TIME).isPresent()) {"
+      },
+      {
+        "lineNumber": 45,
+        "author": {
+          "gitId": "munharsha"
+        },
+        "content": "                CalendarTime time \u003d ParserUtil.parseCalendarTime(argMultimap.getValue(PREFIX_CALENDAR_TIME).get());"
+      },
+      {
+        "lineNumber": 46,
+        "author": {
+          "gitId": "munharsha"
+        },
+        "content": "                return new FindMeetingCommand(null,"
+      },
+      {
+        "lineNumber": 47,
+        "author": {
+          "gitId": "munharsha"
+        },
+        "content": "                        new TimeContainsKeywordsPredicate(Arrays.asList(time.time.split(\"\\\\s+\"))),"
+      },
+      {
+        "lineNumber": 48,
+        "author": {
+          "gitId": "munharsha"
+        },
+        "content": "                        null, null);"
+      },
+      {
+        "lineNumber": 49,
+        "author": {
+          "gitId": "munharsha"
+        },
+        "content": "            } else if (argMultimap.getValue(PREFIX_CALENDAR_BIDDER_ID).isPresent()) {"
+      },
+      {
+        "lineNumber": 50,
+        "author": {
+          "gitId": "munharsha"
+        },
+        "content": "                CalendarBidderId bidderId \u003d"
+      },
+      {
+        "lineNumber": 51,
+        "author": {
+          "gitId": "munharsha"
+        },
+        "content": "                        ParserUtil.parseCalendarBidderId(argMultimap.getValue(PREFIX_CALENDAR_BIDDER_ID).get());"
+      },
+      {
+        "lineNumber": 52,
+        "author": {
+          "gitId": "munharsha"
+        },
+        "content": "                return new FindMeetingCommand(null, null,"
+      },
+      {
+        "lineNumber": 53,
+        "author": {
+          "gitId": "munharsha"
+        },
+        "content": "                        new BidderIdContainsKeywordsPredicate(Arrays.asList(bidderId.bidderId.split(\"\\\\s+\"))),"
+      },
+      {
+        "lineNumber": 54,
+        "author": {
+          "gitId": "munharsha"
+        },
+        "content": "                        null);"
+      },
+      {
+        "lineNumber": 55,
+        "author": {
+          "gitId": "munharsha"
+        },
+        "content": "            } else if (argMultimap.getValue(PREFIX_CALENDAR_PROPERTY_ID).isPresent()) {"
+      },
+      {
+        "lineNumber": 56,
+        "author": {
+          "gitId": "munharsha"
+        },
+        "content": "                CalendarPropertyId propertyId \u003d"
+      },
+      {
+        "lineNumber": 57,
+        "author": {
+          "gitId": "munharsha"
+        },
+        "content": "                        ParserUtil.parseCalendarPropertyId(argMultimap.getValue(PREFIX_CALENDAR_PROPERTY_ID).get());"
+      },
+      {
+        "lineNumber": 58,
+        "author": {
+          "gitId": "munharsha"
+        },
+        "content": "                return new FindMeetingCommand(null, null, null,"
+      },
+      {
+        "lineNumber": 59,
+        "author": {
+          "gitId": "munharsha"
+        },
+        "content": "                        new PropertyIdContainsKeywordsPredicate(Arrays.asList(propertyId.propertyId.split(\"\\\\s+\"))));"
+      },
+      {
+        "lineNumber": 60,
+        "author": {
+          "gitId": "munharsha"
+        },
+        "content": "            }"
+      },
+      {
+        "lineNumber": 61,
+        "author": {
+          "gitId": "munharsha"
+        },
+        "content": "            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, FindMeetingCommand.MESSAGE_USAGE));"
+      },
+      {
+        "lineNumber": 62,
+        "author": {
+          "gitId": "munharsha"
+        },
+        "content": "        } catch (ParseException pe) {"
+      },
+      {
+        "lineNumber": 63,
+        "author": {
+          "gitId": "munharsha"
+        },
+        "content": "            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT,"
+      },
+      {
+        "lineNumber": 64,
+        "author": {
+          "gitId": "munharsha"
+        },
+        "content": "                    FindMeetingCommand.MESSAGE_USAGE), pe);"
+      },
+      {
+        "lineNumber": 65,
+        "author": {
+          "gitId": "munharsha"
+        },
+        "content": "        } catch (IllegalArgumentException e) {"
+      },
+      {
+        "lineNumber": 66,
+        "author": {
+          "gitId": "munharsha"
+        },
+        "content": "            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT,"
+      },
+      {
+        "lineNumber": 67,
+        "author": {
+          "gitId": "munharsha"
+        },
+        "content": "                    FindMeetingCommand.MESSAGE_USAGE), e);"
+      },
+      {
+        "lineNumber": 68,
+        "author": {
+          "gitId": "munharsha"
+        },
+        "content": "        }"
+      },
+      {
+        "lineNumber": 69,
+        "author": {
+          "gitId": "munharsha"
+        },
+        "content": "    }"
+      },
+      {
+        "lineNumber": 70,
+        "author": {
+          "gitId": "munharsha"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 71,
+        "author": {
+          "gitId": "munharsha"
+        },
+        "content": "}"
+      }
+    ],
+    "authorContributionMap": {
+      "munharsha": 71
     }
   },
   {
@@ -35843,162 +38828,6 @@
       "dianneloh9": 2,
       "Christopher-LM": 65,
       "-": 92
-    }
-  },
-  {
-    "path": "src/main/java/seedu/address/logic/parser/ViewCalendarParser.java",
-    "fileType": "functional-code",
-    "lines": [
-      {
-        "lineNumber": 1,
-        "author": {
-          "gitId": "Christopher-LM"
-        },
-        "content": "package seedu.address.logic.parser;"
-      },
-      {
-        "lineNumber": 2,
-        "author": {
-          "gitId": "Christopher-LM"
-        },
-        "content": ""
-      },
-      {
-        "lineNumber": 3,
-        "author": {
-          "gitId": "Christopher-LM"
-        },
-        "content": "import seedu.address.logic.commands.ViewCalendarCommand;"
-      },
-      {
-        "lineNumber": 4,
-        "author": {
-          "gitId": "Christopher-LM"
-        },
-        "content": "import seedu.address.logic.parser.exceptions.ParseException;"
-      },
-      {
-        "lineNumber": 5,
-        "author": {
-          "gitId": "Christopher-LM"
-        },
-        "content": ""
-      },
-      {
-        "lineNumber": 6,
-        "author": {
-          "gitId": "Christopher-LM"
-        },
-        "content": "/**"
-      },
-      {
-        "lineNumber": 7,
-        "author": {
-          "gitId": "Christopher-LM"
-        },
-        "content": " * Parses input arguments and creates a new ViewCalendarCommand object"
-      },
-      {
-        "lineNumber": 8,
-        "author": {
-          "gitId": "Christopher-LM"
-        },
-        "content": " */"
-      },
-      {
-        "lineNumber": 9,
-        "author": {
-          "gitId": "Christopher-LM"
-        },
-        "content": "public class ViewCalendarParser implements Parser\u003cViewCalendarCommand\u003e {"
-      },
-      {
-        "lineNumber": 10,
-        "author": {
-          "gitId": "Christopher-LM"
-        },
-        "content": "    /**"
-      },
-      {
-        "lineNumber": 11,
-        "author": {
-          "gitId": "Christopher-LM"
-        },
-        "content": "     * Parses the given user input and returns a ViewCalendarCommand"
-      },
-      {
-        "lineNumber": 12,
-        "author": {
-          "gitId": "Christopher-LM"
-        },
-        "content": "     * for execution."
-      },
-      {
-        "lineNumber": 13,
-        "author": {
-          "gitId": "Christopher-LM"
-        },
-        "content": "     * @param userInput user arguments."
-      },
-      {
-        "lineNumber": 14,
-        "author": {
-          "gitId": "Christopher-LM"
-        },
-        "content": "     * @return ViewCalendarCommand to be executed."
-      },
-      {
-        "lineNumber": 15,
-        "author": {
-          "gitId": "Christopher-LM"
-        },
-        "content": "     * @throws ParseException if the user input does not conform to the expected format."
-      },
-      {
-        "lineNumber": 16,
-        "author": {
-          "gitId": "Christopher-LM"
-        },
-        "content": "     */"
-      },
-      {
-        "lineNumber": 17,
-        "author": {
-          "gitId": "Christopher-LM"
-        },
-        "content": "    @Override"
-      },
-      {
-        "lineNumber": 18,
-        "author": {
-          "gitId": "Christopher-LM"
-        },
-        "content": "    public ViewCalendarCommand parse(String userInput) throws ParseException {"
-      },
-      {
-        "lineNumber": 19,
-        "author": {
-          "gitId": "Christopher-LM"
-        },
-        "content": "        return null;"
-      },
-      {
-        "lineNumber": 20,
-        "author": {
-          "gitId": "Christopher-LM"
-        },
-        "content": "    }"
-      },
-      {
-        "lineNumber": 21,
-        "author": {
-          "gitId": "Christopher-LM"
-        },
-        "content": "}"
-      }
-    ],
-    "authorContributionMap": {
-      "Christopher-LM": 21
     }
   },
   {
@@ -53591,6 +56420,239 @@
     }
   },
   {
+    "path": "src/main/java/seedu/address/model/calendar/BidderIdContainsKeywordsPredicate.java",
+    "fileType": "functional-code",
+    "lines": [
+      {
+        "lineNumber": 1,
+        "author": {
+          "gitId": "munharsha"
+        },
+        "content": "package seedu.address.model.calendar;"
+      },
+      {
+        "lineNumber": 2,
+        "author": {
+          "gitId": "munharsha"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 3,
+        "author": {
+          "gitId": "munharsha"
+        },
+        "content": "import java.util.List;"
+      },
+      {
+        "lineNumber": 4,
+        "author": {
+          "gitId": "munharsha"
+        },
+        "content": "import java.util.function.Predicate;"
+      },
+      {
+        "lineNumber": 5,
+        "author": {
+          "gitId": "munharsha"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 6,
+        "author": {
+          "gitId": "munharsha"
+        },
+        "content": "import seedu.address.commons.util.StringUtil;"
+      },
+      {
+        "lineNumber": 7,
+        "author": {
+          "gitId": "munharsha"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 8,
+        "author": {
+          "gitId": "munharsha"
+        },
+        "content": "/**"
+      },
+      {
+        "lineNumber": 9,
+        "author": {
+          "gitId": "munharsha"
+        },
+        "content": " * Tests that a {@code Meeting}\u0027s {@code BidderId} matches any of the keywords given."
+      },
+      {
+        "lineNumber": 10,
+        "author": {
+          "gitId": "munharsha"
+        },
+        "content": " */"
+      },
+      {
+        "lineNumber": 11,
+        "author": {
+          "gitId": "munharsha"
+        },
+        "content": "public class BidderIdContainsKeywordsPredicate implements Predicate\u003cCalendarMeeting\u003e {"
+      },
+      {
+        "lineNumber": 12,
+        "author": {
+          "gitId": "munharsha"
+        },
+        "content": "    private final List\u003cString\u003e keywords;"
+      },
+      {
+        "lineNumber": 13,
+        "author": {
+          "gitId": "munharsha"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 14,
+        "author": {
+          "gitId": "munharsha"
+        },
+        "content": "    public BidderIdContainsKeywordsPredicate(List\u003cString\u003e keywords) {"
+      },
+      {
+        "lineNumber": 15,
+        "author": {
+          "gitId": "munharsha"
+        },
+        "content": "        this.keywords \u003d keywords;"
+      },
+      {
+        "lineNumber": 16,
+        "author": {
+          "gitId": "munharsha"
+        },
+        "content": "    }"
+      },
+      {
+        "lineNumber": 17,
+        "author": {
+          "gitId": "munharsha"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 18,
+        "author": {
+          "gitId": "munharsha"
+        },
+        "content": "    @Override"
+      },
+      {
+        "lineNumber": 19,
+        "author": {
+          "gitId": "munharsha"
+        },
+        "content": "    public boolean test(CalendarMeeting calendarMeeting) {"
+      },
+      {
+        "lineNumber": 20,
+        "author": {
+          "gitId": "munharsha"
+        },
+        "content": "        return keywords.stream()"
+      },
+      {
+        "lineNumber": 21,
+        "author": {
+          "gitId": "munharsha"
+        },
+        "content": "                .anyMatch(keyword -\u003e"
+      },
+      {
+        "lineNumber": 22,
+        "author": {
+          "gitId": "munharsha"
+        },
+        "content": "                        StringUtil.containsWordIgnoreCase(calendarMeeting.getCalendarBidderId().bidderId, keyword));"
+      },
+      {
+        "lineNumber": 23,
+        "author": {
+          "gitId": "munharsha"
+        },
+        "content": "    }"
+      },
+      {
+        "lineNumber": 24,
+        "author": {
+          "gitId": "munharsha"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 25,
+        "author": {
+          "gitId": "munharsha"
+        },
+        "content": "    @Override"
+      },
+      {
+        "lineNumber": 26,
+        "author": {
+          "gitId": "munharsha"
+        },
+        "content": "    public boolean equals(Object other) {"
+      },
+      {
+        "lineNumber": 27,
+        "author": {
+          "gitId": "munharsha"
+        },
+        "content": "        return other \u003d\u003d this // short circuit if same object"
+      },
+      {
+        "lineNumber": 28,
+        "author": {
+          "gitId": "munharsha"
+        },
+        "content": "                || (other instanceof BidderIdContainsKeywordsPredicate // instanceof handles nulls"
+      },
+      {
+        "lineNumber": 29,
+        "author": {
+          "gitId": "munharsha"
+        },
+        "content": "                \u0026\u0026 keywords.equals(((BidderIdContainsKeywordsPredicate) other).keywords)); // state check"
+      },
+      {
+        "lineNumber": 30,
+        "author": {
+          "gitId": "munharsha"
+        },
+        "content": "    }"
+      },
+      {
+        "lineNumber": 31,
+        "author": {
+          "gitId": "munharsha"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 32,
+        "author": {
+          "gitId": "munharsha"
+        },
+        "content": "}"
+      }
+    ],
+    "authorContributionMap": {
+      "munharsha": 32
+    }
+  },
+  {
     "path": "src/main/java/seedu/address/model/calendar/CalendarAdmin.java",
     "fileType": "functional-code",
     "lines": [
@@ -53751,40 +56813,152 @@
       {
         "lineNumber": 23,
         "author": {
-          "gitId": "Christopher-LM"
+          "gitId": "munharsha"
         },
-        "content": ""
+        "content": "    /**"
       },
       {
         "lineNumber": 24,
         "author": {
           "gitId": "munharsha"
         },
-        "content": "    @Override"
+        "content": "     * Returns true if either the venue, time, bidderId and propertyId is the same."
       },
       {
         "lineNumber": 25,
         "author": {
-          "gitId": "Christopher-LM"
+          "gitId": "munharsha"
         },
-        "content": "    public String toString() {"
+        "content": "     *"
       },
       {
         "lineNumber": 26,
         "author": {
-          "gitId": "Christopher-LM"
+          "gitId": "munharsha"
         },
-        "content": "        return super.toString();"
+        "content": "     * @param other The other property."
       },
       {
         "lineNumber": 27,
         "author": {
           "gitId": "munharsha"
         },
-        "content": "    }"
+        "content": "     * @return True if both property objects represent the same meeting."
       },
       {
         "lineNumber": 28,
+        "author": {
+          "gitId": "munharsha"
+        },
+        "content": "     */"
+      },
+      {
+        "lineNumber": 29,
+        "author": {
+          "gitId": "munharsha"
+        },
+        "content": "    @Override"
+      },
+      {
+        "lineNumber": 30,
+        "author": {
+          "gitId": "munharsha"
+        },
+        "content": "    public boolean equals(Object other) {"
+      },
+      {
+        "lineNumber": 31,
+        "author": {
+          "gitId": "munharsha"
+        },
+        "content": "        return other \u003d\u003d this // short circuit if same object"
+      },
+      {
+        "lineNumber": 32,
+        "author": {
+          "gitId": "munharsha"
+        },
+        "content": "                || (other instanceof CalendarAdmin // instanceof handles nulls"
+      },
+      {
+        "lineNumber": 33,
+        "author": {
+          "gitId": "munharsha"
+        },
+        "content": "                \u0026\u0026 this.calendarBidderId.equals(((CalendarAdmin) other).getCalendarBidderId())"
+      },
+      {
+        "lineNumber": 34,
+        "author": {
+          "gitId": "munharsha"
+        },
+        "content": "                \u0026\u0026 this.calendarPropertyId.equals(((CalendarAdmin) other).getCalendarPropertyId())"
+      },
+      {
+        "lineNumber": 35,
+        "author": {
+          "gitId": "munharsha"
+        },
+        "content": "                \u0026\u0026 this.calendarTime.equals(((CalendarAdmin) other).getCalendarTime())"
+      },
+      {
+        "lineNumber": 36,
+        "author": {
+          "gitId": "munharsha"
+        },
+        "content": "                \u0026\u0026 this.calendarVenue.equals(((CalendarAdmin) other).getCalendarVenue())); // state check"
+      },
+      {
+        "lineNumber": 37,
+        "author": {
+          "gitId": "munharsha"
+        },
+        "content": "    }"
+      },
+      {
+        "lineNumber": 38,
+        "author": {
+          "gitId": "munharsha"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 39,
+        "author": {
+          "gitId": "Christopher-LM"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 40,
+        "author": {
+          "gitId": "munharsha"
+        },
+        "content": "    @Override"
+      },
+      {
+        "lineNumber": 41,
+        "author": {
+          "gitId": "Christopher-LM"
+        },
+        "content": "    public String toString() {"
+      },
+      {
+        "lineNumber": 42,
+        "author": {
+          "gitId": "Christopher-LM"
+        },
+        "content": "        return super.toString();"
+      },
+      {
+        "lineNumber": 43,
+        "author": {
+          "gitId": "munharsha"
+        },
+        "content": "    }"
+      },
+      {
+        "lineNumber": 44,
         "author": {
           "gitId": "munharsha"
         },
@@ -53793,7 +56967,7 @@
     ],
     "authorContributionMap": {
       "Christopher-LM": 13,
-      "munharsha": 15
+      "munharsha": 31
     }
   },
   {
@@ -54347,35 +57521,35 @@
         "author": {
           "gitId": "munharsha"
         },
-        "content": "    private final CalendarBidderId calendarBidderId;"
+        "content": "    protected final CalendarBidderId calendarBidderId;"
       },
       {
         "lineNumber": 20,
         "author": {
           "gitId": "munharsha"
         },
-        "content": "    private final CalendarPropertyId calendarPropertyId;"
+        "content": "    protected final CalendarPropertyId calendarPropertyId;"
       },
       {
         "lineNumber": 21,
         "author": {
           "gitId": "munharsha"
         },
-        "content": "    private final CalendarTime calendarTime;"
+        "content": "    protected final CalendarTime calendarTime;"
       },
       {
         "lineNumber": 22,
         "author": {
           "gitId": "munharsha"
         },
-        "content": "    private final CalendarVenue calendarVenue;"
+        "content": "    protected final CalendarVenue calendarVenue;"
       },
       {
         "lineNumber": 23,
         "author": {
           "gitId": "munharsha"
         },
-        "content": "    private boolean isMeeting;"
+        "content": "    protected boolean isMeeting;"
       },
       {
         "lineNumber": 24,
@@ -54625,446 +57799,544 @@
       {
         "lineNumber": 59,
         "author": {
-          "gitId": "munharsha"
-        },
-        "content": "    public CalendarBidderId getCalendarBidderId() {"
-      },
-      {
-        "lineNumber": 60,
-        "author": {
-          "gitId": "munharsha"
-        },
-        "content": "        return this.calendarBidderId;"
-      },
-      {
-        "lineNumber": 61,
-        "author": {
-          "gitId": "munharsha"
-        },
-        "content": "    }"
-      },
-      {
-        "lineNumber": 62,
-        "author": {
-          "gitId": "munharsha"
-        },
-        "content": ""
-      },
-      {
-        "lineNumber": 63,
-        "author": {
-          "gitId": "munharsha"
-        },
-        "content": "    public CalendarPropertyId getCalendarPropertyId() {"
-      },
-      {
-        "lineNumber": 64,
-        "author": {
-          "gitId": "munharsha"
-        },
-        "content": "        return this.calendarPropertyId;"
-      },
-      {
-        "lineNumber": 65,
-        "author": {
-          "gitId": "munharsha"
-        },
-        "content": "    }"
-      },
-      {
-        "lineNumber": 66,
-        "author": {
-          "gitId": "munharsha"
-        },
-        "content": ""
-      },
-      {
-        "lineNumber": 67,
-        "author": {
-          "gitId": "munharsha"
-        },
-        "content": "    public CalendarTime getCalendarTime() {"
-      },
-      {
-        "lineNumber": 68,
-        "author": {
-          "gitId": "munharsha"
-        },
-        "content": "        return this.calendarTime;"
-      },
-      {
-        "lineNumber": 69,
-        "author": {
-          "gitId": "munharsha"
-        },
-        "content": "    }"
-      },
-      {
-        "lineNumber": 70,
-        "author": {
-          "gitId": "munharsha"
-        },
-        "content": ""
-      },
-      {
-        "lineNumber": 71,
-        "author": {
-          "gitId": "munharsha"
-        },
-        "content": "    public CalendarVenue getCalendarVenue() {"
-      },
-      {
-        "lineNumber": 72,
-        "author": {
-          "gitId": "munharsha"
-        },
-        "content": "        return this.calendarVenue;"
-      },
-      {
-        "lineNumber": 73,
-        "author": {
-          "gitId": "munharsha"
-        },
-        "content": "    }"
-      },
-      {
-        "lineNumber": 74,
-        "author": {
-          "gitId": "munharsha"
-        },
-        "content": ""
-      },
-      {
-        "lineNumber": 75,
-        "author": {
-          "gitId": "munharsha"
-        },
-        "content": "    public boolean isViewing() {"
-      },
-      {
-        "lineNumber": 76,
-        "author": {
-          "gitId": "munharsha"
-        },
-        "content": "        return this.isViewing;"
-      },
-      {
-        "lineNumber": 77,
-        "author": {
-          "gitId": "munharsha"
-        },
-        "content": "    }"
-      },
-      {
-        "lineNumber": 78,
-        "author": {
-          "gitId": "munharsha"
-        },
-        "content": ""
-      },
-      {
-        "lineNumber": 79,
-        "author": {
-          "gitId": "munharsha"
-        },
-        "content": "    public boolean isPaperWork() {"
-      },
-      {
-        "lineNumber": 80,
-        "author": {
-          "gitId": "munharsha"
-        },
-        "content": "        return this.isPaperWork;"
-      },
-      {
-        "lineNumber": 81,
-        "author": {
-          "gitId": "munharsha"
-        },
-        "content": "    }"
-      },
-      {
-        "lineNumber": 82,
-        "author": {
-          "gitId": "munharsha"
-        },
-        "content": ""
-      },
-      {
-        "lineNumber": 83,
-        "author": {
-          "gitId": "Christopher-LM"
-        },
-        "content": "    public boolean isAdmin() {"
-      },
-      {
-        "lineNumber": 84,
-        "author": {
-          "gitId": "munharsha"
-        },
-        "content": "        return this.isAdmin;"
-      },
-      {
-        "lineNumber": 85,
-        "author": {
-          "gitId": "munharsha"
-        },
-        "content": "    }"
-      },
-      {
-        "lineNumber": 86,
-        "author": {
-          "gitId": "munharsha"
-        },
-        "content": ""
-      },
-      {
-        "lineNumber": 87,
-        "author": {
           "gitId": "Christopher-LM"
         },
         "content": "    /**"
       },
       {
-        "lineNumber": 88,
+        "lineNumber": 60,
         "author": {
           "gitId": "Christopher-LM"
         },
-        "content": "     * Returns true if either the property id is the same or if the address is the same."
+        "content": "     * Creates the type of meeting based on the meeting type."
       },
       {
-        "lineNumber": 89,
+        "lineNumber": 61,
         "author": {
           "gitId": "Christopher-LM"
         },
-        "content": "     *"
+        "content": "     * @return CalendarMeeting of the specific meeting type."
       },
       {
-        "lineNumber": 90,
-        "author": {
-          "gitId": "Christopher-LM"
-        },
-        "content": "     * @param otherMeeting The other property."
-      },
-      {
-        "lineNumber": 91,
-        "author": {
-          "gitId": "Christopher-LM"
-        },
-        "content": "     * @return True if both property objects represent the same property."
-      },
-      {
-        "lineNumber": 92,
+        "lineNumber": 62,
         "author": {
           "gitId": "Christopher-LM"
         },
         "content": "     */"
       },
       {
-        "lineNumber": 93,
+        "lineNumber": 63,
         "author": {
           "gitId": "Christopher-LM"
         },
-        "content": "    public boolean isSameMeeting(CalendarMeeting otherMeeting) {"
+        "content": "    public CalendarMeeting createMeeting(String type, CalendarBidderId bidderId,"
+      },
+      {
+        "lineNumber": 64,
+        "author": {
+          "gitId": "Christopher-LM"
+        },
+        "content": "                                         CalendarPropertyId propertyId, CalendarTime time, CalendarVenue venue) {"
+      },
+      {
+        "lineNumber": 65,
+        "author": {
+          "gitId": "Christopher-LM"
+        },
+        "content": "        if (type.equalsIgnoreCase(\"Paperwork\")) {"
+      },
+      {
+        "lineNumber": 66,
+        "author": {
+          "gitId": "Christopher-LM"
+        },
+        "content": "            return new CalendarPaperwork(bidderId, propertyId, time, venue);"
+      },
+      {
+        "lineNumber": 67,
+        "author": {
+          "gitId": "Christopher-LM"
+        },
+        "content": "        } else if (type.equalsIgnoreCase(\"Admin\")) {"
+      },
+      {
+        "lineNumber": 68,
+        "author": {
+          "gitId": "Christopher-LM"
+        },
+        "content": "            return new CalendarAdmin(bidderId, propertyId, time, venue);"
+      },
+      {
+        "lineNumber": 69,
+        "author": {
+          "gitId": "Christopher-LM"
+        },
+        "content": "        } else if (type.equalsIgnoreCase(\"Viewing\")) {"
+      },
+      {
+        "lineNumber": 70,
+        "author": {
+          "gitId": "Christopher-LM"
+        },
+        "content": "            return new CalendarViewing(bidderId, propertyId, time, venue);"
+      },
+      {
+        "lineNumber": 71,
+        "author": {
+          "gitId": "Christopher-LM"
+        },
+        "content": "        } else {"
+      },
+      {
+        "lineNumber": 72,
+        "author": {
+          "gitId": "Christopher-LM"
+        },
+        "content": "            return new CalendarMeeting(bidderId, propertyId, time, venue);"
+      },
+      {
+        "lineNumber": 73,
+        "author": {
+          "gitId": "Christopher-LM"
+        },
+        "content": "        }"
+      },
+      {
+        "lineNumber": 74,
+        "author": {
+          "gitId": "Christopher-LM"
+        },
+        "content": "    }"
+      },
+      {
+        "lineNumber": 75,
+        "author": {
+          "gitId": "Christopher-LM"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 76,
+        "author": {
+          "gitId": "munharsha"
+        },
+        "content": "    public CalendarBidderId getCalendarBidderId() {"
+      },
+      {
+        "lineNumber": 77,
+        "author": {
+          "gitId": "munharsha"
+        },
+        "content": "        return this.calendarBidderId;"
+      },
+      {
+        "lineNumber": 78,
+        "author": {
+          "gitId": "munharsha"
+        },
+        "content": "    }"
+      },
+      {
+        "lineNumber": 79,
+        "author": {
+          "gitId": "munharsha"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 80,
+        "author": {
+          "gitId": "munharsha"
+        },
+        "content": "    public CalendarPropertyId getCalendarPropertyId() {"
+      },
+      {
+        "lineNumber": 81,
+        "author": {
+          "gitId": "munharsha"
+        },
+        "content": "        return this.calendarPropertyId;"
+      },
+      {
+        "lineNumber": 82,
+        "author": {
+          "gitId": "munharsha"
+        },
+        "content": "    }"
+      },
+      {
+        "lineNumber": 83,
+        "author": {
+          "gitId": "munharsha"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 84,
+        "author": {
+          "gitId": "munharsha"
+        },
+        "content": "    public CalendarTime getCalendarTime() {"
+      },
+      {
+        "lineNumber": 85,
+        "author": {
+          "gitId": "munharsha"
+        },
+        "content": "        return this.calendarTime;"
+      },
+      {
+        "lineNumber": 86,
+        "author": {
+          "gitId": "munharsha"
+        },
+        "content": "    }"
+      },
+      {
+        "lineNumber": 87,
+        "author": {
+          "gitId": "munharsha"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 88,
+        "author": {
+          "gitId": "munharsha"
+        },
+        "content": "    public CalendarVenue getCalendarVenue() {"
+      },
+      {
+        "lineNumber": 89,
+        "author": {
+          "gitId": "munharsha"
+        },
+        "content": "        return this.calendarVenue;"
+      },
+      {
+        "lineNumber": 90,
+        "author": {
+          "gitId": "munharsha"
+        },
+        "content": "    }"
+      },
+      {
+        "lineNumber": 91,
+        "author": {
+          "gitId": "munharsha"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 92,
+        "author": {
+          "gitId": "munharsha"
+        },
+        "content": "    public boolean isViewing() {"
+      },
+      {
+        "lineNumber": 93,
+        "author": {
+          "gitId": "munharsha"
+        },
+        "content": "        return this.isViewing;"
       },
       {
         "lineNumber": 94,
         "author": {
           "gitId": "munharsha"
         },
-        "content": "        if (otherMeeting \u003d\u003d this) {"
+        "content": "    }"
       },
       {
         "lineNumber": 95,
         "author": {
           "gitId": "munharsha"
         },
-        "content": "            return true;"
+        "content": ""
       },
       {
         "lineNumber": 96,
         "author": {
           "gitId": "munharsha"
         },
-        "content": "        }"
+        "content": "    public boolean isPaperWork() {"
       },
       {
         "lineNumber": 97,
         "author": {
           "gitId": "munharsha"
         },
-        "content": ""
+        "content": "        return this.isPaperWork;"
       },
       {
         "lineNumber": 98,
         "author": {
           "gitId": "munharsha"
         },
-        "content": "        return otherMeeting !\u003d null"
+        "content": "    }"
       },
       {
         "lineNumber": 99,
         "author": {
           "gitId": "munharsha"
         },
-        "content": "                \u0026\u0026 otherMeeting.getCalendarPropertyId().equals(getCalendarPropertyId())"
+        "content": ""
       },
       {
         "lineNumber": 100,
         "author": {
-          "gitId": "munharsha"
+          "gitId": "Christopher-LM"
         },
-        "content": "                \u0026\u0026 (otherMeeting.getCalendarVenue().equals(getCalendarVenue()))"
+        "content": "    public boolean isAdmin() {"
       },
       {
         "lineNumber": 101,
         "author": {
           "gitId": "munharsha"
         },
-        "content": "                \u0026\u0026 ((otherMeeting.getCalendarTime() \u003d\u003d getCalendarTime()))"
+        "content": "        return this.isAdmin;"
       },
       {
         "lineNumber": 102,
         "author": {
           "gitId": "munharsha"
         },
-        "content": "                \u0026\u0026 ((otherMeeting.getCalendarBidderId() \u003d\u003d getCalendarBidderId()));"
+        "content": "    }"
       },
       {
         "lineNumber": 103,
         "author": {
-          "gitId": "Christopher-LM"
+          "gitId": "munharsha"
         },
-        "content": "    }"
+        "content": ""
       },
       {
         "lineNumber": 104,
         "author": {
           "gitId": "Christopher-LM"
         },
-        "content": ""
+        "content": "    /**"
       },
       {
         "lineNumber": 105,
         "author": {
-          "gitId": "Christopher-LM"
+          "gitId": "munharsha"
         },
-        "content": ""
+        "content": "     * Returns true if either the venue, time, bidderId and propertyId is the same."
       },
       {
         "lineNumber": 106,
         "author": {
           "gitId": "Christopher-LM"
         },
-        "content": "    @Override"
+        "content": "     *"
       },
       {
         "lineNumber": 107,
         "author": {
-          "gitId": "Christopher-LM"
+          "gitId": "munharsha"
         },
-        "content": "    public String toString() {"
+        "content": "     * @param other The other property."
       },
       {
         "lineNumber": 108,
         "author": {
-          "gitId": "Christopher-LM"
+          "gitId": "munharsha"
         },
-        "content": "        StringBuilder builder \u003d new StringBuilder();"
+        "content": "     * @return True if both property objects represent the same meeting."
       },
       {
         "lineNumber": 109,
         "author": {
           "gitId": "Christopher-LM"
         },
-        "content": "        builder.append(checkMeetingType());"
+        "content": "     */"
       },
       {
         "lineNumber": 110,
         "author": {
-          "gitId": "Christopher-LM"
+          "gitId": "munharsha"
         },
-        "content": ""
+        "content": "    @Override"
       },
       {
         "lineNumber": 111,
         "author": {
-          "gitId": "Christopher-LM"
+          "gitId": "munharsha"
         },
-        "content": "        builder.append(\" Bidder Id: \")"
+        "content": "    public boolean equals(Object other) {"
       },
       {
         "lineNumber": 112,
         "author": {
-          "gitId": "Christopher-LM"
+          "gitId": "munharsha"
         },
-        "content": "                .append(getCalendarBidderId())"
+        "content": "        return other \u003d\u003d this // short circuit if same object"
       },
       {
         "lineNumber": 113,
         "author": {
-          "gitId": "Christopher-LM"
+          "gitId": "munharsha"
         },
-        "content": "                .append(\" Property Id: \")"
+        "content": "                || (other instanceof CalendarMeeting // instanceof handles nulls"
       },
       {
         "lineNumber": 114,
         "author": {
-          "gitId": "Christopher-LM"
+          "gitId": "munharsha"
         },
-        "content": "                .append(getCalendarPropertyId())"
+        "content": "                \u0026\u0026 this.calendarBidderId.equals(((CalendarMeeting) other).getCalendarBidderId())"
       },
       {
         "lineNumber": 115,
         "author": {
-          "gitId": "Christopher-LM"
+          "gitId": "munharsha"
         },
-        "content": "                .append(\" Venue: \")"
+        "content": "                \u0026\u0026 this.calendarPropertyId.equals(((CalendarMeeting) other).getCalendarPropertyId())"
       },
       {
         "lineNumber": 116,
         "author": {
-          "gitId": "Christopher-LM"
+          "gitId": "munharsha"
         },
-        "content": "                .append(getCalendarVenue())"
+        "content": "                \u0026\u0026 this.calendarTime.equals(((CalendarMeeting) other).getCalendarTime())"
       },
       {
         "lineNumber": 117,
         "author": {
-          "gitId": "Christopher-LM"
+          "gitId": "munharsha"
         },
-        "content": "                .append(\" Time: \")"
+        "content": "                \u0026\u0026 this.calendarVenue.equals(((CalendarMeeting) other).getCalendarVenue())); // state check"
       },
       {
         "lineNumber": 118,
         "author": {
           "gitId": "Christopher-LM"
         },
-        "content": "                .append(getCalendarTime());"
+        "content": "    }"
       },
       {
         "lineNumber": 119,
         "author": {
           "gitId": "Christopher-LM"
         },
-        "content": "        return builder.toString();"
+        "content": ""
       },
       {
         "lineNumber": 120,
         "author": {
           "gitId": "Christopher-LM"
         },
-        "content": "    }"
+        "content": "    @Override"
       },
       {
         "lineNumber": 121,
+        "author": {
+          "gitId": "Christopher-LM"
+        },
+        "content": "    public String toString() {"
+      },
+      {
+        "lineNumber": 122,
+        "author": {
+          "gitId": "Christopher-LM"
+        },
+        "content": "        StringBuilder builder \u003d new StringBuilder();"
+      },
+      {
+        "lineNumber": 123,
+        "author": {
+          "gitId": "Christopher-LM"
+        },
+        "content": "        builder.append(checkMeetingType());"
+      },
+      {
+        "lineNumber": 124,
+        "author": {
+          "gitId": "Christopher-LM"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 125,
+        "author": {
+          "gitId": "Christopher-LM"
+        },
+        "content": "        builder.append(\" Bidder Id: \")"
+      },
+      {
+        "lineNumber": 126,
+        "author": {
+          "gitId": "Christopher-LM"
+        },
+        "content": "                .append(getCalendarBidderId())"
+      },
+      {
+        "lineNumber": 127,
+        "author": {
+          "gitId": "Christopher-LM"
+        },
+        "content": "                .append(\" Property Id: \")"
+      },
+      {
+        "lineNumber": 128,
+        "author": {
+          "gitId": "Christopher-LM"
+        },
+        "content": "                .append(getCalendarPropertyId())"
+      },
+      {
+        "lineNumber": 129,
+        "author": {
+          "gitId": "Christopher-LM"
+        },
+        "content": "                .append(\" Venue: \")"
+      },
+      {
+        "lineNumber": 130,
+        "author": {
+          "gitId": "Christopher-LM"
+        },
+        "content": "                .append(getCalendarVenue())"
+      },
+      {
+        "lineNumber": 131,
+        "author": {
+          "gitId": "Christopher-LM"
+        },
+        "content": "                .append(\" Time: \")"
+      },
+      {
+        "lineNumber": 132,
+        "author": {
+          "gitId": "Christopher-LM"
+        },
+        "content": "                .append(getCalendarTime());"
+      },
+      {
+        "lineNumber": 133,
+        "author": {
+          "gitId": "Christopher-LM"
+        },
+        "content": "        return builder.toString();"
+      },
+      {
+        "lineNumber": 134,
+        "author": {
+          "gitId": "Christopher-LM"
+        },
+        "content": "    }"
+      },
+      {
+        "lineNumber": 135,
         "author": {
           "gitId": "munharsha"
         },
         "content": "}"
       },
       {
-        "lineNumber": 122,
+        "lineNumber": 136,
         "author": {
           "gitId": "munharsha"
         },
@@ -55072,8 +58344,8 @@
       }
     ],
     "authorContributionMap": {
-      "Christopher-LM": 45,
-      "munharsha": 77
+      "Christopher-LM": 57,
+      "munharsha": 79
     }
   },
   {
@@ -55239,31 +58511,143 @@
         "author": {
           "gitId": "munharsha"
         },
-        "content": "    @Override"
+        "content": "    /**"
       },
       {
         "lineNumber": 24,
         "author": {
-          "gitId": "Christopher-LM"
+          "gitId": "munharsha"
         },
-        "content": "    public String toString() {"
+        "content": "     * Returns true if either the venue, time, bidderId and propertyId is the same."
       },
       {
         "lineNumber": 25,
         "author": {
-          "gitId": "Christopher-LM"
+          "gitId": "munharsha"
         },
-        "content": "        return super.toString();"
+        "content": "     *"
       },
       {
         "lineNumber": 26,
         "author": {
           "gitId": "munharsha"
         },
-        "content": "    }"
+        "content": "     * @param other The other property."
       },
       {
         "lineNumber": 27,
+        "author": {
+          "gitId": "munharsha"
+        },
+        "content": "     * @return True if both property objects represent the same meeting."
+      },
+      {
+        "lineNumber": 28,
+        "author": {
+          "gitId": "munharsha"
+        },
+        "content": "     */"
+      },
+      {
+        "lineNumber": 29,
+        "author": {
+          "gitId": "munharsha"
+        },
+        "content": "    @Override"
+      },
+      {
+        "lineNumber": 30,
+        "author": {
+          "gitId": "munharsha"
+        },
+        "content": "    public boolean equals(Object other) {"
+      },
+      {
+        "lineNumber": 31,
+        "author": {
+          "gitId": "munharsha"
+        },
+        "content": "        return other \u003d\u003d this // short circuit if same object"
+      },
+      {
+        "lineNumber": 32,
+        "author": {
+          "gitId": "munharsha"
+        },
+        "content": "                || (other instanceof CalendarPaperwork // instanceof handles nulls"
+      },
+      {
+        "lineNumber": 33,
+        "author": {
+          "gitId": "munharsha"
+        },
+        "content": "                \u0026\u0026 this.calendarBidderId.equals(((CalendarPaperwork) other).getCalendarBidderId())"
+      },
+      {
+        "lineNumber": 34,
+        "author": {
+          "gitId": "munharsha"
+        },
+        "content": "                \u0026\u0026 this.calendarPropertyId.equals(((CalendarPaperwork) other).getCalendarPropertyId())"
+      },
+      {
+        "lineNumber": 35,
+        "author": {
+          "gitId": "munharsha"
+        },
+        "content": "                \u0026\u0026 this.calendarTime.equals(((CalendarPaperwork) other).getCalendarTime())"
+      },
+      {
+        "lineNumber": 36,
+        "author": {
+          "gitId": "munharsha"
+        },
+        "content": "                \u0026\u0026 this.calendarVenue.equals(((CalendarPaperwork) other).getCalendarVenue())); // state check"
+      },
+      {
+        "lineNumber": 37,
+        "author": {
+          "gitId": "munharsha"
+        },
+        "content": "    }"
+      },
+      {
+        "lineNumber": 38,
+        "author": {
+          "gitId": "munharsha"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 39,
+        "author": {
+          "gitId": "munharsha"
+        },
+        "content": "    @Override"
+      },
+      {
+        "lineNumber": 40,
+        "author": {
+          "gitId": "Christopher-LM"
+        },
+        "content": "    public String toString() {"
+      },
+      {
+        "lineNumber": 41,
+        "author": {
+          "gitId": "Christopher-LM"
+        },
+        "content": "        return super.toString();"
+      },
+      {
+        "lineNumber": 42,
+        "author": {
+          "gitId": "munharsha"
+        },
+        "content": "    }"
+      },
+      {
+        "lineNumber": 43,
         "author": {
           "gitId": "munharsha"
         },
@@ -55272,7 +58656,7 @@
     ],
     "authorContributionMap": {
       "Christopher-LM": 11,
-      "munharsha": 16
+      "munharsha": 32
     }
   },
   {
@@ -56679,31 +60063,143 @@
         "author": {
           "gitId": "munharsha"
         },
-        "content": "    @Override"
+        "content": "    /**"
       },
       {
         "lineNumber": 24,
         "author": {
-          "gitId": "Christopher-LM"
+          "gitId": "munharsha"
         },
-        "content": "    public String toString() {"
+        "content": "     * Returns true if either the venue, time, bidderId and propertyId is the same."
       },
       {
         "lineNumber": 25,
         "author": {
-          "gitId": "Christopher-LM"
+          "gitId": "munharsha"
         },
-        "content": "        return super.toString();"
+        "content": "     *"
       },
       {
         "lineNumber": 26,
         "author": {
           "gitId": "munharsha"
         },
-        "content": "    }"
+        "content": "     * @param other The other property."
       },
       {
         "lineNumber": 27,
+        "author": {
+          "gitId": "munharsha"
+        },
+        "content": "     * @return True if both property objects represent the same meeting."
+      },
+      {
+        "lineNumber": 28,
+        "author": {
+          "gitId": "munharsha"
+        },
+        "content": "     */"
+      },
+      {
+        "lineNumber": 29,
+        "author": {
+          "gitId": "munharsha"
+        },
+        "content": "    @Override"
+      },
+      {
+        "lineNumber": 30,
+        "author": {
+          "gitId": "munharsha"
+        },
+        "content": "    public boolean equals(Object other) {"
+      },
+      {
+        "lineNumber": 31,
+        "author": {
+          "gitId": "munharsha"
+        },
+        "content": "        return other \u003d\u003d this // short circuit if same object"
+      },
+      {
+        "lineNumber": 32,
+        "author": {
+          "gitId": "munharsha"
+        },
+        "content": "                || (other instanceof CalendarViewing // instanceof handles nulls"
+      },
+      {
+        "lineNumber": 33,
+        "author": {
+          "gitId": "munharsha"
+        },
+        "content": "                \u0026\u0026 this.calendarBidderId.equals(((CalendarViewing) other).getCalendarBidderId())"
+      },
+      {
+        "lineNumber": 34,
+        "author": {
+          "gitId": "munharsha"
+        },
+        "content": "                \u0026\u0026 this.calendarPropertyId.equals(((CalendarViewing) other).getCalendarPropertyId())"
+      },
+      {
+        "lineNumber": 35,
+        "author": {
+          "gitId": "munharsha"
+        },
+        "content": "                \u0026\u0026 this.calendarTime.equals(((CalendarViewing) other).getCalendarTime())"
+      },
+      {
+        "lineNumber": 36,
+        "author": {
+          "gitId": "munharsha"
+        },
+        "content": "                \u0026\u0026 this.calendarVenue.equals(((CalendarViewing) other).getCalendarVenue())); // state check"
+      },
+      {
+        "lineNumber": 37,
+        "author": {
+          "gitId": "munharsha"
+        },
+        "content": "    }"
+      },
+      {
+        "lineNumber": 38,
+        "author": {
+          "gitId": "munharsha"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 39,
+        "author": {
+          "gitId": "munharsha"
+        },
+        "content": "    @Override"
+      },
+      {
+        "lineNumber": 40,
+        "author": {
+          "gitId": "Christopher-LM"
+        },
+        "content": "    public String toString() {"
+      },
+      {
+        "lineNumber": 41,
+        "author": {
+          "gitId": "Christopher-LM"
+        },
+        "content": "        return super.toString();"
+      },
+      {
+        "lineNumber": 42,
+        "author": {
+          "gitId": "munharsha"
+        },
+        "content": "    }"
+      },
+      {
+        "lineNumber": 43,
         "author": {
           "gitId": "munharsha"
         },
@@ -56712,7 +60208,473 @@
     ],
     "authorContributionMap": {
       "Christopher-LM": 11,
-      "munharsha": 16
+      "munharsha": 32
+    }
+  },
+  {
+    "path": "src/main/java/seedu/address/model/calendar/PropertyIdContainsKeywordsPredicate.java",
+    "fileType": "functional-code",
+    "lines": [
+      {
+        "lineNumber": 1,
+        "author": {
+          "gitId": "munharsha"
+        },
+        "content": "package seedu.address.model.calendar;"
+      },
+      {
+        "lineNumber": 2,
+        "author": {
+          "gitId": "munharsha"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 3,
+        "author": {
+          "gitId": "munharsha"
+        },
+        "content": "import java.util.List;"
+      },
+      {
+        "lineNumber": 4,
+        "author": {
+          "gitId": "munharsha"
+        },
+        "content": "import java.util.function.Predicate;"
+      },
+      {
+        "lineNumber": 5,
+        "author": {
+          "gitId": "munharsha"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 6,
+        "author": {
+          "gitId": "munharsha"
+        },
+        "content": "import seedu.address.commons.util.StringUtil;"
+      },
+      {
+        "lineNumber": 7,
+        "author": {
+          "gitId": "munharsha"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 8,
+        "author": {
+          "gitId": "munharsha"
+        },
+        "content": "/**"
+      },
+      {
+        "lineNumber": 9,
+        "author": {
+          "gitId": "munharsha"
+        },
+        "content": " * Tests that a {@code Meeting}\u0027s {@code PropertyId} matches any of the keywords given."
+      },
+      {
+        "lineNumber": 10,
+        "author": {
+          "gitId": "munharsha"
+        },
+        "content": " */"
+      },
+      {
+        "lineNumber": 11,
+        "author": {
+          "gitId": "munharsha"
+        },
+        "content": "public class PropertyIdContainsKeywordsPredicate implements Predicate\u003cCalendarMeeting\u003e {"
+      },
+      {
+        "lineNumber": 12,
+        "author": {
+          "gitId": "munharsha"
+        },
+        "content": "    private final List\u003cString\u003e keywords;"
+      },
+      {
+        "lineNumber": 13,
+        "author": {
+          "gitId": "munharsha"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 14,
+        "author": {
+          "gitId": "munharsha"
+        },
+        "content": "    public PropertyIdContainsKeywordsPredicate(List\u003cString\u003e keywords) {"
+      },
+      {
+        "lineNumber": 15,
+        "author": {
+          "gitId": "munharsha"
+        },
+        "content": "        this.keywords \u003d keywords;"
+      },
+      {
+        "lineNumber": 16,
+        "author": {
+          "gitId": "munharsha"
+        },
+        "content": "    }"
+      },
+      {
+        "lineNumber": 17,
+        "author": {
+          "gitId": "munharsha"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 18,
+        "author": {
+          "gitId": "munharsha"
+        },
+        "content": "    @Override"
+      },
+      {
+        "lineNumber": 19,
+        "author": {
+          "gitId": "munharsha"
+        },
+        "content": "    public boolean test(CalendarMeeting calendarMeeting) {"
+      },
+      {
+        "lineNumber": 20,
+        "author": {
+          "gitId": "munharsha"
+        },
+        "content": "        return keywords.stream()"
+      },
+      {
+        "lineNumber": 21,
+        "author": {
+          "gitId": "munharsha"
+        },
+        "content": "                .anyMatch(keyword -\u003e"
+      },
+      {
+        "lineNumber": 22,
+        "author": {
+          "gitId": "munharsha"
+        },
+        "content": "                        StringUtil.containsWordIgnoreCase(calendarMeeting.getCalendarPropertyId().propertyId, keyword));"
+      },
+      {
+        "lineNumber": 23,
+        "author": {
+          "gitId": "munharsha"
+        },
+        "content": "    }"
+      },
+      {
+        "lineNumber": 24,
+        "author": {
+          "gitId": "munharsha"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 25,
+        "author": {
+          "gitId": "munharsha"
+        },
+        "content": "    @Override"
+      },
+      {
+        "lineNumber": 26,
+        "author": {
+          "gitId": "munharsha"
+        },
+        "content": "    public boolean equals(Object other) {"
+      },
+      {
+        "lineNumber": 27,
+        "author": {
+          "gitId": "munharsha"
+        },
+        "content": "        return other \u003d\u003d this // short circuit if same object"
+      },
+      {
+        "lineNumber": 28,
+        "author": {
+          "gitId": "munharsha"
+        },
+        "content": "                || (other instanceof PropertyIdContainsKeywordsPredicate // instanceof handles nulls"
+      },
+      {
+        "lineNumber": 29,
+        "author": {
+          "gitId": "munharsha"
+        },
+        "content": "                \u0026\u0026 keywords.equals(((PropertyIdContainsKeywordsPredicate) other).keywords)); // state check"
+      },
+      {
+        "lineNumber": 30,
+        "author": {
+          "gitId": "munharsha"
+        },
+        "content": "    }"
+      },
+      {
+        "lineNumber": 31,
+        "author": {
+          "gitId": "munharsha"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 32,
+        "author": {
+          "gitId": "munharsha"
+        },
+        "content": "}"
+      }
+    ],
+    "authorContributionMap": {
+      "munharsha": 32
+    }
+  },
+  {
+    "path": "src/main/java/seedu/address/model/calendar/TimeContainsKeywordsPredicate.java",
+    "fileType": "functional-code",
+    "lines": [
+      {
+        "lineNumber": 1,
+        "author": {
+          "gitId": "munharsha"
+        },
+        "content": "package seedu.address.model.calendar;"
+      },
+      {
+        "lineNumber": 2,
+        "author": {
+          "gitId": "munharsha"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 3,
+        "author": {
+          "gitId": "munharsha"
+        },
+        "content": "import java.util.List;"
+      },
+      {
+        "lineNumber": 4,
+        "author": {
+          "gitId": "munharsha"
+        },
+        "content": "import java.util.function.Predicate;"
+      },
+      {
+        "lineNumber": 5,
+        "author": {
+          "gitId": "munharsha"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 6,
+        "author": {
+          "gitId": "munharsha"
+        },
+        "content": "import seedu.address.commons.util.StringUtil;"
+      },
+      {
+        "lineNumber": 7,
+        "author": {
+          "gitId": "munharsha"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 8,
+        "author": {
+          "gitId": "munharsha"
+        },
+        "content": "/**"
+      },
+      {
+        "lineNumber": 9,
+        "author": {
+          "gitId": "munharsha"
+        },
+        "content": " * Tests that a {@code Meeting}\u0027s {@code Time} matches any of the keywords given."
+      },
+      {
+        "lineNumber": 10,
+        "author": {
+          "gitId": "munharsha"
+        },
+        "content": " */"
+      },
+      {
+        "lineNumber": 11,
+        "author": {
+          "gitId": "munharsha"
+        },
+        "content": "public class TimeContainsKeywordsPredicate implements Predicate\u003cCalendarMeeting\u003e {"
+      },
+      {
+        "lineNumber": 12,
+        "author": {
+          "gitId": "munharsha"
+        },
+        "content": "    private final List\u003cString\u003e keywords;"
+      },
+      {
+        "lineNumber": 13,
+        "author": {
+          "gitId": "munharsha"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 14,
+        "author": {
+          "gitId": "munharsha"
+        },
+        "content": "    public TimeContainsKeywordsPredicate(List\u003cString\u003e keywords) {"
+      },
+      {
+        "lineNumber": 15,
+        "author": {
+          "gitId": "munharsha"
+        },
+        "content": "        this.keywords \u003d keywords;"
+      },
+      {
+        "lineNumber": 16,
+        "author": {
+          "gitId": "munharsha"
+        },
+        "content": "    }"
+      },
+      {
+        "lineNumber": 17,
+        "author": {
+          "gitId": "munharsha"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 18,
+        "author": {
+          "gitId": "munharsha"
+        },
+        "content": "    @Override"
+      },
+      {
+        "lineNumber": 19,
+        "author": {
+          "gitId": "munharsha"
+        },
+        "content": "    public boolean test(CalendarMeeting calendarMeeting) {"
+      },
+      {
+        "lineNumber": 20,
+        "author": {
+          "gitId": "munharsha"
+        },
+        "content": "        return keywords.stream()"
+      },
+      {
+        "lineNumber": 21,
+        "author": {
+          "gitId": "munharsha"
+        },
+        "content": "                .anyMatch(keyword -\u003e"
+      },
+      {
+        "lineNumber": 22,
+        "author": {
+          "gitId": "munharsha"
+        },
+        "content": "                        StringUtil.containsWordIgnoreCase(calendarMeeting.getCalendarTime().time, keyword));"
+      },
+      {
+        "lineNumber": 23,
+        "author": {
+          "gitId": "munharsha"
+        },
+        "content": "    }"
+      },
+      {
+        "lineNumber": 24,
+        "author": {
+          "gitId": "munharsha"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 25,
+        "author": {
+          "gitId": "munharsha"
+        },
+        "content": "    @Override"
+      },
+      {
+        "lineNumber": 26,
+        "author": {
+          "gitId": "munharsha"
+        },
+        "content": "    public boolean equals(Object other) {"
+      },
+      {
+        "lineNumber": 27,
+        "author": {
+          "gitId": "munharsha"
+        },
+        "content": "        return other \u003d\u003d this // short circuit if same object"
+      },
+      {
+        "lineNumber": 28,
+        "author": {
+          "gitId": "munharsha"
+        },
+        "content": "                || (other instanceof TimeContainsKeywordsPredicate // instanceof handles nulls"
+      },
+      {
+        "lineNumber": 29,
+        "author": {
+          "gitId": "munharsha"
+        },
+        "content": "                \u0026\u0026 keywords.equals(((TimeContainsKeywordsPredicate) other).keywords)); // state check"
+      },
+      {
+        "lineNumber": 30,
+        "author": {
+          "gitId": "munharsha"
+        },
+        "content": "    }"
+      },
+      {
+        "lineNumber": 31,
+        "author": {
+          "gitId": "munharsha"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 32,
+        "author": {
+          "gitId": "munharsha"
+        },
+        "content": "}"
+      }
+    ],
+    "authorContributionMap": {
+      "munharsha": 32
     }
   },
   {
@@ -56981,9 +60943,9 @@
       {
         "lineNumber": 38,
         "author": {
-          "gitId": "Christopher-LM"
+          "gitId": "munharsha"
         },
-        "content": "        return internalList.stream().anyMatch(toCheck::isSameMeeting);"
+        "content": "        return internalList.stream().anyMatch(toCheck::equals);"
       },
       {
         "lineNumber": 39,
@@ -57184,9 +61146,9 @@
       {
         "lineNumber": 67,
         "author": {
-          "gitId": "Christopher-LM"
+          "gitId": "munharsha"
         },
-        "content": "        if (!target.isSameMeeting(editedMeeting) \u0026\u0026 contains(editedMeeting)) {"
+        "content": "        if (!target.equals(editedMeeting) \u0026\u0026 contains(editedMeeting)) {"
       },
       {
         "lineNumber": 68,
@@ -57646,9 +61608,9 @@
       {
         "lineNumber": 133,
         "author": {
-          "gitId": "Christopher-LM"
+          "gitId": "munharsha"
         },
-        "content": "                if (meetings.get(i).isSameMeeting(meetings.get(j))) {"
+        "content": "                if (meetings.get(i).equals(meetings.get(j))) {"
       },
       {
         "lineNumber": 134,
@@ -57701,7 +61663,8 @@
       }
     ],
     "authorContributionMap": {
-      "Christopher-LM": 140
+      "Christopher-LM": 137,
+      "munharsha": 3
     }
   },
   {
@@ -139851,297 +143814,367 @@
         "author": {
           "gitId": "munharsha"
         },
-        "content": ""
+        "content": "    private CalendarPaperwork meetingPaperworkType \u003d new CalendarPaperwork(new CalendarBidderId(\"b2\"),"
       },
       {
         "lineNumber": 29,
         "author": {
           "gitId": "munharsha"
         },
-        "content": "    @Test"
+        "content": "            new CalendarPropertyId(\"p2\"), new CalendarTime(\"15 Oct 2020\"),"
       },
       {
         "lineNumber": 30,
         "author": {
           "gitId": "munharsha"
         },
-        "content": "    void getCalendarBidderId() {"
+        "content": "            new CalendarVenue(\"tampines\"));"
       },
       {
         "lineNumber": 31,
         "author": {
           "gitId": "munharsha"
         },
-        "content": "        assertTrue(firstMeeting.getCalendarBidderId().equals(firstMeetingIdentical.getCalendarBidderId()));"
+        "content": ""
       },
       {
         "lineNumber": 32,
         "author": {
           "gitId": "munharsha"
         },
-        "content": "        assertFalse(firstMeeting.getCalendarBidderId().equals(firstMeetingDiff.getCalendarBidderId()));"
+        "content": "    @Test"
       },
       {
         "lineNumber": 33,
         "author": {
           "gitId": "munharsha"
         },
-        "content": "    }"
+        "content": "    void getCalendarBidderId() {"
       },
       {
         "lineNumber": 34,
         "author": {
           "gitId": "munharsha"
         },
-        "content": ""
+        "content": "        assertTrue(firstMeeting.getCalendarBidderId().equals(firstMeetingIdentical.getCalendarBidderId()));"
       },
       {
         "lineNumber": 35,
         "author": {
           "gitId": "munharsha"
         },
-        "content": "    @Test"
+        "content": "        assertFalse(firstMeeting.getCalendarBidderId().equals(firstMeetingDiff.getCalendarBidderId()));"
       },
       {
         "lineNumber": 36,
         "author": {
           "gitId": "munharsha"
         },
-        "content": "    void getCalendarPropertyId() {"
+        "content": "    }"
       },
       {
         "lineNumber": 37,
         "author": {
           "gitId": "munharsha"
         },
-        "content": "        assertTrue(firstMeeting.getCalendarPropertyId().equals(firstMeetingIdentical.getCalendarPropertyId()));"
+        "content": ""
       },
       {
         "lineNumber": 38,
         "author": {
           "gitId": "munharsha"
         },
-        "content": "        assertFalse(firstMeeting.getCalendarPropertyId().equals(firstMeetingDiff.getCalendarPropertyId()));"
+        "content": "    @Test"
       },
       {
         "lineNumber": 39,
         "author": {
           "gitId": "munharsha"
         },
-        "content": "    }"
+        "content": "    void getCalendarPropertyId() {"
       },
       {
         "lineNumber": 40,
         "author": {
           "gitId": "munharsha"
         },
-        "content": ""
+        "content": "        assertTrue(firstMeeting.getCalendarPropertyId().equals(firstMeetingIdentical.getCalendarPropertyId()));"
       },
       {
         "lineNumber": 41,
         "author": {
           "gitId": "munharsha"
         },
-        "content": "    @Test"
+        "content": "        assertFalse(firstMeeting.getCalendarPropertyId().equals(firstMeetingDiff.getCalendarPropertyId()));"
       },
       {
         "lineNumber": 42,
         "author": {
           "gitId": "munharsha"
         },
-        "content": "    void getCalendarTime() {"
+        "content": "    }"
       },
       {
         "lineNumber": 43,
         "author": {
           "gitId": "munharsha"
         },
-        "content": "        assertTrue(firstMeeting.getCalendarTime().equals(firstMeetingIdentical.getCalendarTime()));"
+        "content": ""
       },
       {
         "lineNumber": 44,
         "author": {
           "gitId": "munharsha"
         },
-        "content": "        assertFalse(firstMeeting.getCalendarTime().equals(firstMeetingDiff.getCalendarTime()));"
+        "content": "    @Test"
       },
       {
         "lineNumber": 45,
         "author": {
           "gitId": "munharsha"
         },
-        "content": "    }"
+        "content": "    void getCalendarTime() {"
       },
       {
         "lineNumber": 46,
         "author": {
           "gitId": "munharsha"
         },
-        "content": ""
+        "content": "        assertTrue(firstMeeting.getCalendarTime().equals(firstMeetingIdentical.getCalendarTime()));"
       },
       {
         "lineNumber": 47,
         "author": {
           "gitId": "munharsha"
         },
-        "content": "    @Test"
+        "content": "        assertFalse(firstMeeting.getCalendarTime().equals(firstMeetingDiff.getCalendarTime()));"
       },
       {
         "lineNumber": 48,
         "author": {
           "gitId": "munharsha"
         },
-        "content": "    void getCalendarVenue() {"
+        "content": "    }"
       },
       {
         "lineNumber": 49,
         "author": {
           "gitId": "munharsha"
         },
-        "content": "        assertTrue(firstMeeting.getCalendarVenue().equals(firstMeetingIdentical.getCalendarVenue()));"
+        "content": ""
       },
       {
         "lineNumber": 50,
         "author": {
           "gitId": "munharsha"
         },
-        "content": "        assertFalse(firstMeeting.getCalendarVenue().equals(firstMeetingDiff.getCalendarVenue()));"
+        "content": "    @Test"
       },
       {
         "lineNumber": 51,
         "author": {
           "gitId": "munharsha"
         },
-        "content": "    }"
+        "content": "    void getCalendarVenue() {"
       },
       {
         "lineNumber": 52,
         "author": {
           "gitId": "munharsha"
         },
-        "content": ""
+        "content": "        assertTrue(firstMeeting.getCalendarVenue().equals(firstMeetingIdentical.getCalendarVenue()));"
       },
       {
         "lineNumber": 53,
         "author": {
           "gitId": "munharsha"
         },
-        "content": "    @Test"
+        "content": "        assertFalse(firstMeeting.getCalendarVenue().equals(firstMeetingDiff.getCalendarVenue()));"
       },
       {
         "lineNumber": 54,
         "author": {
           "gitId": "munharsha"
         },
-        "content": "    void isViewing() {"
+        "content": "    }"
       },
       {
         "lineNumber": 55,
         "author": {
           "gitId": "munharsha"
         },
-        "content": "        assertFalse(firstMeeting.isViewing() \u0026\u0026 firstMeetingDiff.isViewing());"
+        "content": ""
       },
       {
         "lineNumber": 56,
         "author": {
           "gitId": "munharsha"
         },
-        "content": "        assertTrue(meetingDiffViewingType.isViewing());"
+        "content": "    @Test"
       },
       {
         "lineNumber": 57,
         "author": {
           "gitId": "munharsha"
         },
-        "content": "    }"
+        "content": "    void isViewing() {"
       },
       {
         "lineNumber": 58,
         "author": {
           "gitId": "munharsha"
         },
-        "content": ""
+        "content": "        assertFalse(firstMeeting.isViewing() \u0026\u0026 firstMeetingDiff.isViewing());"
       },
       {
         "lineNumber": 59,
         "author": {
           "gitId": "munharsha"
         },
-        "content": "    @Test"
+        "content": "        assertTrue(meetingDiffViewingType.isViewing());"
       },
       {
         "lineNumber": 60,
         "author": {
           "gitId": "munharsha"
         },
-        "content": "    void isPaperWork() {"
+        "content": "    }"
       },
       {
         "lineNumber": 61,
         "author": {
           "gitId": "munharsha"
         },
-        "content": "        assertFalse(firstMeeting.isViewing() \u0026\u0026 firstMeetingDiff.isViewing());"
+        "content": ""
       },
       {
         "lineNumber": 62,
         "author": {
           "gitId": "munharsha"
         },
-        "content": "        assertTrue(meetingDiffViewingType.isViewing());"
+        "content": "    @Test"
       },
       {
         "lineNumber": 63,
         "author": {
           "gitId": "munharsha"
         },
-        "content": "    }"
+        "content": "    void isPaperWork() {"
       },
       {
         "lineNumber": 64,
         "author": {
           "gitId": "munharsha"
         },
-        "content": ""
+        "content": "        assertFalse(firstMeeting.isViewing() \u0026\u0026 firstMeetingDiff.isViewing());"
       },
       {
         "lineNumber": 65,
         "author": {
           "gitId": "munharsha"
         },
-        "content": "    @Test"
+        "content": "        assertTrue(meetingDiffViewingType.isViewing());"
       },
       {
         "lineNumber": 66,
         "author": {
           "gitId": "munharsha"
         },
-        "content": "    void isAdmin() {"
+        "content": "    }"
       },
       {
         "lineNumber": 67,
         "author": {
           "gitId": "munharsha"
         },
-        "content": "        assertFalse(firstMeeting.isAdmin() \u0026\u0026 firstMeetingDiff.isAdmin());"
+        "content": ""
       },
       {
         "lineNumber": 68,
         "author": {
           "gitId": "munharsha"
         },
-        "content": "        assertTrue(meetingDiffAdminType.isAdmin());"
+        "content": "    @Test"
       },
       {
         "lineNumber": 69,
         "author": {
           "gitId": "munharsha"
         },
-        "content": "    }"
+        "content": "    void isAdmin() {"
       },
       {
         "lineNumber": 70,
+        "author": {
+          "gitId": "munharsha"
+        },
+        "content": "        assertFalse(firstMeeting.isAdmin() \u0026\u0026 firstMeetingDiff.isAdmin());"
+      },
+      {
+        "lineNumber": 71,
+        "author": {
+          "gitId": "munharsha"
+        },
+        "content": "        assertTrue(meetingDiffAdminType.isAdmin());"
+      },
+      {
+        "lineNumber": 72,
+        "author": {
+          "gitId": "munharsha"
+        },
+        "content": "    }"
+      },
+      {
+        "lineNumber": 73,
+        "author": {
+          "gitId": "munharsha"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 74,
+        "author": {
+          "gitId": "munharsha"
+        },
+        "content": "    @Test"
+      },
+      {
+        "lineNumber": 75,
+        "author": {
+          "gitId": "munharsha"
+        },
+        "content": "    void equals() {"
+      },
+      {
+        "lineNumber": 76,
+        "author": {
+          "gitId": "munharsha"
+        },
+        "content": "        assertTrue(firstMeeting.equals(firstMeetingIdentical));"
+      },
+      {
+        "lineNumber": 77,
+        "author": {
+          "gitId": "munharsha"
+        },
+        "content": "        assertFalse(firstMeeting.equals(firstMeetingDiff));"
+      },
+      {
+        "lineNumber": 78,
+        "author": {
+          "gitId": "munharsha"
+        },
+        "content": "    }"
+      },
+      {
+        "lineNumber": 79,
+        "author": {
+          "gitId": "munharsha"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 80,
         "author": {
           "gitId": "munharsha"
         },
@@ -140149,7 +144182,7 @@
       }
     ],
     "authorContributionMap": {
-      "munharsha": 70
+      "munharsha": 80
     }
   },
   {

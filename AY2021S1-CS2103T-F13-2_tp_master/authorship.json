@@ -2536,546 +2536,546 @@
         "author": {
           "gitId": "-"
         },
-        "content": ""
+        "content": "* `VersionedAddressBook#commit()` — Saves the current address book state in its history."
       },
       {
         "lineNumber": 197,
         "author": {
           "gitId": "-"
         },
-        "content": "* `VersionedAddressBook#commit()` — Saves the current address book state in its history."
+        "content": "* `VersionedAddressBook#undo()` — Restores the previous address book state from its history."
       },
       {
         "lineNumber": 198,
         "author": {
           "gitId": "-"
         },
-        "content": "* `VersionedAddressBook#undo()` — Restores the previous address book state from its history."
+        "content": "* `VersionedAddressBook#redo()` — Restores a previously undone address book state from its history."
       },
       {
         "lineNumber": 199,
         "author": {
           "gitId": "-"
         },
-        "content": "* `VersionedAddressBook#redo()` — Restores a previously undone address book state from its history."
+        "content": ""
       },
       {
         "lineNumber": 200,
         "author": {
           "gitId": "-"
         },
-        "content": ""
+        "content": "These operations are exposed in the `Model` interface as `Model#commitAddressBook()`, `Model#undoAddressBook()` and `Model#redoAddressBook()` respectively."
       },
       {
         "lineNumber": 201,
         "author": {
           "gitId": "-"
         },
-        "content": "These operations are exposed in the `Model` interface as `Model#commitAddressBook()`, `Model#undoAddressBook()` and `Model#redoAddressBook()` respectively."
+        "content": ""
       },
       {
         "lineNumber": 202,
         "author": {
           "gitId": "-"
         },
-        "content": ""
+        "content": "Given below is an example usage scenario and how the undo/redo mechanism behaves at each step."
       },
       {
         "lineNumber": 203,
         "author": {
           "gitId": "-"
         },
-        "content": "Given below is an example usage scenario and how the undo/redo mechanism behaves at each step."
+        "content": ""
       },
       {
         "lineNumber": 204,
         "author": {
           "gitId": "-"
         },
-        "content": ""
+        "content": "Step 1. The user launches the application for the first time. The `VersionedAddressBook` will be initialized with the initial address book state, and the `currentStatePointer` pointing to that single address book state."
       },
       {
         "lineNumber": 205,
         "author": {
           "gitId": "-"
         },
-        "content": "Step 1. The user launches the application for the first time. The `VersionedAddressBook` will be initialized with the initial address book state, and the `currentStatePointer` pointing to that single address book state."
+        "content": ""
       },
       {
         "lineNumber": 206,
         "author": {
           "gitId": "-"
         },
-        "content": ""
+        "content": "![UndoRedoState0](images/UndoRedoState0.png)"
       },
       {
         "lineNumber": 207,
         "author": {
           "gitId": "-"
         },
-        "content": "![UndoRedoState0](images/UndoRedoState0.png)"
-      },
-      {
-        "lineNumber": 208,
-        "author": {
-          "gitId": "-"
-        },
         "content": ""
       },
       {
-        "lineNumber": 209,
+        "lineNumber": 208,
         "author": {
           "gitId": "TanLeYang"
         },
         "content": "Step 2. The user executes `delete 5` command to delete the 5th book in the address book. The `delete` command calls `Model#commitAddressBook()`, causing the modified state of the address book after the `delete 5` command executes to be saved in the `addressBookStateList`, and the `currentStatePointer` is shifted to the newly inserted address book state."
       },
       {
-        "lineNumber": 210,
+        "lineNumber": 209,
         "author": {
           "gitId": "-"
         },
         "content": ""
       },
       {
-        "lineNumber": 211,
+        "lineNumber": 210,
         "author": {
           "gitId": "-"
         },
         "content": "![UndoRedoState1](images/UndoRedoState1.png)"
       },
       {
-        "lineNumber": 212,
+        "lineNumber": 211,
         "author": {
           "gitId": "-"
         },
         "content": ""
       },
       {
-        "lineNumber": 213,
+        "lineNumber": 212,
         "author": {
           "gitId": "TanLeYang"
         },
         "content": "Step 3. The user executes `add n/David …​` to add a new book. The `add` command also calls `Model#commitAddressBook()`, causing another modified address book state to be saved into the `addressBookStateList`."
       },
       {
-        "lineNumber": 214,
+        "lineNumber": 213,
         "author": {
           "gitId": "-"
         },
         "content": ""
       },
       {
-        "lineNumber": 215,
+        "lineNumber": 214,
         "author": {
           "gitId": "-"
         },
         "content": "![UndoRedoState2](images/UndoRedoState2.png)"
       },
       {
-        "lineNumber": 216,
+        "lineNumber": 215,
         "author": {
           "gitId": "-"
         },
         "content": ""
       },
       {
-        "lineNumber": 217,
+        "lineNumber": 216,
         "author": {
           "gitId": "-"
         },
         "content": "\u003cdiv markdown\u003d\"span\" class\u003d\"alert alert-info\"\u003e:information_source: **Note:** If a command fails its execution, it will not call `Model#commitAddressBook()`, so the address book state will not be saved into the `addressBookStateList`."
       },
       {
-        "lineNumber": 218,
+        "lineNumber": 217,
         "author": {
           "gitId": "-"
         },
         "content": ""
+      },
+      {
+        "lineNumber": 218,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "\u003c/div\u003e"
       },
       {
         "lineNumber": 219,
         "author": {
           "gitId": "-"
         },
-        "content": "\u003c/div\u003e"
-      },
-      {
-        "lineNumber": 220,
-        "author": {
-          "gitId": "-"
-        },
         "content": ""
       },
       {
-        "lineNumber": 221,
+        "lineNumber": 220,
         "author": {
           "gitId": "TanLeYang"
         },
         "content": "Step 4. The user now decides that adding the book was a mistake, and decides to undo that action by executing the `undo` command. The `undo` command will call `Model#undoAddressBook()`, which will shift the `currentStatePointer` once to the left, pointing it to the previous address book state, and restores the address book to that state."
       },
       {
-        "lineNumber": 222,
+        "lineNumber": 221,
         "author": {
           "gitId": "-"
         },
         "content": ""
       },
       {
-        "lineNumber": 223,
+        "lineNumber": 222,
         "author": {
           "gitId": "-"
         },
         "content": "![UndoRedoState3](images/UndoRedoState3.png)"
       },
       {
-        "lineNumber": 224,
+        "lineNumber": 223,
         "author": {
           "gitId": "-"
         },
         "content": ""
       },
       {
-        "lineNumber": 225,
+        "lineNumber": 224,
         "author": {
           "gitId": "-"
         },
         "content": "\u003cdiv markdown\u003d\"span\" class\u003d\"alert alert-info\"\u003e:information_source: **Note:** If the `currentStatePointer` is at index 0, pointing to the initial AddressBook state, then there are no previous AddressBook states to restore. The `undo` command uses `Model#canUndoAddressBook()` to check if this is the case. If so, it will return an error to the user rather"
       },
       {
-        "lineNumber": 226,
+        "lineNumber": 225,
         "author": {
           "gitId": "-"
         },
         "content": "than attempting to perform the undo."
       },
       {
-        "lineNumber": 227,
+        "lineNumber": 226,
         "author": {
           "gitId": "-"
         },
         "content": ""
+      },
+      {
+        "lineNumber": 227,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "\u003c/div\u003e"
       },
       {
         "lineNumber": 228,
         "author": {
           "gitId": "-"
         },
-        "content": "\u003c/div\u003e"
+        "content": ""
       },
       {
         "lineNumber": 229,
         "author": {
           "gitId": "-"
         },
-        "content": ""
+        "content": "The following sequence diagram shows how the undo operation works:"
       },
       {
         "lineNumber": 230,
         "author": {
           "gitId": "-"
         },
-        "content": "The following sequence diagram shows how the undo operation works:"
+        "content": ""
       },
       {
         "lineNumber": 231,
         "author": {
           "gitId": "-"
         },
-        "content": ""
+        "content": "![UndoSequenceDiagram](images/UndoSequenceDiagram.png)"
       },
       {
         "lineNumber": 232,
         "author": {
           "gitId": "-"
         },
-        "content": "![UndoSequenceDiagram](images/UndoSequenceDiagram.png)"
+        "content": ""
       },
       {
         "lineNumber": 233,
         "author": {
           "gitId": "-"
         },
-        "content": ""
+        "content": "\u003cdiv markdown\u003d\"span\" class\u003d\"alert alert-info\"\u003e:information_source: **Note:** The lifeline for `UndoCommand` should end at the destroy marker (X) but due to a limitation of PlantUML, the lifeline reaches the end of diagram."
       },
       {
         "lineNumber": 234,
         "author": {
           "gitId": "-"
         },
-        "content": "\u003cdiv markdown\u003d\"span\" class\u003d\"alert alert-info\"\u003e:information_source: **Note:** The lifeline for `UndoCommand` should end at the destroy marker (X) but due to a limitation of PlantUML, the lifeline reaches the end of diagram."
+        "content": ""
       },
       {
         "lineNumber": 235,
         "author": {
           "gitId": "-"
         },
-        "content": ""
+        "content": "\u003c/div\u003e"
       },
       {
         "lineNumber": 236,
         "author": {
           "gitId": "-"
         },
-        "content": "\u003c/div\u003e"
+        "content": ""
       },
       {
         "lineNumber": 237,
         "author": {
           "gitId": "-"
         },
-        "content": ""
+        "content": "The `redo` command does the opposite — it calls `Model#redoAddressBook()`, which shifts the `currentStatePointer` once to the right, pointing to the previously undone state, and restores the address book to that state."
       },
       {
         "lineNumber": 238,
         "author": {
           "gitId": "-"
         },
-        "content": "The `redo` command does the opposite — it calls `Model#redoAddressBook()`, which shifts the `currentStatePointer` once to the right, pointing to the previously undone state, and restores the address book to that state."
+        "content": ""
       },
       {
         "lineNumber": 239,
         "author": {
           "gitId": "-"
         },
-        "content": ""
+        "content": "\u003cdiv markdown\u003d\"span\" class\u003d\"alert alert-info\"\u003e:information_source: **Note:** If the `currentStatePointer` is at index `addressBookStateList.size() - 1`, pointing to the latest address book state, then there are no undone AddressBook states to restore. The `redo` command uses `Model#canRedoAddressBook()` to check if this is the case. If so, it will return an error to the user rather than attempting to perform the redo."
       },
       {
         "lineNumber": 240,
         "author": {
           "gitId": "-"
         },
-        "content": "\u003cdiv markdown\u003d\"span\" class\u003d\"alert alert-info\"\u003e:information_source: **Note:** If the `currentStatePointer` is at index `addressBookStateList.size() - 1`, pointing to the latest address book state, then there are no undone AddressBook states to restore. The `redo` command uses `Model#canRedoAddressBook()` to check if this is the case. If so, it will return an error to the user rather than attempting to perform the redo."
+        "content": ""
       },
       {
         "lineNumber": 241,
         "author": {
           "gitId": "-"
         },
-        "content": ""
+        "content": "\u003c/div\u003e"
       },
       {
         "lineNumber": 242,
         "author": {
           "gitId": "-"
         },
-        "content": "\u003c/div\u003e"
+        "content": ""
       },
       {
         "lineNumber": 243,
         "author": {
           "gitId": "-"
         },
-        "content": ""
+        "content": "Step 5. The user then decides to execute the command `list`. Commands that do not modify the address book, such as `list`, will usually not call `Model#commitAddressBook()`, `Model#undoAddressBook()` or `Model#redoAddressBook()`. Thus, the `addressBookStateList` remains unchanged."
       },
       {
         "lineNumber": 244,
         "author": {
           "gitId": "-"
         },
-        "content": "Step 5. The user then decides to execute the command `list`. Commands that do not modify the address book, such as `list`, will usually not call `Model#commitAddressBook()`, `Model#undoAddressBook()` or `Model#redoAddressBook()`. Thus, the `addressBookStateList` remains unchanged."
+        "content": ""
       },
       {
         "lineNumber": 245,
         "author": {
           "gitId": "-"
         },
-        "content": ""
+        "content": "![UndoRedoState4](images/UndoRedoState4.png)"
       },
       {
         "lineNumber": 246,
         "author": {
           "gitId": "-"
         },
-        "content": "![UndoRedoState4](images/UndoRedoState4.png)"
+        "content": ""
       },
       {
         "lineNumber": 247,
         "author": {
           "gitId": "-"
         },
-        "content": ""
+        "content": "Step 6. The user executes `clear`, which calls `Model#commitAddressBook()`. Since the `currentStatePointer` is not pointing at the end of the `addressBookStateList`, all address book states after the `currentStatePointer` will be purged. Reason: It no longer makes sense to redo the `add n/David …​` command. This is the behavior that most modern desktop applications follow."
       },
       {
         "lineNumber": 248,
         "author": {
           "gitId": "-"
         },
-        "content": "Step 6. The user executes `clear`, which calls `Model#commitAddressBook()`. Since the `currentStatePointer` is not pointing at the end of the `addressBookStateList`, all address book states after the `currentStatePointer` will be purged. Reason: It no longer makes sense to redo the `add n/David …​` command. This is the behavior that most modern desktop applications follow."
+        "content": ""
       },
       {
         "lineNumber": 249,
         "author": {
           "gitId": "-"
         },
-        "content": ""
+        "content": "![UndoRedoState5](images/UndoRedoState5.png)"
       },
       {
         "lineNumber": 250,
         "author": {
           "gitId": "-"
         },
-        "content": "![UndoRedoState5](images/UndoRedoState5.png)"
+        "content": ""
       },
       {
         "lineNumber": 251,
         "author": {
           "gitId": "-"
         },
-        "content": ""
+        "content": "The following activity diagram summarizes what happens when a user executes a new command:"
       },
       {
         "lineNumber": 252,
         "author": {
           "gitId": "-"
         },
-        "content": "The following activity diagram summarizes what happens when a user executes a new command:"
+        "content": ""
       },
       {
         "lineNumber": 253,
         "author": {
           "gitId": "-"
         },
-        "content": ""
+        "content": "![CommitActivityDiagram](images/CommitActivityDiagram.png)"
       },
       {
         "lineNumber": 254,
         "author": {
           "gitId": "-"
         },
-        "content": "![CommitActivityDiagram](images/CommitActivityDiagram.png)"
+        "content": ""
       },
       {
         "lineNumber": 255,
         "author": {
           "gitId": "-"
         },
-        "content": ""
+        "content": "#### Design consideration:"
       },
       {
         "lineNumber": 256,
         "author": {
           "gitId": "-"
         },
-        "content": "#### Design consideration:"
+        "content": ""
       },
       {
         "lineNumber": 257,
         "author": {
           "gitId": "-"
         },
-        "content": ""
+        "content": "##### Aspect: How undo \u0026 redo executes"
       },
       {
         "lineNumber": 258,
         "author": {
           "gitId": "-"
         },
-        "content": "##### Aspect: How undo \u0026 redo executes"
+        "content": ""
       },
       {
         "lineNumber": 259,
         "author": {
           "gitId": "-"
         },
-        "content": ""
+        "content": "* **Alternative 1 (current choice):** Saves the entire address book."
       },
       {
         "lineNumber": 260,
         "author": {
           "gitId": "-"
         },
-        "content": "* **Alternative 1 (current choice):** Saves the entire address book."
+        "content": "  * Pros: Easy to implement."
       },
       {
         "lineNumber": 261,
         "author": {
           "gitId": "-"
         },
-        "content": "  * Pros: Easy to implement."
+        "content": "  * Cons: May have performance issues in terms of memory usage."
       },
       {
         "lineNumber": 262,
         "author": {
           "gitId": "-"
         },
-        "content": "  * Cons: May have performance issues in terms of memory usage."
+        "content": ""
       },
       {
         "lineNumber": 263,
         "author": {
           "gitId": "-"
         },
-        "content": ""
+        "content": "* **Alternative 2:** Individual command knows how to undo/redo by"
       },
       {
         "lineNumber": 264,
         "author": {
           "gitId": "-"
         },
-        "content": "* **Alternative 2:** Individual command knows how to undo/redo by"
-      },
-      {
-        "lineNumber": 265,
-        "author": {
-          "gitId": "-"
-        },
         "content": "  itself."
       },
       {
-        "lineNumber": 266,
+        "lineNumber": 265,
         "author": {
           "gitId": "TanLeYang"
         },
         "content": "  * Pros: Will use less memory (e.g. for `delete`, just save the book being deleted)."
       },
       {
-        "lineNumber": 267,
+        "lineNumber": 266,
         "author": {
           "gitId": "-"
         },
         "content": "  * Cons: We must ensure that the implementation of each individual command are correct."
       },
       {
-        "lineNumber": 268,
+        "lineNumber": 267,
         "author": {
           "gitId": "-"
         },
         "content": ""
       },
       {
-        "lineNumber": 269,
+        "lineNumber": 268,
         "author": {
           "gitId": "-"
         },
         "content": "_{more aspects and alternatives to be added}_"
       },
       {
-        "lineNumber": 270,
+        "lineNumber": 269,
         "author": {
           "gitId": "-"
         },
         "content": ""
       },
       {
-        "lineNumber": 271,
+        "lineNumber": 270,
         "author": {
           "gitId": "-"
         },
         "content": "### \\[Proposed\\] Data archiving"
       },
       {
-        "lineNumber": 272,
+        "lineNumber": 271,
         "author": {
           "gitId": "-"
         },
         "content": ""
       },
       {
-        "lineNumber": 273,
+        "lineNumber": 272,
         "author": {
           "gitId": "-"
         },
         "content": "_{Explain here how the data archiving feature will be implemented}_"
+      },
+      {
+        "lineNumber": 273,
+        "author": {
+          "gitId": "-"
+        },
+        "content": ""
       },
       {
         "lineNumber": 274,
@@ -3089,189 +3089,189 @@
         "author": {
           "gitId": "-"
         },
-        "content": ""
+        "content": "--------------------------------------------------------------------------------------------------------------------"
       },
       {
         "lineNumber": 276,
         "author": {
           "gitId": "-"
         },
-        "content": "--------------------------------------------------------------------------------------------------------------------"
+        "content": ""
       },
       {
         "lineNumber": 277,
         "author": {
           "gitId": "-"
         },
-        "content": ""
+        "content": "## **Documentation, logging, testing, configuration, dev-ops**"
       },
       {
         "lineNumber": 278,
         "author": {
           "gitId": "-"
         },
-        "content": "## **Documentation, logging, testing, configuration, dev-ops**"
+        "content": ""
       },
       {
         "lineNumber": 279,
         "author": {
           "gitId": "-"
         },
-        "content": ""
+        "content": "* [Documentation guide](Documentation.md)"
       },
       {
         "lineNumber": 280,
         "author": {
           "gitId": "-"
         },
-        "content": "* [Documentation guide](Documentation.md)"
+        "content": "* [Testing guide](Testing.md)"
       },
       {
         "lineNumber": 281,
         "author": {
           "gitId": "-"
         },
-        "content": "* [Testing guide](Testing.md)"
+        "content": "* [Logging guide](Logging.md)"
       },
       {
         "lineNumber": 282,
         "author": {
           "gitId": "-"
         },
-        "content": "* [Logging guide](Logging.md)"
+        "content": "* [Configuration guide](Configuration.md)"
       },
       {
         "lineNumber": 283,
         "author": {
           "gitId": "-"
         },
-        "content": "* [Configuration guide](Configuration.md)"
+        "content": "* [DevOps guide](DevOps.md)"
       },
       {
         "lineNumber": 284,
         "author": {
           "gitId": "-"
         },
-        "content": "* [DevOps guide](DevOps.md)"
+        "content": ""
       },
       {
         "lineNumber": 285,
         "author": {
           "gitId": "-"
         },
-        "content": ""
+        "content": "--------------------------------------------------------------------------------------------------------------------"
       },
       {
         "lineNumber": 286,
         "author": {
           "gitId": "-"
         },
-        "content": "--------------------------------------------------------------------------------------------------------------------"
+        "content": ""
       },
       {
         "lineNumber": 287,
         "author": {
           "gitId": "-"
         },
-        "content": ""
+        "content": "## **Appendix: Requirements**"
       },
       {
         "lineNumber": 288,
         "author": {
           "gitId": "-"
         },
-        "content": "## **Appendix: Requirements**"
+        "content": ""
       },
       {
         "lineNumber": 289,
         "author": {
           "gitId": "-"
         },
-        "content": ""
+        "content": "### Product scope"
       },
       {
         "lineNumber": 290,
         "author": {
           "gitId": "-"
         },
-        "content": "### Product scope"
+        "content": ""
       },
       {
         "lineNumber": 291,
         "author": {
           "gitId": "-"
         },
-        "content": ""
+        "content": "**Target user profile**:"
       },
       {
         "lineNumber": 292,
         "author": {
           "gitId": "-"
         },
-        "content": "**Target user profile**:"
-      },
-      {
-        "lineNumber": 293,
-        "author": {
-          "gitId": "-"
-        },
         "content": ""
       },
       {
-        "lineNumber": 294,
+        "lineNumber": 293,
         "author": {
           "gitId": "pangpuncake"
         },
         "content": "* has a need to keep track of pages stopped at for multiple books"
       },
       {
-        "lineNumber": 295,
+        "lineNumber": 294,
         "author": {
           "gitId": "pangpuncake"
         },
         "content": "* has a need to keep track of library loans"
       },
       {
-        "lineNumber": 296,
+        "lineNumber": 295,
         "author": {
           "gitId": "-"
         },
         "content": "* prefer desktop apps over other types"
       },
       {
-        "lineNumber": 297,
+        "lineNumber": 296,
         "author": {
           "gitId": "-"
         },
         "content": "* can type fast"
       },
       {
-        "lineNumber": 298,
+        "lineNumber": 297,
         "author": {
           "gitId": "-"
         },
         "content": "* prefers typing to mouse interactions"
       },
       {
-        "lineNumber": 299,
+        "lineNumber": 298,
         "author": {
           "gitId": "-"
         },
         "content": "* is reasonably comfortable using CLI apps"
       },
       {
-        "lineNumber": 300,
+        "lineNumber": 299,
         "author": {
           "gitId": "-"
         },
         "content": ""
       },
       {
-        "lineNumber": 301,
+        "lineNumber": 300,
         "author": {
           "gitId": "pangpuncake"
         },
         "content": "**Value proposition**: manage bookmarks and library loans faster than a typical mouse/GUI driven app. Removes the need for physical bookmarks and loan receipts."
+      },
+      {
+        "lineNumber": 301,
+        "author": {
+          "gitId": "-"
+        },
+        "content": ""
       },
       {
         "lineNumber": 302,
@@ -3285,252 +3285,252 @@
         "author": {
           "gitId": "-"
         },
-        "content": ""
+        "content": "### User stories"
       },
       {
         "lineNumber": 304,
         "author": {
           "gitId": "-"
         },
-        "content": "### User stories"
+        "content": ""
       },
       {
         "lineNumber": 305,
         "author": {
           "gitId": "-"
         },
-        "content": ""
+        "content": "Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unlikely to have) - `*`"
       },
       {
         "lineNumber": 306,
         "author": {
           "gitId": "-"
         },
-        "content": "Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unlikely to have) - `*`"
+        "content": ""
       },
       {
         "lineNumber": 307,
         "author": {
           "gitId": "-"
         },
-        "content": ""
-      },
-      {
-        "lineNumber": 308,
-        "author": {
-          "gitId": "-"
-        },
         "content": "| Priority | As a …​                                    | I want to …​                                                                 | So that I can…​                                                         |"
       },
       {
-        "lineNumber": 309,
+        "lineNumber": 308,
         "author": {
           "gitId": "pangpuncake"
         },
         "content": "| -------- | ------------------------------------------ | -------------------------------------------------------------------------- | ---------------------------------------------------------------------- |"
       },
       {
-        "lineNumber": 310,
+        "lineNumber": 309,
         "author": {
           "gitId": "pangpuncake"
         },
         "content": "| `* * *`  | user                                       | see all the data of the book                                               | get information about the book                                         |"
       },
       {
-        "lineNumber": 311,
+        "lineNumber": 310,
         "author": {
           "gitId": "pangpuncake"
         },
         "content": "| `* * *`  | user                                       | add a new book                                                             | track my progress                                                      |"
       },
       {
-        "lineNumber": 312,
+        "lineNumber": 311,
         "author": {
           "gitId": "pangpuncake"
         },
         "content": "| `* * *`  | user                                       | delete a book                                                              | remove books that I no longer read                                     |"
       },
       {
-        "lineNumber": 313,
+        "lineNumber": 312,
         "author": {
           "gitId": "TanLeYang"
         },
         "content": "| `* * *`  | user                                       | find a book by name                                                        | locate details of books without having to go through the entire list   |"
       },
       {
-        "lineNumber": 314,
+        "lineNumber": 313,
         "author": {
           "gitId": "mgiang2015"
         },
         "content": "| `* * *`  | user                                       | see all the data about a particular book (title, bookmark, progress)                                                        | locate details of books without having to go through the entire list   |"
       },
       {
-        "lineNumber": 315,
+        "lineNumber": 314,
         "author": {
           "gitId": "pangpuncake"
         },
         "content": "| `* * *`  | user                                       | view a list of all the books and their progress                            | conveniently check my progress on all my books                         |"
       },
       {
-        "lineNumber": 316,
+        "lineNumber": 315,
         "author": {
           "gitId": "pangpuncake"
         },
         "content": "| `* * *`  | user                                       | update the data of a book                                                  |                                                                        |"
       },
       {
-        "lineNumber": 317,
+        "lineNumber": 316,
         "author": {
           "gitId": "pangpuncake"
         },
         "content": "| `* *`    | user                                       | classify my books according to genre                                       | organise my books better                                               |"
       },
       {
-        "lineNumber": 318,
+        "lineNumber": 317,
         "author": {
           "gitId": "pangpuncake"
         },
         "content": "| `* *`    | analytical user                            | write down my thoughts on a book                                           | re-read my analysis later                                              |"
       },
       {
-        "lineNumber": 319,
+        "lineNumber": 318,
         "author": {
           "gitId": "pangpuncake"
         },
         "content": "| `* *`    | user                                       | create my own classifications for genres not in the application            | organise the books to my liking                                        |"
       },
       {
-        "lineNumber": 320,
+        "lineNumber": 319,
         "author": {
           "gitId": "pangpuncake"
         },
         "content": "| `* *`    | Kindle user                                | have a clearer representation of my progress                               | conveniently get my progress without navigating to the Kindle screen   |"
       },
       {
-        "lineNumber": 321,
+        "lineNumber": 320,
         "author": {
           "gitId": "pangpuncake"
         },
         "content": "| `* * *`  | forgetful user                             | keep track of my loan expiry                                               | remember to return the book or extend the loan                         |"
       },
       {
-        "lineNumber": 322,
+        "lineNumber": 321,
         "author": {
           "gitId": "pangpuncake"
         },
         "content": "| `*`      | user                                       | have a visual representation of my loans expiry period                     | instantly know the urgency of each loan                                |"
       },
       {
-        "lineNumber": 323,
+        "lineNumber": 322,
         "author": {
           "gitId": "pangpuncake"
         },
         "content": "| `*`      | user                                       | set reminders for a book loan                                              | be reminded to return my book on time                                  |"
       },
       {
-        "lineNumber": 324,
+        "lineNumber": 323,
         "author": {
           "gitId": "pangpuncake"
         },
         "content": "| `* *`    | user                                       | place tags or notes at different pages                                     | stop using sticky notes                                                |"
       },
       {
-        "lineNumber": 325,
+        "lineNumber": 324,
         "author": {
           "gitId": "pangpuncake"
         },
         "content": "| `* * *`  | user                                       | have an easy interface                                                     | easily navigate through the system with minimal difficulty             |"
       },
       {
-        "lineNumber": 326,
+        "lineNumber": 325,
         "author": {
           "gitId": "pangpuncake"
         },
         "content": "| `* * *`  | user                                       | have a help page                                                           | find out how to use the app                                            |"
       },
       {
-        "lineNumber": 327,
+        "lineNumber": 326,
         "author": {
           "gitId": "pangpuncake"
         },
         "content": "| `* *`    | user                                       | have a few functions that I can use seamlessly                             | learn the app easily without bothering with large numbers of functions |"
       },
       {
-        "lineNumber": 328,
+        "lineNumber": 327,
         "author": {
           "gitId": "pangpuncake"
         },
         "content": "| `* *`    | user                                       | be able to edit my tags and reflections                                    | edit mistakes and typos                                                |"
       },
       {
-        "lineNumber": 329,
+        "lineNumber": 328,
         "author": {
           "gitId": "pangpuncake"
         },
         "content": "| `* *`    | careless user                              | undo any wrong commands that i’ve entered                                  |                                                                        |"
       },
       {
-        "lineNumber": 330,
+        "lineNumber": 329,
         "author": {
           "gitId": "pangpuncake"
         },
         "content": "| `*`      | user                                       | have colour coded tags                                                     | so that I can easily differentiate important tags from the rest        |"
       },
       {
-        "lineNumber": 331,
+        "lineNumber": 330,
         "author": {
           "gitId": "pangpuncake"
         },
         "content": "| `*`      | user                                       | customise the look of the application                                      | make it feel personal                                                  |"
       },
       {
-        "lineNumber": 332,
+        "lineNumber": 331,
         "author": {
           "gitId": "pangpuncake"
         },
         "content": "| `*`      | user                                       | have a summary page for statistics on the books I\u0027ve read                  |                                                                        |"
       },
       {
-        "lineNumber": 333,
+        "lineNumber": 332,
         "author": {
           "gitId": "pangpuncake"
         },
         "content": "| `*`      | user                                       | be able to resize the application                                          | fit it to different screens                                            |"
       },
       {
-        "lineNumber": 334,
+        "lineNumber": 333,
         "author": {
           "gitId": "pangpuncake"
         },
         "content": "| `* *`    | user                                       | be able to filter my books by Lexicographic order, Date, Reading, Finished | get the information I\u0027m looking for                                    |"
       },
       {
-        "lineNumber": 335,
+        "lineNumber": 334,
         "author": {
           "gitId": "pangpuncake"
         },
         "content": "| `*`      | user                                       | see and modify my current settings                                         |                                                                        |"
       },
       {
-        "lineNumber": 336,
+        "lineNumber": 335,
         "author": {
           "gitId": "pangpuncake"
         },
         "content": "| `* * *`  | user                                       | have a home page that summarises important details                         | conveniently access the most important information                     |"
       },
       {
-        "lineNumber": 337,
+        "lineNumber": 336,
         "author": {
           "gitId": "pangpuncake"
         },
         "content": "| `* *`    | beginner user                              | have default settings                                                      | skip configuring them at the start                                     |"
       },
       {
-        "lineNumber": 338,
+        "lineNumber": 337,
         "author": {
           "gitId": "pangpuncake"
         },
         "content": "| `*`      | user                                       | customise the background by uploading my own photo                         | get the information I\u0027m looking for                                    |"
+      },
+      {
+        "lineNumber": 338,
+        "author": {
+          "gitId": "-"
+        },
+        "content": ""
       },
       {
         "lineNumber": 339,
@@ -3544,1347 +3544,1340 @@
         "author": {
           "gitId": "-"
         },
-        "content": ""
+        "content": "### Use cases"
       },
       {
         "lineNumber": 341,
         "author": {
           "gitId": "-"
         },
-        "content": "### Use cases"
-      },
-      {
-        "lineNumber": 342,
-        "author": {
-          "gitId": "-"
-        },
         "content": ""
       },
       {
-        "lineNumber": 343,
+        "lineNumber": 342,
         "author": {
           "gitId": "angrybunny123"
         },
         "content": "(For all use cases below, the **System** is `bookmark` and the **Actor** is the `user`, unless specified otherwise)"
       },
       {
-        "lineNumber": 344,
+        "lineNumber": 343,
         "author": {
-          "gitId": "pennhanlee"
+          "gitId": "-"
         },
         "content": ""
       },
       {
-        "lineNumber": 345,
+        "lineNumber": 344,
         "author": {
           "gitId": "pennhanlee"
         },
         "content": "**Use case: UC01 - Add a book**"
       },
       {
-        "lineNumber": 346,
+        "lineNumber": 345,
         "author": {
           "gitId": "-"
         },
         "content": ""
       },
       {
-        "lineNumber": 347,
+        "lineNumber": 346,
         "author": {
-          "gitId": "pennhanlee"
+          "gitId": "-"
         },
         "content": "**MSS**"
+      },
+      {
+        "lineNumber": 347,
+        "author": {
+          "gitId": "-"
+        },
+        "content": ""
       },
       {
         "lineNumber": 348,
         "author": {
           "gitId": "pennhanlee"
         },
-        "content": ""
+        "content": "1. User requests to add a book."
       },
       {
         "lineNumber": 349,
         "author": {
           "gitId": "pennhanlee"
         },
-        "content": "1. User requests to add a book."
+        "content": "2. bookmark adds the book."
       },
       {
         "lineNumber": 350,
         "author": {
           "gitId": "pennhanlee"
         },
-        "content": "2. bookmark adds the book."
+        "content": ""
       },
       {
         "lineNumber": 351,
         "author": {
           "gitId": "pennhanlee"
         },
-        "content": ""
+        "content": "    Use case ends"
       },
       {
         "lineNumber": 352,
         "author": {
           "gitId": "pennhanlee"
         },
-        "content": "    Use case ends"
+        "content": ""
       },
       {
         "lineNumber": 353,
         "author": {
           "gitId": "pennhanlee"
         },
-        "content": ""
+        "content": "**Extensions**"
       },
       {
         "lineNumber": 354,
         "author": {
           "gitId": "pennhanlee"
         },
-        "content": "**Extensions**"
+        "content": ""
       },
       {
         "lineNumber": 355,
         "author": {
           "gitId": "pennhanlee"
         },
-        "content": ""
+        "content": "* 1a. User provides the wrong code."
       },
       {
         "lineNumber": 356,
         "author": {
           "gitId": "pennhanlee"
         },
-        "content": "* 1a. User provides the wrong code."
+        "content": ""
       },
       {
         "lineNumber": 357,
         "author": {
           "gitId": "pennhanlee"
         },
-        "content": ""
+        "content": "    * 1a1. bookmark returns an error message."
       },
       {
         "lineNumber": 358,
         "author": {
           "gitId": "pennhanlee"
         },
-        "content": "    * 1a1. bookmark returns an error message."
+        "content": ""
       },
       {
         "lineNumber": 359,
         "author": {
           "gitId": "pennhanlee"
         },
-        "content": ""
+        "content": "    Use case ends."
       },
       {
         "lineNumber": 360,
         "author": {
           "gitId": "pennhanlee"
         },
-        "content": "    Use case ends."
+        "content": ""
       },
       {
         "lineNumber": 361,
         "author": {
           "gitId": "pennhanlee"
         },
-        "content": ""
+        "content": "* 1b. User provides a non-numeral for total pages or bookmarked page."
       },
       {
         "lineNumber": 362,
         "author": {
           "gitId": "pennhanlee"
         },
-        "content": "* 1b. User provides a non-numeral for total pages or bookmarked page."
+        "content": ""
       },
       {
         "lineNumber": 363,
         "author": {
           "gitId": "pennhanlee"
         },
-        "content": ""
+        "content": "    * 1b1. bookmark returns an error message."
       },
       {
         "lineNumber": 364,
         "author": {
           "gitId": "pennhanlee"
         },
-        "content": "    * 1b1. bookmark returns an error message."
+        "content": ""
       },
       {
         "lineNumber": 365,
         "author": {
           "gitId": "pennhanlee"
         },
-        "content": ""
+        "content": "    Use case ends."
       },
       {
         "lineNumber": 366,
         "author": {
           "gitId": "pennhanlee"
         },
-        "content": "    Use case ends."
+        "content": ""
       },
       {
         "lineNumber": 367,
         "author": {
           "gitId": "pennhanlee"
         },
-        "content": ""
+        "content": "* 1c. Provided bookmarked page is larger than total pages."
       },
       {
         "lineNumber": 368,
         "author": {
           "gitId": "pennhanlee"
         },
-        "content": "* 1c. Provided bookmarked page is larger than total pages."
+        "content": ""
       },
       {
         "lineNumber": 369,
         "author": {
           "gitId": "pennhanlee"
         },
-        "content": ""
+        "content": "    * 1c1. bookmark returns an error message."
       },
       {
         "lineNumber": 370,
         "author": {
           "gitId": "pennhanlee"
         },
-        "content": "    * 1c1. bookmark returns an error message."
+        "content": ""
       },
       {
         "lineNumber": 371,
         "author": {
           "gitId": "pennhanlee"
         },
-        "content": ""
-      },
-      {
-        "lineNumber": 372,
-        "author": {
-          "gitId": "pennhanlee"
-        },
         "content": "    Use case ends."
       },
       {
-        "lineNumber": 373,
+        "lineNumber": 372,
         "author": {
           "gitId": "-"
         },
         "content": ""
       },
       {
-        "lineNumber": 374,
+        "lineNumber": 373,
         "author": {
           "gitId": "pennhanlee"
         },
         "content": "**Use case: UC02 - View a book**"
       },
       {
-        "lineNumber": 375,
+        "lineNumber": 374,
         "author": {
           "gitId": "-"
         },
         "content": ""
+      },
+      {
+        "lineNumber": 375,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "**MSS**"
       },
       {
         "lineNumber": 376,
         "author": {
           "gitId": "-"
         },
-        "content": "**MSS**"
+        "content": ""
       },
       {
         "lineNumber": 377,
         "author": {
-          "gitId": "-"
+          "gitId": "pennhanlee"
         },
-        "content": ""
+        "content": "1. User \u003cu\u003erequests to list all books (UC05)\u003c/u\u003e."
       },
       {
         "lineNumber": 378,
         "author": {
           "gitId": "pennhanlee"
         },
-        "content": "1. User \u003cu\u003erequests to list all books (UC05)\u003c/u\u003e."
+        "content": "2. User requests to view a specific book using its index on list."
       },
       {
         "lineNumber": 379,
         "author": {
           "gitId": "pennhanlee"
         },
-        "content": "2. User requests to view a specific book using its index on list."
+        "content": "3. bookmark returns title, bookmark and progress of the book to user."
       },
       {
         "lineNumber": 380,
         "author": {
-          "gitId": "pennhanlee"
+          "gitId": "-"
         },
-        "content": "3. bookmark returns title, bookmark and progress of the book to user."
+        "content": ""
       },
       {
         "lineNumber": 381,
         "author": {
           "gitId": "-"
         },
-        "content": ""
+        "content": "    Use case ends."
       },
       {
         "lineNumber": 382,
         "author": {
           "gitId": "-"
         },
-        "content": "    Use case ends."
+        "content": ""
       },
       {
         "lineNumber": 383,
         "author": {
           "gitId": "-"
         },
-        "content": ""
+        "content": "**Extensions**"
       },
       {
         "lineNumber": 384,
         "author": {
           "gitId": "-"
         },
-        "content": "**Extensions**"
-      },
-      {
-        "lineNumber": 385,
-        "author": {
-          "gitId": "-"
-        },
         "content": ""
       },
       {
-        "lineNumber": 386,
+        "lineNumber": 385,
         "author": {
           "gitId": "pennhanlee"
         },
         "content": "* 2a. The index given is invalid."
       },
       {
-        "lineNumber": 387,
+        "lineNumber": 386,
         "author": {
           "gitId": "-"
         },
         "content": ""
       },
       {
-        "lineNumber": 388,
+        "lineNumber": 387,
         "author": {
           "gitId": "pennhanlee"
         },
         "content": "    * 3a1. bookmark returns an error message."
       },
       {
-        "lineNumber": 389,
+        "lineNumber": 388,
         "author": {
           "gitId": "-"
         },
         "content": ""
+      },
+      {
+        "lineNumber": 389,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "      Use case resumes at step 2."
       },
       {
         "lineNumber": 390,
         "author": {
           "gitId": "-"
         },
-        "content": "      Use case resumes at step 2."
-      },
-      {
-        "lineNumber": 391,
-        "author": {
-          "gitId": "-"
-        },
         "content": ""
       },
       {
-        "lineNumber": 392,
+        "lineNumber": 391,
         "author": {
           "gitId": "pennhanlee"
         },
         "content": "**Use case: UC03 - Delete a book**"
       },
       {
-        "lineNumber": 393,
+        "lineNumber": 392,
         "author": {
           "gitId": "pangpuncake"
         },
         "content": ""
+      },
+      {
+        "lineNumber": 393,
+        "author": {
+          "gitId": "pangpuncake"
+        },
+        "content": "**MSS**"
       },
       {
         "lineNumber": 394,
         "author": {
           "gitId": "pangpuncake"
         },
-        "content": "**MSS**"
-      },
-      {
-        "lineNumber": 395,
-        "author": {
-          "gitId": "pangpuncake"
-        },
         "content": ""
       },
       {
-        "lineNumber": 396,
+        "lineNumber": 395,
         "author": {
           "gitId": "pennhanlee"
         },
         "content": "1.  User \u003cu\u003erequests to list all books (UC05)\u003c/u\u003e."
       },
       {
-        "lineNumber": 397,
+        "lineNumber": 396,
         "author": {
           "gitId": "pennhanlee"
         },
         "content": "2.  User requests to delete a specific book using its index on list."
       },
       {
-        "lineNumber": 398,
+        "lineNumber": 397,
         "author": {
           "gitId": "pennhanlee"
         },
         "content": "3.  bookmark deletes the book."
       },
       {
-        "lineNumber": 399,
+        "lineNumber": 398,
         "author": {
           "gitId": "-"
         },
         "content": ""
+      },
+      {
+        "lineNumber": 399,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "    Use case ends."
       },
       {
         "lineNumber": 400,
         "author": {
           "gitId": "-"
         },
-        "content": "    Use case ends."
+        "content": ""
       },
       {
         "lineNumber": 401,
         "author": {
           "gitId": "-"
         },
-        "content": ""
+        "content": "**Extensions**"
       },
       {
         "lineNumber": 402,
         "author": {
           "gitId": "-"
         },
-        "content": "**Extensions**"
-      },
-      {
-        "lineNumber": 403,
-        "author": {
-          "gitId": "-"
-        },
         "content": ""
       },
       {
-        "lineNumber": 404,
+        "lineNumber": 403,
         "author": {
           "gitId": "pennhanlee"
         },
         "content": "* 2a. The index given is invalid."
       },
       {
-        "lineNumber": 405,
+        "lineNumber": 404,
         "author": {
           "gitId": "-"
         },
         "content": ""
       },
       {
-        "lineNumber": 406,
+        "lineNumber": 405,
         "author": {
           "gitId": "pennhanlee"
         },
         "content": "    * 2a1. bookmark returns an error message."
       },
       {
-        "lineNumber": 407,
+        "lineNumber": 406,
         "author": {
           "gitId": "-"
         },
         "content": ""
       },
       {
-        "lineNumber": 408,
+        "lineNumber": 407,
         "author": {
           "gitId": "-"
         },
         "content": "      Use case resumes at step 2."
       },
       {
-        "lineNumber": 409,
+        "lineNumber": 408,
         "author": {
           "gitId": "-"
         },
         "content": ""
       },
       {
-        "lineNumber": 410,
+        "lineNumber": 409,
         "author": {
           "gitId": "pennhanlee"
         },
         "content": "**Use case: UC04 - Edit a book**"
       },
       {
-        "lineNumber": 411,
+        "lineNumber": 410,
         "author": {
           "gitId": "pangpuncake"
         },
         "content": ""
+      },
+      {
+        "lineNumber": 411,
+        "author": {
+          "gitId": "pangpuncake"
+        },
+        "content": "**MSS**"
       },
       {
         "lineNumber": 412,
         "author": {
           "gitId": "pangpuncake"
         },
-        "content": "**MSS**"
-      },
-      {
-        "lineNumber": 413,
-        "author": {
-          "gitId": "pangpuncake"
-        },
         "content": ""
       },
       {
-        "lineNumber": 414,
+        "lineNumber": 413,
         "author": {
           "gitId": "pennhanlee"
         },
         "content": "1. User \u003cu\u003erequests to list all books (UC05)\u003c/u\u003e."
       },
       {
-        "lineNumber": 415,
+        "lineNumber": 414,
         "author": {
           "gitId": "pennhanlee"
         },
         "content": "2. User requests to edit a specific book using its index on list."
       },
       {
-        "lineNumber": 416,
+        "lineNumber": 415,
         "author": {
           "gitId": "pennhanlee"
         },
         "content": "3. The requested entry is updated"
       },
       {
-        "lineNumber": 417,
+        "lineNumber": 416,
         "author": {
           "gitId": "-"
         },
         "content": ""
       },
       {
-        "lineNumber": 418,
+        "lineNumber": 417,
         "author": {
           "gitId": "-"
         },
         "content": "    Use case ends."
       },
       {
-        "lineNumber": 419,
+        "lineNumber": 418,
         "author": {
           "gitId": "-"
         },
         "content": ""
+      },
+      {
+        "lineNumber": 419,
+        "author": {
+          "gitId": "pangpuncake"
+        },
+        "content": "**Extensions**"
       },
       {
         "lineNumber": 420,
         "author": {
           "gitId": "pangpuncake"
         },
-        "content": "**Extensions**"
+        "content": ""
       },
       {
         "lineNumber": 421,
         "author": {
           "gitId": "pangpuncake"
         },
-        "content": ""
-      },
-      {
-        "lineNumber": 422,
-        "author": {
-          "gitId": "pangpuncake"
-        },
         "content": "* 2a. The index given is invalid"
       },
       {
-        "lineNumber": 423,
+        "lineNumber": 422,
         "author": {
           "gitId": "-"
         },
         "content": ""
       },
       {
-        "lineNumber": 424,
+        "lineNumber": 423,
         "author": {
           "gitId": "pennhanlee"
         },
         "content": "    * 2a1. bookmark returns an error message"
       },
       {
-        "lineNumber": 425,
+        "lineNumber": 424,
         "author": {
           "gitId": "-"
         },
         "content": ""
+      },
+      {
+        "lineNumber": 425,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "    Use case resumes at step 2."
       },
       {
         "lineNumber": 426,
         "author": {
           "gitId": "-"
         },
-        "content": "    Use case resumes at step 2."
-      },
-      {
-        "lineNumber": 427,
-        "author": {
-          "gitId": "-"
-        },
         "content": ""
       },
       {
-        "lineNumber": 428,
+        "lineNumber": 427,
         "author": {
           "gitId": "pangpuncake"
         },
         "content": " * 2b. The requested entry to update is invalid"
       },
       {
-        "lineNumber": 429,
+        "lineNumber": 428,
         "author": {
           "gitId": "pangpuncake"
         },
         "content": ""
       },
       {
-        "lineNumber": 430,
+        "lineNumber": 429,
         "author": {
           "gitId": "pennhanlee"
         },
         "content": "    * 2b1. bookmark returns an error message"
       },
       {
-        "lineNumber": 431,
+        "lineNumber": 430,
         "author": {
           "gitId": "pangpuncake"
         },
         "content": ""
+      },
+      {
+        "lineNumber": 431,
+        "author": {
+          "gitId": "pangpuncake"
+        },
+        "content": "    Use case resumes at step 2."
       },
       {
         "lineNumber": 432,
         "author": {
           "gitId": "pangpuncake"
         },
-        "content": "    Use case resumes at step 2."
+        "content": ""
       },
       {
         "lineNumber": 433,
         "author": {
           "gitId": "pangpuncake"
         },
-        "content": ""
+        "content": " * 2c. The provided value for the entry to update is invalid"
       },
       {
         "lineNumber": 434,
         "author": {
           "gitId": "pangpuncake"
         },
-        "content": " * 2c. The provided value for the entry to update is invalid"
-      },
-      {
-        "lineNumber": 435,
-        "author": {
-          "gitId": "pangpuncake"
-        },
         "content": ""
       },
       {
-        "lineNumber": 436,
+        "lineNumber": 435,
         "author": {
           "gitId": "pennhanlee"
         },
         "content": "    * 2c1. bookmark returns an error message"
       },
       {
-        "lineNumber": 437,
+        "lineNumber": 436,
         "author": {
           "gitId": "pangpuncake"
         },
         "content": ""
       },
       {
-        "lineNumber": 438,
+        "lineNumber": 437,
         "author": {
           "gitId": "pangpuncake"
         },
         "content": "    Use case resumes at step 2."
       },
       {
-        "lineNumber": 439,
+        "lineNumber": 438,
         "author": {
           "gitId": "pangpuncake"
         },
         "content": ""
       },
       {
-        "lineNumber": 440,
+        "lineNumber": 439,
         "author": {
           "gitId": "pennhanlee"
         },
         "content": "**Use Case: UC05 - List all books**"
       },
       {
-        "lineNumber": 441,
+        "lineNumber": 440,
         "author": {
           "gitId": "TanLeYang"
         },
         "content": ""
+      },
+      {
+        "lineNumber": 441,
+        "author": {
+          "gitId": "TanLeYang"
+        },
+        "content": "**MSS**"
       },
       {
         "lineNumber": 442,
         "author": {
           "gitId": "TanLeYang"
         },
-        "content": "**MSS**"
+        "content": ""
       },
       {
         "lineNumber": 443,
         "author": {
           "gitId": "TanLeYang"
         },
-        "content": ""
-      },
-      {
-        "lineNumber": 444,
-        "author": {
-          "gitId": "TanLeYang"
-        },
         "content": "1. User requests to list all books"
       },
       {
-        "lineNumber": 445,
+        "lineNumber": 444,
         "author": {
           "gitId": "pennhanlee"
         },
         "content": "2. bookmark returns a list of books"
       },
       {
-        "lineNumber": 446,
+        "lineNumber": 445,
         "author": {
           "gitId": "TanLeYang"
         },
         "content": ""
+      },
+      {
+        "lineNumber": 446,
+        "author": {
+          "gitId": "TanLeYang"
+        },
+        "content": "    Use case ends"
       },
       {
         "lineNumber": 447,
         "author": {
           "gitId": "TanLeYang"
         },
-        "content": "    Use case ends"
+        "content": ""
       },
       {
         "lineNumber": 448,
         "author": {
           "gitId": "TanLeYang"
         },
-        "content": ""
+        "content": "**Extensions**"
       },
       {
         "lineNumber": 449,
         "author": {
           "gitId": "TanLeYang"
         },
-        "content": "**Extensions**"
+        "content": ""
       },
       {
         "lineNumber": 450,
         "author": {
           "gitId": "TanLeYang"
         },
-        "content": ""
-      },
-      {
-        "lineNumber": 451,
-        "author": {
-          "gitId": "TanLeYang"
-        },
         "content": "* 1a. The book list is empty"
       },
       {
-        "lineNumber": 452,
+        "lineNumber": 451,
         "author": {
           "gitId": "pennhanlee"
         },
         "content": "    * 1a1. bookmark returns a message informing user that book list is empty"
       },
       {
-        "lineNumber": 453,
+        "lineNumber": 452,
         "author": {
           "gitId": "TanLeYang"
         },
         "content": ""
       },
       {
-        "lineNumber": 454,
+        "lineNumber": 453,
         "author": {
           "gitId": "TanLeYang"
         },
         "content": "    Use case ends"
       },
       {
-        "lineNumber": 455,
+        "lineNumber": 454,
         "author": {
           "gitId": "-"
         },
         "content": ""
       },
       {
-        "lineNumber": 456,
+        "lineNumber": 455,
         "author": {
           "gitId": "pennhanlee"
         },
         "content": "**Use Case: UC06 - Help**"
       },
       {
-        "lineNumber": 457,
+        "lineNumber": 456,
         "author": {
           "gitId": "pennhanlee"
         },
         "content": ""
       },
       {
-        "lineNumber": 458,
+        "lineNumber": 457,
         "author": {
           "gitId": "pennhanlee"
         },
         "content": "**MSS**"
       },
       {
-        "lineNumber": 459,
+        "lineNumber": 458,
         "author": {
           "gitId": "pennhanlee"
         },
         "content": ""
       },
       {
-        "lineNumber": 460,
+        "lineNumber": 459,
         "author": {
           "gitId": "pennhanlee"
         },
         "content": "1. User requests to see the Help page"
       },
       {
-        "lineNumber": 461,
+        "lineNumber": 460,
         "author": {
           "gitId": "pennhanlee"
         },
         "content": "2. bookmark returns the Help page"
       },
       {
-        "lineNumber": 462,
+        "lineNumber": 461,
         "author": {
           "gitId": "pennhanlee"
         },
         "content": ""
       },
       {
-        "lineNumber": 463,
+        "lineNumber": 462,
         "author": {
           "gitId": "pennhanlee"
         },
         "content": "    Use case ends"
       },
       {
-        "lineNumber": 464,
+        "lineNumber": 463,
         "author": {
           "gitId": "-"
         },
         "content": ""
       },
       {
-        "lineNumber": 465,
+        "lineNumber": 464,
         "author": {
           "gitId": "-"
         },
         "content": "### Non-Functional Requirements"
       },
       {
-        "lineNumber": 466,
+        "lineNumber": 465,
         "author": {
           "gitId": "-"
         },
         "content": ""
       },
       {
-        "lineNumber": 467,
+        "lineNumber": 466,
         "author": {
           "gitId": "-"
         },
         "content": "1.  Should work on any _mainstream OS_ as long as it has Java `11` or above installed."
       },
       {
-        "lineNumber": 468,
+        "lineNumber": 467,
         "author": {
           "gitId": "TanLeYang"
         },
         "content": "2.  Should be able to hold up to 1000 books without a noticeable sluggishness in performance for typical usage."
       },
       {
-        "lineNumber": 469,
+        "lineNumber": 468,
         "author": {
           "gitId": "-"
         },
         "content": "3.  A user with above average typing speed for regular English text (i.e. not code, not system admin commands) should be able to accomplish most of the tasks faster using commands than using the mouse."
       },
       {
-        "lineNumber": 470,
+        "lineNumber": 469,
         "author": {
           "gitId": "TanLeYang"
         },
         "content": "4.  The user interface should be self-explanatory and intuitive for first time users."
       },
       {
-        "lineNumber": 471,
+        "lineNumber": 470,
         "author": {
           "gitId": "TanLeYang"
         },
         "content": "5.  The app should give proper indications to user when user action is in an invalid format."
       },
       {
-        "lineNumber": 472,
+        "lineNumber": 471,
         "author": {
           "gitId": "TanLeYang"
         },
         "content": "6.  The app should be accessible via the downloaded JAR file without any other installations needed."
       },
       {
-        "lineNumber": 473,
+        "lineNumber": 472,
         "author": {
           "gitId": "-"
         },
         "content": ""
       },
       {
-        "lineNumber": 474,
+        "lineNumber": 473,
         "author": {
           "gitId": "-"
         },
         "content": "*{More to be added}*"
       },
       {
-        "lineNumber": 475,
+        "lineNumber": 474,
         "author": {
           "gitId": "-"
         },
         "content": ""
       },
       {
-        "lineNumber": 476,
+        "lineNumber": 475,
         "author": {
           "gitId": "-"
         },
         "content": "### Glossary"
       },
       {
-        "lineNumber": 477,
+        "lineNumber": 476,
         "author": {
           "gitId": "-"
         },
         "content": ""
       },
       {
-        "lineNumber": 478,
+        "lineNumber": 477,
         "author": {
           "gitId": "-"
         },
         "content": "* **Mainstream OS**: Windows, Linux, Unix, OS-X"
       },
       {
-        "lineNumber": 479,
+        "lineNumber": 478,
         "author": {
           "gitId": "-"
         },
         "content": "* **Private contact detail**: A contact detail that is not meant to be shared with others"
       },
       {
-        "lineNumber": 480,
+        "lineNumber": 479,
         "author": {
           "gitId": "-"
         },
         "content": ""
       },
       {
-        "lineNumber": 481,
+        "lineNumber": 480,
         "author": {
           "gitId": "-"
         },
         "content": "--------------------------------------------------------------------------------------------------------------------"
       },
       {
-        "lineNumber": 482,
+        "lineNumber": 481,
         "author": {
           "gitId": "-"
         },
         "content": ""
       },
       {
-        "lineNumber": 483,
+        "lineNumber": 482,
         "author": {
           "gitId": "-"
         },
         "content": "## **Appendix: Instructions for manual testing**"
       },
       {
-        "lineNumber": 484,
+        "lineNumber": 483,
         "author": {
           "gitId": "-"
         },
         "content": ""
       },
       {
-        "lineNumber": 485,
+        "lineNumber": 484,
         "author": {
           "gitId": "-"
         },
         "content": "Given below are instructions to test the app manually."
       },
       {
-        "lineNumber": 486,
+        "lineNumber": 485,
         "author": {
           "gitId": "-"
         },
         "content": ""
       },
       {
-        "lineNumber": 487,
+        "lineNumber": 486,
         "author": {
           "gitId": "-"
         },
         "content": "\u003cdiv markdown\u003d\"span\" class\u003d\"alert alert-info\"\u003e:information_source: **Note:** These instructions only provide a starting point for testers to work on;"
       },
       {
-        "lineNumber": 488,
+        "lineNumber": 487,
         "author": {
           "gitId": "-"
         },
         "content": "testers are expected to do more *exploratory* testing."
       },
       {
-        "lineNumber": 489,
+        "lineNumber": 488,
         "author": {
           "gitId": "-"
         },
         "content": ""
       },
       {
-        "lineNumber": 490,
+        "lineNumber": 489,
         "author": {
           "gitId": "-"
         },
         "content": "\u003c/div\u003e"
       },
       {
-        "lineNumber": 491,
+        "lineNumber": 490,
         "author": {
           "gitId": "-"
         },
         "content": ""
       },
       {
-        "lineNumber": 492,
+        "lineNumber": 491,
         "author": {
           "gitId": "-"
         },
         "content": "### Launch and shutdown"
       },
       {
-        "lineNumber": 493,
+        "lineNumber": 492,
         "author": {
           "gitId": "-"
         },
         "content": ""
       },
       {
-        "lineNumber": 494,
+        "lineNumber": 493,
         "author": {
           "gitId": "-"
         },
         "content": "1. Initial launch"
       },
       {
-        "lineNumber": 495,
+        "lineNumber": 494,
         "author": {
           "gitId": "-"
         },
         "content": ""
       },
       {
-        "lineNumber": 496,
+        "lineNumber": 495,
         "author": {
           "gitId": "-"
         },
         "content": "   1. Download the jar file and copy into an empty folder"
       },
       {
-        "lineNumber": 497,
+        "lineNumber": 496,
         "author": {
           "gitId": "-"
         },
         "content": ""
       },
       {
-        "lineNumber": 498,
+        "lineNumber": 497,
         "author": {
           "gitId": "-"
         },
         "content": "   1. Double-click the jar file Expected: Shows the GUI with a set of sample contacts. The window size may not be optimum."
       },
       {
-        "lineNumber": 499,
+        "lineNumber": 498,
         "author": {
           "gitId": "-"
         },
         "content": ""
       },
       {
-        "lineNumber": 500,
+        "lineNumber": 499,
         "author": {
           "gitId": "-"
         },
         "content": "1. Saving window preferences"
       },
       {
-        "lineNumber": 501,
+        "lineNumber": 500,
         "author": {
           "gitId": "-"
         },
         "content": ""
       },
       {
-        "lineNumber": 502,
+        "lineNumber": 501,
         "author": {
           "gitId": "-"
         },
         "content": "   1. Resize the window to an optimum size. Move the window to a different location. Close the window."
       },
       {
-        "lineNumber": 503,
+        "lineNumber": 502,
         "author": {
           "gitId": "-"
         },
         "content": ""
       },
       {
-        "lineNumber": 504,
+        "lineNumber": 503,
         "author": {
           "gitId": "-"
         },
         "content": "   1. Re-launch the app by double-clicking the jar file.\u003cbr\u003e"
       },
       {
-        "lineNumber": 505,
+        "lineNumber": 504,
         "author": {
           "gitId": "-"
         },
         "content": "       Expected: The most recent window size and location is retained."
       },
       {
-        "lineNumber": 506,
+        "lineNumber": 505,
         "author": {
           "gitId": "-"
         },
         "content": ""
+      },
+      {
+        "lineNumber": 506,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "1. _{ more test cases …​ }_"
       },
       {
         "lineNumber": 507,
         "author": {
           "gitId": "-"
         },
-        "content": "1. _{ more test cases …​ }_"
-      },
-      {
-        "lineNumber": 508,
-        "author": {
-          "gitId": "-"
-        },
         "content": ""
       },
       {
-        "lineNumber": 509,
+        "lineNumber": 508,
         "author": {
           "gitId": "TanLeYang"
         },
         "content": "### Deleting a book"
       },
       {
-        "lineNumber": 510,
+        "lineNumber": 509,
         "author": {
           "gitId": "-"
         },
         "content": ""
       },
       {
-        "lineNumber": 511,
+        "lineNumber": 510,
         "author": {
           "gitId": "TanLeYang"
         },
         "content": "1. Deleting a book while all books are being shown"
       },
       {
-        "lineNumber": 512,
+        "lineNumber": 511,
         "author": {
           "gitId": "-"
         },
         "content": ""
       },
       {
-        "lineNumber": 513,
+        "lineNumber": 512,
         "author": {
           "gitId": "TanLeYang"
         },
         "content": "   1. Prerequisites: List all books using the `list` command. Multiple books in the list."
       },
       {
-        "lineNumber": 514,
+        "lineNumber": 513,
         "author": {
           "gitId": "-"
         },
         "content": ""
       },
       {
-        "lineNumber": 515,
+        "lineNumber": 514,
         "author": {
           "gitId": "-"
         },
         "content": "   1. Test case: `delete 1`\u003cbr\u003e"
       },
       {
-        "lineNumber": 516,
+        "lineNumber": 515,
         "author": {
           "gitId": "-"
         },
         "content": "      Expected: First contact is deleted from the list. Details of the deleted contact shown in the status message. Timestamp in the status bar is updated."
       },
       {
-        "lineNumber": 517,
+        "lineNumber": 516,
         "author": {
           "gitId": "-"
         },
         "content": ""
       },
       {
-        "lineNumber": 518,
+        "lineNumber": 517,
         "author": {
           "gitId": "-"
         },
         "content": "   1. Test case: `delete 0`\u003cbr\u003e"
       },
       {
-        "lineNumber": 519,
+        "lineNumber": 518,
         "author": {
           "gitId": "TanLeYang"
         },
         "content": "      Expected: No book is deleted. Error details shown in the status message. Status bar remains the same."
       },
       {
-        "lineNumber": 520,
+        "lineNumber": 519,
         "author": {
           "gitId": "-"
         },
         "content": ""
       },
       {
-        "lineNumber": 521,
+        "lineNumber": 520,
         "author": {
           "gitId": "-"
         },
         "content": "   1. Other incorrect delete commands to try: `delete`, `delete x`, `...` (where x is larger than the list size)\u003cbr\u003e"
       },
       {
-        "lineNumber": 522,
+        "lineNumber": 521,
         "author": {
           "gitId": "-"
         },
         "content": "      Expected: Similar to previous."
       },
       {
-        "lineNumber": 523,
+        "lineNumber": 522,
         "author": {
           "gitId": "-"
         },
         "content": ""
       },
       {
-        "lineNumber": 524,
+        "lineNumber": 523,
         "author": {
           "gitId": "-"
         },
         "content": "1. _{ more test cases …​ }_"
       },
       {
-        "lineNumber": 525,
+        "lineNumber": 524,
         "author": {
           "gitId": "-"
         },
         "content": ""
       },
       {
-        "lineNumber": 526,
+        "lineNumber": 525,
         "author": {
           "gitId": "-"
         },
         "content": "### Saving data"
       },
       {
-        "lineNumber": 527,
+        "lineNumber": 526,
         "author": {
           "gitId": "-"
         },
         "content": ""
       },
       {
-        "lineNumber": 528,
+        "lineNumber": 527,
         "author": {
           "gitId": "-"
         },
         "content": "1. Dealing with missing/corrupted data files"
       },
       {
-        "lineNumber": 529,
+        "lineNumber": 528,
         "author": {
           "gitId": "-"
         },
         "content": ""
       },
       {
-        "lineNumber": 530,
+        "lineNumber": 529,
         "author": {
           "gitId": "-"
         },
         "content": "   1. _{explain how to simulate a missing/corrupted file, and the expected behavior}_"
       },
       {
-        "lineNumber": 531,
+        "lineNumber": 530,
         "author": {
           "gitId": "-"
         },
         "content": ""
       },
       {
-        "lineNumber": 532,
+        "lineNumber": 531,
         "author": {
           "gitId": "-"
         },
@@ -4894,8 +4887,8 @@
     "authorContributionMap": {
       "mgiang2015": 1,
       "pangpuncake": 50,
-      "-": 330,
-      "pennhanlee": 66,
+      "-": 332,
+      "pennhanlee": 63,
       "TanLeYang": 84,
       "angrybunny123": 1
     }
@@ -6203,7 +6196,7 @@
         "author": {
           "gitId": "angrybunny123"
         },
-        "content": "### Locating books: `find` "
+        "content": "### Locating books: `find`"
       },
       {
         "lineNumber": 93,
@@ -6245,14 +6238,14 @@
         "author": {
           "gitId": "angrybunny123"
         },
-        "content": "* Finds books whose specified field contains any of the input keywords. "
+        "content": "* Finds books whose specified field contains any of the input keywords."
       },
       {
         "lineNumber": 99,
         "author": {
           "gitId": "angrybunny123"
         },
-        "content": "* Can also find completed books \u0026 non-completed books using \"c/\" and \"nc/\" prefixes. "
+        "content": "* Can also find completed books \u0026 non-completed books using \"c/\" and \"nc/\" prefixes."
       },
       {
         "lineNumber": 100,
@@ -34041,9 +34034,9 @@
       {
         "lineNumber": 79,
         "author": {
-          "gitId": "-"
+          "gitId": "pennhanlee"
         },
-        "content": "    //\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d AddressBook \u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d"
+        "content": "    //\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d Library \u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d"
       },
       {
         "lineNumber": 80,
@@ -34551,7 +34544,8 @@
       }
     ],
     "authorContributionMap": {
-      "-": 108,
+      "-": 107,
+      "pennhanlee": 1,
       "TanLeYang": 43
     }
   },
