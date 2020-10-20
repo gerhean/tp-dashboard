@@ -14147,9 +14147,9 @@
       {
         "lineNumber": 18,
         "author": {
-          "gitId": "-"
+          "gitId": "kunnan97"
         },
-        "content": "            + \"the specified keywords (case-insensitive) and displays them as a list with index numbers.\\n\""
+        "content": "            + \"the specified keywords (non-case-insensitive) and displays them as a list with index numbers.\\n\""
       },
       {
         "lineNumber": 19,
@@ -14321,7 +14321,8 @@
       }
     ],
     "authorContributionMap": {
-      "-": 37,
+      "kunnan97": 1,
+      "-": 36,
       "augustinekau": 5
     }
   },
@@ -16597,9 +16598,9 @@
       {
         "lineNumber": 45,
         "author": {
-          "gitId": "-"
+          "gitId": "kunnan97"
         },
-        "content": "        String trimmedName \u003d name.trim();"
+        "content": "        String trimmedName \u003d name.trim().toUpperCase();"
       },
       {
         "lineNumber": 46,
@@ -16842,9 +16843,9 @@
       {
         "lineNumber": 80,
         "author": {
-          "gitId": "augustinekau"
+          "gitId": "kunnan97"
         },
-        "content": "        String trimmedGrade \u003d grade.trim();"
+        "content": "        String trimmedGrade \u003d grade.trim().toUpperCase();"
       },
       {
         "lineNumber": 81,
@@ -17079,9 +17080,10 @@
       }
     ],
     "authorContributionMap": {
+      "kunnan97": 2,
       "pongzers": 14,
-      "-": 85,
-      "augustinekau": 14
+      "-": 84,
+      "augustinekau": 13
     }
   },
   {
@@ -26487,6 +26489,701 @@
     }
   },
   {
+    "path": "src/main/java/seedu/address/ui/AutoCompleteTextField.java",
+    "fileType": "functional-code",
+    "lines": [
+      {
+        "lineNumber": 1,
+        "author": {
+          "gitId": "kunnan97"
+        },
+        "content": "package seedu.address.ui;"
+      },
+      {
+        "lineNumber": 2,
+        "author": {
+          "gitId": "kunnan97"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 3,
+        "author": {
+          "gitId": "kunnan97"
+        },
+        "content": "import java.util.LinkedList;"
+      },
+      {
+        "lineNumber": 4,
+        "author": {
+          "gitId": "kunnan97"
+        },
+        "content": "import java.util.List;"
+      },
+      {
+        "lineNumber": 5,
+        "author": {
+          "gitId": "kunnan97"
+        },
+        "content": "import java.util.SortedSet;"
+      },
+      {
+        "lineNumber": 6,
+        "author": {
+          "gitId": "kunnan97"
+        },
+        "content": "import java.util.TreeSet;"
+      },
+      {
+        "lineNumber": 7,
+        "author": {
+          "gitId": "kunnan97"
+        },
+        "content": "import java.util.stream.Collectors;"
+      },
+      {
+        "lineNumber": 8,
+        "author": {
+          "gitId": "kunnan97"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 9,
+        "author": {
+          "gitId": "kunnan97"
+        },
+        "content": "import javafx.geometry.Side;"
+      },
+      {
+        "lineNumber": 10,
+        "author": {
+          "gitId": "kunnan97"
+        },
+        "content": "import javafx.scene.control.ContextMenu;"
+      },
+      {
+        "lineNumber": 11,
+        "author": {
+          "gitId": "kunnan97"
+        },
+        "content": "import javafx.scene.control.CustomMenuItem;"
+      },
+      {
+        "lineNumber": 12,
+        "author": {
+          "gitId": "kunnan97"
+        },
+        "content": "import javafx.scene.control.Label;"
+      },
+      {
+        "lineNumber": 13,
+        "author": {
+          "gitId": "kunnan97"
+        },
+        "content": "import javafx.scene.control.TextField;"
+      },
+      {
+        "lineNumber": 14,
+        "author": {
+          "gitId": "kunnan97"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 15,
+        "author": {
+          "gitId": "kunnan97"
+        },
+        "content": "/**"
+      },
+      {
+        "lineNumber": 16,
+        "author": {
+          "gitId": "kunnan97"
+        },
+        "content": " * This class is a TextField which implements an \"autocomplete\" functionality, based on a supplied list of entries."
+      },
+      {
+        "lineNumber": 17,
+        "author": {
+          "gitId": "kunnan97"
+        },
+        "content": " * @author Caleb Brinkman"
+      },
+      {
+        "lineNumber": 18,
+        "author": {
+          "gitId": "kunnan97"
+        },
+        "content": " */"
+      },
+      {
+        "lineNumber": 19,
+        "author": {
+          "gitId": "kunnan97"
+        },
+        "content": "public class AutoCompleteTextField extends TextField {"
+      },
+      {
+        "lineNumber": 20,
+        "author": {
+          "gitId": "kunnan97"
+        },
+        "content": "    /** The existing autocomplete entries. */"
+      },
+      {
+        "lineNumber": 21,
+        "author": {
+          "gitId": "kunnan97"
+        },
+        "content": "    private final SortedSet\u003cString\u003e entries;"
+      },
+      {
+        "lineNumber": 22,
+        "author": {
+          "gitId": "kunnan97"
+        },
+        "content": "    /** The popup used to select an entry. */"
+      },
+      {
+        "lineNumber": 23,
+        "author": {
+          "gitId": "kunnan97"
+        },
+        "content": "    private ContextMenu entriesPopup;"
+      },
+      {
+        "lineNumber": 24,
+        "author": {
+          "gitId": "kunnan97"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 25,
+        "author": {
+          "gitId": "kunnan97"
+        },
+        "content": "    /** Construct a new AutoCompleteTextField. */"
+      },
+      {
+        "lineNumber": 26,
+        "author": {
+          "gitId": "kunnan97"
+        },
+        "content": "    public AutoCompleteTextField() {"
+      },
+      {
+        "lineNumber": 27,
+        "author": {
+          "gitId": "kunnan97"
+        },
+        "content": "        super();"
+      },
+      {
+        "lineNumber": 28,
+        "author": {
+          "gitId": "kunnan97"
+        },
+        "content": "        entries \u003d new TreeSet\u003c\u003e();"
+      },
+      {
+        "lineNumber": 29,
+        "author": {
+          "gitId": "kunnan97"
+        },
+        "content": "        entriesPopup \u003d new ContextMenu();"
+      },
+      {
+        "lineNumber": 30,
+        "author": {
+          "gitId": "kunnan97"
+        },
+        "content": "        textProperty().addListener((observableValue, s, s2) -\u003e {"
+      },
+      {
+        "lineNumber": 31,
+        "author": {
+          "gitId": "kunnan97"
+        },
+        "content": "            if (getText().length() \u003d\u003d 0) {"
+      },
+      {
+        "lineNumber": 32,
+        "author": {
+          "gitId": "kunnan97"
+        },
+        "content": "                entriesPopup.hide();"
+      },
+      {
+        "lineNumber": 33,
+        "author": {
+          "gitId": "kunnan97"
+        },
+        "content": "            } else {"
+      },
+      {
+        "lineNumber": 34,
+        "author": {
+          "gitId": "kunnan97"
+        },
+        "content": "                LinkedList\u003cString\u003e searchResult \u003d new LinkedList\u003c\u003e();"
+      },
+      {
+        "lineNumber": 35,
+        "author": {
+          "gitId": "kunnan97"
+        },
+        "content": "                final List\u003cString\u003e filteredEntries \u003d"
+      },
+      {
+        "lineNumber": 36,
+        "author": {
+          "gitId": "kunnan97"
+        },
+        "content": "                        entries.stream().filter(e -\u003e e.toLowerCase()"
+      },
+      {
+        "lineNumber": 37,
+        "author": {
+          "gitId": "kunnan97"
+        },
+        "content": "                                        .contains(getText().toLowerCase())).collect(Collectors.toList());"
+      },
+      {
+        "lineNumber": 38,
+        "author": {
+          "gitId": "kunnan97"
+        },
+        "content": "                searchResult.addAll(filteredEntries);"
+      },
+      {
+        "lineNumber": 39,
+        "author": {
+          "gitId": "kunnan97"
+        },
+        "content": "                if (entries.size() \u003e 0) {"
+      },
+      {
+        "lineNumber": 40,
+        "author": {
+          "gitId": "kunnan97"
+        },
+        "content": "                    populatePopup(searchResult);"
+      },
+      {
+        "lineNumber": 41,
+        "author": {
+          "gitId": "kunnan97"
+        },
+        "content": "                    if (!entriesPopup.isShowing()) {"
+      },
+      {
+        "lineNumber": 42,
+        "author": {
+          "gitId": "kunnan97"
+        },
+        "content": "                        entriesPopup.show(AutoCompleteTextField.this, Side.BOTTOM, 0, 0);"
+      },
+      {
+        "lineNumber": 43,
+        "author": {
+          "gitId": "kunnan97"
+        },
+        "content": "                    }"
+      },
+      {
+        "lineNumber": 44,
+        "author": {
+          "gitId": "kunnan97"
+        },
+        "content": "                } else {"
+      },
+      {
+        "lineNumber": 45,
+        "author": {
+          "gitId": "kunnan97"
+        },
+        "content": "                    entriesPopup.hide();"
+      },
+      {
+        "lineNumber": 46,
+        "author": {
+          "gitId": "kunnan97"
+        },
+        "content": "                }"
+      },
+      {
+        "lineNumber": 47,
+        "author": {
+          "gitId": "kunnan97"
+        },
+        "content": "            }"
+      },
+      {
+        "lineNumber": 48,
+        "author": {
+          "gitId": "kunnan97"
+        },
+        "content": "        });"
+      },
+      {
+        "lineNumber": 49,
+        "author": {
+          "gitId": "kunnan97"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 50,
+        "author": {
+          "gitId": "kunnan97"
+        },
+        "content": "        onTextFieldClicked();"
+      },
+      {
+        "lineNumber": 51,
+        "author": {
+          "gitId": "kunnan97"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 52,
+        "author": {
+          "gitId": "kunnan97"
+        },
+        "content": "        focusedProperty().addListener((observableValue, aBoolean, aBoolean2) -\u003e entriesPopup.hide());"
+      },
+      {
+        "lineNumber": 53,
+        "author": {
+          "gitId": "kunnan97"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 54,
+        "author": {
+          "gitId": "kunnan97"
+        },
+        "content": "    }"
+      },
+      {
+        "lineNumber": 55,
+        "author": {
+          "gitId": "kunnan97"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 56,
+        "author": {
+          "gitId": "kunnan97"
+        },
+        "content": "    private void onTextFieldClicked() {"
+      },
+      {
+        "lineNumber": 57,
+        "author": {
+          "gitId": "kunnan97"
+        },
+        "content": "        this.setOnMouseClicked(arg -\u003e {"
+      },
+      {
+        "lineNumber": 58,
+        "author": {
+          "gitId": "kunnan97"
+        },
+        "content": "            LinkedList\u003cString\u003e searchResult \u003d new LinkedList\u003c\u003e();"
+      },
+      {
+        "lineNumber": 59,
+        "author": {
+          "gitId": "kunnan97"
+        },
+        "content": "            searchResult.addAll(entries);"
+      },
+      {
+        "lineNumber": 60,
+        "author": {
+          "gitId": "kunnan97"
+        },
+        "content": "            populatePopup(searchResult);"
+      },
+      {
+        "lineNumber": 61,
+        "author": {
+          "gitId": "kunnan97"
+        },
+        "content": "            entriesPopup.show(AutoCompleteTextField.this, Side.BOTTOM, 0, 0);"
+      },
+      {
+        "lineNumber": 62,
+        "author": {
+          "gitId": "kunnan97"
+        },
+        "content": "        });"
+      },
+      {
+        "lineNumber": 63,
+        "author": {
+          "gitId": "kunnan97"
+        },
+        "content": "    }"
+      },
+      {
+        "lineNumber": 64,
+        "author": {
+          "gitId": "kunnan97"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 65,
+        "author": {
+          "gitId": "kunnan97"
+        },
+        "content": "    /**"
+      },
+      {
+        "lineNumber": 66,
+        "author": {
+          "gitId": "kunnan97"
+        },
+        "content": "     * Get the existing set of autocomplete entries."
+      },
+      {
+        "lineNumber": 67,
+        "author": {
+          "gitId": "kunnan97"
+        },
+        "content": "     * @return The existing autocomplete entries."
+      },
+      {
+        "lineNumber": 68,
+        "author": {
+          "gitId": "kunnan97"
+        },
+        "content": "     */"
+      },
+      {
+        "lineNumber": 69,
+        "author": {
+          "gitId": "kunnan97"
+        },
+        "content": "    public SortedSet\u003cString\u003e getEntries() {"
+      },
+      {
+        "lineNumber": 70,
+        "author": {
+          "gitId": "kunnan97"
+        },
+        "content": "        return entries;"
+      },
+      {
+        "lineNumber": 71,
+        "author": {
+          "gitId": "kunnan97"
+        },
+        "content": "    }"
+      },
+      {
+        "lineNumber": 72,
+        "author": {
+          "gitId": "kunnan97"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 73,
+        "author": {
+          "gitId": "kunnan97"
+        },
+        "content": "    /**"
+      },
+      {
+        "lineNumber": 74,
+        "author": {
+          "gitId": "kunnan97"
+        },
+        "content": "     * Populate the entry set with the given search results.  Display is limited to 10 entries, for performance."
+      },
+      {
+        "lineNumber": 75,
+        "author": {
+          "gitId": "kunnan97"
+        },
+        "content": "     * @param searchResult The set of matching strings."
+      },
+      {
+        "lineNumber": 76,
+        "author": {
+          "gitId": "kunnan97"
+        },
+        "content": "     */"
+      },
+      {
+        "lineNumber": 77,
+        "author": {
+          "gitId": "kunnan97"
+        },
+        "content": "    private void populatePopup(List\u003cString\u003e searchResult) {"
+      },
+      {
+        "lineNumber": 78,
+        "author": {
+          "gitId": "kunnan97"
+        },
+        "content": "        List\u003cCustomMenuItem\u003e menuItems \u003d new LinkedList\u003c\u003e();"
+      },
+      {
+        "lineNumber": 79,
+        "author": {
+          "gitId": "kunnan97"
+        },
+        "content": "        // If you\u0027d like more entries, modify this line."
+      },
+      {
+        "lineNumber": 80,
+        "author": {
+          "gitId": "kunnan97"
+        },
+        "content": "        int maxEntries \u003d 10;"
+      },
+      {
+        "lineNumber": 81,
+        "author": {
+          "gitId": "kunnan97"
+        },
+        "content": "        int count \u003d Math.min(searchResult.size(), maxEntries);"
+      },
+      {
+        "lineNumber": 82,
+        "author": {
+          "gitId": "kunnan97"
+        },
+        "content": "        for (int i \u003d 0; i \u003c count; i++)"
+      },
+      {
+        "lineNumber": 83,
+        "author": {
+          "gitId": "kunnan97"
+        },
+        "content": "        {"
+      },
+      {
+        "lineNumber": 84,
+        "author": {
+          "gitId": "kunnan97"
+        },
+        "content": "            final String result \u003d searchResult.get(i);"
+      },
+      {
+        "lineNumber": 85,
+        "author": {
+          "gitId": "kunnan97"
+        },
+        "content": "            Label entryLabel \u003d new Label(result);"
+      },
+      {
+        "lineNumber": 86,
+        "author": {
+          "gitId": "kunnan97"
+        },
+        "content": "            CustomMenuItem item \u003d new CustomMenuItem(entryLabel, true);"
+      },
+      {
+        "lineNumber": 87,
+        "author": {
+          "gitId": "kunnan97"
+        },
+        "content": "            item.setOnAction(actionEvent -\u003e {"
+      },
+      {
+        "lineNumber": 88,
+        "author": {
+          "gitId": "kunnan97"
+        },
+        "content": "                setText(result + \" \");"
+      },
+      {
+        "lineNumber": 89,
+        "author": {
+          "gitId": "kunnan97"
+        },
+        "content": "                entriesPopup.hide();"
+      },
+      {
+        "lineNumber": 90,
+        "author": {
+          "gitId": "kunnan97"
+        },
+        "content": "                this.end();"
+      },
+      {
+        "lineNumber": 91,
+        "author": {
+          "gitId": "kunnan97"
+        },
+        "content": "            });"
+      },
+      {
+        "lineNumber": 92,
+        "author": {
+          "gitId": "kunnan97"
+        },
+        "content": "            menuItems.add(item);"
+      },
+      {
+        "lineNumber": 93,
+        "author": {
+          "gitId": "kunnan97"
+        },
+        "content": "        }"
+      },
+      {
+        "lineNumber": 94,
+        "author": {
+          "gitId": "kunnan97"
+        },
+        "content": "        entriesPopup.getItems().clear();"
+      },
+      {
+        "lineNumber": 95,
+        "author": {
+          "gitId": "kunnan97"
+        },
+        "content": "        entriesPopup.getItems().addAll(menuItems);"
+      },
+      {
+        "lineNumber": 96,
+        "author": {
+          "gitId": "kunnan97"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 97,
+        "author": {
+          "gitId": "kunnan97"
+        },
+        "content": "    }"
+      },
+      {
+        "lineNumber": 98,
+        "author": {
+          "gitId": "kunnan97"
+        },
+        "content": "}"
+      }
+    ],
+    "authorContributionMap": {
+      "kunnan97": 98
+    }
+  },
+  {
     "path": "src/main/java/seedu/address/ui/CapBox.java",
     "fileType": "functional-code",
     "lines": [
@@ -26742,6 +27439,590 @@
     }
   },
   {
+    "path": "src/main/java/seedu/address/ui/CommandBox.java",
+    "fileType": "functional-code",
+    "lines": [
+      {
+        "lineNumber": 1,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "package seedu.address.ui;"
+      },
+      {
+        "lineNumber": 2,
+        "author": {
+          "gitId": "-"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 3,
+        "author": {
+          "gitId": "kunnan97"
+        },
+        "content": "import java.util.Arrays;"
+      },
+      {
+        "lineNumber": 4,
+        "author": {
+          "gitId": "kunnan97"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 5,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "import javafx.collections.ObservableList;"
+      },
+      {
+        "lineNumber": 6,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "import javafx.fxml.FXML;"
+      },
+      {
+        "lineNumber": 7,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "import javafx.scene.layout.Region;"
+      },
+      {
+        "lineNumber": 8,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "import seedu.address.logic.commands.CommandResult;"
+      },
+      {
+        "lineNumber": 9,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "import seedu.address.logic.commands.exceptions.CommandException;"
+      },
+      {
+        "lineNumber": 10,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "import seedu.address.logic.parser.exceptions.ParseException;"
+      },
+      {
+        "lineNumber": 11,
+        "author": {
+          "gitId": "-"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 12,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "/**"
+      },
+      {
+        "lineNumber": 13,
+        "author": {
+          "gitId": "-"
+        },
+        "content": " * The UI component that is responsible for receiving user command inputs."
+      },
+      {
+        "lineNumber": 14,
+        "author": {
+          "gitId": "-"
+        },
+        "content": " */"
+      },
+      {
+        "lineNumber": 15,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "public class CommandBox extends UiPart\u003cRegion\u003e {"
+      },
+      {
+        "lineNumber": 16,
+        "author": {
+          "gitId": "-"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 17,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "    public static final String ERROR_STYLE_CLASS \u003d \"error\";"
+      },
+      {
+        "lineNumber": 18,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "    private static final String FXML \u003d \"CommandBox.fxml\";"
+      },
+      {
+        "lineNumber": 19,
+        "author": {
+          "gitId": "-"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 20,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "    private final CommandExecutor commandExecutor;"
+      },
+      {
+        "lineNumber": 21,
+        "author": {
+          "gitId": "-"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 22,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "    @FXML"
+      },
+      {
+        "lineNumber": 23,
+        "author": {
+          "gitId": "kunnan97"
+        },
+        "content": "    private AutoCompleteTextField commandTextField;"
+      },
+      {
+        "lineNumber": 24,
+        "author": {
+          "gitId": "-"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 25,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "    /**"
+      },
+      {
+        "lineNumber": 26,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "     * Creates a {@code CommandBox} with the given {@code CommandExecutor}."
+      },
+      {
+        "lineNumber": 27,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "     */"
+      },
+      {
+        "lineNumber": 28,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "    public CommandBox(CommandExecutor commandExecutor) {"
+      },
+      {
+        "lineNumber": 29,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "        super(FXML);"
+      },
+      {
+        "lineNumber": 30,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "        this.commandExecutor \u003d commandExecutor;"
+      },
+      {
+        "lineNumber": 31,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "        // calls #setStyleToDefault() whenever there is a change to the text of the command box."
+      },
+      {
+        "lineNumber": 32,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "        commandTextField.textProperty().addListener((unused1, unused2, unused3) -\u003e setStyleToDefault());"
+      },
+      {
+        "lineNumber": 33,
+        "author": {
+          "gitId": "kunnan97"
+        },
+        "content": "        commandTextField.getEntries()"
+      },
+      {
+        "lineNumber": 34,
+        "author": {
+          "gitId": "kunnan97"
+        },
+        "content": "                .addAll(Arrays.asList(\"start\", \"add\", \"update\", \"list\", \"s/u\", \"delete\", \"find\", \"help\", \"exit\"));"
+      },
+      {
+        "lineNumber": 35,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "    }"
+      },
+      {
+        "lineNumber": 36,
+        "author": {
+          "gitId": "-"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 37,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "    /**"
+      },
+      {
+        "lineNumber": 38,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "     * Handles the Enter button pressed event."
+      },
+      {
+        "lineNumber": 39,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "     */"
+      },
+      {
+        "lineNumber": 40,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "    @FXML"
+      },
+      {
+        "lineNumber": 41,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "    private void handleCommandEntered() {"
+      },
+      {
+        "lineNumber": 42,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "        try {"
+      },
+      {
+        "lineNumber": 43,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "            commandExecutor.execute(commandTextField.getText());"
+      },
+      {
+        "lineNumber": 44,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "            commandTextField.setText(\"\");"
+      },
+      {
+        "lineNumber": 45,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "        } catch (CommandException | ParseException e) {"
+      },
+      {
+        "lineNumber": 46,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "            setStyleToIndicateCommandFailure();"
+      },
+      {
+        "lineNumber": 47,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "        }"
+      },
+      {
+        "lineNumber": 48,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "    }"
+      },
+      {
+        "lineNumber": 49,
+        "author": {
+          "gitId": "-"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 50,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "    /**"
+      },
+      {
+        "lineNumber": 51,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "     * Sets the command box style to use the default style."
+      },
+      {
+        "lineNumber": 52,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "     */"
+      },
+      {
+        "lineNumber": 53,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "    private void setStyleToDefault() {"
+      },
+      {
+        "lineNumber": 54,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "        commandTextField.getStyleClass().remove(ERROR_STYLE_CLASS);"
+      },
+      {
+        "lineNumber": 55,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "    }"
+      },
+      {
+        "lineNumber": 56,
+        "author": {
+          "gitId": "-"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 57,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "    /**"
+      },
+      {
+        "lineNumber": 58,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "     * Sets the command box style to indicate a failed command."
+      },
+      {
+        "lineNumber": 59,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "     */"
+      },
+      {
+        "lineNumber": 60,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "    private void setStyleToIndicateCommandFailure() {"
+      },
+      {
+        "lineNumber": 61,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "        ObservableList\u003cString\u003e styleClass \u003d commandTextField.getStyleClass();"
+      },
+      {
+        "lineNumber": 62,
+        "author": {
+          "gitId": "-"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 63,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "        if (styleClass.contains(ERROR_STYLE_CLASS)) {"
+      },
+      {
+        "lineNumber": 64,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "            return;"
+      },
+      {
+        "lineNumber": 65,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "        }"
+      },
+      {
+        "lineNumber": 66,
+        "author": {
+          "gitId": "-"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 67,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "        styleClass.add(ERROR_STYLE_CLASS);"
+      },
+      {
+        "lineNumber": 68,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "    }"
+      },
+      {
+        "lineNumber": 69,
+        "author": {
+          "gitId": "-"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 70,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "    /**"
+      },
+      {
+        "lineNumber": 71,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "     * Represents a function that can execute commands."
+      },
+      {
+        "lineNumber": 72,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "     */"
+      },
+      {
+        "lineNumber": 73,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "    @FunctionalInterface"
+      },
+      {
+        "lineNumber": 74,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "    public interface CommandExecutor {"
+      },
+      {
+        "lineNumber": 75,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "        /**"
+      },
+      {
+        "lineNumber": 76,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "         * Executes the command and returns the result."
+      },
+      {
+        "lineNumber": 77,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "         *"
+      },
+      {
+        "lineNumber": 78,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "         * @see seedu.address.logic.Logic#execute(String)"
+      },
+      {
+        "lineNumber": 79,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "         */"
+      },
+      {
+        "lineNumber": 80,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "        CommandResult execute(String commandText) throws CommandException, ParseException;"
+      },
+      {
+        "lineNumber": 81,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "    }"
+      },
+      {
+        "lineNumber": 82,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "}"
+      }
+    ],
+    "authorContributionMap": {
+      "kunnan97": 5,
+      "-": 77
+    }
+  },
+  {
     "path": "src/main/java/seedu/address/ui/HelpWindow.java",
     "fileType": "functional-code",
     "lines": [
@@ -26874,142 +28155,142 @@
       {
         "lineNumber": 19,
         "author": {
-          "gitId": "-"
+          "gitId": "kunnan97"
         },
-        "content": "    public static final String HELP_MESSAGE \u003d \"Refer to the user guide: \" + USERGUIDE_URL;"
+        "content": "    public static final String HELP_MESSAGE \u003d \"OR, refer to the user guide: \" + USERGUIDE_URL;"
       },
       {
         "lineNumber": 20,
         "author": {
-          "gitId": "-"
+          "gitId": "kunnan97"
         },
         "content": ""
       },
       {
         "lineNumber": 21,
         "author": {
-          "gitId": "-"
+          "gitId": "kunnan97"
         },
-        "content": "    private static final Logger logger \u003d LogsCenter.getLogger(HelpWindow.class);"
+        "content": "    private static final String startCommandFormat \u003d \"start --sem SEMESTER\\n\";"
       },
       {
         "lineNumber": 22,
         "author": {
-          "gitId": "-"
+          "gitId": "kunnan97"
         },
-        "content": "    private static final String FXML \u003d \"HelpWindow.fxml\";"
+        "content": "    private static final String addCommandFormat \u003d \"add --mod MODULE_CODE [--grade GRADE]\\n\";"
       },
       {
         "lineNumber": 23,
         "author": {
-          "gitId": "-"
+          "gitId": "kunnan97"
         },
-        "content": ""
+        "content": "    private static final String updateCommandFormat \u003d \"update --mod MODULE_CODE [--grade GRADE]\\n\";"
       },
       {
         "lineNumber": 24,
         "author": {
-          "gitId": "-"
+          "gitId": "kunnan97"
         },
-        "content": "    @FXML"
+        "content": "    private static final String listCommandFormat \u003d \"list [--sem SEMESTER]\\n\";"
       },
       {
         "lineNumber": 25,
         "author": {
-          "gitId": "-"
+          "gitId": "kunnan97"
         },
-        "content": "    private Button copyButton;"
+        "content": "    private static final String suCommandFormat \u003d \"s/u --mod MODULE_CODE\\n\";"
       },
       {
         "lineNumber": 26,
         "author": {
-          "gitId": "-"
+          "gitId": "kunnan97"
         },
-        "content": ""
+        "content": "    private static final String deleteCommandFormat \u003d \"delete --mod MODULE_CODE\\n\";"
       },
       {
         "lineNumber": 27,
         "author": {
-          "gitId": "-"
+          "gitId": "kunnan97"
         },
-        "content": "    @FXML"
+        "content": "    private static final String findCommandFormat \u003d \"find --mod MODULE_CODE\\n\";"
       },
       {
         "lineNumber": 28,
         "author": {
-          "gitId": "-"
+          "gitId": "kunnan97"
         },
-        "content": "    private Label helpMessage;"
+        "content": "    private static final String helpCommandFormat \u003d \"help\\n\";"
       },
       {
         "lineNumber": 29,
         "author": {
-          "gitId": "-"
+          "gitId": "kunnan97"
         },
-        "content": ""
+        "content": "    private static final String exitCommandFormat \u003d \"exit --mod MODULE_CODE\\n\";"
       },
       {
         "lineNumber": 30,
         "author": {
           "gitId": "-"
         },
-        "content": "    /**"
+        "content": ""
       },
       {
         "lineNumber": 31,
         "author": {
           "gitId": "-"
         },
-        "content": "     * Creates a new HelpWindow."
+        "content": "    private static final Logger logger \u003d LogsCenter.getLogger(HelpWindow.class);"
       },
       {
         "lineNumber": 32,
         "author": {
           "gitId": "-"
         },
-        "content": "     *"
+        "content": "    private static final String FXML \u003d \"HelpWindow.fxml\";"
       },
       {
         "lineNumber": 33,
         "author": {
           "gitId": "-"
         },
-        "content": "     * @param root Stage to use as the root of the HelpWindow."
+        "content": ""
       },
       {
         "lineNumber": 34,
         "author": {
-          "gitId": "-"
+          "gitId": "kunnan97"
         },
-        "content": "     */"
+        "content": "    @FXML"
       },
       {
         "lineNumber": 35,
         "author": {
-          "gitId": "-"
+          "gitId": "kunnan97"
         },
-        "content": "    public HelpWindow(Stage root) {"
+        "content": "    private Label helpCommands;"
       },
       {
         "lineNumber": 36,
         "author": {
-          "gitId": "-"
+          "gitId": "kunnan97"
         },
-        "content": "        super(FXML, root);"
+        "content": ""
       },
       {
         "lineNumber": 37,
         "author": {
           "gitId": "-"
         },
-        "content": "        helpMessage.setText(HELP_MESSAGE);"
+        "content": "    @FXML"
       },
       {
         "lineNumber": 38,
         "author": {
           "gitId": "-"
         },
-        "content": "    }"
+        "content": "    private Button copyButton;"
       },
       {
         "lineNumber": 39,
@@ -27023,378 +28304,378 @@
         "author": {
           "gitId": "-"
         },
-        "content": "    /**"
+        "content": "    @FXML"
       },
       {
         "lineNumber": 41,
         "author": {
           "gitId": "-"
         },
-        "content": "     * Creates a new HelpWindow."
+        "content": "    private Label helpMessage;"
       },
       {
         "lineNumber": 42,
         "author": {
           "gitId": "-"
         },
-        "content": "     */"
+        "content": ""
       },
       {
         "lineNumber": 43,
         "author": {
           "gitId": "-"
         },
-        "content": "    public HelpWindow() {"
+        "content": "    /**"
       },
       {
         "lineNumber": 44,
         "author": {
           "gitId": "-"
         },
-        "content": "        this(new Stage());"
+        "content": "     * Creates a new HelpWindow."
       },
       {
         "lineNumber": 45,
         "author": {
           "gitId": "-"
         },
-        "content": "    }"
+        "content": "     *"
       },
       {
         "lineNumber": 46,
         "author": {
           "gitId": "-"
         },
-        "content": ""
+        "content": "     * @param root Stage to use as the root of the HelpWindow."
       },
       {
         "lineNumber": 47,
         "author": {
           "gitId": "-"
         },
-        "content": "    /**"
+        "content": "     */"
       },
       {
         "lineNumber": 48,
         "author": {
           "gitId": "-"
         },
-        "content": "     * Shows the help window."
+        "content": "    public HelpWindow(Stage root) {"
       },
       {
         "lineNumber": 49,
         "author": {
           "gitId": "-"
         },
-        "content": "     * @throws IllegalStateException"
+        "content": "        super(FXML, root);"
       },
       {
         "lineNumber": 50,
         "author": {
           "gitId": "-"
         },
-        "content": "     * \u003cul\u003e"
+        "content": "        helpMessage.setText(HELP_MESSAGE);"
       },
       {
         "lineNumber": 51,
         "author": {
-          "gitId": "-"
+          "gitId": "kunnan97"
         },
-        "content": "     *     \u003cli\u003e"
+        "content": "        setHelpCommands();"
       },
       {
         "lineNumber": 52,
         "author": {
           "gitId": "-"
         },
-        "content": "     *         if this method is called on a thread other than the JavaFX Application Thread."
+        "content": "    }"
       },
       {
         "lineNumber": 53,
         "author": {
           "gitId": "-"
         },
-        "content": "     *     \u003c/li\u003e"
+        "content": ""
       },
       {
         "lineNumber": 54,
         "author": {
           "gitId": "-"
         },
-        "content": "     *     \u003cli\u003e"
+        "content": "    /**"
       },
       {
         "lineNumber": 55,
         "author": {
           "gitId": "-"
         },
-        "content": "     *         if this method is called during animation or layout processing."
+        "content": "     * Creates a new HelpWindow."
       },
       {
         "lineNumber": 56,
         "author": {
           "gitId": "-"
         },
-        "content": "     *     \u003c/li\u003e"
+        "content": "     */"
       },
       {
         "lineNumber": 57,
         "author": {
           "gitId": "-"
         },
-        "content": "     *     \u003cli\u003e"
+        "content": "    public HelpWindow() {"
       },
       {
         "lineNumber": 58,
         "author": {
           "gitId": "-"
         },
-        "content": "     *         if this method is called on the primary stage."
+        "content": "        this(new Stage());"
       },
       {
         "lineNumber": 59,
         "author": {
           "gitId": "-"
         },
-        "content": "     *     \u003c/li\u003e"
+        "content": "    }"
       },
       {
         "lineNumber": 60,
         "author": {
           "gitId": "-"
         },
-        "content": "     *     \u003cli\u003e"
+        "content": ""
       },
       {
         "lineNumber": 61,
         "author": {
-          "gitId": "-"
+          "gitId": "kunnan97"
         },
-        "content": "     *         if {@code dialogStage} is already showing."
+        "content": "    private void setHelpCommands() {"
       },
       {
         "lineNumber": 62,
         "author": {
-          "gitId": "-"
+          "gitId": "kunnan97"
         },
-        "content": "     *     \u003c/li\u003e"
+        "content": "        String helpCommandList \u003d"
       },
       {
         "lineNumber": 63,
         "author": {
-          "gitId": "-"
+          "gitId": "kunnan97"
         },
-        "content": "     * \u003c/ul\u003e"
+        "content": "                \"Formats:\\n\""
       },
       {
         "lineNumber": 64,
         "author": {
-          "gitId": "-"
+          "gitId": "kunnan97"
         },
-        "content": "     */"
+        "content": "                + startCommandFormat"
       },
       {
         "lineNumber": 65,
         "author": {
-          "gitId": "-"
+          "gitId": "kunnan97"
         },
-        "content": "    public void show() {"
+        "content": "                + addCommandFormat"
       },
       {
         "lineNumber": 66,
         "author": {
-          "gitId": "-"
+          "gitId": "kunnan97"
         },
-        "content": "        logger.fine(\"Showing help page about the application.\");"
+        "content": "                + updateCommandFormat"
       },
       {
         "lineNumber": 67,
         "author": {
-          "gitId": "-"
+          "gitId": "kunnan97"
         },
-        "content": "        getRoot().show();"
+        "content": "                + listCommandFormat"
       },
       {
         "lineNumber": 68,
         "author": {
-          "gitId": "-"
+          "gitId": "kunnan97"
         },
-        "content": "        getRoot().centerOnScreen();"
+        "content": "                + suCommandFormat"
       },
       {
         "lineNumber": 69,
         "author": {
-          "gitId": "-"
+          "gitId": "kunnan97"
         },
-        "content": "    }"
+        "content": "                + deleteCommandFormat"
       },
       {
         "lineNumber": 70,
         "author": {
-          "gitId": "-"
+          "gitId": "kunnan97"
         },
-        "content": ""
+        "content": "                + findCommandFormat"
       },
       {
         "lineNumber": 71,
         "author": {
-          "gitId": "-"
+          "gitId": "kunnan97"
         },
-        "content": "    /**"
+        "content": "                + helpCommandFormat"
       },
       {
         "lineNumber": 72,
         "author": {
-          "gitId": "-"
+          "gitId": "kunnan97"
         },
-        "content": "     * Returns true if the help window is currently being shown."
+        "content": "                + exitCommandFormat;"
       },
       {
         "lineNumber": 73,
         "author": {
-          "gitId": "-"
+          "gitId": "kunnan97"
         },
-        "content": "     */"
+        "content": ""
       },
       {
         "lineNumber": 74,
         "author": {
-          "gitId": "-"
+          "gitId": "kunnan97"
         },
-        "content": "    public boolean isShowing() {"
+        "content": "        helpCommands.setText(helpCommandList);"
       },
       {
         "lineNumber": 75,
         "author": {
           "gitId": "-"
         },
-        "content": "        return getRoot().isShowing();"
+        "content": "    }"
       },
       {
         "lineNumber": 76,
         "author": {
           "gitId": "-"
         },
-        "content": "    }"
+        "content": ""
       },
       {
         "lineNumber": 77,
         "author": {
           "gitId": "-"
         },
-        "content": ""
+        "content": "    /**"
       },
       {
         "lineNumber": 78,
         "author": {
           "gitId": "-"
         },
-        "content": "    /**"
+        "content": "     * Shows the help window."
       },
       {
         "lineNumber": 79,
         "author": {
           "gitId": "-"
         },
-        "content": "     * Hides the help window."
+        "content": "     * @throws IllegalStateException"
       },
       {
         "lineNumber": 80,
         "author": {
           "gitId": "-"
         },
-        "content": "     */"
+        "content": "     * \u003cul\u003e"
       },
       {
         "lineNumber": 81,
         "author": {
           "gitId": "-"
         },
-        "content": "    public void hide() {"
+        "content": "     *     \u003cli\u003e"
       },
       {
         "lineNumber": 82,
         "author": {
           "gitId": "-"
         },
-        "content": "        getRoot().hide();"
+        "content": "     *         if this method is called on a thread other than the JavaFX Application Thread."
       },
       {
         "lineNumber": 83,
         "author": {
           "gitId": "-"
         },
-        "content": "    }"
+        "content": "     *     \u003c/li\u003e"
       },
       {
         "lineNumber": 84,
         "author": {
           "gitId": "-"
         },
-        "content": ""
+        "content": "     *     \u003cli\u003e"
       },
       {
         "lineNumber": 85,
         "author": {
           "gitId": "-"
         },
-        "content": "    /**"
+        "content": "     *         if this method is called during animation or layout processing."
       },
       {
         "lineNumber": 86,
         "author": {
           "gitId": "-"
         },
-        "content": "     * Focuses on the help window."
+        "content": "     *     \u003c/li\u003e"
       },
       {
         "lineNumber": 87,
         "author": {
           "gitId": "-"
         },
-        "content": "     */"
+        "content": "     *     \u003cli\u003e"
       },
       {
         "lineNumber": 88,
         "author": {
           "gitId": "-"
         },
-        "content": "    public void focus() {"
+        "content": "     *         if this method is called on the primary stage."
       },
       {
         "lineNumber": 89,
         "author": {
           "gitId": "-"
         },
-        "content": "        getRoot().requestFocus();"
+        "content": "     *     \u003c/li\u003e"
       },
       {
         "lineNumber": 90,
         "author": {
           "gitId": "-"
         },
-        "content": "    }"
+        "content": "     *     \u003cli\u003e"
       },
       {
         "lineNumber": 91,
         "author": {
           "gitId": "-"
         },
-        "content": ""
+        "content": "     *         if {@code dialogStage} is already showing."
       },
       {
         "lineNumber": 92,
         "author": {
           "gitId": "-"
         },
-        "content": "    /**"
+        "content": "     *     \u003c/li\u003e"
       },
       {
         "lineNumber": 93,
         "author": {
           "gitId": "-"
         },
-        "content": "     * Copies the URL to the user guide to the clipboard."
+        "content": "     * \u003c/ul\u003e"
       },
       {
         "lineNumber": 94,
@@ -27408,52 +28689,262 @@
         "author": {
           "gitId": "-"
         },
-        "content": "    @FXML"
+        "content": "    public void show() {"
       },
       {
         "lineNumber": 96,
         "author": {
           "gitId": "-"
         },
-        "content": "    private void copyUrl() {"
+        "content": "        logger.fine(\"Showing help page about the application.\");"
       },
       {
         "lineNumber": 97,
         "author": {
           "gitId": "-"
         },
-        "content": "        final Clipboard clipboard \u003d Clipboard.getSystemClipboard();"
+        "content": "        getRoot().show();"
       },
       {
         "lineNumber": 98,
         "author": {
           "gitId": "-"
         },
-        "content": "        final ClipboardContent url \u003d new ClipboardContent();"
+        "content": "        getRoot().centerOnScreen();"
       },
       {
         "lineNumber": 99,
         "author": {
           "gitId": "-"
         },
-        "content": "        url.putString(USERGUIDE_URL);"
+        "content": "    }"
       },
       {
         "lineNumber": 100,
         "author": {
           "gitId": "-"
         },
-        "content": "        clipboard.setContent(url);"
+        "content": ""
       },
       {
         "lineNumber": 101,
         "author": {
           "gitId": "-"
         },
-        "content": "    }"
+        "content": "    /**"
       },
       {
         "lineNumber": 102,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "     * Returns true if the help window is currently being shown."
+      },
+      {
+        "lineNumber": 103,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "     */"
+      },
+      {
+        "lineNumber": 104,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "    public boolean isShowing() {"
+      },
+      {
+        "lineNumber": 105,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "        return getRoot().isShowing();"
+      },
+      {
+        "lineNumber": 106,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "    }"
+      },
+      {
+        "lineNumber": 107,
+        "author": {
+          "gitId": "-"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 108,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "    /**"
+      },
+      {
+        "lineNumber": 109,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "     * Hides the help window."
+      },
+      {
+        "lineNumber": 110,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "     */"
+      },
+      {
+        "lineNumber": 111,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "    public void hide() {"
+      },
+      {
+        "lineNumber": 112,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "        getRoot().hide();"
+      },
+      {
+        "lineNumber": 113,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "    }"
+      },
+      {
+        "lineNumber": 114,
+        "author": {
+          "gitId": "-"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 115,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "    /**"
+      },
+      {
+        "lineNumber": 116,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "     * Focuses on the help window."
+      },
+      {
+        "lineNumber": 117,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "     */"
+      },
+      {
+        "lineNumber": 118,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "    public void focus() {"
+      },
+      {
+        "lineNumber": 119,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "        getRoot().requestFocus();"
+      },
+      {
+        "lineNumber": 120,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "    }"
+      },
+      {
+        "lineNumber": 121,
+        "author": {
+          "gitId": "-"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 122,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "    /**"
+      },
+      {
+        "lineNumber": 123,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "     * Copies the URL to the user guide to the clipboard."
+      },
+      {
+        "lineNumber": 124,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "     */"
+      },
+      {
+        "lineNumber": 125,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "    @FXML"
+      },
+      {
+        "lineNumber": 126,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "    private void copyUrl() {"
+      },
+      {
+        "lineNumber": 127,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "        final Clipboard clipboard \u003d Clipboard.getSystemClipboard();"
+      },
+      {
+        "lineNumber": 128,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "        final ClipboardContent url \u003d new ClipboardContent();"
+      },
+      {
+        "lineNumber": 129,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "        url.putString(USERGUIDE_URL);"
+      },
+      {
+        "lineNumber": 130,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "        clipboard.setContent(url);"
+      },
+      {
+        "lineNumber": 131,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "    }"
+      },
+      {
+        "lineNumber": 132,
         "author": {
           "gitId": "-"
         },
@@ -27461,8 +28952,8 @@
       }
     ],
     "authorContributionMap": {
-      "kunnan97": 1,
-      "-": 101
+      "kunnan97": 30,
+      "-": 102
     }
   },
   {
@@ -30646,6 +32137,432 @@
     ],
     "authorContributionMap": {
       "kunnan97": 8
+    }
+  },
+  {
+    "path": "src/main/resources/view/CommandBox.fxml",
+    "fileType": "functional-code",
+    "lines": [
+      {
+        "lineNumber": 1,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "\u003c?xml version\u003d\"1.0\" encoding\u003d\"UTF-8\"?\u003e"
+      },
+      {
+        "lineNumber": 2,
+        "author": {
+          "gitId": "-"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 3,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "\u003c?import javafx.scene.control.TextField?\u003e"
+      },
+      {
+        "lineNumber": 4,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "\u003c?import javafx.scene.layout.StackPane?\u003e"
+      },
+      {
+        "lineNumber": 5,
+        "author": {
+          "gitId": "kunnan97"
+        },
+        "content": "\u003c?import seedu.address.ui.AutoCompleteTextField?\u003e"
+      },
+      {
+        "lineNumber": 6,
+        "author": {
+          "gitId": "-"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 7,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "\u003cStackPane styleClass\u003d\"stack-pane\" xmlns\u003d\"http://javafx.com/javafx/8\" xmlns:fx\u003d\"http://javafx.com/fxml/1\"\u003e"
+      },
+      {
+        "lineNumber": 8,
+        "author": {
+          "gitId": "kunnan97"
+        },
+        "content": "  \u003cAutoCompleteTextField fx:id\u003d\"commandTextField\" onAction\u003d\"#handleCommandEntered\" promptText\u003d\"Enter command here...\"/\u003e"
+      },
+      {
+        "lineNumber": 9,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "\u003c/StackPane\u003e"
+      },
+      {
+        "lineNumber": 10,
+        "author": {
+          "gitId": "-"
+        },
+        "content": ""
+      }
+    ],
+    "authorContributionMap": {
+      "kunnan97": 2,
+      "-": 8
+    }
+  },
+  {
+    "path": "src/main/resources/view/HelpWindow.fxml",
+    "fileType": "functional-code",
+    "lines": [
+      {
+        "lineNumber": 1,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "\u003c?xml version\u003d\"1.0\" encoding\u003d\"UTF-8\"?\u003e"
+      },
+      {
+        "lineNumber": 2,
+        "author": {
+          "gitId": "-"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 3,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "\u003c?import javafx.geometry.Insets?\u003e"
+      },
+      {
+        "lineNumber": 4,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "\u003c?import javafx.scene.Scene?\u003e"
+      },
+      {
+        "lineNumber": 5,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "\u003c?import javafx.scene.control.Button?\u003e"
+      },
+      {
+        "lineNumber": 6,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "\u003c?import javafx.scene.control.Label?\u003e"
+      },
+      {
+        "lineNumber": 7,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "\u003c?import javafx.scene.image.Image?\u003e"
+      },
+      {
+        "lineNumber": 8,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "\u003c?import javafx.scene.layout.HBox?\u003e"
+      },
+      {
+        "lineNumber": 9,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "\u003c?import javafx.stage.Stage?\u003e"
+      },
+      {
+        "lineNumber": 10,
+        "author": {
+          "gitId": "-"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 11,
+        "author": {
+          "gitId": "kunnan97"
+        },
+        "content": "\u003c?import javafx.scene.layout.VBox?\u003e"
+      },
+      {
+        "lineNumber": 12,
+        "author": {
+          "gitId": "kunnan97"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 13,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "\u003cfx:root resizable\u003d\"false\" title\u003d\"Help\" type\u003d\"javafx.stage.Stage\" xmlns\u003d\"http://javafx.com/javafx/11\" xmlns:fx\u003d\"http://javafx.com/fxml/1\"\u003e"
+      },
+      {
+        "lineNumber": 14,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "  \u003cicons\u003e"
+      },
+      {
+        "lineNumber": 15,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "    \u003cImage url\u003d\"@/images/help_icon.png\" /\u003e"
+      },
+      {
+        "lineNumber": 16,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "  \u003c/icons\u003e"
+      },
+      {
+        "lineNumber": 17,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "  \u003cscene\u003e"
+      },
+      {
+        "lineNumber": 18,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "    \u003cScene\u003e"
+      },
+      {
+        "lineNumber": 19,
+        "author": {
+          "gitId": "kunnan97"
+        },
+        "content": "        \u003cVBox\u003e"
+      },
+      {
+        "lineNumber": 20,
+        "author": {
+          "gitId": "kunnan97"
+        },
+        "content": "            \u003cLabel fx:id\u003d\"helpCommands\"\u003e"
+      },
+      {
+        "lineNumber": 21,
+        "author": {
+          "gitId": "kunnan97"
+        },
+        "content": "                \u003cpadding\u003e"
+      },
+      {
+        "lineNumber": 22,
+        "author": {
+          "gitId": "kunnan97"
+        },
+        "content": "                    \u003cInsets left\u003d\"5.0\"/\u003e"
+      },
+      {
+        "lineNumber": 23,
+        "author": {
+          "gitId": "kunnan97"
+        },
+        "content": "                \u003c/padding\u003e"
+      },
+      {
+        "lineNumber": 24,
+        "author": {
+          "gitId": "kunnan97"
+        },
+        "content": "            \u003c/Label\u003e"
+      },
+      {
+        "lineNumber": 25,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "            \u003cHBox alignment\u003d\"CENTER\"\u003e"
+      },
+      {
+        "lineNumber": 26,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "                \u003cchildren\u003e"
+      },
+      {
+        "lineNumber": 27,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "                    \u003cLabel fx:id\u003d\"helpMessage\" text\u003d\"Label\"\u003e"
+      },
+      {
+        "lineNumber": 28,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "                        \u003cHBox.margin\u003e"
+      },
+      {
+        "lineNumber": 29,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "                            \u003cInsets right\u003d\"5.0\" /\u003e"
+      },
+      {
+        "lineNumber": 30,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "                        \u003c/HBox.margin\u003e"
+      },
+      {
+        "lineNumber": 31,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "                    \u003c/Label\u003e"
+      },
+      {
+        "lineNumber": 32,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "                    \u003cButton fx:id\u003d\"copyButton\" mnemonicParsing\u003d\"false\" onAction\u003d\"#copyUrl\" text\u003d\"Copy URL\"\u003e"
+      },
+      {
+        "lineNumber": 33,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "                        \u003cHBox.margin\u003e"
+      },
+      {
+        "lineNumber": 34,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "                            \u003cInsets left\u003d\"5.0\" /\u003e"
+      },
+      {
+        "lineNumber": 35,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "                        \u003c/HBox.margin\u003e"
+      },
+      {
+        "lineNumber": 36,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "                    \u003c/Button\u003e"
+      },
+      {
+        "lineNumber": 37,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "                \u003c/children\u003e"
+      },
+      {
+        "lineNumber": 38,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "                \u003copaqueInsets\u003e"
+      },
+      {
+        "lineNumber": 39,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "                    \u003cInsets bottom\u003d\"10.0\" left\u003d\"5.0\" right\u003d\"10.0\" top\u003d\"5.0\" /\u003e"
+      },
+      {
+        "lineNumber": 40,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "                \u003c/opaqueInsets\u003e"
+      },
+      {
+        "lineNumber": 41,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "                \u003cpadding\u003e"
+      },
+      {
+        "lineNumber": 42,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "                    \u003cInsets bottom\u003d\"10.0\" left\u003d\"5.0\" right\u003d\"10.0\" top\u003d\"5.0\" /\u003e"
+      },
+      {
+        "lineNumber": 43,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "                \u003c/padding\u003e"
+      },
+      {
+        "lineNumber": 44,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "            \u003c/HBox\u003e"
+      },
+      {
+        "lineNumber": 45,
+        "author": {
+          "gitId": "kunnan97"
+        },
+        "content": "        \u003c/VBox\u003e"
+      },
+      {
+        "lineNumber": 46,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "    \u003c/Scene\u003e"
+      },
+      {
+        "lineNumber": 47,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "  \u003c/scene\u003e"
+      },
+      {
+        "lineNumber": 48,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "\u003c/fx:root\u003e"
+      }
+    ],
+    "authorContributionMap": {
+      "kunnan97": 9,
+      "-": 39
     }
   },
   {
@@ -50626,9 +52543,9 @@
       {
         "lineNumber": 18,
         "author": {
-          "gitId": "augustinekau"
+          "gitId": "kunnan97"
         },
-        "content": "    public static final String DEFAULT_NAME \u003d \"CS2103T Software Engineering\";"
+        "content": "    public static final String DEFAULT_NAME \u003d \"CS2103T\";"
       },
       {
         "lineNumber": 19,
@@ -51087,9 +53004,10 @@
       }
     ],
     "authorContributionMap": {
+      "kunnan97": 1,
       "pongzers": 14,
       "-": 42,
-      "augustinekau": 27
+      "augustinekau": 26
     }
   },
   {
