@@ -3431,14 +3431,14 @@
       {
         "lineNumber": 242,
         "author": {
-          "gitId": "-"
+          "gitId": "Jaylenlee"
         },
         "content": ""
       },
       {
         "lineNumber": 243,
         "author": {
-          "gitId": "-"
+          "gitId": "Jaylenlee"
         },
         "content": ""
       },
@@ -3550,611 +3550,611 @@
       {
         "lineNumber": 259,
         "author": {
-          "gitId": "Jaylenlee"
+          "gitId": "marcus2k"
         },
-        "content": "_{more aspects and alternatives to be added}_"
+        "content": "### \\[Proposed\\] Customisation of Command Keywords"
       },
       {
         "lineNumber": 260,
         "author": {
-          "gitId": "-"
+          "gitId": "marcus2k"
         },
         "content": ""
       },
       {
         "lineNumber": 261,
         "author": {
-          "gitId": "hakiem526"
+          "gitId": "marcus2k"
         },
-        "content": "### \\[Proposed\\] Graphical Representation Feature"
+        "content": "#### Proposed Implementation"
       },
       {
         "lineNumber": 262,
         "author": {
-          "gitId": "hakiem526"
+          "gitId": "marcus2k"
         },
         "content": ""
       },
       {
         "lineNumber": 263,
         "author": {
-          "gitId": "hakiem526"
+          "gitId": "marcus2k"
         },
-        "content": "#### Proposed Implementation"
+        "content": "The proposed implementation for the customisation of `COMMAND_WORD` field for various `Command` subclasses is by introducing another `Command` subclass, called the `AliasCommand`. This command takes in a command keyword that the user wishes to alter, and takes a second keyword which determines what the new COMMAND_WORD for the stated `Command` subclass would be. To allow for customisation to remain even after the app is closed, a customised keyword-to-command mapping will be stored in JSON format. Upon starting the app, the static field `COMMAND_WORD` will be initialized for each command."
       },
       {
         "lineNumber": 264,
         "author": {
-          "gitId": "hakiem526"
+          "gitId": "marcus2k"
         },
         "content": ""
       },
       {
         "lineNumber": 265,
         "author": {
-          "gitId": "hakiem526"
+          "gitId": "marcus2k"
         },
-        "content": "The proposed graphical representation feature will allow the user to view a pie chart of his total spending, with each wedge representing the percentage of spending that corresponds to a specific tag."
+        "content": "Sample usage:"
       },
       {
         "lineNumber": 266,
         "author": {
-          "gitId": "hakiem526"
+          "gitId": "marcus2k"
         },
-        "content": "This graphical representation will be displayed on `GraphDisplayWindow` upon the execution of `GraphCommand`. This mechanism will be facilitated by `PieChartData` to retrieve the required data from `ExpenseBook`."
+        "content": "By default, `FindCommand.COMMAND_WORD` is `“find”`"
       },
       {
         "lineNumber": 267,
         "author": {
-          "gitId": "hakiem526"
-        },
-        "content": "`PieChartData` extends `ChartData` which allows abstracting out the implementation of different graphical representation formats for future versions."
-      },
-      {
-        "lineNumber": 268,
-        "author": {
-          "gitId": "hakiem526"
+          "gitId": "marcus2k"
         },
         "content": ""
       },
       {
+        "lineNumber": 268,
+        "author": {
+          "gitId": "marcus2k"
+        },
+        "content": "* `alias find get` -\u003e `FindCommand.COMMAND_WORD` will be updated to `“get”`"
+      },
+      {
         "lineNumber": 269,
         "author": {
-          "gitId": "hakiem526"
+          "gitId": "marcus2k"
         },
-        "content": "* `PieChartData#collectData(ObservableList\u003cExpense\u003e)` — Retrieves required data."
+        "content": ""
       },
       {
         "lineNumber": 270,
         "author": {
-          "gitId": "hakiem526"
+          "gitId": "marcus2k"
         },
-        "content": "* `PieChartData#getData()` — Returns data of each `Tag` and the corresponding total expenditure."
+        "content": "This mapping will also be stored in an external JSON so that the customisation remains even after the app is closed. "
       },
       {
         "lineNumber": 271,
         "author": {
-          "gitId": "hakiem526"
+          "gitId": "marcus2k"
         },
         "content": ""
       },
       {
         "lineNumber": 272,
         "author": {
-          "gitId": "hakiem526"
+          "gitId": "marcus2k"
         },
-        "content": "The interactions between `ExpenseBook` (which contains the in-memory data of expenses) and `GraphicalDisplayWindow` (which specifies the UI displayed) facilitated by `PieChartData` is given below. \u003c/br\u003e"
+        "content": "To maintain some degree of simplicity and neatness, we require that the `AliasCommand.COMMAND_WORD` itself to not be customisable. Furthermore, the user also has the ability to revert the command keywords back to their default using the `DefaultAliasCommand` with the default `COMMAND_WORD` as `defaultalias`. This is made a little longer and slightly more complicated to input because this will override the entire customisation to default and user will not be able to retrieve his previous customisations. Like the AliasCommand, `DefaultAliasCommand.COMMAND_WORD` itself is not customisable."
       },
       {
         "lineNumber": 273,
         "author": {
-          "gitId": "hakiem526"
+          "gitId": "marcus2k"
         },
         "content": ""
       },
       {
         "lineNumber": 274,
         "author": {
-          "gitId": "hakiem526"
+          "gitId": "marcus2k"
         },
-        "content": "![ClassDiagram](images/GraphicalRepresentationClassDiagram.png)"
+        "content": "Another change required here is for the COMMAND_WORD fields to not be final, except for AliasCommand and DefaultAliasCommand. This will allow changes to a COMMAND_WORD field to be reflected directly in the current running instance of the application."
       },
       {
         "lineNumber": 275,
         "author": {
-          "gitId": "hakiem526"
+          "gitId": "marcus2k"
         },
         "content": ""
       },
       {
         "lineNumber": 276,
         "author": {
-          "gitId": "hakiem526"
+          "gitId": "marcus2k"
         },
-        "content": "The user initiates this function by executing the graph command. Refer Logic Component architecture diagram for the mechanism by which strings are read and parsed into Command objects."
+        "content": "Step 1. The user launches the application for the first time. The `COMMAND_WORD` static fields for all the subclasses will be initialized to the current mapping retrieved from JSON."
       },
       {
         "lineNumber": 277,
         "author": {
-          "gitId": "hakiem526"
+          "gitId": "marcus2k"
         },
         "content": ""
       },
       {
         "lineNumber": 278,
         "author": {
-          "gitId": "hakiem526"
+          "gitId": "marcus2k"
         },
-        "content": "The sequence diagram below shows the proposed mechanism by which the required data necessary to initialise a pie chart is retrieved. This data is then used to format the UI output."
+        "content": "Step 2. The user executes the `alias find get` command to update the current `FindCommand.COMMAND_WORD` from `”find”’ to `”get”`.  This will not only update the current state, but will also update the JSON mapping."
       },
       {
         "lineNumber": 279,
         "author": {
-          "gitId": "hakiem526"
+          "gitId": "marcus2k"
         },
         "content": ""
       },
       {
         "lineNumber": 280,
         "author": {
-          "gitId": "hakiem526"
+          "gitId": "marcus2k"
         },
-        "content": "![SequenceDiagram](images/GraphicalRepresentationSequenceDiagram.png)"
+        "content": "The following is a sequence diagram showing how it works:"
       },
       {
         "lineNumber": 281,
         "author": {
-          "gitId": "hakiem526"
+          "gitId": "marcus2k"
         },
-        "content": ""
+        "content": "![AliasSequenceDiagram](images/AliasSequenceDiagram.png)"
       },
       {
         "lineNumber": 282,
         "author": {
-          "gitId": "hakiem526"
-        },
-        "content": "\u003cdiv markdown\u003d\"span\" class\u003d\"alert alert-info\"\u003e:information_source: **Note:** Expenses that are untagged will be displayed as a single group. Tags should not be case sensitive."
-      },
-      {
-        "lineNumber": 283,
-        "author": {
-          "gitId": "hakiem526"
+          "gitId": "marcus2k"
         },
         "content": ""
       },
       {
+        "lineNumber": 283,
+        "author": {
+          "gitId": "marcus2k"
+        },
+        "content": "Similarly, the following sequence diagram shows how the DefaultAliasCommand works:"
+      },
+      {
         "lineNumber": 284,
         "author": {
-          "gitId": "hakiem526"
+          "gitId": "marcus2k"
         },
-        "content": "\u003c/div\u003e"
+        "content": "![DefaultAliasSequenceDiagram](images/DefaultAliasSequenceDiagram.png)"
       },
       {
         "lineNumber": 285,
         "author": {
-          "gitId": "hakiem526"
+          "gitId": "marcus2k"
         },
         "content": ""
       },
       {
         "lineNumber": 286,
         "author": {
-          "gitId": "hakiem526"
+          "gitId": "marcus2k"
         },
-        "content": "A possible edge case would be the user having empty expense record prior to executing the graph command. In such a case, the program will display a default message."
+        "content": "Step 3. The user can now use the following command to trigget a FindCommand."
       },
       {
         "lineNumber": 287,
         "author": {
-          "gitId": "hakiem526"
+          "gitId": "marcus2k"
         },
         "content": ""
       },
       {
         "lineNumber": 288,
         "author": {
-          "gitId": "hakiem526"
+          "gitId": "marcus2k"
         },
-        "content": "The following activity diagram summarizes what happens when a user enters a graph command:"
+        "content": "* `get -d lunch at macs`"
       },
       {
         "lineNumber": 289,
         "author": {
-          "gitId": "hakiem526"
+          "gitId": "marcus2k"
         },
-        "content": ""
+        "content": "#### Design consideration:"
       },
       {
         "lineNumber": 290,
         "author": {
-          "gitId": "hakiem526"
+          "gitId": "marcus2k"
         },
-        "content": "![ActivityDiagram](images/GraphicalRepresentationActivityDiagram.png)"
+        "content": ""
       },
       {
         "lineNumber": 291,
         "author": {
-          "gitId": "hakiem526"
+          "gitId": "marcus2k"
         },
-        "content": ""
+        "content": "##### Aspect: How alias executes"
       },
       {
         "lineNumber": 292,
         "author": {
-          "gitId": "hakiem526"
+          "gitId": "marcus2k"
         },
-        "content": "#### Points to Note:"
+        "content": "* **Alternative 1 (current choice):** Allows customisation of all command words except for `AliasCommand` and `DefaultAliasCommand`."
       },
       {
         "lineNumber": 293,
         "author": {
-          "gitId": "hakiem526"
+          "gitId": "marcus2k"
         },
-        "content": ""
+        "content": "  * Pros: Neater implementation especially if the user might frequently change his alias, and DefaultAliasCommand has a long default and uncustomisable command word in order to prevent accidental reset of previous customisations."
       },
       {
         "lineNumber": 294,
         "author": {
-          "gitId": "hakiem526"
+          "gitId": "marcus2k"
         },
-        "content": "* **UI classes to only act as placeholders**"
+        "content": "  * Cons: Restricts degree of customisation."
       },
       {
         "lineNumber": 295,
         "author": {
-          "gitId": "hakiem526"
+          "gitId": "marcus2k"
         },
-        "content": "  * UI formatting is separated from the backend logic."
+        "content": ""
       },
       {
         "lineNumber": 296,
         "author": {
-          "gitId": "hakiem526"
+          "gitId": "marcus2k"
         },
-        "content": "  * Allows for dynamic updating of graphs."
+        "content": "* **Alternative 2:** Allows customisation of ALL command words."
       },
       {
         "lineNumber": 297,
         "author": {
-          "gitId": "hakiem526"
+          "gitId": "marcus2k"
         },
-        "content": ""
+        "content": "  * Pros: Higher degree of flexibility in customisation."
       },
       {
         "lineNumber": 298,
         "author": {
-          "gitId": "hakiem526"
+          "gitId": "marcus2k"
         },
-        "content": "* **Data re-retrieved upon every execution**"
+        "content": "  * Cons: May be messy and slower learning users may get confused."
       },
       {
         "lineNumber": 299,
         "author": {
-          "gitId": "hakiem526"
+          "gitId": "Jaylenlee"
         },
-        "content": "  * Updates graph accordingly."
+        "content": "_{more aspects and alternatives to be added}_"
       },
       {
         "lineNumber": 300,
         "author": {
-          "gitId": "hakiem526"
+          "gitId": "-"
         },
-        "content": "  * Will not show outdated graphs."
+        "content": ""
       },
       {
         "lineNumber": 301,
         "author": {
-          "gitId": "hakiem526"
+          "gitId": "lebencwb"
         },
-        "content": ""
+        "content": "### \\[Proposed\\] Default Category"
       },
       {
         "lineNumber": 302,
         "author": {
-          "gitId": "hakiem526"
-        },
-        "content": "* **Easily extensible**"
-      },
-      {
-        "lineNumber": 303,
-        "author": {
-          "gitId": "hakiem526"
-        },
-        "content": "  * Different sub-classes of `ChartData` can be implemented to collect a variety of meaningful data from `ExpenseBook` to be displayed by various UI classes in different formats."
-      },
-      {
-        "lineNumber": 304,
-        "author": {
-          "gitId": "-"
+          "gitId": "lebencwb"
         },
         "content": ""
       },
       {
+        "lineNumber": 303,
+        "author": {
+          "gitId": "lebencwb"
+        },
+        "content": "The function of the default category is to subsume all \"untagged\" `expenses` under some category."
+      },
+      {
+        "lineNumber": 304,
+        "author": {
+          "gitId": "lebencwb"
+        },
+        "content": "This is especially important for possible occasions such as when the User uses the application without any categories,"
+      },
+      {
         "lineNumber": 305,
         "author": {
-          "gitId": "-"
+          "gitId": "lebencwb"
         },
-        "content": "--------------------------------------------------------------------------------------------------------------------"
+        "content": "or when the User deletes a category that existing `expenses` are linked to."
       },
       {
         "lineNumber": 306,
         "author": {
-          "gitId": "-"
+          "gitId": "lebencwb"
         },
         "content": ""
       },
       {
         "lineNumber": 307,
         "author": {
-          "gitId": "-"
+          "gitId": "lebencwb"
         },
-        "content": "## **Documentation, logging, testing, configuration, dev-ops**"
+        "content": "#### Proposed Implementation"
       },
       {
         "lineNumber": 308,
         "author": {
-          "gitId": "-"
+          "gitId": "lebencwb"
         },
         "content": ""
       },
       {
         "lineNumber": 309,
         "author": {
-          "gitId": "-"
+          "gitId": "lebencwb"
         },
-        "content": "* [Documentation guide](Documentation.md)"
+        "content": "The default category generally functions the same way as any user-created category, except that it cannot be deleted or"
       },
       {
         "lineNumber": 310,
         "author": {
-          "gitId": "-"
+          "gitId": "lebencwb"
         },
-        "content": "* [Testing guide](Testing.md)"
+        "content": "renamed. It is contained separately from the user-created categories (if any) for this reason. If a new ExpenseBook is"
       },
       {
         "lineNumber": 311,
         "author": {
-          "gitId": "-"
+          "gitId": "lebencwb"
         },
-        "content": "* [Logging guide](Logging.md)"
+        "content": "started, the default category is automatically initialized so that the User can use the full range of the basic"
       },
       {
         "lineNumber": 312,
         "author": {
-          "gitId": "-"
+          "gitId": "lebencwb"
         },
-        "content": "* [Configuration guide](Configuration.md)"
+        "content": "features even without creating customized categories."
       },
       {
         "lineNumber": 313,
         "author": {
-          "gitId": "-"
+          "gitId": "lebencwb"
         },
-        "content": "* [DevOps guide](DevOps.md)"
+        "content": ""
       },
       {
         "lineNumber": 314,
         "author": {
-          "gitId": "-"
+          "gitId": "hakiem526"
         },
-        "content": ""
+        "content": "### \\[Proposed\\] Graphical Representation Feature"
       },
       {
         "lineNumber": 315,
         "author": {
-          "gitId": "-"
+          "gitId": "hakiem526"
         },
-        "content": "--------------------------------------------------------------------------------------------------------------------"
+        "content": ""
       },
       {
         "lineNumber": 316,
         "author": {
-          "gitId": "-"
+          "gitId": "hakiem526"
         },
-        "content": ""
+        "content": "#### Proposed Implementation"
       },
       {
         "lineNumber": 317,
         "author": {
-          "gitId": "-"
+          "gitId": "hakiem526"
         },
-        "content": "## **Appendix: Requirements**"
+        "content": ""
       },
       {
         "lineNumber": 318,
         "author": {
-          "gitId": "-"
+          "gitId": "hakiem526"
         },
-        "content": ""
+        "content": "The proposed graphical representation feature will allow the user to view a pie chart of his total spending, with each wedge representing the percentage of spending that corresponds to a specific tag."
       },
       {
         "lineNumber": 319,
         "author": {
-          "gitId": "-"
+          "gitId": "hakiem526"
         },
-        "content": "### Product scope"
+        "content": "This graphical representation will be displayed on `GraphDisplayWindow` upon the execution of `GraphCommand`. This mechanism will be facilitated by `PieChartData` to retrieve the required data from `ExpenseBook`."
       },
       {
         "lineNumber": 320,
         "author": {
-          "gitId": "-"
+          "gitId": "hakiem526"
         },
-        "content": ""
+        "content": "`PieChartData` extends `ChartData` which allows abstracting out the implementation of different graphical representation formats for future versions."
       },
       {
         "lineNumber": 321,
         "author": {
-          "gitId": "-"
-        },
-        "content": "**Target user profile**:"
-      },
-      {
-        "lineNumber": 322,
-        "author": {
-          "gitId": "-"
+          "gitId": "hakiem526"
         },
         "content": ""
       },
       {
+        "lineNumber": 322,
+        "author": {
+          "gitId": "hakiem526"
+        },
+        "content": "* `PieChartData#collectData(ObservableList\u003cExpense\u003e)` — Retrieves required data."
+      },
+      {
         "lineNumber": 323,
         "author": {
-          "gitId": "marcus2k"
+          "gitId": "hakiem526"
         },
-        "content": "* is a college student"
+        "content": "* `PieChartData#getData()` — Returns data of each `Tag` and the corresponding total expenditure."
       },
       {
         "lineNumber": 324,
         "author": {
-          "gitId": "marcus2k"
+          "gitId": "hakiem526"
         },
-        "content": "* spends money mainly on food, transportation, social life and material goods"
+        "content": ""
       },
       {
         "lineNumber": 325,
         "author": {
-          "gitId": "marcus2k"
+          "gitId": "hakiem526"
         },
-        "content": "* wants to keep track of his personal expenses"
+        "content": "The interactions between `ExpenseBook` (which contains the in-memory data of expenses) and `GraphicalDisplayWindow` (which specifies the UI displayed) facilitated by `PieChartData` is given below. \u003c/br\u003e"
       },
       {
         "lineNumber": 326,
         "author": {
-          "gitId": "marcus2k"
+          "gitId": "hakiem526"
         },
-        "content": "* considers oneself as \"tech-folk\""
+        "content": ""
       },
       {
         "lineNumber": 327,
         "author": {
-          "gitId": "marcus2k"
+          "gitId": "hakiem526"
         },
-        "content": "* is familiar and comfortable with the command line"
+        "content": "![ClassDiagram](images/GraphicalRepresentationClassDiagram.png)"
       },
       {
         "lineNumber": 328,
         "author": {
-          "gitId": "marcus2k"
+          "gitId": "hakiem526"
         },
-        "content": "* types fast"
+        "content": ""
       },
       {
         "lineNumber": 329,
         "author": {
-          "gitId": "marcus2k"
+          "gitId": "hakiem526"
         },
-        "content": "* wants to set and keep to a budget"
+        "content": "The user initiates this function by executing the graph command. Refer Logic Component architecture diagram for the mechanism by which strings are read and parsed into Command objects."
       },
       {
         "lineNumber": 330,
         "author": {
-          "gitId": "marcus2k"
+          "gitId": "hakiem526"
         },
-        "content": "* likes things that are fast and simple"
+        "content": ""
       },
       {
         "lineNumber": 331,
         "author": {
-          "gitId": "marcus2k"
+          "gitId": "hakiem526"
         },
-        "content": "* is attached"
+        "content": "The sequence diagram below shows the proposed mechanism by which the required data necessary to initialise a pie chart is retrieved. This data is then used to format the UI output."
       },
       {
         "lineNumber": 332,
         "author": {
-          "gitId": "marcus2k"
+          "gitId": "hakiem526"
         },
-        "content": "* pays for his own bills"
+        "content": ""
       },
       {
         "lineNumber": 333,
         "author": {
-          "gitId": "marcus2k"
+          "gitId": "hakiem526"
         },
-        "content": "* is all for cashless"
+        "content": "![SequenceDiagram](images/GraphicalRepresentationSequenceDiagram.png)"
       },
       {
         "lineNumber": 334,
         "author": {
-          "gitId": "marcus2k"
+          "gitId": "hakiem526"
         },
-        "content": "* is cautious about digital security"
+        "content": ""
       },
       {
         "lineNumber": 335,
         "author": {
-          "gitId": "marcus2k"
+          "gitId": "hakiem526"
         },
-        "content": "* prefers storing things digitally rather than on paper"
+        "content": "\u003cdiv markdown\u003d\"span\" class\u003d\"alert alert-info\"\u003e:information_source: **Note:** Expenses that are untagged will be displayed as a single group. Tags should not be case sensitive."
       },
       {
         "lineNumber": 336,
         "author": {
-          "gitId": "marcus2k"
+          "gitId": "hakiem526"
         },
-        "content": "* likes flexibility/customization"
+        "content": ""
       },
       {
         "lineNumber": 337,
         "author": {
-          "gitId": "marcus2k"
+          "gitId": "hakiem526"
         },
-        "content": "* plays games and likes achievements"
+        "content": "\u003c/div\u003e"
       },
       {
         "lineNumber": 338,
         "author": {
-          "gitId": "marcus2k"
+          "gitId": "hakiem526"
         },
-        "content": "* is not earning income"
+        "content": ""
       },
       {
         "lineNumber": 339,
         "author": {
-          "gitId": "marcus2k"
+          "gitId": "hakiem526"
         },
-        "content": "* is lazy enough to find a solution to manage his expenses for him"
+        "content": "A possible edge case would be the user having empty expense record prior to executing the graph command. In such a case, the program will display a default message."
       },
       {
         "lineNumber": 340,
         "author": {
-          "gitId": "marcus2k"
+          "gitId": "hakiem526"
         },
         "content": ""
       },
       {
         "lineNumber": 341,
         "author": {
-          "gitId": "marcus2k"
+          "gitId": "hakiem526"
         },
-        "content": "**Value proposition**: manage expenses faster and simpler than a typical mouse/GUI driven app"
+        "content": "The following activity diagram summarizes what happens when a user enters a graph command:"
       },
       {
         "lineNumber": 342,
         "author": {
-          "gitId": "-"
+          "gitId": "hakiem526"
         },
         "content": ""
       },
       {
         "lineNumber": 343,
         "author": {
-          "gitId": "-"
+          "gitId": "hakiem526"
         },
-        "content": ""
+        "content": "![ActivityDiagram](images/GraphicalRepresentationActivityDiagram.png)"
       },
       {
         "lineNumber": 344,
         "author": {
-          "gitId": "-"
+          "gitId": "hakiem526"
         },
         "content": ""
       },
       {
         "lineNumber": 345,
         "author": {
-          "gitId": "-"
+          "gitId": "hakiem526"
         },
-        "content": "### User stories"
+        "content": "#### Points to Note:"
       },
       {
         "lineNumber": 346,
@@ -4166,142 +4166,142 @@
       {
         "lineNumber": 347,
         "author": {
-          "gitId": "-"
+          "gitId": "hakiem526"
         },
-        "content": "Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unlikely to have) - `*`"
+        "content": "* **UI classes to only act as placeholders**"
       },
       {
         "lineNumber": 348,
+        "author": {
+          "gitId": "hakiem526"
+        },
+        "content": "  * UI formatting is separated from the backend logic."
+      },
+      {
+        "lineNumber": 349,
+        "author": {
+          "gitId": "hakiem526"
+        },
+        "content": "  * Allows for dynamic updating of graphs."
+      },
+      {
+        "lineNumber": 350,
+        "author": {
+          "gitId": "hakiem526"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 351,
+        "author": {
+          "gitId": "hakiem526"
+        },
+        "content": "* **Data re-retrieved upon every execution**"
+      },
+      {
+        "lineNumber": 352,
+        "author": {
+          "gitId": "hakiem526"
+        },
+        "content": "  * Updates graph accordingly."
+      },
+      {
+        "lineNumber": 353,
+        "author": {
+          "gitId": "hakiem526"
+        },
+        "content": "  * Will not show outdated graphs."
+      },
+      {
+        "lineNumber": 354,
+        "author": {
+          "gitId": "hakiem526"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 355,
+        "author": {
+          "gitId": "hakiem526"
+        },
+        "content": "* **Easily extensible**"
+      },
+      {
+        "lineNumber": 356,
+        "author": {
+          "gitId": "hakiem526"
+        },
+        "content": "  * Different sub-classes of `ChartData` can be implemented to collect a variety of meaningful data from `ExpenseBook` to be displayed by various UI classes in different formats."
+      },
+      {
+        "lineNumber": 357,
         "author": {
           "gitId": "-"
         },
         "content": ""
       },
       {
-        "lineNumber": 349,
+        "lineNumber": 358,
         "author": {
           "gitId": "-"
         },
-        "content": "| Priority | As a …​                                    | I want to …​                                                                                 | So that I can…​                                                        |"
-      },
-      {
-        "lineNumber": 350,
-        "author": {
-          "gitId": "marcus2k"
-        },
-        "content": "| -------- | ------------------------------------------ | ---------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------- |"
-      },
-      {
-        "lineNumber": 351,
-        "author": {
-          "gitId": "marcus2k"
-        },
-        "content": "| `* * *`  | user                                       | add a new expense                                                                                    |                                                                        |"
-      },
-      {
-        "lineNumber": 352,
-        "author": {
-          "gitId": "marcus2k"
-        },
-        "content": "| `* * *`  | user                                       | delete an expense                                                                                    | remove entries that I no longer need                                   |"
-      },
-      {
-        "lineNumber": 353,
-        "author": {
-          "gitId": "marcus2k"
-        },
-        "content": "| `* * *`  | user                                       | set a budget                                                                                         | track if I am sticking to my financial goals                           |"
-      },
-      {
-        "lineNumber": 354,
-        "author": {
-          "gitId": "marcus2k"
-        },
-        "content": "| `* * *`  | user                                       | top up a budget                                                                                      |                                                                        |"
-      },
-      {
-        "lineNumber": 355,
-        "author": {
-          "gitId": "marcus2k"
-        },
-        "content": "| `* * *`  | user                                       | edit an expense                                                                                      |                                                                        |"
-      },
-      {
-        "lineNumber": 356,
-        "author": {
-          "gitId": "Jaylenlee"
-        },
-        "content": "| `* *`    | organized user                             | categorise my expenditure                                                                            | better manage specific aspects of my spending                          |"
-      },
-      {
-        "lineNumber": 357,
-        "author": {
-          "gitId": "marcus2k"
-        },
-        "content": "| `* *`    | new user                                   | use a help command                                                                                   | refer to instructions when I forget how to use the App                 |"
-      },
-      {
-        "lineNumber": 358,
-        "author": {
-          "gitId": "Jaylenlee"
-        },
-        "content": "| `* *`    | cautious user                              | set a password for Bamboo                                                                            | keep my expenses private                                               |"
+        "content": "--------------------------------------------------------------------------------------------------------------------"
       },
       {
         "lineNumber": 359,
         "author": {
-          "gitId": "marcus2k"
+          "gitId": "-"
         },
-        "content": "| `* *`    | user with many expenses                    | find expenses via date, keywords, or category                                                        | locate an expense easily                                               |"
+        "content": ""
       },
       {
         "lineNumber": 360,
         "author": {
-          "gitId": "marcus2k"
+          "gitId": "-"
         },
-        "content": "| `* *`    | careless user                              | revert my commands                                                                                   | easily undo changes I made to my budgeting                             |"
+        "content": "## **Documentation, logging, testing, configuration, dev-ops**"
       },
       {
         "lineNumber": 361,
         "author": {
-          "gitId": "marcus2k"
+          "gitId": "-"
         },
-        "content": "| `*`      | meticulous user                            | track my saving progress to buy big ticket items                                                     | know how far away am I from the target                                 |"
+        "content": ""
       },
       {
         "lineNumber": 362,
         "author": {
-          "gitId": "marcus2k"
+          "gitId": "-"
         },
-        "content": "| `*`      | user who likes to see progress             | use the progress tracker to motivate myself                                                          | keep working at saving up                                              |"
+        "content": "* [Documentation guide](Documentation.md)"
       },
       {
         "lineNumber": 363,
         "author": {
-          "gitId": "Jaylenlee"
+          "gitId": "-"
         },
-        "content": "| `*`      | cautious user                              | view my ledger data in a human-readable format and only edit the file when commands are executed     | be assured that the accounts are updated and accurate                  |"
+        "content": "* [Testing guide](Testing.md)"
       },
       {
         "lineNumber": 364,
         "author": {
-          "gitId": "marcus2k"
+          "gitId": "-"
         },
-        "content": "| `*`      | long-time user                             | archive older data from my view                                                                      | manage my expenses easier                                              |"
+        "content": "* [Logging guide](Logging.md)"
       },
       {
         "lineNumber": 365,
         "author": {
-          "gitId": "marcus2k"
+          "gitId": "-"
         },
-        "content": "| `stretch`| user who likes to plan in advance          | simulate future spending                                                                             | visualize my journey towards my financial goals                        |"
+        "content": "* [Configuration guide](Configuration.md)"
       },
       {
         "lineNumber": 366,
         "author": {
-          "gitId": "marcus2k"
+          "gitId": "-"
         },
-        "content": "| `stretch`| forgetful user                             | receive notifications of budget limits and bill payments                                             | better plan for daily expenditure and make payments on time            |"
+        "content": "* [DevOps guide](DevOps.md)"
       },
       {
         "lineNumber": 367,
@@ -4315,7 +4315,7 @@
         "author": {
           "gitId": "-"
         },
-        "content": "*{More to be added}*"
+        "content": "--------------------------------------------------------------------------------------------------------------------"
       },
       {
         "lineNumber": 369,
@@ -4329,7 +4329,7 @@
         "author": {
           "gitId": "-"
         },
-        "content": "### Use cases"
+        "content": "## **Appendix: Requirements**"
       },
       {
         "lineNumber": 371,
@@ -4341,9 +4341,9 @@
       {
         "lineNumber": 372,
         "author": {
-          "gitId": "marcus2k"
+          "gitId": "-"
         },
-        "content": "(For all use cases below, the System is the Bamboo and the Actor is the user, unless specified otherwise)"
+        "content": "### Product scope"
       },
       {
         "lineNumber": 373,
@@ -4355,14 +4355,14 @@
       {
         "lineNumber": 374,
         "author": {
-          "gitId": "maxxyh"
+          "gitId": "-"
         },
-        "content": "####Use case U1: Add an expense"
+        "content": "**Target user profile**:"
       },
       {
         "lineNumber": 375,
         "author": {
-          "gitId": "marcus2k"
+          "gitId": "-"
         },
         "content": ""
       },
@@ -4371,119 +4371,119 @@
         "author": {
           "gitId": "marcus2k"
         },
-        "content": "**Preconditions:** (Needed for v1.2.1)"
+        "content": "* is a college student"
       },
       {
         "lineNumber": 377,
         "author": {
           "gitId": "marcus2k"
         },
-        "content": ""
+        "content": "* spends money mainly on food, transportation, social life and material goods"
       },
       {
         "lineNumber": 378,
         "author": {
-          "gitId": "maxxyh"
+          "gitId": "marcus2k"
         },
-        "content": "* User is logged in."
+        "content": "* wants to keep track of his personal expenses"
       },
       {
         "lineNumber": 379,
         "author": {
           "gitId": "marcus2k"
         },
-        "content": ""
+        "content": "* considers oneself as \"tech-folk\""
       },
       {
         "lineNumber": 380,
         "author": {
           "gitId": "marcus2k"
         },
-        "content": "**MSS**"
+        "content": "* is familiar and comfortable with the command line"
       },
       {
         "lineNumber": 381,
         "author": {
           "gitId": "marcus2k"
         },
-        "content": ""
+        "content": "* types fast"
       },
       {
         "lineNumber": 382,
         "author": {
-          "gitId": "maxxyh"
+          "gitId": "marcus2k"
         },
-        "content": "1. User requests to add an expense."
+        "content": "* wants to set and keep to a budget"
       },
       {
         "lineNumber": 383,
         "author": {
-          "gitId": "maxxyh"
+          "gitId": "marcus2k"
         },
-        "content": "2. Bamboo adds the expense."
+        "content": "* likes things that are fast and simple"
       },
       {
         "lineNumber": 384,
         "author": {
-          "gitId": "maxxyh"
+          "gitId": "marcus2k"
         },
-        "content": "3. Bamboo lists all expenses and shows the new budget balance."
+        "content": "* is attached"
       },
       {
         "lineNumber": 385,
         "author": {
           "gitId": "marcus2k"
         },
-        "content": ""
+        "content": "* pays for his own bills"
       },
       {
         "lineNumber": 386,
         "author": {
-          "gitId": "maxxyh"
+          "gitId": "marcus2k"
         },
-        "content": "    Use case ends."
+        "content": "* is all for cashless"
       },
       {
         "lineNumber": 387,
         "author": {
           "gitId": "marcus2k"
         },
-        "content": ""
+        "content": "* is cautious about digital security"
       },
       {
         "lineNumber": 388,
         "author": {
           "gitId": "marcus2k"
         },
-        "content": "**Extensions**"
+        "content": "* prefers storing things digitally rather than on paper"
       },
       {
         "lineNumber": 389,
         "author": {
           "gitId": "marcus2k"
         },
-        "content": ""
+        "content": "* likes flexibility/customization"
       },
       {
         "lineNumber": 390,
         "author": {
-          "gitId": "maxxyh"
+          "gitId": "marcus2k"
         },
-        "content": "* 1a. The given command format is invalid."
+        "content": "* plays games and likes achievements"
       },
       {
         "lineNumber": 391,
         "author": {
-          "gitId": "maxxyh"
+          "gitId": "marcus2k"
         },
-        "content": "    * 1a1. Bamboo shows an error message."
+        "content": "* is not earning income"
       },
       {
         "lineNumber": 392,
         "author": {
           "gitId": "marcus2k"
         },
-        "content": "      Use case ends."
+        "content": "* is lazy enough to find a solution to manage his expenses for him"
       },
       {
         "lineNumber": 393,
@@ -4495,9 +4495,9 @@
       {
         "lineNumber": 394,
         "author": {
-          "gitId": "maxxyh"
+          "gitId": "marcus2k"
         },
-        "content": "####Use case U2: Top-up budget"
+        "content": "**Value proposition**: manage expenses faster and simpler than a typical mouse/GUI driven app"
       },
       {
         "lineNumber": 395,
@@ -4509,23 +4509,23 @@
       {
         "lineNumber": 396,
         "author": {
-          "gitId": "marcus2k"
+          "gitId": "-"
         },
-        "content": "**Preconditions:** (Needed for v1.2.1)"
+        "content": ""
       },
       {
         "lineNumber": 397,
         "author": {
-          "gitId": "marcus2k"
+          "gitId": "-"
         },
         "content": ""
       },
       {
         "lineNumber": 398,
         "author": {
-          "gitId": "maxxyh"
+          "gitId": "-"
         },
-        "content": "- User is logged in."
+        "content": "### User stories"
       },
       {
         "lineNumber": 399,
@@ -4539,7 +4539,7 @@
         "author": {
           "gitId": "-"
         },
-        "content": "**MSS**"
+        "content": "Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unlikely to have) - `*`"
       },
       {
         "lineNumber": 401,
@@ -4551,324 +4551,324 @@
       {
         "lineNumber": 402,
         "author": {
-          "gitId": "marcus2k"
+          "gitId": "-"
         },
-        "content": "1. User requests to top up budget by an amount he provides."
+        "content": "| Priority | As a …​                                    | I want to …​                                                                                 | So that I can…​                                                        |"
       },
       {
         "lineNumber": 403,
         "author": {
           "gitId": "marcus2k"
         },
-        "content": "2. Bamboo tops up the user\u0027s budget by the amount given by the user."
+        "content": "| -------- | ------------------------------------------ | ---------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------- |"
       },
       {
         "lineNumber": 404,
         "author": {
-          "gitId": "maxxyh"
+          "gitId": "marcus2k"
         },
-        "content": "3. Bamboo lists all expenses and shows the budget balance."
+        "content": "| `* * *`  | user                                       | add a new expense                                                                                    |                                                                        |"
       },
       {
         "lineNumber": 405,
         "author": {
-          "gitId": "-"
+          "gitId": "marcus2k"
         },
-        "content": ""
+        "content": "| `* * *`  | user                                       | delete an expense                                                                                    | remove entries that I no longer need                                   |"
       },
       {
         "lineNumber": 406,
         "author": {
-          "gitId": "-"
+          "gitId": "marcus2k"
         },
-        "content": "    Use case ends."
+        "content": "| `* * *`  | user                                       | set a budget                                                                                         | track if I am sticking to my financial goals                           |"
       },
       {
         "lineNumber": 407,
         "author": {
-          "gitId": "-"
+          "gitId": "marcus2k"
         },
-        "content": ""
+        "content": "| `* * *`  | user                                       | top up a budget                                                                                      |                                                                        |"
       },
       {
         "lineNumber": 408,
         "author": {
-          "gitId": "-"
+          "gitId": "marcus2k"
         },
-        "content": "**Extensions**"
+        "content": "| `* * *`  | user                                       | edit an expense                                                                                      |                                                                        |"
       },
       {
         "lineNumber": 409,
         "author": {
-          "gitId": "-"
+          "gitId": "Jaylenlee"
         },
-        "content": ""
+        "content": "| `* *`    | organized user                             | categorise my expenditure                                                                            | better manage specific aspects of my spending                          |"
       },
       {
         "lineNumber": 410,
         "author": {
           "gitId": "marcus2k"
         },
-        "content": "* 1a. The given top-up value is invalid."
+        "content": "| `* *`    | new user                                   | use a help command                                                                                   | refer to instructions when I forget how to use the App                 |"
       },
       {
         "lineNumber": 411,
         "author": {
-          "gitId": "marcus2k"
+          "gitId": "Jaylenlee"
         },
-        "content": "    * 1a1. Bamboo shows an error message."
+        "content": "| `* *`    | cautious user                              | set a password for Bamboo                                                                            | keep my expenses private                                               |"
       },
       {
         "lineNumber": 412,
         "author": {
           "gitId": "marcus2k"
         },
-        "content": "      Use case ends."
+        "content": "| `* *`    | user with many expenses                    | find expenses via date, keywords, or category                                                        | locate an expense easily                                               |"
       },
       {
         "lineNumber": 413,
         "author": {
           "gitId": "marcus2k"
         },
-        "content": ""
+        "content": "| `* *`    | careless user                              | revert my commands                                                                                   | easily undo changes I made to my budgeting                             |"
       },
       {
         "lineNumber": 414,
         "author": {
-          "gitId": "maxxyh"
+          "gitId": "marcus2k"
         },
-        "content": "####Use case U3: Delete an expense"
+        "content": "| `*`      | meticulous user                            | track my saving progress to buy big ticket items                                                     | know how far away am I from the target                                 |"
       },
       {
         "lineNumber": 415,
         "author": {
           "gitId": "marcus2k"
         },
-        "content": ""
+        "content": "| `*`      | user who likes to see progress             | use the progress tracker to motivate myself                                                          | keep working at saving up                                              |"
       },
       {
         "lineNumber": 416,
         "author": {
-          "gitId": "marcus2k"
+          "gitId": "Jaylenlee"
         },
-        "content": "**Preconditions:** (Needed for v1.2.1)"
+        "content": "| `*`      | cautious user                              | view my ledger data in a human-readable format and only edit the file when commands are executed     | be assured that the accounts are updated and accurate                  |"
       },
       {
         "lineNumber": 417,
         "author": {
           "gitId": "marcus2k"
         },
-        "content": ""
+        "content": "| `*`      | long-time user                             | archive older data from my view                                                                      | manage my expenses easier                                              |"
       },
       {
         "lineNumber": 418,
         "author": {
-          "gitId": "maxxyh"
+          "gitId": "marcus2k"
         },
-        "content": "* User is logged in."
+        "content": "| `stretch`| user who likes to plan in advance          | simulate future spending                                                                             | visualize my journey towards my financial goals                        |"
       },
       {
         "lineNumber": 419,
         "author": {
-          "gitId": "-"
+          "gitId": "marcus2k"
         },
-        "content": ""
+        "content": "| `stretch`| forgetful user                             | receive notifications of budget limits and bill payments                                             | better plan for daily expenditure and make payments on time            |"
       },
       {
         "lineNumber": 420,
         "author": {
           "gitId": "-"
         },
-        "content": "**MSS**"
+        "content": ""
       },
       {
         "lineNumber": 421,
         "author": {
           "gitId": "-"
         },
-        "content": ""
+        "content": "*{More to be added}*"
       },
       {
         "lineNumber": 422,
         "author": {
-          "gitId": "maxxyh"
+          "gitId": "-"
         },
-        "content": "1. User requests to list expenses (U5)."
+        "content": ""
       },
       {
         "lineNumber": 423,
         "author": {
-          "gitId": "maxxyh"
+          "gitId": "-"
         },
-        "content": "2. Bamboo shows a list of expenses."
+        "content": "### Use cases"
       },
       {
         "lineNumber": 424,
         "author": {
-          "gitId": "maxxyh"
+          "gitId": "-"
         },
-        "content": "3. User requests to delete a specific expense in the list."
+        "content": ""
       },
       {
         "lineNumber": 425,
         "author": {
-          "gitId": "maxxyh"
+          "gitId": "marcus2k"
         },
-        "content": "4. Bamboo deletes the expense."
+        "content": "(For all use cases below, the System is the Bamboo and the Actor is the user, unless specified otherwise)"
       },
       {
         "lineNumber": 426,
         "author": {
-          "gitId": "maxxyh"
+          "gitId": "-"
         },
-        "content": "5. Bamboo lists all expenses and shows the budget balance."
+        "content": ""
       },
       {
         "lineNumber": 427,
         "author": {
-          "gitId": "-"
+          "gitId": "maxxyh"
         },
-        "content": ""
+        "content": "####Use case U1: Add an expense"
       },
       {
         "lineNumber": 428,
         "author": {
-          "gitId": "-"
+          "gitId": "marcus2k"
         },
-        "content": "   Use case ends."
+        "content": ""
       },
       {
         "lineNumber": 429,
-        "author": {
-          "gitId": "-"
-        },
-        "content": ""
-      },
-      {
-        "lineNumber": 430,
-        "author": {
-          "gitId": "-"
-        },
-        "content": "**Extensions**"
-      },
-      {
-        "lineNumber": 431,
-        "author": {
-          "gitId": "-"
-        },
-        "content": ""
-      },
-      {
-        "lineNumber": 432,
-        "author": {
-          "gitId": "-"
-        },
-        "content": "* 2a. The list is empty."
-      },
-      {
-        "lineNumber": 433,
-        "author": {
-          "gitId": "-"
-        },
-        "content": ""
-      },
-      {
-        "lineNumber": 434,
-        "author": {
-          "gitId": "-"
-        },
-        "content": "  Use case ends."
-      },
-      {
-        "lineNumber": 435,
-        "author": {
-          "gitId": "-"
-        },
-        "content": ""
-      },
-      {
-        "lineNumber": 436,
-        "author": {
-          "gitId": "maxxyh"
-        },
-        "content": "* 3a. The given expense does not exist."
-      },
-      {
-        "lineNumber": 437,
-        "author": {
-          "gitId": "marcus2k"
-        },
-        "content": "    * 3a1. Bamboo shows an error message."
-      },
-      {
-        "lineNumber": 438,
-        "author": {
-          "gitId": "-"
-        },
-        "content": ""
-      },
-      {
-        "lineNumber": 439,
-        "author": {
-          "gitId": "-"
-        },
-        "content": "      Use case resumes at step 2."
-      },
-      {
-        "lineNumber": 440,
-        "author": {
-          "gitId": "-"
-        },
-        "content": ""
-      },
-      {
-        "lineNumber": 441,
-        "author": {
-          "gitId": "maxxyh"
-        },
-        "content": "####Use case U4: Edit an expense"
-      },
-      {
-        "lineNumber": 442,
-        "author": {
-          "gitId": "-"
-        },
-        "content": ""
-      },
-      {
-        "lineNumber": 443,
         "author": {
           "gitId": "marcus2k"
         },
         "content": "**Preconditions:** (Needed for v1.2.1)"
       },
       {
-        "lineNumber": 444,
+        "lineNumber": 430,
         "author": {
-          "gitId": "-"
+          "gitId": "marcus2k"
         },
         "content": ""
       },
       {
-        "lineNumber": 445,
+        "lineNumber": 431,
         "author": {
           "gitId": "maxxyh"
         },
         "content": "* User is logged in."
       },
       {
+        "lineNumber": 432,
+        "author": {
+          "gitId": "marcus2k"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 433,
+        "author": {
+          "gitId": "marcus2k"
+        },
+        "content": "**MSS**"
+      },
+      {
+        "lineNumber": 434,
+        "author": {
+          "gitId": "marcus2k"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 435,
+        "author": {
+          "gitId": "maxxyh"
+        },
+        "content": "1. User requests to add an expense."
+      },
+      {
+        "lineNumber": 436,
+        "author": {
+          "gitId": "maxxyh"
+        },
+        "content": "2. Bamboo adds the expense."
+      },
+      {
+        "lineNumber": 437,
+        "author": {
+          "gitId": "maxxyh"
+        },
+        "content": "3. Bamboo lists all expenses and shows the new budget balance."
+      },
+      {
+        "lineNumber": 438,
+        "author": {
+          "gitId": "marcus2k"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 439,
+        "author": {
+          "gitId": "maxxyh"
+        },
+        "content": "    Use case ends."
+      },
+      {
+        "lineNumber": 440,
+        "author": {
+          "gitId": "marcus2k"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 441,
+        "author": {
+          "gitId": "marcus2k"
+        },
+        "content": "**Extensions**"
+      },
+      {
+        "lineNumber": 442,
+        "author": {
+          "gitId": "marcus2k"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 443,
+        "author": {
+          "gitId": "maxxyh"
+        },
+        "content": "* 1a. The given command format is invalid."
+      },
+      {
+        "lineNumber": 444,
+        "author": {
+          "gitId": "maxxyh"
+        },
+        "content": "    * 1a1. Bamboo shows an error message."
+      },
+      {
+        "lineNumber": 445,
+        "author": {
+          "gitId": "marcus2k"
+        },
+        "content": "      Use case ends."
+      },
+      {
         "lineNumber": 446,
         "author": {
-          "gitId": "-"
+          "gitId": "marcus2k"
         },
         "content": ""
       },
       {
         "lineNumber": 447,
         "author": {
-          "gitId": "marcus2k"
+          "gitId": "maxxyh"
         },
-        "content": "**MSS**"
+        "content": "####Use case U2: Top-up budget"
       },
       {
         "lineNumber": 448,
@@ -4880,415 +4880,415 @@
       {
         "lineNumber": 449,
         "author": {
-          "gitId": "maxxyh"
+          "gitId": "marcus2k"
         },
-        "content": "1. User requests to list expenses (U5)."
+        "content": "**Preconditions:** (Needed for v1.2.1)"
       },
       {
         "lineNumber": 450,
         "author": {
-          "gitId": "maxxyh"
+          "gitId": "-"
         },
-        "content": "2. Bamboo shows a list of expenses."
+        "content": ""
       },
       {
         "lineNumber": 451,
         "author": {
           "gitId": "maxxyh"
         },
-        "content": "3. User requests to edit an expense with the new fields given."
+        "content": "- User is logged in."
       },
       {
         "lineNumber": 452,
         "author": {
-          "gitId": "maxxyh"
+          "gitId": "-"
         },
-        "content": "4. Bamboo edits the expense."
+        "content": ""
       },
       {
         "lineNumber": 453,
         "author": {
-          "gitId": "maxxyh"
+          "gitId": "-"
         },
-        "content": "5. Bamboo feedbacks to user what was changed."
+        "content": "**MSS**"
       },
       {
         "lineNumber": 454,
         "author": {
-          "gitId": "maxxyh"
+          "gitId": "-"
         },
-        "content": "6. Bamboo lists all expenses and shows the new budget balance."
+        "content": ""
       },
       {
         "lineNumber": 455,
         "author": {
-          "gitId": "maxxyh"
+          "gitId": "marcus2k"
         },
-        "content": "   Use case ends."
+        "content": "1. User requests to top up budget by an amount he provides."
       },
       {
         "lineNumber": 456,
         "author": {
           "gitId": "marcus2k"
         },
-        "content": ""
+        "content": "2. Bamboo tops up the user\u0027s budget by the amount given by the user."
       },
       {
         "lineNumber": 457,
-        "author": {
-          "gitId": "marcus2k"
-        },
-        "content": "**Extensions**"
-      },
-      {
-        "lineNumber": 458,
-        "author": {
-          "gitId": "marcus2k"
-        },
-        "content": ""
-      },
-      {
-        "lineNumber": 459,
-        "author": {
-          "gitId": "marcus2k"
-        },
-        "content": "* 2a. The list is empty."
-      },
-      {
-        "lineNumber": 460,
-        "author": {
-          "gitId": "marcus2k"
-        },
-        "content": "    * 2a1. Bamboo shows an error message"
-      },
-      {
-        "lineNumber": 461,
-        "author": {
-          "gitId": "marcus2k"
-        },
-        "content": "      Use case ends"
-      },
-      {
-        "lineNumber": 462,
-        "author": {
-          "gitId": "marcus2k"
-        },
-        "content": "* 3a. The given field value is invalid."
-      },
-      {
-        "lineNumber": 463,
-        "author": {
-          "gitId": "marcus2k"
-        },
-        "content": "    * 3a1. Bamboo shows an error message."
-      },
-      {
-        "lineNumber": 464,
-        "author": {
-          "gitId": "marcus2k"
-        },
-        "content": "      Use case ends."
-      },
-      {
-        "lineNumber": 465,
-        "author": {
-          "gitId": "marcus2k"
-        },
-        "content": ""
-      },
-      {
-        "lineNumber": 466,
-        "author": {
-          "gitId": "maxxyh"
-        },
-        "content": "####Use case U5: List all expenses"
-      },
-      {
-        "lineNumber": 467,
-        "author": {
-          "gitId": "maxxyh"
-        },
-        "content": ""
-      },
-      {
-        "lineNumber": 468,
-        "author": {
-          "gitId": "maxxyh"
-        },
-        "content": "**Preconditions:** (Needed for v1.2.1)"
-      },
-      {
-        "lineNumber": 469,
-        "author": {
-          "gitId": "maxxyh"
-        },
-        "content": ""
-      },
-      {
-        "lineNumber": 470,
-        "author": {
-          "gitId": "maxxyh"
-        },
-        "content": "* User is logged in."
-      },
-      {
-        "lineNumber": 471,
-        "author": {
-          "gitId": "maxxyh"
-        },
-        "content": ""
-      },
-      {
-        "lineNumber": 472,
-        "author": {
-          "gitId": "maxxyh"
-        },
-        "content": "**MSS**"
-      },
-      {
-        "lineNumber": 473,
-        "author": {
-          "gitId": "maxxyh"
-        },
-        "content": ""
-      },
-      {
-        "lineNumber": 474,
-        "author": {
-          "gitId": "maxxyh"
-        },
-        "content": "1. User requests to list all expenses."
-      },
-      {
-        "lineNumber": 475,
-        "author": {
-          "gitId": "maxxyh"
-        },
-        "content": "2. Bamboo shows a list of all expenses recorded and the current budget balance."
-      },
-      {
-        "lineNumber": 476,
-        "author": {
-          "gitId": "maxxyh"
-        },
-        "content": ""
-      },
-      {
-        "lineNumber": 477,
-        "author": {
-          "gitId": "maxxyh"
-        },
-        "content": "   Use case ends."
-      },
-      {
-        "lineNumber": 478,
-        "author": {
-          "gitId": "maxxyh"
-        },
-        "content": ""
-      },
-      {
-        "lineNumber": 479,
-        "author": {
-          "gitId": "maxxyh"
-        },
-        "content": "####Use case U6: Add a remark to an expense"
-      },
-      {
-        "lineNumber": 480,
-        "author": {
-          "gitId": "maxxyh"
-        },
-        "content": ""
-      },
-      {
-        "lineNumber": 481,
-        "author": {
-          "gitId": "maxxyh"
-        },
-        "content": "**Preconditions:** (Needed for v1.2.1)"
-      },
-      {
-        "lineNumber": 482,
-        "author": {
-          "gitId": "maxxyh"
-        },
-        "content": "* User is logged in."
-      },
-      {
-        "lineNumber": 483,
-        "author": {
-          "gitId": "maxxyh"
-        },
-        "content": "* Expense List is not empty."
-      },
-      {
-        "lineNumber": 484,
-        "author": {
-          "gitId": "maxxyh"
-        },
-        "content": ""
-      },
-      {
-        "lineNumber": 485,
-        "author": {
-          "gitId": "maxxyh"
-        },
-        "content": "**MSS**"
-      },
-      {
-        "lineNumber": 486,
-        "author": {
-          "gitId": "maxxyh"
-        },
-        "content": "1. User requests to add a remark to specified expense item."
-      },
-      {
-        "lineNumber": 487,
-        "author": {
-          "gitId": "maxxyh"
-        },
-        "content": "2. Bamboo adds remark to specified expense item."
-      },
-      {
-        "lineNumber": 488,
         "author": {
           "gitId": "maxxyh"
         },
         "content": "3. Bamboo lists all expenses and shows the budget balance."
       },
       {
-        "lineNumber": 489,
+        "lineNumber": 458,
         "author": {
-          "gitId": "maxxyh"
-        },
-        "content": "   Use case ends."
-      },
-      {
-        "lineNumber": 490,
-        "author": {
-          "gitId": "maxxyh"
+          "gitId": "-"
         },
         "content": ""
       },
       {
-        "lineNumber": 491,
+        "lineNumber": 459,
         "author": {
-          "gitId": "maxxyh"
-        },
-        "content": "**Extensions**"
-      },
-      {
-        "lineNumber": 492,
-        "author": {
-          "gitId": "maxxyh"
-        },
-        "content": ""
-      },
-      {
-        "lineNumber": 493,
-        "author": {
-          "gitId": "maxxyh"
-        },
-        "content": "* 1a. The given expense does not exist."
-      },
-      {
-        "lineNumber": 494,
-        "author": {
-          "gitId": "maxxyh"
-        },
-        "content": "    * 1a1. Bamboo shows an error message."
-      },
-      {
-        "lineNumber": 495,
-        "author": {
-          "gitId": "maxxyh"
+          "gitId": "-"
         },
         "content": "    Use case ends."
       },
       {
-        "lineNumber": 496,
+        "lineNumber": 460,
         "author": {
-          "gitId": "maxxyh"
+          "gitId": "-"
         },
         "content": ""
       },
       {
-        "lineNumber": 497,
+        "lineNumber": 461,
         "author": {
-          "gitId": "maxxyh"
+          "gitId": "-"
         },
-        "content": "####Use case U7: Find an expense"
+        "content": "**Extensions**"
       },
       {
-        "lineNumber": 498,
+        "lineNumber": 462,
         "author": {
-          "gitId": "maxxyh"
+          "gitId": "-"
         },
         "content": ""
       },
       {
-        "lineNumber": 499,
+        "lineNumber": 463,
+        "author": {
+          "gitId": "marcus2k"
+        },
+        "content": "* 1a. The given top-up value is invalid."
+      },
+      {
+        "lineNumber": 464,
+        "author": {
+          "gitId": "marcus2k"
+        },
+        "content": "    * 1a1. Bamboo shows an error message."
+      },
+      {
+        "lineNumber": 465,
+        "author": {
+          "gitId": "marcus2k"
+        },
+        "content": "      Use case ends."
+      },
+      {
+        "lineNumber": 466,
+        "author": {
+          "gitId": "marcus2k"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 467,
         "author": {
           "gitId": "maxxyh"
+        },
+        "content": "####Use case U3: Delete an expense"
+      },
+      {
+        "lineNumber": 468,
+        "author": {
+          "gitId": "marcus2k"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 469,
+        "author": {
+          "gitId": "marcus2k"
         },
         "content": "**Preconditions:** (Needed for v1.2.1)"
       },
       {
-        "lineNumber": 500,
+        "lineNumber": 470,
         "author": {
-          "gitId": "maxxyh"
+          "gitId": "marcus2k"
         },
         "content": ""
       },
       {
-        "lineNumber": 501,
+        "lineNumber": 471,
         "author": {
           "gitId": "maxxyh"
         },
         "content": "* User is logged in."
       },
       {
+        "lineNumber": 472,
+        "author": {
+          "gitId": "-"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 473,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "**MSS**"
+      },
+      {
+        "lineNumber": 474,
+        "author": {
+          "gitId": "-"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 475,
+        "author": {
+          "gitId": "maxxyh"
+        },
+        "content": "1. User requests to list expenses (U5)."
+      },
+      {
+        "lineNumber": 476,
+        "author": {
+          "gitId": "maxxyh"
+        },
+        "content": "2. Bamboo shows a list of expenses."
+      },
+      {
+        "lineNumber": 477,
+        "author": {
+          "gitId": "maxxyh"
+        },
+        "content": "3. User requests to delete a specific expense in the list."
+      },
+      {
+        "lineNumber": 478,
+        "author": {
+          "gitId": "maxxyh"
+        },
+        "content": "4. Bamboo deletes the expense."
+      },
+      {
+        "lineNumber": 479,
+        "author": {
+          "gitId": "maxxyh"
+        },
+        "content": "5. Bamboo lists all expenses and shows the budget balance."
+      },
+      {
+        "lineNumber": 480,
+        "author": {
+          "gitId": "-"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 481,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "   Use case ends."
+      },
+      {
+        "lineNumber": 482,
+        "author": {
+          "gitId": "-"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 483,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "**Extensions**"
+      },
+      {
+        "lineNumber": 484,
+        "author": {
+          "gitId": "-"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 485,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "* 2a. The list is empty."
+      },
+      {
+        "lineNumber": 486,
+        "author": {
+          "gitId": "-"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 487,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "  Use case ends."
+      },
+      {
+        "lineNumber": 488,
+        "author": {
+          "gitId": "-"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 489,
+        "author": {
+          "gitId": "maxxyh"
+        },
+        "content": "* 3a. The given expense does not exist."
+      },
+      {
+        "lineNumber": 490,
+        "author": {
+          "gitId": "marcus2k"
+        },
+        "content": "    * 3a1. Bamboo shows an error message."
+      },
+      {
+        "lineNumber": 491,
+        "author": {
+          "gitId": "-"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 492,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "      Use case resumes at step 2."
+      },
+      {
+        "lineNumber": 493,
+        "author": {
+          "gitId": "-"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 494,
+        "author": {
+          "gitId": "maxxyh"
+        },
+        "content": "####Use case U4: Edit an expense"
+      },
+      {
+        "lineNumber": 495,
+        "author": {
+          "gitId": "-"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 496,
+        "author": {
+          "gitId": "marcus2k"
+        },
+        "content": "**Preconditions:** (Needed for v1.2.1)"
+      },
+      {
+        "lineNumber": 497,
+        "author": {
+          "gitId": "-"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 498,
+        "author": {
+          "gitId": "maxxyh"
+        },
+        "content": "* User is logged in."
+      },
+      {
+        "lineNumber": 499,
+        "author": {
+          "gitId": "-"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 500,
+        "author": {
+          "gitId": "marcus2k"
+        },
+        "content": "**MSS**"
+      },
+      {
+        "lineNumber": 501,
+        "author": {
+          "gitId": "marcus2k"
+        },
+        "content": ""
+      },
+      {
         "lineNumber": 502,
         "author": {
           "gitId": "maxxyh"
         },
-        "content": ""
+        "content": "1. User requests to list expenses (U5)."
       },
       {
         "lineNumber": 503,
         "author": {
           "gitId": "maxxyh"
         },
-        "content": "**MSS**"
+        "content": "2. Bamboo shows a list of expenses."
       },
       {
         "lineNumber": 504,
         "author": {
           "gitId": "maxxyh"
         },
-        "content": ""
+        "content": "3. User requests to edit an expense with the new fields given."
       },
       {
         "lineNumber": 505,
         "author": {
           "gitId": "maxxyh"
         },
-        "content": "1. User requests to find expense by certain identifiers and search terms."
+        "content": "4. Bamboo edits the expense."
       },
       {
         "lineNumber": 506,
         "author": {
           "gitId": "maxxyh"
         },
-        "content": "2. Bamboo shows a list of expenses which match the identifiers and search terms."
+        "content": "5. Bamboo feedbacks to user what was changed."
       },
       {
         "lineNumber": 507,
         "author": {
           "gitId": "maxxyh"
         },
-        "content": "3. Bamboo lists all expenses and shows the new budget balance."
+        "content": "6. Bamboo lists all expenses and shows the new budget balance."
       },
       {
         "lineNumber": 508,
@@ -5300,572 +5300,943 @@
       {
         "lineNumber": 509,
         "author": {
-          "gitId": "maxxyh"
+          "gitId": "marcus2k"
         },
         "content": ""
       },
       {
         "lineNumber": 510,
         "author": {
-          "gitId": "maxxyh"
+          "gitId": "marcus2k"
         },
         "content": "**Extensions**"
       },
       {
         "lineNumber": 511,
         "author": {
-          "gitId": "maxxyh"
+          "gitId": "marcus2k"
         },
         "content": ""
       },
       {
         "lineNumber": 512,
         "author": {
-          "gitId": "maxxyh"
+          "gitId": "marcus2k"
         },
-        "content": "* 1a. The given field values are invalid."
+        "content": "* 2a. The list is empty."
       },
       {
         "lineNumber": 513,
         "author": {
-          "gitId": "maxxyh"
+          "gitId": "marcus2k"
         },
-        "content": "    * 1a1. Bamboo shows an error message."
+        "content": "    * 2a1. Bamboo shows an error message"
       },
       {
         "lineNumber": 514,
         "author": {
-          "gitId": "maxxyh"
+          "gitId": "marcus2k"
         },
-        "content": "      Use case ends."
+        "content": "      Use case ends"
       },
       {
         "lineNumber": 515,
         "author": {
-          "gitId": "maxxyh"
+          "gitId": "marcus2k"
         },
-        "content": ""
+        "content": "* 3a. The given field value is invalid."
       },
       {
         "lineNumber": 516,
         "author": {
           "gitId": "marcus2k"
         },
-        "content": "### Non-Functional Requirement"
+        "content": "    * 3a1. Bamboo shows an error message."
       },
       {
         "lineNumber": 517,
         "author": {
           "gitId": "marcus2k"
         },
-        "content": ""
+        "content": "      Use case ends."
       },
       {
         "lineNumber": 518,
         "author": {
           "gitId": "marcus2k"
         },
-        "content": "Project Constraints:"
+        "content": ""
       },
       {
         "lineNumber": 519,
         "author": {
-          "gitId": "marcus2k"
+          "gitId": "maxxyh"
         },
-        "content": ""
+        "content": "####Use case U5: List all expenses"
       },
       {
         "lineNumber": 520,
         "author": {
-          "gitId": "marcus2k"
+          "gitId": "maxxyh"
         },
-        "content": "* Product does not handle user\u0027s actual financial account"
+        "content": ""
       },
       {
         "lineNumber": 521,
         "author": {
-          "gitId": "marcus2k"
+          "gitId": "maxxyh"
         },
-        "content": "* User input in the form of command line"
+        "content": "**Preconditions:** (Needed for v1.2.1)"
       },
       {
         "lineNumber": 522,
         "author": {
-          "gitId": "marcus2k"
+          "gitId": "maxxyh"
         },
-        "content": "* System should be beginner-friendly"
+        "content": ""
       },
       {
         "lineNumber": 523,
         "author": {
-          "gitId": "marcus2k"
+          "gitId": "maxxyh"
         },
-        "content": "* User\u0027s spending data should be saved in an external storage file"
+        "content": "* User is logged in."
       },
       {
         "lineNumber": 524,
         "author": {
-          "gitId": "marcus2k"
+          "gitId": "maxxyh"
         },
-        "content": "* Storage file should be updated after each addition or update of spending data"
+        "content": ""
       },
       {
         "lineNumber": 525,
         "author": {
-          "gitId": "marcus2k"
+          "gitId": "maxxyh"
         },
-        "content": "* Product is offered as an offline application"
+        "content": "**MSS**"
       },
       {
         "lineNumber": 526,
         "author": {
-          "gitId": "marcus2k"
+          "gitId": "maxxyh"
         },
         "content": ""
       },
       {
         "lineNumber": 527,
         "author": {
-          "gitId": "marcus2k"
+          "gitId": "maxxyh"
         },
-        "content": "Process Requirements:"
+        "content": "1. User requests to list all expenses."
       },
       {
         "lineNumber": 528,
         "author": {
-          "gitId": "marcus2k"
+          "gitId": "maxxyh"
         },
-        "content": ""
+        "content": "2. Bamboo shows a list of all expenses recorded and the current budget balance."
       },
       {
         "lineNumber": 529,
         "author": {
-          "gitId": "marcus2k"
+          "gitId": "maxxyh"
         },
-        "content": "* Project is expected to adhere to the set Milestones."
+        "content": ""
       },
       {
         "lineNumber": 530,
         "author": {
-          "gitId": "marcus2k"
+          "gitId": "maxxyh"
         },
-        "content": "* User can execute actions using at most 1 command."
+        "content": "   Use case ends."
       },
       {
         "lineNumber": 531,
         "author": {
-          "gitId": "-"
+          "gitId": "maxxyh"
         },
         "content": ""
       },
       {
         "lineNumber": 532,
         "author": {
-          "gitId": "-"
+          "gitId": "maxxyh"
         },
-        "content": "### Glossary"
+        "content": "####Use case U6: Add a remark to an expense"
       },
       {
         "lineNumber": 533,
         "author": {
-          "gitId": "-"
+          "gitId": "maxxyh"
         },
         "content": ""
       },
       {
         "lineNumber": 534,
         "author": {
-          "gitId": "marcus2k"
+          "gitId": "maxxyh"
         },
-        "content": "- **Mainstream OS**: Windows, Linux, Unix, OS-X"
+        "content": "**Preconditions:** (Needed for v1.2.1)"
       },
       {
         "lineNumber": 535,
         "author": {
           "gitId": "maxxyh"
         },
-        "content": "- **Expense**: A single instance of expenditure containing a description, amount spent, date, and category. Expenses are subtracted from the user\u0027s **budget**."
+        "content": "* User is logged in."
       },
       {
         "lineNumber": 536,
         "author": {
-          "gitId": "marcus2k"
+          "gitId": "maxxyh"
         },
-        "content": "- **Budget**: The amount a user sets aside to spend."
+        "content": "* Expense List is not empty."
       },
       {
         "lineNumber": 537,
         "author": {
-          "gitId": "marcus2k"
+          "gitId": "maxxyh"
         },
-        "content": "- **Budget Balance**: The amount of budget left after deducting all expenses."
+        "content": ""
       },
       {
         "lineNumber": 538,
         "author": {
-          "gitId": "-"
+          "gitId": "maxxyh"
         },
-        "content": ""
+        "content": "**MSS**"
       },
       {
         "lineNumber": 539,
         "author": {
-          "gitId": "-"
+          "gitId": "maxxyh"
         },
-        "content": "--------------------------------------------------------------------------------------------------------------------"
+        "content": "1. User requests to add a remark to specified expense item."
       },
       {
         "lineNumber": 540,
         "author": {
-          "gitId": "-"
+          "gitId": "maxxyh"
         },
-        "content": ""
+        "content": "2. Bamboo adds remark to specified expense item."
       },
       {
         "lineNumber": 541,
         "author": {
-          "gitId": "-"
+          "gitId": "maxxyh"
         },
-        "content": "## **Appendix: Instructions for manual testing**"
+        "content": "3. Bamboo lists all expenses and shows the budget balance."
       },
       {
         "lineNumber": 542,
         "author": {
-          "gitId": "-"
+          "gitId": "maxxyh"
         },
-        "content": ""
+        "content": "   Use case ends."
       },
       {
         "lineNumber": 543,
         "author": {
-          "gitId": "-"
+          "gitId": "maxxyh"
         },
-        "content": "Given below are instructions to test the app manually."
+        "content": ""
       },
       {
         "lineNumber": 544,
         "author": {
-          "gitId": "-"
+          "gitId": "maxxyh"
         },
-        "content": ""
+        "content": "**Extensions**"
       },
       {
         "lineNumber": 545,
         "author": {
-          "gitId": "-"
-        },
-        "content": "\u003cdiv markdown\u003d\"span\" class\u003d\"alert alert-info\"\u003e:information_source: **Note:** These instructions only provide a starting point for testers to work on;"
-      },
-      {
-        "lineNumber": 546,
-        "author": {
-          "gitId": "-"
-        },
-        "content": "testers are expected to do more *exploratory* testing."
-      },
-      {
-        "lineNumber": 547,
-        "author": {
-          "gitId": "-"
+          "gitId": "maxxyh"
         },
         "content": ""
       },
       {
+        "lineNumber": 546,
+        "author": {
+          "gitId": "maxxyh"
+        },
+        "content": "* 1a. The given expense does not exist."
+      },
+      {
+        "lineNumber": 547,
+        "author": {
+          "gitId": "maxxyh"
+        },
+        "content": "    * 1a1. Bamboo shows an error message."
+      },
+      {
         "lineNumber": 548,
         "author": {
-          "gitId": "-"
+          "gitId": "maxxyh"
         },
-        "content": "\u003c/div\u003e"
+        "content": "    Use case ends."
       },
       {
         "lineNumber": 549,
         "author": {
-          "gitId": "-"
+          "gitId": "maxxyh"
         },
         "content": ""
       },
       {
         "lineNumber": 550,
         "author": {
-          "gitId": "-"
+          "gitId": "maxxyh"
         },
-        "content": "### Launch and shutdown"
+        "content": "####Use case U7: Find an expense"
       },
       {
         "lineNumber": 551,
         "author": {
-          "gitId": "-"
+          "gitId": "maxxyh"
         },
         "content": ""
       },
       {
         "lineNumber": 552,
         "author": {
-          "gitId": "-"
+          "gitId": "maxxyh"
         },
-        "content": "1. Initial launch"
+        "content": "**Preconditions:** (Needed for v1.2.1)"
       },
       {
         "lineNumber": 553,
         "author": {
-          "gitId": "-"
+          "gitId": "maxxyh"
         },
         "content": ""
       },
       {
         "lineNumber": 554,
         "author": {
-          "gitId": "-"
+          "gitId": "maxxyh"
         },
-        "content": "   1. Download the jar file and copy into an empty folder"
+        "content": "* User is logged in."
       },
       {
         "lineNumber": 555,
         "author": {
-          "gitId": "-"
+          "gitId": "maxxyh"
         },
         "content": ""
       },
       {
         "lineNumber": 556,
         "author": {
-          "gitId": "-"
+          "gitId": "maxxyh"
         },
-        "content": "   1. Double-click the jar file Expected: Shows the GUI with a set of sample contacts. The window size may not be optimum."
+        "content": "**MSS**"
       },
       {
         "lineNumber": 557,
         "author": {
-          "gitId": "-"
+          "gitId": "maxxyh"
         },
         "content": ""
       },
       {
         "lineNumber": 558,
         "author": {
-          "gitId": "-"
+          "gitId": "maxxyh"
         },
-        "content": "1. Saving window preferences"
+        "content": "1. User requests to find expense by certain identifiers and search terms."
       },
       {
         "lineNumber": 559,
         "author": {
-          "gitId": "-"
+          "gitId": "maxxyh"
         },
-        "content": ""
+        "content": "2. Bamboo shows a list of expenses which match the identifiers and search terms."
       },
       {
         "lineNumber": 560,
         "author": {
-          "gitId": "-"
+          "gitId": "maxxyh"
         },
-        "content": "   1. Resize the window to an optimum size. Move the window to a different location. Close the window."
+        "content": "3. Bamboo lists all expenses and shows the new budget balance."
       },
       {
         "lineNumber": 561,
         "author": {
-          "gitId": "-"
+          "gitId": "maxxyh"
         },
-        "content": ""
+        "content": "   Use case ends."
       },
       {
         "lineNumber": 562,
         "author": {
-          "gitId": "-"
+          "gitId": "maxxyh"
         },
-        "content": "   1. Re-launch the app by double-clicking the jar file.\u003cbr\u003e"
+        "content": ""
       },
       {
         "lineNumber": 563,
         "author": {
-          "gitId": "-"
+          "gitId": "maxxyh"
         },
-        "content": "       Expected: The most recent window size and location is retained."
+        "content": "**Extensions**"
       },
       {
         "lineNumber": 564,
         "author": {
-          "gitId": "-"
+          "gitId": "maxxyh"
         },
         "content": ""
       },
       {
         "lineNumber": 565,
         "author": {
-          "gitId": "-"
+          "gitId": "maxxyh"
         },
-        "content": "1. _{ more test cases …​ }_"
+        "content": "* 1a. The given field values are invalid."
       },
       {
         "lineNumber": 566,
         "author": {
-          "gitId": "-"
+          "gitId": "maxxyh"
         },
-        "content": ""
+        "content": "    * 1a1. Bamboo shows an error message."
       },
       {
         "lineNumber": 567,
         "author": {
-          "gitId": "Jaylenlee"
+          "gitId": "maxxyh"
         },
-        "content": "### Deleting an expense"
+        "content": "      Use case ends."
       },
       {
         "lineNumber": 568,
         "author": {
-          "gitId": "-"
+          "gitId": "maxxyh"
         },
         "content": ""
       },
       {
         "lineNumber": 569,
         "author": {
-          "gitId": "Jaylenlee"
+          "gitId": "marcus2k"
         },
-        "content": "1. Deleting an expense while all expenses are being shown"
+        "content": "### Non-Functional Requirement"
       },
       {
         "lineNumber": 570,
         "author": {
-          "gitId": "-"
+          "gitId": "marcus2k"
         },
         "content": ""
       },
       {
         "lineNumber": 571,
         "author": {
-          "gitId": "Jaylenlee"
+          "gitId": "marcus2k"
         },
-        "content": "   1. Prerequisites: List all expenses using the `list` command. Multiple expenses in the list."
+        "content": "Project Constraints:"
       },
       {
         "lineNumber": 572,
         "author": {
-          "gitId": "-"
+          "gitId": "marcus2k"
         },
         "content": ""
       },
       {
         "lineNumber": 573,
         "author": {
-          "gitId": "-"
+          "gitId": "marcus2k"
         },
-        "content": "   1. Test case: `delete 1`\u003cbr\u003e"
+        "content": "* Product does not handle user\u0027s actual financial account"
       },
       {
         "lineNumber": 574,
         "author": {
-          "gitId": "-"
+          "gitId": "marcus2k"
         },
-        "content": "      Expected: First contact is deleted from the list. Details of the deleted contact shown in the status message. Timestamp in the status bar is updated."
+        "content": "* User input in the form of command line"
       },
       {
         "lineNumber": 575,
         "author": {
-          "gitId": "-"
+          "gitId": "marcus2k"
         },
-        "content": ""
+        "content": "* System should be beginner-friendly"
       },
       {
         "lineNumber": 576,
         "author": {
-          "gitId": "-"
+          "gitId": "marcus2k"
         },
-        "content": "   1. Test case: `delete 0`\u003cbr\u003e"
+        "content": "* User\u0027s spending data should be saved in an external storage file"
       },
       {
         "lineNumber": 577,
         "author": {
-          "gitId": "Jaylenlee"
+          "gitId": "marcus2k"
         },
-        "content": "      Expected: No expense is deleted. Error details shown in the status message. Status bar remains the same."
+        "content": "* Storage file should be updated after each addition or update of spending data"
       },
       {
         "lineNumber": 578,
         "author": {
-          "gitId": "-"
+          "gitId": "marcus2k"
         },
-        "content": ""
+        "content": "* Product is offered as an offline application"
       },
       {
         "lineNumber": 579,
         "author": {
-          "gitId": "-"
+          "gitId": "marcus2k"
         },
-        "content": "   1. Other incorrect delete commands to try: `delete`, `delete x`, `...` (where x is larger than the list size)\u003cbr\u003e"
+        "content": ""
       },
       {
         "lineNumber": 580,
         "author": {
-          "gitId": "-"
+          "gitId": "marcus2k"
         },
-        "content": "      Expected: Similar to previous."
+        "content": "Process Requirements:"
       },
       {
         "lineNumber": 581,
         "author": {
-          "gitId": "-"
+          "gitId": "marcus2k"
         },
         "content": ""
       },
       {
         "lineNumber": 582,
         "author": {
-          "gitId": "-"
+          "gitId": "marcus2k"
         },
-        "content": "1. _{ more test cases …​ }_"
+        "content": "* Project is expected to adhere to the set Milestones."
       },
       {
         "lineNumber": 583,
         "author": {
-          "gitId": "-"
+          "gitId": "marcus2k"
         },
-        "content": ""
+        "content": "* User can execute actions using at most 1 command."
       },
       {
         "lineNumber": 584,
         "author": {
           "gitId": "-"
         },
-        "content": "### Saving data"
+        "content": ""
       },
       {
         "lineNumber": 585,
         "author": {
           "gitId": "-"
         },
-        "content": ""
+        "content": "### Glossary"
       },
       {
         "lineNumber": 586,
         "author": {
           "gitId": "-"
         },
-        "content": "1. Dealing with missing/corrupted data files"
+        "content": ""
       },
       {
         "lineNumber": 587,
+        "author": {
+          "gitId": "marcus2k"
+        },
+        "content": "- **Mainstream OS**: Windows, Linux, Unix, OS-X"
+      },
+      {
+        "lineNumber": 588,
+        "author": {
+          "gitId": "maxxyh"
+        },
+        "content": "- **Expense**: A single instance of expenditure containing a description, amount spent, date, and category. Expenses are subtracted from the user\u0027s **budget**."
+      },
+      {
+        "lineNumber": 589,
+        "author": {
+          "gitId": "marcus2k"
+        },
+        "content": "- **Budget**: The amount a user sets aside to spend."
+      },
+      {
+        "lineNumber": 590,
+        "author": {
+          "gitId": "marcus2k"
+        },
+        "content": "- **Budget Balance**: The amount of budget left after deducting all expenses."
+      },
+      {
+        "lineNumber": 591,
         "author": {
           "gitId": "-"
         },
         "content": ""
       },
       {
-        "lineNumber": 588,
+        "lineNumber": 592,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "--------------------------------------------------------------------------------------------------------------------"
+      },
+      {
+        "lineNumber": 593,
+        "author": {
+          "gitId": "-"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 594,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "## **Appendix: Instructions for manual testing**"
+      },
+      {
+        "lineNumber": 595,
+        "author": {
+          "gitId": "-"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 596,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "Given below are instructions to test the app manually."
+      },
+      {
+        "lineNumber": 597,
+        "author": {
+          "gitId": "-"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 598,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "\u003cdiv markdown\u003d\"span\" class\u003d\"alert alert-info\"\u003e:information_source: **Note:** These instructions only provide a starting point for testers to work on;"
+      },
+      {
+        "lineNumber": 599,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "testers are expected to do more *exploratory* testing."
+      },
+      {
+        "lineNumber": 600,
+        "author": {
+          "gitId": "-"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 601,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "\u003c/div\u003e"
+      },
+      {
+        "lineNumber": 602,
+        "author": {
+          "gitId": "-"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 603,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "### Launch and shutdown"
+      },
+      {
+        "lineNumber": 604,
+        "author": {
+          "gitId": "-"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 605,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "1. Initial launch"
+      },
+      {
+        "lineNumber": 606,
+        "author": {
+          "gitId": "-"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 607,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "   1. Download the jar file and copy into an empty folder"
+      },
+      {
+        "lineNumber": 608,
+        "author": {
+          "gitId": "-"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 609,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "   1. Double-click the jar file Expected: Shows the GUI with a set of sample contacts. The window size may not be optimum."
+      },
+      {
+        "lineNumber": 610,
+        "author": {
+          "gitId": "-"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 611,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "1. Saving window preferences"
+      },
+      {
+        "lineNumber": 612,
+        "author": {
+          "gitId": "-"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 613,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "   1. Resize the window to an optimum size. Move the window to a different location. Close the window."
+      },
+      {
+        "lineNumber": 614,
+        "author": {
+          "gitId": "-"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 615,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "   1. Re-launch the app by double-clicking the jar file.\u003cbr\u003e"
+      },
+      {
+        "lineNumber": 616,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "       Expected: The most recent window size and location is retained."
+      },
+      {
+        "lineNumber": 617,
+        "author": {
+          "gitId": "-"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 618,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "1. _{ more test cases …​ }_"
+      },
+      {
+        "lineNumber": 619,
+        "author": {
+          "gitId": "-"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 620,
+        "author": {
+          "gitId": "Jaylenlee"
+        },
+        "content": "### Deleting an expense"
+      },
+      {
+        "lineNumber": 621,
+        "author": {
+          "gitId": "-"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 622,
+        "author": {
+          "gitId": "Jaylenlee"
+        },
+        "content": "1. Deleting an expense while all expenses are being shown"
+      },
+      {
+        "lineNumber": 623,
+        "author": {
+          "gitId": "-"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 624,
+        "author": {
+          "gitId": "Jaylenlee"
+        },
+        "content": "   1. Prerequisites: List all expenses using the `list` command. Multiple expenses in the list."
+      },
+      {
+        "lineNumber": 625,
+        "author": {
+          "gitId": "-"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 626,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "   1. Test case: `delete 1`\u003cbr\u003e"
+      },
+      {
+        "lineNumber": 627,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "      Expected: First contact is deleted from the list. Details of the deleted contact shown in the status message. Timestamp in the status bar is updated."
+      },
+      {
+        "lineNumber": 628,
+        "author": {
+          "gitId": "-"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 629,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "   1. Test case: `delete 0`\u003cbr\u003e"
+      },
+      {
+        "lineNumber": 630,
+        "author": {
+          "gitId": "Jaylenlee"
+        },
+        "content": "      Expected: No expense is deleted. Error details shown in the status message. Status bar remains the same."
+      },
+      {
+        "lineNumber": 631,
+        "author": {
+          "gitId": "-"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 632,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "   1. Other incorrect delete commands to try: `delete`, `delete x`, `...` (where x is larger than the list size)\u003cbr\u003e"
+      },
+      {
+        "lineNumber": 633,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "      Expected: Similar to previous."
+      },
+      {
+        "lineNumber": 634,
+        "author": {
+          "gitId": "-"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 635,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "1. _{ more test cases …​ }_"
+      },
+      {
+        "lineNumber": 636,
+        "author": {
+          "gitId": "-"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 637,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "### Saving data"
+      },
+      {
+        "lineNumber": 638,
+        "author": {
+          "gitId": "-"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 639,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "1. Dealing with missing/corrupted data files"
+      },
+      {
+        "lineNumber": 640,
+        "author": {
+          "gitId": "-"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 641,
         "author": {
           "gitId": "-"
         },
         "content": "   1. _{explain how to simulate a missing/corrupted file, and the expected behavior}_"
       },
       {
-        "lineNumber": 589,
+        "lineNumber": 642,
         "author": {
           "gitId": "-"
         },
         "content": ""
       },
       {
-        "lineNumber": 590,
+        "lineNumber": 643,
         "author": {
           "gitId": "-"
         },
@@ -5873,11 +6244,12 @@
       }
     ],
     "authorContributionMap": {
-      "Jaylenlee": 80,
-      "hakiem526": 43,
-      "marcus2k": 89,
+      "Jaylenlee": 82,
+      "hakiem526": 42,
+      "marcus2k": 129,
       "maxxyh": 79,
-      "-": 299
+      "-": 298,
+      "lebencwb": 13
     }
   },
   {

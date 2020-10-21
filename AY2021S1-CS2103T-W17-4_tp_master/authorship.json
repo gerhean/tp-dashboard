@@ -2188,254 +2188,254 @@
       {
         "lineNumber": 141,
         "author": {
-          "gitId": "-"
+          "gitId": "Lingy12"
         },
-        "content": "### \\[Proposed\\] Undo/redo feature"
+        "content": "### Command alias feature"
       },
       {
         "lineNumber": 142,
         "author": {
-          "gitId": "-"
+          "gitId": "Lingy12"
         },
-        "content": ""
+        "content": "#### Current Implementation"
       },
       {
         "lineNumber": 143,
         "author": {
-          "gitId": "-"
+          "gitId": "Lingy12"
         },
-        "content": "#### Proposed Implementation"
+        "content": ""
       },
       {
         "lineNumber": 144,
         "author": {
-          "gitId": "-"
+          "gitId": "Lingy12"
         },
-        "content": ""
+        "content": "The current implementation is to keep an enumeration `ValidCommand` which keeps a class level `HashMap`. The `HashMap` maps a `String` to a `ValidCommand`."
       },
       {
         "lineNumber": 145,
         "author": {
-          "gitId": "-"
+          "gitId": "Lingy12"
         },
-        "content": "The proposed undo/redo mechanism is facilitated by `VersionedAddressBook`. It extends `AddressBook` with an undo/redo history, stored internally as an `addressBookStateList` and `currentStatePointer`. Additionally, it implements the following operations:"
+        "content": ""
       },
       {
         "lineNumber": 146,
         "author": {
-          "gitId": "-"
+          "gitId": "Lingy12"
         },
-        "content": ""
+        "content": "The `key` of the `HashMap` represents a valid alias of its value which is a `ValidCommand`."
       },
       {
         "lineNumber": 147,
         "author": {
-          "gitId": "-"
+          "gitId": "Lingy12"
         },
-        "content": "* `VersionedAddressBook#commit()` — Saves the current address book state in its history."
+        "content": ""
       },
       {
         "lineNumber": 148,
         "author": {
-          "gitId": "-"
+          "gitId": "Lingy12"
         },
-        "content": "* `VersionedAddressBook#undo()` — Restores the previous address book state from its history."
+        "content": "Given below is the class diagram of related part of command alias feature:"
       },
       {
         "lineNumber": 149,
         "author": {
-          "gitId": "-"
+          "gitId": "Lingy12"
         },
-        "content": "* `VersionedAddressBook#redo()` — Restores a previously undone address book state from its history."
+        "content": ""
       },
       {
         "lineNumber": 150,
         "author": {
-          "gitId": "-"
+          "gitId": "Lingy12"
         },
-        "content": ""
+        "content": "![aliasClassDiagram](images/commandAlias/aliasClassDiagram.png)"
       },
       {
         "lineNumber": 151,
         "author": {
-          "gitId": "-"
+          "gitId": "Lingy12"
         },
-        "content": "These operations are exposed in the `Model` interface as `Model#commitAddressBook()`, `Model#undoAddressBook()` and `Model#redoAddressBook()` respectively."
+        "content": ""
       },
       {
         "lineNumber": 152,
         "author": {
-          "gitId": "-"
+          "gitId": "Lingy12"
         },
-        "content": ""
+        "content": "*`ValidCommand#commandTypeOf(String commandWord)` takes in a command keyword (eg. addj, addc, findc...) and returns a `ValidCommand` which will be used by `AddressBookParser`*"
       },
       {
         "lineNumber": 153,
         "author": {
-          "gitId": "-"
+          "gitId": "Lingy12"
         },
-        "content": "Given below is an example usage scenario and how the undo/redo mechanism behaves at each step."
+        "content": ""
       },
       {
         "lineNumber": 154,
         "author": {
-          "gitId": "-"
+          "gitId": "Lingy12"
         },
-        "content": ""
+        "content": "*`AddressBookParser#parseCommand(String UserInput)` detect the command word and pass in to the `ValidCommand#commandTypeOf(String commandWord)` to find the valid command and produce the `Command` accordingly*"
       },
       {
         "lineNumber": 155,
         "author": {
-          "gitId": "-"
+          "gitId": "Lingy12"
         },
-        "content": "Step 1. The user launches the application for the first time. The `VersionedAddressBook` will be initialized with the initial address book state, and the `currentStatePointer` pointing to that single address book state."
+        "content": ""
       },
       {
         "lineNumber": 156,
         "author": {
-          "gitId": "-"
+          "gitId": "Lingy12"
         },
-        "content": ""
+        "content": "Given below is the sequence diagram of command alias feature (This change only related to `Logic` component, so we omit the execution detail in model):"
       },
       {
         "lineNumber": 157,
         "author": {
-          "gitId": "-"
-        },
-        "content": "![UndoRedoState0](images/UndoRedoState0.png)"
-      },
-      {
-        "lineNumber": 158,
-        "author": {
-          "gitId": "-"
+          "gitId": "Lingy12"
         },
         "content": ""
       },
       {
+        "lineNumber": 158,
+        "author": {
+          "gitId": "Lingy12"
+        },
+        "content": "![aliasSequenceDiagram](images/commandAlias/asliasSequenceDiagram.png)"
+      },
+      {
         "lineNumber": 159,
         "author": {
-          "gitId": "-"
+          "gitId": "Lingy12"
         },
-        "content": "Step 2. The user executes `delete 5` command to delete the 5th person in the address book. The `delete` command calls `Model#commitAddressBook()`, causing the modified state of the address book after the `delete 5` command executes to be saved in the `addressBookStateList`, and the `currentStatePointer` is shifted to the newly inserted address book state."
+        "content": ""
       },
       {
         "lineNumber": 160,
         "author": {
           "gitId": "-"
         },
-        "content": ""
+        "content": "### \\[Proposed\\] Undo/redo feature"
       },
       {
         "lineNumber": 161,
         "author": {
           "gitId": "-"
         },
-        "content": "![UndoRedoState1](images/UndoRedoState1.png)"
+        "content": ""
       },
       {
         "lineNumber": 162,
         "author": {
           "gitId": "-"
         },
-        "content": ""
+        "content": "#### Proposed Implementation"
       },
       {
         "lineNumber": 163,
         "author": {
           "gitId": "-"
         },
-        "content": "Step 3. The user executes `add n/David …​` to add a new person. The `add` command also calls `Model#commitAddressBook()`, causing another modified address book state to be saved into the `addressBookStateList`."
+        "content": ""
       },
       {
         "lineNumber": 164,
         "author": {
           "gitId": "-"
         },
-        "content": ""
+        "content": "The proposed undo/redo mechanism is facilitated by `VersionedAddressBook`. It extends `AddressBook` with an undo/redo history, stored internally as an `addressBookStateList` and `currentStatePointer`. Additionally, it implements the following operations:"
       },
       {
         "lineNumber": 165,
         "author": {
           "gitId": "-"
         },
-        "content": "![UndoRedoState2](images/UndoRedoState2.png)"
+        "content": ""
       },
       {
         "lineNumber": 166,
         "author": {
           "gitId": "-"
         },
-        "content": ""
+        "content": "* `VersionedAddressBook#commit()` — Saves the current address book state in its history."
       },
       {
         "lineNumber": 167,
         "author": {
           "gitId": "-"
         },
-        "content": "\u003cdiv markdown\u003d\"span\" class\u003d\"alert alert-info\"\u003e:information_source: **Note:** If a command fails its execution, it will not call `Model#commitAddressBook()`, so the address book state will not be saved into the `addressBookStateList`."
+        "content": "* `VersionedAddressBook#undo()` — Restores the previous address book state from its history."
       },
       {
         "lineNumber": 168,
         "author": {
           "gitId": "-"
         },
-        "content": ""
+        "content": "* `VersionedAddressBook#redo()` — Restores a previously undone address book state from its history."
       },
       {
         "lineNumber": 169,
         "author": {
           "gitId": "-"
         },
-        "content": "\u003c/div\u003e"
+        "content": ""
       },
       {
         "lineNumber": 170,
         "author": {
           "gitId": "-"
         },
-        "content": ""
+        "content": "These operations are exposed in the `Model` interface as `Model#commitAddressBook()`, `Model#undoAddressBook()` and `Model#redoAddressBook()` respectively."
       },
       {
         "lineNumber": 171,
         "author": {
           "gitId": "-"
         },
-        "content": "Step 4. The user now decides that adding the person was a mistake, and decides to undo that action by executing the `undo` command. The `undo` command will call `Model#undoAddressBook()`, which will shift the `currentStatePointer` once to the left, pointing it to the previous address book state, and restores the address book to that state."
+        "content": ""
       },
       {
         "lineNumber": 172,
         "author": {
           "gitId": "-"
         },
-        "content": ""
+        "content": "Given below is an example usage scenario and how the undo/redo mechanism behaves at each step."
       },
       {
         "lineNumber": 173,
         "author": {
           "gitId": "-"
         },
-        "content": "![UndoRedoState3](images/UndoRedoState3.png)"
+        "content": ""
       },
       {
         "lineNumber": 174,
         "author": {
           "gitId": "-"
         },
-        "content": ""
+        "content": "Step 1. The user launches the application for the first time. The `VersionedAddressBook` will be initialized with the initial address book state, and the `currentStatePointer` pointing to that single address book state."
       },
       {
         "lineNumber": 175,
         "author": {
           "gitId": "-"
         },
-        "content": "\u003cdiv markdown\u003d\"span\" class\u003d\"alert alert-info\"\u003e:information_source: **Note:** If the `currentStatePointer` is at index 0, pointing to the initial AddressBook state, then there are no previous AddressBook states to restore. The `undo` command uses `Model#canUndoAddressBook()` to check if this is the case. If so, it will return an error to the user rather"
+        "content": ""
       },
       {
         "lineNumber": 176,
         "author": {
           "gitId": "-"
         },
-        "content": "than attempting to perform the undo."
+        "content": "![UndoRedoState0](images/UndoRedoState0.png)"
       },
       {
         "lineNumber": 177,
@@ -2449,7 +2449,7 @@
         "author": {
           "gitId": "-"
         },
-        "content": "\u003c/div\u003e"
+        "content": "Step 2. The user executes `delete 5` command to delete the 5th person in the address book. The `delete` command calls `Model#commitAddressBook()`, causing the modified state of the address book after the `delete 5` command executes to be saved in the `addressBookStateList`, and the `currentStatePointer` is shifted to the newly inserted address book state."
       },
       {
         "lineNumber": 179,
@@ -2463,7 +2463,7 @@
         "author": {
           "gitId": "-"
         },
-        "content": "The following sequence diagram shows how the undo operation works:"
+        "content": "![UndoRedoState1](images/UndoRedoState1.png)"
       },
       {
         "lineNumber": 181,
@@ -2477,7 +2477,7 @@
         "author": {
           "gitId": "-"
         },
-        "content": "![UndoSequenceDiagram](images/UndoSequenceDiagram.png)"
+        "content": "Step 3. The user executes `add n/David …​` to add a new person. The `add` command also calls `Model#commitAddressBook()`, causing another modified address book state to be saved into the `addressBookStateList`."
       },
       {
         "lineNumber": 183,
@@ -2491,7 +2491,7 @@
         "author": {
           "gitId": "-"
         },
-        "content": "\u003cdiv markdown\u003d\"span\" class\u003d\"alert alert-info\"\u003e:information_source: **Note:** The lifeline for `UndoCommand` should end at the destroy marker (X) but due to a limitation of PlantUML, the lifeline reaches the end of diagram."
+        "content": "![UndoRedoState2](images/UndoRedoState2.png)"
       },
       {
         "lineNumber": 185,
@@ -2505,7 +2505,7 @@
         "author": {
           "gitId": "-"
         },
-        "content": "\u003c/div\u003e"
+        "content": "\u003cdiv markdown\u003d\"span\" class\u003d\"alert alert-info\"\u003e:information_source: **Note:** If a command fails its execution, it will not call `Model#commitAddressBook()`, so the address book state will not be saved into the `addressBookStateList`."
       },
       {
         "lineNumber": 187,
@@ -2519,7 +2519,7 @@
         "author": {
           "gitId": "-"
         },
-        "content": "The `redo` command does the opposite — it calls `Model#redoAddressBook()`, which shifts the `currentStatePointer` once to the right, pointing to the previously undone state, and restores the address book to that state."
+        "content": "\u003c/div\u003e"
       },
       {
         "lineNumber": 189,
@@ -2533,7 +2533,7 @@
         "author": {
           "gitId": "-"
         },
-        "content": "\u003cdiv markdown\u003d\"span\" class\u003d\"alert alert-info\"\u003e:information_source: **Note:** If the `currentStatePointer` is at index `addressBookStateList.size() - 1`, pointing to the latest address book state, then there are no undone AddressBook states to restore. The `redo` command uses `Model#canRedoAddressBook()` to check if this is the case. If so, it will return an error to the user rather than attempting to perform the redo."
+        "content": "Step 4. The user now decides that adding the person was a mistake, and decides to undo that action by executing the `undo` command. The `undo` command will call `Model#undoAddressBook()`, which will shift the `currentStatePointer` once to the left, pointing it to the previous address book state, and restores the address book to that state."
       },
       {
         "lineNumber": 191,
@@ -2547,7 +2547,7 @@
         "author": {
           "gitId": "-"
         },
-        "content": "\u003c/div\u003e"
+        "content": "![UndoRedoState3](images/UndoRedoState3.png)"
       },
       {
         "lineNumber": 193,
@@ -2561,168 +2561,168 @@
         "author": {
           "gitId": "-"
         },
-        "content": "Step 5. The user then decides to execute the command `list`. Commands that do not modify the address book, such as `list`, will usually not call `Model#commitAddressBook()`, `Model#undoAddressBook()` or `Model#redoAddressBook()`. Thus, the `addressBookStateList` remains unchanged."
+        "content": "\u003cdiv markdown\u003d\"span\" class\u003d\"alert alert-info\"\u003e:information_source: **Note:** If the `currentStatePointer` is at index 0, pointing to the initial AddressBook state, then there are no previous AddressBook states to restore. The `undo` command uses `Model#canUndoAddressBook()` to check if this is the case. If so, it will return an error to the user rather"
       },
       {
         "lineNumber": 195,
         "author": {
           "gitId": "-"
         },
-        "content": ""
+        "content": "than attempting to perform the undo."
       },
       {
         "lineNumber": 196,
         "author": {
           "gitId": "-"
         },
-        "content": "![UndoRedoState4](images/UndoRedoState4.png)"
+        "content": ""
       },
       {
         "lineNumber": 197,
         "author": {
           "gitId": "-"
         },
-        "content": ""
+        "content": "\u003c/div\u003e"
       },
       {
         "lineNumber": 198,
         "author": {
           "gitId": "-"
         },
-        "content": "Step 6. The user executes `clear`, which calls `Model#commitAddressBook()`. Since the `currentStatePointer` is not pointing at the end of the `addressBookStateList`, all address book states after the `currentStatePointer` will be purged. Reason: It no longer makes sense to redo the `add n/David …​` command. This is the behavior that most modern desktop applications follow."
+        "content": ""
       },
       {
         "lineNumber": 199,
         "author": {
           "gitId": "-"
         },
-        "content": ""
+        "content": "The following sequence diagram shows how the undo operation works:"
       },
       {
         "lineNumber": 200,
         "author": {
           "gitId": "-"
         },
-        "content": "![UndoRedoState5](images/UndoRedoState5.png)"
+        "content": ""
       },
       {
         "lineNumber": 201,
         "author": {
           "gitId": "-"
         },
-        "content": ""
+        "content": "![UndoSequenceDiagram](images/UndoSequenceDiagram.png)"
       },
       {
         "lineNumber": 202,
         "author": {
           "gitId": "-"
         },
-        "content": "The following activity diagram summarizes what happens when a user executes a new command:"
+        "content": ""
       },
       {
         "lineNumber": 203,
         "author": {
           "gitId": "-"
         },
-        "content": ""
+        "content": "\u003cdiv markdown\u003d\"span\" class\u003d\"alert alert-info\"\u003e:information_source: **Note:** The lifeline for `UndoCommand` should end at the destroy marker (X) but due to a limitation of PlantUML, the lifeline reaches the end of diagram."
       },
       {
         "lineNumber": 204,
         "author": {
           "gitId": "-"
         },
-        "content": "![CommitActivityDiagram](images/CommitActivityDiagram.png)"
+        "content": ""
       },
       {
         "lineNumber": 205,
         "author": {
           "gitId": "-"
         },
-        "content": ""
+        "content": "\u003c/div\u003e"
       },
       {
         "lineNumber": 206,
         "author": {
           "gitId": "-"
         },
-        "content": "#### Design consideration:"
+        "content": ""
       },
       {
         "lineNumber": 207,
         "author": {
           "gitId": "-"
         },
-        "content": ""
+        "content": "The `redo` command does the opposite — it calls `Model#redoAddressBook()`, which shifts the `currentStatePointer` once to the right, pointing to the previously undone state, and restores the address book to that state."
       },
       {
         "lineNumber": 208,
         "author": {
           "gitId": "-"
         },
-        "content": "##### Aspect: How undo \u0026 redo executes"
+        "content": ""
       },
       {
         "lineNumber": 209,
         "author": {
           "gitId": "-"
         },
-        "content": ""
+        "content": "\u003cdiv markdown\u003d\"span\" class\u003d\"alert alert-info\"\u003e:information_source: **Note:** If the `currentStatePointer` is at index `addressBookStateList.size() - 1`, pointing to the latest address book state, then there are no undone AddressBook states to restore. The `redo` command uses `Model#canRedoAddressBook()` to check if this is the case. If so, it will return an error to the user rather than attempting to perform the redo."
       },
       {
         "lineNumber": 210,
         "author": {
           "gitId": "-"
         },
-        "content": "* **Alternative 1 (current choice):** Saves the entire address book."
+        "content": ""
       },
       {
         "lineNumber": 211,
         "author": {
           "gitId": "-"
         },
-        "content": "  * Pros: Easy to implement."
+        "content": "\u003c/div\u003e"
       },
       {
         "lineNumber": 212,
         "author": {
           "gitId": "-"
         },
-        "content": "  * Cons: May have performance issues in terms of memory usage."
+        "content": ""
       },
       {
         "lineNumber": 213,
         "author": {
           "gitId": "-"
         },
-        "content": ""
+        "content": "Step 5. The user then decides to execute the command `list`. Commands that do not modify the address book, such as `list`, will usually not call `Model#commitAddressBook()`, `Model#undoAddressBook()` or `Model#redoAddressBook()`. Thus, the `addressBookStateList` remains unchanged."
       },
       {
         "lineNumber": 214,
         "author": {
           "gitId": "-"
         },
-        "content": "* **Alternative 2:** Individual command knows how to undo/redo by"
+        "content": ""
       },
       {
         "lineNumber": 215,
         "author": {
           "gitId": "-"
         },
-        "content": "  itself."
+        "content": "![UndoRedoState4](images/UndoRedoState4.png)"
       },
       {
         "lineNumber": 216,
         "author": {
           "gitId": "-"
         },
-        "content": "  * Pros: Will use less memory (e.g. for `delete`, just save the person being deleted)."
+        "content": ""
       },
       {
         "lineNumber": 217,
         "author": {
           "gitId": "-"
         },
-        "content": "  * Cons: We must ensure that the implementation of each individual command are correct."
+        "content": "Step 6. The user executes `clear`, which calls `Model#commitAddressBook()`. Since the `currentStatePointer` is not pointing at the end of the `addressBookStateList`, all address book states after the `currentStatePointer` will be purged. Reason: It no longer makes sense to redo the `add n/David …​` command. This is the behavior that most modern desktop applications follow."
       },
       {
         "lineNumber": 218,
@@ -2736,7 +2736,7 @@
         "author": {
           "gitId": "-"
         },
-        "content": "_{more aspects and alternatives to be added}_"
+        "content": "![UndoRedoState5](images/UndoRedoState5.png)"
       },
       {
         "lineNumber": 220,
@@ -2750,7 +2750,7 @@
         "author": {
           "gitId": "-"
         },
-        "content": "### \\[Proposed\\] Data archiving"
+        "content": "The following activity diagram summarizes what happens when a user executes a new command:"
       },
       {
         "lineNumber": 222,
@@ -2764,7 +2764,7 @@
         "author": {
           "gitId": "-"
         },
-        "content": "_{Explain here how the data archiving feature will be implemented}_"
+        "content": "![CommitActivityDiagram](images/CommitActivityDiagram.png)"
       },
       {
         "lineNumber": 224,
@@ -2778,84 +2778,84 @@
         "author": {
           "gitId": "-"
         },
-        "content": ""
+        "content": "#### Design consideration:"
       },
       {
         "lineNumber": 226,
         "author": {
           "gitId": "-"
         },
-        "content": "--------------------------------------------------------------------------------------------------------------------"
+        "content": ""
       },
       {
         "lineNumber": 227,
         "author": {
           "gitId": "-"
         },
-        "content": ""
+        "content": "##### Aspect: How undo \u0026 redo executes"
       },
       {
         "lineNumber": 228,
         "author": {
           "gitId": "-"
         },
-        "content": "## **Documentation, logging, testing, configuration, dev-ops**"
+        "content": ""
       },
       {
         "lineNumber": 229,
         "author": {
           "gitId": "-"
         },
-        "content": ""
+        "content": "* **Alternative 1 (current choice):** Saves the entire address book."
       },
       {
         "lineNumber": 230,
         "author": {
           "gitId": "-"
         },
-        "content": "* [Documentation guide](Documentation.md)"
+        "content": "  * Pros: Easy to implement."
       },
       {
         "lineNumber": 231,
         "author": {
           "gitId": "-"
         },
-        "content": "* [Testing guide](Testing.md)"
+        "content": "  * Cons: May have performance issues in terms of memory usage."
       },
       {
         "lineNumber": 232,
         "author": {
           "gitId": "-"
         },
-        "content": "* [Logging guide](Logging.md)"
+        "content": ""
       },
       {
         "lineNumber": 233,
         "author": {
           "gitId": "-"
         },
-        "content": "* [Configuration guide](Configuration.md)"
+        "content": "* **Alternative 2:** Individual command knows how to undo/redo by"
       },
       {
         "lineNumber": 234,
         "author": {
           "gitId": "-"
         },
-        "content": "* [DevOps guide](DevOps.md)"
+        "content": "  itself."
       },
       {
         "lineNumber": 235,
         "author": {
           "gitId": "-"
         },
-        "content": ""
+        "content": "  * Pros: Will use less memory (e.g. for `delete`, just save the person being deleted)."
       },
       {
         "lineNumber": 236,
         "author": {
           "gitId": "-"
         },
-        "content": "--------------------------------------------------------------------------------------------------------------------"
+        "content": "  * Cons: We must ensure that the implementation of each individual command are correct."
       },
       {
         "lineNumber": 237,
@@ -2869,7 +2869,7 @@
         "author": {
           "gitId": "-"
         },
-        "content": "## **Appendix: Requirements**"
+        "content": "_{more aspects and alternatives to be added}_"
       },
       {
         "lineNumber": 239,
@@ -2883,7 +2883,7 @@
         "author": {
           "gitId": "-"
         },
-        "content": "### Product scope"
+        "content": "### \\[Proposed\\] Data archiving"
       },
       {
         "lineNumber": 241,
@@ -2897,7 +2897,7 @@
         "author": {
           "gitId": "-"
         },
-        "content": "**Target user profile**:"
+        "content": "_{Explain here how the data archiving feature will be implemented}_"
       },
       {
         "lineNumber": 243,
@@ -2911,175 +2911,175 @@
         "author": {
           "gitId": "-"
         },
-        "content": "* has a need to manage a significant number of contacts"
+        "content": ""
       },
       {
         "lineNumber": 245,
         "author": {
-          "gitId": "joshualiangxy"
+          "gitId": "-"
         },
-        "content": "* has a need to keep track of his meetings with contacts"
+        "content": "--------------------------------------------------------------------------------------------------------------------"
       },
       {
         "lineNumber": 246,
         "author": {
           "gitId": "-"
         },
-        "content": "* prefer desktop apps over other types"
+        "content": ""
       },
       {
         "lineNumber": 247,
         "author": {
           "gitId": "-"
         },
-        "content": "* can type fast"
+        "content": "## **Documentation, logging, testing, configuration, dev-ops**"
       },
       {
         "lineNumber": 248,
         "author": {
           "gitId": "-"
         },
-        "content": "* prefers typing to mouse interactions"
+        "content": ""
       },
       {
         "lineNumber": 249,
         "author": {
           "gitId": "-"
         },
-        "content": "* is reasonably comfortable using CLI apps"
+        "content": "* [Documentation guide](Documentation.md)"
       },
       {
         "lineNumber": 250,
         "author": {
           "gitId": "-"
         },
-        "content": ""
+        "content": "* [Testing guide](Testing.md)"
       },
       {
         "lineNumber": 251,
         "author": {
           "gitId": "-"
         },
-        "content": "**Value proposition**: manage contacts faster than a typical mouse/GUI driven app"
+        "content": "* [Logging guide](Logging.md)"
       },
       {
         "lineNumber": 252,
         "author": {
           "gitId": "-"
         },
-        "content": ""
+        "content": "* [Configuration guide](Configuration.md)"
       },
       {
         "lineNumber": 253,
         "author": {
           "gitId": "-"
         },
-        "content": ""
+        "content": "* [DevOps guide](DevOps.md)"
       },
       {
         "lineNumber": 254,
         "author": {
           "gitId": "-"
         },
-        "content": "### User stories"
+        "content": ""
       },
       {
         "lineNumber": 255,
         "author": {
           "gitId": "-"
         },
-        "content": ""
+        "content": "--------------------------------------------------------------------------------------------------------------------"
       },
       {
         "lineNumber": 256,
         "author": {
           "gitId": "-"
         },
-        "content": "Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unlikely to have) - `*`"
+        "content": ""
       },
       {
         "lineNumber": 257,
         "author": {
           "gitId": "-"
         },
-        "content": ""
+        "content": "## **Appendix: Requirements**"
       },
       {
         "lineNumber": 258,
         "author": {
           "gitId": "-"
         },
-        "content": "| Priority | As a…​ | I want to…​                       | So that I can…​                                                   |"
+        "content": ""
       },
       {
         "lineNumber": 259,
         "author": {
-          "gitId": "joshualiangxy"
+          "gitId": "-"
         },
-        "content": "| :---:    | :---        | :---                                   | :---                                                                   |"
+        "content": "### Product scope"
       },
       {
         "lineNumber": 260,
         "author": {
           "gitId": "-"
         },
-        "content": "| `* * *`  | new user    | see usage instructions                 | refer to instructions when I forget how to use the App                 |"
+        "content": ""
       },
       {
         "lineNumber": 261,
         "author": {
           "gitId": "-"
         },
-        "content": "| `* * *`  | user        | add a new person                       |                                                                        |"
+        "content": "**Target user profile**:"
       },
       {
         "lineNumber": 262,
         "author": {
           "gitId": "-"
         },
-        "content": "| `* * *`  | user        | delete a person                        | remove entries that I no longer need                                   |"
+        "content": ""
       },
       {
         "lineNumber": 263,
         "author": {
           "gitId": "-"
         },
-        "content": "| `* * *`  | user        | find a person by name                  | locate details of persons without having to go through the entire list |"
+        "content": "* has a need to manage a significant number of contacts"
       },
       {
         "lineNumber": 264,
         "author": {
-          "gitId": "Lingy12"
+          "gitId": "joshualiangxy"
         },
-        "content": "| `* * *`  | user        | add a journal entry                    | record an events                                                       |"
+        "content": "* has a need to keep track of his meetings with contacts"
       },
       {
         "lineNumber": 265,
         "author": {
-          "gitId": "Lingy12"
+          "gitId": "-"
         },
-        "content": "| `* * *`  | user        | delete a journal                       | remove an event that is not important from journal                     |"
+        "content": "* prefer desktop apps over other types"
       },
       {
         "lineNumber": 266,
         "author": {
-          "gitId": "Lingy12"
+          "gitId": "-"
         },
-        "content": "| `* * *`  | user        | list all journal entries               |                                                                        |"
+        "content": "* can type fast"
       },
       {
         "lineNumber": 267,
         "author": {
-          "gitId": "joshualiangxy"
+          "gitId": "-"
         },
-        "content": "| `* * *`  | user        | list all contacts in the contacts list |                                                                        |"
+        "content": "* prefers typing to mouse interactions"
       },
       {
         "lineNumber": 268,
         "author": {
-          "gitId": "Lingy12"
+          "gitId": "-"
         },
-        "content": "| `* * *`  | user        | search journal entries                 | navigate to the entry that I am interested                             |"
+        "content": "* is reasonably comfortable using CLI apps"
       },
       {
         "lineNumber": 269,
@@ -3093,7 +3093,7 @@
         "author": {
           "gitId": "-"
         },
-        "content": "*{More to be added}*"
+        "content": "**Value proposition**: manage contacts faster than a typical mouse/GUI driven app"
       },
       {
         "lineNumber": 271,
@@ -3107,112 +3107,112 @@
         "author": {
           "gitId": "-"
         },
-        "content": "### Use cases"
+        "content": ""
       },
       {
         "lineNumber": 273,
         "author": {
           "gitId": "-"
         },
-        "content": ""
+        "content": "### User stories"
       },
       {
         "lineNumber": 274,
         "author": {
-          "gitId": "Lingy12"
+          "gitId": "-"
         },
-        "content": "(For all use cases below, the **System** is the `intelliJournal` and the **Actor** is the `user`, unless specified otherwise)"
+        "content": ""
       },
       {
         "lineNumber": 275,
         "author": {
           "gitId": "-"
         },
-        "content": ""
+        "content": "Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unlikely to have) - `*`"
       },
       {
         "lineNumber": 276,
         "author": {
           "gitId": "-"
         },
-        "content": "**Use case: Delete a person**"
+        "content": ""
       },
       {
         "lineNumber": 277,
         "author": {
           "gitId": "-"
         },
-        "content": ""
+        "content": "| Priority | As a…​ | I want to…​                       | So that I can…​                                                   |"
       },
       {
         "lineNumber": 278,
         "author": {
-          "gitId": "-"
+          "gitId": "joshualiangxy"
         },
-        "content": "**MSS**"
+        "content": "| :---:    | :---        | :---                                   | :---                                                                   |"
       },
       {
         "lineNumber": 279,
         "author": {
           "gitId": "-"
         },
-        "content": ""
+        "content": "| `* * *`  | new user    | see usage instructions                 | refer to instructions when I forget how to use the App                 |"
       },
       {
         "lineNumber": 280,
         "author": {
           "gitId": "-"
         },
-        "content": "1.  User requests to list persons"
+        "content": "| `* * *`  | user        | add a new person                       |                                                                        |"
       },
       {
         "lineNumber": 281,
         "author": {
-          "gitId": "Lingy12"
+          "gitId": "-"
         },
-        "content": "2.  IntelliJournal shows a list of persons"
+        "content": "| `* * *`  | user        | delete a person                        | remove entries that I no longer need                                   |"
       },
       {
         "lineNumber": 282,
         "author": {
           "gitId": "-"
         },
-        "content": "3.  User requests to delete a specific person in the list"
+        "content": "| `* * *`  | user        | find a person by name                  | locate details of persons without having to go through the entire list |"
       },
       {
         "lineNumber": 283,
         "author": {
-          "gitId": "-"
+          "gitId": "Lingy12"
         },
-        "content": "4.  AddressBook deletes the person"
+        "content": "| `* * *`  | user        | add a journal entry                    | record an events                                                       |"
       },
       {
         "lineNumber": 284,
         "author": {
-          "gitId": "-"
+          "gitId": "Lingy12"
         },
-        "content": ""
+        "content": "| `* * *`  | user        | delete a journal                       | remove an event that is not important from journal                     |"
       },
       {
         "lineNumber": 285,
         "author": {
-          "gitId": "-"
+          "gitId": "Lingy12"
         },
-        "content": "    Use case ends."
+        "content": "| `* * *`  | user        | list all journal entries               |                                                                        |"
       },
       {
         "lineNumber": 286,
         "author": {
-          "gitId": "-"
+          "gitId": "joshualiangxy"
         },
-        "content": ""
+        "content": "| `* * *`  | user        | list all contacts in the contacts list |                                                                        |"
       },
       {
         "lineNumber": 287,
         "author": {
-          "gitId": "-"
+          "gitId": "Lingy12"
         },
-        "content": "**Extensions**"
+        "content": "| `* * *`  | user        | search journal entries                 | navigate to the entry that I am interested                             |"
       },
       {
         "lineNumber": 288,
@@ -3226,7 +3226,7 @@
         "author": {
           "gitId": "-"
         },
-        "content": "* 2a. The list is empty."
+        "content": "*{More to be added}*"
       },
       {
         "lineNumber": 290,
@@ -3240,7 +3240,7 @@
         "author": {
           "gitId": "-"
         },
-        "content": "  Use case ends."
+        "content": "### Use cases"
       },
       {
         "lineNumber": 292,
@@ -3252,9 +3252,9 @@
       {
         "lineNumber": 293,
         "author": {
-          "gitId": "-"
+          "gitId": "Lingy12"
         },
-        "content": "* 3a. The given index is invalid."
+        "content": "(For all use cases below, the **System** is the `intelliJournal` and the **Actor** is the `user`, unless specified otherwise)"
       },
       {
         "lineNumber": 294,
@@ -3266,9 +3266,9 @@
       {
         "lineNumber": 295,
         "author": {
-          "gitId": "Lingy12"
+          "gitId": "-"
         },
-        "content": "    * 3a1. IntelliJournal shows an error message."
+        "content": "**Use case: Delete a person**"
       },
       {
         "lineNumber": 296,
@@ -3282,7 +3282,7 @@
         "author": {
           "gitId": "-"
         },
-        "content": "      Use case resumes at step 2."
+        "content": "**MSS**"
       },
       {
         "lineNumber": 298,
@@ -3294,105 +3294,105 @@
       {
         "lineNumber": 299,
         "author": {
-          "gitId": "Lingy12"
+          "gitId": "-"
         },
-        "content": ""
+        "content": "1.  User requests to list persons"
       },
       {
         "lineNumber": 300,
         "author": {
           "gitId": "Lingy12"
         },
-        "content": "**Use case: Delete a journal entry**"
+        "content": "2.  IntelliJournal shows a list of persons"
       },
       {
         "lineNumber": 301,
         "author": {
-          "gitId": "Lingy12"
+          "gitId": "-"
         },
-        "content": ""
+        "content": "3.  User requests to delete a specific person in the list"
       },
       {
         "lineNumber": 302,
         "author": {
-          "gitId": "Lingy12"
+          "gitId": "-"
         },
-        "content": "**MSS**"
+        "content": "4.  AddressBook deletes the person"
       },
       {
         "lineNumber": 303,
         "author": {
-          "gitId": "Lingy12"
+          "gitId": "-"
         },
         "content": ""
       },
       {
         "lineNumber": 304,
         "author": {
-          "gitId": "Lingy12"
+          "gitId": "-"
         },
-        "content": "1. User request to list persons"
+        "content": "    Use case ends."
       },
       {
         "lineNumber": 305,
         "author": {
-          "gitId": "Lingy12"
+          "gitId": "-"
         },
-        "content": "2. IntelliJournal shows a list of journal entry"
+        "content": ""
       },
       {
         "lineNumber": 306,
         "author": {
-          "gitId": "Lingy12"
-        },
-        "content": "3. User request to delte a specific journal entry in the list"
-      },
-      {
-        "lineNumber": 307,
-        "author": {
-          "gitId": "Lingy12"
-        },
-        "content": "4. IntelliJournal deletes the entry"
-      },
-      {
-        "lineNumber": 308,
-        "author": {
-          "gitId": "Lingy12"
-        },
-        "content": ""
-      },
-      {
-        "lineNumber": 309,
-        "author": {
-          "gitId": "Lingy12"
-        },
-        "content": "    Use case ends"
-      },
-      {
-        "lineNumber": 310,
-        "author": {
-          "gitId": "Lingy12"
-        },
-        "content": ""
-      },
-      {
-        "lineNumber": 311,
-        "author": {
-          "gitId": "Lingy12"
+          "gitId": "-"
         },
         "content": "**Extensions**"
       },
       {
+        "lineNumber": 307,
+        "author": {
+          "gitId": "-"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 308,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "* 2a. The list is empty."
+      },
+      {
+        "lineNumber": 309,
+        "author": {
+          "gitId": "-"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 310,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "  Use case ends."
+      },
+      {
+        "lineNumber": 311,
+        "author": {
+          "gitId": "-"
+        },
+        "content": ""
+      },
+      {
         "lineNumber": 312,
         "author": {
-          "gitId": "Lingy12"
+          "gitId": "-"
         },
-        "content": "* 2a. The journal is empty (No entry in journal)"
+        "content": "* 3a. The given index is invalid."
       },
       {
         "lineNumber": 313,
         "author": {
-          "gitId": "Lingy12"
+          "gitId": "-"
         },
         "content": ""
       },
@@ -3401,26 +3401,26 @@
         "author": {
           "gitId": "Lingy12"
         },
-        "content": "    Use case ends"
+        "content": "    * 3a1. IntelliJournal shows an error message."
       },
       {
         "lineNumber": 315,
         "author": {
-          "gitId": "Lingy12"
+          "gitId": "-"
         },
-        "content": "* 3a.  The given index is invalid"
+        "content": ""
       },
       {
         "lineNumber": 316,
         "author": {
-          "gitId": "Lingy12"
+          "gitId": "-"
         },
-        "content": "    * 3a1. IntelliJournal shows an error message."
+        "content": "      Use case resumes at step 2."
       },
       {
         "lineNumber": 317,
         "author": {
-          "gitId": "Lingy12"
+          "gitId": "-"
         },
         "content": ""
       },
@@ -3429,63 +3429,63 @@
         "author": {
           "gitId": "Lingy12"
         },
-        "content": "        Use case resumes at step 2."
+        "content": ""
       },
       {
         "lineNumber": 319,
         "author": {
           "gitId": "Lingy12"
         },
-        "content": ""
+        "content": "**Use case: Delete a journal entry**"
       },
       {
         "lineNumber": 320,
         "author": {
           "gitId": "Lingy12"
         },
-        "content": "**Use case: Search for a journal entry (by entry name)**"
+        "content": ""
       },
       {
         "lineNumber": 321,
         "author": {
           "gitId": "Lingy12"
         },
-        "content": ""
+        "content": "**MSS**"
       },
       {
         "lineNumber": 322,
         "author": {
           "gitId": "Lingy12"
         },
-        "content": "**MSS**"
+        "content": ""
       },
       {
         "lineNumber": 323,
         "author": {
           "gitId": "Lingy12"
         },
-        "content": ""
+        "content": "1. User request to list persons"
       },
       {
         "lineNumber": 324,
         "author": {
           "gitId": "Lingy12"
         },
-        "content": "1. User request to list entries"
+        "content": "2. IntelliJournal shows a list of journal entry"
       },
       {
         "lineNumber": 325,
         "author": {
           "gitId": "Lingy12"
         },
-        "content": "2. User search the entry/entries with given name"
+        "content": "3. User request to delte a specific journal entry in the list"
       },
       {
         "lineNumber": 326,
         "author": {
           "gitId": "Lingy12"
         },
-        "content": "3. Intellij journal display a list of filtered entries"
+        "content": "4. IntelliJournal deletes the entry"
       },
       {
         "lineNumber": 327,
@@ -3499,56 +3499,56 @@
         "author": {
           "gitId": "Lingy12"
         },
-        "content": "**Extension**"
+        "content": "    Use case ends"
       },
       {
         "lineNumber": 329,
         "author": {
           "gitId": "Lingy12"
         },
-        "content": "* 2a. The journal is empty (No entry in journal)"
+        "content": ""
       },
       {
         "lineNumber": 330,
         "author": {
           "gitId": "Lingy12"
         },
-        "content": ""
+        "content": "**Extensions**"
       },
       {
         "lineNumber": 331,
         "author": {
           "gitId": "Lingy12"
         },
-        "content": "    Use case ends"
+        "content": "* 2a. The journal is empty (No entry in journal)"
       },
       {
         "lineNumber": 332,
         "author": {
           "gitId": "Lingy12"
         },
-        "content": "* 3a.  The given name is not in journal"
+        "content": ""
       },
       {
         "lineNumber": 333,
         "author": {
           "gitId": "Lingy12"
         },
-        "content": "    * 3a1. IntelliJournal shows an error message."
+        "content": "    Use case ends"
       },
       {
         "lineNumber": 334,
         "author": {
           "gitId": "Lingy12"
         },
-        "content": ""
+        "content": "* 3a.  The given index is invalid"
       },
       {
         "lineNumber": 335,
         "author": {
           "gitId": "Lingy12"
         },
-        "content": "        Use case resumes at step 1."
+        "content": "    * 3a1. IntelliJournal shows an error message."
       },
       {
         "lineNumber": 336,
@@ -3560,156 +3560,156 @@
       {
         "lineNumber": 337,
         "author": {
-          "gitId": "-"
+          "gitId": "Lingy12"
         },
-        "content": "*{More to be added}*"
+        "content": "        Use case resumes at step 2."
       },
       {
         "lineNumber": 338,
         "author": {
-          "gitId": "-"
+          "gitId": "Lingy12"
         },
         "content": ""
       },
       {
         "lineNumber": 339,
         "author": {
-          "gitId": "-"
+          "gitId": "Lingy12"
         },
-        "content": "### Non-Functional Requirements"
+        "content": "**Use case: Search for a journal entry (by entry name)**"
       },
       {
         "lineNumber": 340,
         "author": {
-          "gitId": "-"
+          "gitId": "Lingy12"
         },
         "content": ""
       },
       {
         "lineNumber": 341,
         "author": {
-          "gitId": "-"
+          "gitId": "Lingy12"
         },
-        "content": "1.  Should work on any _mainstream OS_ as long as it has Java `11` or above installed."
+        "content": "**MSS**"
       },
       {
         "lineNumber": 342,
         "author": {
-          "gitId": "joshualiangxy"
-        },
-        "content": "2.  Should be able to hold up to 1000 persons and journals without a noticeable sluggishness in performance for typical usage."
-      },
-      {
-        "lineNumber": 343,
-        "author": {
-          "gitId": "-"
-        },
-        "content": "3.  A user with above average typing speed for regular English text (i.e. not code, not system admin commands) should be able to accomplish most of the tasks faster using commands than using the mouse."
-      },
-      {
-        "lineNumber": 344,
-        "author": {
-          "gitId": "-"
+          "gitId": "Lingy12"
         },
         "content": ""
       },
       {
+        "lineNumber": 343,
+        "author": {
+          "gitId": "Lingy12"
+        },
+        "content": "1. User request to list entries"
+      },
+      {
+        "lineNumber": 344,
+        "author": {
+          "gitId": "Lingy12"
+        },
+        "content": "2. User search the entry/entries with given name"
+      },
+      {
         "lineNumber": 345,
         "author": {
-          "gitId": "-"
+          "gitId": "Lingy12"
         },
-        "content": "*{More to be added}*"
+        "content": "3. Intellij journal display a list of filtered entries"
       },
       {
         "lineNumber": 346,
         "author": {
-          "gitId": "-"
+          "gitId": "Lingy12"
         },
         "content": ""
       },
       {
         "lineNumber": 347,
         "author": {
-          "gitId": "-"
+          "gitId": "Lingy12"
         },
-        "content": "### Glossary"
+        "content": "**Extension**"
       },
       {
         "lineNumber": 348,
         "author": {
-          "gitId": "-"
+          "gitId": "Lingy12"
         },
-        "content": ""
+        "content": "* 2a. The journal is empty (No entry in journal)"
       },
       {
         "lineNumber": 349,
         "author": {
-          "gitId": "joshualiangxy"
+          "gitId": "Lingy12"
         },
-        "content": "* **Mainstream OS**: Windows, Linux, Unix, MacOS"
+        "content": ""
       },
       {
         "lineNumber": 350,
         "author": {
-          "gitId": "-"
+          "gitId": "Lingy12"
         },
-        "content": ""
+        "content": "    Use case ends"
       },
       {
         "lineNumber": 351,
         "author": {
-          "gitId": "-"
+          "gitId": "Lingy12"
         },
-        "content": "--------------------------------------------------------------------------------------------------------------------"
+        "content": "* 3a.  The given name is not in journal"
       },
       {
         "lineNumber": 352,
         "author": {
-          "gitId": "-"
+          "gitId": "Lingy12"
         },
-        "content": ""
+        "content": "    * 3a1. IntelliJournal shows an error message."
       },
       {
         "lineNumber": 353,
         "author": {
-          "gitId": "-"
-        },
-        "content": "## **Appendix: Instructions for manual testing**"
-      },
-      {
-        "lineNumber": 354,
-        "author": {
-          "gitId": "-"
+          "gitId": "Lingy12"
         },
         "content": ""
       },
       {
+        "lineNumber": 354,
+        "author": {
+          "gitId": "Lingy12"
+        },
+        "content": "        Use case resumes at step 1."
+      },
+      {
         "lineNumber": 355,
         "author": {
-          "gitId": "-"
+          "gitId": "Lingy12"
         },
-        "content": "Given below are instructions to test the app manually."
+        "content": ""
       },
       {
         "lineNumber": 356,
         "author": {
           "gitId": "-"
         },
-        "content": ""
+        "content": "*{More to be added}*"
       },
       {
         "lineNumber": 357,
         "author": {
           "gitId": "-"
         },
-        "content": "\u003cdiv markdown\u003d\"span\" class\u003d\"alert alert-info\"\u003e:information_source: **Note:** These instructions only provide a starting point for testers to work on;"
+        "content": ""
       },
       {
         "lineNumber": 358,
         "author": {
           "gitId": "-"
         },
-        "content": "testers are expected to do more *exploratory* testing."
+        "content": "### Non-Functional Requirements"
       },
       {
         "lineNumber": 359,
@@ -3723,21 +3723,21 @@
         "author": {
           "gitId": "-"
         },
-        "content": "\u003c/div\u003e"
+        "content": "1.  Should work on any _mainstream OS_ as long as it has Java `11` or above installed."
       },
       {
         "lineNumber": 361,
         "author": {
-          "gitId": "-"
+          "gitId": "joshualiangxy"
         },
-        "content": ""
+        "content": "2.  Should be able to hold up to 1000 persons and journals without a noticeable sluggishness in performance for typical usage."
       },
       {
         "lineNumber": 362,
         "author": {
           "gitId": "-"
         },
-        "content": "### Launch and shutdown"
+        "content": "3.  A user with above average typing speed for regular English text (i.e. not code, not system admin commands) should be able to accomplish most of the tasks faster using commands than using the mouse."
       },
       {
         "lineNumber": 363,
@@ -3751,7 +3751,7 @@
         "author": {
           "gitId": "-"
         },
-        "content": "1. Initial launch"
+        "content": "*{More to be added}*"
       },
       {
         "lineNumber": 365,
@@ -3765,7 +3765,7 @@
         "author": {
           "gitId": "-"
         },
-        "content": "   1. Download the jar file and copy into an empty folder"
+        "content": "### Glossary"
       },
       {
         "lineNumber": 367,
@@ -3777,9 +3777,9 @@
       {
         "lineNumber": 368,
         "author": {
-          "gitId": "-"
+          "gitId": "joshualiangxy"
         },
-        "content": "   1. Double-click the jar file Expected: Shows the GUI with a set of sample contacts. The window size may not be optimum."
+        "content": "* **Mainstream OS**: Windows, Linux, Unix, MacOS"
       },
       {
         "lineNumber": 369,
@@ -3793,7 +3793,7 @@
         "author": {
           "gitId": "-"
         },
-        "content": "1. Saving window preferences"
+        "content": "--------------------------------------------------------------------------------------------------------------------"
       },
       {
         "lineNumber": 371,
@@ -3807,7 +3807,7 @@
         "author": {
           "gitId": "-"
         },
-        "content": "   1. Resize the window to an optimum size. Move the window to a different location. Close the window."
+        "content": "## **Appendix: Instructions for manual testing**"
       },
       {
         "lineNumber": 373,
@@ -3821,28 +3821,28 @@
         "author": {
           "gitId": "-"
         },
-        "content": "   1. Re-launch the app by double-clicking the jar file.\u003cbr\u003e"
+        "content": "Given below are instructions to test the app manually."
       },
       {
         "lineNumber": 375,
         "author": {
           "gitId": "-"
         },
-        "content": "       Expected: The most recent window size and location is retained."
+        "content": ""
       },
       {
         "lineNumber": 376,
         "author": {
           "gitId": "-"
         },
-        "content": ""
+        "content": "\u003cdiv markdown\u003d\"span\" class\u003d\"alert alert-info\"\u003e:information_source: **Note:** These instructions only provide a starting point for testers to work on;"
       },
       {
         "lineNumber": 377,
         "author": {
           "gitId": "-"
         },
-        "content": "1. _{ more test cases …​ }_"
+        "content": "testers are expected to do more *exploratory* testing."
       },
       {
         "lineNumber": 378,
@@ -3856,7 +3856,7 @@
         "author": {
           "gitId": "-"
         },
-        "content": "### Deleting a person"
+        "content": "\u003c/div\u003e"
       },
       {
         "lineNumber": 380,
@@ -3870,7 +3870,7 @@
         "author": {
           "gitId": "-"
         },
-        "content": "1. Deleting a person while all persons are being shown"
+        "content": "### Launch and shutdown"
       },
       {
         "lineNumber": 382,
@@ -3882,9 +3882,9 @@
       {
         "lineNumber": 383,
         "author": {
-          "gitId": "jazerler"
+          "gitId": "-"
         },
-        "content": "   1. Prerequisites: List all persons using the `listc` command. Multiple persons in the list."
+        "content": "1. Initial launch"
       },
       {
         "lineNumber": 384,
@@ -3896,37 +3896,37 @@
       {
         "lineNumber": 385,
         "author": {
-          "gitId": "jazerler"
+          "gitId": "-"
         },
-        "content": "   1. Test case: `deletec 1`\u003cbr\u003e"
+        "content": "   1. Download the jar file and copy into an empty folder"
       },
       {
         "lineNumber": 386,
         "author": {
           "gitId": "-"
         },
-        "content": "      Expected: First contact is deleted from the list. Details of the deleted contact shown in the status message. Timestamp in the status bar is updated."
+        "content": ""
       },
       {
         "lineNumber": 387,
         "author": {
           "gitId": "-"
         },
-        "content": ""
+        "content": "   1. Double-click the jar file Expected: Shows the GUI with a set of sample contacts. The window size may not be optimum."
       },
       {
         "lineNumber": 388,
         "author": {
-          "gitId": "jazerler"
+          "gitId": "-"
         },
-        "content": "   1. Test case: `deletec 0`\u003cbr\u003e"
+        "content": ""
       },
       {
         "lineNumber": 389,
         "author": {
           "gitId": "-"
         },
-        "content": "      Expected: No person is deleted. Error details shown in the status message. Status bar remains the same."
+        "content": "1. Saving window preferences"
       },
       {
         "lineNumber": 390,
@@ -3938,30 +3938,30 @@
       {
         "lineNumber": 391,
         "author": {
-          "gitId": "jazerler"
+          "gitId": "-"
         },
-        "content": "   1. Other incorrect delete commands to try: `deletec`, `deletec x`, `...` (where x is larger than the list size)\u003cbr\u003e"
+        "content": "   1. Resize the window to an optimum size. Move the window to a different location. Close the window."
       },
       {
         "lineNumber": 392,
         "author": {
           "gitId": "-"
         },
-        "content": "      Expected: Similar to previous."
+        "content": ""
       },
       {
         "lineNumber": 393,
         "author": {
           "gitId": "-"
         },
-        "content": ""
+        "content": "   1. Re-launch the app by double-clicking the jar file.\u003cbr\u003e"
       },
       {
         "lineNumber": 394,
         "author": {
           "gitId": "-"
         },
-        "content": "1. _{ more test cases …​ }_"
+        "content": "       Expected: The most recent window size and location is retained."
       },
       {
         "lineNumber": 395,
@@ -3975,7 +3975,7 @@
         "author": {
           "gitId": "-"
         },
-        "content": "### Saving data"
+        "content": "1. _{ more test cases …​ }_"
       },
       {
         "lineNumber": 397,
@@ -3989,7 +3989,7 @@
         "author": {
           "gitId": "-"
         },
-        "content": "1. Dealing with missing/corrupted data files"
+        "content": "### Deleting a person"
       },
       {
         "lineNumber": 399,
@@ -4003,7 +4003,7 @@
         "author": {
           "gitId": "-"
         },
-        "content": "   1. _{explain how to simulate a missing/corrupted file, and the expected behavior}_"
+        "content": "1. Deleting a person while all persons are being shown"
       },
       {
         "lineNumber": 401,
@@ -4015,6 +4015,139 @@
       {
         "lineNumber": 402,
         "author": {
+          "gitId": "jazerler"
+        },
+        "content": "   1. Prerequisites: List all persons using the `listc` command. Multiple persons in the list."
+      },
+      {
+        "lineNumber": 403,
+        "author": {
+          "gitId": "-"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 404,
+        "author": {
+          "gitId": "jazerler"
+        },
+        "content": "   1. Test case: `deletec 1`\u003cbr\u003e"
+      },
+      {
+        "lineNumber": 405,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "      Expected: First contact is deleted from the list. Details of the deleted contact shown in the status message. Timestamp in the status bar is updated."
+      },
+      {
+        "lineNumber": 406,
+        "author": {
+          "gitId": "-"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 407,
+        "author": {
+          "gitId": "jazerler"
+        },
+        "content": "   1. Test case: `deletec 0`\u003cbr\u003e"
+      },
+      {
+        "lineNumber": 408,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "      Expected: No person is deleted. Error details shown in the status message. Status bar remains the same."
+      },
+      {
+        "lineNumber": 409,
+        "author": {
+          "gitId": "-"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 410,
+        "author": {
+          "gitId": "jazerler"
+        },
+        "content": "   1. Other incorrect delete commands to try: `deletec`, `deletec x`, `...` (where x is larger than the list size)\u003cbr\u003e"
+      },
+      {
+        "lineNumber": 411,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "      Expected: Similar to previous."
+      },
+      {
+        "lineNumber": 412,
+        "author": {
+          "gitId": "-"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 413,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "1. _{ more test cases …​ }_"
+      },
+      {
+        "lineNumber": 414,
+        "author": {
+          "gitId": "-"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 415,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "### Saving data"
+      },
+      {
+        "lineNumber": 416,
+        "author": {
+          "gitId": "-"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 417,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "1. Dealing with missing/corrupted data files"
+      },
+      {
+        "lineNumber": 418,
+        "author": {
+          "gitId": "-"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 419,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "   1. _{explain how to simulate a missing/corrupted file, and the expected behavior}_"
+      },
+      {
+        "lineNumber": 420,
+        "author": {
+          "gitId": "-"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 421,
+        "author": {
           "gitId": "-"
         },
         "content": "1. _{ more test cases …​ }_"
@@ -4023,7 +4156,7 @@
     "authorContributionMap": {
       "joshualiangxy": 17,
       "jazerler": 15,
-      "Lingy12": 45,
+      "Lingy12": 64,
       "-": 325
     }
   },
@@ -27241,80 +27374,108 @@
         "author": {
           "gitId": "Lingy12"
         },
-        "content": "    @Override"
+        "content": "    public void setEntry(Entry target, Entry editedEntry) {"
       },
       {
         "lineNumber": 109,
         "author": {
           "gitId": "Lingy12"
         },
-        "content": "    public ObservableList\u003cEntry\u003e getEntryList() {"
+        "content": "        entryList.setEntry(target, editedEntry);"
       },
       {
         "lineNumber": 110,
         "author": {
           "gitId": "Lingy12"
         },
-        "content": "        return entryList.asUnmodifiableObservableList();"
+        "content": "    }"
       },
       {
         "lineNumber": 111,
         "author": {
           "gitId": "Lingy12"
         },
-        "content": "    }"
+        "content": ""
       },
       {
         "lineNumber": 112,
         "author": {
-          "gitId": "joshualiangxy"
-        },
-        "content": ""
-      },
-      {
-        "lineNumber": 113,
-        "author": {
-          "gitId": "joshualiangxy"
+          "gitId": "Lingy12"
         },
         "content": "    @Override"
       },
       {
+        "lineNumber": 113,
+        "author": {
+          "gitId": "Lingy12"
+        },
+        "content": "    public ObservableList\u003cEntry\u003e getEntryList() {"
+      },
+      {
         "lineNumber": 114,
         "author": {
-          "gitId": "joshualiangxy"
+          "gitId": "Lingy12"
         },
-        "content": "    public boolean equals(Object other) {"
+        "content": "        return entryList.asUnmodifiableObservableList();"
       },
       {
         "lineNumber": 115,
         "author": {
-          "gitId": "joshualiangxy"
+          "gitId": "Lingy12"
         },
-        "content": "        return other \u003d\u003d this"
+        "content": "    }"
       },
       {
         "lineNumber": 116,
         "author": {
           "gitId": "joshualiangxy"
         },
-        "content": "                || (other instanceof Journal"
+        "content": ""
       },
       {
         "lineNumber": 117,
         "author": {
           "gitId": "joshualiangxy"
         },
-        "content": "                \u0026\u0026 entryList.equals(((Journal) other).entryList));"
+        "content": "    @Override"
       },
       {
         "lineNumber": 118,
         "author": {
           "gitId": "joshualiangxy"
         },
-        "content": "    }"
+        "content": "    public boolean equals(Object other) {"
       },
       {
         "lineNumber": 119,
+        "author": {
+          "gitId": "joshualiangxy"
+        },
+        "content": "        return other \u003d\u003d this"
+      },
+      {
+        "lineNumber": 120,
+        "author": {
+          "gitId": "joshualiangxy"
+        },
+        "content": "                || (other instanceof Journal"
+      },
+      {
+        "lineNumber": 121,
+        "author": {
+          "gitId": "joshualiangxy"
+        },
+        "content": "                \u0026\u0026 entryList.equals(((Journal) other).entryList));"
+      },
+      {
+        "lineNumber": 122,
+        "author": {
+          "gitId": "joshualiangxy"
+        },
+        "content": "    }"
+      },
+      {
+        "lineNumber": 123,
         "author": {
           "gitId": "Lingy12"
         },
@@ -27323,7 +27484,7 @@
     ],
     "authorContributionMap": {
       "joshualiangxy": 7,
-      "Lingy12": 112
+      "Lingy12": 116
     }
   },
   {
@@ -28138,131 +28299,180 @@
       {
         "lineNumber": 116,
         "author": {
-          "gitId": "Nauw1010"
+          "gitId": "Lingy12"
         },
         "content": "    /**"
       },
       {
         "lineNumber": 117,
         "author": {
-          "gitId": "Nauw1010"
+          "gitId": "Lingy12"
         },
-        "content": "     * Returns an unmodifiable view of the filtered person list"
+        "content": "     * Replaces the given entry {@code target} with {@code description}"
       },
       {
         "lineNumber": 118,
         "author": {
-          "gitId": "Nauw1010"
+          "gitId": "Lingy12"
         },
-        "content": "     */"
+        "content": "     * @param target Target entry to be replaced."
       },
       {
         "lineNumber": 119,
         "author": {
-          "gitId": "-"
+          "gitId": "Lingy12"
         },
-        "content": "    ObservableList\u003cPerson\u003e getFilteredPersonList();"
+        "content": "     * @param editedEntry New entry."
       },
       {
         "lineNumber": 120,
         "author": {
-          "gitId": "-"
+          "gitId": "Lingy12"
         },
-        "content": ""
+        "content": "     */"
       },
       {
         "lineNumber": 121,
         "author": {
-          "gitId": "Nauw1010"
+          "gitId": "Lingy12"
         },
-        "content": "    /**"
+        "content": "    void setEntry(Entry target, Entry editedEntry);"
       },
       {
         "lineNumber": 122,
         "author": {
-          "gitId": "Nauw1010"
+          "gitId": "Lingy12"
         },
-        "content": "     * Returns an unmodifiable view of the filtered journal list"
+        "content": ""
       },
       {
         "lineNumber": 123,
         "author": {
           "gitId": "Nauw1010"
         },
-        "content": "     */"
+        "content": "    /**"
       },
       {
         "lineNumber": 124,
         "author": {
           "gitId": "Nauw1010"
         },
-        "content": "    ObservableList\u003cEntry\u003e getFilteredEntryList();"
+        "content": "     * Returns an unmodifiable view of the filtered person list"
       },
       {
         "lineNumber": 125,
         "author": {
           "gitId": "Nauw1010"
         },
-        "content": ""
+        "content": "     */"
       },
       {
         "lineNumber": 126,
         "author": {
           "gitId": "-"
         },
-        "content": "    /**"
+        "content": "    ObservableList\u003cPerson\u003e getFilteredPersonList();"
       },
       {
         "lineNumber": 127,
         "author": {
           "gitId": "-"
         },
-        "content": "     * Updates the filter of the filtered person list to filter by the given {@code predicate}."
+        "content": ""
       },
       {
         "lineNumber": 128,
         "author": {
           "gitId": "Nauw1010"
         },
-        "content": "     *"
+        "content": "    /**"
       },
       {
         "lineNumber": 129,
         "author": {
-          "gitId": "-"
+          "gitId": "Nauw1010"
         },
-        "content": "     * @throws NullPointerException if {@code predicate} is null."
+        "content": "     * Returns an unmodifiable view of the filtered journal list"
       },
       {
         "lineNumber": 130,
         "author": {
-          "gitId": "-"
+          "gitId": "Nauw1010"
         },
         "content": "     */"
       },
       {
         "lineNumber": 131,
         "author": {
-          "gitId": "-"
+          "gitId": "Nauw1010"
         },
-        "content": "    void updateFilteredPersonList(Predicate\u003cPerson\u003e predicate);"
+        "content": "    ObservableList\u003cEntry\u003e getFilteredEntryList();"
       },
       {
         "lineNumber": 132,
         "author": {
-          "gitId": "zhXchD"
+          "gitId": "Nauw1010"
         },
         "content": ""
       },
       {
         "lineNumber": 133,
         "author": {
+          "gitId": "-"
+        },
+        "content": "    /**"
+      },
+      {
+        "lineNumber": 134,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "     * Updates the filter of the filtered person list to filter by the given {@code predicate}."
+      },
+      {
+        "lineNumber": 135,
+        "author": {
+          "gitId": "Nauw1010"
+        },
+        "content": "     *"
+      },
+      {
+        "lineNumber": 136,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "     * @throws NullPointerException if {@code predicate} is null."
+      },
+      {
+        "lineNumber": 137,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "     */"
+      },
+      {
+        "lineNumber": 138,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "    void updateFilteredPersonList(Predicate\u003cPerson\u003e predicate);"
+      },
+      {
+        "lineNumber": 139,
+        "author": {
+          "gitId": "zhXchD"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 140,
+        "author": {
           "gitId": "zhXchD"
         },
         "content": "    void updateFilteredEntryList(Predicate\u003cEntry\u003e predicate);"
       },
       {
-        "lineNumber": 134,
+        "lineNumber": 141,
         "author": {
           "gitId": "-"
         },
@@ -28271,7 +28481,7 @@
     ],
     "authorContributionMap": {
       "zhXchD": 13,
-      "Lingy12": 11,
+      "Lingy12": 18,
       "Nauw1010": 26,
       "-": 84
     }
@@ -29375,273 +29585,273 @@
       {
         "lineNumber": 157,
         "author": {
-          "gitId": "-"
+          "gitId": "Lingy12"
         },
-        "content": "    //\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d Filtered Person List Accessors \u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d"
+        "content": "    @Override"
       },
       {
         "lineNumber": 158,
         "author": {
-          "gitId": "-"
+          "gitId": "Lingy12"
         },
-        "content": ""
+        "content": "    public void setEntry(Entry target, Entry editedEntry) {"
       },
       {
         "lineNumber": 159,
         "author": {
-          "gitId": "-"
+          "gitId": "Lingy12"
         },
-        "content": "    /**"
+        "content": "        requireAllNonNull(target, editedEntry);"
       },
       {
         "lineNumber": 160,
         "author": {
-          "gitId": "-"
+          "gitId": "Lingy12"
         },
-        "content": "     * Returns an unmodifiable view of the list of {@code Person} backed by the internal list of"
+        "content": ""
       },
       {
         "lineNumber": 161,
         "author": {
-          "gitId": "-"
+          "gitId": "Lingy12"
         },
-        "content": "     * {@code versionedAddressBook}"
+        "content": "        journal.setEntry(target, editedEntry);"
       },
       {
         "lineNumber": 162,
         "author": {
-          "gitId": "-"
+          "gitId": "Lingy12"
         },
-        "content": "     */"
+        "content": "    }"
       },
       {
         "lineNumber": 163,
         "author": {
-          "gitId": "-"
+          "gitId": "Lingy12"
         },
-        "content": "    @Override"
+        "content": ""
       },
       {
         "lineNumber": 164,
         "author": {
           "gitId": "-"
         },
-        "content": "    public ObservableList\u003cPerson\u003e getFilteredPersonList() {"
+        "content": "    //\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d Filtered Person List Accessors \u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d"
       },
       {
         "lineNumber": 165,
         "author": {
           "gitId": "-"
         },
-        "content": "        return filteredPersons;"
+        "content": ""
       },
       {
         "lineNumber": 166,
         "author": {
           "gitId": "-"
         },
-        "content": "    }"
+        "content": "    /**"
       },
       {
         "lineNumber": 167,
         "author": {
           "gitId": "-"
         },
-        "content": ""
+        "content": "     * Returns an unmodifiable view of the list of {@code Person} backed by the internal list of"
       },
       {
         "lineNumber": 168,
         "author": {
-          "gitId": "Nauw1010"
-        },
-        "content": "    /**"
-      },
-      {
-        "lineNumber": 169,
-        "author": {
-          "gitId": "Nauw1010"
-        },
-        "content": "     * Returns an unmodifiable view of the list of {@code Journal} backed by the internal list of"
-      },
-      {
-        "lineNumber": 170,
-        "author": {
-          "gitId": "Nauw1010"
+          "gitId": "-"
         },
         "content": "     * {@code versionedAddressBook}"
       },
       {
-        "lineNumber": 171,
+        "lineNumber": 169,
         "author": {
-          "gitId": "Nauw1010"
+          "gitId": "-"
         },
         "content": "     */"
       },
       {
-        "lineNumber": 172,
+        "lineNumber": 170,
         "author": {
-          "gitId": "Nauw1010"
+          "gitId": "-"
         },
         "content": "    @Override"
       },
       {
+        "lineNumber": 171,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "    public ObservableList\u003cPerson\u003e getFilteredPersonList() {"
+      },
+      {
+        "lineNumber": 172,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "        return filteredPersons;"
+      },
+      {
         "lineNumber": 173,
         "author": {
-          "gitId": "Nauw1010"
+          "gitId": "-"
         },
-        "content": "    public ObservableList\u003cEntry\u003e getFilteredEntryList() {"
+        "content": "    }"
       },
       {
         "lineNumber": 174,
         "author": {
-          "gitId": "Nauw1010"
+          "gitId": "-"
         },
-        "content": "        return filteredEntries;"
+        "content": ""
       },
       {
         "lineNumber": 175,
         "author": {
           "gitId": "Nauw1010"
         },
-        "content": "    }"
+        "content": "    /**"
       },
       {
         "lineNumber": 176,
         "author": {
           "gitId": "Nauw1010"
         },
-        "content": ""
+        "content": "     * Returns an unmodifiable view of the list of {@code Journal} backed by the internal list of"
       },
       {
         "lineNumber": 177,
+        "author": {
+          "gitId": "Nauw1010"
+        },
+        "content": "     * {@code versionedAddressBook}"
+      },
+      {
+        "lineNumber": 178,
+        "author": {
+          "gitId": "Nauw1010"
+        },
+        "content": "     */"
+      },
+      {
+        "lineNumber": 179,
+        "author": {
+          "gitId": "Nauw1010"
+        },
+        "content": "    @Override"
+      },
+      {
+        "lineNumber": 180,
+        "author": {
+          "gitId": "Nauw1010"
+        },
+        "content": "    public ObservableList\u003cEntry\u003e getFilteredEntryList() {"
+      },
+      {
+        "lineNumber": 181,
+        "author": {
+          "gitId": "Nauw1010"
+        },
+        "content": "        return filteredEntries;"
+      },
+      {
+        "lineNumber": 182,
+        "author": {
+          "gitId": "Nauw1010"
+        },
+        "content": "    }"
+      },
+      {
+        "lineNumber": 183,
+        "author": {
+          "gitId": "Nauw1010"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 184,
         "author": {
           "gitId": "-"
         },
         "content": "    @Override"
       },
       {
-        "lineNumber": 178,
+        "lineNumber": 185,
         "author": {
           "gitId": "-"
         },
         "content": "    public void updateFilteredPersonList(Predicate\u003cPerson\u003e predicate) {"
       },
       {
-        "lineNumber": 179,
+        "lineNumber": 186,
         "author": {
           "gitId": "-"
         },
         "content": "        requireNonNull(predicate);"
       },
       {
-        "lineNumber": 180,
+        "lineNumber": 187,
         "author": {
           "gitId": "-"
         },
         "content": "        filteredPersons.setPredicate(predicate);"
       },
       {
-        "lineNumber": 181,
-        "author": {
-          "gitId": "-"
-        },
-        "content": "    }"
-      },
-      {
-        "lineNumber": 182,
-        "author": {
-          "gitId": "-"
-        },
-        "content": ""
-      },
-      {
-        "lineNumber": 183,
-        "author": {
-          "gitId": "zhXchD"
-        },
-        "content": "    @Override"
-      },
-      {
-        "lineNumber": 184,
-        "author": {
-          "gitId": "zhXchD"
-        },
-        "content": "    public void updateFilteredEntryList(Predicate\u003cEntry\u003e predicate) {"
-      },
-      {
-        "lineNumber": 185,
-        "author": {
-          "gitId": "zhXchD"
-        },
-        "content": "        requireNonNull(predicate);"
-      },
-      {
-        "lineNumber": 186,
-        "author": {
-          "gitId": "zhXchD"
-        },
-        "content": "        filteredEntries.setPredicate(predicate);"
-      },
-      {
-        "lineNumber": 187,
-        "author": {
-          "gitId": "zhXchD"
-        },
-        "content": "    }"
-      },
-      {
         "lineNumber": 188,
         "author": {
-          "gitId": "zhXchD"
+          "gitId": "-"
         },
-        "content": ""
+        "content": "    }"
       },
       {
         "lineNumber": 189,
         "author": {
           "gitId": "-"
         },
-        "content": "    @Override"
+        "content": ""
       },
       {
         "lineNumber": 190,
         "author": {
-          "gitId": "-"
+          "gitId": "zhXchD"
         },
-        "content": "    public boolean equals(Object obj) {"
+        "content": "    @Override"
       },
       {
         "lineNumber": 191,
         "author": {
-          "gitId": "-"
+          "gitId": "zhXchD"
         },
-        "content": "        // short circuit if same object"
+        "content": "    public void updateFilteredEntryList(Predicate\u003cEntry\u003e predicate) {"
       },
       {
         "lineNumber": 192,
         "author": {
-          "gitId": "-"
+          "gitId": "zhXchD"
         },
-        "content": "        if (obj \u003d\u003d this) {"
+        "content": "        requireNonNull(predicate);"
       },
       {
         "lineNumber": 193,
         "author": {
-          "gitId": "-"
+          "gitId": "zhXchD"
         },
-        "content": "            return true;"
+        "content": "        filteredEntries.setPredicate(predicate);"
       },
       {
         "lineNumber": 194,
         "author": {
-          "gitId": "-"
+          "gitId": "zhXchD"
         },
-        "content": "        }"
+        "content": "    }"
       },
       {
         "lineNumber": 195,
         "author": {
-          "gitId": "-"
+          "gitId": "zhXchD"
         },
         "content": ""
       },
@@ -29650,94 +29860,143 @@
         "author": {
           "gitId": "-"
         },
-        "content": "        // instanceof handles nulls"
+        "content": "    @Override"
       },
       {
         "lineNumber": 197,
         "author": {
           "gitId": "-"
         },
-        "content": "        if (!(obj instanceof ModelManager)) {"
+        "content": "    public boolean equals(Object obj) {"
       },
       {
         "lineNumber": 198,
         "author": {
           "gitId": "-"
         },
-        "content": "            return false;"
+        "content": "        // short circuit if same object"
       },
       {
         "lineNumber": 199,
         "author": {
           "gitId": "-"
         },
-        "content": "        }"
+        "content": "        if (obj \u003d\u003d this) {"
       },
       {
         "lineNumber": 200,
         "author": {
           "gitId": "-"
         },
-        "content": ""
+        "content": "            return true;"
       },
       {
         "lineNumber": 201,
         "author": {
           "gitId": "-"
         },
-        "content": "        // state check"
+        "content": "        }"
       },
       {
         "lineNumber": 202,
         "author": {
           "gitId": "-"
         },
-        "content": "        ModelManager other \u003d (ModelManager) obj;"
+        "content": ""
       },
       {
         "lineNumber": 203,
         "author": {
           "gitId": "-"
         },
-        "content": "        return addressBook.equals(other.addressBook)"
+        "content": "        // instanceof handles nulls"
       },
       {
         "lineNumber": 204,
         "author": {
           "gitId": "-"
         },
-        "content": "            \u0026\u0026 userPrefs.equals(other.userPrefs)"
+        "content": "        if (!(obj instanceof ModelManager)) {"
       },
       {
         "lineNumber": 205,
         "author": {
-          "gitId": "Lingy12"
+          "gitId": "-"
         },
-        "content": "            \u0026\u0026 filteredPersons.equals(other.filteredPersons)"
+        "content": "            return false;"
       },
       {
         "lineNumber": 206,
         "author": {
-          "gitId": "Lingy12"
+          "gitId": "-"
         },
-        "content": "            \u0026\u0026 filteredEntries.equals(other.filteredEntries);"
+        "content": "        }"
       },
       {
         "lineNumber": 207,
         "author": {
           "gitId": "-"
         },
-        "content": "    }"
+        "content": ""
       },
       {
         "lineNumber": 208,
         "author": {
           "gitId": "-"
         },
-        "content": ""
+        "content": "        // state check"
       },
       {
         "lineNumber": 209,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "        ModelManager other \u003d (ModelManager) obj;"
+      },
+      {
+        "lineNumber": 210,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "        return addressBook.equals(other.addressBook)"
+      },
+      {
+        "lineNumber": 211,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "            \u0026\u0026 userPrefs.equals(other.userPrefs)"
+      },
+      {
+        "lineNumber": 212,
+        "author": {
+          "gitId": "Lingy12"
+        },
+        "content": "            \u0026\u0026 filteredPersons.equals(other.filteredPersons)"
+      },
+      {
+        "lineNumber": 213,
+        "author": {
+          "gitId": "Lingy12"
+        },
+        "content": "            \u0026\u0026 filteredEntries.equals(other.filteredEntries);"
+      },
+      {
+        "lineNumber": 214,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "    }"
+      },
+      {
+        "lineNumber": 215,
+        "author": {
+          "gitId": "-"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 216,
         "author": {
           "gitId": "-"
         },
@@ -29746,7 +30005,7 @@
     ],
     "authorContributionMap": {
       "zhXchD": 18,
-      "Lingy12": 17,
+      "Lingy12": 24,
       "Nauw1010": 27,
       "-": 147
     }
@@ -33018,315 +33277,315 @@
         "author": {
           "gitId": "Lingy12"
         },
-        "content": ""
+        "content": "import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;"
       },
       {
         "lineNumber": 5,
         "author": {
           "gitId": "Lingy12"
         },
-        "content": "import java.util.Iterator;"
+        "content": ""
       },
       {
         "lineNumber": 6,
         "author": {
           "gitId": "Lingy12"
         },
-        "content": "import java.util.List;"
+        "content": "import java.util.Iterator;"
       },
       {
         "lineNumber": 7,
         "author": {
           "gitId": "Lingy12"
         },
-        "content": ""
+        "content": "import java.util.List;"
       },
       {
         "lineNumber": 8,
         "author": {
           "gitId": "Lingy12"
         },
-        "content": "import javafx.collections.FXCollections;"
+        "content": ""
       },
       {
         "lineNumber": 9,
         "author": {
           "gitId": "Lingy12"
         },
-        "content": "import javafx.collections.ObservableList;"
+        "content": "import javafx.collections.FXCollections;"
       },
       {
         "lineNumber": 10,
         "author": {
           "gitId": "Lingy12"
         },
-        "content": "import seedu.address.model.journal.exceptions.DuplicateEntryException;"
+        "content": "import javafx.collections.ObservableList;"
       },
       {
         "lineNumber": 11,
         "author": {
           "gitId": "Lingy12"
         },
-        "content": "import seedu.address.model.journal.exceptions.EntryNotFoundException;"
+        "content": "import seedu.address.model.journal.exceptions.DuplicateEntryException;"
       },
       {
         "lineNumber": 12,
         "author": {
           "gitId": "Lingy12"
         },
-        "content": ""
+        "content": "import seedu.address.model.journal.exceptions.EntryNotFoundException;"
       },
       {
         "lineNumber": 13,
         "author": {
           "gitId": "Lingy12"
         },
-        "content": "public class UniqueEntryList implements Iterable\u003cEntry\u003e {"
+        "content": ""
       },
       {
         "lineNumber": 14,
         "author": {
           "gitId": "Lingy12"
         },
-        "content": ""
+        "content": "public class UniqueEntryList implements Iterable\u003cEntry\u003e {"
       },
       {
         "lineNumber": 15,
         "author": {
-          "gitId": "joshualiangxy"
+          "gitId": "Lingy12"
         },
-        "content": "    private final ObservableList\u003cEntry\u003e internalList \u003d"
+        "content": ""
       },
       {
         "lineNumber": 16,
         "author": {
           "gitId": "joshualiangxy"
         },
-        "content": "            FXCollections.observableArrayList();"
+        "content": "    private final ObservableList\u003cEntry\u003e internalList \u003d"
       },
       {
         "lineNumber": 17,
         "author": {
-          "gitId": "Lingy12"
+          "gitId": "joshualiangxy"
         },
-        "content": "    private final ObservableList\u003cEntry\u003e internalUnmodifiableList \u003d"
+        "content": "            FXCollections.observableArrayList();"
       },
       {
         "lineNumber": 18,
         "author": {
           "gitId": "Lingy12"
         },
-        "content": "            FXCollections.unmodifiableObservableList(internalList);"
+        "content": "    private final ObservableList\u003cEntry\u003e internalUnmodifiableList \u003d"
       },
       {
         "lineNumber": 19,
         "author": {
           "gitId": "Lingy12"
         },
-        "content": ""
+        "content": "            FXCollections.unmodifiableObservableList(internalList);"
       },
       {
         "lineNumber": 20,
         "author": {
           "gitId": "Lingy12"
         },
-        "content": "    /**"
+        "content": ""
       },
       {
         "lineNumber": 21,
         "author": {
           "gitId": "Lingy12"
         },
-        "content": "     * Returns true if there is a same entry in the list."
+        "content": "    /**"
       },
       {
         "lineNumber": 22,
         "author": {
           "gitId": "Lingy12"
         },
-        "content": "     */"
+        "content": "     * Returns true if there is a same entry in the list."
       },
       {
         "lineNumber": 23,
         "author": {
           "gitId": "Lingy12"
         },
-        "content": "    public boolean contains(Entry toCheck) {"
+        "content": "     */"
       },
       {
         "lineNumber": 24,
         "author": {
           "gitId": "Lingy12"
         },
-        "content": "        return internalList.stream().anyMatch(toCheck::isSameEntry);"
+        "content": "    public boolean contains(Entry toCheck) {"
       },
       {
         "lineNumber": 25,
         "author": {
           "gitId": "Lingy12"
         },
-        "content": "    }"
+        "content": "        return internalList.stream().anyMatch(toCheck::isSameEntry);"
       },
       {
         "lineNumber": 26,
         "author": {
           "gitId": "Lingy12"
         },
-        "content": ""
+        "content": "    }"
       },
       {
         "lineNumber": 27,
         "author": {
           "gitId": "Lingy12"
         },
-        "content": "    /**"
+        "content": ""
       },
       {
         "lineNumber": 28,
         "author": {
           "gitId": "Lingy12"
         },
-        "content": "     * Returns an observable and unmodified list of the entries."
+        "content": "    /**"
       },
       {
         "lineNumber": 29,
         "author": {
           "gitId": "Lingy12"
         },
-        "content": "     */"
+        "content": "     * Returns an observable and unmodified list of the entries."
       },
       {
         "lineNumber": 30,
         "author": {
           "gitId": "Lingy12"
         },
-        "content": "    public ObservableList\u003cEntry\u003e asUnmodifiableObservableList() {"
+        "content": "     */"
       },
       {
         "lineNumber": 31,
         "author": {
           "gitId": "Lingy12"
         },
-        "content": "        return this.internalUnmodifiableList;"
+        "content": "    public ObservableList\u003cEntry\u003e asUnmodifiableObservableList() {"
       },
       {
         "lineNumber": 32,
         "author": {
           "gitId": "Lingy12"
         },
-        "content": "    }"
+        "content": "        return this.internalUnmodifiableList;"
       },
       {
         "lineNumber": 33,
         "author": {
           "gitId": "Lingy12"
         },
-        "content": ""
+        "content": "    }"
       },
       {
         "lineNumber": 34,
         "author": {
           "gitId": "Lingy12"
         },
-        "content": "    /**"
+        "content": ""
       },
       {
         "lineNumber": 35,
         "author": {
           "gitId": "Lingy12"
         },
-        "content": "     * Adds an entry to the entry list."
+        "content": "    /**"
       },
       {
         "lineNumber": 36,
         "author": {
           "gitId": "Lingy12"
         },
-        "content": "     * @param entry Entry that will be added."
+        "content": "     * Adds an entry to the entry list."
       },
       {
         "lineNumber": 37,
         "author": {
           "gitId": "Lingy12"
         },
-        "content": "     */"
+        "content": "     * @param entry Entry that will be added."
       },
       {
         "lineNumber": 38,
         "author": {
           "gitId": "Lingy12"
         },
-        "content": "    public void add(Entry entry) {"
+        "content": "     */"
       },
       {
         "lineNumber": 39,
         "author": {
           "gitId": "Lingy12"
         },
-        "content": "        requireNonNull(entry);"
+        "content": "    public void add(Entry entry) {"
       },
       {
         "lineNumber": 40,
         "author": {
           "gitId": "Lingy12"
         },
-        "content": "        if (contains(entry)) {"
+        "content": "        requireNonNull(entry);"
       },
       {
         "lineNumber": 41,
         "author": {
           "gitId": "Lingy12"
         },
-        "content": "            throw new DuplicateEntryException();"
+        "content": "        if (contains(entry)) {"
       },
       {
         "lineNumber": 42,
         "author": {
           "gitId": "Lingy12"
         },
-        "content": "        }"
+        "content": "            throw new DuplicateEntryException();"
       },
       {
         "lineNumber": 43,
         "author": {
           "gitId": "Lingy12"
         },
-        "content": "        internalList.add(entry);"
+        "content": "        }"
       },
       {
         "lineNumber": 44,
         "author": {
           "gitId": "Lingy12"
         },
-        "content": "    }"
+        "content": "        internalList.add(entry);"
       },
       {
         "lineNumber": 45,
         "author": {
           "gitId": "Lingy12"
         },
-        "content": ""
+        "content": "    }"
       },
       {
         "lineNumber": 46,
         "author": {
           "gitId": "Lingy12"
         },
-        "content": "    /**"
+        "content": ""
       },
       {
         "lineNumber": 47,
         "author": {
           "gitId": "Lingy12"
         },
-        "content": "     * Removes an entry from entry list."
+        "content": "    /**"
       },
       {
         "lineNumber": 48,
         "author": {
           "gitId": "Lingy12"
         },
-        "content": "     * @param entry Entry that will be removed."
+        "content": "     * Replace the {@code target} Entry with a new {@code editedEntry}."
       },
       {
         "lineNumber": 49,
@@ -33340,164 +33599,297 @@
         "author": {
           "gitId": "Lingy12"
         },
-        "content": "    public void remove(Entry entry) {"
+        "content": "    public void setEntry(Entry target, Entry editedEntry) {"
       },
       {
         "lineNumber": 51,
         "author": {
           "gitId": "Lingy12"
         },
-        "content": "        requireNonNull(entry);"
+        "content": "        requireAllNonNull(target, editedEntry);"
       },
       {
         "lineNumber": 52,
         "author": {
           "gitId": "Lingy12"
         },
-        "content": "        if (!internalList.remove(entry)) {"
+        "content": ""
       },
       {
         "lineNumber": 53,
         "author": {
           "gitId": "Lingy12"
         },
-        "content": "            throw new EntryNotFoundException();"
+        "content": "        int index \u003d internalList.indexOf(target);"
       },
       {
         "lineNumber": 54,
         "author": {
           "gitId": "Lingy12"
         },
-        "content": "        }"
+        "content": "        if (index \u003d\u003d -1) {"
       },
       {
         "lineNumber": 55,
         "author": {
           "gitId": "Lingy12"
         },
-        "content": "    }"
+        "content": "            throw new EntryNotFoundException();"
       },
       {
         "lineNumber": 56,
         "author": {
           "gitId": "Lingy12"
         },
-        "content": ""
+        "content": "        }"
       },
       {
         "lineNumber": 57,
         "author": {
           "gitId": "Lingy12"
         },
-        "content": "    public void setEntries(List\u003cEntry\u003e replacement) {"
+        "content": ""
       },
       {
         "lineNumber": 58,
         "author": {
           "gitId": "Lingy12"
         },
-        "content": "        this.internalList.setAll(replacement);"
+        "content": "        if (!target.isSameEntry(editedEntry) \u0026\u0026 contains(editedEntry)) {"
       },
       {
         "lineNumber": 59,
         "author": {
           "gitId": "Lingy12"
         },
-        "content": "    }"
+        "content": "            throw new DuplicateEntryException();"
       },
       {
         "lineNumber": 60,
         "author": {
           "gitId": "Lingy12"
         },
-        "content": ""
+        "content": "        }"
       },
       {
         "lineNumber": 61,
         "author": {
           "gitId": "Lingy12"
         },
-        "content": "    @Override"
+        "content": ""
       },
       {
         "lineNumber": 62,
         "author": {
           "gitId": "Lingy12"
         },
-        "content": "    public Iterator\u003cEntry\u003e iterator() {"
+        "content": "        internalList.set(index, editedEntry);"
       },
       {
         "lineNumber": 63,
         "author": {
           "gitId": "Lingy12"
         },
-        "content": "        return internalList.iterator();"
+        "content": "    }"
       },
       {
         "lineNumber": 64,
         "author": {
           "gitId": "Lingy12"
         },
-        "content": "    }"
+        "content": ""
       },
       {
         "lineNumber": 65,
+        "author": {
+          "gitId": "Lingy12"
+        },
+        "content": "    /**"
+      },
+      {
+        "lineNumber": 66,
+        "author": {
+          "gitId": "Lingy12"
+        },
+        "content": "     * Removes an entry from entry list."
+      },
+      {
+        "lineNumber": 67,
+        "author": {
+          "gitId": "Lingy12"
+        },
+        "content": "     * @param entry Entry that will be removed."
+      },
+      {
+        "lineNumber": 68,
+        "author": {
+          "gitId": "Lingy12"
+        },
+        "content": "     */"
+      },
+      {
+        "lineNumber": 69,
+        "author": {
+          "gitId": "Lingy12"
+        },
+        "content": "    public void remove(Entry entry) {"
+      },
+      {
+        "lineNumber": 70,
+        "author": {
+          "gitId": "Lingy12"
+        },
+        "content": "        requireNonNull(entry);"
+      },
+      {
+        "lineNumber": 71,
+        "author": {
+          "gitId": "Lingy12"
+        },
+        "content": "        if (!internalList.remove(entry)) {"
+      },
+      {
+        "lineNumber": 72,
+        "author": {
+          "gitId": "Lingy12"
+        },
+        "content": "            throw new EntryNotFoundException();"
+      },
+      {
+        "lineNumber": 73,
+        "author": {
+          "gitId": "Lingy12"
+        },
+        "content": "        }"
+      },
+      {
+        "lineNumber": 74,
+        "author": {
+          "gitId": "Lingy12"
+        },
+        "content": "    }"
+      },
+      {
+        "lineNumber": 75,
+        "author": {
+          "gitId": "Lingy12"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 76,
+        "author": {
+          "gitId": "Lingy12"
+        },
+        "content": "    public void setEntries(List\u003cEntry\u003e replacement) {"
+      },
+      {
+        "lineNumber": 77,
+        "author": {
+          "gitId": "Lingy12"
+        },
+        "content": "        this.internalList.setAll(replacement);"
+      },
+      {
+        "lineNumber": 78,
+        "author": {
+          "gitId": "Lingy12"
+        },
+        "content": "    }"
+      },
+      {
+        "lineNumber": 79,
+        "author": {
+          "gitId": "Lingy12"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 80,
+        "author": {
+          "gitId": "Lingy12"
+        },
+        "content": "    @Override"
+      },
+      {
+        "lineNumber": 81,
+        "author": {
+          "gitId": "Lingy12"
+        },
+        "content": "    public Iterator\u003cEntry\u003e iterator() {"
+      },
+      {
+        "lineNumber": 82,
+        "author": {
+          "gitId": "Lingy12"
+        },
+        "content": "        return internalList.iterator();"
+      },
+      {
+        "lineNumber": 83,
+        "author": {
+          "gitId": "Lingy12"
+        },
+        "content": "    }"
+      },
+      {
+        "lineNumber": 84,
         "author": {
           "gitId": "joshualiangxy"
         },
         "content": ""
       },
       {
-        "lineNumber": 66,
+        "lineNumber": 85,
         "author": {
           "gitId": "joshualiangxy"
         },
         "content": "    @Override"
       },
       {
-        "lineNumber": 67,
+        "lineNumber": 86,
         "author": {
           "gitId": "joshualiangxy"
         },
         "content": "    public boolean equals(Object other) {"
       },
       {
-        "lineNumber": 68,
+        "lineNumber": 87,
         "author": {
           "gitId": "joshualiangxy"
         },
         "content": "        return other \u003d\u003d this"
       },
       {
-        "lineNumber": 69,
+        "lineNumber": 88,
         "author": {
           "gitId": "joshualiangxy"
         },
         "content": "                || (other instanceof UniqueEntryList"
       },
       {
-        "lineNumber": 70,
+        "lineNumber": 89,
         "author": {
           "gitId": "joshualiangxy"
         },
         "content": "                        \u0026\u0026 ((UniqueEntryList) other).internalList.equals("
       },
       {
-        "lineNumber": 71,
+        "lineNumber": 90,
         "author": {
           "gitId": "joshualiangxy"
         },
         "content": "                                internalList));"
       },
       {
-        "lineNumber": 72,
+        "lineNumber": 91,
         "author": {
           "gitId": "joshualiangxy"
         },
         "content": "    }"
       },
       {
-        "lineNumber": 73,
+        "lineNumber": 92,
         "author": {
           "gitId": "Lingy12"
         },
@@ -33506,7 +33898,7 @@
     ],
     "authorContributionMap": {
       "joshualiangxy": 10,
-      "Lingy12": 63
+      "Lingy12": 82
     }
   },
   {
@@ -62410,35 +62802,35 @@
       {
         "lineNumber": 205,
         "author": {
-          "gitId": "zhXchD"
+          "gitId": "Lingy12"
         },
         "content": "        @Override"
       },
       {
         "lineNumber": 206,
         "author": {
-          "gitId": "zhXchD"
+          "gitId": "Lingy12"
         },
-        "content": "        public boolean hasEntry(Entry entry) {"
+        "content": "        public void setEntry(Entry target, Entry editedEntry) {"
       },
       {
         "lineNumber": 207,
         "author": {
-          "gitId": "zhXchD"
+          "gitId": "Lingy12"
         },
         "content": "            throw new AssertionError(\"This method should not be called.\");"
       },
       {
         "lineNumber": 208,
         "author": {
-          "gitId": "zhXchD"
+          "gitId": "Lingy12"
         },
         "content": "        }"
       },
       {
         "lineNumber": 209,
         "author": {
-          "gitId": "zhXchD"
+          "gitId": "Lingy12"
         },
         "content": ""
       },
@@ -62454,7 +62846,7 @@
         "author": {
           "gitId": "zhXchD"
         },
-        "content": "        public void addEntry(Entry entry) {"
+        "content": "        public boolean hasEntry(Entry entry) {"
       },
       {
         "lineNumber": 212,
@@ -62480,219 +62872,219 @@
       {
         "lineNumber": 215,
         "author": {
-          "gitId": "-"
+          "gitId": "zhXchD"
         },
         "content": "        @Override"
       },
       {
         "lineNumber": 216,
         "author": {
-          "gitId": "-"
+          "gitId": "zhXchD"
         },
-        "content": "        public ObservableList\u003cPerson\u003e getFilteredPersonList() {"
+        "content": "        public void addEntry(Entry entry) {"
       },
       {
         "lineNumber": 217,
         "author": {
-          "gitId": "-"
+          "gitId": "zhXchD"
         },
         "content": "            throw new AssertionError(\"This method should not be called.\");"
       },
       {
         "lineNumber": 218,
         "author": {
-          "gitId": "-"
+          "gitId": "zhXchD"
         },
         "content": "        }"
       },
       {
         "lineNumber": 219,
         "author": {
-          "gitId": "-"
+          "gitId": "zhXchD"
         },
         "content": ""
       },
       {
         "lineNumber": 220,
         "author": {
-          "gitId": "Nauw1010"
+          "gitId": "-"
         },
         "content": "        @Override"
       },
       {
         "lineNumber": 221,
         "author": {
-          "gitId": "Nauw1010"
+          "gitId": "-"
         },
-        "content": "        public ObservableList\u003cEntry\u003e getFilteredEntryList() {"
+        "content": "        public ObservableList\u003cPerson\u003e getFilteredPersonList() {"
       },
       {
         "lineNumber": 222,
         "author": {
-          "gitId": "Nauw1010"
+          "gitId": "-"
         },
         "content": "            throw new AssertionError(\"This method should not be called.\");"
       },
       {
         "lineNumber": 223,
         "author": {
-          "gitId": "Nauw1010"
+          "gitId": "-"
         },
         "content": "        }"
       },
       {
         "lineNumber": 224,
         "author": {
-          "gitId": "Nauw1010"
+          "gitId": "-"
         },
         "content": ""
       },
       {
         "lineNumber": 225,
         "author": {
-          "gitId": "-"
+          "gitId": "Nauw1010"
         },
         "content": "        @Override"
       },
       {
         "lineNumber": 226,
         "author": {
-          "gitId": "-"
+          "gitId": "Nauw1010"
         },
-        "content": "        public void updateFilteredPersonList(Predicate\u003cPerson\u003e predicate) {"
+        "content": "        public ObservableList\u003cEntry\u003e getFilteredEntryList() {"
       },
       {
         "lineNumber": 227,
         "author": {
-          "gitId": "-"
+          "gitId": "Nauw1010"
         },
         "content": "            throw new AssertionError(\"This method should not be called.\");"
       },
       {
         "lineNumber": 228,
         "author": {
-          "gitId": "-"
+          "gitId": "Nauw1010"
         },
         "content": "        }"
       },
       {
         "lineNumber": 229,
         "author": {
-          "gitId": "zhXchD"
+          "gitId": "Nauw1010"
         },
         "content": ""
       },
       {
         "lineNumber": 230,
         "author": {
-          "gitId": "zhXchD"
+          "gitId": "-"
         },
         "content": "        @Override"
       },
       {
         "lineNumber": 231,
         "author": {
-          "gitId": "zhXchD"
+          "gitId": "-"
         },
-        "content": "        public void updateFilteredEntryList(Predicate\u003cEntry\u003e predicate) {"
+        "content": "        public void updateFilteredPersonList(Predicate\u003cPerson\u003e predicate) {"
       },
       {
         "lineNumber": 232,
         "author": {
-          "gitId": "zhXchD"
+          "gitId": "-"
         },
         "content": "            throw new AssertionError(\"This method should not be called.\");"
       },
       {
         "lineNumber": 233,
         "author": {
-          "gitId": "zhXchD"
+          "gitId": "-"
         },
         "content": "        }"
       },
       {
         "lineNumber": 234,
         "author": {
-          "gitId": "-"
-        },
-        "content": "    }"
-      },
-      {
-        "lineNumber": 235,
-        "author": {
-          "gitId": "-"
+          "gitId": "zhXchD"
         },
         "content": ""
       },
       {
+        "lineNumber": 235,
+        "author": {
+          "gitId": "zhXchD"
+        },
+        "content": "        @Override"
+      },
+      {
         "lineNumber": 236,
         "author": {
-          "gitId": "-"
+          "gitId": "zhXchD"
         },
-        "content": "    /**"
+        "content": "        public void updateFilteredEntryList(Predicate\u003cEntry\u003e predicate) {"
       },
       {
         "lineNumber": 237,
         "author": {
-          "gitId": "-"
+          "gitId": "zhXchD"
         },
-        "content": "     * A Model stub that contains a single person."
+        "content": "            throw new AssertionError(\"This method should not be called.\");"
       },
       {
         "lineNumber": 238,
         "author": {
-          "gitId": "-"
+          "gitId": "zhXchD"
         },
-        "content": "     */"
+        "content": "        }"
       },
       {
         "lineNumber": 239,
         "author": {
           "gitId": "-"
         },
-        "content": "    private class ModelStubWithPerson extends ModelStub {"
+        "content": "    }"
       },
       {
         "lineNumber": 240,
         "author": {
           "gitId": "-"
         },
-        "content": "        private final Person person;"
+        "content": ""
       },
       {
         "lineNumber": 241,
         "author": {
           "gitId": "-"
         },
-        "content": ""
+        "content": "    /**"
       },
       {
         "lineNumber": 242,
         "author": {
           "gitId": "-"
         },
-        "content": "        ModelStubWithPerson(Person person) {"
+        "content": "     * A Model stub that contains a single person."
       },
       {
         "lineNumber": 243,
         "author": {
           "gitId": "-"
         },
-        "content": "            requireNonNull(person);"
+        "content": "     */"
       },
       {
         "lineNumber": 244,
         "author": {
           "gitId": "-"
         },
-        "content": "            this.person \u003d person;"
+        "content": "    private class ModelStubWithPerson extends ModelStub {"
       },
       {
         "lineNumber": 245,
         "author": {
           "gitId": "-"
         },
-        "content": "        }"
+        "content": "        private final Person person;"
       },
       {
         "lineNumber": 246,
@@ -62706,196 +63098,196 @@
         "author": {
           "gitId": "-"
         },
-        "content": "        @Override"
+        "content": "        ModelStubWithPerson(Person person) {"
       },
       {
         "lineNumber": 248,
         "author": {
           "gitId": "-"
         },
-        "content": "        public boolean hasPerson(Person person) {"
+        "content": "            requireNonNull(person);"
       },
       {
         "lineNumber": 249,
         "author": {
           "gitId": "-"
         },
-        "content": "            requireNonNull(person);"
+        "content": "            this.person \u003d person;"
       },
       {
         "lineNumber": 250,
         "author": {
           "gitId": "-"
         },
-        "content": "            return this.person.isSamePerson(person);"
+        "content": "        }"
       },
       {
         "lineNumber": 251,
         "author": {
           "gitId": "-"
         },
-        "content": "        }"
+        "content": ""
       },
       {
         "lineNumber": 252,
         "author": {
           "gitId": "-"
         },
-        "content": "    }"
+        "content": "        @Override"
       },
       {
         "lineNumber": 253,
         "author": {
           "gitId": "-"
         },
-        "content": ""
+        "content": "        public boolean hasPerson(Person person) {"
       },
       {
         "lineNumber": 254,
         "author": {
           "gitId": "-"
         },
-        "content": "    /**"
+        "content": "            requireNonNull(person);"
       },
       {
         "lineNumber": 255,
         "author": {
           "gitId": "-"
         },
-        "content": "     * A Model stub that always accept the person being added."
+        "content": "            return this.person.isSamePerson(person);"
       },
       {
         "lineNumber": 256,
         "author": {
           "gitId": "-"
         },
-        "content": "     */"
+        "content": "        }"
       },
       {
         "lineNumber": 257,
         "author": {
           "gitId": "-"
         },
-        "content": "    private class ModelStubAcceptingPersonAdded extends ModelStub {"
+        "content": "    }"
       },
       {
         "lineNumber": 258,
         "author": {
           "gitId": "-"
         },
-        "content": "        final ArrayList\u003cPerson\u003e personsAdded \u003d new ArrayList\u003c\u003e();"
+        "content": ""
       },
       {
         "lineNumber": 259,
         "author": {
           "gitId": "-"
         },
-        "content": ""
+        "content": "    /**"
       },
       {
         "lineNumber": 260,
         "author": {
           "gitId": "-"
         },
-        "content": "        @Override"
+        "content": "     * A Model stub that always accept the person being added."
       },
       {
         "lineNumber": 261,
         "author": {
           "gitId": "-"
         },
-        "content": "        public boolean hasPerson(Person person) {"
+        "content": "     */"
       },
       {
         "lineNumber": 262,
         "author": {
           "gitId": "-"
         },
-        "content": "            requireNonNull(person);"
+        "content": "    private class ModelStubAcceptingPersonAdded extends ModelStub {"
       },
       {
         "lineNumber": 263,
         "author": {
           "gitId": "-"
         },
-        "content": "            return personsAdded.stream().anyMatch(person::isSamePerson);"
+        "content": "        final ArrayList\u003cPerson\u003e personsAdded \u003d new ArrayList\u003c\u003e();"
       },
       {
         "lineNumber": 264,
         "author": {
           "gitId": "-"
         },
-        "content": "        }"
+        "content": ""
       },
       {
         "lineNumber": 265,
         "author": {
           "gitId": "-"
         },
-        "content": ""
+        "content": "        @Override"
       },
       {
         "lineNumber": 266,
         "author": {
           "gitId": "-"
         },
-        "content": "        @Override"
+        "content": "        public boolean hasPerson(Person person) {"
       },
       {
         "lineNumber": 267,
         "author": {
           "gitId": "-"
         },
-        "content": "        public void addPerson(Person person) {"
+        "content": "            requireNonNull(person);"
       },
       {
         "lineNumber": 268,
         "author": {
           "gitId": "-"
         },
-        "content": "            requireNonNull(person);"
+        "content": "            return personsAdded.stream().anyMatch(person::isSamePerson);"
       },
       {
         "lineNumber": 269,
         "author": {
           "gitId": "-"
         },
-        "content": "            personsAdded.add(person);"
+        "content": "        }"
       },
       {
         "lineNumber": 270,
         "author": {
           "gitId": "-"
         },
-        "content": "        }"
+        "content": ""
       },
       {
         "lineNumber": 271,
         "author": {
           "gitId": "-"
         },
-        "content": ""
+        "content": "        @Override"
       },
       {
         "lineNumber": 272,
         "author": {
           "gitId": "-"
         },
-        "content": "        @Override"
+        "content": "        public void addPerson(Person person) {"
       },
       {
         "lineNumber": 273,
         "author": {
           "gitId": "-"
         },
-        "content": "        public ReadOnlyAddressBook getAddressBook() {"
+        "content": "            requireNonNull(person);"
       },
       {
         "lineNumber": 274,
         "author": {
           "gitId": "-"
         },
-        "content": "            return new AddressBook();"
+        "content": "            personsAdded.add(person);"
       },
       {
         "lineNumber": 275,
@@ -62909,10 +63301,45 @@
         "author": {
           "gitId": "-"
         },
-        "content": "    }"
+        "content": ""
       },
       {
         "lineNumber": 277,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "        @Override"
+      },
+      {
+        "lineNumber": 278,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "        public ReadOnlyAddressBook getAddressBook() {"
+      },
+      {
+        "lineNumber": 279,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "            return new AddressBook();"
+      },
+      {
+        "lineNumber": 280,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "        }"
+      },
+      {
+        "lineNumber": 281,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "    }"
+      },
+      {
+        "lineNumber": 282,
         "author": {
           "gitId": "-"
         },
@@ -62922,7 +63349,7 @@
     "authorContributionMap": {
       "joshualiangxy": 60,
       "zhXchD": 17,
-      "Lingy12": 10,
+      "Lingy12": 15,
       "Nauw1010": 17,
       "-": 173
     }
@@ -64889,35 +65316,35 @@
       {
         "lineNumber": 205,
         "author": {
-          "gitId": "zhXchD"
+          "gitId": "Lingy12"
         },
         "content": "        @Override"
       },
       {
         "lineNumber": 206,
         "author": {
-          "gitId": "zhXchD"
+          "gitId": "Lingy12"
         },
-        "content": "        public boolean hasEntry(Entry entry) {"
+        "content": "        public void setEntry(Entry target, Entry editedEntry) {"
       },
       {
         "lineNumber": 207,
         "author": {
-          "gitId": "zhXchD"
+          "gitId": "Lingy12"
         },
         "content": "            throw new AssertionError(\"This method should not be called.\");"
       },
       {
         "lineNumber": 208,
         "author": {
-          "gitId": "zhXchD"
+          "gitId": "Lingy12"
         },
         "content": "        }"
       },
       {
         "lineNumber": 209,
         "author": {
-          "gitId": "zhXchD"
+          "gitId": "Lingy12"
         },
         "content": ""
       },
@@ -64933,7 +65360,7 @@
         "author": {
           "gitId": "zhXchD"
         },
-        "content": "        public void addEntry(Entry entry) {"
+        "content": "        public boolean hasEntry(Entry entry) {"
       },
       {
         "lineNumber": 212,
@@ -64968,7 +65395,7 @@
         "author": {
           "gitId": "zhXchD"
         },
-        "content": "        public ObservableList\u003cPerson\u003e getFilteredPersonList() {"
+        "content": "        public void addEntry(Entry entry) {"
       },
       {
         "lineNumber": 217,
@@ -65003,7 +65430,7 @@
         "author": {
           "gitId": "zhXchD"
         },
-        "content": "        public ObservableList\u003cEntry\u003e getFilteredEntryList() {"
+        "content": "        public ObservableList\u003cPerson\u003e getFilteredPersonList() {"
       },
       {
         "lineNumber": 222,
@@ -65038,7 +65465,7 @@
         "author": {
           "gitId": "zhXchD"
         },
-        "content": "        public void updateFilteredPersonList(Predicate\u003cPerson\u003e predicate) {"
+        "content": "        public ObservableList\u003cEntry\u003e getFilteredEntryList() {"
       },
       {
         "lineNumber": 227,
@@ -65073,7 +65500,7 @@
         "author": {
           "gitId": "zhXchD"
         },
-        "content": "        public void updateFilteredEntryList(Predicate\u003cEntry\u003e predicate) {"
+        "content": "        public void updateFilteredPersonList(Predicate\u003cPerson\u003e predicate) {"
       },
       {
         "lineNumber": 232,
@@ -65094,84 +65521,84 @@
         "author": {
           "gitId": "zhXchD"
         },
-        "content": "    }"
+        "content": ""
       },
       {
         "lineNumber": 235,
         "author": {
           "gitId": "zhXchD"
         },
-        "content": ""
+        "content": "        @Override"
       },
       {
         "lineNumber": 236,
         "author": {
           "gitId": "zhXchD"
         },
-        "content": "    /**"
+        "content": "        public void updateFilteredEntryList(Predicate\u003cEntry\u003e predicate) {"
       },
       {
         "lineNumber": 237,
         "author": {
           "gitId": "zhXchD"
         },
-        "content": "     * A Model stub that contains a single entry."
+        "content": "            throw new AssertionError(\"This method should not be called.\");"
       },
       {
         "lineNumber": 238,
         "author": {
           "gitId": "zhXchD"
         },
-        "content": "     */"
+        "content": "        }"
       },
       {
         "lineNumber": 239,
         "author": {
-          "gitId": "Lingy12"
+          "gitId": "zhXchD"
         },
-        "content": "    private static class ModelStubWithEntry extends AddJournalEntryCommandTest.ModelStub {"
+        "content": "    }"
       },
       {
         "lineNumber": 240,
         "author": {
           "gitId": "zhXchD"
         },
-        "content": "        private final Entry entry;"
+        "content": ""
       },
       {
         "lineNumber": 241,
         "author": {
           "gitId": "zhXchD"
         },
-        "content": ""
+        "content": "    /**"
       },
       {
         "lineNumber": 242,
         "author": {
           "gitId": "zhXchD"
         },
-        "content": "        ModelStubWithEntry(Entry entry) {"
+        "content": "     * A Model stub that contains a single entry."
       },
       {
         "lineNumber": 243,
         "author": {
           "gitId": "zhXchD"
         },
-        "content": "            requireNonNull(entry);"
+        "content": "     */"
       },
       {
         "lineNumber": 244,
         "author": {
-          "gitId": "zhXchD"
+          "gitId": "Lingy12"
         },
-        "content": "            this.entry \u003d entry;"
+        "content": "    private static class ModelStubWithEntry extends AddJournalEntryCommandTest.ModelStub {"
       },
       {
         "lineNumber": 245,
         "author": {
           "gitId": "zhXchD"
         },
-        "content": "        }"
+        "content": "        private final Entry entry;"
       },
       {
         "lineNumber": 246,
@@ -65185,196 +65612,196 @@
         "author": {
           "gitId": "zhXchD"
         },
-        "content": "        @Override"
+        "content": "        ModelStubWithEntry(Entry entry) {"
       },
       {
         "lineNumber": 248,
         "author": {
           "gitId": "zhXchD"
         },
-        "content": "        public boolean hasEntry(Entry entry) {"
+        "content": "            requireNonNull(entry);"
       },
       {
         "lineNumber": 249,
         "author": {
           "gitId": "zhXchD"
         },
-        "content": "            requireNonNull(entry);"
+        "content": "            this.entry \u003d entry;"
       },
       {
         "lineNumber": 250,
         "author": {
           "gitId": "zhXchD"
         },
-        "content": "            return this.entry.isSameEntry(entry);"
+        "content": "        }"
       },
       {
         "lineNumber": 251,
         "author": {
           "gitId": "zhXchD"
         },
-        "content": "        }"
+        "content": ""
       },
       {
         "lineNumber": 252,
         "author": {
           "gitId": "zhXchD"
         },
-        "content": "    }"
+        "content": "        @Override"
       },
       {
         "lineNumber": 253,
         "author": {
           "gitId": "zhXchD"
         },
-        "content": ""
+        "content": "        public boolean hasEntry(Entry entry) {"
       },
       {
         "lineNumber": 254,
         "author": {
           "gitId": "zhXchD"
         },
-        "content": "    /**"
+        "content": "            requireNonNull(entry);"
       },
       {
         "lineNumber": 255,
         "author": {
           "gitId": "zhXchD"
         },
-        "content": "     * A Model stub that always accept the entry being added."
+        "content": "            return this.entry.isSameEntry(entry);"
       },
       {
         "lineNumber": 256,
         "author": {
           "gitId": "zhXchD"
         },
-        "content": "     */"
+        "content": "        }"
       },
       {
         "lineNumber": 257,
         "author": {
-          "gitId": "Lingy12"
+          "gitId": "zhXchD"
         },
-        "content": "    private static class ModelStubAcceptingEntryAdded extends AddJournalEntryCommandTest.ModelStub {"
+        "content": "    }"
       },
       {
         "lineNumber": 258,
         "author": {
           "gitId": "zhXchD"
         },
-        "content": "        final ArrayList\u003cEntry\u003e entriesAdded \u003d new ArrayList\u003c\u003e();"
+        "content": ""
       },
       {
         "lineNumber": 259,
         "author": {
           "gitId": "zhXchD"
         },
-        "content": ""
+        "content": "    /**"
       },
       {
         "lineNumber": 260,
         "author": {
           "gitId": "zhXchD"
         },
-        "content": "        @Override"
+        "content": "     * A Model stub that always accept the entry being added."
       },
       {
         "lineNumber": 261,
         "author": {
           "gitId": "zhXchD"
         },
-        "content": "        public boolean hasEntry(Entry entry) {"
+        "content": "     */"
       },
       {
         "lineNumber": 262,
         "author": {
-          "gitId": "zhXchD"
+          "gitId": "Lingy12"
         },
-        "content": "            requireNonNull(entry);"
+        "content": "    private static class ModelStubAcceptingEntryAdded extends AddJournalEntryCommandTest.ModelStub {"
       },
       {
         "lineNumber": 263,
         "author": {
           "gitId": "zhXchD"
         },
-        "content": "            return entriesAdded.stream().anyMatch(entry::isSameEntry);"
+        "content": "        final ArrayList\u003cEntry\u003e entriesAdded \u003d new ArrayList\u003c\u003e();"
       },
       {
         "lineNumber": 264,
         "author": {
           "gitId": "zhXchD"
         },
-        "content": "        }"
+        "content": ""
       },
       {
         "lineNumber": 265,
         "author": {
           "gitId": "zhXchD"
         },
-        "content": ""
+        "content": "        @Override"
       },
       {
         "lineNumber": 266,
         "author": {
           "gitId": "zhXchD"
         },
-        "content": "        @Override"
+        "content": "        public boolean hasEntry(Entry entry) {"
       },
       {
         "lineNumber": 267,
         "author": {
           "gitId": "zhXchD"
         },
-        "content": "        public void addEntry(Entry entry) {"
+        "content": "            requireNonNull(entry);"
       },
       {
         "lineNumber": 268,
         "author": {
           "gitId": "zhXchD"
         },
-        "content": "            requireNonNull(entry);"
+        "content": "            return entriesAdded.stream().anyMatch(entry::isSameEntry);"
       },
       {
         "lineNumber": 269,
         "author": {
           "gitId": "zhXchD"
         },
-        "content": "            entriesAdded.add(entry);"
+        "content": "        }"
       },
       {
         "lineNumber": 270,
         "author": {
           "gitId": "zhXchD"
         },
-        "content": "        }"
+        "content": ""
       },
       {
         "lineNumber": 271,
         "author": {
           "gitId": "zhXchD"
         },
-        "content": ""
+        "content": "        @Override"
       },
       {
         "lineNumber": 272,
         "author": {
           "gitId": "zhXchD"
         },
-        "content": "        @Override"
+        "content": "        public void addEntry(Entry entry) {"
       },
       {
         "lineNumber": 273,
         "author": {
           "gitId": "zhXchD"
         },
-        "content": "        public ReadOnlyAddressBook getAddressBook() {"
+        "content": "            requireNonNull(entry);"
       },
       {
         "lineNumber": 274,
         "author": {
           "gitId": "zhXchD"
         },
-        "content": "            return new AddressBook();"
+        "content": "            entriesAdded.add(entry);"
       },
       {
         "lineNumber": 275,
@@ -65388,10 +65815,45 @@
         "author": {
           "gitId": "zhXchD"
         },
-        "content": "    }"
+        "content": ""
       },
       {
         "lineNumber": 277,
+        "author": {
+          "gitId": "zhXchD"
+        },
+        "content": "        @Override"
+      },
+      {
+        "lineNumber": 278,
+        "author": {
+          "gitId": "zhXchD"
+        },
+        "content": "        public ReadOnlyAddressBook getAddressBook() {"
+      },
+      {
+        "lineNumber": 279,
+        "author": {
+          "gitId": "zhXchD"
+        },
+        "content": "            return new AddressBook();"
+      },
+      {
+        "lineNumber": 280,
+        "author": {
+          "gitId": "zhXchD"
+        },
+        "content": "        }"
+      },
+      {
+        "lineNumber": 281,
+        "author": {
+          "gitId": "zhXchD"
+        },
+        "content": "    }"
+      },
+      {
+        "lineNumber": 282,
         "author": {
           "gitId": "zhXchD"
         },
@@ -65400,7 +65862,7 @@
     ],
     "authorContributionMap": {
       "zhXchD": 262,
-      "Lingy12": 15
+      "Lingy12": 20
     }
   },
   {
@@ -93129,371 +93591,371 @@
         "author": {
           "gitId": "Lingy12"
         },
-        "content": ""
+        "content": "import seedu.address.testutil.EntryBuilder;"
       },
       {
         "lineNumber": 21,
         "author": {
           "gitId": "Lingy12"
         },
-        "content": "public class UniqueEntryListTest {"
+        "content": ""
       },
       {
         "lineNumber": 22,
         "author": {
           "gitId": "Lingy12"
         },
-        "content": "    //TODO: Update UniqueEntryTest"
+        "content": "public class UniqueEntryListTest {"
       },
       {
         "lineNumber": 23,
         "author": {
           "gitId": "Lingy12"
         },
-        "content": ""
+        "content": "    //TODO: Update UniqueEntryTest"
       },
       {
         "lineNumber": 24,
         "author": {
           "gitId": "Lingy12"
         },
-        "content": "    private final UniqueEntryList list \u003d new UniqueEntryList();"
+        "content": ""
       },
       {
         "lineNumber": 25,
         "author": {
           "gitId": "Lingy12"
         },
-        "content": ""
+        "content": "    private final UniqueEntryList list \u003d new UniqueEntryList();"
       },
       {
         "lineNumber": 26,
         "author": {
           "gitId": "Lingy12"
         },
-        "content": "    @Nested"
+        "content": ""
       },
       {
         "lineNumber": 27,
         "author": {
           "gitId": "Lingy12"
         },
-        "content": "    @DisplayName(\"contains method\")"
+        "content": "    @Nested"
       },
       {
         "lineNumber": 28,
         "author": {
           "gitId": "Lingy12"
         },
-        "content": "    class Contains {"
+        "content": "    @DisplayName(\"contains method\")"
       },
       {
         "lineNumber": 29,
         "author": {
           "gitId": "Lingy12"
         },
-        "content": ""
+        "content": "    class Contains {"
       },
       {
         "lineNumber": 30,
         "author": {
           "gitId": "Lingy12"
         },
-        "content": "        @Test"
+        "content": ""
       },
       {
         "lineNumber": 31,
         "author": {
           "gitId": "Lingy12"
         },
-        "content": "        @DisplayName(\"Throw NullPointerException when pass in an null entry\")"
+        "content": "        @Test"
       },
       {
         "lineNumber": 32,
         "author": {
           "gitId": "Lingy12"
         },
-        "content": "        void contains_nullInput_throwNullPointerException() {"
+        "content": "        @DisplayName(\"Throw NullPointerException when pass in an null entry\")"
       },
       {
         "lineNumber": 33,
         "author": {
           "gitId": "Lingy12"
         },
-        "content": "            assertThrows(NullPointerException.class, () -\u003e list.contains(null));"
+        "content": "        void contains_nullInput_throwNullPointerException() {"
       },
       {
         "lineNumber": 34,
         "author": {
           "gitId": "Lingy12"
         },
-        "content": "        }"
+        "content": "            assertThrows(NullPointerException.class, () -\u003e list.contains(null));"
       },
       {
         "lineNumber": 35,
         "author": {
           "gitId": "Lingy12"
         },
-        "content": ""
+        "content": "        }"
       },
       {
         "lineNumber": 36,
         "author": {
           "gitId": "Lingy12"
         },
-        "content": "        @Test"
+        "content": ""
       },
       {
         "lineNumber": 37,
         "author": {
           "gitId": "Lingy12"
         },
-        "content": "        @DisplayName(\"Return true when the entry is in the list\")"
+        "content": "        @Test"
       },
       {
         "lineNumber": 38,
         "author": {
           "gitId": "Lingy12"
         },
-        "content": "        void contains_containsEntry_returnTrue() {"
+        "content": "        @DisplayName(\"Return true when the entry is in the list\")"
       },
       {
         "lineNumber": 39,
         "author": {
           "gitId": "Lingy12"
         },
-        "content": "            UniqueEntryList modifiedList \u003d list;"
+        "content": "        void contains_containsEntry_returnTrue() {"
       },
       {
         "lineNumber": 40,
         "author": {
-          "gitId": "joshualiangxy"
+          "gitId": "Lingy12"
         },
-        "content": "            modifiedList.add(TEST_ENTRY_DEFAULT);"
+        "content": "            UniqueEntryList modifiedList \u003d list;"
       },
       {
         "lineNumber": 41,
         "author": {
           "gitId": "joshualiangxy"
         },
-        "content": "            assertTrue(modifiedList.contains(TEST_ENTRY_DEFAULT));"
+        "content": "            modifiedList.add(TEST_ENTRY_DEFAULT);"
       },
       {
         "lineNumber": 42,
         "author": {
-          "gitId": "Lingy12"
+          "gitId": "joshualiangxy"
         },
-        "content": "        }"
+        "content": "            assertTrue(modifiedList.contains(TEST_ENTRY_DEFAULT));"
       },
       {
         "lineNumber": 43,
         "author": {
           "gitId": "Lingy12"
         },
-        "content": ""
+        "content": "        }"
       },
       {
         "lineNumber": 44,
         "author": {
           "gitId": "Lingy12"
         },
-        "content": "        @Test"
+        "content": ""
       },
       {
         "lineNumber": 45,
         "author": {
           "gitId": "Lingy12"
         },
-        "content": "        @DisplayName(\"Return false when the entry is not in the list\")"
+        "content": "        @Test"
       },
       {
         "lineNumber": 46,
         "author": {
           "gitId": "Lingy12"
         },
-        "content": "        void contains_notInList_returnFalse() {"
+        "content": "        @DisplayName(\"Return false when the entry is not in the list\")"
       },
       {
         "lineNumber": 47,
+        "author": {
+          "gitId": "Lingy12"
+        },
+        "content": "        void contains_notInList_returnFalse() {"
+      },
+      {
+        "lineNumber": 48,
         "author": {
           "gitId": "joshualiangxy"
         },
         "content": "            assertFalse(list.contains(TEST_ENTRY_DIFF_DESCRIPTION));"
       },
       {
-        "lineNumber": 48,
-        "author": {
-          "gitId": "Lingy12"
-        },
-        "content": "        }"
-      },
-      {
         "lineNumber": 49,
         "author": {
           "gitId": "Lingy12"
         },
-        "content": "    }"
+        "content": "        }"
       },
       {
         "lineNumber": 50,
         "author": {
           "gitId": "Lingy12"
         },
-        "content": ""
+        "content": "    }"
       },
       {
         "lineNumber": 51,
         "author": {
           "gitId": "Lingy12"
         },
-        "content": "    @Nested"
+        "content": ""
       },
       {
         "lineNumber": 52,
         "author": {
           "gitId": "Lingy12"
         },
-        "content": "    @DisplayName(\"asUnmodifiableList method\")"
+        "content": "    @Nested"
       },
       {
         "lineNumber": 53,
         "author": {
           "gitId": "Lingy12"
         },
-        "content": "    class AsUnmodifiableList {"
+        "content": "    @DisplayName(\"asUnmodifiableList method\")"
       },
       {
         "lineNumber": 54,
         "author": {
           "gitId": "Lingy12"
         },
-        "content": ""
+        "content": "    class AsUnmodifiableList {"
       },
       {
         "lineNumber": 55,
         "author": {
           "gitId": "Lingy12"
         },
-        "content": "        @Test"
+        "content": ""
       },
       {
         "lineNumber": 56,
         "author": {
           "gitId": "Lingy12"
         },
-        "content": "        @DisplayName(\"Should throw unsupportedOperationException when modify the list\")"
+        "content": "        @Test"
       },
       {
         "lineNumber": 57,
         "author": {
           "gitId": "Lingy12"
         },
-        "content": "        void asUnmodifiableList_modify_throwUnsupportedOpertationException() {"
+        "content": "        @DisplayName(\"Should throw unsupportedOperationException when modify the list\")"
       },
       {
         "lineNumber": 58,
         "author": {
           "gitId": "Lingy12"
         },
-        "content": "            assertThrows(UnsupportedOperationException.class, () -\u003e"
+        "content": "        void asUnmodifiableList_modify_throwUnsupportedOpertationException() {"
       },
       {
         "lineNumber": 59,
+        "author": {
+          "gitId": "Lingy12"
+        },
+        "content": "            assertThrows(UnsupportedOperationException.class, () -\u003e"
+      },
+      {
+        "lineNumber": 60,
         "author": {
           "gitId": "joshualiangxy"
         },
         "content": "                    list.asUnmodifiableObservableList().add(TEST_ENTRY_DEFAULT));"
       },
       {
-        "lineNumber": 60,
+        "lineNumber": 61,
         "author": {
           "gitId": "Lingy12"
         },
         "content": "        }"
       },
       {
-        "lineNumber": 61,
+        "lineNumber": 62,
         "author": {
           "gitId": "Lingy12"
         },
         "content": "    }"
       },
       {
-        "lineNumber": 62,
-        "author": {
-          "gitId": "Lingy12"
-        },
-        "content": ""
-      },
-      {
         "lineNumber": 63,
         "author": {
           "gitId": "Lingy12"
         },
-        "content": "    @Nested"
+        "content": ""
       },
       {
         "lineNumber": 64,
         "author": {
           "gitId": "Lingy12"
         },
-        "content": "    @DisplayName(\"add method\")"
+        "content": "    @Nested"
       },
       {
         "lineNumber": 65,
         "author": {
           "gitId": "Lingy12"
         },
-        "content": "    class Add {"
+        "content": "    @DisplayName(\"add method\")"
       },
       {
         "lineNumber": 66,
         "author": {
           "gitId": "Lingy12"
         },
-        "content": ""
+        "content": "    class Add {"
       },
       {
         "lineNumber": 67,
         "author": {
           "gitId": "Lingy12"
         },
-        "content": "        @Test"
+        "content": ""
       },
       {
         "lineNumber": 68,
         "author": {
           "gitId": "Lingy12"
         },
-        "content": "        @DisplayName(\"Should throw DuplicateEntryException if add a duplicate entry\")"
+        "content": "        @Test"
       },
       {
         "lineNumber": 69,
         "author": {
           "gitId": "Lingy12"
         },
-        "content": "        void add_addDuplicate_throwDuplicateEntryException() {"
+        "content": "        @DisplayName(\"Should throw DuplicateEntryException if add a duplicate entry\")"
       },
       {
         "lineNumber": 70,
         "author": {
           "gitId": "Lingy12"
         },
-        "content": "            assertThrows(DuplicateEntryException.class, () -\u003e {"
+        "content": "        void add_addDuplicate_throwDuplicateEntryException() {"
       },
       {
         "lineNumber": 71,
         "author": {
           "gitId": "Lingy12"
         },
-        "content": "                UniqueEntryList list \u003d new UniqueEntryList();"
+        "content": "            assertThrows(DuplicateEntryException.class, () -\u003e {"
       },
       {
         "lineNumber": 72,
         "author": {
-          "gitId": "joshualiangxy"
+          "gitId": "Lingy12"
         },
-        "content": "                list.add(TEST_ENTRY_DEFAULT);"
+        "content": "                UniqueEntryList list \u003d new UniqueEntryList();"
       },
       {
         "lineNumber": 73,
@@ -93505,740 +93967,978 @@
       {
         "lineNumber": 74,
         "author": {
-          "gitId": "Lingy12"
+          "gitId": "joshualiangxy"
         },
-        "content": "            });"
+        "content": "                list.add(TEST_ENTRY_DEFAULT);"
       },
       {
         "lineNumber": 75,
         "author": {
           "gitId": "Lingy12"
         },
-        "content": "        }"
+        "content": "            });"
       },
       {
         "lineNumber": 76,
         "author": {
           "gitId": "Lingy12"
         },
-        "content": ""
+        "content": "        }"
       },
       {
         "lineNumber": 77,
         "author": {
           "gitId": "Lingy12"
         },
-        "content": "        @Test"
+        "content": ""
       },
       {
         "lineNumber": 78,
         "author": {
           "gitId": "Lingy12"
         },
-        "content": "        @DisplayName(\"Should throw NullPointerException if try to add a null\")"
+        "content": "        @Test"
       },
       {
         "lineNumber": 79,
         "author": {
           "gitId": "Lingy12"
         },
-        "content": "        void add_null_throwNullPointerException() {"
+        "content": "        @DisplayName(\"Should throw NullPointerException if try to add a null\")"
       },
       {
         "lineNumber": 80,
         "author": {
           "gitId": "Lingy12"
         },
-        "content": "            assertThrows(NullPointerException.class, () -\u003e list.add(null));"
+        "content": "        void add_null_throwNullPointerException() {"
       },
       {
         "lineNumber": 81,
         "author": {
           "gitId": "Lingy12"
         },
-        "content": "        }"
+        "content": "            assertThrows(NullPointerException.class, () -\u003e list.add(null));"
       },
       {
         "lineNumber": 82,
         "author": {
           "gitId": "Lingy12"
         },
-        "content": "    }"
+        "content": "        }"
       },
       {
         "lineNumber": 83,
         "author": {
           "gitId": "Lingy12"
         },
-        "content": ""
+        "content": "    }"
       },
       {
         "lineNumber": 84,
         "author": {
           "gitId": "Lingy12"
         },
-        "content": "    @Nested"
+        "content": ""
       },
       {
         "lineNumber": 85,
         "author": {
           "gitId": "Lingy12"
         },
-        "content": "    @DisplayName(\"remove method\")"
+        "content": "    @Nested"
       },
       {
         "lineNumber": 86,
         "author": {
           "gitId": "Lingy12"
         },
-        "content": "    class Remove {"
+        "content": "    @DisplayName(\"remove method\")"
       },
       {
         "lineNumber": 87,
         "author": {
           "gitId": "Lingy12"
         },
-        "content": "        @Test"
+        "content": "    class Remove {"
       },
       {
         "lineNumber": 88,
         "author": {
           "gitId": "Lingy12"
         },
-        "content": "        @DisplayName(\"Should throw NullPointerExeption if try to remove a null\")"
+        "content": "        @Test"
       },
       {
         "lineNumber": 89,
         "author": {
           "gitId": "Lingy12"
         },
-        "content": "        void remove_null_throwNullPointerException() {"
+        "content": "        @DisplayName(\"Should throw NullPointerExeption if try to remove a null\")"
       },
       {
         "lineNumber": 90,
         "author": {
           "gitId": "Lingy12"
         },
-        "content": "            assertThrows(NullPointerException.class, () -\u003e list.remove(null));"
+        "content": "        void remove_null_throwNullPointerException() {"
       },
       {
         "lineNumber": 91,
         "author": {
           "gitId": "Lingy12"
         },
-        "content": "        }"
+        "content": "            assertThrows(NullPointerException.class, () -\u003e list.remove(null));"
       },
       {
         "lineNumber": 92,
         "author": {
           "gitId": "Lingy12"
         },
-        "content": ""
+        "content": "        }"
       },
       {
         "lineNumber": 93,
         "author": {
           "gitId": "Lingy12"
         },
-        "content": "        @Test"
+        "content": ""
       },
       {
         "lineNumber": 94,
         "author": {
           "gitId": "Lingy12"
         },
-        "content": "        @DisplayName(\"Should throw EntryNotFoundException if the entry is not in the list\")"
+        "content": "        @Test"
       },
       {
         "lineNumber": 95,
         "author": {
           "gitId": "Lingy12"
         },
-        "content": "        void remove_notInList_throwEntryNotFoundException() {"
+        "content": "        @DisplayName(\"Should throw EntryNotFoundException if the entry is not in the list\")"
       },
       {
         "lineNumber": 96,
         "author": {
-          "gitId": "joshualiangxy"
+          "gitId": "Lingy12"
         },
-        "content": "            assertThrows(EntryNotFoundException.class, () -\u003e list.remove("
+        "content": "        void remove_notInList_throwEntryNotFoundException() {"
       },
       {
         "lineNumber": 97,
         "author": {
           "gitId": "joshualiangxy"
         },
-        "content": "                    TEST_ENTRY_DEFAULT));"
+        "content": "            assertThrows(EntryNotFoundException.class, () -\u003e list.remove("
       },
       {
         "lineNumber": 98,
         "author": {
-          "gitId": "Lingy12"
+          "gitId": "joshualiangxy"
         },
-        "content": "        }"
+        "content": "                    TEST_ENTRY_DEFAULT));"
       },
       {
         "lineNumber": 99,
         "author": {
           "gitId": "Lingy12"
         },
-        "content": ""
+        "content": "        }"
       },
       {
         "lineNumber": 100,
         "author": {
           "gitId": "Lingy12"
         },
-        "content": "        @Test"
+        "content": ""
       },
       {
         "lineNumber": 101,
         "author": {
           "gitId": "Lingy12"
         },
-        "content": "        @DisplayName(\"Should remove the entry if the entry is in the list\")"
+        "content": "        @Test"
       },
       {
         "lineNumber": 102,
         "author": {
           "gitId": "Lingy12"
         },
-        "content": "        void remove_inList_removeEntry() {"
+        "content": "        @DisplayName(\"Should remove the entry if the entry is in the list\")"
       },
       {
         "lineNumber": 103,
         "author": {
           "gitId": "Lingy12"
         },
-        "content": "            UniqueEntryList expectedList \u003d new UniqueEntryList();"
+        "content": "        void remove_inList_removeEntry() {"
       },
       {
         "lineNumber": 104,
         "author": {
-          "gitId": "joshualiangxy"
+          "gitId": "Lingy12"
         },
-        "content": "            list.add(TEST_ENTRY_DEFAULT);"
+        "content": "            UniqueEntryList expectedList \u003d new UniqueEntryList();"
       },
       {
         "lineNumber": 105,
         "author": {
           "gitId": "joshualiangxy"
         },
-        "content": "            list.remove(TEST_ENTRY_DEFAULT);"
+        "content": "            list.add(TEST_ENTRY_DEFAULT);"
       },
       {
         "lineNumber": 106,
         "author": {
-          "gitId": "Lingy12"
+          "gitId": "joshualiangxy"
         },
-        "content": "            assertEquals(expectedList, list);"
+        "content": "            list.remove(TEST_ENTRY_DEFAULT);"
       },
       {
         "lineNumber": 107,
         "author": {
           "gitId": "Lingy12"
         },
-        "content": "        }"
+        "content": "            assertEquals(expectedList, list);"
       },
       {
         "lineNumber": 108,
         "author": {
           "gitId": "Lingy12"
         },
-        "content": "    }"
+        "content": "        }"
       },
       {
         "lineNumber": 109,
         "author": {
           "gitId": "Lingy12"
         },
-        "content": ""
+        "content": "    }"
       },
       {
         "lineNumber": 110,
         "author": {
           "gitId": "Lingy12"
         },
-        "content": "    @Nested"
+        "content": ""
       },
       {
         "lineNumber": 111,
         "author": {
           "gitId": "Lingy12"
         },
-        "content": "    @DisplayName(\"setEntries method\")"
+        "content": "    @Nested"
       },
       {
         "lineNumber": 112,
         "author": {
           "gitId": "Lingy12"
         },
-        "content": "    class SetEntries {"
+        "content": "    @DisplayName(\"setEntries method\")"
       },
       {
         "lineNumber": 113,
         "author": {
           "gitId": "Lingy12"
         },
-        "content": "        @Test"
+        "content": "    class SetEntries {"
       },
       {
         "lineNumber": 114,
         "author": {
           "gitId": "Lingy12"
         },
-        "content": "        @DisplayName(\"throw nullPointerException if pass in a null list\")"
+        "content": "        @Test"
       },
       {
         "lineNumber": 115,
         "author": {
           "gitId": "Lingy12"
         },
-        "content": "        void setEntries_null_throwNullPointerException() {"
+        "content": "        @DisplayName(\"throw nullPointerException if pass in a null list\")"
       },
       {
         "lineNumber": 116,
         "author": {
           "gitId": "Lingy12"
         },
-        "content": "            assertThrows(NullPointerException.class, () -\u003e list.setEntries(null));"
+        "content": "        void setEntries_null_throwNullPointerException() {"
       },
       {
         "lineNumber": 117,
         "author": {
           "gitId": "Lingy12"
         },
-        "content": "        }"
+        "content": "            assertThrows(NullPointerException.class, () -\u003e list.setEntries(null));"
       },
       {
         "lineNumber": 118,
         "author": {
           "gitId": "Lingy12"
         },
-        "content": ""
+        "content": "        }"
       },
       {
         "lineNumber": 119,
         "author": {
           "gitId": "Lingy12"
         },
-        "content": "        @Test"
+        "content": ""
       },
       {
         "lineNumber": 120,
         "author": {
           "gitId": "Lingy12"
         },
-        "content": "        @DisplayName(\"set entry according to the list given\")"
+        "content": "        @Test"
       },
       {
         "lineNumber": 121,
         "author": {
           "gitId": "Lingy12"
         },
-        "content": "        void setEntries_validList_setEntriesSuccess() {"
+        "content": "        @DisplayName(\"set entry according to the list given\")"
       },
       {
         "lineNumber": 122,
         "author": {
           "gitId": "Lingy12"
         },
-        "content": "            List\u003cEntry\u003e testList \u003d new LinkedList\u003c\u003e();"
+        "content": "        void setEntries_validList_setEntriesSuccess() {"
       },
       {
         "lineNumber": 123,
         "author": {
-          "gitId": "joshualiangxy"
+          "gitId": "Lingy12"
         },
-        "content": "            testList.add(TEST_ENTRY_DEFAULT);"
+        "content": "            List\u003cEntry\u003e testList \u003d new LinkedList\u003c\u003e();"
       },
       {
         "lineNumber": 124,
         "author": {
           "gitId": "joshualiangxy"
         },
-        "content": "            testList.add(TEST_ENTRY_DIFF_TITLE);"
+        "content": "            testList.add(TEST_ENTRY_DEFAULT);"
       },
       {
         "lineNumber": 125,
         "author": {
-          "gitId": "Lingy12"
+          "gitId": "joshualiangxy"
         },
-        "content": "            list.setEntries(testList);"
+        "content": "            testList.add(TEST_ENTRY_DIFF_TITLE);"
       },
       {
         "lineNumber": 126,
         "author": {
           "gitId": "Lingy12"
         },
-        "content": "            UniqueEntryList expectedList \u003d new UniqueEntryList();"
+        "content": "            list.setEntries(testList);"
       },
       {
         "lineNumber": 127,
         "author": {
-          "gitId": "joshualiangxy"
+          "gitId": "Lingy12"
         },
-        "content": "            expectedList.add(TEST_ENTRY_DEFAULT);"
+        "content": "            UniqueEntryList expectedList \u003d new UniqueEntryList();"
       },
       {
         "lineNumber": 128,
         "author": {
           "gitId": "joshualiangxy"
         },
-        "content": "            expectedList.add(TEST_ENTRY_DIFF_TITLE);"
+        "content": "            expectedList.add(TEST_ENTRY_DEFAULT);"
       },
       {
         "lineNumber": 129,
         "author": {
-          "gitId": "Lingy12"
+          "gitId": "joshualiangxy"
         },
-        "content": "            assertEquals(expectedList, list);"
+        "content": "            expectedList.add(TEST_ENTRY_DIFF_TITLE);"
       },
       {
         "lineNumber": 130,
         "author": {
           "gitId": "Lingy12"
         },
-        "content": "        }"
+        "content": "            assertEquals(expectedList, list);"
       },
       {
         "lineNumber": 131,
         "author": {
           "gitId": "Lingy12"
         },
-        "content": "    }"
+        "content": "        }"
       },
       {
         "lineNumber": 132,
         "author": {
           "gitId": "Lingy12"
         },
-        "content": ""
+        "content": "    }"
       },
       {
         "lineNumber": 133,
         "author": {
           "gitId": "Lingy12"
         },
-        "content": "    @Nested"
+        "content": ""
       },
       {
         "lineNumber": 134,
         "author": {
           "gitId": "Lingy12"
         },
-        "content": "    @DisplayName(\"iterator method\")"
+        "content": "    @Nested"
       },
       {
         "lineNumber": 135,
         "author": {
           "gitId": "Lingy12"
         },
-        "content": "    class Iterator {"
+        "content": "    @DisplayName(\"iterator method\")"
       },
       {
         "lineNumber": 136,
         "author": {
           "gitId": "Lingy12"
         },
-        "content": "        @Test"
+        "content": "    class Iterator {"
       },
       {
         "lineNumber": 137,
         "author": {
           "gitId": "Lingy12"
         },
-        "content": "        @DisplayName(\"Return a interator contains all element in the lsit\")"
+        "content": "        @Test"
       },
       {
         "lineNumber": 138,
         "author": {
           "gitId": "Lingy12"
         },
-        "content": "        void iterator_contains_allElementsInList() {"
+        "content": "        @DisplayName(\"Return a interator contains all element in the lsit\")"
       },
       {
         "lineNumber": 139,
         "author": {
-          "gitId": "joshualiangxy"
+          "gitId": "Lingy12"
         },
-        "content": "            list.add(TEST_ENTRY_DEFAULT);"
+        "content": "        void iterator_contains_allElementsInList() {"
       },
       {
         "lineNumber": 140,
         "author": {
           "gitId": "joshualiangxy"
         },
-        "content": "            list.add(TEST_ENTRY_DIFF_DESCRIPTION);"
+        "content": "            list.add(TEST_ENTRY_DEFAULT);"
       },
       {
         "lineNumber": 141,
         "author": {
-          "gitId": "Lingy12"
+          "gitId": "joshualiangxy"
         },
-        "content": "            for (java.util.Iterator\u003cEntry\u003e it \u003d list.iterator(); it.hasNext(); ) {"
+        "content": "            list.add(TEST_ENTRY_DIFF_DESCRIPTION);"
       },
       {
         "lineNumber": 142,
         "author": {
           "gitId": "Lingy12"
         },
-        "content": "                Entry e \u003d it.next();"
+        "content": "            for (java.util.Iterator\u003cEntry\u003e it \u003d list.iterator(); it.hasNext(); ) {"
       },
       {
         "lineNumber": 143,
         "author": {
           "gitId": "Lingy12"
         },
-        "content": "                assertTrue(list.contains(e));"
+        "content": "                Entry e \u003d it.next();"
       },
       {
         "lineNumber": 144,
         "author": {
           "gitId": "Lingy12"
         },
-        "content": "            }"
+        "content": "                assertTrue(list.contains(e));"
       },
       {
         "lineNumber": 145,
         "author": {
           "gitId": "Lingy12"
         },
-        "content": "        }"
+        "content": "            }"
       },
       {
         "lineNumber": 146,
         "author": {
           "gitId": "Lingy12"
         },
-        "content": "    }"
+        "content": "        }"
       },
       {
         "lineNumber": 147,
         "author": {
           "gitId": "Lingy12"
         },
-        "content": ""
+        "content": "    }"
       },
       {
         "lineNumber": 148,
         "author": {
           "gitId": "Lingy12"
         },
-        "content": "    @Nested"
+        "content": ""
       },
       {
         "lineNumber": 149,
         "author": {
           "gitId": "Lingy12"
         },
-        "content": "    @DisplayName(\"Equals method\")"
+        "content": "    @Nested"
       },
       {
         "lineNumber": 150,
         "author": {
           "gitId": "Lingy12"
         },
-        "content": "    class Equals {"
+        "content": "    @DisplayName(\"Equals method\")"
       },
       {
         "lineNumber": 151,
         "author": {
           "gitId": "Lingy12"
         },
-        "content": ""
+        "content": "    class Equals {"
       },
       {
         "lineNumber": 152,
         "author": {
           "gitId": "Lingy12"
         },
-        "content": "        private final UniqueEntryList list \u003d new UniqueEntryList();"
+        "content": ""
       },
       {
         "lineNumber": 153,
         "author": {
           "gitId": "Lingy12"
         },
-        "content": ""
+        "content": "        private final UniqueEntryList list \u003d new UniqueEntryList();"
       },
       {
         "lineNumber": 154,
         "author": {
           "gitId": "Lingy12"
         },
-        "content": "        @Test"
+        "content": ""
       },
       {
         "lineNumber": 155,
         "author": {
           "gitId": "Lingy12"
         },
-        "content": "        @DisplayName(\"Should return true when the same object\")"
+        "content": "        @Test"
       },
       {
         "lineNumber": 156,
         "author": {
           "gitId": "Lingy12"
         },
-        "content": "        void equals_sameObject_true() {"
+        "content": "        @DisplayName(\"Should return true when the same object\")"
       },
       {
         "lineNumber": 157,
         "author": {
           "gitId": "Lingy12"
         },
-        "content": "            assertTrue(list.equals(list));"
+        "content": "        void equals_sameObject_true() {"
       },
       {
         "lineNumber": 158,
         "author": {
           "gitId": "Lingy12"
         },
-        "content": "        }"
+        "content": "            assertTrue(list.equals(list));"
       },
       {
         "lineNumber": 159,
         "author": {
           "gitId": "Lingy12"
         },
-        "content": ""
+        "content": "        }"
       },
       {
         "lineNumber": 160,
         "author": {
           "gitId": "Lingy12"
         },
-        "content": "        @Test"
+        "content": ""
       },
       {
         "lineNumber": 161,
         "author": {
           "gitId": "Lingy12"
         },
-        "content": "        @DisplayName(\"Should return true when the content is the same\")"
+        "content": "        @Test"
       },
       {
         "lineNumber": 162,
         "author": {
           "gitId": "Lingy12"
         },
-        "content": "        void equals_true_sameContent() {"
+        "content": "        @DisplayName(\"Should return true when the content is the same\")"
       },
       {
         "lineNumber": 163,
         "author": {
-          "gitId": "joshualiangxy"
+          "gitId": "Lingy12"
         },
-        "content": "            list.add(TEST_ENTRY_DEFAULT);"
+        "content": "        void equals_true_sameContent() {"
       },
       {
         "lineNumber": 164,
         "author": {
           "gitId": "joshualiangxy"
         },
-        "content": "            list.add(TEST_ENTRY_DIFF_DESCRIPTION);"
+        "content": "            list.add(TEST_ENTRY_DEFAULT);"
       },
       {
         "lineNumber": 165,
         "author": {
-          "gitId": "Lingy12"
+          "gitId": "joshualiangxy"
         },
-        "content": "            UniqueEntryList testList \u003d new UniqueEntryList();"
+        "content": "            list.add(TEST_ENTRY_DIFF_DESCRIPTION);"
       },
       {
         "lineNumber": 166,
         "author": {
-          "gitId": "joshualiangxy"
+          "gitId": "Lingy12"
         },
-        "content": "            testList.add(TEST_ENTRY_DEFAULT);"
+        "content": "            UniqueEntryList testList \u003d new UniqueEntryList();"
       },
       {
         "lineNumber": 167,
         "author": {
           "gitId": "joshualiangxy"
         },
-        "content": "            testList.add(TEST_ENTRY_DIFF_DESCRIPTION);"
+        "content": "            testList.add(TEST_ENTRY_DEFAULT);"
       },
       {
         "lineNumber": 168,
         "author": {
-          "gitId": "Lingy12"
+          "gitId": "joshualiangxy"
         },
-        "content": "            assertTrue(testList.equals(list));"
+        "content": "            testList.add(TEST_ENTRY_DIFF_DESCRIPTION);"
       },
       {
         "lineNumber": 169,
         "author": {
           "gitId": "Lingy12"
         },
-        "content": "        }"
+        "content": "            assertTrue(testList.equals(list));"
       },
       {
         "lineNumber": 170,
         "author": {
           "gitId": "Lingy12"
         },
-        "content": ""
+        "content": "        }"
       },
       {
         "lineNumber": 171,
         "author": {
           "gitId": "Lingy12"
         },
-        "content": "        @Test"
+        "content": ""
       },
       {
         "lineNumber": 172,
         "author": {
           "gitId": "Lingy12"
         },
-        "content": "        @DisplayName(\"SHould return false when the content is not the same\")"
+        "content": "        @Test"
       },
       {
         "lineNumber": 173,
         "author": {
           "gitId": "Lingy12"
         },
-        "content": "        void equals_diffContent_false() {"
+        "content": "        @DisplayName(\"SHould return false when the content is not the same\")"
       },
       {
         "lineNumber": 174,
+        "author": {
+          "gitId": "Lingy12"
+        },
+        "content": "        void equals_diffContent_false() {"
+      },
+      {
+        "lineNumber": 175,
         "author": {
           "gitId": "joshualiangxy"
         },
         "content": "            list.add(TEST_ENTRY_DEFAULT);"
       },
       {
-        "lineNumber": 175,
+        "lineNumber": 176,
         "author": {
           "gitId": "Lingy12"
         },
         "content": "            UniqueEntryList testList \u003d new UniqueEntryList();"
       },
       {
-        "lineNumber": 176,
+        "lineNumber": 177,
         "author": {
           "gitId": "Lingy12"
         },
         "content": "            assertFalse(testList.equals(list));"
       },
       {
-        "lineNumber": 177,
+        "lineNumber": 178,
         "author": {
           "gitId": "Lingy12"
         },
         "content": "        }"
       },
       {
-        "lineNumber": 178,
+        "lineNumber": 179,
         "author": {
           "gitId": "Lingy12"
         },
         "content": "    }"
       },
       {
-        "lineNumber": 179,
+        "lineNumber": 180,
+        "author": {
+          "gitId": "Lingy12"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 181,
+        "author": {
+          "gitId": "Lingy12"
+        },
+        "content": "    @Nested"
+      },
+      {
+        "lineNumber": 182,
+        "author": {
+          "gitId": "Lingy12"
+        },
+        "content": "    @DisplayName(\"setEntry method\")"
+      },
+      {
+        "lineNumber": 183,
+        "author": {
+          "gitId": "Lingy12"
+        },
+        "content": "    class SetEntry {"
+      },
+      {
+        "lineNumber": 184,
+        "author": {
+          "gitId": "Lingy12"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 185,
+        "author": {
+          "gitId": "Lingy12"
+        },
+        "content": "        private final UniqueEntryList list \u003d new UniqueEntryList();"
+      },
+      {
+        "lineNumber": 186,
+        "author": {
+          "gitId": "Lingy12"
+        },
+        "content": "        private final Entry sampleEntry1 \u003d new EntryBuilder().build();"
+      },
+      {
+        "lineNumber": 187,
+        "author": {
+          "gitId": "Lingy12"
+        },
+        "content": "        private final Entry sampleEntry2 \u003d new EntryBuilder().withTitle(\"Dummy title\").build();"
+      },
+      {
+        "lineNumber": 188,
+        "author": {
+          "gitId": "Lingy12"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 189,
+        "author": {
+          "gitId": "Lingy12"
+        },
+        "content": "        @Test"
+      },
+      {
+        "lineNumber": 190,
+        "author": {
+          "gitId": "Lingy12"
+        },
+        "content": "        @DisplayName(\"Should the replace the entry if the edited entry is valid.\")"
+      },
+      {
+        "lineNumber": 191,
+        "author": {
+          "gitId": "Lingy12"
+        },
+        "content": "        void setEntry_success_replaceEntry() {"
+      },
+      {
+        "lineNumber": 192,
+        "author": {
+          "gitId": "Lingy12"
+        },
+        "content": "            list.add(sampleEntry1);"
+      },
+      {
+        "lineNumber": 193,
+        "author": {
+          "gitId": "Lingy12"
+        },
+        "content": "            assertTrue(list.contains(sampleEntry1));"
+      },
+      {
+        "lineNumber": 194,
+        "author": {
+          "gitId": "Lingy12"
+        },
+        "content": "            list.setEntry(sampleEntry1, sampleEntry2);"
+      },
+      {
+        "lineNumber": 195,
+        "author": {
+          "gitId": "Lingy12"
+        },
+        "content": "            assertTrue(list.contains(sampleEntry2));"
+      },
+      {
+        "lineNumber": 196,
+        "author": {
+          "gitId": "Lingy12"
+        },
+        "content": "            assertFalse(list.contains(sampleEntry1));"
+      },
+      {
+        "lineNumber": 197,
+        "author": {
+          "gitId": "Lingy12"
+        },
+        "content": "        }"
+      },
+      {
+        "lineNumber": 198,
+        "author": {
+          "gitId": "Lingy12"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 199,
+        "author": {
+          "gitId": "Lingy12"
+        },
+        "content": "        @Test"
+      },
+      {
+        "lineNumber": 200,
+        "author": {
+          "gitId": "Lingy12"
+        },
+        "content": "        @DisplayName(\"Should throw EntryNotFoundException if the target is not in list\")"
+      },
+      {
+        "lineNumber": 201,
+        "author": {
+          "gitId": "Lingy12"
+        },
+        "content": "        void setEntry_notInList_throwsEntryNotFoundException() {"
+      },
+      {
+        "lineNumber": 202,
+        "author": {
+          "gitId": "Lingy12"
+        },
+        "content": "            assertThrows(EntryNotFoundException.class, () -\u003e list.setEntry(sampleEntry1, sampleEntry2));"
+      },
+      {
+        "lineNumber": 203,
+        "author": {
+          "gitId": "Lingy12"
+        },
+        "content": "        }"
+      },
+      {
+        "lineNumber": 204,
+        "author": {
+          "gitId": "Lingy12"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 205,
+        "author": {
+          "gitId": "Lingy12"
+        },
+        "content": "        @Test"
+      },
+      {
+        "lineNumber": 206,
+        "author": {
+          "gitId": "Lingy12"
+        },
+        "content": "        @DisplayName(\"Should throw DuplicateEntryException if the entry is in the list\")"
+      },
+      {
+        "lineNumber": 207,
+        "author": {
+          "gitId": "Lingy12"
+        },
+        "content": "        void setEntry_editedEntryInList_throwsDuplicateEntryException() {"
+      },
+      {
+        "lineNumber": 208,
+        "author": {
+          "gitId": "Lingy12"
+        },
+        "content": "            list.add(sampleEntry1);"
+      },
+      {
+        "lineNumber": 209,
+        "author": {
+          "gitId": "Lingy12"
+        },
+        "content": "            list.add(sampleEntry2);"
+      },
+      {
+        "lineNumber": 210,
+        "author": {
+          "gitId": "Lingy12"
+        },
+        "content": "            assertThrows(DuplicateEntryException.class, () -\u003e list.setEntry(sampleEntry1, sampleEntry2));"
+      },
+      {
+        "lineNumber": 211,
+        "author": {
+          "gitId": "Lingy12"
+        },
+        "content": "        }"
+      },
+      {
+        "lineNumber": 212,
+        "author": {
+          "gitId": "Lingy12"
+        },
+        "content": "    }"
+      },
+      {
+        "lineNumber": 213,
         "author": {
           "gitId": "Lingy12"
         },
@@ -94247,7 +94947,7 @@
     ],
     "authorContributionMap": {
       "joshualiangxy": 24,
-      "Lingy12": 155
+      "Lingy12": 189
     }
   },
   {

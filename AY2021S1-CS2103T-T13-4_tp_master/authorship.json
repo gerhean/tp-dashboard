@@ -2046,541 +2046,541 @@
       {
         "lineNumber": 136,
         "author": {
-          "gitId": "-"
+          "gitId": "Ziyang-98"
         },
-        "content": "### \\[Proposed\\] Undo/redo feature"
+        "content": "### Edit account feature"
       },
       {
         "lineNumber": 137,
         "author": {
-          "gitId": "-"
+          "gitId": "Ziyang-98"
         },
         "content": ""
       },
       {
         "lineNumber": 138,
         "author": {
-          "gitId": "-"
+          "gitId": "Ziyang-98"
         },
-        "content": "#### Proposed Implementation"
+        "content": "#### Implementation"
       },
       {
         "lineNumber": 139,
         "author": {
-          "gitId": "-"
+          "gitId": "Ziyang-98"
         },
-        "content": ""
+        "content": "The proposed edit account mechanism is facilitated by `EditAccountCommand`. It extends `Command` and is identified by"
       },
       {
         "lineNumber": 140,
         "author": {
-          "gitId": "-"
+          "gitId": "Ziyang-98"
         },
-        "content": "The proposed undo/redo mechanism is facilitated by `VersionedAddressBook`. It extends `AddressBook` with an undo/redo history, stored internally as an `addressBookStateList` and `currentStatePointer`. Additionally, it implements the following operations:"
+        "content": "\u0027CommonCentsParser\u0027 and `EditAccountCommandParser`. The `EditAccountCommand` interacts with `Account` and the interaction"
       },
       {
         "lineNumber": 141,
         "author": {
-          "gitId": "-"
+          "gitId": "Ziyang-98"
         },
-        "content": ""
+        "content": "is managed by `ActiveAccount` as well as the `Model`. As such, it implements the following operation:"
       },
       {
         "lineNumber": 142,
         "author": {
-          "gitId": "-"
+          "gitId": "Ziyang-98"
         },
-        "content": "* `VersionedAddressBook#commit()` — Saves the current address book state in its history."
+        "content": ""
       },
       {
         "lineNumber": 143,
         "author": {
-          "gitId": "-"
+          "gitId": "Ziyang-98"
         },
-        "content": "* `VersionedAddressBook#undo()` — Restores the previous address book state from its history."
+        "content": "* `Account#setName(Name editedName)` — Sets the name of the account"
       },
       {
         "lineNumber": 144,
         "author": {
-          "gitId": "-"
+          "gitId": "Ziyang-98"
         },
-        "content": "* `VersionedAddressBook#redo()` — Restores a previously undone address book state from its history."
+        "content": ""
       },
       {
         "lineNumber": 145,
         "author": {
-          "gitId": "-"
+          "gitId": "Ziyang-98"
         },
-        "content": ""
+        "content": "The operation is exposed in the `ActiveAccount` interface as `ActiveAccount#setName()`."
       },
       {
         "lineNumber": 146,
         "author": {
-          "gitId": "-"
+          "gitId": "Ziyang-98"
         },
-        "content": "These operations are exposed in the `Model` interface as `Model#commitAddressBook()`, `Model#undoAddressBook()` and `Model#redoAddressBook()` respectively."
+        "content": ""
       },
       {
         "lineNumber": 147,
         "author": {
-          "gitId": "-"
+          "gitId": "Ziyang-98"
         },
-        "content": ""
+        "content": "Given below is an example usage scenario and how the edit account mechanism behaves at each step."
       },
       {
         "lineNumber": 148,
         "author": {
-          "gitId": "-"
-        },
-        "content": "Given below is an example usage scenario and how the undo/redo mechanism behaves at each step."
-      },
-      {
-        "lineNumber": 149,
-        "author": {
-          "gitId": "-"
+          "gitId": "Ziyang-98"
         },
         "content": ""
       },
       {
+        "lineNumber": 149,
+        "author": {
+          "gitId": "Ziyang-98"
+        },
+        "content": "Step 1. The user inputs the edit command to edit the current account in `ActiveAccount`. `CommonCentsParser` identifies"
+      },
+      {
         "lineNumber": 150,
         "author": {
-          "gitId": "-"
+          "gitId": "Ziyang-98"
         },
-        "content": "Step 1. The user launches the application for the first time. The `VersionedAddressBook` will be initialized with the initial address book state, and the `currentStatePointer` pointing to that single address book state."
+        "content": "the command word and calls `EditCommandParser#parse(String args)` to parse the input into a valid `EditAccountCommand`"
       },
       {
         "lineNumber": 151,
         "author": {
-          "gitId": "-"
+          "gitId": "Ziyang-98"
         },
         "content": ""
       },
       {
         "lineNumber": 152,
         "author": {
-          "gitId": "-"
+          "gitId": "Ziyang-98"
         },
-        "content": "![UndoRedoState0](images/UndoRedoState0.png)"
+        "content": "Step 2. `EditAccountCommand` starts to be executed. In the execution, the current account, namely `previousAccount`"
       },
       {
         "lineNumber": 153,
         "author": {
-          "gitId": "-"
+          "gitId": "Ziyang-98"
         },
-        "content": ""
+        "content": "in `ActiveAccount` is retrieved."
       },
       {
         "lineNumber": 154,
         "author": {
-          "gitId": "-"
-        },
-        "content": "Step 2. The user executes `delete 5` command to delete the 5th person in the address book. The `delete` command calls `Model#commitAddressBook()`, causing the modified state of the address book after the `delete 5` command executes to be saved in the `addressBookStateList`, and the `currentStatePointer` is shifted to the newly inserted address book state."
-      },
-      {
-        "lineNumber": 155,
-        "author": {
-          "gitId": "-"
+          "gitId": "Ziyang-98"
         },
         "content": ""
       },
       {
+        "lineNumber": 155,
+        "author": {
+          "gitId": "Ziyang-98"
+        },
+        "content": "Step 3. `ActiveAccount#setName(Name editedName)` is called with the edited name to replace the name of the current"
+      },
+      {
         "lineNumber": 156,
         "author": {
-          "gitId": "-"
+          "gitId": "Ziyang-98"
         },
-        "content": "![UndoRedoState1](images/UndoRedoState1.png)"
+        "content": "account in `ActiveAccount`."
       },
       {
         "lineNumber": 157,
         "author": {
-          "gitId": "-"
+          "gitId": "Ziyang-98"
         },
         "content": ""
       },
       {
         "lineNumber": 158,
         "author": {
-          "gitId": "-"
+          "gitId": "Ziyang-98"
         },
-        "content": "Step 3. The user executes `add n/David …​` to add a new person. The `add` command also calls `Model#commitAddressBook()`, causing another modified address book state to be saved into the `addressBookStateList`."
+        "content": "Step 4. The updated account, namely `newAccount`, in `ActiveAccount` is retrieved."
       },
       {
         "lineNumber": 159,
         "author": {
-          "gitId": "-"
+          "gitId": "Ziyang-98"
         },
         "content": ""
       },
       {
         "lineNumber": 160,
         "author": {
-          "gitId": "-"
+          "gitId": "Ziyang-98"
         },
-        "content": "![UndoRedoState2](images/UndoRedoState2.png)"
+        "content": "Step 5. `Model#setAccount(Account target, Account editedAccount)` is called with `previousAccount` as `target`, and"
       },
       {
         "lineNumber": 161,
         "author": {
-          "gitId": "-"
+          "gitId": "Ziyang-98"
         },
-        "content": ""
+        "content": "`newAccount` as `editedAccount`. This is to replace the to-be-edited account in the Model with the edited account."
       },
       {
         "lineNumber": 162,
         "author": {
-          "gitId": "-"
+          "gitId": "Ziyang-98"
         },
-        "content": "\u003cdiv markdown\u003d\"span\" class\u003d\"alert alert-info\"\u003e:information_source: **Note:** If a command fails its execution, it will not call `Model#commitAddressBook()`, so the address book state will not be saved into the `addressBookStateList`."
+        "content": ""
       },
       {
         "lineNumber": 163,
         "author": {
-          "gitId": "-"
+          "gitId": "Ziyang-98"
         },
-        "content": ""
+        "content": "The following sequence diagram shows how an edit account operation works:"
       },
       {
         "lineNumber": 164,
         "author": {
-          "gitId": "-"
+          "gitId": "Ziyang-98"
         },
-        "content": "\u003c/div\u003e"
+        "content": ""
       },
       {
         "lineNumber": 165,
         "author": {
-          "gitId": "-"
+          "gitId": "Ziyang-98"
         },
-        "content": ""
+        "content": "![EditAccountSequenceDiagram](images/EditAccountSequenceDiagram.png)"
       },
       {
         "lineNumber": 166,
         "author": {
-          "gitId": "-"
+          "gitId": "Ziyang-98"
         },
-        "content": "Step 4. The user now decides that adding the person was a mistake, and decides to undo that action by executing the `undo` command. The `undo` command will call `Model#undoAddressBook()`, which will shift the `currentStatePointer` once to the left, pointing it to the previous address book state, and restores the address book to that state."
+        "content": ""
       },
       {
         "lineNumber": 167,
         "author": {
-          "gitId": "-"
+          "gitId": "Ziyang-98"
         },
-        "content": ""
+        "content": "\u003cdiv markdown\u003d\"span\" class\u003d\"alert alert-info\"\u003e:information_source: **Note:** Some of the interactions with the utility classes,"
       },
       {
         "lineNumber": 168,
         "author": {
-          "gitId": "-"
+          "gitId": "Ziyang-98"
         },
-        "content": "![UndoRedoState3](images/UndoRedoState3.png)"
+        "content": "such as `CommandResult` and `Storage` are left out of the sequence diagram as their roles are not significant in the execution"
       },
       {
         "lineNumber": 169,
         "author": {
-          "gitId": "-"
+          "gitId": "Ziyang-98"
         },
-        "content": ""
+        "content": "of the edit account command."
       },
       {
         "lineNumber": 170,
         "author": {
-          "gitId": "-"
-        },
-        "content": "\u003cdiv markdown\u003d\"span\" class\u003d\"alert alert-info\"\u003e:information_source: **Note:** If the `currentStatePointer` is at index 0, pointing to the initial AddressBook state, then there are no previous AddressBook states to restore. The `undo` command uses `Model#canUndoAddressBook()` to check if this is the case. If so, it will return an error to the user rather"
-      },
-      {
-        "lineNumber": 171,
-        "author": {
-          "gitId": "-"
-        },
-        "content": "than attempting to perform the undo."
-      },
-      {
-        "lineNumber": 172,
-        "author": {
-          "gitId": "-"
-        },
-        "content": ""
-      },
-      {
-        "lineNumber": 173,
-        "author": {
-          "gitId": "-"
+          "gitId": "Ziyang-98"
         },
         "content": "\u003c/div\u003e"
       },
       {
-        "lineNumber": 174,
+        "lineNumber": 171,
         "author": {
-          "gitId": "-"
+          "gitId": "Ziyang-98"
         },
         "content": ""
       },
       {
+        "lineNumber": 172,
+        "author": {
+          "gitId": "Ziyang-98"
+        },
+        "content": "The following activity diagram summarizes what happens when a user executes a new command:"
+      },
+      {
+        "lineNumber": 173,
+        "author": {
+          "gitId": "Ziyang-98"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 174,
+        "author": {
+          "gitId": "Ziyang-98"
+        },
+        "content": "![EditAccountActivityDiagram](images/EditAccountActivityDiagram.png)"
+      },
+      {
         "lineNumber": 175,
         "author": {
-          "gitId": "-"
+          "gitId": "Ziyang-98"
         },
-        "content": "The following sequence diagram shows how the undo operation works:"
+        "content": ""
       },
       {
         "lineNumber": 176,
         "author": {
-          "gitId": "-"
+          "gitId": "Ziyang-98"
         },
         "content": ""
       },
       {
         "lineNumber": 177,
         "author": {
-          "gitId": "-"
+          "gitId": "Ziyang-98"
         },
-        "content": "![UndoSequenceDiagram](images/UndoSequenceDiagram.png)"
+        "content": "#### Design consideration:"
       },
       {
         "lineNumber": 178,
         "author": {
-          "gitId": "-"
+          "gitId": "Ziyang-98"
         },
         "content": ""
       },
       {
         "lineNumber": 179,
         "author": {
-          "gitId": "-"
+          "gitId": "Ziyang-98"
         },
-        "content": "\u003cdiv markdown\u003d\"span\" class\u003d\"alert alert-info\"\u003e:information_source: **Note:** The lifeline for `UndoCommand` should end at the destroy marker (X) but due to a limitation of PlantUML, the lifeline reaches the end of diagram."
+        "content": "##### Aspect: How does edit account executes:"
       },
       {
         "lineNumber": 180,
         "author": {
-          "gitId": "-"
+          "gitId": "Ziyang-98"
         },
         "content": ""
       },
       {
         "lineNumber": 181,
         "author": {
-          "gitId": "-"
+          "gitId": "Ziyang-98"
         },
-        "content": "\u003c/div\u003e"
+        "content": "* **Alternative 1 (current choice):** Accounts can only be edited if they are active."
       },
       {
         "lineNumber": 182,
         "author": {
-          "gitId": "-"
+          "gitId": "Ziyang-98"
         },
-        "content": ""
+        "content": "  * Pros: Easy to implement."
       },
       {
         "lineNumber": 183,
         "author": {
-          "gitId": "-"
+          "gitId": "Ziyang-98"
         },
-        "content": "The `redo` command does the opposite — it calls `Model#redoAddressBook()`, which shifts the `currentStatePointer` once to the right, pointing to the previously undone state, and restores the address book to that state."
+        "content": "  * Cons: Less flexibility for user."
       },
       {
         "lineNumber": 184,
         "author": {
-          "gitId": "-"
+          "gitId": "Ziyang-98"
         },
         "content": ""
       },
       {
         "lineNumber": 185,
         "author": {
-          "gitId": "-"
+          "gitId": "Ziyang-98"
         },
-        "content": "\u003cdiv markdown\u003d\"span\" class\u003d\"alert alert-info\"\u003e:information_source: **Note:** If the `currentStatePointer` is at index `addressBookStateList.size() - 1`, pointing to the latest address book state, then there are no undone AddressBook states to restore. The `redo` command uses `Model#canRedoAddressBook()` to check if this is the case. If so, it will return an error to the user rather than attempting to perform the redo."
+        "content": "* **Alternative 2:** Accounts can be edited by retrieving them from the account list with an index input."
       },
       {
         "lineNumber": 186,
         "author": {
-          "gitId": "-"
+          "gitId": "Ziyang-98"
         },
-        "content": ""
+        "content": "  * Pros: More flexibility for user."
       },
       {
         "lineNumber": 187,
         "author": {
-          "gitId": "-"
+          "gitId": "Ziyang-98"
         },
-        "content": "\u003c/div\u003e"
+        "content": "  * Cons: It is difficult to implement and manage because we need to consider whether the account to be edited"
       },
       {
         "lineNumber": 188,
         "author": {
-          "gitId": "-"
+          "gitId": "Ziyang-98"
         },
-        "content": ""
+        "content": "  is active and add extra measures for that case. As such, we chose alternative one since it is a more elegant"
       },
       {
         "lineNumber": 189,
         "author": {
-          "gitId": "-"
+          "gitId": "Ziyang-98"
         },
-        "content": "Step 5. The user then decides to execute the command `list`. Commands that do not modify the address book, such as `list`, will usually not call `Model#commitAddressBook()`, `Model#undoAddressBook()` or `Model#redoAddressBook()`. Thus, the `addressBookStateList` remains unchanged."
+        "content": "  solution."
       },
       {
         "lineNumber": 190,
         "author": {
-          "gitId": "-"
+          "gitId": "Ziyang-98"
         },
-        "content": ""
+        "content": "  "
       },
       {
         "lineNumber": 191,
         "author": {
-          "gitId": "-"
+          "gitId": "Ziyang-98"
         },
-        "content": "![UndoRedoState4](images/UndoRedoState4.png)"
+        "content": "##### Aspect: Mutability of account"
       },
       {
         "lineNumber": 192,
         "author": {
-          "gitId": "-"
+          "gitId": "Ziyang-98"
         },
-        "content": ""
+        "content": "* **Choice:** Allowing Name attribute of Account to be mutated by EditCommand."
       },
       {
         "lineNumber": 193,
         "author": {
-          "gitId": "-"
+          "gitId": "Ziyang-98"
         },
-        "content": "Step 6. The user executes `clear`, which calls `Model#commitAddressBook()`. Since the `currentStatePointer` is not pointing at the end of the `addressBookStateList`, all address book states after the `currentStatePointer` will be purged. Reason: It no longer makes sense to redo the `add n/David …​` command. This is the behavior that most modern desktop applications follow."
+        "content": "  * Rationale: Initially, we implemented the Name attribute of Account to be immutable. However, we realize that it"
       },
       {
         "lineNumber": 194,
         "author": {
-          "gitId": "-"
+          "gitId": "Ziyang-98"
         },
-        "content": ""
+        "content": "  is difficult to replace the name of the account if it is immutable. Hence, to overcome this obstacle, we decided"
       },
       {
         "lineNumber": 195,
         "author": {
-          "gitId": "-"
+          "gitId": "Ziyang-98"
         },
-        "content": "![UndoRedoState5](images/UndoRedoState5.png)"
+        "content": "  to make the Name attribute mutable."
       },
       {
         "lineNumber": 196,
         "author": {
-          "gitId": "-"
+          "gitId": "Ziyang-98"
         },
-        "content": ""
+        "content": "  * Implications: Extra precaution needs to be implemented, for instance creating new copies of account to prevent unnecessary"
       },
       {
         "lineNumber": 197,
         "author": {
-          "gitId": "-"
+          "gitId": "Ziyang-98"
         },
-        "content": "The following activity diagram summarizes what happens when a user executes a new command:"
+        "content": "  changes to accounts in account list."
       },
       {
         "lineNumber": 198,
         "author": {
-          "gitId": "-"
+          "gitId": "Ziyang-98"
         },
         "content": ""
       },
       {
         "lineNumber": 199,
         "author": {
-          "gitId": "-"
+          "gitId": "Ziyang-98"
         },
-        "content": "![CommitActivityDiagram](images/CommitActivityDiagram.png)"
+        "content": ""
       },
       {
         "lineNumber": 200,
         "author": {
           "gitId": "-"
         },
-        "content": ""
+        "content": "### \\[Proposed\\] Undo/redo feature"
       },
       {
         "lineNumber": 201,
         "author": {
           "gitId": "-"
         },
-        "content": "#### Design consideration:"
+        "content": ""
       },
       {
         "lineNumber": 202,
         "author": {
           "gitId": "-"
         },
-        "content": ""
+        "content": "#### Proposed Implementation"
       },
       {
         "lineNumber": 203,
         "author": {
           "gitId": "-"
         },
-        "content": "##### Aspect: How undo \u0026 redo executes"
+        "content": ""
       },
       {
         "lineNumber": 204,
         "author": {
           "gitId": "-"
         },
-        "content": ""
+        "content": "The proposed undo/redo mechanism is facilitated by `VersionedAddressBook`. It extends `AddressBook` with an undo/redo history, stored internally as an `addressBookStateList` and `currentStatePointer`. Additionally, it implements the following operations:"
       },
       {
         "lineNumber": 205,
         "author": {
           "gitId": "-"
         },
-        "content": "* **Alternative 1 (current choice):** Saves the entire address book."
+        "content": ""
       },
       {
         "lineNumber": 206,
         "author": {
           "gitId": "-"
         },
-        "content": "  * Pros: Easy to implement."
+        "content": "* `VersionedAddressBook#commit()` — Saves the current address book state in its history."
       },
       {
         "lineNumber": 207,
         "author": {
           "gitId": "-"
         },
-        "content": "  * Cons: May have performance issues in terms of memory usage."
+        "content": "* `VersionedAddressBook#undo()` — Restores the previous address book state from its history."
       },
       {
         "lineNumber": 208,
         "author": {
           "gitId": "-"
         },
-        "content": ""
+        "content": "* `VersionedAddressBook#redo()` — Restores a previously undone address book state from its history."
       },
       {
         "lineNumber": 209,
         "author": {
           "gitId": "-"
         },
-        "content": "* **Alternative 2:** Individual command knows how to undo/redo by"
+        "content": ""
       },
       {
         "lineNumber": 210,
         "author": {
           "gitId": "-"
         },
-        "content": "  itself."
+        "content": "These operations are exposed in the `Model` interface as `Model#commitAddressBook()`, `Model#undoAddressBook()` and `Model#redoAddressBook()` respectively."
       },
       {
         "lineNumber": 211,
         "author": {
           "gitId": "-"
         },
-        "content": "  * Pros: Will use less memory (e.g. for `delete`, just save the person being deleted)."
+        "content": ""
       },
       {
         "lineNumber": 212,
         "author": {
           "gitId": "-"
         },
-        "content": "  * Cons: We must ensure that the implementation of each individual command are correct."
+        "content": "Given below is an example usage scenario and how the undo/redo mechanism behaves at each step."
       },
       {
         "lineNumber": 213,
@@ -2594,7 +2594,7 @@
         "author": {
           "gitId": "-"
         },
-        "content": "_{more aspects and alternatives to be added}_"
+        "content": "Step 1. The user launches the application for the first time. The `VersionedAddressBook` will be initialized with the initial address book state, and the `currentStatePointer` pointing to that single address book state."
       },
       {
         "lineNumber": 215,
@@ -2608,7 +2608,7 @@
         "author": {
           "gitId": "-"
         },
-        "content": "### \\[Proposed\\] Data archiving"
+        "content": "![UndoRedoState0](images/UndoRedoState0.png)"
       },
       {
         "lineNumber": 217,
@@ -2622,7 +2622,7 @@
         "author": {
           "gitId": "-"
         },
-        "content": "_{Explain here how the data archiving feature will be implemented}_"
+        "content": "Step 2. The user executes `delete 5` command to delete the 5th person in the address book. The `delete` command calls `Model#commitAddressBook()`, causing the modified state of the address book after the `delete 5` command executes to be saved in the `addressBookStateList`, and the `currentStatePointer` is shifted to the newly inserted address book state."
       },
       {
         "lineNumber": 219,
@@ -2636,112 +2636,112 @@
         "author": {
           "gitId": "-"
         },
-        "content": ""
+        "content": "![UndoRedoState1](images/UndoRedoState1.png)"
       },
       {
         "lineNumber": 221,
         "author": {
           "gitId": "-"
         },
-        "content": "--------------------------------------------------------------------------------------------------------------------"
+        "content": ""
       },
       {
         "lineNumber": 222,
         "author": {
           "gitId": "-"
         },
-        "content": ""
+        "content": "Step 3. The user executes `add n/David …​` to add a new person. The `add` command also calls `Model#commitAddressBook()`, causing another modified address book state to be saved into the `addressBookStateList`."
       },
       {
         "lineNumber": 223,
         "author": {
           "gitId": "-"
         },
-        "content": "## **Documentation, logging, testing, configuration, dev-ops**"
+        "content": ""
       },
       {
         "lineNumber": 224,
         "author": {
           "gitId": "-"
         },
-        "content": ""
+        "content": "![UndoRedoState2](images/UndoRedoState2.png)"
       },
       {
         "lineNumber": 225,
         "author": {
           "gitId": "-"
         },
-        "content": "* [Documentation guide](Documentation.md)"
+        "content": ""
       },
       {
         "lineNumber": 226,
         "author": {
           "gitId": "-"
         },
-        "content": "* [Testing guide](Testing.md)"
+        "content": "\u003cdiv markdown\u003d\"span\" class\u003d\"alert alert-info\"\u003e:information_source: **Note:** If a command fails its execution, it will not call `Model#commitAddressBook()`, so the address book state will not be saved into the `addressBookStateList`."
       },
       {
         "lineNumber": 227,
         "author": {
           "gitId": "-"
         },
-        "content": "* [Logging guide](Logging.md)"
+        "content": ""
       },
       {
         "lineNumber": 228,
         "author": {
           "gitId": "-"
         },
-        "content": "* [Configuration guide](Configuration.md)"
+        "content": "\u003c/div\u003e"
       },
       {
         "lineNumber": 229,
         "author": {
           "gitId": "-"
         },
-        "content": "* [DevOps guide](DevOps.md)"
+        "content": ""
       },
       {
         "lineNumber": 230,
         "author": {
           "gitId": "-"
         },
-        "content": ""
+        "content": "Step 4. The user now decides that adding the person was a mistake, and decides to undo that action by executing the `undo` command. The `undo` command will call `Model#undoAddressBook()`, which will shift the `currentStatePointer` once to the left, pointing it to the previous address book state, and restores the address book to that state."
       },
       {
         "lineNumber": 231,
         "author": {
           "gitId": "-"
         },
-        "content": "--------------------------------------------------------------------------------------------------------------------"
+        "content": ""
       },
       {
         "lineNumber": 232,
         "author": {
           "gitId": "-"
         },
-        "content": ""
+        "content": "![UndoRedoState3](images/UndoRedoState3.png)"
       },
       {
         "lineNumber": 233,
         "author": {
           "gitId": "-"
         },
-        "content": "## **Appendix: Requirements**"
+        "content": ""
       },
       {
         "lineNumber": 234,
         "author": {
           "gitId": "-"
         },
-        "content": ""
+        "content": "\u003cdiv markdown\u003d\"span\" class\u003d\"alert alert-info\"\u003e:information_source: **Note:** If the `currentStatePointer` is at index 0, pointing to the initial AddressBook state, then there are no previous AddressBook states to restore. The `undo` command uses `Model#canUndoAddressBook()` to check if this is the case. If so, it will return an error to the user rather"
       },
       {
         "lineNumber": 235,
         "author": {
           "gitId": "-"
         },
-        "content": "### Product scope"
+        "content": "than attempting to perform the undo."
       },
       {
         "lineNumber": 236,
@@ -2755,7 +2755,7 @@
         "author": {
           "gitId": "-"
         },
-        "content": "**Target user profile**:"
+        "content": "\u003c/div\u003e"
       },
       {
         "lineNumber": 238,
@@ -2767,37 +2767,37 @@
       {
         "lineNumber": 239,
         "author": {
-          "gitId": "Ziyang-98"
+          "gitId": "-"
         },
-        "content": "* has a need to manage a significant number of business accounts, each with a significant number of financial entries"
+        "content": "The following sequence diagram shows how the undo operation works:"
       },
       {
         "lineNumber": 240,
         "author": {
           "gitId": "-"
         },
-        "content": "* prefer desktop apps over other types"
+        "content": ""
       },
       {
         "lineNumber": 241,
         "author": {
           "gitId": "-"
         },
-        "content": "* can type fast"
+        "content": "![UndoSequenceDiagram](images/UndoSequenceDiagram.png)"
       },
       {
         "lineNumber": 242,
         "author": {
           "gitId": "-"
         },
-        "content": "* prefers typing to mouse interactions"
+        "content": ""
       },
       {
         "lineNumber": 243,
         "author": {
           "gitId": "-"
         },
-        "content": "* is reasonably comfortable using CLI apps"
+        "content": "\u003cdiv markdown\u003d\"span\" class\u003d\"alert alert-info\"\u003e:information_source: **Note:** The lifeline for `UndoCommand` should end at the destroy marker (X) but due to a limitation of PlantUML, the lifeline reaches the end of diagram."
       },
       {
         "lineNumber": 244,
@@ -2809,9 +2809,9 @@
       {
         "lineNumber": 245,
         "author": {
-          "gitId": "Ziyang-98"
+          "gitId": "-"
         },
-        "content": "**Value proposition**: manage financial entries faster than a typical mouse/GUI driven app"
+        "content": "\u003c/div\u003e"
       },
       {
         "lineNumber": 246,
@@ -2825,77 +2825,77 @@
         "author": {
           "gitId": "-"
         },
-        "content": ""
+        "content": "The `redo` command does the opposite — it calls `Model#redoAddressBook()`, which shifts the `currentStatePointer` once to the right, pointing to the previously undone state, and restores the address book to that state."
       },
       {
         "lineNumber": 248,
         "author": {
           "gitId": "-"
         },
-        "content": "### User stories"
+        "content": ""
       },
       {
         "lineNumber": 249,
         "author": {
           "gitId": "-"
         },
-        "content": ""
+        "content": "\u003cdiv markdown\u003d\"span\" class\u003d\"alert alert-info\"\u003e:information_source: **Note:** If the `currentStatePointer` is at index `addressBookStateList.size() - 1`, pointing to the latest address book state, then there are no undone AddressBook states to restore. The `redo` command uses `Model#canRedoAddressBook()` to check if this is the case. If so, it will return an error to the user rather than attempting to perform the redo."
       },
       {
         "lineNumber": 250,
         "author": {
           "gitId": "-"
         },
-        "content": "Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unlikely to have) - `*`"
+        "content": ""
       },
       {
         "lineNumber": 251,
         "author": {
           "gitId": "-"
         },
-        "content": ""
+        "content": "\u003c/div\u003e"
       },
       {
         "lineNumber": 252,
         "author": {
           "gitId": "-"
         },
-        "content": "| Priority | As a …​                                 | I want to …​                                   | So that I can…​                                                                 |"
+        "content": ""
       },
       {
         "lineNumber": 253,
         "author": {
-          "gitId": "Ziyang-98"
+          "gitId": "-"
         },
-        "content": "| -------- | ------------------------------------------ | ------------------------------------------------- | -------------------------------------------------------------------- |"
+        "content": "Step 5. The user then decides to execute the command `list`. Commands that do not modify the address book, such as `list`, will usually not call `Model#commitAddressBook()`, `Model#undoAddressBook()` or `Model#redoAddressBook()`. Thus, the `addressBookStateList` remains unchanged."
       },
       {
         "lineNumber": 254,
         "author": {
-          "gitId": "Ziyang-98"
+          "gitId": "-"
         },
-        "content": "| `* * *`  | user                                       | exit the app                                      |                                                                      |"
+        "content": ""
       },
       {
         "lineNumber": 255,
         "author": {
-          "gitId": "Ziyang-98"
+          "gitId": "-"
         },
-        "content": "| `* * *`  | user                                       | add an expense/revenue entry                       |                                                                      |"
+        "content": "![UndoRedoState4](images/UndoRedoState4.png)"
       },
       {
         "lineNumber": 256,
         "author": {
-          "gitId": "Ziyang-98"
+          "gitId": "-"
         },
-        "content": "| `* * *`  | user                                       | delete an entry                                   | remove entries that I no longer need                                 |"
+        "content": ""
       },
       {
         "lineNumber": 257,
         "author": {
-          "gitId": "Ziyang-98"
+          "gitId": "-"
         },
-        "content": "| `* *`    | user                                       | have multiple accounts for different businesses   | keep expense/earning entries for the respective businesses separate  |"
+        "content": "Step 6. The user executes `clear`, which calls `Model#commitAddressBook()`. Since the `currentStatePointer` is not pointing at the end of the `addressBookStateList`, all address book states after the `currentStatePointer` will be purged. Reason: It no longer makes sense to redo the `add n/David …​` command. This is the behavior that most modern desktop applications follow."
       },
       {
         "lineNumber": 258,
@@ -2909,7 +2909,7 @@
         "author": {
           "gitId": "-"
         },
-        "content": "*{More to be added}*"
+        "content": "![UndoRedoState5](images/UndoRedoState5.png)"
       },
       {
         "lineNumber": 260,
@@ -2923,7 +2923,7 @@
         "author": {
           "gitId": "-"
         },
-        "content": "### Use cases"
+        "content": "The following activity diagram summarizes what happens when a user executes a new command:"
       },
       {
         "lineNumber": 262,
@@ -2937,7 +2937,7 @@
         "author": {
           "gitId": "-"
         },
-        "content": "(For all use cases below, the **System** is the `AddressBook` and the **Actor** is the `user`, unless specified otherwise)"
+        "content": "![CommitActivityDiagram](images/CommitActivityDiagram.png)"
       },
       {
         "lineNumber": 264,
@@ -2949,9 +2949,9 @@
       {
         "lineNumber": 265,
         "author": {
-          "gitId": "Ziyang-98"
+          "gitId": "-"
         },
-        "content": "**Use case: UC01 - Add an expense entry**"
+        "content": "#### Design consideration:"
       },
       {
         "lineNumber": 266,
@@ -2965,7 +2965,7 @@
         "author": {
           "gitId": "-"
         },
-        "content": "**MSS**"
+        "content": "##### Aspect: How undo \u0026 redo executes"
       },
       {
         "lineNumber": 268,
@@ -2977,58 +2977,58 @@
       {
         "lineNumber": 269,
         "author": {
-          "gitId": "Ziyang-98"
+          "gitId": "-"
         },
-        "content": "1.  User requests to add an expense entry"
+        "content": "* **Alternative 1 (current choice):** Saves the entire address book."
       },
       {
         "lineNumber": 270,
         "author": {
-          "gitId": "Ziyang-98"
+          "gitId": "-"
         },
-        "content": "2.  Common Cents adds the expense entry"
+        "content": "  * Pros: Easy to implement."
       },
       {
         "lineNumber": 271,
         "author": {
           "gitId": "-"
         },
-        "content": ""
+        "content": "  * Cons: May have performance issues in terms of memory usage."
       },
       {
         "lineNumber": 272,
         "author": {
           "gitId": "-"
         },
-        "content": "    Use case ends."
+        "content": ""
       },
       {
         "lineNumber": 273,
         "author": {
           "gitId": "-"
         },
-        "content": ""
+        "content": "* **Alternative 2:** Individual command knows how to undo/redo by"
       },
       {
         "lineNumber": 274,
         "author": {
           "gitId": "-"
         },
-        "content": "**Extensions**"
+        "content": "  itself."
       },
       {
         "lineNumber": 275,
         "author": {
           "gitId": "-"
         },
-        "content": ""
+        "content": "  * Pros: Will use less memory (e.g. for `delete`, just save the person being deleted)."
       },
       {
         "lineNumber": 276,
         "author": {
-          "gitId": "Ziyang-98"
+          "gitId": "-"
         },
-        "content": "* 1a. The given input is in invalid format."
+        "content": "  * Cons: We must ensure that the implementation of each individual command are correct."
       },
       {
         "lineNumber": 277,
@@ -3042,7 +3042,7 @@
         "author": {
           "gitId": "Ziyang-98"
         },
-        "content": "    * 1a1. Common Cents shows an error message."
+        "content": "_{more aspects and alternatives to be added}"
       },
       {
         "lineNumber": 279,
@@ -3054,9 +3054,9 @@
       {
         "lineNumber": 280,
         "author": {
-          "gitId": "Ziyang-98"
+          "gitId": "-"
         },
-        "content": "      Use case resumes at step 1."
+        "content": "### \\[Proposed\\] Data archiving"
       },
       {
         "lineNumber": 281,
@@ -3068,189 +3068,189 @@
       {
         "lineNumber": 282,
         "author": {
+          "gitId": "Ziyang-98"
+        },
+        "content": "_{Explain here how the data archiving feature will be implemented}"
+      },
+      {
+        "lineNumber": 283,
+        "author": {
           "gitId": "-"
         },
         "content": ""
       },
       {
-        "lineNumber": 283,
-        "author": {
-          "gitId": "Ziyang-98"
-        },
-        "content": "**Use case: UC02 - Add a revenue entry**"
-      },
-      {
         "lineNumber": 284,
         "author": {
-          "gitId": "Ziyang-98"
+          "gitId": "-"
         },
         "content": ""
       },
       {
         "lineNumber": 285,
         "author": {
-          "gitId": "Ziyang-98"
+          "gitId": "-"
         },
-        "content": "**MSS**"
+        "content": "--------------------------------------------------------------------------------------------------------------------"
       },
       {
         "lineNumber": 286,
         "author": {
-          "gitId": "Ziyang-98"
+          "gitId": "-"
         },
         "content": ""
       },
       {
         "lineNumber": 287,
         "author": {
-          "gitId": "Ziyang-98"
+          "gitId": "-"
         },
-        "content": "1.  User requests to add revenue entry"
+        "content": "## **Documentation, logging, testing, configuration, dev-ops**"
       },
       {
         "lineNumber": 288,
         "author": {
-          "gitId": "Ziyang-98"
+          "gitId": "-"
         },
-        "content": "2.  Common Cents adds revenue entry"
+        "content": ""
       },
       {
         "lineNumber": 289,
         "author": {
           "gitId": "-"
         },
-        "content": ""
+        "content": "* [Documentation guide](Documentation.md)"
       },
       {
         "lineNumber": 290,
         "author": {
           "gitId": "-"
         },
-        "content": "    Use case ends."
+        "content": "* [Testing guide](Testing.md)"
       },
       {
         "lineNumber": 291,
         "author": {
           "gitId": "-"
         },
-        "content": ""
+        "content": "* [Logging guide](Logging.md)"
       },
       {
         "lineNumber": 292,
         "author": {
-          "gitId": "Ziyang-98"
+          "gitId": "-"
         },
-        "content": "**Extensions**"
+        "content": "* [Configuration guide](Configuration.md)"
       },
       {
         "lineNumber": 293,
         "author": {
-          "gitId": "Ziyang-98"
+          "gitId": "-"
         },
-        "content": ""
+        "content": "* [DevOps guide](DevOps.md)"
       },
       {
         "lineNumber": 294,
         "author": {
-          "gitId": "Ziyang-98"
+          "gitId": "-"
         },
-        "content": "* 1a. The given input is in invalid format."
+        "content": ""
       },
       {
         "lineNumber": 295,
         "author": {
           "gitId": "-"
         },
-        "content": ""
+        "content": "--------------------------------------------------------------------------------------------------------------------"
       },
       {
         "lineNumber": 296,
-        "author": {
-          "gitId": "Ziyang-98"
-        },
-        "content": "    * 1a1. Common Cents shows an error message."
-      },
-      {
-        "lineNumber": 297,
         "author": {
           "gitId": "-"
         },
         "content": ""
       },
       {
+        "lineNumber": 297,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "## **Appendix: Requirements**"
+      },
+      {
         "lineNumber": 298,
         "author": {
-          "gitId": "Ziyang-98"
+          "gitId": "-"
         },
-        "content": "      Use case resumes at step 1."
+        "content": ""
       },
       {
         "lineNumber": 299,
         "author": {
-          "gitId": "Ziyang-98"
+          "gitId": "-"
         },
-        "content": ""
+        "content": "### Product scope"
       },
       {
         "lineNumber": 300,
         "author": {
-          "gitId": "Ziyang-98"
-        },
-        "content": "**Use case: UC03 - Delete an entry**"
-      },
-      {
-        "lineNumber": 301,
-        "author": {
-          "gitId": "Ziyang-98"
+          "gitId": "-"
         },
         "content": ""
       },
       {
+        "lineNumber": 301,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "**Target user profile**:"
+      },
+      {
         "lineNumber": 302,
         "author": {
-          "gitId": "Ziyang-98"
+          "gitId": "-"
         },
-        "content": "**MSS**"
+        "content": ""
       },
       {
         "lineNumber": 303,
         "author": {
           "gitId": "Ziyang-98"
         },
-        "content": ""
+        "content": "* has a need to manage a significant number of business accounts, each with a significant number of financial entries"
       },
       {
         "lineNumber": 304,
         "author": {
-          "gitId": "Ziyang-98"
+          "gitId": "-"
         },
-        "content": "1.  User requests to delete a specific entry"
+        "content": "* prefer desktop apps over other types"
       },
       {
         "lineNumber": 305,
         "author": {
-          "gitId": "Ziyang-98"
+          "gitId": "-"
         },
-        "content": "2.  Common cents deletes the entry."
+        "content": "* can type fast"
       },
       {
         "lineNumber": 306,
         "author": {
-          "gitId": "Ziyang-98"
+          "gitId": "-"
         },
-        "content": ""
+        "content": "* prefers typing to mouse interactions"
       },
       {
         "lineNumber": 307,
         "author": {
-          "gitId": "Ziyang-98"
+          "gitId": "-"
         },
-        "content": "    Use case ends."
+        "content": "* is reasonably comfortable using CLI apps"
       },
       {
         "lineNumber": 308,
         "author": {
-          "gitId": "Ziyang-98"
+          "gitId": "-"
         },
         "content": ""
       },
@@ -3259,196 +3259,196 @@
         "author": {
           "gitId": "Ziyang-98"
         },
-        "content": "**Extensions**"
+        "content": "**Value proposition**: manage financial entries faster than a typical mouse/GUI driven app"
       },
       {
         "lineNumber": 310,
         "author": {
-          "gitId": "Ziyang-98"
+          "gitId": "-"
         },
         "content": ""
       },
       {
         "lineNumber": 311,
         "author": {
-          "gitId": "Ziyang-98"
+          "gitId": "-"
         },
-        "content": "* 1a. The given index is invalid."
+        "content": ""
       },
       {
         "lineNumber": 312,
         "author": {
-          "gitId": "Ziyang-98"
+          "gitId": "-"
         },
-        "content": ""
+        "content": "### User stories"
       },
       {
         "lineNumber": 313,
         "author": {
-          "gitId": "Ziyang-98"
-        },
-        "content": "    * 1a1. Common cents shows an error message."
-      },
-      {
-        "lineNumber": 314,
-        "author": {
-          "gitId": "Ziyang-98"
+          "gitId": "-"
         },
         "content": ""
       },
       {
+        "lineNumber": 314,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unlikely to have) - `*`"
+      },
+      {
         "lineNumber": 315,
         "author": {
-          "gitId": "Ziyang-98"
+          "gitId": "-"
         },
-        "content": "      Use case resumes at step 1."
+        "content": ""
       },
       {
         "lineNumber": 316,
         "author": {
           "gitId": "-"
         },
-        "content": ""
+        "content": "| Priority | As a …​                                 | I want to …​                                   | So that I can…​                                                                 |"
       },
       {
         "lineNumber": 317,
         "author": {
           "gitId": "Ziyang-98"
         },
-        "content": "**Use case: UC04 - Exiting app**"
+        "content": "| -------- | ------------------------------------------ | ------------------------------------------------- | -------------------------------------------------------------------- |"
       },
       {
         "lineNumber": 318,
         "author": {
           "gitId": "Ziyang-98"
         },
-        "content": ""
+        "content": "| `* * *`  | user                                       | exit the app                                      |                                                                      |"
       },
       {
         "lineNumber": 319,
         "author": {
           "gitId": "Ziyang-98"
         },
-        "content": "**MSS**"
+        "content": "| `* * *`  | user                                       | add an expense/revenue entry                       |                                                                      |"
       },
       {
         "lineNumber": 320,
         "author": {
           "gitId": "Ziyang-98"
         },
-        "content": ""
+        "content": "| `* * *`  | user                                       | delete an entry                                   | remove entries that I no longer need                                 |"
       },
       {
         "lineNumber": 321,
         "author": {
           "gitId": "Ziyang-98"
         },
-        "content": "1.  User requests to exit"
+        "content": "| `* *`    | user                                       | have multiple accounts for different businesses   | keep expense/earning entries for the respective businesses separate  |"
       },
       {
         "lineNumber": 322,
         "author": {
-          "gitId": "Ziyang-98"
-        },
-        "content": "2.  Common cents responds with exit message and closes."
-      },
-      {
-        "lineNumber": 323,
-        "author": {
-          "gitId": "Ziyang-98"
+          "gitId": "-"
         },
         "content": ""
       },
       {
+        "lineNumber": 323,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "*{More to be added}*"
+      },
+      {
         "lineNumber": 324,
         "author": {
-          "gitId": "Ziyang-98"
+          "gitId": "-"
         },
-        "content": "    Use case ends."
+        "content": ""
       },
       {
         "lineNumber": 325,
         "author": {
           "gitId": "-"
         },
-        "content": ""
+        "content": "### Use cases"
       },
       {
         "lineNumber": 326,
         "author": {
           "gitId": "-"
         },
-        "content": "*{More to be added}*"
+        "content": ""
       },
       {
         "lineNumber": 327,
         "author": {
           "gitId": "-"
         },
-        "content": ""
+        "content": "(For all use cases below, the **System** is the `AddressBook` and the **Actor** is the `user`, unless specified otherwise)"
       },
       {
         "lineNumber": 328,
         "author": {
           "gitId": "-"
         },
-        "content": "### Non-Functional Requirements"
+        "content": ""
       },
       {
         "lineNumber": 329,
         "author": {
-          "gitId": "-"
+          "gitId": "Ziyang-98"
         },
-        "content": ""
+        "content": "**Use case: UC01 - Add an expense entry**"
       },
       {
         "lineNumber": 330,
         "author": {
           "gitId": "-"
         },
-        "content": "1.  Should work on any _mainstream OS_ as long as it has Java `11` or above installed."
+        "content": ""
       },
       {
         "lineNumber": 331,
         "author": {
-          "gitId": "Ziyang-98"
+          "gitId": "-"
         },
-        "content": "2.  Should be able to hold up to 1000 entries per account without a noticeable sluggishness in performance for typical"
+        "content": "**MSS**"
       },
       {
         "lineNumber": 332,
         "author": {
           "gitId": "-"
         },
-        "content": "3.  A user with above average typing speed for regular English text (i.e. not code, not system admin commands) should be able to accomplish most of the tasks faster using commands than using the mouse."
+        "content": ""
       },
       {
         "lineNumber": 333,
         "author": {
           "gitId": "Ziyang-98"
         },
-        "content": "4.  Should be able to perform simple arithmetic with up to 1000 entries without a significant drop in performance"
+        "content": "1.  User requests to add an expense entry"
       },
       {
         "lineNumber": 334,
         "author": {
           "gitId": "Ziyang-98"
         },
-        "content": "5.  Should be able to understand the layout of product without much reference to the user guide"
+        "content": "2.  Common Cents adds the expense entry"
       },
       {
         "lineNumber": 335,
         "author": {
-          "gitId": "Ziyang-98"
+          "gitId": "-"
         },
-        "content": "6.  Should be able to hold up to 100 accounts without taking up excess memory"
+        "content": ""
       },
       {
         "lineNumber": 336,
         "author": {
           "gitId": "-"
         },
-        "content": "*{More to be added}*"
+        "content": "    Use case ends."
       },
       {
         "lineNumber": 337,
@@ -3462,7 +3462,7 @@
         "author": {
           "gitId": "-"
         },
-        "content": "### Glossary"
+        "content": "**Extensions**"
       },
       {
         "lineNumber": 339,
@@ -3474,93 +3474,93 @@
       {
         "lineNumber": 340,
         "author": {
-          "gitId": "-"
+          "gitId": "Ziyang-98"
         },
-        "content": "* **Mainstream OS**: Windows, Linux, Unix, OS-X"
+        "content": "* 1a. The given input is in invalid format."
       },
       {
         "lineNumber": 341,
         "author": {
-          "gitId": "-"
+          "gitId": "Ziyang-98"
         },
-        "content": "* **Private contact detail**: A contact detail that is not meant to be shared with others"
+        "content": ""
       },
       {
         "lineNumber": 342,
         "author": {
-          "gitId": "-"
+          "gitId": "Ziyang-98"
         },
-        "content": ""
+        "content": "    * 1a1. Common Cents shows an error message."
       },
       {
         "lineNumber": 343,
         "author": {
-          "gitId": "-"
-        },
-        "content": "--------------------------------------------------------------------------------------------------------------------"
-      },
-      {
-        "lineNumber": 344,
-        "author": {
-          "gitId": "-"
+          "gitId": "Ziyang-98"
         },
         "content": ""
       },
       {
+        "lineNumber": 344,
+        "author": {
+          "gitId": "Ziyang-98"
+        },
+        "content": "      Use case resumes at step 1."
+      },
+      {
         "lineNumber": 345,
         "author": {
-          "gitId": "-"
+          "gitId": "Ziyang-98"
         },
-        "content": "## **Appendix: Instructions for manual testing**"
+        "content": ""
       },
       {
         "lineNumber": 346,
         "author": {
-          "gitId": "-"
+          "gitId": "Ziyang-98"
         },
         "content": ""
       },
       {
         "lineNumber": 347,
         "author": {
-          "gitId": "-"
+          "gitId": "Ziyang-98"
         },
-        "content": "Given below are instructions to test the app manually."
+        "content": "**Use case: UC02 - Add a revenue entry**"
       },
       {
         "lineNumber": 348,
         "author": {
-          "gitId": "-"
+          "gitId": "Ziyang-98"
         },
         "content": ""
       },
       {
         "lineNumber": 349,
         "author": {
-          "gitId": "-"
+          "gitId": "Ziyang-98"
         },
-        "content": "\u003cdiv markdown\u003d\"span\" class\u003d\"alert alert-info\"\u003e:information_source: **Note:** These instructions only provide a starting point for testers to work on;"
+        "content": "**MSS**"
       },
       {
         "lineNumber": 350,
         "author": {
-          "gitId": "-"
-        },
-        "content": "testers are expected to do more *exploratory* testing."
-      },
-      {
-        "lineNumber": 351,
-        "author": {
-          "gitId": "-"
+          "gitId": "Ziyang-98"
         },
         "content": ""
       },
       {
+        "lineNumber": 351,
+        "author": {
+          "gitId": "Ziyang-98"
+        },
+        "content": "1.  User requests to add revenue entry"
+      },
+      {
         "lineNumber": 352,
         "author": {
-          "gitId": "-"
+          "gitId": "Ziyang-98"
         },
-        "content": "\u003c/div\u003e"
+        "content": "2.  Common Cents adds revenue entry"
       },
       {
         "lineNumber": 353,
@@ -3574,7 +3574,7 @@
         "author": {
           "gitId": "-"
         },
-        "content": "### Launch and shutdown"
+        "content": "    Use case ends."
       },
       {
         "lineNumber": 355,
@@ -3586,23 +3586,23 @@
       {
         "lineNumber": 356,
         "author": {
-          "gitId": "-"
+          "gitId": "Ziyang-98"
         },
-        "content": "1. Initial launch"
+        "content": "**Extensions**"
       },
       {
         "lineNumber": 357,
         "author": {
-          "gitId": "-"
+          "gitId": "Ziyang-98"
         },
         "content": ""
       },
       {
         "lineNumber": 358,
         "author": {
-          "gitId": "-"
+          "gitId": "Ziyang-98"
         },
-        "content": "   1. Download the jar file and copy into an empty folder"
+        "content": "* 1a. The given input is in invalid format."
       },
       {
         "lineNumber": 359,
@@ -3614,9 +3614,9 @@
       {
         "lineNumber": 360,
         "author": {
-          "gitId": "-"
+          "gitId": "Ziyang-98"
         },
-        "content": "   1. Double-click the jar file Expected: Shows the GUI with a set of sample contacts. The window size may not be optimum."
+        "content": "    * 1a1. Common Cents shows an error message."
       },
       {
         "lineNumber": 361,
@@ -3628,23 +3628,23 @@
       {
         "lineNumber": 362,
         "author": {
-          "gitId": "-"
+          "gitId": "Ziyang-98"
         },
-        "content": "1. Saving window preferences"
+        "content": "      Use case resumes at step 1."
       },
       {
         "lineNumber": 363,
         "author": {
-          "gitId": "-"
+          "gitId": "Ziyang-98"
         },
         "content": ""
       },
       {
         "lineNumber": 364,
         "author": {
-          "gitId": "-"
+          "gitId": "Ziyang-98"
         },
-        "content": "   1. Resize the window to an optimum size. Move the window to a different location. Close the window."
+        "content": "**Use case: UC03 - Delete an entry**"
       },
       {
         "lineNumber": 365,
@@ -3658,28 +3658,28 @@
         "author": {
           "gitId": "-"
         },
-        "content": "   1. Re-launch the app by double-clicking the jar file.\u003cbr\u003e"
+        "content": "**MSS**"
       },
       {
         "lineNumber": 367,
         "author": {
           "gitId": "-"
         },
-        "content": "       Expected: The most recent window size and location is retained."
+        "content": ""
       },
       {
         "lineNumber": 368,
         "author": {
-          "gitId": "-"
+          "gitId": "Ziyang-98"
         },
-        "content": ""
+        "content": "1.  User requests to delete a specific entry"
       },
       {
         "lineNumber": 369,
         "author": {
-          "gitId": "-"
+          "gitId": "Ziyang-98"
         },
-        "content": "1. _{ more test cases …​ }_"
+        "content": "2.  Common cents deletes the entry."
       },
       {
         "lineNumber": 370,
@@ -3693,7 +3693,7 @@
         "author": {
           "gitId": "-"
         },
-        "content": "### Deleting a person"
+        "content": "    Use case ends."
       },
       {
         "lineNumber": 372,
@@ -3707,7 +3707,7 @@
         "author": {
           "gitId": "-"
         },
-        "content": "1. Deleting a person while all persons are being shown"
+        "content": "**Extensions**"
       },
       {
         "lineNumber": 374,
@@ -3719,51 +3719,51 @@
       {
         "lineNumber": 375,
         "author": {
-          "gitId": "-"
+          "gitId": "Ziyang-98"
         },
-        "content": "   1. Prerequisites: List all persons using the `list` command. Multiple persons in the list."
+        "content": "* 1a. The given index is invalid."
       },
       {
         "lineNumber": 376,
         "author": {
-          "gitId": "-"
+          "gitId": "Ziyang-98"
         },
         "content": ""
       },
       {
         "lineNumber": 377,
         "author": {
-          "gitId": "-"
+          "gitId": "Ziyang-98"
         },
-        "content": "   1. Test case: `delete 1`\u003cbr\u003e"
+        "content": "    * 1a1. Common cents shows an error message."
       },
       {
         "lineNumber": 378,
         "author": {
-          "gitId": "-"
+          "gitId": "Ziyang-98"
         },
-        "content": "      Expected: First contact is deleted from the list. Details of the deleted contact shown in the status message. Timestamp in the status bar is updated."
+        "content": ""
       },
       {
         "lineNumber": 379,
         "author": {
-          "gitId": "-"
+          "gitId": "Ziyang-98"
         },
-        "content": ""
+        "content": "      Use case resumes at step 1."
       },
       {
         "lineNumber": 380,
         "author": {
           "gitId": "-"
         },
-        "content": "   1. Test case: `delete 0`\u003cbr\u003e"
+        "content": ""
       },
       {
         "lineNumber": 381,
         "author": {
-          "gitId": "-"
+          "gitId": "Ziyang-98"
         },
-        "content": "      Expected: No person is deleted. Error details shown in the status message. Status bar remains the same."
+        "content": "**Use case: UC04 - Exiting app**"
       },
       {
         "lineNumber": 382,
@@ -3775,30 +3775,30 @@
       {
         "lineNumber": 383,
         "author": {
-          "gitId": "-"
+          "gitId": "Ziyang-98"
         },
-        "content": "   1. Other incorrect delete commands to try: `delete`, `delete x`, `...` (where x is larger than the list size)\u003cbr\u003e"
+        "content": "**MSS**"
       },
       {
         "lineNumber": 384,
         "author": {
           "gitId": "-"
         },
-        "content": "      Expected: Similar to previous."
+        "content": ""
       },
       {
         "lineNumber": 385,
         "author": {
-          "gitId": "-"
+          "gitId": "Ziyang-98"
         },
-        "content": ""
+        "content": "1.  User requests to exit"
       },
       {
         "lineNumber": 386,
         "author": {
-          "gitId": "-"
+          "gitId": "Ziyang-98"
         },
-        "content": "1. _{ more test cases …​ }_"
+        "content": "2.  Common cents responds with exit message and closes."
       },
       {
         "lineNumber": 387,
@@ -3810,9 +3810,9 @@
       {
         "lineNumber": 388,
         "author": {
-          "gitId": "-"
+          "gitId": "Ziyang-98"
         },
-        "content": "### Saving data"
+        "content": "    Use case ends."
       },
       {
         "lineNumber": 389,
@@ -3826,7 +3826,7 @@
         "author": {
           "gitId": "-"
         },
-        "content": "1. Dealing with missing/corrupted data files"
+        "content": "*{More to be added}*"
       },
       {
         "lineNumber": 391,
@@ -3840,7 +3840,7 @@
         "author": {
           "gitId": "-"
         },
-        "content": "   1. _{explain how to simulate a missing/corrupted file, and the expected behavior}_"
+        "content": "### Non-Functional Requirements"
       },
       {
         "lineNumber": 393,
@@ -3854,12 +3854,460 @@
         "author": {
           "gitId": "-"
         },
+        "content": "1.  Should work on any _mainstream OS_ as long as it has Java `11` or above installed."
+      },
+      {
+        "lineNumber": 395,
+        "author": {
+          "gitId": "Ziyang-98"
+        },
+        "content": "2.  Should be able to hold up to 1000 entries per account without a noticeable sluggishness in performance for typical"
+      },
+      {
+        "lineNumber": 396,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "3.  A user with above average typing speed for regular English text (i.e. not code, not system admin commands) should be able to accomplish most of the tasks faster using commands than using the mouse."
+      },
+      {
+        "lineNumber": 397,
+        "author": {
+          "gitId": "Ziyang-98"
+        },
+        "content": "4.  Should be able to perform simple arithmetic with up to 1000 entries without a significant drop in performance"
+      },
+      {
+        "lineNumber": 398,
+        "author": {
+          "gitId": "Ziyang-98"
+        },
+        "content": "5.  Should be able to understand the layout of product without much reference to the user guide"
+      },
+      {
+        "lineNumber": 399,
+        "author": {
+          "gitId": "Ziyang-98"
+        },
+        "content": "6.  Should be able to hold up to 100 accounts without taking up excess memory"
+      },
+      {
+        "lineNumber": 400,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "*{More to be added}*"
+      },
+      {
+        "lineNumber": 401,
+        "author": {
+          "gitId": "-"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 402,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "### Glossary"
+      },
+      {
+        "lineNumber": 403,
+        "author": {
+          "gitId": "-"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 404,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "* **Mainstream OS**: Windows, Linux, Unix, OS-X"
+      },
+      {
+        "lineNumber": 405,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "* **Private contact detail**: A contact detail that is not meant to be shared with others"
+      },
+      {
+        "lineNumber": 406,
+        "author": {
+          "gitId": "-"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 407,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "--------------------------------------------------------------------------------------------------------------------"
+      },
+      {
+        "lineNumber": 408,
+        "author": {
+          "gitId": "-"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 409,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "## **Appendix: Instructions for manual testing**"
+      },
+      {
+        "lineNumber": 410,
+        "author": {
+          "gitId": "-"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 411,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "Given below are instructions to test the app manually."
+      },
+      {
+        "lineNumber": 412,
+        "author": {
+          "gitId": "-"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 413,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "\u003cdiv markdown\u003d\"span\" class\u003d\"alert alert-info\"\u003e:information_source: **Note:** These instructions only provide a starting point for testers to work on;"
+      },
+      {
+        "lineNumber": 414,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "testers are expected to do more *exploratory* testing."
+      },
+      {
+        "lineNumber": 415,
+        "author": {
+          "gitId": "-"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 416,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "\u003c/div\u003e"
+      },
+      {
+        "lineNumber": 417,
+        "author": {
+          "gitId": "-"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 418,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "### Launch and shutdown"
+      },
+      {
+        "lineNumber": 419,
+        "author": {
+          "gitId": "-"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 420,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "1. Initial launch"
+      },
+      {
+        "lineNumber": 421,
+        "author": {
+          "gitId": "-"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 422,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "   1. Download the jar file and copy into an empty folder"
+      },
+      {
+        "lineNumber": 423,
+        "author": {
+          "gitId": "-"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 424,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "   1. Double-click the jar file Expected: Shows the GUI with a set of sample contacts. The window size may not be optimum."
+      },
+      {
+        "lineNumber": 425,
+        "author": {
+          "gitId": "-"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 426,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "1. Saving window preferences"
+      },
+      {
+        "lineNumber": 427,
+        "author": {
+          "gitId": "-"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 428,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "   1. Resize the window to an optimum size. Move the window to a different location. Close the window."
+      },
+      {
+        "lineNumber": 429,
+        "author": {
+          "gitId": "-"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 430,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "   1. Re-launch the app by double-clicking the jar file.\u003cbr\u003e"
+      },
+      {
+        "lineNumber": 431,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "       Expected: The most recent window size and location is retained."
+      },
+      {
+        "lineNumber": 432,
+        "author": {
+          "gitId": "-"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 433,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "1. _{ more test cases …​ }_"
+      },
+      {
+        "lineNumber": 434,
+        "author": {
+          "gitId": "-"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 435,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "### Deleting a person"
+      },
+      {
+        "lineNumber": 436,
+        "author": {
+          "gitId": "-"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 437,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "1. Deleting a person while all persons are being shown"
+      },
+      {
+        "lineNumber": 438,
+        "author": {
+          "gitId": "-"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 439,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "   1. Prerequisites: List all persons using the `list` command. Multiple persons in the list."
+      },
+      {
+        "lineNumber": 440,
+        "author": {
+          "gitId": "-"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 441,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "   1. Test case: `delete 1`\u003cbr\u003e"
+      },
+      {
+        "lineNumber": 442,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "      Expected: First contact is deleted from the list. Details of the deleted contact shown in the status message. Timestamp in the status bar is updated."
+      },
+      {
+        "lineNumber": 443,
+        "author": {
+          "gitId": "-"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 444,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "   1. Test case: `delete 0`\u003cbr\u003e"
+      },
+      {
+        "lineNumber": 445,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "      Expected: No person is deleted. Error details shown in the status message. Status bar remains the same."
+      },
+      {
+        "lineNumber": 446,
+        "author": {
+          "gitId": "-"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 447,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "   1. Other incorrect delete commands to try: `delete`, `delete x`, `...` (where x is larger than the list size)\u003cbr\u003e"
+      },
+      {
+        "lineNumber": 448,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "      Expected: Similar to previous."
+      },
+      {
+        "lineNumber": 449,
+        "author": {
+          "gitId": "-"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 450,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "1. _{ more test cases …​ }_"
+      },
+      {
+        "lineNumber": 451,
+        "author": {
+          "gitId": "-"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 452,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "### Saving data"
+      },
+      {
+        "lineNumber": 453,
+        "author": {
+          "gitId": "-"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 454,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "1. Dealing with missing/corrupted data files"
+      },
+      {
+        "lineNumber": 455,
+        "author": {
+          "gitId": "-"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 456,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "   1. _{explain how to simulate a missing/corrupted file, and the expected behavior}_"
+      },
+      {
+        "lineNumber": 457,
+        "author": {
+          "gitId": "-"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 458,
+        "author": {
+          "gitId": "-"
+        },
         "content": "1. _{ more test cases …​ }_"
       }
     ],
     "authorContributionMap": {
-      "Ziyang-98": 53,
-      "-": 341
+      "Ziyang-98": 112,
+      "-": 346
     }
   },
   {
@@ -12234,7 +12682,7 @@
         "author": {
           "gitId": "Ziyang-98"
         },
-        "content": "            + PREFIX_NAME + \"ACCOUNT NAME \";"
+        "content": "            + \"Example: \" + PREFIX_NAME + \"ACCOUNT NAME \";"
       },
       {
         "lineNumber": 22,
@@ -13317,7 +13765,7 @@
       {
         "lineNumber": 48,
         "author": {
-          "gitId": "-"
+          "gitId": "jordanyoong"
         },
         "content": "    }"
       },
@@ -13331,13 +13779,62 @@
       {
         "lineNumber": 50,
         "author": {
+          "gitId": "jordanyoong"
+        },
+        "content": "    @Override"
+      },
+      {
+        "lineNumber": 51,
+        "author": {
+          "gitId": "jordanyoong"
+        },
+        "content": "    public boolean equals(Object other) {"
+      },
+      {
+        "lineNumber": 52,
+        "author": {
+          "gitId": "jordanyoong"
+        },
+        "content": "        return other \u003d\u003d this // short circuit if same object"
+      },
+      {
+        "lineNumber": 53,
+        "author": {
+          "gitId": "jordanyoong"
+        },
+        "content": "                || (other instanceof ClearCommand) // instanceof handles nulls"
+      },
+      {
+        "lineNumber": 54,
+        "author": {
+          "gitId": "jordanyoong"
+        },
+        "content": "                \u0026\u0026 category.equals(((ClearCommand) other).category); // state check"
+      },
+      {
+        "lineNumber": 55,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "    }"
+      },
+      {
+        "lineNumber": 56,
+        "author": {
+          "gitId": "jordanyoong"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 57,
+        "author": {
           "gitId": "-"
         },
         "content": "}"
       }
     ],
     "authorContributionMap": {
-      "jordanyoong": 34,
+      "jordanyoong": 41,
       "-": 16
     }
   },
@@ -14626,105 +15123,105 @@
         "author": {
           "gitId": "Ziyang-98"
         },
-        "content": "import java.util.List;"
+        "content": "import seedu.address.logic.commands.exceptions.CommandException;"
       },
       {
         "lineNumber": 8,
         "author": {
           "gitId": "Ziyang-98"
         },
-        "content": ""
+        "content": "import seedu.address.model.Model;"
       },
       {
         "lineNumber": 9,
         "author": {
           "gitId": "Ziyang-98"
         },
-        "content": "import seedu.address.logic.commands.exceptions.CommandException;"
+        "content": "import seedu.address.model.account.Account;"
       },
       {
         "lineNumber": 10,
         "author": {
           "gitId": "Ziyang-98"
         },
-        "content": "import seedu.address.model.Model;"
+        "content": "import seedu.address.model.account.ActiveAccount;"
       },
       {
         "lineNumber": 11,
         "author": {
           "gitId": "Ziyang-98"
         },
-        "content": "import seedu.address.model.account.Account;"
+        "content": "import seedu.address.model.account.Name;"
       },
       {
         "lineNumber": 12,
         "author": {
           "gitId": "Ziyang-98"
         },
-        "content": "import seedu.address.model.account.ActiveAccount;"
+        "content": ""
       },
       {
         "lineNumber": 13,
         "author": {
           "gitId": "Ziyang-98"
         },
-        "content": "import seedu.address.model.account.Name;"
+        "content": "/**"
       },
       {
         "lineNumber": 14,
         "author": {
           "gitId": "Ziyang-98"
         },
-        "content": "import seedu.address.model.account.entry.Expense;"
+        "content": " * Edits the details of an existing account in Common Cents."
       },
       {
         "lineNumber": 15,
         "author": {
           "gitId": "Ziyang-98"
         },
-        "content": "import seedu.address.model.account.entry.Revenue;"
+        "content": " */"
       },
       {
         "lineNumber": 16,
         "author": {
           "gitId": "Ziyang-98"
         },
-        "content": ""
+        "content": "public class EditAccountCommand extends Command {"
       },
       {
         "lineNumber": 17,
         "author": {
           "gitId": "Ziyang-98"
         },
-        "content": "/**"
+        "content": "    public static final String COMMAND_WORD \u003d \"editacc\";"
       },
       {
         "lineNumber": 18,
         "author": {
           "gitId": "Ziyang-98"
         },
-        "content": " * Edits the details of an existing account in Common Cents."
+        "content": ""
       },
       {
         "lineNumber": 19,
         "author": {
           "gitId": "Ziyang-98"
         },
-        "content": " */"
+        "content": "    public static final String MESSAGE_USAGE \u003d COMMAND_WORD + \": Edits the current Account\u0027s name\\n\""
       },
       {
         "lineNumber": 20,
         "author": {
           "gitId": "Ziyang-98"
         },
-        "content": "public class EditAccountCommand extends Command {"
+        "content": "            + \"Parameters: \" + PREFIX_NAME + \"ACCOUNT NAME \""
       },
       {
         "lineNumber": 21,
         "author": {
           "gitId": "Ziyang-98"
         },
-        "content": "    public static final String COMMAND_WORD \u003d \"editacc\";"
+        "content": "            + \"Example: \" + PREFIX_NAME + \"ACCOUNT NAME \";"
       },
       {
         "lineNumber": 22,
@@ -14738,224 +15235,224 @@
         "author": {
           "gitId": "Ziyang-98"
         },
-        "content": "    public static final String MESSAGE_USAGE \u003d COMMAND_WORD + \": Edits the current Account\u0027s name\\n\""
+        "content": "    public static final String MESSAGE_SUCCESS \u003d \"Name for account changed from %1$s -\u003e %2$s!\";"
       },
       {
         "lineNumber": 24,
         "author": {
           "gitId": "Ziyang-98"
         },
-        "content": "            + \"Parameters: \" + PREFIX_NAME + \"ACCOUNT NAME \";"
+        "content": ""
       },
       {
         "lineNumber": 25,
         "author": {
           "gitId": "Ziyang-98"
         },
-        "content": ""
+        "content": "    public final Name name;"
       },
       {
         "lineNumber": 26,
         "author": {
           "gitId": "Ziyang-98"
         },
-        "content": "    public static final String MESSAGE_SUCCESS \u003d \"Name for account changed from %1$s -\u003e %2$s!\";"
+        "content": ""
       },
       {
         "lineNumber": 27,
         "author": {
           "gitId": "Ziyang-98"
         },
-        "content": ""
+        "content": "    /**"
       },
       {
         "lineNumber": 28,
         "author": {
           "gitId": "Ziyang-98"
         },
-        "content": "    public final Account account;"
+        "content": "     * Creates an EditAccountCommand to edit the current {@code ActiveAccount}"
       },
       {
         "lineNumber": 29,
         "author": {
           "gitId": "Ziyang-98"
         },
-        "content": ""
+        "content": "     */"
       },
       {
         "lineNumber": 30,
         "author": {
           "gitId": "Ziyang-98"
         },
-        "content": "    /**"
+        "content": "    public EditAccountCommand(Name name) {"
       },
       {
         "lineNumber": 31,
         "author": {
           "gitId": "Ziyang-98"
         },
-        "content": "     * Creates an EditAccountCommand to edit the current {@code ActiveAccount}"
+        "content": "        requireNonNull(name);"
       },
       {
         "lineNumber": 32,
         "author": {
           "gitId": "Ziyang-98"
         },
-        "content": "     */"
+        "content": "        this.name \u003d name;"
       },
       {
         "lineNumber": 33,
         "author": {
           "gitId": "Ziyang-98"
         },
-        "content": "    public EditAccountCommand(Account account) {"
+        "content": "    }"
       },
       {
         "lineNumber": 34,
         "author": {
           "gitId": "Ziyang-98"
         },
-        "content": "        requireNonNull(account);"
+        "content": ""
       },
       {
         "lineNumber": 35,
         "author": {
           "gitId": "Ziyang-98"
         },
-        "content": "        this.account \u003d account;"
+        "content": "    @Override"
       },
       {
         "lineNumber": 36,
         "author": {
           "gitId": "Ziyang-98"
         },
-        "content": "    }"
+        "content": "    public CommandResult execute(Model model, ActiveAccount activeAccount) throws CommandException {"
       },
       {
         "lineNumber": 37,
         "author": {
           "gitId": "Ziyang-98"
         },
-        "content": ""
+        "content": "        requireAllNonNull(model, activeAccount);"
       },
       {
         "lineNumber": 38,
         "author": {
           "gitId": "Ziyang-98"
         },
-        "content": "    @Override"
+        "content": "        Account previousAccount \u003d activeAccount.getAccount();"
       },
       {
         "lineNumber": 39,
         "author": {
           "gitId": "Ziyang-98"
         },
-        "content": "    public CommandResult execute(Model model, ActiveAccount activeAccount) throws CommandException {"
+        "content": ""
       },
       {
         "lineNumber": 40,
         "author": {
           "gitId": "Ziyang-98"
         },
-        "content": "        requireAllNonNull(model, activeAccount);"
+        "content": "        activeAccount.setName(name);"
       },
       {
         "lineNumber": 41,
         "author": {
           "gitId": "Ziyang-98"
         },
-        "content": "        Account currentAccount \u003d activeAccount.getAccount();"
+        "content": "        Account newAccount \u003d activeAccount.getAccount();"
       },
       {
         "lineNumber": 42,
         "author": {
           "gitId": "Ziyang-98"
         },
-        "content": ""
+        "content": "        model.setAccount(previousAccount, newAccount);"
       },
       {
         "lineNumber": 43,
         "author": {
           "gitId": "Ziyang-98"
         },
-        "content": "        Name previousName \u003d currentAccount.getName();"
+        "content": "        Name previousName \u003d previousAccount.getName();"
       },
       {
         "lineNumber": 44,
         "author": {
           "gitId": "Ziyang-98"
         },
-        "content": "        Name newName \u003d account.getName();"
+        "content": "        Name newName \u003d newAccount.getName();"
       },
       {
         "lineNumber": 45,
         "author": {
           "gitId": "Ziyang-98"
         },
-        "content": ""
+        "content": "        return new CommandResult(String.format(MESSAGE_SUCCESS, previousName.toString(), newName.toString()));"
       },
       {
         "lineNumber": 46,
         "author": {
           "gitId": "Ziyang-98"
         },
-        "content": "        List\u003cExpense\u003e currentExpenses \u003d currentAccount.getExpenseList();"
+        "content": ""
       },
       {
         "lineNumber": 47,
         "author": {
           "gitId": "Ziyang-98"
         },
-        "content": "        List\u003cRevenue\u003e currentRevenues \u003d currentAccount.getRevenueList();"
+        "content": "    }"
       },
       {
         "lineNumber": 48,
         "author": {
           "gitId": "Ziyang-98"
         },
-        "content": "        this.account.setExpenses(currentExpenses);"
+        "content": ""
       },
       {
         "lineNumber": 49,
         "author": {
           "gitId": "Ziyang-98"
         },
-        "content": "        this.account.setRevenues(currentRevenues);"
+        "content": "    @Override"
       },
       {
         "lineNumber": 50,
         "author": {
           "gitId": "Ziyang-98"
         },
-        "content": ""
+        "content": "    public boolean equals(Object other) {"
       },
       {
         "lineNumber": 51,
         "author": {
           "gitId": "Ziyang-98"
         },
-        "content": "        model.setAccount(currentAccount, account);"
+        "content": "        return other \u003d\u003d this // short circuit if same object"
       },
       {
         "lineNumber": 52,
         "author": {
           "gitId": "Ziyang-98"
         },
-        "content": "        activeAccount.setActiveAccount(this.account);"
+        "content": "                || (other instanceof EditAccountCommand // instanceof handles nulls"
       },
       {
         "lineNumber": 53,
         "author": {
           "gitId": "Ziyang-98"
         },
-        "content": ""
+        "content": "                \u0026\u0026 name.equals(((EditAccountCommand) other).name));"
       },
       {
         "lineNumber": 54,
         "author": {
           "gitId": "Ziyang-98"
         },
-        "content": "        return new CommandResult(String.format(MESSAGE_SUCCESS, previousName.toString(), newName.toString()));"
+        "content": "    }"
       },
       {
         "lineNumber": 55,
@@ -14969,74 +15466,11 @@
         "author": {
           "gitId": "Ziyang-98"
         },
-        "content": "    }"
-      },
-      {
-        "lineNumber": 57,
-        "author": {
-          "gitId": "Ziyang-98"
-        },
-        "content": ""
-      },
-      {
-        "lineNumber": 58,
-        "author": {
-          "gitId": "Ziyang-98"
-        },
-        "content": "    @Override"
-      },
-      {
-        "lineNumber": 59,
-        "author": {
-          "gitId": "Ziyang-98"
-        },
-        "content": "    public boolean equals(Object other) {"
-      },
-      {
-        "lineNumber": 60,
-        "author": {
-          "gitId": "Ziyang-98"
-        },
-        "content": "        return other \u003d\u003d this // short circuit if same object"
-      },
-      {
-        "lineNumber": 61,
-        "author": {
-          "gitId": "Ziyang-98"
-        },
-        "content": "                || (other instanceof EditAccountCommand // instanceof handles nulls"
-      },
-      {
-        "lineNumber": 62,
-        "author": {
-          "gitId": "Ziyang-98"
-        },
-        "content": "                \u0026\u0026 account.equals(((EditAccountCommand) other).account));"
-      },
-      {
-        "lineNumber": 63,
-        "author": {
-          "gitId": "Ziyang-98"
-        },
-        "content": "    }"
-      },
-      {
-        "lineNumber": 64,
-        "author": {
-          "gitId": "Ziyang-98"
-        },
-        "content": ""
-      },
-      {
-        "lineNumber": 65,
-        "author": {
-          "gitId": "Ziyang-98"
-        },
         "content": "}"
       }
     ],
     "authorContributionMap": {
-      "Ziyang-98": 65
+      "Ziyang-98": 56
     }
   },
   {
@@ -16899,203 +17333,203 @@
         "author": {
           "gitId": "Ziyang-98"
         },
-        "content": "import java.util.stream.Stream;"
+        "content": "import seedu.address.logic.commands.AddAccountCommand;"
       },
       {
         "lineNumber": 7,
         "author": {
           "gitId": "Ziyang-98"
         },
-        "content": ""
+        "content": "import seedu.address.logic.parser.exceptions.ParseException;"
       },
       {
         "lineNumber": 8,
         "author": {
           "gitId": "Ziyang-98"
         },
-        "content": "import seedu.address.logic.commands.AddAccountCommand;"
+        "content": "import seedu.address.logic.parser.util.ArgumentMultimap;"
       },
       {
         "lineNumber": 9,
         "author": {
           "gitId": "Ziyang-98"
         },
-        "content": "import seedu.address.logic.parser.exceptions.ParseException;"
+        "content": "import seedu.address.logic.parser.util.ArgumentTokenizer;"
       },
       {
         "lineNumber": 10,
         "author": {
           "gitId": "Ziyang-98"
         },
-        "content": "import seedu.address.logic.parser.util.ArgumentMultimap;"
+        "content": "import seedu.address.logic.parser.util.ParserUtil;"
       },
       {
         "lineNumber": 11,
         "author": {
           "gitId": "Ziyang-98"
         },
-        "content": "import seedu.address.logic.parser.util.ArgumentTokenizer;"
+        "content": "import seedu.address.model.account.Account;"
       },
       {
         "lineNumber": 12,
         "author": {
           "gitId": "Ziyang-98"
         },
-        "content": "import seedu.address.logic.parser.util.ParserUtil;"
+        "content": "import seedu.address.model.account.Name;"
       },
       {
         "lineNumber": 13,
         "author": {
           "gitId": "Ziyang-98"
         },
-        "content": "import seedu.address.model.account.Account;"
+        "content": ""
       },
       {
         "lineNumber": 14,
         "author": {
           "gitId": "Ziyang-98"
         },
-        "content": "import seedu.address.model.account.Name;"
+        "content": ""
       },
       {
         "lineNumber": 15,
         "author": {
           "gitId": "Ziyang-98"
         },
-        "content": ""
+        "content": "/**"
       },
       {
         "lineNumber": 16,
         "author": {
           "gitId": "Ziyang-98"
         },
-        "content": ""
+        "content": " * Parses input arguments and creates a new AddAccountCommand object"
       },
       {
         "lineNumber": 17,
         "author": {
           "gitId": "Ziyang-98"
         },
-        "content": "/**"
+        "content": " */"
       },
       {
         "lineNumber": 18,
         "author": {
           "gitId": "Ziyang-98"
         },
-        "content": " * Parses input arguments and creates a new AddAccountCommand object"
+        "content": "public class AddAccountCommandParser implements Parser\u003cAddAccountCommand\u003e {"
       },
       {
         "lineNumber": 19,
         "author": {
           "gitId": "Ziyang-98"
         },
-        "content": " */"
+        "content": ""
       },
       {
         "lineNumber": 20,
         "author": {
           "gitId": "Ziyang-98"
         },
-        "content": "public class AddAccountCommandParser implements Parser\u003cAddAccountCommand\u003e {"
+        "content": "    /**"
       },
       {
         "lineNumber": 21,
         "author": {
           "gitId": "Ziyang-98"
         },
-        "content": ""
+        "content": "     * Parses the given {@code String} of arguments in the context of the AddAccountCommand"
       },
       {
         "lineNumber": 22,
         "author": {
           "gitId": "Ziyang-98"
         },
-        "content": "    /**"
+        "content": "     * and returns an AddAccountCommand object for execution."
       },
       {
         "lineNumber": 23,
         "author": {
           "gitId": "Ziyang-98"
         },
-        "content": "     * Parses the given {@code String} of arguments in the context of the AddAccountCommand"
+        "content": "     * @throws ParseException if the user input does not conform the expected format"
       },
       {
         "lineNumber": 24,
         "author": {
           "gitId": "Ziyang-98"
         },
-        "content": "     * and returns an AddAccountCommand object for execution."
+        "content": "     */"
       },
       {
         "lineNumber": 25,
         "author": {
           "gitId": "Ziyang-98"
         },
-        "content": "     * @throws ParseException if the user input does not conform the expected format"
+        "content": "    public AddAccountCommand parse(String args) throws ParseException {"
       },
       {
         "lineNumber": 26,
         "author": {
           "gitId": "Ziyang-98"
         },
-        "content": "     */"
+        "content": "        ArgumentMultimap argMultimap \u003d"
       },
       {
         "lineNumber": 27,
         "author": {
           "gitId": "Ziyang-98"
         },
-        "content": "    public AddAccountCommand parse(String args) throws ParseException {"
+        "content": "                ArgumentTokenizer.tokenize(args, PREFIX_NAME);"
       },
       {
         "lineNumber": 28,
         "author": {
           "gitId": "Ziyang-98"
         },
-        "content": "        ArgumentMultimap argMultimap \u003d"
+        "content": ""
       },
       {
         "lineNumber": 29,
         "author": {
           "gitId": "Ziyang-98"
         },
-        "content": "                ArgumentTokenizer.tokenize(args, PREFIX_NAME);"
+        "content": "        if (!ParserUtil.arePrefixesPresent(argMultimap, PREFIX_NAME)"
       },
       {
         "lineNumber": 30,
         "author": {
           "gitId": "Ziyang-98"
         },
-        "content": ""
+        "content": "                || !argMultimap.getPreamble().isEmpty()) {"
       },
       {
         "lineNumber": 31,
         "author": {
           "gitId": "Ziyang-98"
         },
-        "content": "        if (!arePrefixesPresent(argMultimap, PREFIX_NAME)"
+        "content": "            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddAccountCommand.MESSAGE_USAGE));"
       },
       {
         "lineNumber": 32,
         "author": {
           "gitId": "Ziyang-98"
         },
-        "content": "                || !argMultimap.getPreamble().isEmpty()) {"
+        "content": "        }"
       },
       {
         "lineNumber": 33,
         "author": {
           "gitId": "Ziyang-98"
         },
-        "content": "            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddAccountCommand.MESSAGE_USAGE));"
+        "content": ""
       },
       {
         "lineNumber": 34,
         "author": {
           "gitId": "Ziyang-98"
         },
-        "content": "        }"
+        "content": "        Name name \u003d ParserUtil.parseName(argMultimap.getValue(PREFIX_NAME).get());"
       },
       {
         "lineNumber": 35,
@@ -17109,7 +17543,7 @@
         "author": {
           "gitId": "Ziyang-98"
         },
-        "content": "        Name name \u003d ParserUtil.parseName(argMultimap.getValue(PREFIX_NAME).get());"
+        "content": "        Account account \u003d new Account(name);"
       },
       {
         "lineNumber": 37,
@@ -17123,94 +17557,24 @@
         "author": {
           "gitId": "Ziyang-98"
         },
-        "content": "        Account account \u003d new Account(name);"
+        "content": "        return new AddAccountCommand(account);"
       },
       {
         "lineNumber": 39,
         "author": {
           "gitId": "Ziyang-98"
         },
-        "content": ""
+        "content": "    }"
       },
       {
         "lineNumber": 40,
         "author": {
           "gitId": "Ziyang-98"
         },
-        "content": "        return new AddAccountCommand(account);"
+        "content": ""
       },
       {
         "lineNumber": 41,
-        "author": {
-          "gitId": "Ziyang-98"
-        },
-        "content": "    }"
-      },
-      {
-        "lineNumber": 42,
-        "author": {
-          "gitId": "Ziyang-98"
-        },
-        "content": ""
-      },
-      {
-        "lineNumber": 43,
-        "author": {
-          "gitId": "Ziyang-98"
-        },
-        "content": "    /**"
-      },
-      {
-        "lineNumber": 44,
-        "author": {
-          "gitId": "Ziyang-98"
-        },
-        "content": "     * Returns true if none of the prefixes contains empty {@code Optional} values in the given"
-      },
-      {
-        "lineNumber": 45,
-        "author": {
-          "gitId": "Ziyang-98"
-        },
-        "content": "     * {@code ArgumentMultimap}."
-      },
-      {
-        "lineNumber": 46,
-        "author": {
-          "gitId": "Ziyang-98"
-        },
-        "content": "     */"
-      },
-      {
-        "lineNumber": 47,
-        "author": {
-          "gitId": "Ziyang-98"
-        },
-        "content": "    private static boolean arePrefixesPresent(ArgumentMultimap argumentMultimap, Prefix... prefixes) {"
-      },
-      {
-        "lineNumber": 48,
-        "author": {
-          "gitId": "Ziyang-98"
-        },
-        "content": "        return Stream.of(prefixes).allMatch(prefix -\u003e argumentMultimap.getValue(prefix).isPresent());"
-      },
-      {
-        "lineNumber": 49,
-        "author": {
-          "gitId": "Ziyang-98"
-        },
-        "content": "    }"
-      },
-      {
-        "lineNumber": 50,
-        "author": {
-          "gitId": "Ziyang-98"
-        },
-        "content": ""
-      },
-      {
-        "lineNumber": 51,
         "author": {
           "gitId": "Ziyang-98"
         },
@@ -17218,7 +17582,7 @@
       }
     ],
     "authorContributionMap": {
-      "Ziyang-98": 51
+      "Ziyang-98": 41
     }
   },
   {
@@ -17766,7 +18130,7 @@
         "author": {
           "gitId": "jordanyoong"
         },
-        "content": "public class ClearCommandParser {"
+        "content": "public class ClearCommandParser implements Parser\u003cClearCommand\u003e {"
       },
       {
         "lineNumber": 18,
@@ -19214,217 +19578,217 @@
         "author": {
           "gitId": "Ziyang-98"
         },
-        "content": "import java.util.stream.Stream;"
+        "content": "import seedu.address.logic.commands.EditAccountCommand;"
       },
       {
         "lineNumber": 7,
         "author": {
           "gitId": "Ziyang-98"
         },
-        "content": ""
+        "content": "import seedu.address.logic.parser.exceptions.ParseException;"
       },
       {
         "lineNumber": 8,
         "author": {
           "gitId": "Ziyang-98"
         },
-        "content": "import seedu.address.logic.commands.EditAccountCommand;"
+        "content": "import seedu.address.logic.parser.util.ArgumentMultimap;"
       },
       {
         "lineNumber": 9,
         "author": {
           "gitId": "Ziyang-98"
         },
-        "content": "import seedu.address.logic.parser.exceptions.ParseException;"
+        "content": "import seedu.address.logic.parser.util.ArgumentTokenizer;"
       },
       {
         "lineNumber": 10,
         "author": {
           "gitId": "Ziyang-98"
         },
-        "content": "import seedu.address.logic.parser.util.ArgumentMultimap;"
+        "content": "import seedu.address.logic.parser.util.ParserUtil;"
       },
       {
         "lineNumber": 11,
         "author": {
           "gitId": "Ziyang-98"
         },
-        "content": "import seedu.address.logic.parser.util.ArgumentTokenizer;"
+        "content": "import seedu.address.model.account.Name;"
       },
       {
         "lineNumber": 12,
         "author": {
           "gitId": "Ziyang-98"
         },
-        "content": "import seedu.address.logic.parser.util.ParserUtil;"
+        "content": ""
       },
       {
         "lineNumber": 13,
         "author": {
           "gitId": "Ziyang-98"
         },
-        "content": "import seedu.address.model.account.Account;"
+        "content": ""
       },
       {
         "lineNumber": 14,
         "author": {
           "gitId": "Ziyang-98"
         },
-        "content": "import seedu.address.model.account.Name;"
+        "content": "/**"
       },
       {
         "lineNumber": 15,
         "author": {
           "gitId": "Ziyang-98"
         },
-        "content": ""
+        "content": " * Parses input arguments and creates a new EditAccountCommand object"
       },
       {
         "lineNumber": 16,
         "author": {
           "gitId": "Ziyang-98"
         },
-        "content": ""
+        "content": " */"
       },
       {
         "lineNumber": 17,
         "author": {
           "gitId": "Ziyang-98"
         },
-        "content": "/**"
+        "content": "public class EditAccountCommandParser implements Parser\u003cEditAccountCommand\u003e {"
       },
       {
         "lineNumber": 18,
         "author": {
           "gitId": "Ziyang-98"
         },
-        "content": " * Parses input arguments and creates a new EditAccountCommand object"
+        "content": ""
       },
       {
         "lineNumber": 19,
         "author": {
           "gitId": "Ziyang-98"
         },
-        "content": " */"
+        "content": "    /**"
       },
       {
         "lineNumber": 20,
         "author": {
           "gitId": "Ziyang-98"
         },
-        "content": "public class EditAccountCommandParser implements Parser\u003cEditAccountCommand\u003e {"
+        "content": "     * Parses the given {@code String} of arguments in the context of the EditAccountCommand"
       },
       {
         "lineNumber": 21,
         "author": {
           "gitId": "Ziyang-98"
         },
-        "content": ""
+        "content": "     * and returns an EditAccountCommand object for execution."
       },
       {
         "lineNumber": 22,
         "author": {
           "gitId": "Ziyang-98"
         },
-        "content": "    /**"
+        "content": "     * @throws ParseException if the user input does not conform the expected format"
       },
       {
         "lineNumber": 23,
         "author": {
           "gitId": "Ziyang-98"
         },
-        "content": "     * Parses the given {@code String} of arguments in the context of the EditAccountCommand"
+        "content": "     */"
       },
       {
         "lineNumber": 24,
         "author": {
           "gitId": "Ziyang-98"
         },
-        "content": "     * and returns an EditAccountCommand object for execution."
+        "content": "    public EditAccountCommand parse(String args) throws ParseException {"
       },
       {
         "lineNumber": 25,
         "author": {
           "gitId": "Ziyang-98"
         },
-        "content": "     * @throws ParseException if the user input does not conform the expected format"
+        "content": "        ArgumentMultimap argMultimap \u003d"
       },
       {
         "lineNumber": 26,
         "author": {
           "gitId": "Ziyang-98"
         },
-        "content": "     */"
+        "content": "                ArgumentTokenizer.tokenize(args, PREFIX_NAME);"
       },
       {
         "lineNumber": 27,
         "author": {
           "gitId": "Ziyang-98"
         },
-        "content": "    public EditAccountCommand parse(String args) throws ParseException {"
+        "content": ""
       },
       {
         "lineNumber": 28,
         "author": {
           "gitId": "Ziyang-98"
         },
-        "content": "        ArgumentMultimap argMultimap \u003d"
+        "content": "        if (!ParserUtil.arePrefixesPresent(argMultimap, PREFIX_NAME)"
       },
       {
         "lineNumber": 29,
         "author": {
           "gitId": "Ziyang-98"
         },
-        "content": "                ArgumentTokenizer.tokenize(args, PREFIX_NAME);"
+        "content": "                || !argMultimap.getPreamble().isEmpty()) {"
       },
       {
         "lineNumber": 30,
         "author": {
           "gitId": "Ziyang-98"
         },
-        "content": ""
+        "content": "            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, EditAccountCommand.MESSAGE_USAGE));"
       },
       {
         "lineNumber": 31,
         "author": {
           "gitId": "Ziyang-98"
         },
-        "content": "        if (!arePrefixesPresent(argMultimap, PREFIX_NAME)"
+        "content": "        }"
       },
       {
         "lineNumber": 32,
         "author": {
           "gitId": "Ziyang-98"
         },
-        "content": "                || !argMultimap.getPreamble().isEmpty()) {"
+        "content": ""
       },
       {
         "lineNumber": 33,
         "author": {
           "gitId": "Ziyang-98"
         },
-        "content": "            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, EditAccountCommand.MESSAGE_USAGE));"
+        "content": "        Name name \u003d ParserUtil.parseName(argMultimap.getValue(PREFIX_NAME).get());"
       },
       {
         "lineNumber": 34,
         "author": {
           "gitId": "Ziyang-98"
         },
-        "content": "        }"
+        "content": ""
       },
       {
         "lineNumber": 35,
         "author": {
           "gitId": "Ziyang-98"
         },
-        "content": ""
+        "content": "        return new EditAccountCommand(name);"
       },
       {
         "lineNumber": 36,
         "author": {
           "gitId": "Ziyang-98"
         },
-        "content": "        Name name \u003d ParserUtil.parseName(argMultimap.getValue(PREFIX_NAME).get());"
+        "content": "    }"
       },
       {
         "lineNumber": 37,
@@ -19438,102 +19802,11 @@
         "author": {
           "gitId": "Ziyang-98"
         },
-        "content": "        Account account \u003d new Account(name);"
-      },
-      {
-        "lineNumber": 39,
-        "author": {
-          "gitId": "Ziyang-98"
-        },
-        "content": ""
-      },
-      {
-        "lineNumber": 40,
-        "author": {
-          "gitId": "Ziyang-98"
-        },
-        "content": "        return new EditAccountCommand(account);"
-      },
-      {
-        "lineNumber": 41,
-        "author": {
-          "gitId": "Ziyang-98"
-        },
-        "content": "    }"
-      },
-      {
-        "lineNumber": 42,
-        "author": {
-          "gitId": "Ziyang-98"
-        },
-        "content": ""
-      },
-      {
-        "lineNumber": 43,
-        "author": {
-          "gitId": "Ziyang-98"
-        },
-        "content": "    /**"
-      },
-      {
-        "lineNumber": 44,
-        "author": {
-          "gitId": "Ziyang-98"
-        },
-        "content": "     * Returns true if none of the prefixes contains empty {@code Optional} values in the given"
-      },
-      {
-        "lineNumber": 45,
-        "author": {
-          "gitId": "Ziyang-98"
-        },
-        "content": "     * {@code ArgumentMultimap}."
-      },
-      {
-        "lineNumber": 46,
-        "author": {
-          "gitId": "Ziyang-98"
-        },
-        "content": "     */"
-      },
-      {
-        "lineNumber": 47,
-        "author": {
-          "gitId": "Ziyang-98"
-        },
-        "content": "    private static boolean arePrefixesPresent(ArgumentMultimap argumentMultimap, Prefix... prefixes) {"
-      },
-      {
-        "lineNumber": 48,
-        "author": {
-          "gitId": "Ziyang-98"
-        },
-        "content": "        return Stream.of(prefixes).allMatch(prefix -\u003e argumentMultimap.getValue(prefix).isPresent());"
-      },
-      {
-        "lineNumber": 49,
-        "author": {
-          "gitId": "Ziyang-98"
-        },
-        "content": "    }"
-      },
-      {
-        "lineNumber": 50,
-        "author": {
-          "gitId": "Ziyang-98"
-        },
-        "content": ""
-      },
-      {
-        "lineNumber": 51,
-        "author": {
-          "gitId": "Ziyang-98"
-        },
         "content": "}"
       }
     ],
     "authorContributionMap": {
-      "Ziyang-98": 51
+      "Ziyang-98": 38
     }
   },
   {
@@ -20003,171 +20276,164 @@
         "author": {
           "gitId": "Ziyang-98"
         },
-        "content": "import seedu.address.logic.commands.DeleteAccountCommand;"
+        "content": "import seedu.address.logic.commands.SwitchAccountCommand;"
       },
       {
         "lineNumber": 7,
         "author": {
           "gitId": "Ziyang-98"
         },
-        "content": "import seedu.address.logic.commands.SwitchAccountCommand;"
+        "content": "import seedu.address.logic.parser.exceptions.ParseException;"
       },
       {
         "lineNumber": 8,
         "author": {
           "gitId": "Ziyang-98"
         },
-        "content": "import seedu.address.logic.parser.exceptions.ParseException;"
+        "content": "import seedu.address.logic.parser.util.ParserUtil;"
       },
       {
         "lineNumber": 9,
         "author": {
           "gitId": "Ziyang-98"
         },
-        "content": "import seedu.address.logic.parser.util.ParserUtil;"
+        "content": ""
       },
       {
         "lineNumber": 10,
         "author": {
           "gitId": "Ziyang-98"
         },
-        "content": ""
+        "content": "/**"
       },
       {
         "lineNumber": 11,
         "author": {
           "gitId": "Ziyang-98"
         },
-        "content": "/**"
+        "content": " * Parses input arguments and creates a new DeleteAccountCommand object"
       },
       {
         "lineNumber": 12,
         "author": {
           "gitId": "Ziyang-98"
         },
-        "content": " * Parses input arguments and creates a new DeleteAccountCommand object"
+        "content": " */"
       },
       {
         "lineNumber": 13,
         "author": {
           "gitId": "Ziyang-98"
         },
-        "content": " */"
+        "content": "public class SwitchAccountCommandParser implements Parser\u003cSwitchAccountCommand\u003e {"
       },
       {
         "lineNumber": 14,
         "author": {
           "gitId": "Ziyang-98"
         },
-        "content": "public class SwitchAccountCommandParser implements Parser\u003cSwitchAccountCommand\u003e {"
+        "content": "    /**"
       },
       {
         "lineNumber": 15,
         "author": {
           "gitId": "Ziyang-98"
         },
-        "content": "    /**"
+        "content": "     * Parses the given {@code String} of arguments in the context of the SwitchAccountCommand"
       },
       {
         "lineNumber": 16,
         "author": {
           "gitId": "Ziyang-98"
         },
-        "content": "     * Parses the given {@code String} of arguments in the context of the SwitchAccountCommand"
+        "content": "     * and returns a SwitchAccountCommand object for execution."
       },
       {
         "lineNumber": 17,
         "author": {
           "gitId": "Ziyang-98"
         },
-        "content": "     * and returns a SwitchAccountCommand object for execution."
+        "content": "     * @throws ParseException if the user input does not conform the expected format"
       },
       {
         "lineNumber": 18,
         "author": {
           "gitId": "Ziyang-98"
         },
-        "content": "     * @throws ParseException if the user input does not conform the expected format"
+        "content": "     */"
       },
       {
         "lineNumber": 19,
         "author": {
           "gitId": "Ziyang-98"
         },
-        "content": "     */"
+        "content": "    public SwitchAccountCommand parse(String args) throws ParseException {"
       },
       {
         "lineNumber": 20,
         "author": {
           "gitId": "Ziyang-98"
         },
-        "content": "    public SwitchAccountCommand parse(String args) throws ParseException {"
+        "content": "        try {"
       },
       {
         "lineNumber": 21,
         "author": {
           "gitId": "Ziyang-98"
         },
-        "content": "        try {"
+        "content": "            Index index \u003d ParserUtil.parseIndex(args);"
       },
       {
         "lineNumber": 22,
         "author": {
           "gitId": "Ziyang-98"
         },
-        "content": "            Index index \u003d ParserUtil.parseIndex(args);"
+        "content": "            return new SwitchAccountCommand(index);"
       },
       {
         "lineNumber": 23,
         "author": {
           "gitId": "Ziyang-98"
         },
-        "content": "            return new SwitchAccountCommand(index);"
+        "content": "        } catch (ParseException pe) {"
       },
       {
         "lineNumber": 24,
         "author": {
           "gitId": "Ziyang-98"
         },
-        "content": "        } catch (ParseException pe) {"
+        "content": "            throw new ParseException("
       },
       {
         "lineNumber": 25,
         "author": {
           "gitId": "Ziyang-98"
         },
-        "content": "            throw new ParseException("
+        "content": "                    String.format(MESSAGE_INVALID_COMMAND_FORMAT, SwitchAccountCommand.MESSAGE_USAGE), pe);"
       },
       {
         "lineNumber": 26,
         "author": {
           "gitId": "Ziyang-98"
         },
-        "content": "                    String.format(MESSAGE_INVALID_COMMAND_FORMAT, DeleteAccountCommand.MESSAGE_USAGE), pe);"
+        "content": "        }"
       },
       {
         "lineNumber": 27,
         "author": {
           "gitId": "Ziyang-98"
         },
-        "content": "        }"
+        "content": "    }"
       },
       {
         "lineNumber": 28,
         "author": {
           "gitId": "Ziyang-98"
         },
-        "content": "    }"
-      },
-      {
-        "lineNumber": 29,
-        "author": {
-          "gitId": "Ziyang-98"
-        },
         "content": ""
       },
       {
-        "lineNumber": 30,
+        "lineNumber": 29,
         "author": {
           "gitId": "Ziyang-98"
         },
@@ -20175,7 +20441,7 @@
       }
     ],
     "authorContributionMap": {
-      "Ziyang-98": 30
+      "Ziyang-98": 29
     }
   },
   {
@@ -28378,49 +28644,49 @@
         "author": {
           "gitId": "Ziyang-98"
         },
-        "content": "    /** Returns the Active Account */"
+        "content": "    /**"
       },
       {
         "lineNumber": 26,
         "author": {
-          "gitId": "nicholas-gcc"
+          "gitId": "Ziyang-98"
         },
-        "content": "    Account getAccount();"
+        "content": "     * Replaces the name of the account with {@code name}."
       },
       {
         "lineNumber": 27,
         "author": {
           "gitId": "Ziyang-98"
         },
-        "content": ""
+        "content": "     */"
       },
       {
         "lineNumber": 28,
         "author": {
           "gitId": "Ziyang-98"
         },
-        "content": "    /**"
+        "content": "    public void setName(Name name);"
       },
       {
         "lineNumber": 29,
         "author": {
           "gitId": "Ziyang-98"
         },
-        "content": "     * Returns true if an expense/revenue entry with the same identity as {@code entry} exists in the account."
+        "content": ""
       },
       {
         "lineNumber": 30,
         "author": {
           "gitId": "Ziyang-98"
         },
-        "content": "     */"
+        "content": "    /** Returns a copy of the Active Account */"
       },
       {
         "lineNumber": 31,
         "author": {
-          "gitId": "Ziyang-98"
+          "gitId": "nicholas-gcc"
         },
-        "content": "    boolean hasEntry(Entry entry);"
+        "content": "    Account getAccount();"
       },
       {
         "lineNumber": 32,
@@ -28441,7 +28707,7 @@
         "author": {
           "gitId": "Ziyang-98"
         },
-        "content": "     * Returns true if a expense with the same identity as {@code expense} exists in the account."
+        "content": "     * Returns true if an expense/revenue entry with the same identity as {@code entry} exists in the account."
       },
       {
         "lineNumber": 35,
@@ -28455,7 +28721,7 @@
         "author": {
           "gitId": "Ziyang-98"
         },
-        "content": "    boolean hasExpense(Expense expense);"
+        "content": "    boolean hasEntry(Entry entry);"
       },
       {
         "lineNumber": 37,
@@ -28476,7 +28742,7 @@
         "author": {
           "gitId": "Ziyang-98"
         },
-        "content": "     * Returns true if a revenue with the same identity as {@code revenue} exists in the account."
+        "content": "     * Returns true if a expense with the same identity as {@code expense} exists in the account."
       },
       {
         "lineNumber": 40,
@@ -28490,7 +28756,7 @@
         "author": {
           "gitId": "Ziyang-98"
         },
-        "content": "    boolean hasRevenue(Revenue revenue);"
+        "content": "    boolean hasExpense(Expense expense);"
       },
       {
         "lineNumber": 42,
@@ -28511,91 +28777,91 @@
         "author": {
           "gitId": "Ziyang-98"
         },
-        "content": "     * Deletes the given expense."
+        "content": "     * Returns true if a revenue with the same identity as {@code revenue} exists in the account."
       },
       {
         "lineNumber": 45,
         "author": {
           "gitId": "Ziyang-98"
         },
-        "content": "     * The expense must exist in the account."
+        "content": "     */"
       },
       {
         "lineNumber": 46,
         "author": {
           "gitId": "Ziyang-98"
         },
-        "content": "     */"
+        "content": "    boolean hasRevenue(Revenue revenue);"
       },
       {
         "lineNumber": 47,
         "author": {
           "gitId": "Ziyang-98"
         },
-        "content": "    void deleteExpense(Expense target);"
+        "content": ""
       },
       {
         "lineNumber": 48,
         "author": {
           "gitId": "Ziyang-98"
         },
-        "content": ""
+        "content": "    /**"
       },
       {
         "lineNumber": 49,
         "author": {
           "gitId": "Ziyang-98"
         },
-        "content": "    /**"
+        "content": "     * Deletes the given expense."
       },
       {
         "lineNumber": 50,
         "author": {
           "gitId": "Ziyang-98"
         },
-        "content": "     * Deletes the given revenue."
+        "content": "     * The expense must exist in the account."
       },
       {
         "lineNumber": 51,
         "author": {
           "gitId": "Ziyang-98"
         },
-        "content": "     * The revenue must exist in the account."
+        "content": "     */"
       },
       {
         "lineNumber": 52,
         "author": {
           "gitId": "Ziyang-98"
         },
-        "content": "     */"
+        "content": "    void deleteExpense(Expense target);"
       },
       {
         "lineNumber": 53,
         "author": {
           "gitId": "Ziyang-98"
         },
-        "content": "    void deleteRevenue(Revenue target);"
+        "content": ""
       },
       {
         "lineNumber": 54,
         "author": {
           "gitId": "Ziyang-98"
         },
-        "content": ""
+        "content": "    /**"
       },
       {
         "lineNumber": 55,
         "author": {
           "gitId": "Ziyang-98"
         },
-        "content": "    /**"
+        "content": "     * Deletes the given revenue."
       },
       {
         "lineNumber": 56,
         "author": {
           "gitId": "Ziyang-98"
         },
-        "content": "     * Adds the given expense."
+        "content": "     * The revenue must exist in the account."
       },
       {
         "lineNumber": 57,
@@ -28609,7 +28875,7 @@
         "author": {
           "gitId": "Ziyang-98"
         },
-        "content": "    void addExpense(Expense expense);"
+        "content": "    void deleteRevenue(Revenue target);"
       },
       {
         "lineNumber": 59,
@@ -28630,7 +28896,7 @@
         "author": {
           "gitId": "Ziyang-98"
         },
-        "content": "     * Adds the given revenue."
+        "content": "     * Adds the given expense."
       },
       {
         "lineNumber": 62,
@@ -28644,7 +28910,7 @@
         "author": {
           "gitId": "Ziyang-98"
         },
-        "content": "    void addRevenue(Revenue revenue);"
+        "content": "    void addExpense(Expense expense);"
       },
       {
         "lineNumber": 64,
@@ -28665,110 +28931,110 @@
         "author": {
           "gitId": "Ziyang-98"
         },
-        "content": "     * Replaces the given expense {@code target} with {@code editedExpense}."
+        "content": "     * Adds the given revenue."
       },
       {
         "lineNumber": 67,
         "author": {
           "gitId": "Ziyang-98"
         },
-        "content": "     * {@code target} must exist in the account."
+        "content": "     */"
       },
       {
         "lineNumber": 68,
         "author": {
           "gitId": "Ziyang-98"
         },
-        "content": "     */"
+        "content": "    void addRevenue(Revenue revenue);"
       },
       {
         "lineNumber": 69,
         "author": {
           "gitId": "Ziyang-98"
         },
-        "content": "    void setExpense(Expense target, Expense editedExpense);"
+        "content": ""
       },
       {
         "lineNumber": 70,
         "author": {
           "gitId": "Ziyang-98"
         },
-        "content": ""
+        "content": "    /**"
       },
       {
         "lineNumber": 71,
         "author": {
           "gitId": "Ziyang-98"
         },
-        "content": "    /**"
+        "content": "     * Replaces the given expense {@code target} with {@code editedExpense}."
       },
       {
         "lineNumber": 72,
         "author": {
           "gitId": "Ziyang-98"
         },
-        "content": "     * Replaces the given revenue {@code target} with {@code editedRevenue}."
+        "content": "     * {@code target} must exist in the account."
       },
       {
         "lineNumber": 73,
         "author": {
           "gitId": "Ziyang-98"
         },
-        "content": "     * {@code target} must exist in the account."
+        "content": "     */"
       },
       {
         "lineNumber": 74,
         "author": {
           "gitId": "Ziyang-98"
         },
-        "content": "     */"
+        "content": "    void setExpense(Expense target, Expense editedExpense);"
       },
       {
         "lineNumber": 75,
         "author": {
           "gitId": "Ziyang-98"
         },
-        "content": "    void setRevenue(Revenue target, Revenue editedRevenue);"
+        "content": ""
       },
       {
         "lineNumber": 76,
         "author": {
           "gitId": "Ziyang-98"
         },
-        "content": ""
+        "content": "    /**"
       },
       {
         "lineNumber": 77,
         "author": {
-          "gitId": "jordanyoong"
+          "gitId": "Ziyang-98"
         },
-        "content": "    /**"
+        "content": "     * Replaces the given revenue {@code target} with {@code editedRevenue}."
       },
       {
         "lineNumber": 78,
         "author": {
-          "gitId": "jordanyoong"
+          "gitId": "Ziyang-98"
         },
-        "content": "     * Clears all entries in the expense list."
+        "content": "     * {@code target} must exist in the account."
       },
       {
         "lineNumber": 79,
         "author": {
-          "gitId": "jordanyoong"
+          "gitId": "Ziyang-98"
         },
         "content": "     */"
       },
       {
         "lineNumber": 80,
         "author": {
-          "gitId": "jordanyoong"
+          "gitId": "Ziyang-98"
         },
-        "content": "    void clearExpenses();"
+        "content": "    void setRevenue(Revenue target, Revenue editedRevenue);"
       },
       {
         "lineNumber": 81,
         "author": {
-          "gitId": "jordanyoong"
+          "gitId": "Ziyang-98"
         },
         "content": ""
       },
@@ -28784,7 +29050,7 @@
         "author": {
           "gitId": "jordanyoong"
         },
-        "content": "     * Clears all entries in the revenues list."
+        "content": "     * Clears all entries in the expense list."
       },
       {
         "lineNumber": 84,
@@ -28798,7 +29064,7 @@
         "author": {
           "gitId": "jordanyoong"
         },
-        "content": "    void clearRevenues();"
+        "content": "    void clearExpenses();"
       },
       {
         "lineNumber": 86,
@@ -28810,131 +29076,166 @@
       {
         "lineNumber": 87,
         "author": {
-          "gitId": "Ziyang-98"
+          "gitId": "jordanyoong"
         },
-        "content": "    /** Returns an unmodifiable view of the filtered expense list */"
+        "content": "    /**"
       },
       {
         "lineNumber": 88,
         "author": {
-          "gitId": "Ziyang-98"
+          "gitId": "jordanyoong"
         },
-        "content": "    public ObservableList\u003cExpense\u003e getFilteredExpenseList();"
+        "content": "     * Clears all entries in the revenues list."
       },
       {
         "lineNumber": 89,
         "author": {
-          "gitId": "Ziyang-98"
+          "gitId": "jordanyoong"
         },
-        "content": ""
+        "content": "     */"
       },
       {
         "lineNumber": 90,
         "author": {
-          "gitId": "Ziyang-98"
+          "gitId": "jordanyoong"
         },
-        "content": "    /** Returns an unmodifiable view of the filtered revenue list */"
+        "content": "    void clearRevenues();"
       },
       {
         "lineNumber": 91,
         "author": {
-          "gitId": "Ziyang-98"
+          "gitId": "jordanyoong"
         },
-        "content": "    public ObservableList\u003cRevenue\u003e getFilteredRevenueList();"
+        "content": ""
       },
       {
         "lineNumber": 92,
         "author": {
           "gitId": "Ziyang-98"
         },
-        "content": ""
+        "content": "    /** Returns an unmodifiable view of the filtered expense list */"
       },
       {
         "lineNumber": 93,
         "author": {
           "gitId": "Ziyang-98"
         },
-        "content": "    /**"
+        "content": "    public ObservableList\u003cExpense\u003e getFilteredExpenseList();"
       },
       {
         "lineNumber": 94,
         "author": {
           "gitId": "Ziyang-98"
         },
-        "content": "     * Updates the filter of the filtered expense list to filter by the given {@code predicate}."
+        "content": ""
       },
       {
         "lineNumber": 95,
         "author": {
           "gitId": "Ziyang-98"
         },
-        "content": "     * @throws NullPointerException if {@code predicate} is null."
+        "content": "    /** Returns an unmodifiable view of the filtered revenue list */"
       },
       {
         "lineNumber": 96,
         "author": {
           "gitId": "Ziyang-98"
         },
-        "content": "     */"
+        "content": "    public ObservableList\u003cRevenue\u003e getFilteredRevenueList();"
       },
       {
         "lineNumber": 97,
         "author": {
           "gitId": "Ziyang-98"
         },
-        "content": "    void updateFilteredExpenseList(Predicate\u003cExpense\u003e predicate);"
+        "content": ""
       },
       {
         "lineNumber": 98,
         "author": {
           "gitId": "Ziyang-98"
         },
-        "content": ""
+        "content": "    /**"
       },
       {
         "lineNumber": 99,
         "author": {
           "gitId": "Ziyang-98"
         },
-        "content": "    /**"
+        "content": "     * Updates the filter of the filtered expense list to filter by the given {@code predicate}."
       },
       {
         "lineNumber": 100,
         "author": {
           "gitId": "Ziyang-98"
         },
-        "content": "     * Updates the filter of the filtered revenue list to filter by the given {@code predicate}."
+        "content": "     * @throws NullPointerException if {@code predicate} is null."
       },
       {
         "lineNumber": 101,
         "author": {
           "gitId": "Ziyang-98"
         },
-        "content": "     * @throws NullPointerException if {@code predicate} is null."
+        "content": "     */"
       },
       {
         "lineNumber": 102,
         "author": {
           "gitId": "Ziyang-98"
         },
-        "content": "     */"
+        "content": "    void updateFilteredExpenseList(Predicate\u003cExpense\u003e predicate);"
       },
       {
         "lineNumber": 103,
         "author": {
           "gitId": "Ziyang-98"
         },
-        "content": "    void updateFilteredRevenueList(Predicate\u003cRevenue\u003e predicate);"
+        "content": ""
       },
       {
         "lineNumber": 104,
         "author": {
           "gitId": "Ziyang-98"
         },
-        "content": ""
+        "content": "    /**"
       },
       {
         "lineNumber": 105,
+        "author": {
+          "gitId": "Ziyang-98"
+        },
+        "content": "     * Updates the filter of the filtered revenue list to filter by the given {@code predicate}."
+      },
+      {
+        "lineNumber": 106,
+        "author": {
+          "gitId": "Ziyang-98"
+        },
+        "content": "     * @throws NullPointerException if {@code predicate} is null."
+      },
+      {
+        "lineNumber": 107,
+        "author": {
+          "gitId": "Ziyang-98"
+        },
+        "content": "     */"
+      },
+      {
+        "lineNumber": 108,
+        "author": {
+          "gitId": "Ziyang-98"
+        },
+        "content": "    void updateFilteredRevenueList(Predicate\u003cRevenue\u003e predicate);"
+      },
+      {
+        "lineNumber": 109,
+        "author": {
+          "gitId": "Ziyang-98"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 110,
         "author": {
           "gitId": "Ziyang-98"
         },
@@ -28942,7 +29243,7 @@
       }
     ],
     "authorContributionMap": {
-      "Ziyang-98": 94,
+      "Ziyang-98": 99,
       "nicholas-gcc": 1,
       "jordanyoong": 10
     }
@@ -29241,16 +29542,16 @@
       {
         "lineNumber": 42,
         "author": {
-          "gitId": "nicholas-gcc"
+          "gitId": "Ziyang-98"
         },
-        "content": "    public Account getAccount() {"
+        "content": "    public void setName(Name name) {"
       },
       {
         "lineNumber": 43,
         "author": {
           "gitId": "Ziyang-98"
         },
-        "content": "        return activeAccount;"
+        "content": "        activeAccount.setName(name);"
       },
       {
         "lineNumber": 44,
@@ -29276,163 +29577,163 @@
       {
         "lineNumber": 47,
         "author": {
-          "gitId": "Ziyang-98"
+          "gitId": "nicholas-gcc"
         },
-        "content": "    public boolean hasEntry(Entry entry) {"
+        "content": "    public Account getAccount() {"
       },
       {
         "lineNumber": 48,
         "author": {
           "gitId": "Ziyang-98"
         },
-        "content": "        requireNonNull(entry);"
+        "content": "        return activeAccount.copyData();"
       },
       {
         "lineNumber": 49,
         "author": {
           "gitId": "Ziyang-98"
         },
-        "content": ""
+        "content": "    }"
       },
       {
         "lineNumber": 50,
         "author": {
           "gitId": "Ziyang-98"
         },
-        "content": "        return activeAccount.hasEntry(entry);"
+        "content": ""
       },
       {
         "lineNumber": 51,
         "author": {
           "gitId": "Ziyang-98"
         },
-        "content": "    }"
+        "content": "    @Override"
       },
       {
         "lineNumber": 52,
         "author": {
           "gitId": "Ziyang-98"
         },
-        "content": ""
+        "content": "    public boolean hasEntry(Entry entry) {"
       },
       {
         "lineNumber": 53,
         "author": {
           "gitId": "Ziyang-98"
         },
-        "content": "    @Override"
+        "content": "        requireNonNull(entry);"
       },
       {
         "lineNumber": 54,
         "author": {
           "gitId": "Ziyang-98"
         },
-        "content": "    public boolean hasExpense(Expense expense) {"
+        "content": ""
       },
       {
         "lineNumber": 55,
         "author": {
           "gitId": "Ziyang-98"
         },
-        "content": "        requireNonNull(expense);"
+        "content": "        return activeAccount.hasEntry(entry);"
       },
       {
         "lineNumber": 56,
         "author": {
           "gitId": "Ziyang-98"
         },
-        "content": ""
+        "content": "    }"
       },
       {
         "lineNumber": 57,
         "author": {
           "gitId": "Ziyang-98"
         },
-        "content": "        return activeAccount.hasExpense(expense);"
+        "content": ""
       },
       {
         "lineNumber": 58,
         "author": {
           "gitId": "Ziyang-98"
         },
-        "content": "    }"
+        "content": "    @Override"
       },
       {
         "lineNumber": 59,
         "author": {
           "gitId": "Ziyang-98"
         },
-        "content": ""
+        "content": "    public boolean hasExpense(Expense expense) {"
       },
       {
         "lineNumber": 60,
         "author": {
           "gitId": "Ziyang-98"
         },
-        "content": "    @Override"
+        "content": "        requireNonNull(expense);"
       },
       {
         "lineNumber": 61,
         "author": {
           "gitId": "Ziyang-98"
         },
-        "content": "    public boolean hasRevenue(Revenue revenue) {"
+        "content": ""
       },
       {
         "lineNumber": 62,
         "author": {
           "gitId": "Ziyang-98"
         },
-        "content": "        requireNonNull(revenue);"
+        "content": "        return activeAccount.hasExpense(expense);"
       },
       {
         "lineNumber": 63,
         "author": {
           "gitId": "Ziyang-98"
         },
-        "content": ""
+        "content": "    }"
       },
       {
         "lineNumber": 64,
         "author": {
           "gitId": "Ziyang-98"
         },
-        "content": "        return activeAccount.hasRevenue(revenue);"
+        "content": ""
       },
       {
         "lineNumber": 65,
         "author": {
           "gitId": "Ziyang-98"
         },
-        "content": "    }"
+        "content": "    @Override"
       },
       {
         "lineNumber": 66,
         "author": {
           "gitId": "Ziyang-98"
         },
-        "content": ""
+        "content": "    public boolean hasRevenue(Revenue revenue) {"
       },
       {
         "lineNumber": 67,
         "author": {
           "gitId": "Ziyang-98"
         },
-        "content": "    @Override"
+        "content": "        requireNonNull(revenue);"
       },
       {
         "lineNumber": 68,
         "author": {
           "gitId": "Ziyang-98"
         },
-        "content": "    public void deleteExpense(Expense target) {"
+        "content": ""
       },
       {
         "lineNumber": 69,
         "author": {
           "gitId": "Ziyang-98"
         },
-        "content": "        activeAccount.removeExpense(target);"
+        "content": "        return activeAccount.hasRevenue(revenue);"
       },
       {
         "lineNumber": 70,
@@ -29460,14 +29761,14 @@
         "author": {
           "gitId": "Ziyang-98"
         },
-        "content": "    public void deleteRevenue(Revenue target) {"
+        "content": "    public void deleteExpense(Expense target) {"
       },
       {
         "lineNumber": 74,
         "author": {
           "gitId": "Ziyang-98"
         },
-        "content": "        activeAccount.removeRevenue(target);"
+        "content": "        activeAccount.removeExpense(target);"
       },
       {
         "lineNumber": 75,
@@ -29495,14 +29796,14 @@
         "author": {
           "gitId": "Ziyang-98"
         },
-        "content": "    public void addExpense(Expense expense) {"
+        "content": "    public void deleteRevenue(Revenue target) {"
       },
       {
         "lineNumber": 79,
         "author": {
           "gitId": "Ziyang-98"
         },
-        "content": "        activeAccount.addExpense(expense);"
+        "content": "        activeAccount.removeRevenue(target);"
       },
       {
         "lineNumber": 80,
@@ -29530,14 +29831,14 @@
         "author": {
           "gitId": "Ziyang-98"
         },
-        "content": "    public void addRevenue(Revenue revenue) {"
+        "content": "    public void addExpense(Expense expense) {"
       },
       {
         "lineNumber": 84,
         "author": {
           "gitId": "Ziyang-98"
         },
-        "content": "        activeAccount.addRevenue(revenue);"
+        "content": "        activeAccount.addExpense(expense);"
       },
       {
         "lineNumber": 85,
@@ -29565,124 +29866,124 @@
         "author": {
           "gitId": "Ziyang-98"
         },
-        "content": "    public void setExpense(Expense target, Expense editedExpense) {"
+        "content": "    public void addRevenue(Revenue revenue) {"
       },
       {
         "lineNumber": 89,
         "author": {
           "gitId": "Ziyang-98"
         },
-        "content": "        requireAllNonNull(target, editedExpense);"
+        "content": "        activeAccount.addRevenue(revenue);"
       },
       {
         "lineNumber": 90,
         "author": {
           "gitId": "Ziyang-98"
         },
-        "content": ""
+        "content": "    }"
       },
       {
         "lineNumber": 91,
         "author": {
           "gitId": "Ziyang-98"
         },
-        "content": "        activeAccount.setExpense(target, editedExpense);"
+        "content": ""
       },
       {
         "lineNumber": 92,
         "author": {
           "gitId": "Ziyang-98"
         },
-        "content": "    }"
+        "content": "    @Override"
       },
       {
         "lineNumber": 93,
         "author": {
           "gitId": "Ziyang-98"
         },
-        "content": ""
+        "content": "    public void setExpense(Expense target, Expense editedExpense) {"
       },
       {
         "lineNumber": 94,
         "author": {
           "gitId": "Ziyang-98"
         },
-        "content": "    @Override"
+        "content": "        requireAllNonNull(target, editedExpense);"
       },
       {
         "lineNumber": 95,
         "author": {
           "gitId": "Ziyang-98"
         },
-        "content": "    public void setRevenue(Revenue target, Revenue editedRevenue) {"
+        "content": ""
       },
       {
         "lineNumber": 96,
         "author": {
           "gitId": "Ziyang-98"
         },
-        "content": "        requireAllNonNull(target, editedRevenue);"
+        "content": "        activeAccount.setExpense(target, editedExpense);"
       },
       {
         "lineNumber": 97,
         "author": {
           "gitId": "Ziyang-98"
         },
-        "content": ""
+        "content": "    }"
       },
       {
         "lineNumber": 98,
         "author": {
           "gitId": "Ziyang-98"
         },
-        "content": "        activeAccount.setRevenue(target, editedRevenue);"
+        "content": ""
       },
       {
         "lineNumber": 99,
         "author": {
           "gitId": "Ziyang-98"
         },
-        "content": "    }"
+        "content": "    @Override"
       },
       {
         "lineNumber": 100,
         "author": {
           "gitId": "Ziyang-98"
         },
-        "content": ""
+        "content": "    public void setRevenue(Revenue target, Revenue editedRevenue) {"
       },
       {
         "lineNumber": 101,
         "author": {
-          "gitId": "jordanyoong"
+          "gitId": "Ziyang-98"
         },
-        "content": "    @Override"
+        "content": "        requireAllNonNull(target, editedRevenue);"
       },
       {
         "lineNumber": 102,
         "author": {
-          "gitId": "jordanyoong"
+          "gitId": "Ziyang-98"
         },
-        "content": "    public void clearExpenses() {"
+        "content": ""
       },
       {
         "lineNumber": 103,
         "author": {
-          "gitId": "jordanyoong"
+          "gitId": "Ziyang-98"
         },
-        "content": "        activeAccount.clearExpenses();"
+        "content": "        activeAccount.setRevenue(target, editedRevenue);"
       },
       {
         "lineNumber": 104,
         "author": {
-          "gitId": "jordanyoong"
+          "gitId": "Ziyang-98"
         },
         "content": "    }"
       },
       {
         "lineNumber": 105,
         "author": {
-          "gitId": "jordanyoong"
+          "gitId": "Ziyang-98"
         },
         "content": ""
       },
@@ -29698,14 +29999,14 @@
         "author": {
           "gitId": "jordanyoong"
         },
-        "content": "    public void clearRevenues() {"
+        "content": "    public void clearExpenses() {"
       },
       {
         "lineNumber": 108,
         "author": {
           "gitId": "jordanyoong"
         },
-        "content": "        activeAccount.clearRevenues();"
+        "content": "        activeAccount.clearExpenses();"
       },
       {
         "lineNumber": 109,
@@ -29724,44 +30025,44 @@
       {
         "lineNumber": 111,
         "author": {
-          "gitId": "Ziyang-98"
-        },
-        "content": "    //\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d Filtered Account List Accessors \u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d"
-      },
-      {
-        "lineNumber": 112,
-        "author": {
-          "gitId": "Ziyang-98"
-        },
-        "content": ""
-      },
-      {
-        "lineNumber": 113,
-        "author": {
-          "gitId": "Ziyang-98"
+          "gitId": "jordanyoong"
         },
         "content": "    @Override"
       },
       {
+        "lineNumber": 112,
+        "author": {
+          "gitId": "jordanyoong"
+        },
+        "content": "    public void clearRevenues() {"
+      },
+      {
+        "lineNumber": 113,
+        "author": {
+          "gitId": "jordanyoong"
+        },
+        "content": "        activeAccount.clearRevenues();"
+      },
+      {
         "lineNumber": 114,
         "author": {
-          "gitId": "Ziyang-98"
+          "gitId": "jordanyoong"
         },
-        "content": "    public ObservableList\u003cExpense\u003e getFilteredExpenseList() {"
+        "content": "    }"
       },
       {
         "lineNumber": 115,
         "author": {
-          "gitId": "Ziyang-98"
+          "gitId": "jordanyoong"
         },
-        "content": "        return filteredExpenses;"
+        "content": ""
       },
       {
         "lineNumber": 116,
         "author": {
           "gitId": "Ziyang-98"
         },
-        "content": "    }"
+        "content": "    //\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d Filtered Account List Accessors \u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d"
       },
       {
         "lineNumber": 117,
@@ -29782,14 +30083,14 @@
         "author": {
           "gitId": "Ziyang-98"
         },
-        "content": "    public ObservableList\u003cRevenue\u003e getFilteredRevenueList() {"
+        "content": "    public ObservableList\u003cExpense\u003e getFilteredExpenseList() {"
       },
       {
         "lineNumber": 120,
         "author": {
           "gitId": "Ziyang-98"
         },
-        "content": "        return filteredRevenues;"
+        "content": "        return filteredExpenses;"
       },
       {
         "lineNumber": 121,
@@ -29808,163 +30109,163 @@
       {
         "lineNumber": 123,
         "author": {
-          "gitId": "lettuceman4"
+          "gitId": "Ziyang-98"
         },
-        "content": ""
+        "content": "    @Override"
       },
       {
         "lineNumber": 124,
         "author": {
           "gitId": "Ziyang-98"
         },
-        "content": "    @Override"
+        "content": "    public ObservableList\u003cRevenue\u003e getFilteredRevenueList() {"
       },
       {
         "lineNumber": 125,
         "author": {
           "gitId": "Ziyang-98"
         },
-        "content": "    public void updateFilteredExpenseList(Predicate\u003cExpense\u003e predicate) {"
+        "content": "        return filteredRevenues;"
       },
       {
         "lineNumber": 126,
         "author": {
           "gitId": "Ziyang-98"
         },
-        "content": "        requireNonNull(predicate);"
+        "content": "    }"
       },
       {
         "lineNumber": 127,
         "author": {
           "gitId": "Ziyang-98"
         },
-        "content": "        this.filteredExpenses.setPredicate(predicate);"
+        "content": ""
       },
       {
         "lineNumber": 128,
         "author": {
-          "gitId": "Ziyang-98"
+          "gitId": "lettuceman4"
         },
-        "content": "    }"
+        "content": ""
       },
       {
         "lineNumber": 129,
         "author": {
           "gitId": "Ziyang-98"
         },
-        "content": ""
+        "content": "    @Override"
       },
       {
         "lineNumber": 130,
         "author": {
           "gitId": "Ziyang-98"
         },
-        "content": "    @Override"
+        "content": "    public void updateFilteredExpenseList(Predicate\u003cExpense\u003e predicate) {"
       },
       {
         "lineNumber": 131,
         "author": {
           "gitId": "Ziyang-98"
         },
-        "content": "    public void updateFilteredRevenueList(Predicate\u003cRevenue\u003e predicate) {"
+        "content": "        requireNonNull(predicate);"
       },
       {
         "lineNumber": 132,
         "author": {
           "gitId": "Ziyang-98"
         },
-        "content": "        requireNonNull(predicate);"
+        "content": "        this.filteredExpenses.setPredicate(predicate);"
       },
       {
         "lineNumber": 133,
         "author": {
           "gitId": "Ziyang-98"
         },
-        "content": "        this.filteredRevenues.setPredicate(predicate);"
+        "content": "    }"
       },
       {
         "lineNumber": 134,
         "author": {
           "gitId": "Ziyang-98"
         },
-        "content": "    }"
+        "content": ""
       },
       {
         "lineNumber": 135,
         "author": {
           "gitId": "Ziyang-98"
         },
-        "content": ""
+        "content": "    @Override"
       },
       {
         "lineNumber": 136,
         "author": {
           "gitId": "Ziyang-98"
         },
-        "content": "    @Override"
+        "content": "    public void updateFilteredRevenueList(Predicate\u003cRevenue\u003e predicate) {"
       },
       {
         "lineNumber": 137,
         "author": {
           "gitId": "Ziyang-98"
         },
-        "content": "    public boolean equals(Object obj) {"
+        "content": "        requireNonNull(predicate);"
       },
       {
         "lineNumber": 138,
         "author": {
           "gitId": "Ziyang-98"
         },
-        "content": "        // short circuit if same object"
+        "content": "        this.filteredRevenues.setPredicate(predicate);"
       },
       {
         "lineNumber": 139,
         "author": {
           "gitId": "Ziyang-98"
         },
-        "content": "        if (obj \u003d\u003d this) {"
+        "content": "    }"
       },
       {
         "lineNumber": 140,
         "author": {
           "gitId": "Ziyang-98"
         },
-        "content": "            return true;"
+        "content": ""
       },
       {
         "lineNumber": 141,
         "author": {
           "gitId": "Ziyang-98"
         },
-        "content": "        }"
+        "content": "    @Override"
       },
       {
         "lineNumber": 142,
         "author": {
           "gitId": "Ziyang-98"
         },
-        "content": ""
+        "content": "    public boolean equals(Object obj) {"
       },
       {
         "lineNumber": 143,
         "author": {
           "gitId": "Ziyang-98"
         },
-        "content": "        // instanceof handles nulls"
+        "content": "        // short circuit if same object"
       },
       {
         "lineNumber": 144,
         "author": {
           "gitId": "Ziyang-98"
         },
-        "content": "        if (!(obj instanceof ActiveAccountManager)) {"
+        "content": "        if (obj \u003d\u003d this) {"
       },
       {
         "lineNumber": 145,
         "author": {
           "gitId": "Ziyang-98"
         },
-        "content": "            return false;"
+        "content": "            return true;"
       },
       {
         "lineNumber": 146,
@@ -29985,52 +30286,87 @@
         "author": {
           "gitId": "Ziyang-98"
         },
-        "content": "        // state check"
+        "content": "        // instanceof handles nulls"
       },
       {
         "lineNumber": 149,
         "author": {
           "gitId": "Ziyang-98"
         },
-        "content": "        ActiveAccountManager other \u003d (ActiveAccountManager) obj;"
+        "content": "        if (!(obj instanceof ActiveAccountManager)) {"
       },
       {
         "lineNumber": 150,
         "author": {
           "gitId": "Ziyang-98"
         },
-        "content": "        return activeAccount.equals(other.activeAccount)"
+        "content": "            return false;"
       },
       {
         "lineNumber": 151,
         "author": {
           "gitId": "Ziyang-98"
         },
-        "content": "                \u0026\u0026 filteredExpenses.equals(other.filteredExpenses)"
+        "content": "        }"
       },
       {
         "lineNumber": 152,
         "author": {
           "gitId": "Ziyang-98"
         },
-        "content": "                \u0026\u0026 filteredRevenues.equals(other.filteredRevenues);"
+        "content": ""
       },
       {
         "lineNumber": 153,
         "author": {
           "gitId": "Ziyang-98"
         },
-        "content": "    }"
+        "content": "        // state check"
       },
       {
         "lineNumber": 154,
         "author": {
           "gitId": "Ziyang-98"
         },
-        "content": ""
+        "content": "        ActiveAccountManager other \u003d (ActiveAccountManager) obj;"
       },
       {
         "lineNumber": 155,
+        "author": {
+          "gitId": "Ziyang-98"
+        },
+        "content": "        return activeAccount.equals(other.activeAccount)"
+      },
+      {
+        "lineNumber": 156,
+        "author": {
+          "gitId": "Ziyang-98"
+        },
+        "content": "                \u0026\u0026 filteredExpenses.equals(other.filteredExpenses)"
+      },
+      {
+        "lineNumber": 157,
+        "author": {
+          "gitId": "Ziyang-98"
+        },
+        "content": "                \u0026\u0026 filteredRevenues.equals(other.filteredRevenues);"
+      },
+      {
+        "lineNumber": 158,
+        "author": {
+          "gitId": "Ziyang-98"
+        },
+        "content": "    }"
+      },
+      {
+        "lineNumber": 159,
+        "author": {
+          "gitId": "Ziyang-98"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 160,
         "author": {
           "gitId": "Ziyang-98"
         },
@@ -30038,7 +30374,7 @@
       }
     ],
     "authorContributionMap": {
-      "Ziyang-98": 143,
+      "Ziyang-98": 148,
       "lettuceman4": 1,
       "nicholas-gcc": 1,
       "jordanyoong": 10
@@ -50023,6 +50359,429 @@
     }
   },
   {
+    "path": "src/test/java/seedu/address/logic/commands/ClearCommandTest.java",
+    "fileType": "test-code",
+    "lines": [
+      {
+        "lineNumber": 1,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "package seedu.address.logic.commands;"
+      },
+      {
+        "lineNumber": 2,
+        "author": {
+          "gitId": "-"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 3,
+        "author": {
+          "gitId": "jordanyoong"
+        },
+        "content": "import static org.junit.jupiter.api.Assertions.assertEquals;"
+      },
+      {
+        "lineNumber": 4,
+        "author": {
+          "gitId": "jordanyoong"
+        },
+        "content": "import static org.junit.jupiter.api.Assertions.assertFalse;"
+      },
+      {
+        "lineNumber": 5,
+        "author": {
+          "gitId": "jordanyoong"
+        },
+        "content": "import static org.junit.jupiter.api.Assertions.assertTrue;"
+      },
+      {
+        "lineNumber": 6,
+        "author": {
+          "gitId": "jordanyoong"
+        },
+        "content": "import static seedu.address.testutil.TypicalEntries.BUY_FLOWER_POTS;"
+      },
+      {
+        "lineNumber": 7,
+        "author": {
+          "gitId": "jordanyoong"
+        },
+        "content": "import static seedu.address.testutil.TypicalEntries.SELL_FLOWER_POTS;"
+      },
+      {
+        "lineNumber": 8,
+        "author": {
+          "gitId": "-"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 9,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "import org.junit.jupiter.api.Test;"
+      },
+      {
+        "lineNumber": 10,
+        "author": {
+          "gitId": "-"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 11,
+        "author": {
+          "gitId": "jordanyoong"
+        },
+        "content": "import seedu.address.commons.core.category.Category;"
+      },
+      {
+        "lineNumber": 12,
+        "author": {
+          "gitId": "jordanyoong"
+        },
+        "content": "import seedu.address.logic.commands.exceptions.CommandException;"
+      },
+      {
+        "lineNumber": 13,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "import seedu.address.model.Model;"
+      },
+      {
+        "lineNumber": 14,
+        "author": {
+          "gitId": "jordanyoong"
+        },
+        "content": "import seedu.address.model.account.ActiveAccount;"
+      },
+      {
+        "lineNumber": 15,
+        "author": {
+          "gitId": "jordanyoong"
+        },
+        "content": "import seedu.address.model.account.ActiveAccountManager;"
+      },
+      {
+        "lineNumber": 16,
+        "author": {
+          "gitId": "jordanyoong"
+        },
+        "content": "import seedu.address.testutil.ModelStub;"
+      },
+      {
+        "lineNumber": 17,
+        "author": {
+          "gitId": "jordanyoong"
+        },
+        "content": "import seedu.address.testutil.TypicalEntries;"
+      },
+      {
+        "lineNumber": 18,
+        "author": {
+          "gitId": "jordanyoong"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 19,
+        "author": {
+          "gitId": "jordanyoong"
+        },
+        "content": "/**"
+      },
+      {
+        "lineNumber": 20,
+        "author": {
+          "gitId": "jordanyoong"
+        },
+        "content": " * Contains integration and unit tests for {@code ClearCommand}."
+      },
+      {
+        "lineNumber": 21,
+        "author": {
+          "gitId": "jordanyoong"
+        },
+        "content": " */"
+      },
+      {
+        "lineNumber": 22,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "public class ClearCommandTest {"
+      },
+      {
+        "lineNumber": 23,
+        "author": {
+          "gitId": "-"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 24,
+        "author": {
+          "gitId": "jordanyoong"
+        },
+        "content": "    private final Model modelStub \u003d new ModelStub();"
+      },
+      {
+        "lineNumber": 25,
+        "author": {
+          "gitId": "jordanyoong"
+        },
+        "content": "    private final Category expense \u003d new Category(\"expense\");"
+      },
+      {
+        "lineNumber": 26,
+        "author": {
+          "gitId": "jordanyoong"
+        },
+        "content": "    private final Category revenue \u003d new Category(\"revenue\");"
+      },
+      {
+        "lineNumber": 27,
+        "author": {
+          "gitId": "jordanyoong"
+        },
+        "content": "    private final ActiveAccount activeAccount \u003d new ActiveAccountManager(TypicalEntries.getTypicalAccount());"
+      },
+      {
+        "lineNumber": 28,
+        "author": {
+          "gitId": "jordanyoong"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 29,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "    @Test"
+      },
+      {
+        "lineNumber": 30,
+        "author": {
+          "gitId": "jordanyoong"
+        },
+        "content": "    public void execute_validClearExpense_success() throws CommandException {"
+      },
+      {
+        "lineNumber": 31,
+        "author": {
+          "gitId": "jordanyoong"
+        },
+        "content": "        CommandResult commandResult \u003d new ClearCommand(expense).execute(modelStub, activeAccount);"
+      },
+      {
+        "lineNumber": 32,
+        "author": {
+          "gitId": "jordanyoong"
+        },
+        "content": "        assertEquals(String.format(ClearCommand.MESSAGE_DELETE_ENTRY_SUCCESS, expense),"
+      },
+      {
+        "lineNumber": 33,
+        "author": {
+          "gitId": "jordanyoong"
+        },
+        "content": "                commandResult.getFeedbackToUser());"
+      },
+      {
+        "lineNumber": 34,
+        "author": {
+          "gitId": "jordanyoong"
+        },
+        "content": "        assertFalse(activeAccount.hasExpense(BUY_FLOWER_POTS));"
+      },
+      {
+        "lineNumber": 35,
+        "author": {
+          "gitId": "jordanyoong"
+        },
+        "content": "        assertTrue(activeAccount.getFilteredExpenseList().isEmpty());"
+      },
+      {
+        "lineNumber": 36,
+        "author": {
+          "gitId": "jordanyoong"
+        },
+        "content": "    }"
+      },
+      {
+        "lineNumber": 37,
+        "author": {
+          "gitId": "-"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 38,
+        "author": {
+          "gitId": "jordanyoong"
+        },
+        "content": "    @Test"
+      },
+      {
+        "lineNumber": 39,
+        "author": {
+          "gitId": "jordanyoong"
+        },
+        "content": "    public void execute_validClearRevenue_success() throws CommandException {"
+      },
+      {
+        "lineNumber": 40,
+        "author": {
+          "gitId": "jordanyoong"
+        },
+        "content": "        CommandResult commandResult \u003d new ClearCommand(revenue).execute(modelStub, activeAccount);"
+      },
+      {
+        "lineNumber": 41,
+        "author": {
+          "gitId": "jordanyoong"
+        },
+        "content": "        assertEquals(String.format(ClearCommand.MESSAGE_DELETE_ENTRY_SUCCESS, revenue),"
+      },
+      {
+        "lineNumber": 42,
+        "author": {
+          "gitId": "jordanyoong"
+        },
+        "content": "                commandResult.getFeedbackToUser());"
+      },
+      {
+        "lineNumber": 43,
+        "author": {
+          "gitId": "jordanyoong"
+        },
+        "content": "        assertFalse(activeAccount.hasRevenue(SELL_FLOWER_POTS));"
+      },
+      {
+        "lineNumber": 44,
+        "author": {
+          "gitId": "jordanyoong"
+        },
+        "content": "        assertTrue(activeAccount.getFilteredRevenueList().isEmpty());"
+      },
+      {
+        "lineNumber": 45,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "    }"
+      },
+      {
+        "lineNumber": 46,
+        "author": {
+          "gitId": "-"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 47,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "    @Test"
+      },
+      {
+        "lineNumber": 48,
+        "author": {
+          "gitId": "jordanyoong"
+        },
+        "content": "    public void execute_validClearExpense_failure() {"
+      },
+      {
+        "lineNumber": 49,
+        "author": {
+          "gitId": "jordanyoong"
+        },
+        "content": "        assertTrue(activeAccount.hasExpense(BUY_FLOWER_POTS));"
+      },
+      {
+        "lineNumber": 50,
+        "author": {
+          "gitId": "jordanyoong"
+        },
+        "content": "        assertFalse(activeAccount.getFilteredExpenseList().isEmpty());"
+      },
+      {
+        "lineNumber": 51,
+        "author": {
+          "gitId": "jordanyoong"
+        },
+        "content": "    }"
+      },
+      {
+        "lineNumber": 52,
+        "author": {
+          "gitId": "-"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 53,
+        "author": {
+          "gitId": "jordanyoong"
+        },
+        "content": "    @Test"
+      },
+      {
+        "lineNumber": 54,
+        "author": {
+          "gitId": "jordanyoong"
+        },
+        "content": "    public void execute_validClearRevenue_failure() {"
+      },
+      {
+        "lineNumber": 55,
+        "author": {
+          "gitId": "jordanyoong"
+        },
+        "content": "        assertTrue(activeAccount.hasRevenue(SELL_FLOWER_POTS));"
+      },
+      {
+        "lineNumber": 56,
+        "author": {
+          "gitId": "jordanyoong"
+        },
+        "content": "        assertFalse(activeAccount.getFilteredRevenueList().isEmpty());"
+      },
+      {
+        "lineNumber": 57,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "    }"
+      },
+      {
+        "lineNumber": 58,
+        "author": {
+          "gitId": "-"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 59,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "}"
+      }
+    ],
+    "authorContributionMap": {
+      "jordanyoong": 42,
+      "-": 17
+    }
+  },
+  {
     "path": "src/test/java/seedu/address/logic/commands/CommandTestUtil.java",
     "fileType": "test-code",
     "lines": [
@@ -54327,6 +55086,267 @@
     "authorContributionMap": {
       "Ziyang-98": 3,
       "-": 150
+    }
+  },
+  {
+    "path": "src/test/java/seedu/address/logic/parser/ClearCommandParserTest.java",
+    "fileType": "test-code",
+    "lines": [
+      {
+        "lineNumber": 1,
+        "author": {
+          "gitId": "jordanyoong"
+        },
+        "content": "package seedu.address.logic.parser;"
+      },
+      {
+        "lineNumber": 2,
+        "author": {
+          "gitId": "jordanyoong"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 3,
+        "author": {
+          "gitId": "jordanyoong"
+        },
+        "content": "import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;"
+      },
+      {
+        "lineNumber": 4,
+        "author": {
+          "gitId": "jordanyoong"
+        },
+        "content": "import static seedu.address.logic.parser.CommandParserTestUtil.assertParseFailure;"
+      },
+      {
+        "lineNumber": 5,
+        "author": {
+          "gitId": "jordanyoong"
+        },
+        "content": "import static seedu.address.logic.parser.CommandParserTestUtil.assertParseSuccess;"
+      },
+      {
+        "lineNumber": 6,
+        "author": {
+          "gitId": "jordanyoong"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 7,
+        "author": {
+          "gitId": "jordanyoong"
+        },
+        "content": "import org.junit.jupiter.api.Test;"
+      },
+      {
+        "lineNumber": 8,
+        "author": {
+          "gitId": "jordanyoong"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 9,
+        "author": {
+          "gitId": "jordanyoong"
+        },
+        "content": "import seedu.address.commons.core.category.Category;"
+      },
+      {
+        "lineNumber": 10,
+        "author": {
+          "gitId": "jordanyoong"
+        },
+        "content": "import seedu.address.logic.commands.ClearCommand;"
+      },
+      {
+        "lineNumber": 11,
+        "author": {
+          "gitId": "jordanyoong"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 12,
+        "author": {
+          "gitId": "jordanyoong"
+        },
+        "content": "/**"
+      },
+      {
+        "lineNumber": 13,
+        "author": {
+          "gitId": "jordanyoong"
+        },
+        "content": " * As we are only doing white-box testing, our test cases do not cover path variations"
+      },
+      {
+        "lineNumber": 14,
+        "author": {
+          "gitId": "jordanyoong"
+        },
+        "content": " * outside of the ClearCommand code. The path variation for those two cases occur inside the ParserUtil,"
+      },
+      {
+        "lineNumber": 15,
+        "author": {
+          "gitId": "jordanyoong"
+        },
+        "content": " * and therefore should be covered by the ParserUtilTest."
+      },
+      {
+        "lineNumber": 16,
+        "author": {
+          "gitId": "jordanyoong"
+        },
+        "content": " */"
+      },
+      {
+        "lineNumber": 17,
+        "author": {
+          "gitId": "jordanyoong"
+        },
+        "content": "public class ClearCommandParserTest {"
+      },
+      {
+        "lineNumber": 18,
+        "author": {
+          "gitId": "jordanyoong"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 19,
+        "author": {
+          "gitId": "jordanyoong"
+        },
+        "content": "    private final ClearCommandParser parser \u003d new ClearCommandParser();"
+      },
+      {
+        "lineNumber": 20,
+        "author": {
+          "gitId": "jordanyoong"
+        },
+        "content": "    private final Category expense \u003d new Category(\"expense\");"
+      },
+      {
+        "lineNumber": 21,
+        "author": {
+          "gitId": "jordanyoong"
+        },
+        "content": "    private final Category revenue \u003d new Category(\"revenue\");"
+      },
+      {
+        "lineNumber": 22,
+        "author": {
+          "gitId": "jordanyoong"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 23,
+        "author": {
+          "gitId": "jordanyoong"
+        },
+        "content": "    @Test"
+      },
+      {
+        "lineNumber": 24,
+        "author": {
+          "gitId": "jordanyoong"
+        },
+        "content": "    public void parse_validExpense_returnsClearCommand() {"
+      },
+      {
+        "lineNumber": 25,
+        "author": {
+          "gitId": "jordanyoong"
+        },
+        "content": "        assertParseSuccess(parser, \"clear c/expense\", new ClearCommand(expense));"
+      },
+      {
+        "lineNumber": 26,
+        "author": {
+          "gitId": "jordanyoong"
+        },
+        "content": "    }"
+      },
+      {
+        "lineNumber": 27,
+        "author": {
+          "gitId": "jordanyoong"
+        },
+        "content": "    @Test"
+      },
+      {
+        "lineNumber": 28,
+        "author": {
+          "gitId": "jordanyoong"
+        },
+        "content": "    public void parse_validRevenue_returnsClearCommand() {"
+      },
+      {
+        "lineNumber": 29,
+        "author": {
+          "gitId": "jordanyoong"
+        },
+        "content": "        assertParseSuccess(parser, \"clear c/revenue\", new ClearCommand(revenue));"
+      },
+      {
+        "lineNumber": 30,
+        "author": {
+          "gitId": "jordanyoong"
+        },
+        "content": "    }"
+      },
+      {
+        "lineNumber": 31,
+        "author": {
+          "gitId": "jordanyoong"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 32,
+        "author": {
+          "gitId": "jordanyoong"
+        },
+        "content": "    @Test"
+      },
+      {
+        "lineNumber": 33,
+        "author": {
+          "gitId": "jordanyoong"
+        },
+        "content": "    public void parse_invalidArgs_throwsParseException() {"
+      },
+      {
+        "lineNumber": 34,
+        "author": {
+          "gitId": "jordanyoong"
+        },
+        "content": "        assertParseFailure(parser, \"a\", String.format(MESSAGE_INVALID_COMMAND_FORMAT, ClearCommand.MESSAGE_USAGE));"
+      },
+      {
+        "lineNumber": 35,
+        "author": {
+          "gitId": "jordanyoong"
+        },
+        "content": "    }"
+      },
+      {
+        "lineNumber": 36,
+        "author": {
+          "gitId": "jordanyoong"
+        },
+        "content": "}"
+      }
+    ],
+    "authorContributionMap": {
+      "jordanyoong": 36
     }
   },
   {
@@ -71451,37 +72471,37 @@
       {
         "lineNumber": 8,
         "author": {
-          "gitId": "nicholas-gcc"
+          "gitId": "Ziyang-98"
         },
-        "content": "import seedu.address.model.account.ReadOnlyAccount;"
+        "content": "import seedu.address.model.account.Name;"
       },
       {
         "lineNumber": 9,
         "author": {
           "gitId": "nicholas-gcc"
         },
-        "content": "import seedu.address.model.account.entry.Entry;"
+        "content": "import seedu.address.model.account.ReadOnlyAccount;"
       },
       {
         "lineNumber": 10,
         "author": {
           "gitId": "nicholas-gcc"
         },
-        "content": "import seedu.address.model.account.entry.Expense;"
+        "content": "import seedu.address.model.account.entry.Entry;"
       },
       {
         "lineNumber": 11,
         "author": {
           "gitId": "nicholas-gcc"
         },
-        "content": "import seedu.address.model.account.entry.Revenue;"
+        "content": "import seedu.address.model.account.entry.Expense;"
       },
       {
         "lineNumber": 12,
         "author": {
           "gitId": "nicholas-gcc"
         },
-        "content": ""
+        "content": "import seedu.address.model.account.entry.Revenue;"
       },
       {
         "lineNumber": 13,
@@ -71495,210 +72515,210 @@
         "author": {
           "gitId": "nicholas-gcc"
         },
-        "content": "public class ActiveAccountStub implements ActiveAccount {"
+        "content": ""
       },
       {
         "lineNumber": 15,
         "author": {
           "gitId": "nicholas-gcc"
         },
-        "content": "    @Override"
+        "content": "public class ActiveAccountStub implements ActiveAccount {"
       },
       {
         "lineNumber": 16,
         "author": {
           "gitId": "nicholas-gcc"
         },
-        "content": "    public void setActiveAccount(ReadOnlyAccount newActiveAccount) {"
+        "content": "    @Override"
       },
       {
         "lineNumber": 17,
         "author": {
           "gitId": "nicholas-gcc"
         },
-        "content": ""
+        "content": "    public void setActiveAccount(ReadOnlyAccount newActiveAccount) {"
       },
       {
         "lineNumber": 18,
         "author": {
           "gitId": "nicholas-gcc"
         },
-        "content": "    }"
+        "content": ""
       },
       {
         "lineNumber": 19,
         "author": {
           "gitId": "nicholas-gcc"
         },
-        "content": ""
+        "content": "    }"
       },
       {
         "lineNumber": 20,
         "author": {
-          "gitId": "nicholas-gcc"
+          "gitId": "Ziyang-98"
         },
         "content": "    @Override"
       },
       {
         "lineNumber": 21,
         "author": {
-          "gitId": "nicholas-gcc"
+          "gitId": "Ziyang-98"
         },
-        "content": "    public Account getAccount() {"
+        "content": "    public void setName(Name name){}"
       },
       {
         "lineNumber": 22,
         "author": {
           "gitId": "nicholas-gcc"
         },
-        "content": "        return null;"
+        "content": "    @Override"
       },
       {
         "lineNumber": 23,
         "author": {
           "gitId": "nicholas-gcc"
         },
-        "content": "    }"
+        "content": "    public Account getAccount() {"
       },
       {
         "lineNumber": 24,
         "author": {
           "gitId": "nicholas-gcc"
         },
-        "content": ""
+        "content": "        return null;"
       },
       {
         "lineNumber": 25,
         "author": {
           "gitId": "nicholas-gcc"
         },
-        "content": "    @Override"
+        "content": "    }"
       },
       {
         "lineNumber": 26,
         "author": {
           "gitId": "nicholas-gcc"
         },
-        "content": "    public boolean hasEntry(Entry entry) {"
+        "content": ""
       },
       {
         "lineNumber": 27,
         "author": {
           "gitId": "nicholas-gcc"
         },
-        "content": "        return false;"
+        "content": "    @Override"
       },
       {
         "lineNumber": 28,
         "author": {
           "gitId": "nicholas-gcc"
         },
-        "content": "    }"
+        "content": "    public boolean hasEntry(Entry entry) {"
       },
       {
         "lineNumber": 29,
         "author": {
           "gitId": "nicholas-gcc"
         },
-        "content": ""
+        "content": "        return false;"
       },
       {
         "lineNumber": 30,
         "author": {
           "gitId": "nicholas-gcc"
         },
-        "content": "    @Override"
+        "content": "    }"
       },
       {
         "lineNumber": 31,
         "author": {
           "gitId": "nicholas-gcc"
         },
-        "content": "    public boolean hasExpense(Expense expense) {"
+        "content": ""
       },
       {
         "lineNumber": 32,
         "author": {
           "gitId": "nicholas-gcc"
         },
-        "content": "        return false;"
+        "content": "    @Override"
       },
       {
         "lineNumber": 33,
         "author": {
           "gitId": "nicholas-gcc"
         },
-        "content": "    }"
+        "content": "    public boolean hasExpense(Expense expense) {"
       },
       {
         "lineNumber": 34,
         "author": {
           "gitId": "nicholas-gcc"
         },
-        "content": ""
+        "content": "        return false;"
       },
       {
         "lineNumber": 35,
         "author": {
           "gitId": "nicholas-gcc"
         },
-        "content": "    @Override"
+        "content": "    }"
       },
       {
         "lineNumber": 36,
         "author": {
           "gitId": "nicholas-gcc"
         },
-        "content": "    public boolean hasRevenue(Revenue revenue) {"
+        "content": ""
       },
       {
         "lineNumber": 37,
         "author": {
           "gitId": "nicholas-gcc"
         },
-        "content": "        return false;"
+        "content": "    @Override"
       },
       {
         "lineNumber": 38,
         "author": {
           "gitId": "nicholas-gcc"
         },
-        "content": "    }"
+        "content": "    public boolean hasRevenue(Revenue revenue) {"
       },
       {
         "lineNumber": 39,
         "author": {
           "gitId": "nicholas-gcc"
         },
-        "content": ""
+        "content": "        return false;"
       },
       {
         "lineNumber": 40,
         "author": {
           "gitId": "nicholas-gcc"
         },
-        "content": "    @Override"
+        "content": "    }"
       },
       {
         "lineNumber": 41,
         "author": {
           "gitId": "nicholas-gcc"
         },
-        "content": "    public void deleteExpense(Expense target) {"
+        "content": ""
       },
       {
         "lineNumber": 42,
         "author": {
           "gitId": "nicholas-gcc"
         },
-        "content": ""
+        "content": "    @Override"
       },
       {
         "lineNumber": 43,
         "author": {
           "gitId": "nicholas-gcc"
         },
-        "content": "    }"
+        "content": "    public void deleteExpense(Expense target) {"
       },
       {
         "lineNumber": 44,
@@ -71712,28 +72732,28 @@
         "author": {
           "gitId": "nicholas-gcc"
         },
-        "content": "    @Override"
+        "content": "    }"
       },
       {
         "lineNumber": 46,
         "author": {
           "gitId": "nicholas-gcc"
         },
-        "content": "    public void deleteRevenue(Revenue target) {"
+        "content": ""
       },
       {
         "lineNumber": 47,
         "author": {
           "gitId": "nicholas-gcc"
         },
-        "content": ""
+        "content": "    @Override"
       },
       {
         "lineNumber": 48,
         "author": {
           "gitId": "nicholas-gcc"
         },
-        "content": "    }"
+        "content": "    public void deleteRevenue(Revenue target) {"
       },
       {
         "lineNumber": 49,
@@ -71747,28 +72767,28 @@
         "author": {
           "gitId": "nicholas-gcc"
         },
-        "content": "    @Override"
+        "content": "    }"
       },
       {
         "lineNumber": 51,
         "author": {
           "gitId": "nicholas-gcc"
         },
-        "content": "    public void addExpense(Expense expense) {"
+        "content": ""
       },
       {
         "lineNumber": 52,
         "author": {
           "gitId": "nicholas-gcc"
         },
-        "content": ""
+        "content": "    @Override"
       },
       {
         "lineNumber": 53,
         "author": {
           "gitId": "nicholas-gcc"
         },
-        "content": "    }"
+        "content": "    public void addExpense(Expense expense) {"
       },
       {
         "lineNumber": 54,
@@ -71782,28 +72802,28 @@
         "author": {
           "gitId": "nicholas-gcc"
         },
-        "content": "    @Override"
+        "content": "    }"
       },
       {
         "lineNumber": 56,
         "author": {
           "gitId": "nicholas-gcc"
         },
-        "content": "    public void addRevenue(Revenue revenue) {"
+        "content": ""
       },
       {
         "lineNumber": 57,
         "author": {
           "gitId": "nicholas-gcc"
         },
-        "content": ""
+        "content": "    @Override"
       },
       {
         "lineNumber": 58,
         "author": {
           "gitId": "nicholas-gcc"
         },
-        "content": "    }"
+        "content": "    public void addRevenue(Revenue revenue) {"
       },
       {
         "lineNumber": 59,
@@ -71817,28 +72837,28 @@
         "author": {
           "gitId": "nicholas-gcc"
         },
-        "content": "    @Override"
+        "content": "    }"
       },
       {
         "lineNumber": 61,
         "author": {
           "gitId": "nicholas-gcc"
         },
-        "content": "    public void setExpense(Expense target, Expense editedExpense) {"
+        "content": ""
       },
       {
         "lineNumber": 62,
         "author": {
           "gitId": "nicholas-gcc"
         },
-        "content": ""
+        "content": "    @Override"
       },
       {
         "lineNumber": 63,
         "author": {
           "gitId": "nicholas-gcc"
         },
-        "content": "    }"
+        "content": "    public void setExpense(Expense target, Expense editedExpense) {"
       },
       {
         "lineNumber": 64,
@@ -71852,28 +72872,28 @@
         "author": {
           "gitId": "nicholas-gcc"
         },
-        "content": "    @Override"
+        "content": "    }"
       },
       {
         "lineNumber": 66,
         "author": {
           "gitId": "nicholas-gcc"
         },
-        "content": "    public void setRevenue(Revenue target, Revenue editedRevenue) {"
+        "content": ""
       },
       {
         "lineNumber": 67,
         "author": {
           "gitId": "nicholas-gcc"
         },
-        "content": ""
+        "content": "    @Override"
       },
       {
         "lineNumber": 68,
         "author": {
           "gitId": "nicholas-gcc"
         },
-        "content": "    }"
+        "content": "    public void setRevenue(Revenue target, Revenue editedRevenue) {"
       },
       {
         "lineNumber": 69,
@@ -71885,30 +72905,30 @@
       {
         "lineNumber": 70,
         "author": {
-          "gitId": "jordanyoong"
+          "gitId": "nicholas-gcc"
         },
-        "content": "    @Override"
+        "content": "    }"
       },
       {
         "lineNumber": 71,
         "author": {
-          "gitId": "jordanyoong"
+          "gitId": "nicholas-gcc"
         },
-        "content": "    public void clearExpenses() {"
+        "content": ""
       },
       {
         "lineNumber": 72,
         "author": {
           "gitId": "jordanyoong"
         },
-        "content": ""
+        "content": "    @Override"
       },
       {
         "lineNumber": 73,
         "author": {
           "gitId": "jordanyoong"
         },
-        "content": "    }"
+        "content": "    public void clearExpenses() {"
       },
       {
         "lineNumber": 74,
@@ -71922,28 +72942,28 @@
         "author": {
           "gitId": "jordanyoong"
         },
-        "content": "    @Override"
+        "content": "    }"
       },
       {
         "lineNumber": 76,
         "author": {
           "gitId": "jordanyoong"
         },
-        "content": "    public void clearRevenues() {"
+        "content": ""
       },
       {
         "lineNumber": 77,
         "author": {
           "gitId": "jordanyoong"
         },
-        "content": ""
+        "content": "    @Override"
       },
       {
         "lineNumber": 78,
         "author": {
           "gitId": "jordanyoong"
         },
-        "content": "    }"
+        "content": "    public void clearRevenues() {"
       },
       {
         "lineNumber": 79,
@@ -71955,107 +72975,107 @@
       {
         "lineNumber": 80,
         "author": {
-          "gitId": "nicholas-gcc"
+          "gitId": "jordanyoong"
         },
-        "content": "    @Override"
+        "content": "    }"
       },
       {
         "lineNumber": 81,
         "author": {
-          "gitId": "nicholas-gcc"
+          "gitId": "jordanyoong"
         },
-        "content": "    public ObservableList\u003cExpense\u003e getFilteredExpenseList() {"
+        "content": ""
       },
       {
         "lineNumber": 82,
         "author": {
           "gitId": "nicholas-gcc"
         },
-        "content": "        return null;"
+        "content": "    @Override"
       },
       {
         "lineNumber": 83,
         "author": {
           "gitId": "nicholas-gcc"
         },
-        "content": "    }"
+        "content": "    public ObservableList\u003cExpense\u003e getFilteredExpenseList() {"
       },
       {
         "lineNumber": 84,
         "author": {
           "gitId": "nicholas-gcc"
         },
-        "content": ""
+        "content": "        return null;"
       },
       {
         "lineNumber": 85,
         "author": {
           "gitId": "nicholas-gcc"
         },
-        "content": "    @Override"
+        "content": "    }"
       },
       {
         "lineNumber": 86,
         "author": {
           "gitId": "nicholas-gcc"
         },
-        "content": "    public ObservableList\u003cRevenue\u003e getFilteredRevenueList() {"
+        "content": ""
       },
       {
         "lineNumber": 87,
         "author": {
           "gitId": "nicholas-gcc"
         },
-        "content": "        return null;"
+        "content": "    @Override"
       },
       {
         "lineNumber": 88,
         "author": {
           "gitId": "nicholas-gcc"
         },
-        "content": "    }"
+        "content": "    public ObservableList\u003cRevenue\u003e getFilteredRevenueList() {"
       },
       {
         "lineNumber": 89,
         "author": {
           "gitId": "nicholas-gcc"
         },
-        "content": ""
+        "content": "        return null;"
       },
       {
         "lineNumber": 90,
         "author": {
           "gitId": "nicholas-gcc"
         },
-        "content": ""
+        "content": "    }"
       },
       {
         "lineNumber": 91,
         "author": {
           "gitId": "nicholas-gcc"
         },
-        "content": "    @Override"
+        "content": ""
       },
       {
         "lineNumber": 92,
         "author": {
           "gitId": "nicholas-gcc"
         },
-        "content": "    public void updateFilteredExpenseList(Predicate\u003cExpense\u003e predicate) {"
+        "content": ""
       },
       {
         "lineNumber": 93,
         "author": {
           "gitId": "nicholas-gcc"
         },
-        "content": ""
+        "content": "    @Override"
       },
       {
         "lineNumber": 94,
         "author": {
           "gitId": "nicholas-gcc"
         },
-        "content": "    }"
+        "content": "    public void updateFilteredExpenseList(Predicate\u003cExpense\u003e predicate) {"
       },
       {
         "lineNumber": 95,
@@ -72069,28 +73089,28 @@
         "author": {
           "gitId": "nicholas-gcc"
         },
-        "content": "    @Override"
+        "content": "    }"
       },
       {
         "lineNumber": 97,
         "author": {
           "gitId": "nicholas-gcc"
         },
-        "content": "    public void updateFilteredRevenueList(Predicate\u003cRevenue\u003e predicate) {"
+        "content": ""
       },
       {
         "lineNumber": 98,
         "author": {
           "gitId": "nicholas-gcc"
         },
-        "content": ""
+        "content": "    @Override"
       },
       {
         "lineNumber": 99,
         "author": {
           "gitId": "nicholas-gcc"
         },
-        "content": "    }"
+        "content": "    public void updateFilteredRevenueList(Predicate\u003cRevenue\u003e predicate) {"
       },
       {
         "lineNumber": 100,
@@ -72104,11 +73124,26 @@
         "author": {
           "gitId": "nicholas-gcc"
         },
+        "content": "    }"
+      },
+      {
+        "lineNumber": 102,
+        "author": {
+          "gitId": "nicholas-gcc"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 103,
+        "author": {
+          "gitId": "nicholas-gcc"
+        },
         "content": "}"
       }
     ],
     "authorContributionMap": {
-      "nicholas-gcc": 91,
+      "Ziyang-98": 3,
+      "nicholas-gcc": 90,
       "jordanyoong": 10
     }
   },

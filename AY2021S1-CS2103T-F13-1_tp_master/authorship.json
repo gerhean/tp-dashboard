@@ -2031,10 +2031,53 @@
           "gitId": "blackonyyx"
         },
         "content": "![DeleteRecipe](images/commandseqdiagrams/DeleteRecipeSequenceDiagram.png)"
+      },
+      {
+        "lineNumber": 25,
+        "author": {
+          "gitId": "khenghun"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 26,
+        "author": {
+          "gitId": "khenghun"
+        },
+        "content": "### List Item Command"
+      },
+      {
+        "lineNumber": 27,
+        "author": {
+          "gitId": "khenghun"
+        },
+        "content": "![ListItemSequenceDiagram](images/commandseqdiagrams/ListItemSequenceDiagram.png)"
+      },
+      {
+        "lineNumber": 28,
+        "author": {
+          "gitId": "khenghun"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 29,
+        "author": {
+          "gitId": "khenghun"
+        },
+        "content": "### List Recipe Command"
+      },
+      {
+        "lineNumber": 30,
+        "author": {
+          "gitId": "khenghun"
+        },
+        "content": "![ListRecipeSequenceDiagram](images/commandseqdiagrams/ListRecipeSequenceDiagram.png)"
       }
     ],
     "authorContributionMap": {
-      "blackonyyx": 24
+      "blackonyyx": 24,
+      "khenghun": 6
     }
   },
   {
@@ -3562,9 +3605,9 @@
       {
         "lineNumber": 126,
         "author": {
-          "gitId": "blackonyyx"
+          "gitId": "khenghun"
         },
-        "content": "* exposes an unmodifiable `ObservableList\u003cItem\u003e` that can be \u0027observed\u0027 e.g. the UI can be bound to this list so that the UI automatically updates when the data in the list change."
+        "content": "* exposes an unmodifiable `ObservableList\u003cItem\u003e` and `ObservableList\u003cRecipe\u003e` which can be \u0027observed\u0027 e.g. the UI can be bound to this list so that the UI automatically updates when the data in the list change."
       },
       {
         "lineNumber": 127,
@@ -3898,275 +3941,275 @@
       {
         "lineNumber": 174,
         "author": {
-          "gitId": "-"
+          "gitId": "khenghun"
         },
-        "content": "### \\[Proposed\\] Undo/redo feature"
+        "content": "### List item/recipe feature"
       },
       {
         "lineNumber": 175,
         "author": {
-          "gitId": "-"
+          "gitId": "khenghun"
         },
         "content": ""
       },
       {
         "lineNumber": 176,
         "author": {
-          "gitId": "-"
+          "gitId": "khenghun"
         },
-        "content": "#### Proposed Implementation"
+        "content": "The list item/recipe feature allows the user to toggle between viewing the list of all items or recipes in the "
       },
       {
         "lineNumber": 177,
         "author": {
-          "gitId": "-"
+          "gitId": "khenghun"
         },
-        "content": ""
+        "content": "current inventory. "
       },
       {
         "lineNumber": 178,
         "author": {
-          "gitId": "aqcd"
+          "gitId": "khenghun"
         },
-        "content": "`VersionedInventory` facilitates the proposed undo/redo feature. It extends `Inventory`, with"
+        "content": ""
       },
       {
         "lineNumber": 179,
         "author": {
-          "gitId": "aqcd"
+          "gitId": "khenghun"
         },
-        "content": "comprises: `ItemList`, `LocationList` and `RecipeList` and contains the entire `Inventory`\u0027s undo/redo history,"
+        "content": "#### Implementation"
       },
       {
         "lineNumber": 180,
         "author": {
-          "gitId": "aqcd"
+          "gitId": "khenghun"
         },
-        "content": "stored internally as an `inventoryStateList` and `currentStatePointer`."
+        "content": ""
       },
       {
         "lineNumber": 181,
         "author": {
-          "gitId": "aqcd"
+          "gitId": "khenghun"
         },
-        "content": ""
+        "content": "There are three main view modes available: the existing item list, existing recipe list, and detailed item view."
       },
       {
         "lineNumber": 182,
         "author": {
-          "gitId": "blackonyyx"
+          "gitId": "khenghun"
         },
-        "content": "Additionally, it implements the following operations:"
+        "content": ""
       },
       {
         "lineNumber": 183,
         "author": {
-          "gitId": "-"
+          "gitId": "khenghun"
         },
-        "content": ""
+        "content": "In `InventoryMainWindow`, whenever a command is executed, the `InventoryListPanel` is refreshed, to be filled with the relevant inventory list."
       },
       {
         "lineNumber": 184,
         "author": {
-          "gitId": "aqcd"
+          "gitId": "khenghun"
         },
-        "content": "* `VersionedInventory#commit()` — Saves the current inventory state in its history."
+        "content": "This list is retrieved by `getInventoryList` in `LogicManager`, based on the current view mode."
       },
       {
         "lineNumber": 185,
         "author": {
-          "gitId": "aqcd"
+          "gitId": "khenghun"
         },
-        "content": "* `VersionedInventory#undo()` — Restores the previous inventory state from its history."
+        "content": ""
       },
       {
         "lineNumber": 186,
         "author": {
-          "gitId": "aqcd"
+          "gitId": "khenghun"
         },
-        "content": "* `VersionedInventory#redo()` — Restores a previously undone inventory state from its history."
+        "content": "For list item, list recipe and view details commands, the relevant display mode is stored in the `CommandResult`. "
       },
       {
         "lineNumber": 187,
         "author": {
-          "gitId": "-"
+          "gitId": "khenghun"
         },
-        "content": ""
+        "content": "Upon execution, `InventoryMainWindow` will store the display mode, and pass on to the `InventoryListPanel` and `LogicManager`."
       },
       {
         "lineNumber": 188,
         "author": {
-          "gitId": "aqcd"
-        },
-        "content": "These operations are exposed in the `Model` interface as `Model#commitInventory()`, `Model#undoInventory()` and"
-      },
-      {
-        "lineNumber": 189,
-        "author": {
-          "gitId": "aqcd"
-        },
-        "content": "`Model#redoInventory()` respectively."
-      },
-      {
-        "lineNumber": 190,
-        "author": {
-          "gitId": "-"
+          "gitId": "khenghun"
         },
         "content": ""
       },
       {
+        "lineNumber": 189,
+        "author": {
+          "gitId": "khenghun"
+        },
+        "content": "For all other commands, they return a `CommandResult` with `UNCHANGED` as the inventory type. "
+      },
+      {
+        "lineNumber": 190,
+        "author": {
+          "gitId": "khenghun"
+        },
+        "content": "This indicates that the view mode should not be changed. The same type of inventory list (updated accordingly)"
+      },
+      {
         "lineNumber": 191,
         "author": {
-          "gitId": "-"
+          "gitId": "khenghun"
         },
-        "content": "Given below is an example usage scenario and how the undo/redo mechanism behaves at each step."
+        "content": "will be retrieved and displayed."
       },
       {
         "lineNumber": 192,
         "author": {
-          "gitId": "-"
+          "gitId": "khenghun"
         },
         "content": ""
       },
       {
         "lineNumber": 193,
         "author": {
-          "gitId": "aqcd"
+          "gitId": "khenghun"
         },
-        "content": "Step 1. The user launches the application for the first time. The `VersionedInventory` will be initialized with"
+        "content": "Given below is an example usage of list item and list recipes and what is displayed at each step."
       },
       {
         "lineNumber": 194,
         "author": {
-          "gitId": "blackonyyx"
+          "gitId": "khenghun"
         },
-        "content": "the initial inventory state, and the `currentStatePointer` pointing to that single inventory state."
+        "content": ""
       },
       {
         "lineNumber": 195,
         "author": {
-          "gitId": "-"
+          "gitId": "khenghun"
         },
-        "content": ""
+        "content": "Step 1: The user launches the application. By default, the item list is displayed."
       },
       {
         "lineNumber": 196,
         "author": {
-          "gitId": "-"
+          "gitId": "khenghun"
         },
-        "content": "![UndoRedoState0](images/UndoRedoState0.png)"
+        "content": ""
       },
       {
         "lineNumber": 197,
         "author": {
-          "gitId": "-"
+          "gitId": "khenghun"
         },
-        "content": ""
+        "content": "Step 2: The user executes `listr` to view the recipe list. The current recipe list is now displayed."
       },
       {
         "lineNumber": 198,
         "author": {
-          "gitId": "aqcd"
+          "gitId": "khenghun"
         },
-        "content": "Step 2. The user executes `deli Bob’s 28th finger` (a `DeleteItemCommand`) command to delete the matching item in"
+        "content": ""
       },
       {
         "lineNumber": 199,
         "author": {
-          "gitId": "aqcd"
+          "gitId": "khenghun"
         },
-        "content": "the inventory. The `deli` command calls `Model#commitInventory()`, causing the modified state of the inventory"
+        "content": "Step 3: The user executes `addi -n Bob’s 6th regret -q 8` to add a new item. The recipe list is still displayed."
       },
       {
         "lineNumber": 200,
         "author": {
-          "gitId": "aqcd"
+          "gitId": "khenghun"
         },
-        "content": "after the `deli Bob’s 28th finger` command executes to be saved in the `inventoryStateList`, and the"
+        "content": ""
       },
       {
         "lineNumber": 201,
         "author": {
-          "gitId": "aqcd"
+          "gitId": "khenghun"
         },
-        "content": "`currentStatePointer` is shifted to the newly inserted inventory state."
+        "content": "Step 4: The user executes `view Bob\u0027s 6th regret` to view the details of the item. "
       },
       {
         "lineNumber": 202,
         "author": {
-          "gitId": "-"
+          "gitId": "khenghun"
         },
-        "content": ""
+        "content": "The detailed item is now displayed, and all other items are removed from view."
       },
       {
         "lineNumber": 203,
         "author": {
-          "gitId": "-"
-        },
-        "content": "![UndoRedoState1](images/UndoRedoState1.png)"
-      },
-      {
-        "lineNumber": 204,
-        "author": {
-          "gitId": "-"
+          "gitId": "khenghun"
         },
         "content": ""
       },
       {
+        "lineNumber": 204,
+        "author": {
+          "gitId": "khenghun"
+        },
+        "content": "Step 5: The user executes `listi` to view the item list. The current item list is now displayed."
+      },
+      {
         "lineNumber": 205,
         "author": {
-          "gitId": "aqcd"
+          "gitId": "khenghun"
         },
-        "content": "Step 3. The user executes `addi Bob’s 6th regret -q 8` (a `AddItemCommand`) to add a new item."
+        "content": ""
       },
       {
         "lineNumber": 206,
         "author": {
-          "gitId": "aqcd"
+          "gitId": "khenghun"
         },
-        "content": "The `addi` command also calls `Model#commitInventory()`, causing another modified inventory state to be"
+        "content": "The following sequence diagram shows how the list items operation works:"
       },
       {
         "lineNumber": 207,
         "author": {
-          "gitId": "aqcd"
+          "gitId": "khenghun"
         },
-        "content": "saved into the `inventoryStateList`."
+        "content": "![ListItemSequenceDiagram](images/commandseqdiagrams/ListItemSequenceDiagram.png)"
       },
       {
         "lineNumber": 208,
         "author": {
-          "gitId": "-"
+          "gitId": "khenghun"
         },
         "content": ""
       },
       {
         "lineNumber": 209,
         "author": {
-          "gitId": "-"
+          "gitId": "khenghun"
         },
-        "content": "![UndoRedoState2](images/UndoRedoState2.png)"
+        "content": "The following sequence diagram shows how the list recipes operation works:"
       },
       {
         "lineNumber": 210,
         "author": {
-          "gitId": "-"
+          "gitId": "khenghun"
         },
-        "content": ""
+        "content": "![ListRecipeSequenceDiagram](images/commandseqdiagrams/ListRecipeSequenceDiagram.png)"
       },
       {
         "lineNumber": 211,
         "author": {
-          "gitId": "aqcd"
+          "gitId": "khenghun"
         },
-        "content": "**Note:** If a command fails its execution, it will not call `Model#commitInventory()`, so the inventory"
+        "content": ""
       },
       {
         "lineNumber": 212,
         "author": {
-          "gitId": "aqcd"
+          "gitId": "-"
         },
-        "content": "state will not be saved into the `inventoryStateList`."
+        "content": "### \\[Proposed\\] Undo/redo feature"
       },
       {
         "lineNumber": 213,
@@ -4178,37 +4221,37 @@
       {
         "lineNumber": 214,
         "author": {
-          "gitId": "aqcd"
+          "gitId": "-"
         },
-        "content": "Step 4. The user now decides that adding the item was a mistake, and decides to undo that action by executing the"
+        "content": "#### Proposed Implementation"
       },
       {
         "lineNumber": 215,
-        "author": {
-          "gitId": "aqcd"
-        },
-        "content": "`undo` command. The `undo` command will call `Model#undoInventory()`, which will shift the `currentStatePointer`"
-      },
-      {
-        "lineNumber": 216,
-        "author": {
-          "gitId": "aqcd"
-        },
-        "content": "once to the left, pointing it to the previous inventory state, and restores the inventory to that state."
-      },
-      {
-        "lineNumber": 217,
         "author": {
           "gitId": "-"
         },
         "content": ""
       },
       {
+        "lineNumber": 216,
+        "author": {
+          "gitId": "aqcd"
+        },
+        "content": "`VersionedInventory` facilitates the proposed undo/redo feature. It extends `Inventory`, with"
+      },
+      {
+        "lineNumber": 217,
+        "author": {
+          "gitId": "aqcd"
+        },
+        "content": "comprises: `ItemList`, `LocationList` and `RecipeList` and contains the entire `Inventory`\u0027s undo/redo history,"
+      },
+      {
         "lineNumber": 218,
         "author": {
-          "gitId": "-"
+          "gitId": "aqcd"
         },
-        "content": "![UndoRedoState3](images/UndoRedoState3.png)"
+        "content": "stored internally as an `inventoryStateList` and `currentStatePointer`."
       },
       {
         "lineNumber": 219,
@@ -4220,37 +4263,37 @@
       {
         "lineNumber": 220,
         "author": {
-          "gitId": "aqcd"
+          "gitId": "blackonyyx"
         },
-        "content": "**Note:** If the `currentStatePointer` is at index 0, pointing to the initial `Inventory` state, then there are "
+        "content": "Additionally, it implements the following operations:"
       },
       {
         "lineNumber": 221,
-        "author": {
-          "gitId": "aqcd"
-        },
-        "content": "no previous `Inventory` states to restore. The `undo` command uses `Model#canUndoinventory()` to check if this"
-      },
-      {
-        "lineNumber": 222,
-        "author": {
-          "gitId": "blackonyyx"
-        },
-        "content": "is the case. If so, it will return an error to the user rather than attempting to perform the undo."
-      },
-      {
-        "lineNumber": 223,
         "author": {
           "gitId": "-"
         },
         "content": ""
       },
       {
+        "lineNumber": 222,
+        "author": {
+          "gitId": "aqcd"
+        },
+        "content": "* `VersionedInventory#commit()` — Saves the current inventory state in its history."
+      },
+      {
+        "lineNumber": 223,
+        "author": {
+          "gitId": "aqcd"
+        },
+        "content": "* `VersionedInventory#undo()` — Restores the previous inventory state from its history."
+      },
+      {
         "lineNumber": 224,
         "author": {
-          "gitId": "-"
+          "gitId": "aqcd"
         },
-        "content": "The following sequence diagram shows how the undo operation works:"
+        "content": "* `VersionedInventory#redo()` — Restores a previously undone inventory state from its history."
       },
       {
         "lineNumber": 225,
@@ -4262,156 +4305,156 @@
       {
         "lineNumber": 226,
         "author": {
-          "gitId": "-"
+          "gitId": "aqcd"
         },
-        "content": "![UndoSequenceDiagram](images/UndoSequenceDiagram.png)"
+        "content": "These operations are exposed in the `Model` interface as `Model#commitInventory()`, `Model#undoInventory()` and"
       },
       {
         "lineNumber": 227,
         "author": {
-          "gitId": "blackonyyx"
+          "gitId": "aqcd"
         },
-        "content": "**Note:** The lifeline for `UndoCommand` should end at the destroy marker (X) but due to a"
+        "content": "`Model#redoInventory()` respectively."
       },
       {
         "lineNumber": 228,
         "author": {
-          "gitId": "blackonyyx"
+          "gitId": "-"
         },
-        "content": "limitation of PlantUML, the lifeline reaches the end of diagram."
+        "content": ""
       },
       {
         "lineNumber": 229,
         "author": {
           "gitId": "-"
         },
-        "content": ""
+        "content": "Given below is an example usage scenario and how the undo/redo mechanism behaves at each step."
       },
       {
         "lineNumber": 230,
         "author": {
-          "gitId": "aqcd"
+          "gitId": "-"
         },
-        "content": "The `redo` command does the opposite — it calls `Model#redoInventory()`, which shifts the `currentStatePointer`"
+        "content": ""
       },
       {
         "lineNumber": 231,
         "author": {
-          "gitId": "blackonyyx"
+          "gitId": "aqcd"
         },
-        "content": "once to the right, pointing to the previously undone state, and restores the inventory to that state."
+        "content": "Step 1. The user launches the application for the first time. The `VersionedInventory` will be initialized with"
       },
       {
         "lineNumber": 232,
         "author": {
-          "gitId": "-"
+          "gitId": "blackonyyx"
         },
-        "content": ""
+        "content": "the initial inventory state, and the `currentStatePointer` pointing to that single inventory state."
       },
       {
         "lineNumber": 233,
         "author": {
-          "gitId": "aqcd"
+          "gitId": "-"
         },
-        "content": "**Note:** If the `currentStatePointer` is at index `inventoryStateList.size() - 1`, pointing to the"
+        "content": ""
       },
       {
         "lineNumber": 234,
         "author": {
-          "gitId": "aqcd"
+          "gitId": "-"
         },
-        "content": "latest inventory state, then there are no undone `Inventory` states to restore. The `redo` command uses"
+        "content": "![UndoRedoState0](images/UndoRedoState0.png)"
       },
       {
         "lineNumber": 235,
-        "author": {
-          "gitId": "aqcd"
-        },
-        "content": "`Model#canRedoInventory()` to check if this is the case. If so, it will return an error to the user"
-      },
-      {
-        "lineNumber": 236,
-        "author": {
-          "gitId": "blackonyyx"
-        },
-        "content": "rather than attempting to perform the redo."
-      },
-      {
-        "lineNumber": 237,
         "author": {
           "gitId": "-"
         },
         "content": ""
       },
       {
+        "lineNumber": 236,
+        "author": {
+          "gitId": "aqcd"
+        },
+        "content": "Step 2. The user executes `deli Bob’s 28th finger` (a `DeleteItemCommand`) command to delete the matching item in"
+      },
+      {
+        "lineNumber": 237,
+        "author": {
+          "gitId": "aqcd"
+        },
+        "content": "the inventory. The `deli` command calls `Model#commitInventory()`, causing the modified state of the inventory"
+      },
+      {
         "lineNumber": 238,
         "author": {
-          "gitId": "blackonyyx"
+          "gitId": "aqcd"
         },
-        "content": "Step 5. The user then decides to execute the command `list`. Commands that do not modify the inventory, such as `list`,"
+        "content": "after the `deli Bob’s 28th finger` command executes to be saved in the `inventoryStateList`, and the"
       },
       {
         "lineNumber": 239,
         "author": {
           "gitId": "aqcd"
         },
-        "content": "will usually not call `Model#commitInventory()`, `Model#undoInventory()` or `Model#redoInventory()`."
+        "content": "`currentStatePointer` is shifted to the newly inserted inventory state."
       },
       {
         "lineNumber": 240,
         "author": {
-          "gitId": "blackonyyx"
+          "gitId": "-"
         },
-        "content": "Thus, the `inventoryinatorStateList` remains unchanged."
+        "content": ""
       },
       {
         "lineNumber": 241,
         "author": {
           "gitId": "-"
         },
-        "content": ""
+        "content": "![UndoRedoState1](images/UndoRedoState1.png)"
       },
       {
         "lineNumber": 242,
         "author": {
           "gitId": "-"
         },
-        "content": "![UndoRedoState4](images/UndoRedoState4.png)"
+        "content": ""
       },
       {
         "lineNumber": 243,
         "author": {
-          "gitId": "-"
+          "gitId": "aqcd"
         },
-        "content": ""
+        "content": "Step 3. The user executes `addi Bob’s 6th regret -q 8` (a `AddItemCommand`) to add a new item."
       },
       {
         "lineNumber": 244,
         "author": {
           "gitId": "aqcd"
         },
-        "content": "Step 6. The user executes `clear`, which calls `Model#commitInventory()`. Since the `currentStatePointer`"
+        "content": "The `addi` command also calls `Model#commitInventory()`, causing another modified inventory state to be"
       },
       {
         "lineNumber": 245,
         "author": {
           "gitId": "aqcd"
         },
-        "content": "is not pointing at the end of the `inventoryStateList`, all inventory states after the `currentStatePointer`"
+        "content": "saved into the `inventoryStateList`."
       },
       {
         "lineNumber": 246,
         "author": {
-          "gitId": "aqcd"
+          "gitId": "-"
         },
-        "content": "will be purged. Reason: It no longer makes sense to redo the `addi Bob’s 6th regret -q 8` command. This is the"
+        "content": ""
       },
       {
         "lineNumber": 247,
         "author": {
-          "gitId": "blackonyyx"
+          "gitId": "-"
         },
-        "content": "behavior that most modern desktop applications follow."
+        "content": "![UndoRedoState2](images/UndoRedoState2.png)"
       },
       {
         "lineNumber": 248,
@@ -4423,149 +4466,149 @@
       {
         "lineNumber": 249,
         "author": {
-          "gitId": "-"
+          "gitId": "aqcd"
         },
-        "content": "![UndoRedoState5](images/UndoRedoState5.png)"
+        "content": "**Note:** If a command fails its execution, it will not call `Model#commitInventory()`, so the inventory"
       },
       {
         "lineNumber": 250,
         "author": {
-          "gitId": "-"
+          "gitId": "aqcd"
         },
-        "content": ""
+        "content": "state will not be saved into the `inventoryStateList`."
       },
       {
         "lineNumber": 251,
         "author": {
           "gitId": "-"
         },
-        "content": "The following activity diagram summarizes what happens when a user executes a new command:"
+        "content": ""
       },
       {
         "lineNumber": 252,
         "author": {
-          "gitId": "-"
+          "gitId": "aqcd"
         },
-        "content": ""
+        "content": "Step 4. The user now decides that adding the item was a mistake, and decides to undo that action by executing the"
       },
       {
         "lineNumber": 253,
         "author": {
-          "gitId": "-"
+          "gitId": "aqcd"
         },
-        "content": "![CommitActivityDiagram](images/CommitActivityDiagram.png)"
+        "content": "`undo` command. The `undo` command will call `Model#undoInventory()`, which will shift the `currentStatePointer`"
       },
       {
         "lineNumber": 254,
         "author": {
-          "gitId": "-"
+          "gitId": "aqcd"
         },
-        "content": ""
+        "content": "once to the left, pointing it to the previous inventory state, and restores the inventory to that state."
       },
       {
         "lineNumber": 255,
         "author": {
           "gitId": "-"
         },
-        "content": "#### Design consideration:"
+        "content": ""
       },
       {
         "lineNumber": 256,
         "author": {
           "gitId": "-"
         },
-        "content": ""
+        "content": "![UndoRedoState3](images/UndoRedoState3.png)"
       },
       {
         "lineNumber": 257,
         "author": {
           "gitId": "-"
         },
-        "content": "##### Aspect: How undo \u0026 redo executes"
+        "content": ""
       },
       {
         "lineNumber": 258,
         "author": {
-          "gitId": "-"
+          "gitId": "aqcd"
         },
-        "content": ""
+        "content": "**Note:** If the `currentStatePointer` is at index 0, pointing to the initial `Inventory` state, then there are "
       },
       {
         "lineNumber": 259,
         "author": {
-          "gitId": "blackonyyx"
+          "gitId": "aqcd"
         },
-        "content": "* **Alternative 1 (current choice):** Saves the entire inventory."
+        "content": "no previous `Inventory` states to restore. The `undo` command uses `Model#canUndoinventory()` to check if this"
       },
       {
         "lineNumber": 260,
         "author": {
-          "gitId": "-"
+          "gitId": "blackonyyx"
         },
-        "content": "  * Pros: Easy to implement."
+        "content": "is the case. If so, it will return an error to the user rather than attempting to perform the undo."
       },
       {
         "lineNumber": 261,
         "author": {
           "gitId": "-"
         },
-        "content": "  * Cons: May have performance issues in terms of memory usage."
+        "content": ""
       },
       {
         "lineNumber": 262,
         "author": {
           "gitId": "-"
         },
-        "content": ""
+        "content": "The following sequence diagram shows how the undo operation works:"
       },
       {
         "lineNumber": 263,
         "author": {
-          "gitId": "aqcd"
+          "gitId": "-"
         },
-        "content": "* **Alternative 2:** Store a stack of commands that have been run."
+        "content": ""
       },
       {
         "lineNumber": 264,
         "author": {
-          "gitId": "aqcd"
+          "gitId": "-"
         },
-        "content": "  * Pros: We store a stack of commands which is added to whenever the user runs a new command that"
+        "content": "![UndoSequenceDiagram](images/UndoSequenceDiagram.png)"
       },
       {
         "lineNumber": 265,
         "author": {
-          "gitId": "aqcd"
+          "gitId": "blackonyyx"
         },
-        "content": "          modifies the inventory state. When undo is invoked, the stack is popped and added to a"
+        "content": "**Note:** The lifeline for `UndoCommand` should end at the destroy marker (X) but due to a"
       },
       {
         "lineNumber": 266,
         "author": {
-          "gitId": "aqcd"
+          "gitId": "blackonyyx"
         },
-        "content": "          redo stack, and the command will be negated and run. When redo is invoked, the redo stack"
+        "content": "limitation of PlantUML, the lifeline reaches the end of diagram."
       },
       {
         "lineNumber": 267,
         "author": {
-          "gitId": "aqcd"
+          "gitId": "-"
         },
-        "content": "          is popped and the command is run."
+        "content": ""
       },
       {
         "lineNumber": 268,
         "author": {
           "gitId": "aqcd"
         },
-        "content": "  * Cons: Harder to implement as each command has to be negated individually. This has considerably"
+        "content": "The `redo` command does the opposite — it calls `Model#redoInventory()`, which shifts the `currentStatePointer`"
       },
       {
         "lineNumber": 269,
         "author": {
-          "gitId": "aqcd"
+          "gitId": "blackonyyx"
         },
-        "content": "          many edge cases to consider."
+        "content": "once to the right, pointing to the previously undone state, and restores the inventory to that state."
       },
       {
         "lineNumber": 270,
@@ -4577,30 +4620,30 @@
       {
         "lineNumber": 271,
         "author": {
-          "gitId": "-"
+          "gitId": "aqcd"
         },
-        "content": "--------------------------------------------------------------------------------------------------------------------"
+        "content": "**Note:** If the `currentStatePointer` is at index `inventoryStateList.size() - 1`, pointing to the"
       },
       {
         "lineNumber": 272,
         "author": {
-          "gitId": "-"
+          "gitId": "aqcd"
         },
-        "content": ""
+        "content": "latest inventory state, then there are no undone `Inventory` states to restore. The `redo` command uses"
       },
       {
         "lineNumber": 273,
         "author": {
-          "gitId": "-"
+          "gitId": "aqcd"
         },
-        "content": ""
+        "content": "`Model#canRedoInventory()` to check if this is the case. If so, it will return an error to the user"
       },
       {
         "lineNumber": 274,
         "author": {
-          "gitId": "-"
+          "gitId": "blackonyyx"
         },
-        "content": "## **Appendix: Requirements**"
+        "content": "rather than attempting to perform the redo."
       },
       {
         "lineNumber": 275,
@@ -4612,23 +4655,23 @@
       {
         "lineNumber": 276,
         "author": {
-          "gitId": "-"
+          "gitId": "khenghun"
         },
-        "content": "### Product scope"
+        "content": "Step 5. The user then decides to execute the command `listi`. Commands that do not modify the inventory, such as "
       },
       {
         "lineNumber": 277,
         "author": {
-          "gitId": "-"
+          "gitId": "khenghun"
         },
-        "content": ""
+        "content": "`listi`, will usually not call `Model#commitInventory()`, `Model#undoInventory()` or `Model#redoInventory()`."
       },
       {
         "lineNumber": 278,
         "author": {
-          "gitId": "-"
+          "gitId": "blackonyyx"
         },
-        "content": "**Target user profile**:"
+        "content": "Thus, the `inventoryinatorStateList` remains unchanged."
       },
       {
         "lineNumber": 279,
@@ -4640,285 +4683,551 @@
       {
         "lineNumber": 280,
         "author": {
-          "gitId": "blackonyyx"
+          "gitId": "-"
         },
-        "content": "* has a need to manage a significant number of items in a game."
+        "content": "![UndoRedoState4](images/UndoRedoState4.png)"
       },
       {
         "lineNumber": 281,
         "author": {
           "gitId": "-"
         },
-        "content": "* prefer desktop apps over other types"
+        "content": ""
       },
       {
         "lineNumber": 282,
         "author": {
-          "gitId": "-"
+          "gitId": "aqcd"
         },
-        "content": "* can type fast"
+        "content": "Step 6. The user executes `clear`, which calls `Model#commitInventory()`. Since the `currentStatePointer`"
       },
       {
         "lineNumber": 283,
         "author": {
-          "gitId": "-"
+          "gitId": "aqcd"
         },
-        "content": "* prefers typing to mouse interactions"
+        "content": "is not pointing at the end of the `inventoryStateList`, all inventory states after the `currentStatePointer`"
       },
       {
         "lineNumber": 284,
         "author": {
-          "gitId": "blackonyyx"
+          "gitId": "aqcd"
         },
-        "content": "* is very comfortable with using CLI apps"
+        "content": "will be purged. Reason: It no longer makes sense to redo the `addi Bob’s 6th regret -q 8` command. This is the"
       },
       {
         "lineNumber": 285,
         "author": {
-          "gitId": "-"
+          "gitId": "blackonyyx"
         },
-        "content": ""
+        "content": "behavior that most modern desktop applications follow."
       },
       {
         "lineNumber": 286,
         "author": {
-          "gitId": "blackonyyx"
+          "gitId": "-"
         },
-        "content": "**Value proposition**: manage inventory faster than a typical mouse/GUI driven app"
+        "content": ""
       },
       {
         "lineNumber": 287,
         "author": {
           "gitId": "-"
         },
-        "content": ""
+        "content": "![UndoRedoState5](images/UndoRedoState5.png)"
       },
       {
         "lineNumber": 288,
         "author": {
-          "gitId": "blackonyyx"
+          "gitId": "-"
         },
-        "content": "### User stories for V1.1"
+        "content": ""
       },
       {
         "lineNumber": 289,
         "author": {
           "gitId": "-"
         },
-        "content": ""
+        "content": "The following activity diagram summarizes what happens when a user executes a new command:"
       },
       {
         "lineNumber": 290,
         "author": {
           "gitId": "-"
         },
-        "content": "Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unlikely to have) - `*`"
+        "content": ""
       },
       {
         "lineNumber": 291,
         "author": {
           "gitId": "-"
         },
-        "content": ""
+        "content": "![CommitActivityDiagram](images/CommitActivityDiagram.png)"
       },
       {
         "lineNumber": 292,
         "author": {
           "gitId": "-"
         },
-        "content": "| Priority | As a …​                                    | I want to …​                     | So that I can…​                                             |"
+        "content": ""
       },
       {
         "lineNumber": 293,
         "author": {
           "gitId": "-"
         },
-        "content": "| -------- | ------------------------------------------ | ------------------------------ | ---------------------------------------------------------------------- |"
+        "content": "#### Design consideration:"
       },
       {
         "lineNumber": 294,
         "author": {
           "gitId": "-"
         },
-        "content": "| `* * *`  | new user                                   | see usage instructions         | refer to instructions when I forget how to use the App                 |"
+        "content": ""
       },
       {
         "lineNumber": 295,
         "author": {
-          "gitId": "blackonyyx"
+          "gitId": "-"
         },
-        "content": "| `* * *`  | user                                       | add a new item                 |                                                                        |"
+        "content": "##### Aspect: How undo \u0026 redo executes"
       },
       {
         "lineNumber": 296,
         "author": {
-          "gitId": "blackonyyx"
+          "gitId": "-"
         },
-        "content": "| `* * *`  | user                                       | add a recipe                   |                                                                        |"
+        "content": ""
       },
       {
         "lineNumber": 297,
         "author": {
           "gitId": "blackonyyx"
         },
-        "content": "| `* * *`  | user                                       | delete a item                  | remove item that I no longer need to track                             |"
+        "content": "* **Alternative 1 (current choice):** Saves the entire inventory."
       },
       {
         "lineNumber": 298,
         "author": {
-          "gitId": "blackonyyx"
+          "gitId": "-"
         },
-        "content": "| `* * *`  | user                                       | delete a recipe                | remove recepies that I no longer need to use                           |"
+        "content": "  * Pros: Easy to implement."
       },
       {
         "lineNumber": 299,
         "author": {
-          "gitId": "blackonyyx"
+          "gitId": "-"
         },
-        "content": "| `* * *`  | user                                       | find a item by name            | locate details of items without having to go through the entire list   |"
+        "content": "  * Cons: May have performance issues in terms of memory usage."
       },
       {
         "lineNumber": 300,
         "author": {
-          "gitId": "blackonyyx"
+          "gitId": "-"
         },
-        "content": "| `* * `   | user                                       | tag a item by location         | locate items by where they are located                                 |"
+        "content": ""
       },
       {
         "lineNumber": 301,
         "author": {
-          "gitId": "blackonyyx"
+          "gitId": "aqcd"
         },
-        "content": "| `* * `   | user                                       | use del command to delete both recipes and items         | improve user experience in the application   |"
+        "content": "* **Alternative 2:** Store a stack of commands that have been run."
       },
       {
         "lineNumber": 302,
         "author": {
-          "gitId": "blackonyyx"
+          "gitId": "aqcd"
         },
-        "content": "*{More to be added in later iterations}*"
+        "content": "  * Pros: We store a stack of commands which is added to whenever the user runs a new command that"
       },
       {
         "lineNumber": 303,
         "author": {
-          "gitId": "-"
+          "gitId": "aqcd"
         },
-        "content": ""
+        "content": "          modifies the inventory state. When undo is invoked, the stack is popped and added to a"
       },
       {
         "lineNumber": 304,
         "author": {
-          "gitId": "-"
+          "gitId": "aqcd"
         },
-        "content": "### Non-Functional Requirements"
+        "content": "          redo stack, and the command will be negated and run. When redo is invoked, the redo stack"
       },
       {
         "lineNumber": 305,
+        "author": {
+          "gitId": "aqcd"
+        },
+        "content": "          is popped and the command is run."
+      },
+      {
+        "lineNumber": 306,
+        "author": {
+          "gitId": "aqcd"
+        },
+        "content": "  * Cons: Harder to implement as each command has to be negated individually. This has considerably"
+      },
+      {
+        "lineNumber": 307,
+        "author": {
+          "gitId": "aqcd"
+        },
+        "content": "          many edge cases to consider."
+      },
+      {
+        "lineNumber": 308,
         "author": {
           "gitId": "-"
         },
         "content": ""
       },
       {
-        "lineNumber": 306,
-        "author": {
-          "gitId": "-"
-        },
-        "content": "1.  Should work on any _mainstream OS_ as long as it has Java `11` or above installed."
-      },
-      {
-        "lineNumber": 307,
-        "author": {
-          "gitId": "-"
-        },
-        "content": "2.  Should be able to hold up to 1000 persons without a noticeable sluggishness in performance for typical usage."
-      },
-      {
-        "lineNumber": 308,
-        "author": {
-          "gitId": "blackonyyx"
-        },
-        "content": "3.  A user with above average typing speed for regular English text (i.e. not code, not system admin commands)"
-      },
-      {
         "lineNumber": 309,
         "author": {
-          "gitId": "blackonyyx"
+          "gitId": "-"
         },
-        "content": " should be able to accomplish most of the tasks faster using commands than using the mouse."
+        "content": "--------------------------------------------------------------------------------------------------------------------"
       },
       {
         "lineNumber": 310,
         "author": {
-          "gitId": "blackonyyx"
+          "gitId": "-"
         },
-        "content": "4.  A user should be able to view visually the output from the Application"
+        "content": ""
       },
       {
         "lineNumber": 311,
         "author": {
           "gitId": "-"
         },
-        "content": "*{More to be added}*"
+        "content": ""
       },
       {
         "lineNumber": 312,
         "author": {
           "gitId": "-"
         },
-        "content": ""
+        "content": "## **Appendix: Requirements**"
       },
       {
         "lineNumber": 313,
         "author": {
           "gitId": "-"
         },
-        "content": "### Glossary"
+        "content": ""
       },
       {
         "lineNumber": 314,
         "author": {
           "gitId": "-"
         },
-        "content": ""
+        "content": "### Product scope"
       },
       {
         "lineNumber": 315,
         "author": {
           "gitId": "-"
         },
-        "content": "* **Mainstream OS**: Windows, Linux, Unix, OS-X"
+        "content": ""
       },
       {
         "lineNumber": 316,
         "author": {
-          "gitId": "blackonyyx"
+          "gitId": "-"
         },
-        "content": "* **Item**: An item represents an object you obtain in a game. Eg a \u003cu\u003eRock\u003c/u\u003e"
+        "content": "**Target user profile**:"
       },
       {
         "lineNumber": 317,
         "author": {
-          "gitId": "blackonyyx"
+          "gitId": "-"
         },
-        "content": "* **Recipe**: An recipe is associated with multiple items, and represents the consumption of items in the input,"
+        "content": ""
       },
       {
         "lineNumber": 318,
         "author": {
           "gitId": "blackonyyx"
         },
-        "content": " to produce an item of the output. Eg: a 3 \u003cu\u003eSticks\u003c/u\u003e -\u003e \u003cu\u003eStaff\u003c/u\u003e"
+        "content": "* has a need to manage a significant number of items in a game."
       },
       {
         "lineNumber": 319,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "* prefer desktop apps over other types"
+      },
+      {
+        "lineNumber": 320,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "* can type fast"
+      },
+      {
+        "lineNumber": 321,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "* prefers typing to mouse interactions"
+      },
+      {
+        "lineNumber": 322,
+        "author": {
+          "gitId": "blackonyyx"
+        },
+        "content": "* is very comfortable with using CLI apps"
+      },
+      {
+        "lineNumber": 323,
+        "author": {
+          "gitId": "-"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 324,
+        "author": {
+          "gitId": "blackonyyx"
+        },
+        "content": "**Value proposition**: manage inventory faster than a typical mouse/GUI driven app"
+      },
+      {
+        "lineNumber": 325,
+        "author": {
+          "gitId": "-"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 326,
+        "author": {
+          "gitId": "blackonyyx"
+        },
+        "content": "### User stories for V1.1"
+      },
+      {
+        "lineNumber": 327,
+        "author": {
+          "gitId": "-"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 328,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unlikely to have) - `*`"
+      },
+      {
+        "lineNumber": 329,
+        "author": {
+          "gitId": "-"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 330,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "| Priority | As a …​                                    | I want to …​                     | So that I can…​                                             |"
+      },
+      {
+        "lineNumber": 331,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "| -------- | ------------------------------------------ | ------------------------------ | ---------------------------------------------------------------------- |"
+      },
+      {
+        "lineNumber": 332,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "| `* * *`  | new user                                   | see usage instructions         | refer to instructions when I forget how to use the App                 |"
+      },
+      {
+        "lineNumber": 333,
+        "author": {
+          "gitId": "blackonyyx"
+        },
+        "content": "| `* * *`  | user                                       | add a new item                 |                                                                        |"
+      },
+      {
+        "lineNumber": 334,
+        "author": {
+          "gitId": "blackonyyx"
+        },
+        "content": "| `* * *`  | user                                       | add a recipe                   |                                                                        |"
+      },
+      {
+        "lineNumber": 335,
+        "author": {
+          "gitId": "blackonyyx"
+        },
+        "content": "| `* * *`  | user                                       | delete a item                  | remove item that I no longer need to track                             |"
+      },
+      {
+        "lineNumber": 336,
+        "author": {
+          "gitId": "blackonyyx"
+        },
+        "content": "| `* * *`  | user                                       | delete a recipe                | remove recepies that I no longer need to use                           |"
+      },
+      {
+        "lineNumber": 337,
+        "author": {
+          "gitId": "blackonyyx"
+        },
+        "content": "| `* * *`  | user                                       | find a item by name            | locate details of items without having to go through the entire list   |"
+      },
+      {
+        "lineNumber": 338,
+        "author": {
+          "gitId": "blackonyyx"
+        },
+        "content": "| `* * `   | user                                       | tag a item by location         | locate items by where they are located                                 |"
+      },
+      {
+        "lineNumber": 339,
+        "author": {
+          "gitId": "blackonyyx"
+        },
+        "content": "| `* * `   | user                                       | use del command to delete both recipes and items         | improve user experience in the application   |"
+      },
+      {
+        "lineNumber": 340,
+        "author": {
+          "gitId": "blackonyyx"
+        },
+        "content": "*{More to be added in later iterations}*"
+      },
+      {
+        "lineNumber": 341,
+        "author": {
+          "gitId": "-"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 342,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "### Non-Functional Requirements"
+      },
+      {
+        "lineNumber": 343,
+        "author": {
+          "gitId": "-"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 344,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "1.  Should work on any _mainstream OS_ as long as it has Java `11` or above installed."
+      },
+      {
+        "lineNumber": 345,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "2.  Should be able to hold up to 1000 persons without a noticeable sluggishness in performance for typical usage."
+      },
+      {
+        "lineNumber": 346,
+        "author": {
+          "gitId": "blackonyyx"
+        },
+        "content": "3.  A user with above average typing speed for regular English text (i.e. not code, not system admin commands)"
+      },
+      {
+        "lineNumber": 347,
+        "author": {
+          "gitId": "blackonyyx"
+        },
+        "content": " should be able to accomplish most of the tasks faster using commands than using the mouse."
+      },
+      {
+        "lineNumber": 348,
+        "author": {
+          "gitId": "blackonyyx"
+        },
+        "content": "4.  A user should be able to view visually the output from the Application"
+      },
+      {
+        "lineNumber": 349,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "*{More to be added}*"
+      },
+      {
+        "lineNumber": 350,
+        "author": {
+          "gitId": "-"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 351,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "### Glossary"
+      },
+      {
+        "lineNumber": 352,
+        "author": {
+          "gitId": "-"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 353,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "* **Mainstream OS**: Windows, Linux, Unix, OS-X"
+      },
+      {
+        "lineNumber": 354,
+        "author": {
+          "gitId": "blackonyyx"
+        },
+        "content": "* **Item**: An item represents an object you obtain in a game. Eg a \u003cu\u003eRock\u003c/u\u003e"
+      },
+      {
+        "lineNumber": 355,
+        "author": {
+          "gitId": "blackonyyx"
+        },
+        "content": "* **Recipe**: An recipe is associated with multiple items, and represents the consumption of items in the input,"
+      },
+      {
+        "lineNumber": 356,
+        "author": {
+          "gitId": "blackonyyx"
+        },
+        "content": " to produce an item of the output. Eg: a 3 \u003cu\u003eSticks\u003c/u\u003e -\u003e \u003cu\u003eStaff\u003c/u\u003e"
+      },
+      {
+        "lineNumber": 357,
         "author": {
           "gitId": "blackonyyx"
         },
         "content": "* **Location**: The place where a Item can be found in game. Eg: \u003cu\u003eSleepywood\u003c/u\u003e"
       },
       {
-        "lineNumber": 320,
+        "lineNumber": 358,
         "author": {
           "gitId": "blackonyyx"
         },
@@ -4926,9 +5235,10 @@
       }
     ],
     "authorContributionMap": {
-      "blackonyyx": 65,
-      "aqcd": 78,
-      "-": 177
+      "blackonyyx": 63,
+      "aqcd": 76,
+      "-": 178,
+      "khenghun": 41
     }
   },
   {
@@ -59089,264 +59399,208 @@
       {
         "lineNumber": 52,
         "author": {
-          "gitId": "khenghun"
+          "gitId": "justacasul"
         },
-        "content": "    public DisplayedInventoryType getInventoryType() {"
+        "content": "    /**"
       },
       {
         "lineNumber": 53,
         "author": {
           "gitId": "khenghun"
         },
-        "content": "        return this.inventoryType;"
+        "content": "     * Custom {@code ListCell} that displays the graphics of the current inventory, either {@code Item} using an"
       },
       {
         "lineNumber": 54,
         "author": {
           "gitId": "khenghun"
         },
-        "content": "    }"
-      },
-      {
-        "lineNumber": 55,
-        "author": {
-          "gitId": "khenghun"
-        },
-        "content": ""
-      },
-      {
-        "lineNumber": 56,
-        "author": {
-          "gitId": "khenghun"
-        },
-        "content": "    public void setInventoryType(DisplayedInventoryType inventoryType) {"
-      },
-      {
-        "lineNumber": 57,
-        "author": {
-          "gitId": "khenghun"
-        },
-        "content": "        this.inventoryType \u003d inventoryType;"
-      },
-      {
-        "lineNumber": 58,
-        "author": {
-          "gitId": "khenghun"
-        },
-        "content": "    }"
-      },
-      {
-        "lineNumber": 59,
-        "author": {
-          "gitId": "khenghun"
-        },
-        "content": ""
-      },
-      {
-        "lineNumber": 60,
-        "author": {
-          "gitId": "justacasul"
-        },
-        "content": "    /**"
-      },
-      {
-        "lineNumber": 61,
-        "author": {
-          "gitId": "khenghun"
-        },
-        "content": "     * Custom {@code ListCell} that displays the graphics of the current inventory, either {@code Item} using an"
-      },
-      {
-        "lineNumber": 62,
-        "author": {
-          "gitId": "khenghun"
-        },
         "content": "     * {@code InventoryCard} or {@code PrintableRecipe} using a {@code RecipeCard}."
       },
       {
-        "lineNumber": 63,
+        "lineNumber": 55,
         "author": {
           "gitId": "justacasul"
         },
         "content": "     */"
       },
       {
-        "lineNumber": 64,
+        "lineNumber": 56,
         "author": {
           "gitId": "khenghun"
         },
         "content": "    class ItemListViewCell extends ListCell\u003cInventoryComponent\u003e {"
       },
       {
-        "lineNumber": 65,
+        "lineNumber": 57,
         "author": {
           "gitId": "khenghun"
         },
         "content": ""
       },
       {
-        "lineNumber": 66,
+        "lineNumber": 58,
         "author": {
           "gitId": "justacasul"
         },
         "content": "        @Override"
       },
       {
-        "lineNumber": 67,
+        "lineNumber": 59,
         "author": {
           "gitId": "khenghun"
         },
         "content": "        protected void updateItem(InventoryComponent inventoryComponent, boolean empty) {"
       },
       {
-        "lineNumber": 68,
+        "lineNumber": 60,
         "author": {
           "gitId": "khenghun"
         },
         "content": "            super.updateItem(inventoryComponent, empty);"
       },
       {
-        "lineNumber": 69,
+        "lineNumber": 61,
         "author": {
           "gitId": "khenghun"
         },
         "content": "            if (empty || inventoryComponent \u003d\u003d null) {"
       },
       {
-        "lineNumber": 70,
+        "lineNumber": 62,
         "author": {
           "gitId": "justacasul"
         },
         "content": "                setGraphic(null);"
       },
       {
-        "lineNumber": 71,
+        "lineNumber": 63,
         "author": {
           "gitId": "justacasul"
         },
         "content": "                setText(null);"
       },
       {
-        "lineNumber": 72,
+        "lineNumber": 64,
         "author": {
           "gitId": "justacasul"
         },
         "content": "            } else {"
       },
       {
-        "lineNumber": 73,
+        "lineNumber": 65,
         "author": {
           "gitId": "khenghun"
         },
         "content": "                switch (inventoryComponent.getType()) {"
       },
       {
-        "lineNumber": 74,
+        "lineNumber": 66,
         "author": {
           "gitId": "khenghun"
         },
         "content": "                case ITEMS:"
       },
       {
-        "lineNumber": 75,
+        "lineNumber": 67,
         "author": {
           "gitId": "khenghun"
         },
         "content": "                    setGraphic(new InventoryCard((Item) inventoryComponent, getIndex() + 1).getRoot());"
       },
       {
-        "lineNumber": 76,
+        "lineNumber": 68,
         "author": {
           "gitId": "khenghun"
         },
         "content": "                    break;"
       },
       {
-        "lineNumber": 77,
+        "lineNumber": 69,
         "author": {
           "gitId": "khenghun"
         },
         "content": "                case RECIPES:"
       },
       {
-        "lineNumber": 78,
+        "lineNumber": 70,
         "author": {
           "gitId": "khenghun"
         },
         "content": "                    setGraphic(new RecipeCard((PrintableRecipe) inventoryComponent, getIndex() + 1).getRoot());"
       },
       {
-        "lineNumber": 79,
+        "lineNumber": 71,
         "author": {
           "gitId": "khenghun"
         },
         "content": "                    break;"
       },
       {
-        "lineNumber": 80,
+        "lineNumber": 72,
         "author": {
           "gitId": "khenghun"
         },
         "content": "                case DETAILED_ITEM:"
       },
       {
-        "lineNumber": 81,
+        "lineNumber": 73,
         "author": {
           "gitId": "khenghun"
         },
         "content": "                    setGraphic(new DetailedItemCard((DetailedItem) inventoryComponent, getIndex() + 1).getRoot());"
       },
       {
-        "lineNumber": 82,
+        "lineNumber": 74,
         "author": {
           "gitId": "khenghun"
         },
         "content": "                    break;"
       },
       {
-        "lineNumber": 83,
+        "lineNumber": 75,
         "author": {
           "gitId": "khenghun"
         },
         "content": "                default:"
       },
       {
-        "lineNumber": 84,
+        "lineNumber": 76,
         "author": {
           "gitId": "khenghun"
         },
         "content": "                    throw new IllegalStateException(\"This inventoryType is not valid\");"
       },
       {
-        "lineNumber": 85,
+        "lineNumber": 77,
         "author": {
           "gitId": "khenghun"
         },
         "content": "                }"
       },
       {
-        "lineNumber": 86,
+        "lineNumber": 78,
         "author": {
           "gitId": "justacasul"
         },
         "content": "            }"
       },
       {
-        "lineNumber": 87,
+        "lineNumber": 79,
         "author": {
           "gitId": "justacasul"
         },
         "content": "        }"
       },
       {
-        "lineNumber": 88,
+        "lineNumber": 80,
         "author": {
           "gitId": "justacasul"
         },
         "content": "    }"
       },
       {
-        "lineNumber": 89,
+        "lineNumber": 81,
         "author": {
           "gitId": "justacasul"
         },
@@ -59356,7 +59610,7 @@
     "authorContributionMap": {
       "justacasul": 32,
       "Rahul0506": 3,
-      "khenghun": 54
+      "khenghun": 46
     }
   },
   {

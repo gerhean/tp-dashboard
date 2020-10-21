@@ -17885,77 +17885,77 @@
         "author": {
           "gitId": "aizatazhar"
         },
-        "content": "    private static final String FILE_FORMAT \u003d \".json\";"
+        "content": "    public static final String FILE_FORMAT \u003d \".json\";"
       },
       {
         "lineNumber": 39,
         "author": {
           "gitId": "aizatazhar"
         },
-        "content": "    private final String fileName;"
+        "content": ""
       },
       {
         "lineNumber": 40,
         "author": {
           "gitId": "aizatazhar"
         },
-        "content": ""
+        "content": "    private String fileName;"
       },
       {
         "lineNumber": 41,
         "author": {
           "gitId": "aizatazhar"
         },
-        "content": "    /**"
+        "content": "    private Path savePath;"
       },
       {
         "lineNumber": 42,
         "author": {
           "gitId": "aizatazhar"
         },
-        "content": "     * Creates a SnapCommand to save the current state of the ZooKeep Book in a file"
+        "content": ""
       },
       {
         "lineNumber": 43,
         "author": {
           "gitId": "aizatazhar"
         },
-        "content": "     * with a specified file name."
+        "content": "    /**"
       },
       {
         "lineNumber": 44,
         "author": {
           "gitId": "aizatazhar"
         },
-        "content": "     */"
+        "content": "     * Creates a SnapCommand to save the current state of the ZooKeep Book to the specified path"
       },
       {
         "lineNumber": 45,
         "author": {
           "gitId": "aizatazhar"
         },
-        "content": "    public SnapCommand(String fileName) {"
+        "content": "     */"
       },
       {
         "lineNumber": 46,
         "author": {
           "gitId": "aizatazhar"
         },
-        "content": "        requireNonNull(fileName);"
+        "content": "    public SnapCommand(Path savePath, String fileName) {"
       },
       {
         "lineNumber": 47,
         "author": {
           "gitId": "aizatazhar"
         },
-        "content": "        this.fileName \u003d fileName + FILE_FORMAT;"
+        "content": "        requireNonNull(savePath);"
       },
       {
         "lineNumber": 48,
         "author": {
           "gitId": "aizatazhar"
         },
-        "content": "    }"
+        "content": "        requireNonNull(fileName);"
       },
       {
         "lineNumber": 49,
@@ -17969,21 +17969,21 @@
         "author": {
           "gitId": "aizatazhar"
         },
-        "content": "    @Override"
+        "content": "        this.savePath \u003d savePath;"
       },
       {
         "lineNumber": 51,
         "author": {
           "gitId": "aizatazhar"
         },
-        "content": "    public CommandResult execute(Model model) throws CommandException {"
+        "content": "        this.fileName \u003d fileName;"
       },
       {
         "lineNumber": 52,
         "author": {
           "gitId": "aizatazhar"
         },
-        "content": "        requireNonNull(model);"
+        "content": "    }"
       },
       {
         "lineNumber": 53,
@@ -17997,21 +17997,21 @@
         "author": {
           "gitId": "aizatazhar"
         },
-        "content": "        Path zooKeepBookFilePath \u003d model.getUserPrefs().getZooKeepBookFilePath();"
+        "content": "    @Override"
       },
       {
         "lineNumber": 55,
         "author": {
           "gitId": "aizatazhar"
         },
-        "content": "        ZooKeepBookStorage zooKeepBookStorage \u003d new JsonZooKeepBookStorage(zooKeepBookFilePath);"
+        "content": "    public CommandResult execute(Model model) throws CommandException {"
       },
       {
         "lineNumber": 56,
         "author": {
           "gitId": "aizatazhar"
         },
-        "content": "        JsonUserPrefsStorage userPrefsStorage \u003d new JsonUserPrefsStorage(zooKeepBookFilePath);"
+        "content": "        requireNonNull(model);"
       },
       {
         "lineNumber": 57,
@@ -18025,276 +18025,150 @@
         "author": {
           "gitId": "aizatazhar"
         },
-        "content": "        try {"
+        "content": "        Path zooKeepBookFilePath \u003d model.getUserPrefs().getZooKeepBookFilePath();"
       },
       {
         "lineNumber": 59,
         "author": {
           "gitId": "aizatazhar"
         },
-        "content": "            Storage storage \u003d new StorageManager(zooKeepBookStorage, userPrefsStorage);"
+        "content": "        ZooKeepBookStorage zooKeepBookStorage \u003d new JsonZooKeepBookStorage(zooKeepBookFilePath);"
       },
       {
         "lineNumber": 60,
         "author": {
           "gitId": "aizatazhar"
         },
-        "content": "            ReadOnlyZooKeepBook zooKeepBook \u003d model.getZooKeepBook();"
+        "content": "        JsonUserPrefsStorage userPrefsStorage \u003d new JsonUserPrefsStorage(zooKeepBookFilePath);"
       },
       {
         "lineNumber": 61,
         "author": {
           "gitId": "aizatazhar"
         },
-        "content": "            Path savePath \u003d Path.of(\"data\", fileName);"
+        "content": ""
       },
       {
         "lineNumber": 62,
         "author": {
           "gitId": "aizatazhar"
         },
-        "content": ""
+        "content": "        try {"
       },
       {
         "lineNumber": 63,
         "author": {
           "gitId": "aizatazhar"
         },
-        "content": "            storage.saveZooKeepBook(zooKeepBook, savePath);"
+        "content": "            Storage storage \u003d new StorageManager(zooKeepBookStorage, userPrefsStorage);"
       },
       {
         "lineNumber": 64,
         "author": {
           "gitId": "aizatazhar"
         },
-        "content": "        } catch (IOException ioe) {"
+        "content": "            ReadOnlyZooKeepBook zooKeepBook \u003d model.getZooKeepBook();"
       },
       {
         "lineNumber": 65,
         "author": {
           "gitId": "aizatazhar"
         },
-        "content": "            throw new CommandException(String.format(MESSAGE_ERROR + ioe, ioe));"
+        "content": "            storage.saveZooKeepBook(zooKeepBook, savePath);"
       },
       {
         "lineNumber": 66,
         "author": {
           "gitId": "aizatazhar"
         },
-        "content": "        }"
+        "content": "        } catch (IOException ioe) {"
       },
       {
         "lineNumber": 67,
         "author": {
           "gitId": "aizatazhar"
         },
-        "content": ""
+        "content": "            throw new CommandException(String.format(MESSAGE_ERROR + ioe, ioe));"
       },
       {
         "lineNumber": 68,
         "author": {
           "gitId": "aizatazhar"
         },
-        "content": "        return new CommandResult(String.format(MESSAGE_SUCCESS, fileName));"
+        "content": "        }"
       },
       {
         "lineNumber": 69,
         "author": {
           "gitId": "aizatazhar"
         },
-        "content": "    }"
+        "content": ""
       },
       {
         "lineNumber": 70,
         "author": {
           "gitId": "aizatazhar"
         },
-        "content": ""
+        "content": "        return new CommandResult(String.format(MESSAGE_SUCCESS, fileName + FILE_FORMAT));"
       },
       {
         "lineNumber": 71,
         "author": {
           "gitId": "aizatazhar"
         },
-        "content": "    // Overloaded method that accepts a save Path destination for easier testing purposes"
+        "content": "    }"
       },
       {
         "lineNumber": 72,
         "author": {
           "gitId": "aizatazhar"
         },
-        "content": "    protected CommandResult execute(Model model, Path path) throws CommandException {"
+        "content": ""
       },
       {
         "lineNumber": 73,
         "author": {
           "gitId": "aizatazhar"
         },
-        "content": "        requireNonNull(model);"
+        "content": "    @Override"
       },
       {
         "lineNumber": 74,
         "author": {
           "gitId": "aizatazhar"
         },
-        "content": ""
+        "content": "    public boolean equals(Object other) {"
       },
       {
         "lineNumber": 75,
         "author": {
           "gitId": "aizatazhar"
         },
-        "content": "        Path zooKeepBookFilePath \u003d model.getUserPrefs().getZooKeepBookFilePath();"
+        "content": "        return other \u003d\u003d this // short circuit if same object"
       },
       {
         "lineNumber": 76,
         "author": {
           "gitId": "aizatazhar"
         },
-        "content": "        ZooKeepBookStorage zooKeepBookStorage \u003d new JsonZooKeepBookStorage(zooKeepBookFilePath);"
+        "content": "                || (other instanceof SnapCommand // instanceof handles nulls"
       },
       {
         "lineNumber": 77,
         "author": {
           "gitId": "aizatazhar"
         },
-        "content": "        JsonUserPrefsStorage userPrefsStorage \u003d new JsonUserPrefsStorage(zooKeepBookFilePath);"
+        "content": "                \u0026\u0026 fileName.equals(((SnapCommand) other).fileName));"
       },
       {
         "lineNumber": 78,
         "author": {
           "gitId": "aizatazhar"
         },
-        "content": ""
+        "content": "    }"
       },
       {
         "lineNumber": 79,
-        "author": {
-          "gitId": "aizatazhar"
-        },
-        "content": "        try {"
-      },
-      {
-        "lineNumber": 80,
-        "author": {
-          "gitId": "aizatazhar"
-        },
-        "content": "            Storage storage \u003d new StorageManager(zooKeepBookStorage, userPrefsStorage);"
-      },
-      {
-        "lineNumber": 81,
-        "author": {
-          "gitId": "aizatazhar"
-        },
-        "content": "            ReadOnlyZooKeepBook zooKeepBook \u003d model.getZooKeepBook();"
-      },
-      {
-        "lineNumber": 82,
-        "author": {
-          "gitId": "aizatazhar"
-        },
-        "content": ""
-      },
-      {
-        "lineNumber": 83,
-        "author": {
-          "gitId": "aizatazhar"
-        },
-        "content": "            storage.saveZooKeepBook(zooKeepBook, path);"
-      },
-      {
-        "lineNumber": 84,
-        "author": {
-          "gitId": "aizatazhar"
-        },
-        "content": "        } catch (IOException ioe) {"
-      },
-      {
-        "lineNumber": 85,
-        "author": {
-          "gitId": "aizatazhar"
-        },
-        "content": "            throw new CommandException(String.format(MESSAGE_ERROR + ioe, ioe));"
-      },
-      {
-        "lineNumber": 86,
-        "author": {
-          "gitId": "aizatazhar"
-        },
-        "content": "        }"
-      },
-      {
-        "lineNumber": 87,
-        "author": {
-          "gitId": "aizatazhar"
-        },
-        "content": ""
-      },
-      {
-        "lineNumber": 88,
-        "author": {
-          "gitId": "aizatazhar"
-        },
-        "content": "        return new CommandResult(String.format(MESSAGE_SUCCESS, fileName));"
-      },
-      {
-        "lineNumber": 89,
-        "author": {
-          "gitId": "aizatazhar"
-        },
-        "content": "    }"
-      },
-      {
-        "lineNumber": 90,
-        "author": {
-          "gitId": "aizatazhar"
-        },
-        "content": ""
-      },
-      {
-        "lineNumber": 91,
-        "author": {
-          "gitId": "aizatazhar"
-        },
-        "content": "    @Override"
-      },
-      {
-        "lineNumber": 92,
-        "author": {
-          "gitId": "aizatazhar"
-        },
-        "content": "    public boolean equals(Object other) {"
-      },
-      {
-        "lineNumber": 93,
-        "author": {
-          "gitId": "aizatazhar"
-        },
-        "content": "        return other \u003d\u003d this // short circuit if same object"
-      },
-      {
-        "lineNumber": 94,
-        "author": {
-          "gitId": "aizatazhar"
-        },
-        "content": "                || (other instanceof SnapCommand // instanceof handles nulls"
-      },
-      {
-        "lineNumber": 95,
-        "author": {
-          "gitId": "aizatazhar"
-        },
-        "content": "                \u0026\u0026 fileName.equals(((SnapCommand) other).fileName));"
-      },
-      {
-        "lineNumber": 96,
-        "author": {
-          "gitId": "aizatazhar"
-        },
-        "content": "    }"
-      },
-      {
-        "lineNumber": 97,
         "author": {
           "gitId": "aizatazhar"
         },
@@ -18302,7 +18176,7 @@
       }
     ],
     "authorContributionMap": {
-      "aizatazhar": 97
+      "aizatazhar": 79
     }
   },
   {
@@ -21582,77 +21456,77 @@
         "author": {
           "gitId": "aizatazhar"
         },
-        "content": "        String trimmedArgs \u003d args.trim();"
+        "content": "        String fileName \u003d args.trim();"
       },
       {
         "lineNumber": 24,
         "author": {
           "gitId": "aizatazhar"
         },
-        "content": "        if (trimmedArgs.isEmpty()) {"
+        "content": "        Path savePath \u003d Path.of(\"data\", fileName + SnapCommand.FILE_FORMAT);"
       },
       {
         "lineNumber": 25,
         "author": {
           "gitId": "aizatazhar"
         },
-        "content": "            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, SnapCommand.MESSAGE_USAGE));"
+        "content": "        int maxFileNameLength \u003d 100;"
       },
       {
         "lineNumber": 26,
         "author": {
           "gitId": "aizatazhar"
         },
-        "content": "        } else if (!trimmedArgs.matches(VALIDATION_REGEX) || trimmedArgs.length() \u003e 100) {"
+        "content": ""
       },
       {
         "lineNumber": 27,
         "author": {
           "gitId": "aizatazhar"
         },
-        "content": "            throw new ParseException(SnapCommand.MESSAGE_CONSTRAINTS);"
+        "content": "        if (fileName.isEmpty()) {"
       },
       {
         "lineNumber": 28,
         "author": {
           "gitId": "aizatazhar"
         },
-        "content": "        } else if (Files.exists(Path.of(\"data\", trimmedArgs + \".json\"))) {"
+        "content": "            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, SnapCommand.MESSAGE_USAGE));"
       },
       {
         "lineNumber": 29,
         "author": {
           "gitId": "aizatazhar"
         },
-        "content": "            throw new ParseException(String.format(SnapCommand.MESSAGE_WARNING, trimmedArgs + \".json\"));"
+        "content": "        } else if (!fileName.matches(VALIDATION_REGEX) || fileName.length() \u003e maxFileNameLength) {"
       },
       {
         "lineNumber": 30,
         "author": {
           "gitId": "aizatazhar"
         },
-        "content": "        }"
+        "content": "            throw new ParseException(SnapCommand.MESSAGE_CONSTRAINTS);"
       },
       {
         "lineNumber": 31,
         "author": {
           "gitId": "aizatazhar"
         },
-        "content": ""
+        "content": "        } else if (Files.exists(savePath)) {"
       },
       {
         "lineNumber": 32,
         "author": {
           "gitId": "aizatazhar"
         },
-        "content": "        return new SnapCommand(trimmedArgs);"
+        "content": "            throw new ParseException(String.format(SnapCommand.MESSAGE_WARNING, fileName + SnapCommand.FILE_FORMAT));"
       },
       {
         "lineNumber": 33,
         "author": {
           "gitId": "aizatazhar"
         },
-        "content": "    }"
+        "content": "        }"
       },
       {
         "lineNumber": 34,
@@ -21666,11 +21540,32 @@
         "author": {
           "gitId": "aizatazhar"
         },
+        "content": "        return new SnapCommand(savePath, fileName);"
+      },
+      {
+        "lineNumber": 36,
+        "author": {
+          "gitId": "aizatazhar"
+        },
+        "content": "    }"
+      },
+      {
+        "lineNumber": 37,
+        "author": {
+          "gitId": "aizatazhar"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 38,
+        "author": {
+          "gitId": "aizatazhar"
+        },
         "content": "}"
       }
     ],
     "authorContributionMap": {
-      "aizatazhar": 35
+      "aizatazhar": 38
     }
   },
   {
@@ -47553,217 +47448,217 @@
         "author": {
           "gitId": "aizatazhar"
         },
-        "content": "    private static final String FILE_FORMAT \u003d \".json\";"
+        "content": "    private Path makePath(String fileName) {"
       },
       {
         "lineNumber": 26,
         "author": {
           "gitId": "aizatazhar"
         },
-        "content": ""
+        "content": "        return Path.of(\"src\", \"test\", \"data\", \"SnapCommandTest\", fileName + SnapCommand.FILE_FORMAT);"
       },
       {
         "lineNumber": 27,
         "author": {
           "gitId": "aizatazhar"
         },
-        "content": "    @Test"
+        "content": "    }"
       },
       {
         "lineNumber": 28,
         "author": {
           "gitId": "aizatazhar"
         },
-        "content": "    public void constructor_nullFileName_throwsNullPointerException() {"
+        "content": ""
       },
       {
         "lineNumber": 29,
         "author": {
           "gitId": "aizatazhar"
         },
-        "content": "        assertThrows(NullPointerException.class, () -\u003e new SnapCommand(null));"
+        "content": "    @Test"
       },
       {
         "lineNumber": 30,
         "author": {
           "gitId": "aizatazhar"
         },
-        "content": "    }"
+        "content": "    public void constructor_nullConstructor_throwsNullPointerException() {"
       },
       {
         "lineNumber": 31,
         "author": {
           "gitId": "aizatazhar"
         },
-        "content": ""
+        "content": "        assertThrows(NullPointerException.class, () -\u003e new SnapCommand(null, null));"
       },
       {
         "lineNumber": 32,
         "author": {
           "gitId": "aizatazhar"
         },
-        "content": "    @Test"
+        "content": "    }"
       },
       {
         "lineNumber": 33,
         "author": {
           "gitId": "aizatazhar"
         },
-        "content": "    public void execute_validFileName_success() throws Exception {"
+        "content": ""
       },
       {
         "lineNumber": 34,
         "author": {
           "gitId": "aizatazhar"
         },
-        "content": "        ModelStub modelStub \u003d new ModelStub();"
+        "content": "    @Test"
       },
       {
         "lineNumber": 35,
         "author": {
           "gitId": "aizatazhar"
         },
-        "content": "        String validFileName \u003d \"ZooKeepBookTest_19-10-2020\" + FILE_FORMAT;"
+        "content": "    public void execute_validFileName_success() throws Exception {"
       },
       {
         "lineNumber": 36,
         "author": {
           "gitId": "aizatazhar"
         },
-        "content": "        Path path \u003d Path.of(\"src\", \"test\", \"data\", \"SnapCommandTest\", validFileName);"
+        "content": "        ModelStub modelStub \u003d new ModelStub();"
       },
       {
         "lineNumber": 37,
         "author": {
           "gitId": "aizatazhar"
         },
-        "content": "        CommandResult commandResult \u003d new SnapCommand(validFileName).execute(modelStub, path);"
+        "content": "        String validFileName \u003d \"ZooKeepBookTest_19-10-2020\";"
       },
       {
         "lineNumber": 38,
         "author": {
           "gitId": "aizatazhar"
         },
-        "content": ""
+        "content": "        Path path \u003d makePath(validFileName);"
       },
       {
         "lineNumber": 39,
         "author": {
           "gitId": "aizatazhar"
         },
-        "content": "        // assert that command has executed successfully"
+        "content": "        CommandResult commandResult \u003d new SnapCommand(path, validFileName).execute(modelStub);"
       },
       {
         "lineNumber": 40,
         "author": {
           "gitId": "aizatazhar"
         },
-        "content": "        assertEquals(String.format(SnapCommand.MESSAGE_SUCCESS, validFileName + FILE_FORMAT),"
+        "content": ""
       },
       {
         "lineNumber": 41,
         "author": {
           "gitId": "aizatazhar"
         },
-        "content": "                commandResult.getFeedbackToUser());"
+        "content": "        // assert that command has executed successfully"
       },
       {
         "lineNumber": 42,
         "author": {
           "gitId": "aizatazhar"
         },
-        "content": ""
+        "content": "        assertEquals(String.format(SnapCommand.MESSAGE_SUCCESS, validFileName + SnapCommand.FILE_FORMAT),"
       },
       {
         "lineNumber": 43,
         "author": {
           "gitId": "aizatazhar"
         },
-        "content": "        // assert that contents of created file is equal"
+        "content": "                commandResult.getFeedbackToUser());"
       },
       {
         "lineNumber": 44,
         "author": {
           "gitId": "aizatazhar"
         },
-        "content": "        ReadOnlyZooKeepBook expectedBook \u003d modelStub.getZooKeepBook();"
+        "content": ""
       },
       {
         "lineNumber": 45,
         "author": {
           "gitId": "aizatazhar"
         },
-        "content": "        ReadOnlyZooKeepBook savedBook \u003d new JsonZooKeepBookStorageStub(path).readZooKeepBook().get();"
+        "content": "        // assert that contents of created file is equal"
       },
       {
         "lineNumber": 46,
         "author": {
           "gitId": "aizatazhar"
         },
-        "content": "        assertEquals(expectedBook, savedBook);"
+        "content": "        ReadOnlyZooKeepBook expectedBook \u003d modelStub.getZooKeepBook();"
       },
       {
         "lineNumber": 47,
         "author": {
           "gitId": "aizatazhar"
         },
-        "content": "    }"
+        "content": "        ReadOnlyZooKeepBook savedBook \u003d new JsonZooKeepBookStorageStub(path).readZooKeepBook().get();"
       },
       {
         "lineNumber": 48,
         "author": {
           "gitId": "aizatazhar"
         },
-        "content": ""
+        "content": "        assertEquals(expectedBook, savedBook);"
       },
       {
         "lineNumber": 49,
         "author": {
           "gitId": "aizatazhar"
         },
-        "content": "    @Test"
+        "content": "    }"
       },
       {
         "lineNumber": 50,
         "author": {
           "gitId": "aizatazhar"
         },
-        "content": "    public void equals() {"
+        "content": ""
       },
       {
         "lineNumber": 51,
         "author": {
           "gitId": "aizatazhar"
         },
-        "content": "        final String fileName \u003d \"zookeepbook_19-10-2020\";"
+        "content": "    @Test"
       },
       {
         "lineNumber": 52,
         "author": {
           "gitId": "aizatazhar"
         },
-        "content": "        SnapCommand snapCommand \u003d new SnapCommand(fileName);"
+        "content": "    public void equals() {"
       },
       {
         "lineNumber": 53,
         "author": {
           "gitId": "aizatazhar"
         },
-        "content": ""
+        "content": "        final String fileName \u003d \"zookeepbook_19-10-2020\";"
       },
       {
         "lineNumber": 54,
         "author": {
           "gitId": "aizatazhar"
         },
-        "content": "        // same object -\u003e returns true"
+        "content": "        Path path \u003d makePath(fileName);"
       },
       {
         "lineNumber": 55,
         "author": {
           "gitId": "aizatazhar"
         },
-        "content": "        assertTrue(snapCommand.equals(snapCommand));"
+        "content": "        SnapCommand snapCommand \u003d new SnapCommand(path, fileName);"
       },
       {
         "lineNumber": 56,
@@ -47777,70 +47672,70 @@
         "author": {
           "gitId": "aizatazhar"
         },
-        "content": "        // same values -\u003e returns true"
+        "content": "        // same object -\u003e returns true"
       },
       {
         "lineNumber": 58,
         "author": {
           "gitId": "aizatazhar"
         },
-        "content": "        SnapCommand snapCommandCopy \u003d new SnapCommand(fileName);"
+        "content": "        assertTrue(snapCommand.equals(snapCommand));"
       },
       {
         "lineNumber": 59,
         "author": {
           "gitId": "aizatazhar"
         },
-        "content": "        assertTrue(snapCommand.equals(snapCommandCopy));"
+        "content": ""
       },
       {
         "lineNumber": 60,
         "author": {
           "gitId": "aizatazhar"
         },
-        "content": ""
+        "content": "        // same values -\u003e returns true"
       },
       {
         "lineNumber": 61,
         "author": {
           "gitId": "aizatazhar"
         },
-        "content": "        // different file names -\u003e returns false"
+        "content": "        SnapCommand snapCommandCopy \u003d new SnapCommand(path, fileName);"
       },
       {
         "lineNumber": 62,
         "author": {
           "gitId": "aizatazhar"
         },
-        "content": "        SnapCommand snapCommandWithDifferentFileName \u003d new SnapCommand(fileName + \"x\");"
+        "content": "        assertTrue(snapCommand.equals(snapCommandCopy));"
       },
       {
         "lineNumber": 63,
         "author": {
           "gitId": "aizatazhar"
         },
-        "content": "        assertFalse(snapCommand.equals(snapCommandWithDifferentFileName));"
+        "content": ""
       },
       {
         "lineNumber": 64,
         "author": {
           "gitId": "aizatazhar"
         },
-        "content": ""
+        "content": "        // different file names -\u003e returns false"
       },
       {
         "lineNumber": 65,
         "author": {
           "gitId": "aizatazhar"
         },
-        "content": "        // different types -\u003e returns false"
+        "content": "        SnapCommand snapCommandWithDifferentFileName \u003d new SnapCommand(path, fileName + \"x\");"
       },
       {
         "lineNumber": 66,
         "author": {
           "gitId": "aizatazhar"
         },
-        "content": "        assertFalse(snapCommand.equals(1));"
+        "content": "        assertFalse(snapCommand.equals(snapCommandWithDifferentFileName));"
       },
       {
         "lineNumber": 67,
@@ -47854,703 +47749,724 @@
         "author": {
           "gitId": "aizatazhar"
         },
-        "content": "        // null -\u003e returns false"
+        "content": "        // different types -\u003e returns false"
       },
       {
         "lineNumber": 69,
         "author": {
           "gitId": "aizatazhar"
         },
-        "content": "        assertFalse(snapCommand.equals(null));"
+        "content": "        assertFalse(snapCommand.equals(1));"
       },
       {
         "lineNumber": 70,
         "author": {
           "gitId": "aizatazhar"
         },
-        "content": "    }"
+        "content": ""
       },
       {
         "lineNumber": 71,
         "author": {
           "gitId": "aizatazhar"
         },
-        "content": ""
+        "content": "        // null -\u003e returns false"
       },
       {
         "lineNumber": 72,
         "author": {
           "gitId": "aizatazhar"
         },
-        "content": "    private class ModelStub implements Model {"
+        "content": "        assertFalse(snapCommand.equals(null));"
       },
       {
         "lineNumber": 73,
         "author": {
           "gitId": "aizatazhar"
         },
-        "content": "        @Override"
+        "content": "    }"
       },
       {
         "lineNumber": 74,
         "author": {
           "gitId": "aizatazhar"
         },
-        "content": "        public void setUserPrefs(ReadOnlyUserPrefs userPrefs) {"
+        "content": ""
       },
       {
         "lineNumber": 75,
         "author": {
           "gitId": "aizatazhar"
         },
-        "content": "            throw new AssertionError(\"This method should not be called.\");"
+        "content": "    private class ModelStub implements Model {"
       },
       {
         "lineNumber": 76,
         "author": {
           "gitId": "aizatazhar"
         },
-        "content": "        }"
+        "content": "        @Override"
       },
       {
         "lineNumber": 77,
         "author": {
           "gitId": "aizatazhar"
         },
-        "content": ""
+        "content": "        public void setUserPrefs(ReadOnlyUserPrefs userPrefs) {"
       },
       {
         "lineNumber": 78,
         "author": {
           "gitId": "aizatazhar"
         },
-        "content": "        @Override"
+        "content": "            throw new AssertionError(\"This method should not be called.\");"
       },
       {
         "lineNumber": 79,
         "author": {
           "gitId": "aizatazhar"
         },
-        "content": "        public ReadOnlyUserPrefs getUserPrefs() {"
+        "content": "        }"
       },
       {
         "lineNumber": 80,
         "author": {
           "gitId": "aizatazhar"
         },
-        "content": "            UserPrefs userPrefs \u003d new UserPrefs();"
+        "content": ""
       },
       {
         "lineNumber": 81,
         "author": {
           "gitId": "aizatazhar"
         },
-        "content": "            userPrefs.setGuiSettings(new GuiSettings(1000, 500, 300, 100));"
+        "content": "        @Override"
       },
       {
         "lineNumber": 82,
         "author": {
           "gitId": "aizatazhar"
         },
-        "content": "            userPrefs.setZooKeepBookFilePath(Paths.get(\"zookeepbook.json\"));"
+        "content": "        public ReadOnlyUserPrefs getUserPrefs() {"
       },
       {
         "lineNumber": 83,
         "author": {
           "gitId": "aizatazhar"
         },
-        "content": "            return userPrefs;"
+        "content": "            UserPrefs userPrefs \u003d new UserPrefs();"
       },
       {
         "lineNumber": 84,
         "author": {
           "gitId": "aizatazhar"
         },
-        "content": "        }"
+        "content": "            userPrefs.setGuiSettings(new GuiSettings(1000, 500, 300, 100));"
       },
       {
         "lineNumber": 85,
         "author": {
           "gitId": "aizatazhar"
         },
-        "content": ""
+        "content": "            userPrefs.setZooKeepBookFilePath(Paths.get(\"zookeepbook.json\"));"
       },
       {
         "lineNumber": 86,
         "author": {
           "gitId": "aizatazhar"
         },
-        "content": "        @Override"
+        "content": "            return userPrefs;"
       },
       {
         "lineNumber": 87,
         "author": {
           "gitId": "aizatazhar"
         },
-        "content": "        public GuiSettings getGuiSettings() {"
+        "content": "        }"
       },
       {
         "lineNumber": 88,
         "author": {
           "gitId": "aizatazhar"
         },
-        "content": "            throw new AssertionError(\"This method should not be called.\");"
+        "content": ""
       },
       {
         "lineNumber": 89,
         "author": {
           "gitId": "aizatazhar"
         },
-        "content": "        }"
+        "content": "        @Override"
       },
       {
         "lineNumber": 90,
         "author": {
           "gitId": "aizatazhar"
         },
-        "content": ""
+        "content": "        public GuiSettings getGuiSettings() {"
       },
       {
         "lineNumber": 91,
         "author": {
           "gitId": "aizatazhar"
         },
-        "content": "        @Override"
+        "content": "            throw new AssertionError(\"This method should not be called.\");"
       },
       {
         "lineNumber": 92,
         "author": {
           "gitId": "aizatazhar"
         },
-        "content": "        public void setGuiSettings(GuiSettings guiSettings) {"
+        "content": "        }"
       },
       {
         "lineNumber": 93,
         "author": {
           "gitId": "aizatazhar"
         },
-        "content": "            throw new AssertionError(\"This method should not be called.\");"
+        "content": ""
       },
       {
         "lineNumber": 94,
         "author": {
           "gitId": "aizatazhar"
         },
-        "content": "        }"
+        "content": "        @Override"
       },
       {
         "lineNumber": 95,
         "author": {
           "gitId": "aizatazhar"
         },
-        "content": ""
+        "content": "        public void setGuiSettings(GuiSettings guiSettings) {"
       },
       {
         "lineNumber": 96,
         "author": {
           "gitId": "aizatazhar"
         },
-        "content": "        @Override"
+        "content": "            throw new AssertionError(\"This method should not be called.\");"
       },
       {
         "lineNumber": 97,
         "author": {
           "gitId": "aizatazhar"
         },
-        "content": "        public Path getZooKeepBookFilePath() {"
+        "content": "        }"
       },
       {
         "lineNumber": 98,
         "author": {
           "gitId": "aizatazhar"
         },
-        "content": "            throw new AssertionError(\"This method should not be called.\");"
+        "content": ""
       },
       {
         "lineNumber": 99,
         "author": {
           "gitId": "aizatazhar"
         },
-        "content": "        }"
+        "content": "        @Override"
       },
       {
         "lineNumber": 100,
         "author": {
           "gitId": "aizatazhar"
         },
-        "content": ""
+        "content": "        public Path getZooKeepBookFilePath() {"
       },
       {
         "lineNumber": 101,
         "author": {
           "gitId": "aizatazhar"
         },
-        "content": "        @Override"
+        "content": "            throw new AssertionError(\"This method should not be called.\");"
       },
       {
         "lineNumber": 102,
         "author": {
           "gitId": "aizatazhar"
         },
-        "content": "        public void setZooKeepBookFilePath(Path zooKeepBookFilePath) {"
+        "content": "        }"
       },
       {
         "lineNumber": 103,
         "author": {
           "gitId": "aizatazhar"
         },
-        "content": "            throw new AssertionError(\"This method should not be called.\");"
+        "content": ""
       },
       {
         "lineNumber": 104,
         "author": {
           "gitId": "aizatazhar"
         },
-        "content": "        }"
+        "content": "        @Override"
       },
       {
         "lineNumber": 105,
         "author": {
           "gitId": "aizatazhar"
         },
-        "content": ""
+        "content": "        public void setZooKeepBookFilePath(Path zooKeepBookFilePath) {"
       },
       {
         "lineNumber": 106,
         "author": {
           "gitId": "aizatazhar"
         },
-        "content": "        @Override"
+        "content": "            throw new AssertionError(\"This method should not be called.\");"
       },
       {
         "lineNumber": 107,
         "author": {
           "gitId": "aizatazhar"
         },
-        "content": "        public void addAnimal(Animal animal) {"
+        "content": "        }"
       },
       {
         "lineNumber": 108,
         "author": {
           "gitId": "aizatazhar"
         },
-        "content": "            throw new AssertionError(\"This method should not be called.\");"
+        "content": ""
       },
       {
         "lineNumber": 109,
         "author": {
           "gitId": "aizatazhar"
         },
-        "content": "        }"
+        "content": "        @Override"
       },
       {
         "lineNumber": 110,
         "author": {
           "gitId": "aizatazhar"
         },
-        "content": ""
+        "content": "        public void addAnimal(Animal animal) {"
       },
       {
         "lineNumber": 111,
         "author": {
           "gitId": "aizatazhar"
         },
-        "content": "        @Override"
+        "content": "            throw new AssertionError(\"This method should not be called.\");"
       },
       {
         "lineNumber": 112,
         "author": {
           "gitId": "aizatazhar"
         },
-        "content": "        public void setZooKeepBook(ReadOnlyZooKeepBook newData) {"
+        "content": "        }"
       },
       {
         "lineNumber": 113,
         "author": {
           "gitId": "aizatazhar"
         },
-        "content": "            throw new AssertionError(\"This method should not be called.\");"
+        "content": ""
       },
       {
         "lineNumber": 114,
         "author": {
           "gitId": "aizatazhar"
         },
-        "content": "        }"
+        "content": "        @Override"
       },
       {
         "lineNumber": 115,
         "author": {
           "gitId": "aizatazhar"
         },
-        "content": ""
+        "content": "        public void setZooKeepBook(ReadOnlyZooKeepBook newData) {"
       },
       {
         "lineNumber": 116,
         "author": {
           "gitId": "aizatazhar"
         },
-        "content": "        @Override"
+        "content": "            throw new AssertionError(\"This method should not be called.\");"
       },
       {
         "lineNumber": 117,
         "author": {
           "gitId": "aizatazhar"
         },
-        "content": "        public ReadOnlyZooKeepBook getZooKeepBook() {"
+        "content": "        }"
       },
       {
         "lineNumber": 118,
         "author": {
           "gitId": "aizatazhar"
         },
-        "content": "            return TypicalAnimals.getTypicalZooKeepBook();"
+        "content": ""
       },
       {
         "lineNumber": 119,
         "author": {
           "gitId": "aizatazhar"
         },
-        "content": "        }"
+        "content": "        @Override"
       },
       {
         "lineNumber": 120,
         "author": {
           "gitId": "aizatazhar"
         },
-        "content": ""
+        "content": "        public ReadOnlyZooKeepBook getZooKeepBook() {"
       },
       {
         "lineNumber": 121,
         "author": {
           "gitId": "aizatazhar"
         },
-        "content": "        @Override"
+        "content": "            return TypicalAnimals.getTypicalZooKeepBook();"
       },
       {
         "lineNumber": 122,
         "author": {
           "gitId": "aizatazhar"
         },
-        "content": "        public boolean hasAnimal(Animal animal) {"
+        "content": "        }"
       },
       {
         "lineNumber": 123,
         "author": {
           "gitId": "aizatazhar"
         },
-        "content": "            throw new AssertionError(\"This method should not be called.\");"
+        "content": ""
       },
       {
         "lineNumber": 124,
         "author": {
           "gitId": "aizatazhar"
         },
-        "content": "        }"
+        "content": "        @Override"
       },
       {
         "lineNumber": 125,
         "author": {
           "gitId": "aizatazhar"
         },
-        "content": ""
+        "content": "        public boolean hasAnimal(Animal animal) {"
       },
       {
         "lineNumber": 126,
         "author": {
           "gitId": "aizatazhar"
         },
-        "content": "        @Override"
+        "content": "            throw new AssertionError(\"This method should not be called.\");"
       },
       {
         "lineNumber": 127,
         "author": {
           "gitId": "aizatazhar"
         },
-        "content": "        public void deleteAnimal(Animal target) {"
+        "content": "        }"
       },
       {
         "lineNumber": 128,
         "author": {
           "gitId": "aizatazhar"
         },
-        "content": "            throw new AssertionError(\"This method should not be called.\");"
+        "content": ""
       },
       {
         "lineNumber": 129,
         "author": {
           "gitId": "aizatazhar"
         },
-        "content": "        }"
+        "content": "        @Override"
       },
       {
         "lineNumber": 130,
         "author": {
           "gitId": "aizatazhar"
         },
-        "content": ""
+        "content": "        public void deleteAnimal(Animal target) {"
       },
       {
         "lineNumber": 131,
         "author": {
           "gitId": "aizatazhar"
         },
-        "content": "        @Override"
+        "content": "            throw new AssertionError(\"This method should not be called.\");"
       },
       {
         "lineNumber": 132,
         "author": {
           "gitId": "aizatazhar"
         },
-        "content": "        public void setAnimal(Animal target, Animal editedAnimal) {"
+        "content": "        }"
       },
       {
         "lineNumber": 133,
         "author": {
           "gitId": "aizatazhar"
         },
-        "content": "            throw new AssertionError(\"This method should not be called.\");"
+        "content": ""
       },
       {
         "lineNumber": 134,
         "author": {
           "gitId": "aizatazhar"
         },
-        "content": "        }"
+        "content": "        @Override"
       },
       {
         "lineNumber": 135,
         "author": {
           "gitId": "aizatazhar"
         },
-        "content": ""
+        "content": "        public void setAnimal(Animal target, Animal editedAnimal) {"
       },
       {
         "lineNumber": 136,
         "author": {
           "gitId": "aizatazhar"
         },
-        "content": "        @Override"
+        "content": "            throw new AssertionError(\"This method should not be called.\");"
       },
       {
         "lineNumber": 137,
         "author": {
           "gitId": "aizatazhar"
         },
-        "content": "        public ObservableList\u003cAnimal\u003e getFilteredAnimalList() {"
+        "content": "        }"
       },
       {
         "lineNumber": 138,
         "author": {
           "gitId": "aizatazhar"
         },
-        "content": "            throw new AssertionError(\"This method should not be called.\");"
+        "content": ""
       },
       {
         "lineNumber": 139,
         "author": {
           "gitId": "aizatazhar"
         },
-        "content": "        }"
+        "content": "        @Override"
       },
       {
         "lineNumber": 140,
         "author": {
           "gitId": "aizatazhar"
         },
-        "content": ""
+        "content": "        public ObservableList\u003cAnimal\u003e getFilteredAnimalList() {"
       },
       {
         "lineNumber": 141,
         "author": {
           "gitId": "aizatazhar"
         },
-        "content": "        @Override"
+        "content": "            throw new AssertionError(\"This method should not be called.\");"
       },
       {
         "lineNumber": 142,
         "author": {
           "gitId": "aizatazhar"
         },
-        "content": "        public void updateFilteredAnimalList(Predicate\u003cAnimal\u003e predicate) {"
+        "content": "        }"
       },
       {
         "lineNumber": 143,
         "author": {
           "gitId": "aizatazhar"
         },
-        "content": "            throw new AssertionError(\"This method should not be called.\");"
+        "content": ""
       },
       {
         "lineNumber": 144,
         "author": {
           "gitId": "aizatazhar"
         },
-        "content": "        }"
+        "content": "        @Override"
       },
       {
         "lineNumber": 145,
         "author": {
           "gitId": "aizatazhar"
         },
-        "content": "    }"
+        "content": "        public void updateFilteredAnimalList(Predicate\u003cAnimal\u003e predicate) {"
       },
       {
         "lineNumber": 146,
         "author": {
           "gitId": "aizatazhar"
         },
-        "content": ""
+        "content": "            throw new AssertionError(\"This method should not be called.\");"
       },
       {
         "lineNumber": 147,
         "author": {
           "gitId": "aizatazhar"
         },
-        "content": "    private class JsonZooKeepBookStorageStub extends JsonZooKeepBookStorage {"
+        "content": "        }"
       },
       {
         "lineNumber": 148,
         "author": {
           "gitId": "aizatazhar"
         },
-        "content": ""
+        "content": "    }"
       },
       {
         "lineNumber": 149,
         "author": {
           "gitId": "aizatazhar"
         },
-        "content": "        public JsonZooKeepBookStorageStub(Path filePath) {"
+        "content": ""
       },
       {
         "lineNumber": 150,
         "author": {
           "gitId": "aizatazhar"
         },
-        "content": "            super(filePath);"
+        "content": "    private class JsonZooKeepBookStorageStub extends JsonZooKeepBookStorage {"
       },
       {
         "lineNumber": 151,
         "author": {
           "gitId": "aizatazhar"
         },
-        "content": "        }"
+        "content": ""
       },
       {
         "lineNumber": 152,
         "author": {
           "gitId": "aizatazhar"
         },
-        "content": ""
+        "content": "        public JsonZooKeepBookStorageStub(Path filePath) {"
       },
       {
         "lineNumber": 153,
         "author": {
           "gitId": "aizatazhar"
         },
-        "content": "        @Override"
+        "content": "            super(filePath);"
       },
       {
         "lineNumber": 154,
         "author": {
           "gitId": "aizatazhar"
         },
-        "content": "        public Path getZooKeepBookFilePath() {"
+        "content": "        }"
       },
       {
         "lineNumber": 155,
         "author": {
           "gitId": "aizatazhar"
         },
-        "content": "            throw new AssertionError(\"This method should not be called.\");"
+        "content": ""
       },
       {
         "lineNumber": 156,
         "author": {
           "gitId": "aizatazhar"
         },
-        "content": "        }"
+        "content": "        @Override"
       },
       {
         "lineNumber": 157,
         "author": {
           "gitId": "aizatazhar"
         },
-        "content": ""
+        "content": "        public Path getZooKeepBookFilePath() {"
       },
       {
         "lineNumber": 158,
         "author": {
           "gitId": "aizatazhar"
         },
-        "content": "        @Override"
+        "content": "            throw new AssertionError(\"This method should not be called.\");"
       },
       {
         "lineNumber": 159,
         "author": {
           "gitId": "aizatazhar"
         },
-        "content": "        public void saveZooKeepBook(ReadOnlyZooKeepBook zooKeepBook) {"
+        "content": "        }"
       },
       {
         "lineNumber": 160,
         "author": {
           "gitId": "aizatazhar"
         },
-        "content": "            throw new AssertionError(\"This method should not be called.\");"
+        "content": ""
       },
       {
         "lineNumber": 161,
         "author": {
           "gitId": "aizatazhar"
         },
-        "content": "        }"
+        "content": "        @Override"
       },
       {
         "lineNumber": 162,
         "author": {
           "gitId": "aizatazhar"
         },
-        "content": ""
+        "content": "        public void saveZooKeepBook(ReadOnlyZooKeepBook zooKeepBook) {"
       },
       {
         "lineNumber": 163,
         "author": {
           "gitId": "aizatazhar"
         },
-        "content": "        @Override"
+        "content": "            throw new AssertionError(\"This method should not be called.\");"
       },
       {
         "lineNumber": 164,
         "author": {
           "gitId": "aizatazhar"
         },
-        "content": "        public void saveZooKeepBook(ReadOnlyZooKeepBook zooKeepBook, Path filePath) {"
+        "content": "        }"
       },
       {
         "lineNumber": 165,
         "author": {
           "gitId": "aizatazhar"
         },
-        "content": "            throw new AssertionError(\"This method should not be called.\");"
+        "content": ""
       },
       {
         "lineNumber": 166,
         "author": {
           "gitId": "aizatazhar"
         },
-        "content": "        }"
+        "content": "        @Override"
       },
       {
         "lineNumber": 167,
         "author": {
           "gitId": "aizatazhar"
         },
-        "content": "    }"
+        "content": "        public void saveZooKeepBook(ReadOnlyZooKeepBook zooKeepBook, Path filePath) {"
       },
       {
         "lineNumber": 168,
+        "author": {
+          "gitId": "aizatazhar"
+        },
+        "content": "            throw new AssertionError(\"This method should not be called.\");"
+      },
+      {
+        "lineNumber": 169,
+        "author": {
+          "gitId": "aizatazhar"
+        },
+        "content": "        }"
+      },
+      {
+        "lineNumber": 170,
+        "author": {
+          "gitId": "aizatazhar"
+        },
+        "content": "    }"
+      },
+      {
+        "lineNumber": 171,
         "author": {
           "gitId": "aizatazhar"
         },
@@ -48558,7 +48474,7 @@
       }
     ],
     "authorContributionMap": {
-      "aizatazhar": 168
+      "aizatazhar": 171
     }
   },
   {
@@ -54838,7 +54754,7 @@
         "author": {
           "gitId": "aizatazhar"
         },
-        "content": "import org.junit.jupiter.api.Test;"
+        "content": "import java.nio.file.Path;"
       },
       {
         "lineNumber": 8,
@@ -54852,7 +54768,7 @@
         "author": {
           "gitId": "aizatazhar"
         },
-        "content": "import seedu.address.logic.commands.SnapCommand;"
+        "content": "import org.junit.jupiter.api.Test;"
       },
       {
         "lineNumber": 10,
@@ -54866,91 +54782,91 @@
         "author": {
           "gitId": "aizatazhar"
         },
-        "content": "public class SnapCommandParserTest {"
+        "content": "import seedu.address.logic.commands.SnapCommand;"
       },
       {
         "lineNumber": 12,
         "author": {
           "gitId": "aizatazhar"
         },
-        "content": "    private SnapCommandParser parser \u003d new SnapCommandParser();"
+        "content": ""
       },
       {
         "lineNumber": 13,
         "author": {
           "gitId": "aizatazhar"
         },
-        "content": ""
+        "content": "public class SnapCommandParserTest {"
       },
       {
         "lineNumber": 14,
         "author": {
           "gitId": "aizatazhar"
         },
-        "content": "    @Test"
+        "content": "    private SnapCommandParser parser \u003d new SnapCommandParser();"
       },
       {
         "lineNumber": 15,
         "author": {
           "gitId": "aizatazhar"
         },
-        "content": "    public void parse_validFileName_success() {"
+        "content": ""
       },
       {
         "lineNumber": 16,
         "author": {
           "gitId": "aizatazhar"
         },
-        "content": "        String validFileName1 \u003d \"zookeep_19-10-2020\";"
+        "content": "    private Path makePath(String fileName) {"
       },
       {
         "lineNumber": 17,
         "author": {
           "gitId": "aizatazhar"
         },
-        "content": "        assertParseSuccess(parser, validFileName1, new SnapCommand(validFileName1));"
+        "content": "        return Path.of(\"data\", fileName + SnapCommand.FILE_FORMAT);"
       },
       {
         "lineNumber": 18,
         "author": {
           "gitId": "aizatazhar"
         },
-        "content": ""
+        "content": "    }"
       },
       {
         "lineNumber": 19,
         "author": {
           "gitId": "aizatazhar"
         },
-        "content": "        String validFileName2 \u003d \"_\";"
+        "content": ""
       },
       {
         "lineNumber": 20,
         "author": {
           "gitId": "aizatazhar"
         },
-        "content": "        assertParseSuccess(parser, validFileName2, new SnapCommand(validFileName2));"
+        "content": "    @Test"
       },
       {
         "lineNumber": 21,
         "author": {
           "gitId": "aizatazhar"
         },
-        "content": ""
+        "content": "    public void parse_validFileName_success() {"
       },
       {
         "lineNumber": 22,
         "author": {
           "gitId": "aizatazhar"
         },
-        "content": "        String validFileName3 \u003d \"-\";"
+        "content": "        String validFileName1 \u003d \"zookeep_19-10-2020\";"
       },
       {
         "lineNumber": 23,
         "author": {
           "gitId": "aizatazhar"
         },
-        "content": "        assertParseSuccess(parser, validFileName3, new SnapCommand(validFileName3));"
+        "content": "        assertParseSuccess(parser, validFileName1, new SnapCommand(makePath(validFileName1), validFileName1));"
       },
       {
         "lineNumber": 24,
@@ -54964,150 +54880,199 @@
         "author": {
           "gitId": "aizatazhar"
         },
-        "content": "        String validFileNameLength \u003d \"x\".repeat(100);"
+        "content": "        String validFileName2 \u003d \"_\";"
       },
       {
         "lineNumber": 26,
         "author": {
           "gitId": "aizatazhar"
         },
-        "content": "        assertParseSuccess(parser, validFileNameLength, new SnapCommand(validFileNameLength));"
+        "content": "        assertParseSuccess(parser, validFileName2, new SnapCommand(makePath(validFileName2), validFileName2));"
       },
       {
         "lineNumber": 27,
         "author": {
           "gitId": "aizatazhar"
         },
-        "content": "    }"
+        "content": ""
       },
       {
         "lineNumber": 28,
         "author": {
           "gitId": "aizatazhar"
         },
-        "content": ""
+        "content": "        String validFileName3 \u003d \"-\";"
       },
       {
         "lineNumber": 29,
         "author": {
           "gitId": "aizatazhar"
         },
-        "content": "    @Test"
+        "content": "        assertParseSuccess(parser, validFileName3, new SnapCommand(makePath(validFileName3), validFileName3));"
       },
       {
         "lineNumber": 30,
         "author": {
           "gitId": "aizatazhar"
         },
-        "content": "    public void parse_invalidFileName_failure() {"
+        "content": ""
       },
       {
         "lineNumber": 31,
         "author": {
           "gitId": "aizatazhar"
         },
-        "content": "        String expectedMessageEmptyString \u003d String.format(MESSAGE_INVALID_COMMAND_FORMAT, SnapCommand.MESSAGE_USAGE);"
+        "content": "        String validFileNameLength \u003d \"x\".repeat(100);"
       },
       {
         "lineNumber": 32,
         "author": {
           "gitId": "aizatazhar"
         },
-        "content": "        String expectedMessageConstraints \u003d SnapCommand.MESSAGE_CONSTRAINTS;"
+        "content": "        assertParseSuccess(parser, validFileNameLength,"
       },
       {
         "lineNumber": 33,
         "author": {
           "gitId": "aizatazhar"
         },
-        "content": ""
+        "content": "                new SnapCommand(makePath(validFileNameLength), validFileNameLength));"
       },
       {
         "lineNumber": 34,
         "author": {
           "gitId": "aizatazhar"
         },
-        "content": "        String fileNameIsEmpty \u003d \" \";"
+        "content": "    }"
       },
       {
         "lineNumber": 35,
         "author": {
           "gitId": "aizatazhar"
         },
-        "content": "        assertParseFailure(parser, fileNameIsEmpty, expectedMessageEmptyString);"
+        "content": ""
       },
       {
         "lineNumber": 36,
         "author": {
           "gitId": "aizatazhar"
         },
-        "content": ""
+        "content": "    @Test"
       },
       {
         "lineNumber": 37,
         "author": {
           "gitId": "aizatazhar"
         },
-        "content": "        String fileNameContainsWhitespace \u003d \"zookeep 19-10-2020\";"
+        "content": "    public void parse_invalidFileName_failure() {"
       },
       {
         "lineNumber": 38,
         "author": {
           "gitId": "aizatazhar"
         },
-        "content": "        assertParseFailure(parser, fileNameContainsWhitespace, expectedMessageConstraints);"
+        "content": "        String expectedMessageEmptyString \u003d String.format(MESSAGE_INVALID_COMMAND_FORMAT, SnapCommand.MESSAGE_USAGE);"
       },
       {
         "lineNumber": 39,
         "author": {
           "gitId": "aizatazhar"
         },
-        "content": ""
+        "content": "        String expectedMessageConstraints \u003d SnapCommand.MESSAGE_CONSTRAINTS;"
       },
       {
         "lineNumber": 40,
         "author": {
           "gitId": "aizatazhar"
         },
-        "content": "        String fileNameContainsNonAlphanumeric \u003d \"19.10.2020\";"
+        "content": ""
       },
       {
         "lineNumber": 41,
         "author": {
           "gitId": "aizatazhar"
         },
-        "content": "        assertParseFailure(parser, fileNameContainsNonAlphanumeric, expectedMessageConstraints);"
+        "content": "        String fileNameIsEmpty \u003d \" \";"
       },
       {
         "lineNumber": 42,
         "author": {
           "gitId": "aizatazhar"
         },
-        "content": ""
+        "content": "        assertParseFailure(parser, fileNameIsEmpty, expectedMessageEmptyString);"
       },
       {
         "lineNumber": 43,
         "author": {
           "gitId": "aizatazhar"
         },
-        "content": "        String fileNameLongerThan100Characters \u003d \"x\".repeat(101);"
+        "content": ""
       },
       {
         "lineNumber": 44,
         "author": {
           "gitId": "aizatazhar"
         },
-        "content": "        assertParseFailure(parser, fileNameLongerThan100Characters, expectedMessageConstraints);"
+        "content": "        String fileNameContainsWhitespace \u003d \"zookeep 19-10-2020\";"
       },
       {
         "lineNumber": 45,
         "author": {
           "gitId": "aizatazhar"
         },
-        "content": "    }"
+        "content": "        assertParseFailure(parser, fileNameContainsWhitespace, expectedMessageConstraints);"
       },
       {
         "lineNumber": 46,
+        "author": {
+          "gitId": "aizatazhar"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 47,
+        "author": {
+          "gitId": "aizatazhar"
+        },
+        "content": "        String fileNameContainsNonAlphanumeric \u003d \"19.10.2020\";"
+      },
+      {
+        "lineNumber": 48,
+        "author": {
+          "gitId": "aizatazhar"
+        },
+        "content": "        assertParseFailure(parser, fileNameContainsNonAlphanumeric, expectedMessageConstraints);"
+      },
+      {
+        "lineNumber": 49,
+        "author": {
+          "gitId": "aizatazhar"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 50,
+        "author": {
+          "gitId": "aizatazhar"
+        },
+        "content": "        String fileNameLongerThan100Characters \u003d \"x\".repeat(101);"
+      },
+      {
+        "lineNumber": 51,
+        "author": {
+          "gitId": "aizatazhar"
+        },
+        "content": "        assertParseFailure(parser, fileNameLongerThan100Characters, expectedMessageConstraints);"
+      },
+      {
+        "lineNumber": 52,
+        "author": {
+          "gitId": "aizatazhar"
+        },
+        "content": "    }"
+      },
+      {
+        "lineNumber": 53,
         "author": {
           "gitId": "aizatazhar"
         },
@@ -55115,7 +55080,7 @@
       }
     ],
     "authorContributionMap": {
-      "aizatazhar": 46
+      "aizatazhar": 53
     }
   },
   {

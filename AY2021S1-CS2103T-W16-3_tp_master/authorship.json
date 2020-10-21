@@ -3298,7 +3298,7 @@
       {
         "lineNumber": 129,
         "author": {
-          "gitId": "-"
+          "gitId": "wltan"
         },
         "content": "\u003c/div\u003e"
       },
@@ -3312,9 +3312,9 @@
       {
         "lineNumber": 131,
         "author": {
-          "gitId": "-"
+          "gitId": "yongping827"
         },
-        "content": "### Storage component"
+        "content": "The `FinanceTracker` has a `TransactionList` field which stores all `Expense` and `Income` objects together."
       },
       {
         "lineNumber": 132,
@@ -3326,37 +3326,37 @@
       {
         "lineNumber": 133,
         "author": {
-          "gitId": "-"
+          "gitId": "yongping827"
         },
-        "content": "![Structure of the Storage Component](images/StorageClassDiagram.png)"
+        "content": "The `ModelManager` has three `FilteredList` fields which point to the same `ObservableList` obtained from `FinanceTracker::getTransactionList`."
       },
       {
         "lineNumber": 134,
         "author": {
-          "gitId": "-"
+          "gitId": "yongping827"
         },
-        "content": ""
+        "content": "The `Predicate` fields in the three `FilteredList` fields are set such that:"
       },
       {
         "lineNumber": 135,
         "author": {
-          "gitId": "zhaojj2209"
+          "gitId": "yongping827"
         },
-        "content": "**API** : [`Storage.java`](https://github.com/AY2021S1-CS2103T-W16-3/tp/blob/master/src/main/java/ay2021s1_cs2103_w16_3/finesse/storage/Storage.java)"
+        "content": "* `filteredTransactions` shows a view of all `Transaction` objects"
       },
       {
         "lineNumber": 136,
         "author": {
-          "gitId": "zhaojj2209"
+          "gitId": "yongping827"
         },
-        "content": ""
+        "content": "* `filteredExpenses` shows a view of all `Transaction` objects of type `Expense`"
       },
       {
         "lineNumber": 137,
         "author": {
-          "gitId": "zhaojj2209"
+          "gitId": "yongping827"
         },
-        "content": "The `Storage` component:"
+        "content": "* `filteredIncomes` shows a view of all `Transaction` objects of type `Income`"
       },
       {
         "lineNumber": 138,
@@ -3368,86 +3368,86 @@
       {
         "lineNumber": 139,
         "author": {
-          "gitId": "-"
+          "gitId": "yongping827"
         },
-        "content": "* can save `UserPref` objects in json format and read it back."
+        "content": "The motivation behind having three lists is due to the fact that there are three tabs in the user interface, each having its own list while at the same time retrieving data from the same transaction list. "
       },
       {
         "lineNumber": 140,
         "author": {
-          "gitId": "zhaojj2209"
+          "gitId": "-"
         },
-        "content": "* can save the finance tracker data in json format and read it back."
+        "content": ""
       },
       {
         "lineNumber": 141,
         "author": {
           "gitId": "-"
         },
-        "content": ""
+        "content": "### Storage component"
       },
       {
         "lineNumber": 142,
         "author": {
           "gitId": "-"
         },
-        "content": "### Common classes"
+        "content": ""
       },
       {
         "lineNumber": 143,
         "author": {
           "gitId": "-"
         },
-        "content": ""
+        "content": "![Structure of the Storage Component](images/StorageClassDiagram.png)"
       },
       {
         "lineNumber": 144,
         "author": {
-          "gitId": "zhaojj2209"
+          "gitId": "-"
         },
-        "content": "Classes used by multiple components are in the `ay2021s1_cs2103_w16_3.finesse.commons` package."
+        "content": ""
       },
       {
         "lineNumber": 145,
         "author": {
-          "gitId": "-"
+          "gitId": "zhaojj2209"
         },
-        "content": ""
+        "content": "**API** : [`Storage.java`](https://github.com/AY2021S1-CS2103T-W16-3/tp/blob/master/src/main/java/ay2021s1_cs2103_w16_3/finesse/storage/Storage.java)"
       },
       {
         "lineNumber": 146,
         "author": {
-          "gitId": "-"
+          "gitId": "zhaojj2209"
         },
-        "content": "--------------------------------------------------------------------------------------------------------------------"
+        "content": ""
       },
       {
         "lineNumber": 147,
         "author": {
-          "gitId": "-"
+          "gitId": "zhaojj2209"
         },
-        "content": ""
+        "content": "The `Storage` component:"
       },
       {
         "lineNumber": 148,
         "author": {
           "gitId": "-"
         },
-        "content": "## **Implementation**"
+        "content": ""
       },
       {
         "lineNumber": 149,
         "author": {
-          "gitId": "-"
+          "gitId": "yongping827"
         },
-        "content": ""
+        "content": "* can save `UserPref` objects in `JSON` format and read it back."
       },
       {
         "lineNumber": 150,
         "author": {
-          "gitId": "-"
+          "gitId": "yongping827"
         },
-        "content": "This section describes some noteworthy details on how certain features are implemented."
+        "content": "* can save the finance tracker data in `JSON` format and read it back."
       },
       {
         "lineNumber": 151,
@@ -3459,184 +3459,184 @@
       {
         "lineNumber": 152,
         "author": {
-          "gitId": "zhaojj2209"
+          "gitId": "yongping827"
         },
-        "content": "### Find transactions"
+        "content": "`JsonAdaptedExpense` and `JsonAdaptedIncome` are `JSON`-friendly adaptations of `Expense` and `Income` respectively."
       },
       {
         "lineNumber": 153,
         "author": {
-          "gitId": "-"
+          "gitId": "yongping827"
         },
-        "content": ""
+        "content": "However, unlike `Expense` and `Income`, all the fields in `JsonAdaptedExpense` and `JsonAdaptedIncome` are `String` objects."
       },
       {
         "lineNumber": 154,
         "author": {
-          "gitId": "zhaojj2209"
+          "gitId": "yongping827"
         },
-        "content": "The find transactions feature is implemented via `FindCommandParser`, as well as the following commands:"
+        "content": "This is so that the fields are compatible with the `JSON` format."
       },
       {
         "lineNumber": 155,
         "author": {
-          "gitId": "-"
+          "gitId": "yongping827"
         },
         "content": ""
       },
       {
         "lineNumber": 156,
         "author": {
-          "gitId": "zhaojj2209"
+          "gitId": "yongping827"
         },
-        "content": "* `FindCommand`, the base command that is returned when the command is parsed"
+        "content": "`JsonSerializableFinanceTracker` contains two `List` fields, one containing all `JsonAdaptedExpense` objects and the other containing all `JsonAdaptedIncome` objects."
       },
       {
         "lineNumber": 157,
         "author": {
-          "gitId": "zhaojj2209"
+          "gitId": "yongping827"
         },
-        "content": "* `FindTransactionCommand`, to be executed when the user inputs the command on the Overview tab"
+        "content": "Despite the similarities between `Expense` and `Income`, and despite the fact that objects of both types are put into the same list in `FinanceTracker`,"
       },
       {
         "lineNumber": 158,
         "author": {
-          "gitId": "zhaojj2209"
+          "gitId": "yongping827"
         },
-        "content": "* `FindExpenseCommand`, to be executed when the user inputs the command on the Expenses tab"
+        "content": "the motivation behind keeping them separately is to ensure that they are separately listed in the `JSON` data file."
       },
       {
         "lineNumber": 159,
         "author": {
-          "gitId": "zhaojj2209"
+          "gitId": "-"
         },
-        "content": "* `FindIncomeCommand`, to be executed when the user inputs the command on the Incomes tab"
+        "content": ""
       },
       {
         "lineNumber": 160,
         "author": {
           "gitId": "-"
         },
-        "content": ""
+        "content": "### Common classes"
       },
       {
         "lineNumber": 161,
         "author": {
-          "gitId": "zhaojj2209"
+          "gitId": "-"
         },
-        "content": "`FindCommandParser` takes in the command arguments and parses them to return a `FindCommand` containing the correct predicate for finding the transactions."
+        "content": ""
       },
       {
         "lineNumber": 162,
         "author": {
           "gitId": "zhaojj2209"
         },
-        "content": "Depending on the UI tab the user inputted the command in, a `FindXXXCommand` (`FindTransactionCommand`, `FindExpenseCommand` or `FindIncomeCommand`) will be created from the base `FindCommand`."
+        "content": "Classes used by multiple components are in the `ay2021s1_cs2103_w16_3.finesse.commons` package."
       },
       {
         "lineNumber": 163,
         "author": {
-          "gitId": "zhaojj2209"
+          "gitId": "-"
         },
-        "content": "When executed, the `FindXXXCommand` will set the predicate of the respective `FilteredList` in `ModelManager` so that only the transactions matching the keywords will be displayed in the list."
+        "content": ""
       },
       {
         "lineNumber": 164,
         "author": {
           "gitId": "-"
         },
-        "content": ""
+        "content": "--------------------------------------------------------------------------------------------------------------------"
       },
       {
         "lineNumber": 165,
         "author": {
-          "gitId": "zhaojj2209"
+          "gitId": "-"
         },
-        "content": "Below is the Sequence Diagram for interactions within the `Logic` and `Model` components when the user inputs the `\"find tea\"` command while on the Overview tab."
+        "content": ""
       },
       {
         "lineNumber": 166,
         "author": {
           "gitId": "-"
         },
-        "content": ""
+        "content": "## **Implementation**"
       },
       {
         "lineNumber": 167,
         "author": {
-          "gitId": "zhaojj2209"
+          "gitId": "-"
         },
-        "content": "![Interactions Inside the Logic Component for the `find tea` Command on the Overview tab](images/FindSequenceDiagram.png)"
+        "content": ""
       },
       {
         "lineNumber": 168,
         "author": {
           "gitId": "-"
         },
-        "content": ""
+        "content": "This section describes some noteworthy details on how certain features are implemented."
       },
       {
         "lineNumber": 169,
         "author": {
-          "gitId": "zhaojj2209"
+          "gitId": "-"
         },
-        "content": "Alternatives considered:"
+        "content": ""
       },
       {
         "lineNumber": 170,
         "author": {
-          "gitId": "-"
+          "gitId": "zhaojj2209"
         },
-        "content": ""
+        "content": "### Find transactions"
       },
       {
         "lineNumber": 171,
         "author": {
-          "gitId": "zhaojj2209"
+          "gitId": "-"
         },
-        "content": "* Having separate command parsers for each tab in which the find command can be input, e.g. `FindTransactionCommandParser`, `FindExpenseCommandParser` and `FindIncomeCommandParser`."
+        "content": ""
       },
       {
         "lineNumber": 172,
         "author": {
-          "gitId": "-"
+          "gitId": "zhaojj2209"
         },
-        "content": ""
+        "content": "The find transactions feature is implemented via `FindCommandParser`, as well as the following commands:"
       },
       {
         "lineNumber": 173,
         "author": {
-          "gitId": "ianyong"
-        },
-        "content": "### Programmatically switch selected tab"
-      },
-      {
-        "lineNumber": 174,
-        "author": {
           "gitId": "-"
         },
         "content": ""
       },
       {
+        "lineNumber": 174,
+        "author": {
+          "gitId": "zhaojj2209"
+        },
+        "content": "* `FindCommand`, the base command that is returned when the command is parsed"
+      },
+      {
         "lineNumber": 175,
         "author": {
-          "gitId": "ianyong"
+          "gitId": "zhaojj2209"
         },
-        "content": "Several of the expense/income-specific commands update the list of transactions displayed in a particular tab."
+        "content": "* `FindTransactionCommand`, to be executed when the user inputs the command on the Overview tab"
       },
       {
         "lineNumber": 176,
         "author": {
-          "gitId": "ianyong"
+          "gitId": "zhaojj2209"
         },
-        "content": "Examples of these include the `add-expense` and `add-income` commands."
+        "content": "* `FindExpenseCommand`, to be executed when the user inputs the command on the Expenses tab"
       },
       {
         "lineNumber": 177,
         "author": {
-          "gitId": "ianyong"
+          "gitId": "zhaojj2209"
         },
-        "content": "As such, on the execution of such commands, the UI has to switch to the affected tab to display the result of the command execution."
+        "content": "* `FindIncomeCommand`, to be executed when the user inputs the command on the Incomes tab"
       },
       {
         "lineNumber": 178,
@@ -3648,93 +3648,93 @@
       {
         "lineNumber": 179,
         "author": {
-          "gitId": "ianyong"
+          "gitId": "zhaojj2209"
         },
-        "content": "The ability to programmatically update the selected tab is implemented via `CommandResult`."
+        "content": "`FindCommandParser` takes in the command arguments and parses them to return a `FindCommand` containing the correct predicate for finding the transactions."
       },
       {
         "lineNumber": 180,
         "author": {
-          "gitId": "ianyong"
+          "gitId": "zhaojj2209"
         },
-        "content": "Upon the successful execution of a command, a `CommandResult` is generated and passed back to `MainWindow`."
+        "content": "Depending on the UI tab the user inputted the command in, a `FindXXXCommand` (`FindTransactionCommand`, `FindExpenseCommand` or `FindIncomeCommand`) will be created from the base `FindCommand`."
       },
       {
         "lineNumber": 181,
         "author": {
-          "gitId": "ianyong"
+          "gitId": "zhaojj2209"
         },
-        "content": "This `CommandResult` contains the necessary information which the `MainWindow` needs to update the user interface, such as:"
+        "content": "When executed, the `FindXXXCommand` will set the predicate of the respective `FilteredList` in `ModelManager` so that only the transactions matching the keywords will be displayed in the list."
       },
       {
         "lineNumber": 182,
         "author": {
-          "gitId": "ianyong"
+          "gitId": "-"
         },
-        "content": "* The feedback to be displayed to the user;"
+        "content": ""
       },
       {
         "lineNumber": 183,
         "author": {
-          "gitId": "ianyong"
+          "gitId": "zhaojj2209"
         },
-        "content": "* Whether to exit the application; and"
+        "content": "Below is the Sequence Diagram for interactions within the `Logic` and `Model` components when the user inputs the `\"find tea\"` command while on the Overview tab."
       },
       {
         "lineNumber": 184,
         "author": {
-          "gitId": "ianyong"
+          "gitId": "-"
         },
-        "content": "* Whether to programmatically switch to a different tab in the user interface."
+        "content": ""
       },
       {
         "lineNumber": 185,
         "author": {
-          "gitId": "-"
+          "gitId": "zhaojj2209"
         },
-        "content": ""
+        "content": "![Interactions Inside the Logic Component for the `find tea` Command on the Overview tab](images/FindSequenceDiagram.png)"
       },
       {
         "lineNumber": 186,
         "author": {
-          "gitId": "ianyong"
+          "gitId": "-"
         },
-        "content": "![Interactions inside the Logic Component when executing commands](images/CommandResultSequenceDiagram.png)"
+        "content": ""
       },
       {
         "lineNumber": 187,
         "author": {
-          "gitId": "-"
-        },
-        "content": ""
-      },
-      {
-        "lineNumber": 188,
-        "author": {
-          "gitId": "ianyong"
+          "gitId": "zhaojj2209"
         },
         "content": "Alternatives considered:"
       },
       {
-        "lineNumber": 189,
+        "lineNumber": 188,
         "author": {
           "gitId": "-"
         },
         "content": ""
       },
       {
+        "lineNumber": 189,
+        "author": {
+          "gitId": "zhaojj2209"
+        },
+        "content": "* Having separate command parsers for each tab in which the find command can be input, e.g. `FindTransactionCommandParser`, `FindExpenseCommandParser` and `FindIncomeCommandParser`."
+      },
+      {
         "lineNumber": 190,
         "author": {
-          "gitId": "ianyong"
+          "gitId": "-"
         },
-        "content": "* Add a method in `MainWindow` which can be called to programmatically switch tabs in the user interface upon execution of the command."
+        "content": ""
       },
       {
         "lineNumber": 191,
         "author": {
           "gitId": "ianyong"
         },
-        "content": "  This was decided against as it would result in a much tighter coupling of `Logic` and `UI` components."
+        "content": "### Programmatically switch selected tab"
       },
       {
         "lineNumber": 192,
@@ -3746,23 +3746,23 @@
       {
         "lineNumber": 193,
         "author": {
-          "gitId": "zhaojj2209"
+          "gitId": "ianyong"
         },
-        "content": "### Set monthly spending limit"
+        "content": "Several of the expense/income-specific commands update the list of transactions displayed in a particular tab."
       },
       {
         "lineNumber": 194,
         "author": {
-          "gitId": "-"
+          "gitId": "ianyong"
         },
-        "content": ""
+        "content": "Examples of these include the `add-expense` and `add-income` commands."
       },
       {
         "lineNumber": 195,
         "author": {
-          "gitId": "zhaojj2209"
+          "gitId": "ianyong"
         },
-        "content": "The monthly budgeting feature is implemented via `SetExpenseLimitCommand` as well as `MonthlyExpenseLimit`."
+        "content": "As such, on the execution of such commands, the UI has to switch to the affected tab to display the result of the command execution."
       },
       {
         "lineNumber": 196,
@@ -3774,121 +3774,121 @@
       {
         "lineNumber": 197,
         "author": {
-          "gitId": "zhaojj2209"
+          "gitId": "ianyong"
         },
-        "content": "[Coming soon]"
+        "content": "The ability to programmatically update the selected tab is implemented via `CommandResult`."
       },
       {
         "lineNumber": 198,
         "author": {
-          "gitId": "-"
+          "gitId": "ianyong"
         },
-        "content": ""
+        "content": "Upon the successful execution of a command, a `CommandResult` is generated and passed back to `MainWindow`."
       },
       {
         "lineNumber": 199,
         "author": {
-          "gitId": "zhaojj2209"
+          "gitId": "ianyong"
         },
-        "content": "### Set monthly savings goal"
+        "content": "This `CommandResult` contains the necessary information which the `MainWindow` needs to update the user interface, such as:"
       },
       {
         "lineNumber": 200,
         "author": {
-          "gitId": "-"
+          "gitId": "ianyong"
         },
-        "content": ""
+        "content": "* The feedback to be displayed to the user;"
       },
       {
         "lineNumber": 201,
         "author": {
-          "gitId": "zhaojj2209"
+          "gitId": "ianyong"
         },
-        "content": "The monthly budgeting feature is implemented via `SetSavingsGoalCommand` as well as `MonthlySavingsGoal`."
+        "content": "* Whether to exit the application; and"
       },
       {
         "lineNumber": 202,
         "author": {
-          "gitId": "-"
+          "gitId": "ianyong"
         },
-        "content": ""
+        "content": "* Whether to programmatically switch to a different tab in the user interface."
       },
       {
         "lineNumber": 203,
         "author": {
-          "gitId": "zhaojj2209"
+          "gitId": "-"
         },
-        "content": "[Coming soon]"
+        "content": ""
       },
       {
         "lineNumber": 204,
         "author": {
-          "gitId": "-"
+          "gitId": "ianyong"
         },
-        "content": ""
+        "content": "![Interactions inside the Logic Component when executing commands](images/CommandResultSequenceDiagram.png)"
       },
       {
         "lineNumber": 205,
         "author": {
           "gitId": "-"
         },
-        "content": "--------------------------------------------------------------------------------------------------------------------"
+        "content": ""
       },
       {
         "lineNumber": 206,
         "author": {
-          "gitId": "-"
+          "gitId": "ianyong"
         },
-        "content": ""
+        "content": "Alternatives considered:"
       },
       {
         "lineNumber": 207,
         "author": {
           "gitId": "-"
         },
-        "content": "## **Documentation, logging, testing, configuration, dev-ops**"
+        "content": ""
       },
       {
         "lineNumber": 208,
         "author": {
-          "gitId": "-"
+          "gitId": "ianyong"
         },
-        "content": ""
+        "content": "* Add a method in `MainWindow` which can be called to programmatically switch tabs in the user interface upon execution of the command."
       },
       {
         "lineNumber": 209,
         "author": {
-          "gitId": "-"
+          "gitId": "ianyong"
         },
-        "content": "* [Documentation guide](Documentation.md)"
+        "content": "  This was decided against as it would result in a much tighter coupling of `Logic` and `UI` components."
       },
       {
         "lineNumber": 210,
         "author": {
           "gitId": "-"
         },
-        "content": "* [Testing guide](Testing.md)"
+        "content": ""
       },
       {
         "lineNumber": 211,
         "author": {
-          "gitId": "-"
+          "gitId": "zhaojj2209"
         },
-        "content": "* [Logging guide](Logging.md)"
+        "content": "### Set monthly spending limit"
       },
       {
         "lineNumber": 212,
         "author": {
           "gitId": "-"
         },
-        "content": "* [Configuration guide](Configuration.md)"
+        "content": ""
       },
       {
         "lineNumber": 213,
         "author": {
-          "gitId": "-"
+          "gitId": "zhaojj2209"
         },
-        "content": "* [DevOps guide](DevOps.md)"
+        "content": "The monthly budgeting feature is implemented via `SetExpenseLimitCommand` as well as `MonthlyExpenseLimit`."
       },
       {
         "lineNumber": 214,
@@ -3900,9 +3900,9 @@
       {
         "lineNumber": 215,
         "author": {
-          "gitId": "-"
+          "gitId": "zhaojj2209"
         },
-        "content": "--------------------------------------------------------------------------------------------------------------------"
+        "content": "[Coming soon]"
       },
       {
         "lineNumber": 216,
@@ -3914,9 +3914,9 @@
       {
         "lineNumber": 217,
         "author": {
-          "gitId": "-"
+          "gitId": "zhaojj2209"
         },
-        "content": "## **Appendix: Requirements**"
+        "content": "### Set monthly savings goal"
       },
       {
         "lineNumber": 218,
@@ -3928,9 +3928,9 @@
       {
         "lineNumber": 219,
         "author": {
-          "gitId": "-"
+          "gitId": "zhaojj2209"
         },
-        "content": "### Product scope"
+        "content": "The monthly budgeting feature is implemented via `SetSavingsGoalCommand` as well as `MonthlySavingsGoal`."
       },
       {
         "lineNumber": 220,
@@ -3942,9 +3942,9 @@
       {
         "lineNumber": 221,
         "author": {
-          "gitId": "-"
+          "gitId": "zhaojj2209"
         },
-        "content": "**Target user profile**:"
+        "content": "[Coming soon]"
       },
       {
         "lineNumber": 222,
@@ -3956,688 +3956,688 @@
       {
         "lineNumber": 223,
         "author": {
-          "gitId": "zhaojj2209"
+          "gitId": "siddarth2824"
         },
-        "content": "* Tertiary student"
+        "content": "### [Proposed] Frequent Expense Feature"
       },
       {
         "lineNumber": 224,
         "author": {
-          "gitId": "zhaojj2209"
+          "gitId": "-"
         },
-        "content": "* Has a need to track everyday expenses/incomes"
+        "content": ""
       },
       {
         "lineNumber": 225,
         "author": {
-          "gitId": "zhaojj2209"
+          "gitId": "siddarth2824"
         },
-        "content": "* Wishes to cultivate good saving habits"
+        "content": "#### Proposed Implementation"
       },
       {
         "lineNumber": 226,
         "author": {
-          "gitId": "zhaojj2209"
+          "gitId": "siddarth2824"
         },
-        "content": "* Prefers desktop apps"
+        "content": "The Frequent Expense feature consists of `add-frequent-expense`, `edit-frequent-expense`, `delete-frequent-expense`,"
       },
       {
         "lineNumber": 227,
         "author": {
-          "gitId": "zhaojj2209"
+          "gitId": "siddarth2824"
         },
-        "content": "* Prefers typing to mouse interactions"
+        "content": "`convert-frequent-expense`."
       },
       {
         "lineNumber": 228,
         "author": {
-          "gitId": "-"
+          "gitId": "siddarth2824"
         },
         "content": ""
       },
       {
         "lineNumber": 229,
         "author": {
-          "gitId": "zhaojj2209"
+          "gitId": "siddarth2824"
         },
-        "content": "**Value proposition**: Manage finances and cultivate good financial habits (such as saving) efficiently by typing in CLI commands"
+        "content": "Frequent expenses are expenses that the user have identified to be occurring regularly or with high frequency."
       },
       {
         "lineNumber": 230,
         "author": {
-          "gitId": "-"
+          "gitId": "siddarth2824"
         },
-        "content": ""
+        "content": "Examples of such expenses can be phone bill, music subscription or buying bubble tea on a weekly basis."
       },
       {
         "lineNumber": 231,
         "author": {
-          "gitId": "-"
+          "gitId": "siddarth2824"
         },
-        "content": "### User stories"
+        "content": ""
       },
       {
         "lineNumber": 232,
         "author": {
-          "gitId": "-"
+          "gitId": "siddarth2824"
         },
-        "content": ""
+        "content": "This feature allows users to add frequent expenses to the finance tracker. The user can then choose to convert a"
       },
       {
         "lineNumber": 233,
         "author": {
-          "gitId": "-"
+          "gitId": "siddarth2824"
         },
-        "content": "Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unlikely to have) - `*`"
+        "content": "frequent expense to an expense that the user wants to add to the transaction list in the finance tracker. This is done by"
       },
       {
         "lineNumber": 234,
         "author": {
-          "gitId": "-"
+          "gitId": "siddarth2824"
         },
-        "content": ""
+        "content": "calling `Logic#execute` which creates an  `AddFrequentExpenseCommand`. This command then calls"
       },
       {
         "lineNumber": 235,
         "author": {
-          "gitId": "-"
+          "gitId": "siddarth2824"
         },
-        "content": "| Priority | As a …​               | I want to …​                  | So that I can…​                                                          |"
+        "content": "`ModelManager#addFrequentExpense`, adding the specified frequent expense into the frequent expense list."
       },
       {
         "lineNumber": 236,
         "author": {
-          "gitId": "zhaojj2209"
+          "gitId": "siddarth2824"
         },
-        "content": "| -------- | ------------------------ | -------------------------------  | --------------------------------------------------------------------------- |"
+        "content": ""
       },
       {
         "lineNumber": 237,
         "author": {
-          "gitId": "zhaojj2209"
+          "gitId": "siddarth2824"
         },
-        "content": "| `* * *`  | new user                 | see usage instructions           | refer to instructions when I forget how to use the app                      |"
+        "content": "This feature also simplifies the deletion and editing of frequent expenses, and they work in a similar manner."
       },
       {
         "lineNumber": 238,
         "author": {
-          "gitId": "zhaojj2209"
+          "gitId": "siddarth2824"
         },
-        "content": "| `* * *`  | user                     | add an expense                   |                                                                             |"
+        "content": ""
       },
       {
         "lineNumber": 239,
         "author": {
-          "gitId": "zhaojj2209"
+          "gitId": "siddarth2824"
         },
-        "content": "| `* * *`  | user                     | add an income                    |                                                                             |"
+        "content": "#### Convert Frequent Expense To Expense Feature"
       },
       {
         "lineNumber": 240,
         "author": {
-          "gitId": "zhaojj2209"
+          "gitId": "siddarth2824"
         },
-        "content": "| `* * *`  | user                     | view a list of past transactions | keep track of my past expenses/incomes                                      |"
+        "content": ""
       },
       {
         "lineNumber": 241,
         "author": {
-          "gitId": "zhaojj2209"
+          "gitId": "siddarth2824"
         },
-        "content": "| `* * *`  | user                     | edit a transaction               | update expenses/incomes that were entered wrongly                           |"
+        "content": "The purpose of this feature is to allow users to add expenses, that they add to the transaction list in the finance"
       },
       {
         "lineNumber": 242,
         "author": {
-          "gitId": "zhaojj2209"
+          "gitId": "siddarth2824"
         },
-        "content": "| `* * *`  | user                     | delete a transaction             | remove expenses/incomes that were entered wrongly                           |"
+        "content": "tracker on a frequent basis in a convenient manner. After adding a frequent expense into the frequent expense list in"
       },
       {
         "lineNumber": 243,
         "author": {
-          "gitId": "zhaojj2209"
+          "gitId": "siddarth2824"
         },
-        "content": "| `* * *`  | user                     | group transactions by categories | keep track of my past expenses/incomes across various categories            |"
+        "content": "the finance tracker, the user can call convert-frequent-expense to the respective frequent expense to make the"
       },
       {
         "lineNumber": 244,
         "author": {
-          "gitId": "zhaojj2209"
+          "gitId": "siddarth2824"
         },
-        "content": "| `* * *`  | user                     | search for transactions          | easily find related expenses/incomes                                        |"
+        "content": "conversion."
       },
       {
         "lineNumber": 245,
         "author": {
-          "gitId": "zhaojj2209"
+          "gitId": "siddarth2824"
         },
-        "content": "| `* *`    | user                     | set a monthly spending limit     | track how much I have left to spend for the month                           |"
+        "content": ""
       },
       {
         "lineNumber": 246,
         "author": {
-          "gitId": "zhaojj2209"
+          "gitId": "siddarth2824"
         },
-        "content": "| `* *`    | user                     | set a monthly saving goal        | cultivate good saving habits                                                |"
+        "content": "Given below is the proposed UML sequence diagram and explanation of an example usage scenario for"
       },
       {
         "lineNumber": 247,
         "author": {
-          "gitId": "zhaojj2209"
+          "gitId": "siddarth2824"
         },
-        "content": "| `* *`    | user                     | view my saving trends            | better manage my future expenses                                            |"
+        "content": "convert-frequent-expense"
       },
       {
         "lineNumber": 248,
         "author": {
-          "gitId": "-"
+          "gitId": "siddarth2824"
         },
         "content": ""
       },
       {
         "lineNumber": 249,
         "author": {
-          "gitId": "-"
+          "gitId": "siddarth2824"
         },
-        "content": "*{More to be added}*"
+        "content": "![Sequence Diagram of the Convert Frequent Expense To Expense Feature](images/ConvertFrequentExpenseSequenceDiagram.png)"
       },
       {
         "lineNumber": 250,
         "author": {
-          "gitId": "-"
+          "gitId": "siddarth2824"
         },
         "content": ""
       },
       {
         "lineNumber": 251,
         "author": {
-          "gitId": "-"
+          "gitId": "siddarth2824"
         },
-        "content": "### Use cases"
+        "content": "1. User enters the command `convert-frequent-expense 1 d/05/05/2020`, where `1` is the index of the respective frequent"
       },
       {
         "lineNumber": 252,
         "author": {
-          "gitId": "-"
+          "gitId": "siddarth2824"
         },
-        "content": ""
+        "content": "expense in the frequent expense list and `d/05/05/20` is the date on which the user wants to carry out the conversion,"
       },
       {
         "lineNumber": 253,
         "author": {
-          "gitId": "zhaojj2209"
+          "gitId": "siddarth2824"
         },
-        "content": "(For all use cases below, the **System** is `Fine$$e` and the **Actor** is the `user`, unless specified otherwise)"
+        "content": "to add the selected frequent expense into the expense list. This command is executed by `LogicManager`, which will then"
       },
       {
         "lineNumber": 254,
         "author": {
-          "gitId": "-"
+          "gitId": "siddarth2824"
         },
-        "content": ""
+        "content": "call `FinanceTrackerParser#parseCommand(“convert-frequent-expense 1 d/05/05/2020”)`. This will create a"
       },
       {
         "lineNumber": 255,
         "author": {
-          "gitId": "zhaojj2209"
+          "gitId": "siddarth2824"
         },
-        "content": "**Use case: Delete an expense**"
+        "content": "`ConvertFrequentExpenseCommand` object and return it to the `LogicManager`."
       },
       {
         "lineNumber": 256,
         "author": {
-          "gitId": "-"
+          "gitId": "siddarth2824"
         },
-        "content": ""
+        "content": "2. The `LogicManager` will then call `ConvertFrequentExpenseCommand#execute`, which will call"
       },
       {
         "lineNumber": 257,
         "author": {
-          "gitId": "-"
+          "gitId": "siddarth2824"
         },
-        "content": "**MSS**"
+        "content": "`Model#getFilteredFrequentExpenseList()` to retrieve the list of frequent expenses in the finance tracker."
       },
       {
         "lineNumber": 258,
         "author": {
-          "gitId": "-"
+          "gitId": "siddarth2824"
         },
-        "content": ""
+        "content": "3. The program will then retrieve the specified frequent expense from the list of frequent expenses. It will"
       },
       {
         "lineNumber": 259,
         "author": {
-          "gitId": "zhaojj2209"
+          "gitId": "siddarth2824"
         },
-        "content": "1.  User requests to list expenses"
+        "content": "then call `FrequentExpense#convert` on the frequent expense together with the date the user has inputted and convert"
       },
       {
         "lineNumber": 260,
         "author": {
-          "gitId": "zhaojj2209"
+          "gitId": "siddarth2824"
         },
-        "content": "2.  Fine$$e shows a list of expenses"
+        "content": "it to an `Expense` object."
       },
       {
         "lineNumber": 261,
         "author": {
-          "gitId": "zhaojj2209"
+          "gitId": "siddarth2824"
         },
-        "content": "3.  User requests to delete a specific expense"
+        "content": "4. After converting the `FrequentExpense` object to an `Expense` object, it will call `Model#addExpense` to add the"
       },
       {
         "lineNumber": 262,
         "author": {
-          "gitId": "zhaojj2209"
+          "gitId": "siddarth2824"
         },
-        "content": "4.  Fine$$e deletes the expense"
+        "content": "`Expense` object to the expense list in the finance tracker."
       },
       {
         "lineNumber": 263,
         "author": {
           "gitId": "-"
         },
-        "content": ""
+        "content": "--------------------------------------------------------------------------------------------------------------------"
       },
       {
         "lineNumber": 264,
         "author": {
           "gitId": "-"
         },
-        "content": "    Use case ends."
+        "content": ""
       },
       {
         "lineNumber": 265,
         "author": {
           "gitId": "-"
         },
-        "content": ""
+        "content": "## **Documentation, logging, testing, configuration, dev-ops**"
       },
       {
         "lineNumber": 266,
         "author": {
           "gitId": "-"
         },
-        "content": "**Extensions**"
+        "content": ""
       },
       {
         "lineNumber": 267,
         "author": {
           "gitId": "-"
         },
-        "content": ""
+        "content": "* [Documentation guide](Documentation.md)"
       },
       {
         "lineNumber": 268,
         "author": {
           "gitId": "-"
         },
-        "content": "* 2a. The list is empty."
+        "content": "* [Testing guide](Testing.md)"
       },
       {
         "lineNumber": 269,
         "author": {
           "gitId": "-"
         },
-        "content": ""
+        "content": "* [Logging guide](Logging.md)"
       },
       {
         "lineNumber": 270,
         "author": {
           "gitId": "-"
         },
-        "content": "  Use case ends."
+        "content": "* [Configuration guide](Configuration.md)"
       },
       {
         "lineNumber": 271,
         "author": {
           "gitId": "-"
         },
-        "content": ""
+        "content": "* [DevOps guide](DevOps.md)"
       },
       {
         "lineNumber": 272,
         "author": {
           "gitId": "-"
         },
-        "content": "* 3a. The given index is invalid."
+        "content": ""
       },
       {
         "lineNumber": 273,
         "author": {
           "gitId": "-"
         },
-        "content": ""
+        "content": "--------------------------------------------------------------------------------------------------------------------"
       },
       {
         "lineNumber": 274,
         "author": {
-          "gitId": "zhaojj2209"
+          "gitId": "-"
         },
-        "content": "    * 3a1. Fine$$e shows an error message."
+        "content": ""
       },
       {
         "lineNumber": 275,
         "author": {
           "gitId": "-"
         },
-        "content": ""
+        "content": "## **Appendix: Requirements**"
       },
       {
         "lineNumber": 276,
         "author": {
           "gitId": "-"
         },
-        "content": "      Use case resumes at step 2."
+        "content": ""
       },
       {
         "lineNumber": 277,
         "author": {
           "gitId": "-"
         },
-        "content": ""
+        "content": "### Product scope"
       },
       {
         "lineNumber": 278,
         "author": {
           "gitId": "-"
         },
-        "content": "*{More to be added}*"
+        "content": ""
       },
       {
         "lineNumber": 279,
         "author": {
           "gitId": "-"
         },
-        "content": ""
+        "content": "**Target user profile**:"
       },
       {
         "lineNumber": 280,
         "author": {
           "gitId": "-"
         },
-        "content": "### Non-Functional Requirements"
+        "content": ""
       },
       {
         "lineNumber": 281,
         "author": {
-          "gitId": "-"
+          "gitId": "zhaojj2209"
         },
-        "content": ""
+        "content": "* Tertiary student"
       },
       {
         "lineNumber": 282,
         "author": {
-          "gitId": "yongping827"
+          "gitId": "zhaojj2209"
         },
-        "content": "1.  Should work on any mainstream OS as long as it has Java `11` or above installed."
+        "content": "* Has a need to track everyday expenses/incomes"
       },
       {
         "lineNumber": 283,
         "author": {
           "gitId": "zhaojj2209"
         },
-        "content": "2.  Should be able to hold up to 1000 expenses/incomes without a noticeable sluggishness in performance for typical usage."
+        "content": "* Wishes to cultivate good saving habits"
       },
       {
         "lineNumber": 284,
         "author": {
-          "gitId": "-"
+          "gitId": "zhaojj2209"
         },
-        "content": "3.  A user with above average typing speed for regular English text (i.e. not code, not system admin commands) should be able to accomplish most of the tasks faster using commands than using the mouse."
+        "content": "* Prefers desktop apps"
       },
       {
         "lineNumber": 285,
         "author": {
-          "gitId": "yongping827"
+          "gitId": "zhaojj2209"
         },
-        "content": "4.  The data should be stored locally and should be in a human-editable text file."
+        "content": "* Prefers typing to mouse interactions"
       },
       {
         "lineNumber": 286,
         "author": {
-          "gitId": "yongping827"
+          "gitId": "-"
         },
-        "content": "5.  The data should not be stored in a Database Management System (DBMS)."
+        "content": ""
       },
       {
         "lineNumber": 287,
         "author": {
-          "gitId": "yongping827"
+          "gitId": "zhaojj2209"
         },
-        "content": "6.  Should not require an installer."
+        "content": "**Value proposition**: Manage finances and cultivate good financial habits (such as saving) efficiently by typing in CLI commands"
       },
       {
         "lineNumber": 288,
         "author": {
-          "gitId": "yongping827"
+          "gitId": "-"
         },
-        "content": "7.  Should not depend on any remote server."
+        "content": ""
       },
       {
         "lineNumber": 289,
         "author": {
           "gitId": "-"
         },
-        "content": ""
+        "content": "### User stories"
       },
       {
         "lineNumber": 290,
         "author": {
           "gitId": "-"
         },
-        "content": "*{More to be added}*"
+        "content": ""
       },
       {
         "lineNumber": 291,
         "author": {
           "gitId": "-"
         },
-        "content": ""
+        "content": "Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unlikely to have) - `*`"
       },
       {
         "lineNumber": 292,
         "author": {
           "gitId": "-"
         },
-        "content": "### Glossary"
+        "content": ""
       },
       {
         "lineNumber": 293,
         "author": {
           "gitId": "-"
         },
-        "content": ""
+        "content": "| Priority | As a …​               | I want to …​                  | So that I can…​                                                          |"
       },
       {
         "lineNumber": 294,
         "author": {
-          "gitId": "yongping827"
+          "gitId": "zhaojj2209"
         },
-        "content": "* **Expense**: A single transaction that results in a decrease in cash"
+        "content": "| -------- | ------------------------ | -------------------------------  | --------------------------------------------------------------------------- |"
       },
       {
         "lineNumber": 295,
         "author": {
-          "gitId": "yongping827"
+          "gitId": "zhaojj2209"
         },
-        "content": "* **Income**: A single transaction that results in an increase in cash"
+        "content": "| `* * *`  | new user                 | see usage instructions           | refer to instructions when I forget how to use the app                      |"
       },
       {
         "lineNumber": 296,
         "author": {
-          "gitId": "-"
+          "gitId": "zhaojj2209"
         },
-        "content": "* **Mainstream OS**: Windows, Linux, Unix, OS-X"
+        "content": "| `* * *`  | user                     | add an expense                   |                                                                             |"
       },
       {
         "lineNumber": 297,
         "author": {
-          "gitId": "yongping827"
+          "gitId": "zhaojj2209"
         },
-        "content": "* **Savings**: Net gain (positive) or loss (negative) in cash over a set period of time"
+        "content": "| `* * *`  | user                     | add an income                    |                                                                             |"
       },
       {
         "lineNumber": 298,
         "author": {
-          "gitId": "-"
+          "gitId": "zhaojj2209"
         },
-        "content": ""
+        "content": "| `* * *`  | user                     | view a list of past transactions | keep track of my past expenses/incomes                                      |"
       },
       {
         "lineNumber": 299,
         "author": {
-          "gitId": "-"
+          "gitId": "zhaojj2209"
         },
-        "content": "--------------------------------------------------------------------------------------------------------------------"
+        "content": "| `* * *`  | user                     | edit a transaction               | update expenses/incomes that were entered wrongly                           |"
       },
       {
         "lineNumber": 300,
         "author": {
-          "gitId": "-"
+          "gitId": "zhaojj2209"
         },
-        "content": ""
+        "content": "| `* * *`  | user                     | delete a transaction             | remove expenses/incomes that were entered wrongly                           |"
       },
       {
         "lineNumber": 301,
         "author": {
-          "gitId": "-"
+          "gitId": "zhaojj2209"
         },
-        "content": "## **Appendix: Instructions for manual testing**"
+        "content": "| `* * *`  | user                     | group transactions by categories | keep track of my past expenses/incomes across various categories            |"
       },
       {
         "lineNumber": 302,
         "author": {
-          "gitId": "-"
+          "gitId": "zhaojj2209"
         },
-        "content": ""
+        "content": "| `* * *`  | user                     | search for transactions          | easily find related expenses/incomes                                        |"
       },
       {
         "lineNumber": 303,
         "author": {
-          "gitId": "-"
+          "gitId": "zhaojj2209"
         },
-        "content": "Given below are instructions to test the app manually."
+        "content": "| `* *`    | user                     | set a monthly spending limit     | track how much I have left to spend for the month                           |"
       },
       {
         "lineNumber": 304,
         "author": {
-          "gitId": "-"
+          "gitId": "zhaojj2209"
         },
-        "content": ""
+        "content": "| `* *`    | user                     | set a monthly saving goal        | cultivate good saving habits                                                |"
       },
       {
         "lineNumber": 305,
         "author": {
-          "gitId": "-"
+          "gitId": "zhaojj2209"
         },
-        "content": "\u003cdiv markdown\u003d\"span\" class\u003d\"alert alert-info\"\u003e:information_source: **Note:** These instructions only provide a starting point for testers to work on;"
+        "content": "| `* *`    | user                     | view my saving trends            | better manage my future expenses                                            |"
       },
       {
         "lineNumber": 306,
         "author": {
           "gitId": "-"
         },
-        "content": "testers are expected to do more *exploratory* testing."
+        "content": ""
       },
       {
         "lineNumber": 307,
         "author": {
           "gitId": "-"
         },
-        "content": ""
+        "content": "*{More to be added}*"
       },
       {
         "lineNumber": 308,
         "author": {
           "gitId": "-"
         },
-        "content": "\u003c/div\u003e"
+        "content": ""
       },
       {
         "lineNumber": 309,
         "author": {
           "gitId": "-"
         },
-        "content": ""
+        "content": "### Use cases"
       },
       {
         "lineNumber": 310,
         "author": {
           "gitId": "-"
         },
-        "content": "### Launch and shutdown"
+        "content": ""
       },
       {
         "lineNumber": 311,
         "author": {
-          "gitId": "-"
+          "gitId": "zhaojj2209"
         },
-        "content": ""
+        "content": "(For all use cases below, the **System** is `Fine$$e` and the **Actor** is the `user`, unless specified otherwise)"
       },
       {
         "lineNumber": 312,
         "author": {
           "gitId": "-"
         },
-        "content": "1. Initial launch"
+        "content": ""
       },
       {
         "lineNumber": 313,
         "author": {
-          "gitId": "-"
+          "gitId": "zhaojj2209"
         },
-        "content": ""
+        "content": "**Use case: Delete an expense**"
       },
       {
         "lineNumber": 314,
         "author": {
           "gitId": "-"
         },
-        "content": "   1. Download the jar file and copy into an empty folder"
+        "content": ""
       },
       {
         "lineNumber": 315,
         "author": {
           "gitId": "-"
         },
-        "content": ""
+        "content": "**MSS**"
       },
       {
         "lineNumber": 316,
         "author": {
           "gitId": "-"
         },
-        "content": "   1. Double-click the jar file Expected: Shows the GUI with a set of sample contacts. The window size may not be optimum."
+        "content": ""
       },
       {
         "lineNumber": 317,
         "author": {
-          "gitId": "-"
+          "gitId": "zhaojj2209"
         },
-        "content": ""
+        "content": "1.  User requests to list expenses"
       },
       {
         "lineNumber": 318,
         "author": {
-          "gitId": "-"
+          "gitId": "zhaojj2209"
         },
-        "content": "1. Saving window preferences"
+        "content": "2.  Fine$$e shows a list of expenses"
       },
       {
         "lineNumber": 319,
         "author": {
-          "gitId": "-"
+          "gitId": "zhaojj2209"
         },
-        "content": ""
+        "content": "3.  User requests to delete a specific expense"
       },
       {
         "lineNumber": 320,
         "author": {
-          "gitId": "-"
+          "gitId": "zhaojj2209"
         },
-        "content": "   1. Resize the window to an optimum size. Move the window to a different location. Close the window."
+        "content": "4.  Fine$$e deletes the expense"
       },
       {
         "lineNumber": 321,
@@ -4651,91 +4651,91 @@
         "author": {
           "gitId": "-"
         },
-        "content": "   1. Re-launch the app by double-clicking the jar file.\u003cbr\u003e"
+        "content": "    Use case ends."
       },
       {
         "lineNumber": 323,
         "author": {
           "gitId": "-"
         },
-        "content": "       Expected: The most recent window size and location is retained."
+        "content": ""
       },
       {
         "lineNumber": 324,
         "author": {
           "gitId": "-"
         },
-        "content": ""
+        "content": "**Extensions**"
       },
       {
         "lineNumber": 325,
         "author": {
           "gitId": "-"
         },
-        "content": "1. _{ more test cases …​ }_"
+        "content": ""
       },
       {
         "lineNumber": 326,
         "author": {
           "gitId": "-"
         },
-        "content": ""
+        "content": "* 2a. The list is empty."
       },
       {
         "lineNumber": 327,
         "author": {
-          "gitId": "yongping827"
+          "gitId": "-"
         },
-        "content": "### Deleting a transaction"
+        "content": ""
       },
       {
         "lineNumber": 328,
         "author": {
           "gitId": "-"
         },
-        "content": ""
+        "content": "  Use case ends."
       },
       {
         "lineNumber": 329,
         "author": {
-          "gitId": "yongping827"
+          "gitId": "-"
         },
-        "content": "1. Deleting a transaction while all transactions are being shown"
+        "content": ""
       },
       {
         "lineNumber": 330,
         "author": {
           "gitId": "-"
         },
-        "content": ""
+        "content": "* 3a. The given index is invalid."
       },
       {
         "lineNumber": 331,
         "author": {
-          "gitId": "yongping827"
+          "gitId": "-"
         },
-        "content": "   1. Prerequisites: List all transactions using the `list` command. Multiple transactions in the list."
+        "content": ""
       },
       {
         "lineNumber": 332,
         "author": {
-          "gitId": "-"
+          "gitId": "zhaojj2209"
         },
-        "content": ""
+        "content": "    * 3a1. Fine$$e shows an error message."
       },
       {
         "lineNumber": 333,
         "author": {
           "gitId": "-"
         },
-        "content": "   1. Test case: `delete 1`\u003cbr\u003e"
+        "content": ""
       },
       {
         "lineNumber": 334,
         "author": {
-          "gitId": "yongping827"
+          "gitId": "-"
         },
-        "content": "      Expected: First transaction is deleted from the list. Details of the deleted transaction shown in the status message. Timestamp in the status bar is updated."
+        "content": "      Use case resumes at step 2."
       },
       {
         "lineNumber": 335,
@@ -4749,77 +4749,77 @@
         "author": {
           "gitId": "-"
         },
-        "content": "   1. Test case: `delete 0`\u003cbr\u003e"
+        "content": "*{More to be added}*"
       },
       {
         "lineNumber": 337,
         "author": {
-          "gitId": "yongping827"
+          "gitId": "-"
         },
-        "content": "      Expected: No transaction is deleted. Error details shown in the status message. Status bar remains the same."
+        "content": ""
       },
       {
         "lineNumber": 338,
         "author": {
           "gitId": "-"
         },
-        "content": ""
+        "content": "### Non-Functional Requirements"
       },
       {
         "lineNumber": 339,
         "author": {
           "gitId": "-"
         },
-        "content": "   1. Other incorrect delete commands to try: `delete`, `delete x`, `...` (where x is larger than the list size)\u003cbr\u003e"
+        "content": ""
       },
       {
         "lineNumber": 340,
         "author": {
-          "gitId": "-"
+          "gitId": "yongping827"
         },
-        "content": "      Expected: Similar to previous."
+        "content": "1.  Should work on any mainstream OS as long as it has Java `11` or above installed."
       },
       {
         "lineNumber": 341,
         "author": {
-          "gitId": "-"
+          "gitId": "zhaojj2209"
         },
-        "content": ""
+        "content": "2.  Should be able to hold up to 1000 expenses/incomes without a noticeable sluggishness in performance for typical usage."
       },
       {
         "lineNumber": 342,
         "author": {
           "gitId": "-"
         },
-        "content": "1. _{ more test cases …​ }_"
+        "content": "3.  A user with above average typing speed for regular English text (i.e. not code, not system admin commands) should be able to accomplish most of the tasks faster using commands than using the mouse."
       },
       {
         "lineNumber": 343,
         "author": {
-          "gitId": "-"
+          "gitId": "yongping827"
         },
-        "content": ""
+        "content": "4.  The data should be stored locally and should be in a human-editable text file."
       },
       {
         "lineNumber": 344,
         "author": {
-          "gitId": "-"
+          "gitId": "yongping827"
         },
-        "content": "### Saving data"
+        "content": "5.  The data should not be stored in a Database Management System (DBMS)."
       },
       {
         "lineNumber": 345,
         "author": {
-          "gitId": "-"
+          "gitId": "yongping827"
         },
-        "content": ""
+        "content": "6.  Should not require an installer."
       },
       {
         "lineNumber": 346,
         "author": {
-          "gitId": "-"
+          "gitId": "yongping827"
         },
-        "content": "1. Dealing with missing/corrupted data files"
+        "content": "7.  Should not depend on any remote server."
       },
       {
         "lineNumber": 347,
@@ -4833,7 +4833,7 @@
         "author": {
           "gitId": "-"
         },
-        "content": "   1. _{explain how to simulate a missing/corrupted file, and the expected behavior}_"
+        "content": "*{More to be added}*"
       },
       {
         "lineNumber": 349,
@@ -4847,14 +4847,421 @@
         "author": {
           "gitId": "-"
         },
+        "content": "### Glossary"
+      },
+      {
+        "lineNumber": 351,
+        "author": {
+          "gitId": "-"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 352,
+        "author": {
+          "gitId": "yongping827"
+        },
+        "content": "* **Expense**: A single transaction that results in a decrease in cash"
+      },
+      {
+        "lineNumber": 353,
+        "author": {
+          "gitId": "yongping827"
+        },
+        "content": "* **Income**: A single transaction that results in an increase in cash"
+      },
+      {
+        "lineNumber": 354,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "* **Mainstream OS**: Windows, Linux, Unix, OS-X"
+      },
+      {
+        "lineNumber": 355,
+        "author": {
+          "gitId": "yongping827"
+        },
+        "content": "* **Savings**: Net gain (positive) or loss (negative) in cash over a set period of time"
+      },
+      {
+        "lineNumber": 356,
+        "author": {
+          "gitId": "-"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 357,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "--------------------------------------------------------------------------------------------------------------------"
+      },
+      {
+        "lineNumber": 358,
+        "author": {
+          "gitId": "-"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 359,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "## **Appendix: Instructions for manual testing**"
+      },
+      {
+        "lineNumber": 360,
+        "author": {
+          "gitId": "-"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 361,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "Given below are instructions to test the app manually."
+      },
+      {
+        "lineNumber": 362,
+        "author": {
+          "gitId": "-"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 363,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "\u003cdiv markdown\u003d\"span\" class\u003d\"alert alert-info\"\u003e:information_source: **Note:** These instructions only provide a starting point for testers to work on;"
+      },
+      {
+        "lineNumber": 364,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "testers are expected to do more *exploratory* testing."
+      },
+      {
+        "lineNumber": 365,
+        "author": {
+          "gitId": "-"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 366,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "\u003c/div\u003e"
+      },
+      {
+        "lineNumber": 367,
+        "author": {
+          "gitId": "-"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 368,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "### Launch and shutdown"
+      },
+      {
+        "lineNumber": 369,
+        "author": {
+          "gitId": "-"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 370,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "1. Initial launch"
+      },
+      {
+        "lineNumber": 371,
+        "author": {
+          "gitId": "-"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 372,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "   1. Download the jar file and copy into an empty folder"
+      },
+      {
+        "lineNumber": 373,
+        "author": {
+          "gitId": "-"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 374,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "   1. Double-click the jar file Expected: Shows the GUI with a set of sample contacts. The window size may not be optimum."
+      },
+      {
+        "lineNumber": 375,
+        "author": {
+          "gitId": "-"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 376,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "1. Saving window preferences"
+      },
+      {
+        "lineNumber": 377,
+        "author": {
+          "gitId": "-"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 378,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "   1. Resize the window to an optimum size. Move the window to a different location. Close the window."
+      },
+      {
+        "lineNumber": 379,
+        "author": {
+          "gitId": "-"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 380,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "   1. Re-launch the app by double-clicking the jar file.\u003cbr\u003e"
+      },
+      {
+        "lineNumber": 381,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "       Expected: The most recent window size and location is retained."
+      },
+      {
+        "lineNumber": 382,
+        "author": {
+          "gitId": "-"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 383,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "1. _{ more test cases …​ }_"
+      },
+      {
+        "lineNumber": 384,
+        "author": {
+          "gitId": "-"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 385,
+        "author": {
+          "gitId": "yongping827"
+        },
+        "content": "### Deleting a transaction"
+      },
+      {
+        "lineNumber": 386,
+        "author": {
+          "gitId": "-"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 387,
+        "author": {
+          "gitId": "yongping827"
+        },
+        "content": "1. Deleting a transaction while all transactions are being shown"
+      },
+      {
+        "lineNumber": 388,
+        "author": {
+          "gitId": "-"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 389,
+        "author": {
+          "gitId": "yongping827"
+        },
+        "content": "   1. Prerequisites: List all transactions using the `list` command. Multiple transactions in the list."
+      },
+      {
+        "lineNumber": 390,
+        "author": {
+          "gitId": "-"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 391,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "   1. Test case: `delete 1`\u003cbr\u003e"
+      },
+      {
+        "lineNumber": 392,
+        "author": {
+          "gitId": "yongping827"
+        },
+        "content": "      Expected: First transaction is deleted from the list. Details of the deleted transaction shown in the status message. Timestamp in the status bar is updated."
+      },
+      {
+        "lineNumber": 393,
+        "author": {
+          "gitId": "-"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 394,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "   1. Test case: `delete 0`\u003cbr\u003e"
+      },
+      {
+        "lineNumber": 395,
+        "author": {
+          "gitId": "yongping827"
+        },
+        "content": "      Expected: No transaction is deleted. Error details shown in the status message. Status bar remains the same."
+      },
+      {
+        "lineNumber": 396,
+        "author": {
+          "gitId": "-"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 397,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "   1. Other incorrect delete commands to try: `delete`, `delete x`, `...` (where x is larger than the list size)\u003cbr\u003e"
+      },
+      {
+        "lineNumber": 398,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "      Expected: Similar to previous."
+      },
+      {
+        "lineNumber": 399,
+        "author": {
+          "gitId": "-"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 400,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "1. _{ more test cases …​ }_"
+      },
+      {
+        "lineNumber": 401,
+        "author": {
+          "gitId": "-"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 402,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "### Saving data"
+      },
+      {
+        "lineNumber": 403,
+        "author": {
+          "gitId": "-"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 404,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "1. Dealing with missing/corrupted data files"
+      },
+      {
+        "lineNumber": 405,
+        "author": {
+          "gitId": "-"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 406,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "   1. _{explain how to simulate a missing/corrupted file, and the expected behavior}_"
+      },
+      {
+        "lineNumber": 407,
+        "author": {
+          "gitId": "-"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 408,
+        "author": {
+          "gitId": "-"
+        },
         "content": "1. _{ more test cases …​ }_"
       }
     ],
     "authorContributionMap": {
-      "wltan": 28,
-      "zhaojj2209": 72,
-      "yongping827": 13,
-      "-": 223,
+      "siddarth2824": 39,
+      "wltan": 29,
+      "zhaojj2209": 71,
+      "yongping827": 29,
+      "-": 226,
       "ianyong": 14
     }
   },
@@ -31129,54 +31536,61 @@
       {
         "lineNumber": 22,
         "author": {
-          "gitId": "-"
+          "gitId": "siddarth2824"
         },
-        "content": "            return new DeleteCommand(index);"
+        "content": "            assert index.getZeroBased() \u003e\u003d 0;"
       },
       {
         "lineNumber": 23,
         "author": {
           "gitId": "-"
         },
-        "content": "        } catch (ParseException pe) {"
+        "content": "            return new DeleteCommand(index);"
       },
       {
         "lineNumber": 24,
         "author": {
           "gitId": "-"
         },
-        "content": "            throw new ParseException("
+        "content": "        } catch (ParseException pe) {"
       },
       {
         "lineNumber": 25,
         "author": {
           "gitId": "-"
         },
-        "content": "                    String.format(MESSAGE_INVALID_COMMAND_FORMAT, DeleteCommand.MESSAGE_USAGE), pe);"
+        "content": "            throw new ParseException("
       },
       {
         "lineNumber": 26,
         "author": {
           "gitId": "-"
         },
-        "content": "        }"
+        "content": "                    String.format(MESSAGE_INVALID_COMMAND_FORMAT, DeleteCommand.MESSAGE_USAGE), pe);"
       },
       {
         "lineNumber": 27,
         "author": {
           "gitId": "-"
         },
-        "content": "    }"
+        "content": "        }"
       },
       {
         "lineNumber": 28,
         "author": {
           "gitId": "-"
         },
-        "content": ""
+        "content": "    }"
       },
       {
         "lineNumber": 29,
+        "author": {
+          "gitId": "-"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 30,
         "author": {
           "gitId": "-"
         },
@@ -31184,6 +31598,7 @@
       }
     ],
     "authorContributionMap": {
+      "siddarth2824": 1,
       "zhaojj2209": 5,
       "-": 24
     }
