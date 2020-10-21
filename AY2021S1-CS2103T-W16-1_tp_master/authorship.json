@@ -1468,9 +1468,9 @@
       {
         "lineNumber": 54,
         "author": {
-          "gitId": "-"
+          "gitId": "zhaohuanqdcn"
         },
-        "content": "The *Sequence Diagram* below shows how the components interact with each other for the scenario where the user issues the command `delete 1`."
+        "content": "The *Sequence Diagram* below shows how the components interact with each other for the scenario where the user issues the command `delete_meeting 1`."
       },
       {
         "lineNumber": 55,
@@ -1713,9 +1713,9 @@
       {
         "lineNumber": 89,
         "author": {
-          "gitId": "-"
+          "gitId": "zhaohuanqdcn"
         },
-        "content": "Given below is the Sequence Diagram for interactions within the `Logic` component for the `execute(\"delete 1\")` API call."
+        "content": "Given below is the Sequence Diagram for interactions within the `Logic` component for the `execute(\"delete_meeting 1\")` API call."
       },
       {
         "lineNumber": 90,
@@ -1727,9 +1727,9 @@
       {
         "lineNumber": 91,
         "author": {
-          "gitId": "-"
+          "gitId": "zhaohuanqdcn"
         },
-        "content": "![Interactions Inside the Logic Component for the `delete 1` Command](images/DeleteSequenceDiagram.png)"
+        "content": "![Interactions Inside the Logic Component for the `delete_meeting 1` Command](images/DeleteMeetingSequenceDiagram.png)"
       },
       {
         "lineNumber": 92,
@@ -1757,7 +1757,7 @@
         "author": {
           "gitId": "zhaohuanqdcn"
         },
-        "content": ":information_source: **Note:** The lifeline for `DeleteCommandParser` should end at the destroy marker (X) but due to a limitation of PlantUML, the lifeline reaches the end of diagram."
+        "content": ":information_source: **Note:** The lifeline for `DeleteMeetingCommandParser` should end at the destroy marker (X) but due to a limitation of PlantUML, the lifeline reaches the end of diagram."
       },
       {
         "lineNumber": 96,
@@ -1839,16 +1839,16 @@
       {
         "lineNumber": 107,
         "author": {
-          "gitId": "-"
+          "gitId": "zhaohuanqdcn"
         },
-        "content": "* stores the address book data."
+        "content": "* stores the data of contacts and meetings."
       },
       {
         "lineNumber": 108,
         "author": {
-          "gitId": "-"
+          "gitId": "zhaohuanqdcn"
         },
-        "content": "* exposes an unmodifiable `ObservableList\u003cPerson\u003e` that can be \u0027observed\u0027 e.g. the UI can be bound to this list so that the UI automatically updates when the data in the list change."
+        "content": "* exposes unmodifiable `ObservableList\u003cPerson\u003e` and `ObservableList\u003cMeeting\u003e` that can be \u0027observed\u0027 e.g. the UI can be bound to this list so that the UI automatically updates when the data in the list change."
       },
       {
         "lineNumber": 109,
@@ -2070,9 +2070,9 @@
       {
         "lineNumber": 140,
         "author": {
-          "gitId": "-"
+          "gitId": "xxzz-tt"
         },
-        "content": "### \\[Proposed\\] Undo/redo feature"
+        "content": "### Add meeting feature"
       },
       {
         "lineNumber": 141,
@@ -2084,9 +2084,9 @@
       {
         "lineNumber": 142,
         "author": {
-          "gitId": "-"
+          "gitId": "xxzz-tt"
         },
-        "content": "#### Proposed Implementation"
+        "content": "#### Implementation"
       },
       {
         "lineNumber": 143,
@@ -2098,9 +2098,9 @@
       {
         "lineNumber": 144,
         "author": {
-          "gitId": "-"
+          "gitId": "xxzz-tt"
         },
-        "content": "The proposed undo/redo mechanism is facilitated by `VersionedAddressBook`. It extends `AddressBook` with an undo/redo history, stored internally as an `addressBookStateList` and `currentStatePointer`. Additionally, it implements the following operations:"
+        "content": "The add meeting mechanism is facilitated by `AddMeetingCommand`. It extends `Command`."
       },
       {
         "lineNumber": 145,
@@ -2112,23 +2112,23 @@
       {
         "lineNumber": 146,
         "author": {
-          "gitId": "-"
+          "gitId": "xxzz-tt"
         },
-        "content": "* `VersionedAddressBook#commit()` — Saves the current address book state in its history."
+        "content": "* `AddMeetingCommand#execute()` —  Add a new meeting in the model if it is valid and not a duplicate."
       },
       {
         "lineNumber": 147,
         "author": {
           "gitId": "-"
         },
-        "content": "* `VersionedAddressBook#undo()` — Restores the previous address book state from its history."
+        "content": ""
       },
       {
         "lineNumber": 148,
         "author": {
-          "gitId": "-"
+          "gitId": "xxzz-tt"
         },
-        "content": "* `VersionedAddressBook#redo()` — Restores a previously undone address book state from its history."
+        "content": "This operation is exposed in the `Model` interface as `Model#addMeeting()`."
       },
       {
         "lineNumber": 149,
@@ -2140,9 +2140,9 @@
       {
         "lineNumber": 150,
         "author": {
-          "gitId": "-"
+          "gitId": "xxzz-tt"
         },
-        "content": "These operations are exposed in the `Model` interface as `Model#commitAddressBook()`, `Model#undoAddressBook()` and `Model#redoAddressBook()` respectively."
+        "content": "The following sequence diagram shows how the add meeting operation works:"
       },
       {
         "lineNumber": 151,
@@ -2154,9 +2154,9 @@
       {
         "lineNumber": 152,
         "author": {
-          "gitId": "-"
+          "gitId": "xxzz-tt"
         },
-        "content": "Given below is an example usage scenario and how the undo/redo mechanism behaves at each step."
+        "content": "![AddMeetingSequenceDiagram](images/AddMeetingSequenceDiagram.png)"
       },
       {
         "lineNumber": 153,
@@ -2168,9 +2168,9 @@
       {
         "lineNumber": 154,
         "author": {
-          "gitId": "-"
+          "gitId": "xxzz-tt"
         },
-        "content": "Step 1. The user launches the application for the first time. The `VersionedAddressBook` will be initialized with the initial address book state, and the `currentStatePointer` pointing to that single address book state."
+        "content": "\u003cdiv markdown\u003d\"span\" class\u003d\"alert alert-info\"\u003e"
       },
       {
         "lineNumber": 155,
@@ -2182,23 +2182,23 @@
       {
         "lineNumber": 156,
         "author": {
-          "gitId": "-"
+          "gitId": "xxzz-tt"
         },
-        "content": "![UndoRedoState0](images/UndoRedoState0.png)"
+        "content": ":information_source: **Note:** The lifeline for `AddMeetingCommand` should end at the destroy marker (X) but due to a limitation of PlantUML, the lifeline reaches the end of diagram."
       },
       {
         "lineNumber": 157,
         "author": {
-          "gitId": "-"
+          "gitId": "xxzz-tt"
         },
         "content": ""
       },
       {
         "lineNumber": 158,
         "author": {
-          "gitId": "-"
+          "gitId": "xxzz-tt"
         },
-        "content": "Step 2. The user executes `delete 5` command to delete the 5th person in the address book. The `delete` command calls `Model#commitAddressBook()`, causing the modified state of the address book after the `delete 5` command executes to be saved in the `addressBookStateList`, and the `currentStatePointer` is shifted to the newly inserted address book state."
+        "content": "\u003c/div\u003e"
       },
       {
         "lineNumber": 159,
@@ -2210,9 +2210,9 @@
       {
         "lineNumber": 160,
         "author": {
-          "gitId": "-"
+          "gitId": "xxzz-tt"
         },
-        "content": "![UndoRedoState1](images/UndoRedoState1.png)"
+        "content": "#### Design consideration:"
       },
       {
         "lineNumber": 161,
@@ -2224,9 +2224,9 @@
       {
         "lineNumber": 162,
         "author": {
-          "gitId": "-"
+          "gitId": "xxzz-tt"
         },
-        "content": "Step 3. The user executes `add n/David …​` to add a new person. The `add` command also calls `Model#commitAddressBook()`, causing another modified address book state to be saved into the `addressBookStateList`."
+        "content": "##### Aspect: How add meeting executes"
       },
       {
         "lineNumber": 163,
@@ -2238,9 +2238,9 @@
       {
         "lineNumber": 164,
         "author": {
-          "gitId": "-"
+          "gitId": "xxzz-tt"
         },
-        "content": "![UndoRedoState2](images/UndoRedoState2.png)"
+        "content": "* Consistent workflow with other commands"
       },
       {
         "lineNumber": 165,
@@ -2252,23 +2252,23 @@
       {
         "lineNumber": 166,
         "author": {
-          "gitId": "zhaohuanqdcn"
+          "gitId": "xxzz-tt"
         },
-        "content": "\u003cdiv markdown\u003d\"span\" class\u003d\"alert alert-info\"\u003e"
+        "content": "_{more aspects and alternatives to be added}_"
       },
       {
         "lineNumber": 167,
         "author": {
-          "gitId": "zhaohuanqdcn"
+          "gitId": "-"
         },
         "content": ""
       },
       {
         "lineNumber": 168,
         "author": {
-          "gitId": "zhaohuanqdcn"
+          "gitId": "xxzz-tt"
         },
-        "content": ":information_source: **Note:** If a command fails its execution, it will not call `Model#commitAddressBook()`, so the address book state will not be saved into the `addressBookStateList`."
+        "content": "### Edit meeting feature"
       },
       {
         "lineNumber": 169,
@@ -2280,9 +2280,9 @@
       {
         "lineNumber": 170,
         "author": {
-          "gitId": "-"
+          "gitId": "xxzz-tt"
         },
-        "content": "\u003c/div\u003e"
+        "content": "#### Implementation"
       },
       {
         "lineNumber": 171,
@@ -2294,9 +2294,9 @@
       {
         "lineNumber": 172,
         "author": {
-          "gitId": "-"
+          "gitId": "xxzz-tt"
         },
-        "content": "Step 4. The user now decides that adding the person was a mistake, and decides to undo that action by executing the `undo` command. The `undo` command will call `Model#undoAddressBook()`, which will shift the `currentStatePointer` once to the left, pointing it to the previous address book state, and restores the address book to that state."
+        "content": "The edit meeting mechanism is facilitated by `EditMeetingCommand`. It extends `Command`."
       },
       {
         "lineNumber": 173,
@@ -2308,9 +2308,9 @@
       {
         "lineNumber": 174,
         "author": {
-          "gitId": "-"
+          "gitId": "xxzz-tt"
         },
-        "content": "![UndoRedoState3](images/UndoRedoState3.png)"
+        "content": "* `EditMeetingCommand#execute()` —  Edit a new meeting in the model if it is valid and not a duplicate."
       },
       {
         "lineNumber": 175,
@@ -2322,345 +2322,345 @@
       {
         "lineNumber": 176,
         "author": {
-          "gitId": "zhaohuanqdcn"
+          "gitId": "xxzz-tt"
         },
-        "content": "\u003cdiv markdown\u003d\"span\" class\u003d\"alert alert-info\"\u003e"
+        "content": "This operation is exposed in the `Model` interface as `Model#setMeeting()`, `Model#getFilteredMeetingList()` and `Model#getFilteredMeetingList()`."
       },
       {
         "lineNumber": 177,
         "author": {
-          "gitId": "zhaohuanqdcn"
+          "gitId": "-"
         },
         "content": ""
       },
       {
         "lineNumber": 178,
         "author": {
-          "gitId": "zhaohuanqdcn"
+          "gitId": "xxzz-tt"
         },
-        "content": ":information_source: **Note:** If the `currentStatePointer` is at index 0, pointing to the initial AddressBook state, then there are no previous AddressBook states to restore. The `undo` command uses `Model#canUndoAddressBook()` to check if this is the case. If so, it will return an error to the user rather"
+        "content": "The following sequence diagram shows how the edit meeting operation works:"
       },
       {
         "lineNumber": 179,
         "author": {
           "gitId": "-"
         },
-        "content": "than attempting to perform the undo."
+        "content": ""
       },
       {
         "lineNumber": 180,
         "author": {
-          "gitId": "-"
+          "gitId": "xxzz-tt"
         },
-        "content": ""
+        "content": "![EditMeetingSequenceDiagram](images/EditMeetingSequenceDiagram.png)"
       },
       {
         "lineNumber": 181,
         "author": {
           "gitId": "-"
         },
-        "content": "\u003c/div\u003e"
+        "content": ""
       },
       {
         "lineNumber": 182,
         "author": {
-          "gitId": "-"
+          "gitId": "xxzz-tt"
         },
-        "content": ""
+        "content": "\u003cdiv markdown\u003d\"span\" class\u003d\"alert alert-info\"\u003e"
       },
       {
         "lineNumber": 183,
         "author": {
-          "gitId": "-"
+          "gitId": "xxzz-tt"
         },
-        "content": "The following sequence diagram shows how the undo operation works:"
+        "content": ""
       },
       {
         "lineNumber": 184,
         "author": {
-          "gitId": "-"
+          "gitId": "xxzz-tt"
         },
-        "content": ""
+        "content": ":information_source: **Note:** The lifeline for `EditMeetingCommand` should end at the destroy marker (X) but due to a limitation of PlantUML, the lifeline reaches the end of diagram."
       },
       {
         "lineNumber": 185,
         "author": {
           "gitId": "-"
         },
-        "content": "![UndoSequenceDiagram](images/UndoSequenceDiagram.png)"
+        "content": ""
       },
       {
         "lineNumber": 186,
         "author": {
           "gitId": "-"
         },
-        "content": ""
+        "content": "\u003c/div\u003e"
       },
       {
         "lineNumber": 187,
         "author": {
-          "gitId": "zhaohuanqdcn"
+          "gitId": "-"
         },
-        "content": "\u003cdiv markdown\u003d\"span\" class\u003d\"alert alert-info\"\u003e"
+        "content": ""
       },
       {
         "lineNumber": 188,
         "author": {
-          "gitId": "zhaohuanqdcn"
+          "gitId": "xxzz-tt"
         },
-        "content": ""
+        "content": "#### Design consideration:"
       },
       {
         "lineNumber": 189,
         "author": {
-          "gitId": "zhaohuanqdcn"
+          "gitId": "xxzz-tt"
         },
-        "content": ":information_source: **Note:** The lifeline for `UndoCommand` should end at the destroy marker (X) but due to a limitation of PlantUML, the lifeline reaches the end of diagram."
+        "content": ""
       },
       {
         "lineNumber": 190,
         "author": {
-          "gitId": "-"
+          "gitId": "zhaohuanqdcn"
         },
-        "content": ""
+        "content": "##### Aspect: How edit meeting executes"
       },
       {
         "lineNumber": 191,
         "author": {
-          "gitId": "-"
+          "gitId": "xxzz-tt"
         },
-        "content": "\u003c/div\u003e"
+        "content": ""
       },
       {
         "lineNumber": 192,
         "author": {
-          "gitId": "-"
+          "gitId": "xxzz-tt"
         },
-        "content": ""
+        "content": "* Consistent workflow with other commands"
       },
       {
         "lineNumber": 193,
         "author": {
-          "gitId": "-"
-        },
-        "content": "The `redo` command does the opposite — it calls `Model#redoAddressBook()`, which shifts the `currentStatePointer` once to the right, pointing to the previously undone state, and restores the address book to that state."
-      },
-      {
-        "lineNumber": 194,
-        "author": {
-          "gitId": "-"
+          "gitId": "xxzz-tt"
         },
         "content": ""
       },
       {
+        "lineNumber": 194,
+        "author": {
+          "gitId": "xxzz-tt"
+        },
+        "content": "_{more aspects and alternatives to be added}_"
+      },
+      {
         "lineNumber": 195,
         "author": {
-          "gitId": "zhaohuanqdcn"
+          "gitId": "xxzz-tt"
         },
-        "content": "\u003cdiv markdown\u003d\"span\" class\u003d\"alert alert-info\"\u003e"
+        "content": ""
       },
       {
         "lineNumber": 196,
         "author": {
           "gitId": "zhaohuanqdcn"
         },
-        "content": ""
+        "content": "### Delete meeting feature"
       },
       {
         "lineNumber": 197,
         "author": {
           "gitId": "zhaohuanqdcn"
         },
-        "content": ":information_source: **Note:** If the `currentStatePointer` is at index `addressBookStateList.size() - 1`, pointing to the latest address book state, then there are no undone AddressBook states to restore. The `redo` command uses `Model#canRedoAddressBook()` to check if this is the case. If so, it will return an error to the user rather than attempting to perform the redo."
+        "content": ""
       },
       {
         "lineNumber": 198,
         "author": {
-          "gitId": "-"
+          "gitId": "zhaohuanqdcn"
         },
-        "content": ""
+        "content": "#### Implementation"
       },
       {
         "lineNumber": 199,
         "author": {
-          "gitId": "-"
+          "gitId": "zhaohuanqdcn"
         },
-        "content": "\u003c/div\u003e"
+        "content": ""
       },
       {
         "lineNumber": 200,
         "author": {
-          "gitId": "-"
+          "gitId": "zhaohuanqdcn"
         },
-        "content": ""
+        "content": "The delete meeting mechanism is facilitated by `DeleteMeetingCommand`. It extends `Command`."
       },
       {
         "lineNumber": 201,
         "author": {
-          "gitId": "-"
+          "gitId": "zhaohuanqdcn"
         },
-        "content": "Step 5. The user then decides to execute the command `list`. Commands that do not modify the address book, such as `list`, will usually not call `Model#commitAddressBook()`, `Model#undoAddressBook()` or `Model#redoAddressBook()`. Thus, the `addressBookStateList` remains unchanged."
+        "content": ""
       },
       {
         "lineNumber": 202,
         "author": {
-          "gitId": "-"
+          "gitId": "zhaohuanqdcn"
         },
-        "content": ""
+        "content": "-   `DeleteMeetingCommand#execute()` —  Deletes the meeting specified by an index."
       },
       {
         "lineNumber": 203,
         "author": {
-          "gitId": "-"
+          "gitId": "zhaohuanqdcn"
         },
-        "content": "![UndoRedoState4](images/UndoRedoState4.png)"
+        "content": ""
       },
       {
         "lineNumber": 204,
         "author": {
-          "gitId": "-"
+          "gitId": "zhaohuanqdcn"
         },
-        "content": ""
+        "content": "The flow of a usual delete meeting execution cycle has been illustrated above as an example in [**logic component**](#logic-component):"
       },
       {
         "lineNumber": 205,
         "author": {
-          "gitId": "-"
+          "gitId": "zhaohuanqdcn"
         },
-        "content": "Step 6. The user executes `clear`, which calls `Model#commitAddressBook()`. Since the `currentStatePointer` is not pointing at the end of the `addressBookStateList`, all address book states after the `currentStatePointer` will be purged. Reason: It no longer makes sense to redo the `add n/David …​` command. This is the behavior that most modern desktop applications follow."
+        "content": ""
       },
       {
         "lineNumber": 206,
         "author": {
-          "gitId": "-"
-        },
-        "content": ""
-      },
-      {
-        "lineNumber": 207,
-        "author": {
-          "gitId": "-"
-        },
-        "content": "![UndoRedoState5](images/UndoRedoState5.png)"
-      },
-      {
-        "lineNumber": 208,
-        "author": {
-          "gitId": "-"
-        },
-        "content": ""
-      },
-      {
-        "lineNumber": 209,
-        "author": {
-          "gitId": "-"
-        },
-        "content": "The following activity diagram summarizes what happens when a user executes a new command:"
-      },
-      {
-        "lineNumber": 210,
-        "author": {
-          "gitId": "-"
-        },
-        "content": ""
-      },
-      {
-        "lineNumber": 211,
-        "author": {
-          "gitId": "-"
-        },
-        "content": "![CommitActivityDiagram](images/CommitActivityDiagram.png)"
-      },
-      {
-        "lineNumber": 212,
-        "author": {
-          "gitId": "-"
-        },
-        "content": ""
-      },
-      {
-        "lineNumber": 213,
-        "author": {
-          "gitId": "-"
+          "gitId": "zhaohuanqdcn"
         },
         "content": "#### Design consideration:"
       },
       {
-        "lineNumber": 214,
+        "lineNumber": 207,
         "author": {
-          "gitId": "-"
+          "gitId": "zhaohuanqdcn"
         },
         "content": ""
+      },
+      {
+        "lineNumber": 208,
+        "author": {
+          "gitId": "zhaohuanqdcn"
+        },
+        "content": "##### Aspect: which list to delete from?"
+      },
+      {
+        "lineNumber": 209,
+        "author": {
+          "gitId": "zhaohuanqdcn"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 210,
+        "author": {
+          "gitId": "zhaohuanqdcn"
+        },
+        "content": "*   `DeleteMeetingCommand` is implemented in a way so that it deletes the meeting specified by an index from the _last shown list_. This enables combinatorial commands which seem more intuitive. For instance, `delete_meeting 1` following a `FindMeetingCommand` deletes the first meeting from the search results, whereas the same command following a `ListMeetingCommand` deletes the first meeting from the whole meeting list."
+      },
+      {
+        "lineNumber": 211,
+        "author": {
+          "gitId": "zhaohuanqdcn"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 212,
+        "author": {
+          "gitId": "AdithyaNarayan"
+        },
+        "content": "### Find meeting feature"
+      },
+      {
+        "lineNumber": 213,
+        "author": {
+          "gitId": "AdithyaNarayan"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 214,
+        "author": {
+          "gitId": "AdithyaNarayan"
+        },
+        "content": "#### Implementation"
       },
       {
         "lineNumber": 215,
         "author": {
-          "gitId": "-"
+          "gitId": "AdithyaNarayan"
         },
-        "content": "##### Aspect: How undo \u0026 redo executes"
+        "content": ""
       },
       {
         "lineNumber": 216,
         "author": {
-          "gitId": "-"
+          "gitId": "AdithyaNarayan"
         },
-        "content": ""
+        "content": "The find meeting mechanism is facilitated by `FindMeetingCommand`. It extends `Command`."
       },
       {
         "lineNumber": 217,
         "author": {
-          "gitId": "-"
-        },
-        "content": "* **Alternative 1 (current choice):** Saves the entire address book."
-      },
-      {
-        "lineNumber": 218,
-        "author": {
-          "gitId": "-"
-        },
-        "content": "  * Pros: Easy to implement."
-      },
-      {
-        "lineNumber": 219,
-        "author": {
-          "gitId": "-"
-        },
-        "content": "  * Cons: May have performance issues in terms of memory usage."
-      },
-      {
-        "lineNumber": 220,
-        "author": {
-          "gitId": "-"
+          "gitId": "AdithyaNarayan"
         },
         "content": ""
       },
       {
+        "lineNumber": 218,
+        "author": {
+          "gitId": "AdithyaNarayan"
+        },
+        "content": "-   `FindMeetingCommand#execute()` —  Finds meeting where the data of meeting matches given keywords."
+      },
+      {
+        "lineNumber": 219,
+        "author": {
+          "gitId": "AdithyaNarayan"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 220,
+        "author": {
+          "gitId": "AdithyaNarayan"
+        },
+        "content": "Given below is the high-level class diagram based on `FindMeetingCommand` and its direct dependencies."
+      },
+      {
         "lineNumber": 221,
         "author": {
-          "gitId": "-"
+          "gitId": "AdithyaNarayan"
         },
-        "content": "* **Alternative 2:** Individual command knows how to undo/redo by"
+        "content": ""
       },
       {
         "lineNumber": 222,
         "author": {
-          "gitId": "-"
+          "gitId": "AdithyaNarayan"
         },
-        "content": "  itself."
+        "content": "![FindMeetingClassDiagram](images/FindMeetingClassDiagram.png)"
       },
       {
         "lineNumber": 223,
         "author": {
-          "gitId": "-"
+          "gitId": "AdithyaNarayan"
         },
-        "content": "  * Pros: Will use less memory (e.g. for `delete`, just save the person being deleted)."
+        "content": ""
       },
       {
         "lineNumber": 224,
         "author": {
-          "gitId": "-"
+          "gitId": "AdithyaNarayan"
         },
-        "content": "  * Cons: We must ensure that the implementation of each individual command are correct."
+        "content": "The given sequence diagram illustrates the flow of a usual find meeting execution cycle:"
       },
       {
         "lineNumber": 225,
@@ -2672,429 +2672,429 @@
       {
         "lineNumber": 226,
         "author": {
-          "gitId": "-"
+          "gitId": "AdithyaNarayan"
         },
-        "content": "_{more aspects and alternatives to be added}_"
+        "content": "![FindMeetingSequenceDiagram](images/FindMeetingSequenceDiagram.png)"
       },
       {
         "lineNumber": 227,
         "author": {
-          "gitId": "-"
+          "gitId": "AdithyaNarayan"
         },
         "content": ""
       },
       {
         "lineNumber": 228,
         "author": {
-          "gitId": "ramenmen"
+          "gitId": "AdithyaNarayan"
         },
-        "content": "### Add meeting feature"
+        "content": "\u003cdiv markdown\u003d\"span\" class\u003d\"alert alert-info\"\u003e"
       },
       {
         "lineNumber": 229,
         "author": {
-          "gitId": "-"
+          "gitId": "AdithyaNarayan"
         },
         "content": ""
       },
       {
         "lineNumber": 230,
         "author": {
-          "gitId": "ramenmen"
+          "gitId": "AdithyaNarayan"
         },
-        "content": "#### Implementation"
+        "content": ":information_source: **Note:** The lifeline for `FindMeetingCommand` should end at the destroy marker (X) but due to a limitation of PlantUML, the lifeline reaches the end of diagram."
       },
       {
         "lineNumber": 231,
         "author": {
-          "gitId": "ramenmen"
+          "gitId": "-"
         },
         "content": ""
       },
       {
         "lineNumber": 232,
         "author": {
-          "gitId": "ramenmen"
+          "gitId": "-"
         },
-        "content": "The add meeting mechanism is facilitated by `AddMeetingCommand`. It extends `Command`."
+        "content": "\u003c/div\u003e"
       },
       {
         "lineNumber": 233,
         "author": {
-          "gitId": "ramenmen"
+          "gitId": "-"
         },
         "content": ""
       },
       {
         "lineNumber": 234,
         "author": {
-          "gitId": "ramenmen"
+          "gitId": "AdithyaNarayan"
         },
-        "content": "* `AddMeetingCommand#execute()` —  Add a new meeting in the model if it is valid and not a duplicate."
+        "content": "#### Design consideration:"
       },
       {
         "lineNumber": 235,
         "author": {
-          "gitId": "ramenmen"
+          "gitId": "AdithyaNarayan"
         },
         "content": ""
       },
       {
         "lineNumber": 236,
         "author": {
-          "gitId": "ramenmen"
+          "gitId": "AdithyaNarayan"
         },
-        "content": "This operation is exposed in the `Model` interface as `Model#addMeeting()`."
+        "content": "##### Aspect: Keyword matching Title or Data?"
       },
       {
         "lineNumber": 237,
         "author": {
-          "gitId": "ramenmen"
+          "gitId": "-"
         },
         "content": ""
       },
       {
         "lineNumber": 238,
         "author": {
-          "gitId": "ramenmen"
+          "gitId": "AdithyaNarayan"
         },
-        "content": "The following sequence diagram shows how the add meeting operation works:"
+        "content": "*   Initially, mimicing the functionality of `FindContactCommand`, the find meeting only matched the keywords to the title. However, it made more sense to match other attributes like participant names, location and time since it would be easy to pinpoint which meetings take place where through a single find command."
       },
       {
         "lineNumber": 239,
         "author": {
-          "gitId": "ramenmen"
+          "gitId": "AdithyaNarayan"
         },
-        "content": ""
+        "content": "*   Hence, the predicate matching logic was tweaked in order to accomodate other attributes to make the feature more robust."
       },
       {
         "lineNumber": 240,
         "author": {
-          "gitId": "ramenmen"
+          "gitId": "-"
         },
-        "content": "![AddMeetingSequenceDiagram](images/AddMeetingSequenceDiagram.png)"
+        "content": ""
       },
       {
         "lineNumber": 241,
         "author": {
-          "gitId": "ramenmen"
+          "gitId": "AdithyaNarayan"
         },
-        "content": ""
+        "content": "##### \\[Proposed\\] DateTime matching using different formats"
       },
       {
         "lineNumber": 242,
         "author": {
-          "gitId": "ramenmen"
+          "gitId": "-"
         },
-        "content": "\u003cdiv markdown\u003d\"span\" class\u003d\"alert alert-info\"\u003e"
+        "content": ""
       },
       {
         "lineNumber": 243,
         "author": {
-          "gitId": "ramenmen"
+          "gitId": "AdithyaNarayan"
         },
-        "content": ""
+        "content": "*   Currently, DateTime finding is carried out using string matching. It would be more natural to match through DateTime comparison. This would make sure that different date formats like \"November\" and \"Nov\" both match the meeting."
       },
       {
         "lineNumber": 244,
         "author": {
-          "gitId": "ramenmen"
+          "gitId": "-"
         },
-        "content": ":information_source: **Note:** The lifeline for `AddMeetingCommand` should end at the destroy marker (X) but due to a limitation of PlantUML, the lifeline reaches the end of diagram."
+        "content": ""
       },
       {
         "lineNumber": 245,
         "author": {
-          "gitId": "ramenmen"
+          "gitId": "zhaohuanqdcn"
         },
-        "content": ""
+        "content": "### list meeting feature"
       },
       {
         "lineNumber": 246,
         "author": {
-          "gitId": "ramenmen"
+          "gitId": "-"
         },
-        "content": "\u003c/div\u003e"
+        "content": ""
       },
       {
         "lineNumber": 247,
         "author": {
-          "gitId": "ramenmen"
-        },
-        "content": ""
-      },
-      {
-        "lineNumber": 248,
-        "author": {
-          "gitId": "ramenmen"
-        },
-        "content": "#### Design consideration:"
-      },
-      {
-        "lineNumber": 249,
-        "author": {
-          "gitId": "ramenmen"
-        },
-        "content": ""
-      },
-      {
-        "lineNumber": 250,
-        "author": {
-          "gitId": "ramenmen"
-        },
-        "content": "##### Aspect: How add meeting executes"
-      },
-      {
-        "lineNumber": 251,
-        "author": {
-          "gitId": "ramenmen"
-        },
-        "content": ""
-      },
-      {
-        "lineNumber": 252,
-        "author": {
-          "gitId": "ramenmen"
-        },
-        "content": "* Consistent workflow with other commands"
-      },
-      {
-        "lineNumber": 253,
-        "author": {
-          "gitId": "ramenmen"
-        },
-        "content": ""
-      },
-      {
-        "lineNumber": 254,
-        "author": {
-          "gitId": "ramenmen"
-        },
-        "content": "_{more aspects and alternatives to be added}_"
-      },
-      {
-        "lineNumber": 255,
-        "author": {
-          "gitId": "ramenmen"
-        },
-        "content": ""
-      },
-      {
-        "lineNumber": 256,
-        "author": {
-          "gitId": "ramenmen"
-        },
-        "content": "### Edit meeting feature"
-      },
-      {
-        "lineNumber": 257,
-        "author": {
-          "gitId": "ramenmen"
-        },
-        "content": ""
-      },
-      {
-        "lineNumber": 258,
-        "author": {
-          "gitId": "ramenmen"
+          "gitId": "zhaohuanqdcn"
         },
         "content": "#### Implementation"
       },
       {
-        "lineNumber": 259,
+        "lineNumber": 248,
         "author": {
-          "gitId": "ramenmen"
+          "gitId": "zhaohuanqdcn"
         },
         "content": ""
+      },
+      {
+        "lineNumber": 249,
+        "author": {
+          "gitId": "zhaohuanqdcn"
+        },
+        "content": "The list meeting mechanism is facilitated by `ListMeetingCommand`. It extends `Command`."
+      },
+      {
+        "lineNumber": 250,
+        "author": {
+          "gitId": "zhaohuanqdcn"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 251,
+        "author": {
+          "gitId": "zhaohuanqdcn"
+        },
+        "content": "-   `ListMeetingCommand#execute()` —  Lists out all the meetings stored in the address book."
+      },
+      {
+        "lineNumber": 252,
+        "author": {
+          "gitId": "-"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 253,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "#### Design consideration:"
+      },
+      {
+        "lineNumber": 254,
+        "author": {
+          "gitId": "-"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 255,
+        "author": {
+          "gitId": "zhaohuanqdcn"
+        },
+        "content": "##### Aspect: why not use find?"
+      },
+      {
+        "lineNumber": 256,
+        "author": {
+          "gitId": "-"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 257,
+        "author": {
+          "gitId": "zhaohuanqdcn"
+        },
+        "content": "*   Adding a syntax like `find_meeting` with empty keyword makes the list operation less intuitive. As `list_meeting` is a frequently used functionality, we decide to have a separate command."
+      },
+      {
+        "lineNumber": 258,
+        "author": {
+          "gitId": "-"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 259,
+        "author": {
+          "gitId": "zhaohuanqdcn"
+        },
+        "content": "### Clear meeting feature"
       },
       {
         "lineNumber": 260,
         "author": {
-          "gitId": "ramenmen"
+          "gitId": "-"
         },
-        "content": "The edit meeting mechanism is facilitated by `EditMeetingCommand`. It extends `Command`."
+        "content": ""
       },
       {
         "lineNumber": 261,
         "author": {
-          "gitId": "ramenmen"
+          "gitId": "zhaohuanqdcn"
         },
-        "content": ""
+        "content": "#### Implementation"
       },
       {
         "lineNumber": 262,
         "author": {
-          "gitId": "ramenmen"
+          "gitId": "zhaohuanqdcn"
         },
-        "content": "* `EditMeetingCommand#execute()` —  Edit a new meeting in the model if it is valid and not a duplicate."
+        "content": ""
       },
       {
         "lineNumber": 263,
         "author": {
-          "gitId": "ramenmen"
+          "gitId": "zhaohuanqdcn"
         },
-        "content": ""
+        "content": "The clear meeting mechanism is facilitated by `ClearMeetingCommand`. It extends `Command`."
       },
       {
         "lineNumber": 264,
         "author": {
-          "gitId": "ramenmen"
+          "gitId": "zhaohuanqdcn"
         },
-        "content": "This operation is exposed in the `Model` interface as `Model#setMeeting()`, `Model#getFilteredMeetingList()` and `Model#getFilteredMeetingList()`."
+        "content": ""
       },
       {
         "lineNumber": 265,
         "author": {
-          "gitId": "ramenmen"
+          "gitId": "zhaohuanqdcn"
         },
-        "content": ""
+        "content": "-   `ClearMeetingCommand#execute()` —  Deletes all the meetings stored in the address book."
       },
       {
         "lineNumber": 266,
         "author": {
-          "gitId": "ramenmen"
+          "gitId": "zhaohuanqdcn"
         },
-        "content": "The following sequence diagram shows how the edit meeting operation works:"
+        "content": ""
       },
       {
         "lineNumber": 267,
         "author": {
-          "gitId": "ramenmen"
+          "gitId": "zhaohuanqdcn"
         },
-        "content": ""
+        "content": "#### Design consideration:"
       },
       {
         "lineNumber": 268,
         "author": {
-          "gitId": "ramenmen"
+          "gitId": "zhaohuanqdcn"
         },
-        "content": "![EditMeetingSequenceDiagram](images/EditMeetingSequenceDiagram.png)"
+        "content": ""
       },
       {
         "lineNumber": 269,
         "author": {
-          "gitId": "ramenmen"
+          "gitId": "zhaohuanqdcn"
         },
-        "content": ""
+        "content": "##### Aspect: why not use delete?"
       },
       {
         "lineNumber": 270,
         "author": {
-          "gitId": "ramenmen"
-        },
-        "content": "\u003cdiv markdown\u003d\"span\" class\u003d\"alert alert-info\"\u003e"
-      },
-      {
-        "lineNumber": 271,
-        "author": {
-          "gitId": "ramenmen"
+          "gitId": "zhaohuanqdcn"
         },
         "content": ""
       },
       {
+        "lineNumber": 271,
+        "author": {
+          "gitId": "zhaohuanqdcn"
+        },
+        "content": "*   Adding a syntax like `delete_meeting all` command makes it hard to parse `DeleteMeetingCommand`, and `clear_meeting` itself is not very often used. "
+      },
+      {
         "lineNumber": 272,
         "author": {
-          "gitId": "ramenmen"
+          "gitId": "zhaohuanqdcn"
         },
-        "content": ":information_source: **Note:** The lifeline for `EditMeetingCommand` should end at the destroy marker (X) but due to a limitation of PlantUML, the lifeline reaches the end of diagram."
+        "content": ""
       },
       {
         "lineNumber": 273,
         "author": {
           "gitId": "ramenmen"
         },
-        "content": ""
+        "content": "### Meeting Class"
       },
       {
         "lineNumber": 274,
         "author": {
-          "gitId": "ramenmen"
+          "gitId": "-"
         },
-        "content": "\u003c/div\u003e"
+        "content": ""
       },
       {
         "lineNumber": 275,
         "author": {
           "gitId": "ramenmen"
         },
-        "content": ""
+        "content": "#### Implementation"
       },
       {
         "lineNumber": 276,
         "author": {
-          "gitId": "ramenmen"
+          "gitId": "-"
         },
-        "content": "#### Design consideration:"
+        "content": ""
       },
       {
         "lineNumber": 277,
         "author": {
           "gitId": "ramenmen"
         },
-        "content": ""
+        "content": "The Meetings class and meeting details classes are adapted from the code for Persons and person details."
       },
       {
         "lineNumber": 278,
         "author": {
-          "gitId": "ramenmen"
+          "gitId": "-"
         },
-        "content": "##### Aspect: How add meeting executes"
+        "content": ""
       },
       {
         "lineNumber": 279,
         "author": {
           "gitId": "ramenmen"
         },
-        "content": ""
+        "content": "The following is the Class Diagram for the meetings feature."
       },
       {
         "lineNumber": 280,
         "author": {
           "gitId": "ramenmen"
         },
-        "content": "* Consistent workflow with other commands"
+        "content": ""
       },
       {
         "lineNumber": 281,
         "author": {
           "gitId": "ramenmen"
         },
-        "content": ""
+        "content": "![MeetingClassDiag](images/MeetingClassDiag.png)"
       },
       {
         "lineNumber": 282,
         "author": {
           "gitId": "ramenmen"
         },
-        "content": "_{more aspects and alternatives to be added}_"
+        "content": ""
       },
       {
         "lineNumber": 283,
         "author": {
           "gitId": "ramenmen"
         },
-        "content": ""
+        "content": "The Meetings class and meeting details classes are adapted from the code for Persons and person details. The Meeting class contains two methods that are not present in the Person class:"
       },
       {
         "lineNumber": 284,
         "author": {
           "gitId": "ramenmen"
         },
-        "content": "### Meeting Class"
+        "content": ""
       },
       {
         "lineNumber": 285,
         "author": {
           "gitId": "ramenmen"
         },
-        "content": ""
+        "content": "* `addParticipant(Person person)` — Adds person as a participant of the meeting."
       },
       {
         "lineNumber": 286,
         "author": {
           "gitId": "ramenmen"
         },
-        "content": "#### Implementation"
+        "content": "* `delParticipant(Index index)` — Deletes the participant at index from the meeting\u0027s list of participants."
       },
       {
         "lineNumber": 287,
@@ -3108,7 +3108,7 @@
         "author": {
           "gitId": "ramenmen"
         },
-        "content": "The Meetings class and meeting details classes are adapted from the code for Persons and person details."
+        "content": "The following sequence diagram shows how the delete participant operation works:"
       },
       {
         "lineNumber": 289,
@@ -3122,7 +3122,7 @@
         "author": {
           "gitId": "ramenmen"
         },
-        "content": "The following is the Class Diagram for the meetings feature."
+        "content": "![DelPartSequenceDiagram](images/DelPartSequenceDiagram.png)"
       },
       {
         "lineNumber": 291,
@@ -3136,7 +3136,7 @@
         "author": {
           "gitId": "ramenmen"
         },
-        "content": "![MeetingClassDiag](images/MeetingClassDiag.png)"
+        "content": "\u003cdiv markdown\u003d\"span\" class\u003d\"alert alert-info\"\u003e"
       },
       {
         "lineNumber": 293,
@@ -3150,7 +3150,7 @@
         "author": {
           "gitId": "ramenmen"
         },
-        "content": "The Meetings class and meeting details classes are adapted from the code for Persons and person details. The Meeting class contains two methods that are not present in the Person class:"
+        "content": ":information_source: **Note:** The lifeline for `DeleteParticipantCommand` should end at the destroy marker (X) but due to a limitation of PlantUML, the lifeline reaches the end of diagram."
       },
       {
         "lineNumber": 295,
@@ -3164,21 +3164,21 @@
         "author": {
           "gitId": "ramenmen"
         },
-        "content": "* `addParticipant(Person person)` — Adds person as a participant of the meeting."
+        "content": "\u003c/div\u003e"
       },
       {
         "lineNumber": 297,
         "author": {
           "gitId": "ramenmen"
         },
-        "content": "* `delParticipant(Index index)` — Deletes the participant at index from the meeting\u0027s list of participants."
+        "content": ""
       },
       {
         "lineNumber": 298,
         "author": {
           "gitId": "ramenmen"
         },
-        "content": ""
+        "content": "The `addParticipant` command does the opposite with a similar sequence — it calls `Meeting#addParticipant(person)`."
       },
       {
         "lineNumber": 299,
@@ -3192,7 +3192,7 @@
         "author": {
           "gitId": "ramenmen"
         },
-        "content": "The following sequence diagram shows how the delete participant operation works:"
+        "content": "The following activity diagram summarizes what happens when a user executes a delete participant command:"
       },
       {
         "lineNumber": 301,
@@ -3206,7 +3206,7 @@
         "author": {
           "gitId": "ramenmen"
         },
-        "content": "![DelPartSequenceDiagram](images/DelPartSequenceDiagram.png)"
+        "content": "![ParticipantActivityDiagram](images/ParticipantActivityDiagram.png)"
       },
       {
         "lineNumber": 303,
@@ -3220,12 +3220,12 @@
         "author": {
           "gitId": "ramenmen"
         },
-        "content": "\u003cdiv markdown\u003d\"span\" class\u003d\"alert alert-info\"\u003e"
+        "content": "#### Design consideration:"
       },
       {
         "lineNumber": 305,
         "author": {
-          "gitId": "ramenmen"
+          "gitId": "-"
         },
         "content": ""
       },
@@ -3234,12 +3234,12 @@
         "author": {
           "gitId": "ramenmen"
         },
-        "content": ":information_source: **Note:** The lifeline for `DeleteParticipantCommand` should end at the destroy marker (X) but due to a limitation of PlantUML, the lifeline reaches the end of diagram."
+        "content": "##### Aspect: How add \u0026 delete participants executes"
       },
       {
         "lineNumber": 307,
         "author": {
-          "gitId": "ramenmen"
+          "gitId": "-"
         },
         "content": ""
       },
@@ -3248,7 +3248,7 @@
         "author": {
           "gitId": "ramenmen"
         },
-        "content": "\u003c/div\u003e"
+        "content": "* Consistent workflow with other commands"
       },
       {
         "lineNumber": 309,
@@ -3260,100 +3260,100 @@
       {
         "lineNumber": 310,
         "author": {
-          "gitId": "ramenmen"
+          "gitId": "AdithyaNarayan"
         },
-        "content": "The `addParticipant` command does the opposite with a similar sequence — it calls `Meeting#addParticipant(person)`."
+        "content": "_{more aspects and alternatives to be added}_"
       },
       {
         "lineNumber": 311,
         "author": {
-          "gitId": "ramenmen"
+          "gitId": "-"
         },
-        "content": ""
+        "content": "--------------------------------------------------------------------------------------------------------------------"
       },
       {
         "lineNumber": 312,
         "author": {
-          "gitId": "ramenmen"
+          "gitId": "-"
         },
-        "content": "The following activity diagram summarizes what happens when a user executes a delete participant command:"
+        "content": ""
       },
       {
         "lineNumber": 313,
         "author": {
-          "gitId": "ramenmen"
+          "gitId": "-"
         },
-        "content": ""
+        "content": "## **Documentation, logging, testing, configuration, dev-ops**"
       },
       {
         "lineNumber": 314,
         "author": {
-          "gitId": "ramenmen"
-        },
-        "content": "![ParticipantActivityDiagram](images/ParticipantActivityDiagram.png)"
-      },
-      {
-        "lineNumber": 315,
-        "author": {
-          "gitId": "ramenmen"
+          "gitId": "-"
         },
         "content": ""
       },
       {
+        "lineNumber": 315,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "* [Documentation guide](Documentation.md)"
+      },
+      {
         "lineNumber": 316,
         "author": {
-          "gitId": "ramenmen"
+          "gitId": "-"
         },
-        "content": "#### Design consideration:"
+        "content": "* [Testing guide](Testing.md)"
       },
       {
         "lineNumber": 317,
         "author": {
           "gitId": "-"
         },
-        "content": ""
+        "content": "* [Logging guide](Logging.md)"
       },
       {
         "lineNumber": 318,
         "author": {
-          "gitId": "ramenmen"
+          "gitId": "-"
         },
-        "content": "##### Aspect: How add \u0026 delete participants executes"
+        "content": "* [Configuration guide](Configuration.md)"
       },
       {
         "lineNumber": 319,
         "author": {
           "gitId": "-"
         },
-        "content": ""
+        "content": "* [DevOps guide](DevOps.md)"
       },
       {
         "lineNumber": 320,
         "author": {
-          "gitId": "ramenmen"
+          "gitId": "-"
         },
-        "content": "* Consistent workflow with other commands"
+        "content": ""
       },
       {
         "lineNumber": 321,
         "author": {
           "gitId": "-"
         },
-        "content": ""
+        "content": "--------------------------------------------------------------------------------------------------------------------"
       },
       {
         "lineNumber": 322,
         "author": {
-          "gitId": "ramenmen"
+          "gitId": "-"
         },
-        "content": "_{more aspects and alternatives to be added}_"
+        "content": ""
       },
       {
         "lineNumber": 323,
         "author": {
           "gitId": "-"
         },
-        "content": "--------------------------------------------------------------------------------------------------------------------"
+        "content": "## **Appendix: Requirements**"
       },
       {
         "lineNumber": 324,
@@ -3367,7 +3367,7 @@
         "author": {
           "gitId": "-"
         },
-        "content": "## **Documentation, logging, testing, configuration, dev-ops**"
+        "content": "### Product scope"
       },
       {
         "lineNumber": 326,
@@ -3379,821 +3379,821 @@
       {
         "lineNumber": 327,
         "author": {
-          "gitId": "-"
-        },
-        "content": "* [Documentation guide](Documentation.md)"
-      },
-      {
-        "lineNumber": 328,
-        "author": {
-          "gitId": "-"
-        },
-        "content": "* [Testing guide](Testing.md)"
-      },
-      {
-        "lineNumber": 329,
-        "author": {
-          "gitId": "-"
-        },
-        "content": "* [Logging guide](Logging.md)"
-      },
-      {
-        "lineNumber": 330,
-        "author": {
-          "gitId": "-"
-        },
-        "content": "* [Configuration guide](Configuration.md)"
-      },
-      {
-        "lineNumber": 331,
-        "author": {
-          "gitId": "-"
-        },
-        "content": "* [DevOps guide](DevOps.md)"
-      },
-      {
-        "lineNumber": 332,
-        "author": {
-          "gitId": "-"
-        },
-        "content": ""
-      },
-      {
-        "lineNumber": 333,
-        "author": {
-          "gitId": "-"
-        },
-        "content": "--------------------------------------------------------------------------------------------------------------------"
-      },
-      {
-        "lineNumber": 334,
-        "author": {
-          "gitId": "-"
-        },
-        "content": ""
-      },
-      {
-        "lineNumber": 335,
-        "author": {
-          "gitId": "-"
-        },
-        "content": "## **Appendix: Requirements**"
-      },
-      {
-        "lineNumber": 336,
-        "author": {
-          "gitId": "-"
-        },
-        "content": ""
-      },
-      {
-        "lineNumber": 337,
-        "author": {
-          "gitId": "-"
-        },
-        "content": "### Product scope"
-      },
-      {
-        "lineNumber": 338,
-        "author": {
-          "gitId": "-"
-        },
-        "content": ""
-      },
-      {
-        "lineNumber": 339,
-        "author": {
           "gitId": "KOH-ZHE-HAO"
         },
         "content": "* **Target user profile**:"
       },
       {
-        "lineNumber": 340,
+        "lineNumber": 328,
         "author": {
           "gitId": "KOH-ZHE-HAO"
         },
         "content": "    * Potential Users (who prefer CLI/typing):"
       },
       {
-        "lineNumber": 341,
+        "lineNumber": 329,
         "author": {
           "gitId": "KOH-ZHE-HAO"
         },
         "content": "        * Coders"
       },
       {
-        "lineNumber": 342,
+        "lineNumber": 330,
         "author": {
           "gitId": "KOH-ZHE-HAO"
         },
         "content": "        * Authors/Bloggers/Journalists"
       },
       {
-        "lineNumber": 343,
+        "lineNumber": 331,
         "author": {
           "gitId": "KOH-ZHE-HAO"
         },
         "content": "        * **Personal Secretaries**"
       },
       {
-        "lineNumber": 344,
+        "lineNumber": 332,
         "author": {
           "gitId": "KOH-ZHE-HAO"
         },
         "content": "    * Potential Users (who need address book):"
       },
       {
-        "lineNumber": 345,
+        "lineNumber": 333,
         "author": {
           "gitId": "KOH-ZHE-HAO"
         },
         "content": "        * Business managers"
       },
       {
-        "lineNumber": 346,
+        "lineNumber": 334,
         "author": {
           "gitId": "KOH-ZHE-HAO"
         },
         "content": "        * **Personal Secretaries**"
       },
       {
-        "lineNumber": 347,
+        "lineNumber": 335,
         "author": {
           "gitId": "KOH-ZHE-HAO"
         },
         "content": "        * HR admins"
       },
       {
-        "lineNumber": 348,
+        "lineNumber": 336,
         "author": {
           "gitId": "KOH-ZHE-HAO"
         },
         "content": "        * Salespersons"
       },
       {
-        "lineNumber": 349,
+        "lineNumber": 337,
         "author": {
           "gitId": "KOH-ZHE-HAO"
         },
         "content": "    "
       },
       {
-        "lineNumber": 350,
+        "lineNumber": 338,
         "author": {
           "gitId": "KOH-ZHE-HAO"
         },
         "content": "    * Common in both: "
       },
       {
-        "lineNumber": 351,
+        "lineNumber": 339,
         "author": {
           "gitId": "KOH-ZHE-HAO"
         },
         "content": "        * **Executive Personal Secretary**"
       },
       {
-        "lineNumber": 352,
+        "lineNumber": 340,
         "author": {
           "gitId": "KOH-ZHE-HAO"
         },
         "content": "    * Job Focus: "
       },
       {
-        "lineNumber": 353,
+        "lineNumber": 341,
         "author": {
           "gitId": "KOH-ZHE-HAO"
         },
         "content": "        * Arrange conference calls and meetings"
       },
       {
-        "lineNumber": 354,
+        "lineNumber": 342,
         "author": {
           "gitId": "KOH-ZHE-HAO"
         },
         "content": "        * Manage clients"
       },
       {
-        "lineNumber": 355,
+        "lineNumber": 343,
         "author": {
           "gitId": "KOH-ZHE-HAO"
         },
         "content": "        * Send email correspondence"
       },
       {
-        "lineNumber": 356,
+        "lineNumber": 344,
         "author": {
           "gitId": "KOH-ZHE-HAO"
         },
         "content": "        * Make travel arrangements"
       },
       {
-        "lineNumber": 357,
+        "lineNumber": 345,
         "author": {
           "gitId": "KOH-ZHE-HAO"
         },
         "content": "    "
       },
       {
-        "lineNumber": 358,
+        "lineNumber": 346,
         "author": {
           "gitId": "KOH-ZHE-HAO"
         },
         "content": "* **Value proposition**: "
       },
       {
-        "lineNumber": 359,
+        "lineNumber": 347,
         "author": {
           "gitId": "KOH-ZHE-HAO"
         },
         "content": "    * Minimise the workload"
       },
       {
-        "lineNumber": 360,
+        "lineNumber": 348,
         "author": {
           "gitId": "KOH-ZHE-HAO"
         },
         "content": "    * Easier to manage"
       },
       {
-        "lineNumber": 361,
+        "lineNumber": 349,
         "author": {
           "gitId": "KOH-ZHE-HAO"
         },
         "content": "    * Automate monotonous and repetitive tasks"
       },
       {
-        "lineNumber": 362,
+        "lineNumber": 350,
         "author": {
           "gitId": "KOH-ZHE-HAO"
         },
         "content": "    * Decrease human errors"
       },
       {
-        "lineNumber": 363,
+        "lineNumber": 351,
         "author": {
           "gitId": "KOH-ZHE-HAO"
         },
         "content": "    * Reduce typos and spelling mistakes"
       },
       {
-        "lineNumber": 364,
+        "lineNumber": 352,
         "author": {
           "gitId": "KOH-ZHE-HAO"
         },
         "content": "    * Optimise meeting timings and location"
       },
       {
-        "lineNumber": 365,
+        "lineNumber": 353,
         "author": {
           "gitId": "KOH-ZHE-HAO"
         },
         "content": "    * Reminders for important tasks/events"
       },
       {
-        "lineNumber": 366,
+        "lineNumber": 354,
         "author": {
           "gitId": "-"
         },
         "content": ""
       },
       {
-        "lineNumber": 367,
+        "lineNumber": 355,
         "author": {
           "gitId": "-"
         },
         "content": ""
       },
       {
-        "lineNumber": 368,
+        "lineNumber": 356,
         "author": {
           "gitId": "-"
         },
         "content": ""
       },
       {
-        "lineNumber": 369,
+        "lineNumber": 357,
         "author": {
           "gitId": "-"
         },
         "content": "### User stories"
       },
       {
-        "lineNumber": 370,
+        "lineNumber": 358,
         "author": {
           "gitId": "-"
         },
         "content": ""
       },
       {
-        "lineNumber": 371,
+        "lineNumber": 359,
         "author": {
           "gitId": "-"
         },
         "content": "Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unlikely to have) - `*`"
       },
       {
-        "lineNumber": 372,
+        "lineNumber": 360,
         "author": {
           "gitId": "-"
         },
         "content": ""
       },
       {
-        "lineNumber": 373,
+        "lineNumber": 361,
         "author": {
           "gitId": "-"
         },
         "content": "| Priority | As a …​                                    | I want to …​                     | So that I can…​                                                        |"
       },
       {
-        "lineNumber": 374,
+        "lineNumber": 362,
         "author": {
           "gitId": "-"
         },
         "content": "| -------- | ------------------------------------------ | ------------------------------ | ---------------------------------------------------------------------- |"
       },
       {
-        "lineNumber": 375,
+        "lineNumber": 363,
         "author": {
           "gitId": "ramenmen"
         },
         "content": "| `*`  |    meeting planner | update existing meetings | make sure the details are up to date.| "
       },
       {
-        "lineNumber": 376,
+        "lineNumber": 364,
         "author": {
           "gitId": "ramenmen"
         },
         "content": "| `*`  |    meeting planner | delete specified meetings if they are cancelled.| |"
       },
       {
-        "lineNumber": 377,
+        "lineNumber": 365,
         "author": {
           "gitId": "ramenmen"
         },
         "content": "| `*`  |    meeting planner | view all upcoming meetings in a specific order.| |"
       },
       {
-        "lineNumber": 378,
+        "lineNumber": 366,
         "author": {
           "gitId": "ramenmen"
         },
         "content": "| `*`  |    meeting planner | add a meeting to the schedule.| |"
       },
       {
-        "lineNumber": 379,
+        "lineNumber": 367,
         "author": {
           "gitId": "ramenmen"
         },
         "content": "| `*`  |    frequent user | search for a certain contact I am looking for| |"
       },
       {
-        "lineNumber": 380,
+        "lineNumber": 368,
         "author": {
           "gitId": "ramenmen"
         },
         "content": "| `*`  |    frequent user | view a list of all my contacts at any time.| |"
       },
       {
-        "lineNumber": 381,
+        "lineNumber": 369,
         "author": {
           "gitId": "ramenmen"
         },
         "content": "| `*`  |    frequent user | create new contact in my contact list.| |"
       },
       {
-        "lineNumber": 382,
+        "lineNumber": 370,
         "author": {
           "gitId": "ramenmen"
         },
         "content": "| `*`  |    first-time user | enter my and my employer\u0027s details| |"
       },
       {
-        "lineNumber": 383,
+        "lineNumber": 371,
         "author": {
           "gitId": "ramenmen"
         },
         "content": "| `*`  |    meeting planner | search for meetings with some criteria.| |"
       },
       {
-        "lineNumber": 384,
+        "lineNumber": 372,
         "author": {
           "gitId": "ramenmen"
         },
         "content": "| `*`  |    frequent meeting planner | receive reminders from the app that to remind my employer for an upcoming meeting | make sure my employer can be on time for their meetings.| "
       },
       {
-        "lineNumber": 385,
+        "lineNumber": 373,
         "author": {
           "gitId": "ramenmen"
         },
         "content": "| `*`  |    frequent meeting planner | attach a location and time of the meeting as additional information| |"
       },
       {
-        "lineNumber": 386,
+        "lineNumber": 374,
         "author": {
           "gitId": "ramenmen"
         },
         "content": "| `*`  |     expert user | delete some unwanted contacts in my contact list.| |"
       },
       {
-        "lineNumber": 387,
+        "lineNumber": 375,
         "author": {
           "gitId": "ramenmen"
         },
         "content": "| `*`  |    frequent user | update each of my contacts whenever there is a change in their particulars/ details.||"
       },
       {
-        "lineNumber": 388,
-        "author": {
-          "gitId": "ramenmen"
-        },
-        "content": "| `* *`  |    frequent user | easily reschedule agenda items if plans change.| |"
-      },
-      {
-        "lineNumber": 389,
-        "author": {
-          "gitId": "ramenmen"
-        },
-        "content": "| `* *`  |     expert user | edit my agenda list to add or delete some details.| |"
-      },
-      {
-        "lineNumber": 390,
-        "author": {
-          "gitId": "ramenmen"
-        },
-        "content": "| `* *`  |    copy typist | get my notes automatically corrected for spelling/grammar mistakes.| |"
-      },
-      {
-        "lineNumber": 391,
+        "lineNumber": 376,
         "author": {
           "gitId": "ramenmen"
         },
         "content": "| `* *`  |    frequent meeting planner | plan a route based on meeting locations and times.| |"
       },
       {
-        "lineNumber": 392,
+        "lineNumber": 377,
         "author": {
-          "gitId": "ramenmen"
+          "gitId": "zhaohuanqdcn"
         },
-        "content": "| `* *`  |    first time user | find the list of all features that the app has | know what specific task can I complete by using this app.| "
+        "content": "| `* *`  |    frequent user | receive reminders for upcoming meetings |  prepare for the meeting. | "
       },
       {
-        "lineNumber": 393,
-        "author": {
-          "gitId": "ramenmen"
-        },
-        "content": "| `* *`  |    user | see a list of tasks that requires the most priority | pay attention to them first.| "
-      },
-      {
-        "lineNumber": 394,
-        "author": {
-          "gitId": "ramenmen"
-        },
-        "content": "| `* *`  |    regular user | sync/export contacts/calendar| |"
-      },
-      {
-        "lineNumber": 395,
-        "author": {
-          "gitId": "ramenmen"
-        },
-        "content": "| `* *`  |    frequent user | receive reminders for tasks that are due soon  |  complete them in time.| "
-      },
-      {
-        "lineNumber": 396,
+        "lineNumber": 378,
         "author": {
           "gitId": "ramenmen"
         },
         "content": "| `* *`  |    frequent meeting planner | assimilate a map in the app to keep track of all frequently visited locations  |  plan the travel routine wisely that takes time taken to travel from one place to another place into consideration.| "
       },
       {
-        "lineNumber": 397,
+        "lineNumber": 379,
         "author": {
           "gitId": "ramenmen"
         },
         "content": "| `* *`  |    frequent meeting planner | send emails directly from the app by choosing the necessary recipients from the contact list.| |"
       },
       {
-        "lineNumber": 398,
+        "lineNumber": 380,
         "author": {
           "gitId": "ramenmen"
         },
         "content": "| `* *`  |    relatively new user | input slightly variated input that the app can understand and interpret  |  learn while doing.| "
       },
       {
-        "lineNumber": 399,
-        "author": {
-          "gitId": "ramenmen"
-        },
-        "content": "| `* *`  |    first time user | import existing calendar/agendas/locations |  save my time on data migration.| "
-      },
-      {
-        "lineNumber": 400,
+        "lineNumber": 381,
         "author": {
           "gitId": "ramenmen"
         },
         "content": "| `* *`  |    first time user | learn how to use the app  |  actually use the app to solve the tasks that I have.| "
       },
       {
-        "lineNumber": 401,
+        "lineNumber": 382,
         "author": {
-          "gitId": "ramenmen"
+          "gitId": "zhaohuanqdcn"
         },
-        "content": "| `* *`  |    frequent user | auto-fill the necessary details into a pre-defined template and batch send emails  |  save the time taken to individually send emails for the meeting.| "
+        "content": "| `* *`  |    long-time user | automatically archive expired meetings | I am not distracted by old meetings.| "
       },
       {
-        "lineNumber": 402,
-        "author": {
-          "gitId": "ramenmen"
-        },
-        "content": "| `* *`  |     expert user | create shortcuts for certain tasks |  save time on frequently performed tasks.| "
-      },
-      {
-        "lineNumber": 403,
-        "author": {
-          "gitId": "ramenmen"
-        },
-        "content": "| `* *`  |    new or returning user | sync my tasks from other platforms to the task list |  save time instead of entering them manually.| "
-      },
-      {
-        "lineNumber": 404,
-        "author": {
-          "gitId": "ramenmen"
-        },
-        "content": "| `* *`  |    long-time user | archive unused data | I am not distracted by irrelevant or old items.| "
-      },
-      {
-        "lineNumber": 405,
+        "lineNumber": 383,
         "author": {
           "gitId": "ramenmen"
         },
         "content": "| `* *`  |    user ready to start using the app | clear all current data |  get rid of data I added when experimenting with the app.| "
       },
       {
-        "lineNumber": 406,
-        "author": {
-          "gitId": "ramenmen"
-        },
-        "content": "| `* *`  |    busy user | see my daily tasks at the start of the day  |  better organize my time.| "
-      },
-      {
-        "lineNumber": 407,
-        "author": {
-          "gitId": "ramenmen"
-        },
-        "content": "| `* *`  |    frequent user | add tasks to my task list.| |"
-      },
-      {
-        "lineNumber": 408,
-        "author": {
-          "gitId": "ramenmen"
-        },
-        "content": "| `* *`  |    frequent user | view a list of all the tasks I have to accomplish and their deadlines | I am up to date with my work.| "
-      },
-      {
-        "lineNumber": 409,
-        "author": {
-          "gitId": "ramenmen"
-        },
-        "content": "| `* *`  |    frequent user | search for tasks by name or deadline in the task list.| |"
-      },
-      {
-        "lineNumber": 410,
-        "author": {
-          "gitId": "ramenmen"
-        },
-        "content": "| `* *`  |    frequent user | delete tasks from my task list.| |"
-      },
-      {
-        "lineNumber": 411,
-        "author": {
-          "gitId": "ramenmen"
-        },
-        "content": "| `* *`  |    frequent user | update the details of a task in my task list.| |"
-      },
-      {
-        "lineNumber": 412,
-        "author": {
-          "gitId": "ramenmen"
-        },
-        "content": "| `* *`  |    relatively new user | be reminded of the key features  |  speed up my workflows.| "
-      },
-      {
-        "lineNumber": 413,
-        "author": {
-          "gitId": "ramenmen"
-        },
-        "content": "| `* *`  |    frequent user | use an email template to send personalised emails to notify other companies for a meeting | save time on crafting the email one-by-one.| "
-      },
-      {
-        "lineNumber": 414,
-        "author": {
-          "gitId": "ramenmen"
-        },
-        "content": "| `* *`  |    meeting planner | resolve meetings conflict | make sure no two meetings will happen at the same time.| "
-      },
-      {
-        "lineNumber": 415,
+        "lineNumber": 384,
         "author": {
           "gitId": "ramenmen"
         },
         "content": "| `* *`  |    meeting planner | give priority to certain meetings | make sure these important meetings will take place under the best possible circumstances.| "
       },
       {
-        "lineNumber": 416,
+        "lineNumber": 385,
         "author": {
           "gitId": "ramenmen"
         },
         "content": "| `* *`  |    frequent user | use built-in shortcuts  |  accelerate my workflow.| "
       },
       {
-        "lineNumber": 417,
+        "lineNumber": 386,
         "author": {
           "gitId": "ramenmen"
         },
         "content": "| `* *`  |    frequent meeting planner | import and export the existing calendar  |  save time on entering this information manually.| "
       },
       {
-        "lineNumber": 418,
+        "lineNumber": 387,
         "author": {
           "gitId": "ramenmen"
         },
-        "content": "| `* *`  |    relatively new user | be prompted to change my invalid input  |  get it correctly from then on.| "
+        "content": "| `* *`  |    relatively new user | be prompted to change my invalid input  |  get it correctly from then on.|  "
       },
       {
-        "lineNumber": 419,
+        "lineNumber": 388,
+        "author": {
+          "gitId": "zhaohuanqdcn"
+        },
+        "content": "| `* * *`  |    first time user | find the list of all features that the app has | know what specific task can I complete by using this app.| "
+      },
+      {
+        "lineNumber": 389,
         "author": {
           "gitId": "ramenmen"
         },
-        "content": "| `* * *`  |    copy typist | transcribe/type a document into a note | save them for future use.| "
+        "content": "| `* * *`  |    potential user exploring the app | see the app populated with sample data,  |  easily see how the app will look like when it is in use.|"
       },
       {
-        "lineNumber": 420,
+        "lineNumber": 390,
         "author": {
-          "gitId": "ramenmen"
+          "gitId": "zhaohuanqdcn"
         },
-        "content": "| `* * *`  |    busy user | see a weekly digest on weekend | have a sense of what happened during the week.| "
+        "content": "| `* * *`  |    regular user | sync/export contacts/calendar| save time on data migration. |"
       },
       {
-        "lineNumber": 421,
-        "author": {
-          "gitId": "ramenmen"
-        },
-        "content": "| `* * *`  |    receiver of meeting emails | see my meetings automatically fetched and updated from the email | I don\u0027t have to manually create a meeting when it is proposed by a third-party.| "
-      },
-      {
-        "lineNumber": 422,
-        "author": {
-          "gitId": "ramenmen"
-        },
-        "content": "| `* * *`  |    potential user exploring the app | see the app populated with sample data,  |  easily see how the app will look like when it is in use.| "
-      },
-      {
-        "lineNumber": 423,
+        "lineNumber": 391,
         "author": {
           "gitId": "ramenmen"
         },
         "content": ""
       },
       {
-        "lineNumber": 424,
+        "lineNumber": 392,
         "author": {
           "gitId": "-"
         },
         "content": ""
       },
       {
-        "lineNumber": 425,
+        "lineNumber": 393,
         "author": {
           "gitId": "-"
         },
         "content": ""
       },
       {
-        "lineNumber": 426,
+        "lineNumber": 394,
         "author": {
           "gitId": "-"
         },
         "content": "### Use cases"
       },
       {
-        "lineNumber": 427,
+        "lineNumber": 395,
         "author": {
           "gitId": "-"
         },
         "content": ""
       },
       {
-        "lineNumber": 428,
+        "lineNumber": 396,
         "author": {
           "gitId": "xxzz-tt"
         },
         "content": "(For all use cases below, the **System** is the `Recretary` and the **Actor** is the `user`, unless specified otherwise)"
       },
       {
-        "lineNumber": 429,
+        "lineNumber": 397,
         "author": {
           "gitId": "-"
         },
         "content": ""
       },
       {
-        "lineNumber": 430,
+        "lineNumber": 398,
         "author": {
           "gitId": "xxzz-tt"
         },
         "content": "**Use case: UC01 - Add a person**  "
       },
       {
-        "lineNumber": 431,
+        "lineNumber": 399,
         "author": {
           "gitId": "-"
         },
         "content": ""
       },
       {
-        "lineNumber": 432,
+        "lineNumber": 400,
         "author": {
           "gitId": "-"
         },
         "content": "**MSS**  "
       },
       {
-        "lineNumber": 433,
+        "lineNumber": 401,
         "author": {
           "gitId": "-"
         },
         "content": ""
       },
       {
-        "lineNumber": 434,
+        "lineNumber": 402,
         "author": {
           "gitId": "xxzz-tt"
         },
         "content": "1. User requests to add a new contact with the relevant details."
       },
       {
-        "lineNumber": 435,
+        "lineNumber": 403,
         "author": {
           "gitId": "xxzz-tt"
         },
         "content": "2. System indicates that the addition is successful."
       },
       {
-        "lineNumber": 436,
+        "lineNumber": 404,
         "author": {
           "gitId": "-"
         },
         "content": ""
       },
       {
-        "lineNumber": 437,
+        "lineNumber": 405,
         "author": {
           "gitId": "-"
         },
         "content": "Use case ends."
       },
       {
-        "lineNumber": 438,
+        "lineNumber": 406,
         "author": {
           "gitId": "-"
         },
         "content": ""
       },
       {
-        "lineNumber": 439,
+        "lineNumber": 407,
         "author": {
           "gitId": "xxzz-tt"
         },
         "content": "**Extensions**:"
       },
       {
-        "lineNumber": 440,
+        "lineNumber": 408,
         "author": {
-          "gitId": "-"
+          "gitId": "xxzz-tt"
         },
         "content": ""
       },
       {
-        "lineNumber": 441,
+        "lineNumber": 409,
         "author": {
           "gitId": "xxzz-tt"
         },
         "content": "* 1a. System detects an error in the data."
       },
       {
-        "lineNumber": 442,
+        "lineNumber": 410,
         "author": {
           "gitId": "xxzz-tt"
         },
         "content": "  * 1a1. System requests for the correct data."
       },
       {
-        "lineNumber": 443,
+        "lineNumber": 411,
         "author": {
           "gitId": "xxzz-tt"
         },
         "content": "  * 1a2. User enters new data."
+      },
+      {
+        "lineNumber": 412,
+        "author": {
+          "gitId": "xxzz-tt"
+        },
+        "content": "  "
+      },
+      {
+        "lineNumber": 413,
+        "author": {
+          "gitId": "xxzz-tt"
+        },
+        "content": "  Steps 1a1-1a2 are repeated until the data entered are correct."
+      },
+      {
+        "lineNumber": 414,
+        "author": {
+          "gitId": "xxzz-tt"
+        },
+        "content": "  "
+      },
+      {
+        "lineNumber": 415,
+        "author": {
+          "gitId": "xxzz-tt"
+        },
+        "content": "  Use case resumes from step 2."
+      },
+      {
+        "lineNumber": 416,
+        "author": {
+          "gitId": "xxzz-tt"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 417,
+        "author": {
+          "gitId": "xxzz-tt"
+        },
+        "content": "**Use case: UC02 - Add a meeting and its participants**  "
+      },
+      {
+        "lineNumber": 418,
+        "author": {
+          "gitId": "-"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 419,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "**MSS**"
+      },
+      {
+        "lineNumber": 420,
+        "author": {
+          "gitId": "-"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 421,
+        "author": {
+          "gitId": "xxzz-tt"
+        },
+        "content": "1. User requests to add a new meeting with the location, title and date."
+      },
+      {
+        "lineNumber": 422,
+        "author": {
+          "gitId": "xxzz-tt"
+        },
+        "content": "2. System requests for the participant lists."
+      },
+      {
+        "lineNumber": 423,
+        "author": {
+          "gitId": "xxzz-tt"
+        },
+        "content": "3. User enters the participant\u0027s name (must be one of the contacts)."
+      },
+      {
+        "lineNumber": 424,
+        "author": {
+          "gitId": "xxzz-tt"
+        },
+        "content": "4. System indicates that the addition is successful."
+      },
+      {
+        "lineNumber": 425,
+        "author": {
+          "gitId": "xxzz-tt"
+        },
+        "content": "5. User repeats step 3 until all participants are added."
+      },
+      {
+        "lineNumber": 426,
+        "author": {
+          "gitId": "xxzz-tt"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 427,
+        "author": {
+          "gitId": "xxzz-tt"
+        },
+        "content": "Use case ends."
+      },
+      {
+        "lineNumber": 428,
+        "author": {
+          "gitId": "xxzz-tt"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 429,
+        "author": {
+          "gitId": "xxzz-tt"
+        },
+        "content": "**Extensions**:"
+      },
+      {
+        "lineNumber": 430,
+        "author": {
+          "gitId": "xxzz-tt"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 431,
+        "author": {
+          "gitId": "xxzz-tt"
+        },
+        "content": "* 1a. System detects an error in the data."
+      },
+      {
+        "lineNumber": 432,
+        "author": {
+          "gitId": "xxzz-tt"
+        },
+        "content": "  * 1a1. System requests for the correct data."
+      },
+      {
+        "lineNumber": 433,
+        "author": {
+          "gitId": "xxzz-tt"
+        },
+        "content": "  * 1a2. User enters new data."
+      },
+      {
+        "lineNumber": 434,
+        "author": {
+          "gitId": "xxzz-tt"
+        },
+        "content": "  "
+      },
+      {
+        "lineNumber": 435,
+        "author": {
+          "gitId": "xxzz-tt"
+        },
+        "content": "  Steps 1a1-1a2 are repeated until the data entered are correct."
+      },
+      {
+        "lineNumber": 436,
+        "author": {
+          "gitId": "xxzz-tt"
+        },
+        "content": "  "
+      },
+      {
+        "lineNumber": 437,
+        "author": {
+          "gitId": "xxzz-tt"
+        },
+        "content": "  Use case resumes from step 2."
+      },
+      {
+        "lineNumber": 438,
+        "author": {
+          "gitId": "xxzz-tt"
+        },
+        "content": "  "
+      },
+      {
+        "lineNumber": 439,
+        "author": {
+          "gitId": "xxzz-tt"
+        },
+        "content": "* 3a. Contact is not in System."
+      },
+      {
+        "lineNumber": 440,
+        "author": {
+          "gitId": "xxzz-tt"
+        },
+        "content": "  * 3a1. System requests for the correct contact."
+      },
+      {
+        "lineNumber": 441,
+        "author": {
+          "gitId": "xxzz-tt"
+        },
+        "content": "  * 3a2. User enters new contact name."
+      },
+      {
+        "lineNumber": 442,
+        "author": {
+          "gitId": "xxzz-tt"
+        },
+        "content": "  "
+      },
+      {
+        "lineNumber": 443,
+        "author": {
+          "gitId": "xxzz-tt"
+        },
+        "content": "  Steps 3a1-3a2 are repeated until the data entered are correct."
       },
       {
         "lineNumber": 444,
@@ -4207,26 +4207,26 @@
         "author": {
           "gitId": "xxzz-tt"
         },
-        "content": "  Steps 1a1-1a2 are repeated until the data entered are correct."
+        "content": "  Use case resumes from step 4."
       },
       {
         "lineNumber": 446,
         "author": {
           "gitId": "xxzz-tt"
         },
-        "content": "  "
+        "content": ""
       },
       {
         "lineNumber": 447,
         "author": {
           "gitId": "xxzz-tt"
         },
-        "content": "  Use case resumes from step 2."
+        "content": "**Use case: UC03 - List all contacts or all meetings**  "
       },
       {
         "lineNumber": 448,
         "author": {
-          "gitId": "xxzz-tt"
+          "gitId": "-"
         },
         "content": ""
       },
@@ -4235,308 +4235,308 @@
         "author": {
           "gitId": "xxzz-tt"
         },
-        "content": "**Use case: UC02 - Add a meeting and its participants**  "
+        "content": "**MSS**"
       },
       {
         "lineNumber": 450,
         "author": {
-          "gitId": "-"
+          "gitId": "xxzz-tt"
         },
         "content": ""
       },
       {
         "lineNumber": 451,
         "author": {
-          "gitId": "-"
-        },
-        "content": "**MSS**"
-      },
-      {
-        "lineNumber": 452,
-        "author": {
-          "gitId": "-"
-        },
-        "content": ""
-      },
-      {
-        "lineNumber": 453,
-        "author": {
-          "gitId": "xxzz-tt"
-        },
-        "content": "1. User requests to add a new meeting with the location, title and date."
-      },
-      {
-        "lineNumber": 454,
-        "author": {
-          "gitId": "xxzz-tt"
-        },
-        "content": "2. System requests for the participant lists."
-      },
-      {
-        "lineNumber": 455,
-        "author": {
-          "gitId": "xxzz-tt"
-        },
-        "content": "3. User enters the participant\u0027s name (must be one of the contacts)."
-      },
-      {
-        "lineNumber": 456,
-        "author": {
-          "gitId": "xxzz-tt"
-        },
-        "content": "4. System indicates that the addition is successful."
-      },
-      {
-        "lineNumber": 457,
-        "author": {
-          "gitId": "xxzz-tt"
-        },
-        "content": "5. User repeats step 3 until all participants are added."
-      },
-      {
-        "lineNumber": 458,
-        "author": {
-          "gitId": "xxzz-tt"
-        },
-        "content": ""
-      },
-      {
-        "lineNumber": 459,
-        "author": {
-          "gitId": "xxzz-tt"
-        },
-        "content": "Use case ends."
-      },
-      {
-        "lineNumber": 460,
-        "author": {
-          "gitId": "xxzz-tt"
-        },
-        "content": ""
-      },
-      {
-        "lineNumber": 461,
-        "author": {
-          "gitId": "xxzz-tt"
-        },
-        "content": "**Extensions**:"
-      },
-      {
-        "lineNumber": 462,
-        "author": {
-          "gitId": "xxzz-tt"
-        },
-        "content": ""
-      },
-      {
-        "lineNumber": 463,
-        "author": {
-          "gitId": "xxzz-tt"
-        },
-        "content": "* 1a. System detects an error in the data."
-      },
-      {
-        "lineNumber": 464,
-        "author": {
-          "gitId": "xxzz-tt"
-        },
-        "content": "  * 1a1. System requests for the correct data."
-      },
-      {
-        "lineNumber": 465,
-        "author": {
-          "gitId": "xxzz-tt"
-        },
-        "content": "  * 1a2. User enters new data."
-      },
-      {
-        "lineNumber": 466,
-        "author": {
-          "gitId": "xxzz-tt"
-        },
-        "content": "  "
-      },
-      {
-        "lineNumber": 467,
-        "author": {
-          "gitId": "xxzz-tt"
-        },
-        "content": "  Steps 1a1-1a2 are repeated until the data entered are correct."
-      },
-      {
-        "lineNumber": 468,
-        "author": {
-          "gitId": "xxzz-tt"
-        },
-        "content": "  "
-      },
-      {
-        "lineNumber": 469,
-        "author": {
-          "gitId": "xxzz-tt"
-        },
-        "content": "  Use case resumes from step 2."
-      },
-      {
-        "lineNumber": 470,
-        "author": {
-          "gitId": "xxzz-tt"
-        },
-        "content": "  "
-      },
-      {
-        "lineNumber": 471,
-        "author": {
-          "gitId": "xxzz-tt"
-        },
-        "content": "* 3a. Contact is not in System."
-      },
-      {
-        "lineNumber": 472,
-        "author": {
-          "gitId": "xxzz-tt"
-        },
-        "content": "  * 3a1. System requests for the correct contact."
-      },
-      {
-        "lineNumber": 473,
-        "author": {
-          "gitId": "xxzz-tt"
-        },
-        "content": "  * 3a2. User enters new contact name."
-      },
-      {
-        "lineNumber": 474,
-        "author": {
-          "gitId": "xxzz-tt"
-        },
-        "content": "  "
-      },
-      {
-        "lineNumber": 475,
-        "author": {
-          "gitId": "xxzz-tt"
-        },
-        "content": "  Steps 3a1-3a2 are repeated until the data entered are correct."
-      },
-      {
-        "lineNumber": 476,
-        "author": {
-          "gitId": "xxzz-tt"
-        },
-        "content": "  "
-      },
-      {
-        "lineNumber": 477,
-        "author": {
-          "gitId": "xxzz-tt"
-        },
-        "content": "  Use case resumes from step 4."
-      },
-      {
-        "lineNumber": 478,
-        "author": {
-          "gitId": "xxzz-tt"
-        },
-        "content": ""
-      },
-      {
-        "lineNumber": 479,
-        "author": {
-          "gitId": "xxzz-tt"
-        },
-        "content": "**Use case: UC03 - List all contacts or all meetings**  "
-      },
-      {
-        "lineNumber": 480,
-        "author": {
-          "gitId": "-"
-        },
-        "content": ""
-      },
-      {
-        "lineNumber": 481,
-        "author": {
-          "gitId": "xxzz-tt"
-        },
-        "content": "**MSS**"
-      },
-      {
-        "lineNumber": 482,
-        "author": {
-          "gitId": "xxzz-tt"
-        },
-        "content": ""
-      },
-      {
-        "lineNumber": 483,
-        "author": {
           "gitId": "xxzz-tt"
         },
         "content": "1. User requests to list all contacts/ meetings"
       },
       {
-        "lineNumber": 484,
+        "lineNumber": 452,
         "author": {
           "gitId": "xxzz-tt"
         },
         "content": "2. System shows the full list of contacts/ meetings"
       },
       {
-        "lineNumber": 485,
+        "lineNumber": 453,
         "author": {
-          "gitId": "-"
+          "gitId": "xxzz-tt"
         },
         "content": ""
       },
       {
-        "lineNumber": 486,
+        "lineNumber": 454,
         "author": {
           "gitId": "xxzz-tt"
         },
         "content": "Use case ends."
       },
       {
-        "lineNumber": 487,
+        "lineNumber": 455,
         "author": {
           "gitId": "xxzz-tt"
         },
         "content": ""
       },
       {
-        "lineNumber": 488,
+        "lineNumber": 456,
         "author": {
           "gitId": "xxzz-tt"
         },
         "content": "**Extensions**:"
       },
       {
-        "lineNumber": 489,
+        "lineNumber": 457,
         "author": {
           "gitId": "xxzz-tt"
         },
         "content": ""
       },
       {
-        "lineNumber": 490,
+        "lineNumber": 458,
         "author": {
           "gitId": "xxzz-tt"
         },
         "content": "* 2a. The requested list is empty."
       },
       {
-        "lineNumber": 491,
+        "lineNumber": 459,
         "author": {
           "gitId": "xxzz-tt"
         },
         "content": "  "
       },
       {
-        "lineNumber": 492,
+        "lineNumber": 460,
         "author": {
           "gitId": "xxzz-tt"
         },
         "content": "  Use case ends."
+      },
+      {
+        "lineNumber": 461,
+        "author": {
+          "gitId": "xxzz-tt"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 462,
+        "author": {
+          "gitId": "xxzz-tt"
+        },
+        "content": "**Use case: UC04 - Edit a contact**  "
+      },
+      {
+        "lineNumber": 463,
+        "author": {
+          "gitId": "xxzz-tt"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 464,
+        "author": {
+          "gitId": "xxzz-tt"
+        },
+        "content": "**MSS**"
+      },
+      {
+        "lineNumber": 465,
+        "author": {
+          "gitId": "xxzz-tt"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 466,
+        "author": {
+          "gitId": "xxzz-tt"
+        },
+        "content": "1. User requests to \u003cins\u003e list all contacts (UC03)\u003c/ins\u003e."
+      },
+      {
+        "lineNumber": 467,
+        "author": {
+          "gitId": "xxzz-tt"
+        },
+        "content": "2. User requests to edit a contact with its index and new details."
+      },
+      {
+        "lineNumber": 468,
+        "author": {
+          "gitId": "xxzz-tt"
+        },
+        "content": "3. System indicates that the update is successful."
+      },
+      {
+        "lineNumber": 469,
+        "author": {
+          "gitId": "xxzz-tt"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 470,
+        "author": {
+          "gitId": "xxzz-tt"
+        },
+        "content": "Use case ends."
+      },
+      {
+        "lineNumber": 471,
+        "author": {
+          "gitId": "xxzz-tt"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 472,
+        "author": {
+          "gitId": "xxzz-tt"
+        },
+        "content": "**Extensions**:"
+      },
+      {
+        "lineNumber": 473,
+        "author": {
+          "gitId": "-"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 474,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "* 2a. The list is empty."
+      },
+      {
+        "lineNumber": 475,
+        "author": {
+          "gitId": "-"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 476,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "  Use case ends."
+      },
+      {
+        "lineNumber": 477,
+        "author": {
+          "gitId": "-"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 478,
+        "author": {
+          "gitId": "xxzz-tt"
+        },
+        "content": "* 2b. User enters a negative integer as index."
+      },
+      {
+        "lineNumber": 479,
+        "author": {
+          "gitId": "xxzz-tt"
+        },
+        "content": "  * 2b1. System indicates the error and requests for a non-negative index as index."
+      },
+      {
+        "lineNumber": 480,
+        "author": {
+          "gitId": "xxzz-tt"
+        },
+        "content": "  * 2b2. User enters the correct index and new details."
+      },
+      {
+        "lineNumber": 481,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "  "
+      },
+      {
+        "lineNumber": 482,
+        "author": {
+          "gitId": "xxzz-tt"
+        },
+        "content": "  Steps 2b1-2b2 are repeated until the data entered are correct.  "
+      },
+      {
+        "lineNumber": 483,
+        "author": {
+          "gitId": "xxzz-tt"
+        },
+        "content": "  Use case resumes from step 3."
+      },
+      {
+        "lineNumber": 484,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "  "
+      },
+      {
+        "lineNumber": 485,
+        "author": {
+          "gitId": "xxzz-tt"
+        },
+        "content": "* 2c. User did not enter new details."
+      },
+      {
+        "lineNumber": 486,
+        "author": {
+          "gitId": "xxzz-tt"
+        },
+        "content": "  * 2c1. System indicates the error and requests for the correct details."
+      },
+      {
+        "lineNumber": 487,
+        "author": {
+          "gitId": "xxzz-tt"
+        },
+        "content": "  * 2c2. User enters the specific index and correct details."
+      },
+      {
+        "lineNumber": 488,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "  "
+      },
+      {
+        "lineNumber": 489,
+        "author": {
+          "gitId": "xxzz-tt"
+        },
+        "content": "  Steps 2c1-2c2 are repeated until the data entered are correct.  "
+      },
+      {
+        "lineNumber": 490,
+        "author": {
+          "gitId": "xxzz-tt"
+        },
+        "content": "  Use case resumes from step 3."
+      },
+      {
+        "lineNumber": 491,
+        "author": {
+          "gitId": "xxzz-tt"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 492,
+        "author": {
+          "gitId": "xxzz-tt"
+        },
+        "content": "**Use case: UC05 - Edit a meeting**  "
       },
       {
         "lineNumber": 493,
@@ -4550,7 +4550,7 @@
         "author": {
           "gitId": "xxzz-tt"
         },
-        "content": "**Use case: UC04 - Edit a contact**  "
+        "content": "**MSS**"
       },
       {
         "lineNumber": 495,
@@ -4564,35 +4564,35 @@
         "author": {
           "gitId": "xxzz-tt"
         },
-        "content": "**MSS**"
+        "content": "1. User requests to \u003cins\u003e list all meetings (UC03)\u003c/ins\u003e."
       },
       {
         "lineNumber": 497,
         "author": {
           "gitId": "xxzz-tt"
         },
-        "content": ""
+        "content": "2. User requests to edit a meeting with its index and new details."
       },
       {
         "lineNumber": 498,
         "author": {
           "gitId": "xxzz-tt"
         },
-        "content": "1. User requests to \u003cins\u003e list all contacts (UC03)\u003c/ins\u003e."
+        "content": "3. System indicates that the update is successful."
       },
       {
         "lineNumber": 499,
         "author": {
-          "gitId": "xxzz-tt"
+          "gitId": "-"
         },
-        "content": "2. User requests to edit a contact with its index and new details."
+        "content": ""
       },
       {
         "lineNumber": 500,
         "author": {
           "gitId": "xxzz-tt"
         },
-        "content": "3. System indicates that the update is successful."
+        "content": "Use case ends."
       },
       {
         "lineNumber": 501,
@@ -4606,21 +4606,21 @@
         "author": {
           "gitId": "xxzz-tt"
         },
-        "content": "Use case ends."
+        "content": "**Extensions**:"
       },
       {
         "lineNumber": 503,
         "author": {
-          "gitId": "xxzz-tt"
+          "gitId": "-"
         },
         "content": ""
       },
       {
         "lineNumber": 504,
         "author": {
-          "gitId": "xxzz-tt"
+          "gitId": "-"
         },
-        "content": "**Extensions**:"
+        "content": "* 2a. The list is empty."
       },
       {
         "lineNumber": 505,
@@ -4634,7 +4634,7 @@
         "author": {
           "gitId": "-"
         },
-        "content": "* 2a. The list is empty."
+        "content": "  Use case ends."
       },
       {
         "lineNumber": 507,
@@ -4646,168 +4646,168 @@
       {
         "lineNumber": 508,
         "author": {
-          "gitId": "-"
-        },
-        "content": "  Use case ends."
-      },
-      {
-        "lineNumber": 509,
-        "author": {
-          "gitId": "-"
-        },
-        "content": ""
-      },
-      {
-        "lineNumber": 510,
-        "author": {
           "gitId": "xxzz-tt"
         },
         "content": "* 2b. User enters a negative integer as index."
       },
       {
-        "lineNumber": 511,
+        "lineNumber": 509,
         "author": {
           "gitId": "xxzz-tt"
         },
         "content": "  * 2b1. System indicates the error and requests for a non-negative index as index."
       },
       {
-        "lineNumber": 512,
+        "lineNumber": 510,
         "author": {
           "gitId": "xxzz-tt"
         },
         "content": "  * 2b2. User enters the correct index and new details."
       },
       {
-        "lineNumber": 513,
+        "lineNumber": 511,
         "author": {
-          "gitId": "-"
+          "gitId": "xxzz-tt"
         },
         "content": "  "
       },
       {
-        "lineNumber": 514,
+        "lineNumber": 512,
         "author": {
           "gitId": "xxzz-tt"
         },
         "content": "  Steps 2b1-2b2 are repeated until the data entered are correct.  "
       },
       {
-        "lineNumber": 515,
+        "lineNumber": 513,
         "author": {
           "gitId": "xxzz-tt"
         },
         "content": "  Use case resumes from step 3."
       },
       {
-        "lineNumber": 516,
+        "lineNumber": 514,
         "author": {
-          "gitId": "-"
+          "gitId": "xxzz-tt"
         },
         "content": "  "
       },
       {
-        "lineNumber": 517,
+        "lineNumber": 515,
         "author": {
           "gitId": "xxzz-tt"
         },
         "content": "* 2c. User did not enter new details."
       },
       {
-        "lineNumber": 518,
+        "lineNumber": 516,
         "author": {
           "gitId": "xxzz-tt"
         },
         "content": "  * 2c1. System indicates the error and requests for the correct details."
       },
       {
-        "lineNumber": 519,
+        "lineNumber": 517,
         "author": {
           "gitId": "xxzz-tt"
         },
         "content": "  * 2c2. User enters the specific index and correct details."
       },
       {
-        "lineNumber": 520,
+        "lineNumber": 518,
         "author": {
-          "gitId": "-"
+          "gitId": "xxzz-tt"
         },
         "content": "  "
       },
       {
-        "lineNumber": 521,
+        "lineNumber": 519,
         "author": {
           "gitId": "xxzz-tt"
         },
         "content": "  Steps 2c1-2c2 are repeated until the data entered are correct.  "
       },
       {
-        "lineNumber": 522,
+        "lineNumber": 520,
         "author": {
           "gitId": "xxzz-tt"
         },
         "content": "  Use case resumes from step 3."
       },
       {
+        "lineNumber": 521,
+        "author": {
+          "gitId": "xxzz-tt"
+        },
+        "content": " "
+      },
+      {
+        "lineNumber": 522,
+        "author": {
+          "gitId": "xxzz-tt"
+        },
+        "content": "* 2d. User requests to edit participant list."
+      },
+      {
         "lineNumber": 523,
         "author": {
           "gitId": "xxzz-tt"
         },
-        "content": ""
+        "content": "  * 2d1. System shows current list of participants. "
       },
       {
         "lineNumber": 524,
         "author": {
           "gitId": "xxzz-tt"
         },
-        "content": "**Use case: UC05 - Edit a meeting**  "
+        "content": "  * 2d2. User enters the index of the participant he/she wants to remove."
       },
       {
         "lineNumber": 525,
         "author": {
           "gitId": "xxzz-tt"
         },
-        "content": ""
+        "content": "  * 2d3. System shows the updated list of participants."
       },
       {
         "lineNumber": 526,
         "author": {
           "gitId": "xxzz-tt"
         },
-        "content": "**MSS**"
+        "content": "  "
       },
       {
         "lineNumber": 527,
         "author": {
           "gitId": "xxzz-tt"
         },
-        "content": ""
+        "content": "  Steps 2d1-2d2 are repeated until the user finishes editing.  "
       },
       {
         "lineNumber": 528,
         "author": {
           "gitId": "xxzz-tt"
         },
-        "content": "1. User requests to \u003cins\u003e list all meetings (UC03)\u003c/ins\u003e."
+        "content": "  Use case resumes from step 3."
       },
       {
         "lineNumber": 529,
         "author": {
           "gitId": "xxzz-tt"
         },
-        "content": "2. User requests to edit a meeting with its index and new details."
+        "content": ""
       },
       {
         "lineNumber": 530,
         "author": {
           "gitId": "xxzz-tt"
         },
-        "content": "3. System indicates that the update is successful."
+        "content": "**Use case: UC06 - Find a contact or a meeting**  "
       },
       {
         "lineNumber": 531,
         "author": {
-          "gitId": "-"
+          "gitId": "xxzz-tt"
         },
         "content": ""
       },
@@ -4816,12 +4816,12 @@
         "author": {
           "gitId": "xxzz-tt"
         },
-        "content": "Use case ends."
+        "content": "**MSS**"
       },
       {
         "lineNumber": 533,
         "author": {
-          "gitId": "-"
+          "gitId": "xxzz-tt"
         },
         "content": ""
       },
@@ -4830,308 +4830,308 @@
         "author": {
           "gitId": "xxzz-tt"
         },
-        "content": "**Extensions**:"
-      },
-      {
-        "lineNumber": 535,
-        "author": {
-          "gitId": "-"
-        },
-        "content": ""
-      },
-      {
-        "lineNumber": 536,
-        "author": {
-          "gitId": "xxzz-tt"
-        },
-        "content": "* 2a. The list is empty."
-      },
-      {
-        "lineNumber": 537,
-        "author": {
-          "gitId": "xxzz-tt"
-        },
-        "content": ""
-      },
-      {
-        "lineNumber": 538,
-        "author": {
-          "gitId": "xxzz-tt"
-        },
-        "content": "  Use case ends."
-      },
-      {
-        "lineNumber": 539,
-        "author": {
-          "gitId": "xxzz-tt"
-        },
-        "content": ""
-      },
-      {
-        "lineNumber": 540,
-        "author": {
-          "gitId": "xxzz-tt"
-        },
-        "content": "* 2b. User enters a negative integer as index."
-      },
-      {
-        "lineNumber": 541,
-        "author": {
-          "gitId": "xxzz-tt"
-        },
-        "content": "  * 2b1. System indicates the error and requests for a non-negative index as index."
-      },
-      {
-        "lineNumber": 542,
-        "author": {
-          "gitId": "xxzz-tt"
-        },
-        "content": "  * 2b2. User enters the correct index and new details."
-      },
-      {
-        "lineNumber": 543,
-        "author": {
-          "gitId": "xxzz-tt"
-        },
-        "content": "  "
-      },
-      {
-        "lineNumber": 544,
-        "author": {
-          "gitId": "xxzz-tt"
-        },
-        "content": "  Steps 2b1-2b2 are repeated until the data entered are correct.  "
-      },
-      {
-        "lineNumber": 545,
-        "author": {
-          "gitId": "xxzz-tt"
-        },
-        "content": "  Use case resumes from step 3."
-      },
-      {
-        "lineNumber": 546,
-        "author": {
-          "gitId": "xxzz-tt"
-        },
-        "content": "  "
-      },
-      {
-        "lineNumber": 547,
-        "author": {
-          "gitId": "xxzz-tt"
-        },
-        "content": "* 2c. User did not enter new details."
-      },
-      {
-        "lineNumber": 548,
-        "author": {
-          "gitId": "xxzz-tt"
-        },
-        "content": "  * 2c1. System indicates the error and requests for the correct details."
-      },
-      {
-        "lineNumber": 549,
-        "author": {
-          "gitId": "xxzz-tt"
-        },
-        "content": "  * 2c2. User enters the specific index and correct details."
-      },
-      {
-        "lineNumber": 550,
-        "author": {
-          "gitId": "xxzz-tt"
-        },
-        "content": "  "
-      },
-      {
-        "lineNumber": 551,
-        "author": {
-          "gitId": "xxzz-tt"
-        },
-        "content": "  Steps 2c1-2c2 are repeated until the data entered are correct.  "
-      },
-      {
-        "lineNumber": 552,
-        "author": {
-          "gitId": "xxzz-tt"
-        },
-        "content": "  Use case resumes from step 3."
-      },
-      {
-        "lineNumber": 553,
-        "author": {
-          "gitId": "xxzz-tt"
-        },
-        "content": " "
-      },
-      {
-        "lineNumber": 554,
-        "author": {
-          "gitId": "xxzz-tt"
-        },
-        "content": "* 2d. User requests to edit participant list."
-      },
-      {
-        "lineNumber": 555,
-        "author": {
-          "gitId": "xxzz-tt"
-        },
-        "content": "  * 2d1. System shows current list of participants. "
-      },
-      {
-        "lineNumber": 556,
-        "author": {
-          "gitId": "xxzz-tt"
-        },
-        "content": "  * 2d2. User enters the index of the participant he/she wants to remove."
-      },
-      {
-        "lineNumber": 557,
-        "author": {
-          "gitId": "xxzz-tt"
-        },
-        "content": "  * 2d3. System shows the updated list of participants."
-      },
-      {
-        "lineNumber": 558,
-        "author": {
-          "gitId": "xxzz-tt"
-        },
-        "content": "  "
-      },
-      {
-        "lineNumber": 559,
-        "author": {
-          "gitId": "xxzz-tt"
-        },
-        "content": "  Steps 2d1-2d2 are repeated until the user finishes editing.  "
-      },
-      {
-        "lineNumber": 560,
-        "author": {
-          "gitId": "xxzz-tt"
-        },
-        "content": "  Use case resumes from step 3."
-      },
-      {
-        "lineNumber": 561,
-        "author": {
-          "gitId": "xxzz-tt"
-        },
-        "content": ""
-      },
-      {
-        "lineNumber": 562,
-        "author": {
-          "gitId": "xxzz-tt"
-        },
-        "content": "**Use case: UC06 - Find a contact or a meeting**  "
-      },
-      {
-        "lineNumber": 563,
-        "author": {
-          "gitId": "xxzz-tt"
-        },
-        "content": ""
-      },
-      {
-        "lineNumber": 564,
-        "author": {
-          "gitId": "xxzz-tt"
-        },
-        "content": "**MSS**"
-      },
-      {
-        "lineNumber": 565,
-        "author": {
-          "gitId": "xxzz-tt"
-        },
-        "content": ""
-      },
-      {
-        "lineNumber": 566,
-        "author": {
-          "gitId": "xxzz-tt"
-        },
         "content": "1. User requests to search for a contact/meeting with a keyword."
       },
       {
-        "lineNumber": 567,
+        "lineNumber": 535,
         "author": {
           "gitId": "xxzz-tt"
         },
         "content": "2. System shows the list of contacts/ meetings with matching keywords."
       },
       {
-        "lineNumber": 568,
+        "lineNumber": 536,
         "author": {
-          "gitId": "xxzz-tt"
+          "gitId": "-"
         },
         "content": ""
       },
       {
-        "lineNumber": 569,
+        "lineNumber": 537,
         "author": {
           "gitId": "xxzz-tt"
         },
         "content": "Use case ends."
       },
       {
-        "lineNumber": 570,
+        "lineNumber": 538,
         "author": {
-          "gitId": "xxzz-tt"
+          "gitId": "-"
         },
         "content": ""
       },
       {
-        "lineNumber": 571,
+        "lineNumber": 539,
         "author": {
           "gitId": "xxzz-tt"
         },
         "content": "**Extensions**:"
       },
       {
-        "lineNumber": 572,
+        "lineNumber": 540,
         "author": {
-          "gitId": "xxzz-tt"
+          "gitId": "-"
         },
         "content": ""
       },
       {
-        "lineNumber": 573,
+        "lineNumber": 541,
         "author": {
           "gitId": "xxzz-tt"
         },
         "content": "* 1a. No contact/ meeting matched the keyword method."
       },
       {
-        "lineNumber": 574,
+        "lineNumber": 542,
         "author": {
           "gitId": "xxzz-tt"
         },
         "content": "  * 1a1. System shows a message indicating no matching records were found."
       },
       {
-        "lineNumber": 575,
+        "lineNumber": 543,
         "author": {
           "gitId": "xxzz-tt"
         },
         "content": "  Use case ends."
       },
       {
-        "lineNumber": 576,
+        "lineNumber": 544,
         "author": {
           "gitId": "xxzz-tt"
         },
         "content": "  "
       },
       {
-        "lineNumber": 577,
+        "lineNumber": 545,
         "author": {
           "gitId": "xxzz-tt"
         },
         "content": "**Use case: UC07 - Delete a contact or a meeting**  "
+      },
+      {
+        "lineNumber": 546,
+        "author": {
+          "gitId": "xxzz-tt"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 547,
+        "author": {
+          "gitId": "xxzz-tt"
+        },
+        "content": "**MSS**"
+      },
+      {
+        "lineNumber": 548,
+        "author": {
+          "gitId": "xxzz-tt"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 549,
+        "author": {
+          "gitId": "xxzz-tt"
+        },
+        "content": "1. User requests to \u003cins\u003e list all contacts/ meetings (UC03)\u003c/ins\u003e."
+      },
+      {
+        "lineNumber": 550,
+        "author": {
+          "gitId": "xxzz-tt"
+        },
+        "content": "2. User requests to remove a contact/ meeting from the list with its index."
+      },
+      {
+        "lineNumber": 551,
+        "author": {
+          "gitId": "xxzz-tt"
+        },
+        "content": "3. System shows a success message "
+      },
+      {
+        "lineNumber": 552,
+        "author": {
+          "gitId": "xxzz-tt"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 553,
+        "author": {
+          "gitId": "xxzz-tt"
+        },
+        "content": "Use case ends."
+      },
+      {
+        "lineNumber": 554,
+        "author": {
+          "gitId": "xxzz-tt"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 555,
+        "author": {
+          "gitId": "xxzz-tt"
+        },
+        "content": "**Extensions**:"
+      },
+      {
+        "lineNumber": 556,
+        "author": {
+          "gitId": "xxzz-tt"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 557,
+        "author": {
+          "gitId": "xxzz-tt"
+        },
+        "content": "* 2a. The list is empty."
+      },
+      {
+        "lineNumber": 558,
+        "author": {
+          "gitId": "xxzz-tt"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 559,
+        "author": {
+          "gitId": "xxzz-tt"
+        },
+        "content": "  Use case ends."
+      },
+      {
+        "lineNumber": 560,
+        "author": {
+          "gitId": "xxzz-tt"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 561,
+        "author": {
+          "gitId": "xxzz-tt"
+        },
+        "content": "* 2b. User enters a negative integer as index."
+      },
+      {
+        "lineNumber": 562,
+        "author": {
+          "gitId": "xxzz-tt"
+        },
+        "content": "  * 2a1. System indicates the error and requests for a non-negative index as index."
+      },
+      {
+        "lineNumber": 563,
+        "author": {
+          "gitId": "xxzz-tt"
+        },
+        "content": "  * 2a2. User enters the correct index."
+      },
+      {
+        "lineNumber": 564,
+        "author": {
+          "gitId": "xxzz-tt"
+        },
+        "content": "  "
+      },
+      {
+        "lineNumber": 565,
+        "author": {
+          "gitId": "xxzz-tt"
+        },
+        "content": "  Steps 2b1-2b2 are repeated until the data entered are correct.  "
+      },
+      {
+        "lineNumber": 566,
+        "author": {
+          "gitId": "xxzz-tt"
+        },
+        "content": "  Use case resumes from step 3."
+      },
+      {
+        "lineNumber": 567,
+        "author": {
+          "gitId": "xxzz-tt"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 568,
+        "author": {
+          "gitId": "xxzz-tt"
+        },
+        "content": "**Use case: UC08 - Delete all contacts or meetings**  "
+      },
+      {
+        "lineNumber": 569,
+        "author": {
+          "gitId": "xxzz-tt"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 570,
+        "author": {
+          "gitId": "xxzz-tt"
+        },
+        "content": "**MSS**"
+      },
+      {
+        "lineNumber": 571,
+        "author": {
+          "gitId": "xxzz-tt"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 572,
+        "author": {
+          "gitId": "xxzz-tt"
+        },
+        "content": "1.  User requests to delete all contacts/ meetings."
+      },
+      {
+        "lineNumber": 573,
+        "author": {
+          "gitId": "xxzz-tt"
+        },
+        "content": "2.  System indicates that the deletion is successful."
+      },
+      {
+        "lineNumber": 574,
+        "author": {
+          "gitId": "xxzz-tt"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 575,
+        "author": {
+          "gitId": "xxzz-tt"
+        },
+        "content": "    Use case ends."
+      },
+      {
+        "lineNumber": 576,
+        "author": {
+          "gitId": "xxzz-tt"
+        },
+        "content": "    "
+      },
+      {
+        "lineNumber": 577,
+        "author": {
+          "gitId": "xxzz-tt"
+        },
+        "content": "**Extensions**: "
       },
       {
         "lineNumber": 578,
@@ -5145,7 +5145,7 @@
         "author": {
           "gitId": "xxzz-tt"
         },
-        "content": "**MSS**"
+        "content": "* 1a. No contact/ meeting has been added."
       },
       {
         "lineNumber": 580,
@@ -5159,231 +5159,231 @@
         "author": {
           "gitId": "xxzz-tt"
         },
-        "content": "1. User requests to \u003cins\u003e list all contacts/ meetings (UC03)\u003c/ins\u003e."
+        "content": "  Use case ends."
       },
       {
         "lineNumber": 582,
         "author": {
-          "gitId": "xxzz-tt"
+          "gitId": "-"
         },
-        "content": "2. User requests to remove a contact/ meeting from the list with its index."
+        "content": ""
       },
       {
         "lineNumber": 583,
         "author": {
-          "gitId": "xxzz-tt"
+          "gitId": "-"
         },
-        "content": "3. System shows a success message "
+        "content": "### Non-Functional Requirements"
       },
       {
         "lineNumber": 584,
         "author": {
-          "gitId": "xxzz-tt"
+          "gitId": "-"
         },
         "content": ""
       },
       {
         "lineNumber": 585,
         "author": {
-          "gitId": "xxzz-tt"
+          "gitId": "zhaohuanqdcn"
         },
-        "content": "Use case ends."
+        "content": "1.  Should work on any mainstream OS as long as it has Java `11` or above installed."
       },
       {
         "lineNumber": 586,
         "author": {
-          "gitId": "xxzz-tt"
+          "gitId": "-"
         },
-        "content": ""
+        "content": "2.  Should be able to hold up to 1000 persons without a noticeable sluggishness in performance for typical usage."
       },
       {
         "lineNumber": 587,
         "author": {
-          "gitId": "xxzz-tt"
+          "gitId": "-"
         },
-        "content": "**Extensions**:"
+        "content": "3.  A user with above average typing speed for regular English text (i.e. not code, not system admin commands) should be able to accomplish most of the tasks faster using commands than using the mouse."
       },
       {
         "lineNumber": 588,
         "author": {
-          "gitId": "xxzz-tt"
+          "gitId": "AdithyaNarayan"
         },
-        "content": ""
+        "content": "4.  Should be portable. The executable must be one-click run."
       },
       {
         "lineNumber": 589,
         "author": {
-          "gitId": "xxzz-tt"
+          "gitId": "AdithyaNarayan"
         },
-        "content": "* 2a. The list is empty."
+        "content": "5.  The data must be saved onto the hard disk and must be transferrable. In case of unexpected shutdown, the data must be preserved. The data should be human readable."
       },
       {
         "lineNumber": 590,
         "author": {
-          "gitId": "xxzz-tt"
+          "gitId": "AdithyaNarayan"
         },
-        "content": ""
+        "content": "6.  Each new update should be backwords-compatable with the data from the previous versions so that it will be easy for users to port over."
       },
       {
         "lineNumber": 591,
         "author": {
-          "gitId": "xxzz-tt"
+          "gitId": "AdithyaNarayan"
         },
-        "content": "  Use case ends."
+        "content": "7.  The app must speeden the workflow of the secretary and not be of hinderance.  "
       },
       {
         "lineNumber": 592,
         "author": {
-          "gitId": "xxzz-tt"
+          "gitId": "-"
         },
         "content": ""
       },
       {
         "lineNumber": 593,
         "author": {
-          "gitId": "xxzz-tt"
+          "gitId": "-"
         },
-        "content": "* 2b. User enters a negative integer as index."
+        "content": "### Glossary"
       },
       {
         "lineNumber": 594,
         "author": {
-          "gitId": "xxzz-tt"
+          "gitId": "-"
         },
-        "content": "  * 2a1. System indicates the error and requests for a non-negative index as index."
+        "content": ""
       },
       {
         "lineNumber": 595,
         "author": {
-          "gitId": "xxzz-tt"
+          "gitId": "zhaohuanqdcn"
         },
-        "content": "  * 2a2. User enters the correct index."
+        "content": "* **API**: Application Programming Interface"
       },
       {
         "lineNumber": 596,
         "author": {
-          "gitId": "xxzz-tt"
+          "gitId": "zhaohuanqdcn"
         },
-        "content": "  "
+        "content": "* **UML**: Unified Modeling Language"
       },
       {
         "lineNumber": 597,
         "author": {
-          "gitId": "xxzz-tt"
+          "gitId": "zhaohuanqdcn"
         },
-        "content": "  Steps 2b1-2b2 are repeated until the data entered are correct.  "
+        "content": "* **CLI**: Command Line Interface"
       },
       {
         "lineNumber": 598,
         "author": {
-          "gitId": "xxzz-tt"
+          "gitId": "zhaohuanqdcn"
         },
-        "content": "  Use case resumes from step 3."
+        "content": "* **GUI**: Graphic User Interface"
       },
       {
         "lineNumber": 599,
         "author": {
-          "gitId": "xxzz-tt"
+          "gitId": "zhaohuanqdcn"
         },
-        "content": ""
+        "content": "* **MSS**: Main Success Scenario (aka Main Flow of Events)"
       },
       {
         "lineNumber": 600,
         "author": {
-          "gitId": "xxzz-tt"
+          "gitId": "zhaohuanqdcn"
         },
-        "content": "**Use case: UC08 - Delete all contacts or meetings**  "
+        "content": "* **Java FX**: Standard GUI library for Java SE"
       },
       {
         "lineNumber": 601,
         "author": {
-          "gitId": "xxzz-tt"
+          "gitId": "-"
         },
-        "content": ""
+        "content": "* **Mainstream OS**: Windows, Linux, Unix, OS-X"
       },
       {
         "lineNumber": 602,
         "author": {
-          "gitId": "xxzz-tt"
+          "gitId": "zhaohuanqdcn"
         },
-        "content": "**MSS**"
+        "content": ""
       },
       {
         "lineNumber": 603,
         "author": {
-          "gitId": "xxzz-tt"
+          "gitId": "-"
         },
         "content": ""
       },
       {
         "lineNumber": 604,
         "author": {
-          "gitId": "xxzz-tt"
+          "gitId": "-"
         },
-        "content": "1.  User requests to delete all contacts/ meetings."
+        "content": "--------------------------------------------------------------------------------------------------------------------"
       },
       {
         "lineNumber": 605,
         "author": {
-          "gitId": "xxzz-tt"
+          "gitId": "-"
         },
-        "content": "2.  System indicates that the deletion is successful."
+        "content": ""
       },
       {
         "lineNumber": 606,
         "author": {
-          "gitId": "xxzz-tt"
+          "gitId": "-"
         },
-        "content": ""
+        "content": "## **Appendix: Instructions for manual testing**"
       },
       {
         "lineNumber": 607,
         "author": {
-          "gitId": "xxzz-tt"
+          "gitId": "-"
         },
-        "content": "    Use case ends."
+        "content": ""
       },
       {
         "lineNumber": 608,
         "author": {
-          "gitId": "xxzz-tt"
+          "gitId": "-"
         },
-        "content": "    "
+        "content": "Given below are instructions to test the app manually."
       },
       {
         "lineNumber": 609,
         "author": {
-          "gitId": "xxzz-tt"
+          "gitId": "-"
         },
-        "content": "**Extensions**: "
+        "content": ""
       },
       {
         "lineNumber": 610,
         "author": {
-          "gitId": "xxzz-tt"
+          "gitId": "zhaohuanqdcn"
         },
-        "content": ""
+        "content": "\u003cdiv markdown\u003d\"span\" class\u003d\"alert alert-info\"\u003e"
       },
       {
         "lineNumber": 611,
         "author": {
-          "gitId": "xxzz-tt"
-        },
-        "content": "* 1a. No contact/ meeting has been added."
-      },
-      {
-        "lineNumber": 612,
-        "author": {
-          "gitId": "xxzz-tt"
+          "gitId": "zhaohuanqdcn"
         },
         "content": ""
       },
       {
+        "lineNumber": 612,
+        "author": {
+          "gitId": "AdithyaNarayan"
+        },
+        "content": ":information_source: **Note:** These instructions only provide a starting point for testers to work on;"
+      },
+      {
         "lineNumber": 613,
         "author": {
-          "gitId": "xxzz-tt"
+          "gitId": "-"
         },
-        "content": "  Use case ends."
+        "content": "testers are expected to do more *exploratory* testing."
       },
       {
         "lineNumber": 614,
@@ -5397,7 +5397,7 @@
         "author": {
           "gitId": "-"
         },
-        "content": "### Non-Functional Requirements"
+        "content": "\u003c/div\u003e"
       },
       {
         "lineNumber": 616,
@@ -5409,51 +5409,51 @@
       {
         "lineNumber": 617,
         "author": {
-          "gitId": "zhaohuanqdcn"
+          "gitId": "-"
         },
-        "content": "1.  Should work on any mainstream OS as long as it has Java `11` or above installed."
+        "content": "### Launch and shutdown"
       },
       {
         "lineNumber": 618,
         "author": {
           "gitId": "-"
         },
-        "content": "2.  Should be able to hold up to 1000 persons without a noticeable sluggishness in performance for typical usage."
+        "content": ""
       },
       {
         "lineNumber": 619,
         "author": {
           "gitId": "-"
         },
-        "content": "3.  A user with above average typing speed for regular English text (i.e. not code, not system admin commands) should be able to accomplish most of the tasks faster using commands than using the mouse."
+        "content": "1. Initial launch"
       },
       {
         "lineNumber": 620,
         "author": {
-          "gitId": "AdithyaNarayan"
+          "gitId": "-"
         },
-        "content": "4.  Should be portable. The executable must be one-click run."
+        "content": ""
       },
       {
         "lineNumber": 621,
         "author": {
-          "gitId": "AdithyaNarayan"
+          "gitId": "-"
         },
-        "content": "5.  The data must be saved onto the hard disk and must be transferrable. In case of unexpected shutdown, the data must be preserved. The data should be human readable."
+        "content": "   1. Download the jar file and copy into an empty folder"
       },
       {
         "lineNumber": 622,
         "author": {
-          "gitId": "AdithyaNarayan"
+          "gitId": "-"
         },
-        "content": "6.  Each new update should be backwords-compatable with the data from the previous versions so that it will be easy for users to port over."
+        "content": ""
       },
       {
         "lineNumber": 623,
         "author": {
-          "gitId": "AdithyaNarayan"
+          "gitId": "-"
         },
-        "content": "7.  The app must speeden the workflow of the secretary and not be of hinderance.  "
+        "content": "   1. Double-click the jar file Expected: Shows the GUI with a set of sample contacts. The window size may not be optimum."
       },
       {
         "lineNumber": 624,
@@ -5467,7 +5467,7 @@
         "author": {
           "gitId": "-"
         },
-        "content": "### Glossary"
+        "content": "1. Saving window preferences"
       },
       {
         "lineNumber": 626,
@@ -5479,58 +5479,58 @@
       {
         "lineNumber": 627,
         "author": {
-          "gitId": "zhaohuanqdcn"
+          "gitId": "-"
         },
-        "content": "* **API**: Application Programming Interface"
+        "content": "   1. Resize the window to an optimum size. Move the window to a different location. Close the window."
       },
       {
         "lineNumber": 628,
         "author": {
-          "gitId": "zhaohuanqdcn"
+          "gitId": "-"
         },
-        "content": "* **UML**: Unified Modeling Language"
+        "content": ""
       },
       {
         "lineNumber": 629,
         "author": {
-          "gitId": "zhaohuanqdcn"
+          "gitId": "-"
         },
-        "content": "* **CLI**: Command Line Interface"
+        "content": "   1. Re-launch the app by double-clicking the jar file.\u003cbr\u003e"
       },
       {
         "lineNumber": 630,
         "author": {
-          "gitId": "zhaohuanqdcn"
+          "gitId": "-"
         },
-        "content": "* **GUI**: Graphic User Interface"
+        "content": "       Expected: The most recent window size and location is retained."
       },
       {
         "lineNumber": 631,
         "author": {
-          "gitId": "zhaohuanqdcn"
+          "gitId": "-"
         },
-        "content": "* **MSS**: Main Success Scenario (aka Main Flow of Events)"
+        "content": ""
       },
       {
         "lineNumber": 632,
         "author": {
-          "gitId": "zhaohuanqdcn"
+          "gitId": "-"
         },
-        "content": "* **Java FX**: Standard GUI library for Java SE"
+        "content": "1. _{ more test cases …​ }_"
       },
       {
         "lineNumber": 633,
         "author": {
           "gitId": "-"
         },
-        "content": "* **Mainstream OS**: Windows, Linux, Unix, OS-X"
+        "content": ""
       },
       {
         "lineNumber": 634,
         "author": {
-          "gitId": "zhaohuanqdcn"
+          "gitId": "-"
         },
-        "content": ""
+        "content": "### Deleting a person"
       },
       {
         "lineNumber": 635,
@@ -5544,7 +5544,7 @@
         "author": {
           "gitId": "-"
         },
-        "content": "--------------------------------------------------------------------------------------------------------------------"
+        "content": "1. Deleting a person while all persons are being shown"
       },
       {
         "lineNumber": 637,
@@ -5558,7 +5558,7 @@
         "author": {
           "gitId": "-"
         },
-        "content": "## **Appendix: Instructions for manual testing**"
+        "content": "   1. Prerequisites: List all persons using the `list` command. Multiple persons in the list."
       },
       {
         "lineNumber": 639,
@@ -5572,56 +5572,56 @@
         "author": {
           "gitId": "-"
         },
-        "content": "Given below are instructions to test the app manually."
+        "content": "   1. Test case: `delete 1`\u003cbr\u003e"
       },
       {
         "lineNumber": 641,
         "author": {
           "gitId": "-"
         },
-        "content": ""
+        "content": "      Expected: First contact is deleted from the list. Details of the deleted contact shown in the status message. Timestamp in the status bar is updated."
       },
       {
         "lineNumber": 642,
         "author": {
-          "gitId": "zhaohuanqdcn"
-        },
-        "content": "\u003cdiv markdown\u003d\"span\" class\u003d\"alert alert-info\"\u003e"
-      },
-      {
-        "lineNumber": 643,
-        "author": {
-          "gitId": "zhaohuanqdcn"
+          "gitId": "-"
         },
         "content": ""
       },
       {
+        "lineNumber": 643,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "   1. Test case: `delete 0`\u003cbr\u003e"
+      },
+      {
         "lineNumber": 644,
         "author": {
-          "gitId": "zhaohuanqdcn"
+          "gitId": "-"
         },
-        "content": ":information_source: **Note:** These instructions only provide a starting point for testers to work on;"
+        "content": "      Expected: No person is deleted. Error details shown in the status message. Status bar remains the same."
       },
       {
         "lineNumber": 645,
         "author": {
           "gitId": "-"
         },
-        "content": "testers are expected to do more *exploratory* testing."
+        "content": ""
       },
       {
         "lineNumber": 646,
         "author": {
           "gitId": "-"
         },
-        "content": ""
+        "content": "   1. Other incorrect delete commands to try: `delete`, `delete x`, `...` (where x is larger than the list size)\u003cbr\u003e"
       },
       {
         "lineNumber": 647,
         "author": {
           "gitId": "-"
         },
-        "content": "\u003c/div\u003e"
+        "content": "      Expected: Similar to previous."
       },
       {
         "lineNumber": 648,
@@ -5635,7 +5635,7 @@
         "author": {
           "gitId": "-"
         },
-        "content": "### Launch and shutdown"
+        "content": "1. _{ more test cases …​ }_"
       },
       {
         "lineNumber": 650,
@@ -5649,7 +5649,7 @@
         "author": {
           "gitId": "-"
         },
-        "content": "1. Initial launch"
+        "content": "### Saving data"
       },
       {
         "lineNumber": 652,
@@ -5663,7 +5663,7 @@
         "author": {
           "gitId": "-"
         },
-        "content": "   1. Download the jar file and copy into an empty folder"
+        "content": "1. Dealing with missing/corrupted data files"
       },
       {
         "lineNumber": 654,
@@ -5677,7 +5677,7 @@
         "author": {
           "gitId": "-"
         },
-        "content": "   1. Double-click the jar file Expected: Shows the GUI with a set of sample contacts. The window size may not be optimum."
+        "content": "   1. _{explain how to simulate a missing/corrupted file, and the expected behavior}_"
       },
       {
         "lineNumber": 656,
@@ -5691,240 +5691,16 @@
         "author": {
           "gitId": "-"
         },
-        "content": "1. Saving window preferences"
-      },
-      {
-        "lineNumber": 658,
-        "author": {
-          "gitId": "-"
-        },
-        "content": ""
-      },
-      {
-        "lineNumber": 659,
-        "author": {
-          "gitId": "-"
-        },
-        "content": "   1. Resize the window to an optimum size. Move the window to a different location. Close the window."
-      },
-      {
-        "lineNumber": 660,
-        "author": {
-          "gitId": "-"
-        },
-        "content": ""
-      },
-      {
-        "lineNumber": 661,
-        "author": {
-          "gitId": "-"
-        },
-        "content": "   1. Re-launch the app by double-clicking the jar file.\u003cbr\u003e"
-      },
-      {
-        "lineNumber": 662,
-        "author": {
-          "gitId": "-"
-        },
-        "content": "       Expected: The most recent window size and location is retained."
-      },
-      {
-        "lineNumber": 663,
-        "author": {
-          "gitId": "-"
-        },
-        "content": ""
-      },
-      {
-        "lineNumber": 664,
-        "author": {
-          "gitId": "-"
-        },
-        "content": "1. _{ more test cases …​ }_"
-      },
-      {
-        "lineNumber": 665,
-        "author": {
-          "gitId": "-"
-        },
-        "content": ""
-      },
-      {
-        "lineNumber": 666,
-        "author": {
-          "gitId": "-"
-        },
-        "content": "### Deleting a person"
-      },
-      {
-        "lineNumber": 667,
-        "author": {
-          "gitId": "-"
-        },
-        "content": ""
-      },
-      {
-        "lineNumber": 668,
-        "author": {
-          "gitId": "-"
-        },
-        "content": "1. Deleting a person while all persons are being shown"
-      },
-      {
-        "lineNumber": 669,
-        "author": {
-          "gitId": "-"
-        },
-        "content": ""
-      },
-      {
-        "lineNumber": 670,
-        "author": {
-          "gitId": "-"
-        },
-        "content": "   1. Prerequisites: List all persons using the `list` command. Multiple persons in the list."
-      },
-      {
-        "lineNumber": 671,
-        "author": {
-          "gitId": "-"
-        },
-        "content": ""
-      },
-      {
-        "lineNumber": 672,
-        "author": {
-          "gitId": "-"
-        },
-        "content": "   1. Test case: `delete 1`\u003cbr\u003e"
-      },
-      {
-        "lineNumber": 673,
-        "author": {
-          "gitId": "-"
-        },
-        "content": "      Expected: First contact is deleted from the list. Details of the deleted contact shown in the status message. Timestamp in the status bar is updated."
-      },
-      {
-        "lineNumber": 674,
-        "author": {
-          "gitId": "-"
-        },
-        "content": ""
-      },
-      {
-        "lineNumber": 675,
-        "author": {
-          "gitId": "-"
-        },
-        "content": "   1. Test case: `delete 0`\u003cbr\u003e"
-      },
-      {
-        "lineNumber": 676,
-        "author": {
-          "gitId": "-"
-        },
-        "content": "      Expected: No person is deleted. Error details shown in the status message. Status bar remains the same."
-      },
-      {
-        "lineNumber": 677,
-        "author": {
-          "gitId": "-"
-        },
-        "content": ""
-      },
-      {
-        "lineNumber": 678,
-        "author": {
-          "gitId": "-"
-        },
-        "content": "   1. Other incorrect delete commands to try: `delete`, `delete x`, `...` (where x is larger than the list size)\u003cbr\u003e"
-      },
-      {
-        "lineNumber": 679,
-        "author": {
-          "gitId": "-"
-        },
-        "content": "      Expected: Similar to previous."
-      },
-      {
-        "lineNumber": 680,
-        "author": {
-          "gitId": "-"
-        },
-        "content": ""
-      },
-      {
-        "lineNumber": 681,
-        "author": {
-          "gitId": "-"
-        },
-        "content": "1. _{ more test cases …​ }_"
-      },
-      {
-        "lineNumber": 682,
-        "author": {
-          "gitId": "-"
-        },
-        "content": ""
-      },
-      {
-        "lineNumber": 683,
-        "author": {
-          "gitId": "-"
-        },
-        "content": "### Saving data"
-      },
-      {
-        "lineNumber": 684,
-        "author": {
-          "gitId": "-"
-        },
-        "content": ""
-      },
-      {
-        "lineNumber": 685,
-        "author": {
-          "gitId": "-"
-        },
-        "content": "1. Dealing with missing/corrupted data files"
-      },
-      {
-        "lineNumber": 686,
-        "author": {
-          "gitId": "-"
-        },
-        "content": ""
-      },
-      {
-        "lineNumber": 687,
-        "author": {
-          "gitId": "-"
-        },
-        "content": "   1. _{explain how to simulate a missing/corrupted file, and the expected behavior}_"
-      },
-      {
-        "lineNumber": 688,
-        "author": {
-          "gitId": "-"
-        },
-        "content": ""
-      },
-      {
-        "lineNumber": 689,
-        "author": {
-          "gitId": "-"
-        },
         "content": "1. _{ more test cases …​ }_"
       }
     ],
     "authorContributionMap": {
       "KOH-ZHE-HAO": 27,
-      "zhaohuanqdcn": 29,
-      "ramenmen": 140,
-      "AdithyaNarayan": 4,
-      "-": 327,
-      "xxzz-tt": 162
+      "zhaohuanqdcn": 63,
+      "ramenmen": 57,
+      "AdithyaNarayan": 31,
+      "-": 289,
+      "xxzz-tt": 190
     }
   },
   {
@@ -26291,1237 +26067,1258 @@
       {
         "lineNumber": 3,
         "author": {
-          "gitId": "-"
+          "gitId": "zhaohuanqdcn"
         },
-        "content": "import static java.util.Objects.requireNonNull;"
+        "content": "import static java.util.Objects.isNull;"
       },
       {
         "lineNumber": 4,
         "author": {
           "gitId": "-"
         },
-        "content": ""
+        "content": "import static java.util.Objects.requireNonNull;"
       },
       {
         "lineNumber": 5,
         "author": {
           "gitId": "-"
         },
-        "content": "import java.util.List;"
+        "content": ""
       },
       {
         "lineNumber": 6,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "import java.util.List;"
+      },
+      {
+        "lineNumber": 7,
         "author": {
           "gitId": "ramenmen"
         },
         "content": "import java.util.Objects;"
       },
       {
-        "lineNumber": 7,
+        "lineNumber": 8,
         "author": {
           "gitId": "-"
         },
         "content": ""
       },
       {
-        "lineNumber": 8,
+        "lineNumber": 9,
         "author": {
           "gitId": "-"
         },
         "content": "import javafx.collections.ObservableList;"
       },
       {
-        "lineNumber": 9,
+        "lineNumber": 10,
         "author": {
           "gitId": "ramenmen"
         },
         "content": "import seedu.address.model.meeting.Meeting;"
       },
       {
-        "lineNumber": 10,
+        "lineNumber": 11,
         "author": {
           "gitId": "ramenmen"
         },
         "content": "import seedu.address.model.meeting.UniqueMeetingList;"
       },
       {
-        "lineNumber": 11,
+        "lineNumber": 12,
         "author": {
           "gitId": "-"
         },
         "content": "import seedu.address.model.person.Person;"
       },
       {
-        "lineNumber": 12,
+        "lineNumber": 13,
         "author": {
           "gitId": "-"
         },
         "content": "import seedu.address.model.person.UniquePersonList;"
       },
       {
-        "lineNumber": 13,
-        "author": {
-          "gitId": "-"
-        },
-        "content": ""
-      },
-      {
         "lineNumber": 14,
         "author": {
           "gitId": "-"
         },
-        "content": "/**"
+        "content": ""
       },
       {
         "lineNumber": 15,
         "author": {
           "gitId": "-"
         },
-        "content": " * Wraps all data at the address-book level"
+        "content": "/**"
       },
       {
         "lineNumber": 16,
         "author": {
           "gitId": "-"
         },
-        "content": " * Duplicates are not allowed (by .isSamePerson comparison)"
+        "content": " * Wraps all data at the address-book level"
       },
       {
         "lineNumber": 17,
         "author": {
           "gitId": "-"
         },
-        "content": " */"
+        "content": " * Duplicates are not allowed (by .isSamePerson comparison)"
       },
       {
         "lineNumber": 18,
         "author": {
           "gitId": "-"
         },
-        "content": "public class AddressBook implements ReadOnlyAddressBook {"
+        "content": " */"
       },
       {
         "lineNumber": 19,
         "author": {
           "gitId": "-"
         },
-        "content": ""
+        "content": "public class AddressBook implements ReadOnlyAddressBook {"
       },
       {
         "lineNumber": 20,
         "author": {
           "gitId": "-"
         },
-        "content": "    private final UniquePersonList persons;"
+        "content": ""
       },
       {
         "lineNumber": 21,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "    private final UniquePersonList persons;"
+      },
+      {
+        "lineNumber": 22,
         "author": {
           "gitId": "ramenmen"
         },
         "content": "    private final UniqueMeetingList meetings;"
       },
       {
-        "lineNumber": 22,
-        "author": {
-          "gitId": "-"
-        },
-        "content": ""
-      },
-      {
         "lineNumber": 23,
         "author": {
           "gitId": "-"
         },
-        "content": "    /*"
+        "content": ""
       },
       {
         "lineNumber": 24,
         "author": {
           "gitId": "-"
         },
-        "content": "     * The \u0027unusual\u0027 code block below is a non-static initialization block, sometimes used to avoid duplication"
+        "content": "    /*"
       },
       {
         "lineNumber": 25,
         "author": {
           "gitId": "-"
         },
-        "content": "     * between constructors. See https://docs.oracle.com/javase/tutorial/java/javaOO/initial.html"
+        "content": "     * The \u0027unusual\u0027 code block below is a non-static initialization block, sometimes used to avoid duplication"
       },
       {
         "lineNumber": 26,
         "author": {
           "gitId": "-"
         },
-        "content": "     *"
+        "content": "     * between constructors. See https://docs.oracle.com/javase/tutorial/java/javaOO/initial.html"
       },
       {
         "lineNumber": 27,
         "author": {
           "gitId": "-"
         },
-        "content": "     * Note that non-static init blocks are not recommended to use. There are other ways to avoid duplication"
+        "content": "     *"
       },
       {
         "lineNumber": 28,
         "author": {
           "gitId": "-"
         },
-        "content": "     *   among constructors."
+        "content": "     * Note that non-static init blocks are not recommended to use. There are other ways to avoid duplication"
       },
       {
         "lineNumber": 29,
         "author": {
           "gitId": "-"
         },
-        "content": "     */"
+        "content": "     *   among constructors."
       },
       {
         "lineNumber": 30,
         "author": {
           "gitId": "-"
         },
-        "content": "    {"
+        "content": "     */"
       },
       {
         "lineNumber": 31,
         "author": {
           "gitId": "-"
         },
-        "content": "        persons \u003d new UniquePersonList();"
+        "content": "    {"
       },
       {
         "lineNumber": 32,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "        persons \u003d new UniquePersonList();"
+      },
+      {
+        "lineNumber": 33,
         "author": {
           "gitId": "ramenmen"
         },
         "content": "        meetings \u003d new UniqueMeetingList();"
       },
       {
-        "lineNumber": 33,
-        "author": {
-          "gitId": "-"
-        },
-        "content": "    }"
-      },
-      {
         "lineNumber": 34,
         "author": {
           "gitId": "-"
         },
-        "content": ""
+        "content": "    }"
       },
       {
         "lineNumber": 35,
         "author": {
           "gitId": "-"
         },
-        "content": "    public AddressBook() {}"
+        "content": ""
       },
       {
         "lineNumber": 36,
         "author": {
           "gitId": "-"
         },
-        "content": ""
+        "content": "    public AddressBook() {}"
       },
       {
         "lineNumber": 37,
         "author": {
           "gitId": "-"
         },
-        "content": "    /**"
+        "content": ""
       },
       {
         "lineNumber": 38,
         "author": {
           "gitId": "-"
         },
-        "content": "     * Creates an AddressBook using the Persons in the {@code toBeCopied}"
+        "content": "    /**"
       },
       {
         "lineNumber": 39,
         "author": {
           "gitId": "-"
         },
-        "content": "     */"
+        "content": "     * Creates an AddressBook using the Persons in the {@code toBeCopied}"
       },
       {
         "lineNumber": 40,
         "author": {
           "gitId": "-"
         },
-        "content": "    public AddressBook(ReadOnlyAddressBook toBeCopied) {"
+        "content": "     */"
       },
       {
         "lineNumber": 41,
         "author": {
           "gitId": "-"
         },
-        "content": "        this();"
+        "content": "    public AddressBook(ReadOnlyAddressBook toBeCopied) {"
       },
       {
         "lineNumber": 42,
         "author": {
           "gitId": "-"
         },
-        "content": "        resetData(toBeCopied);"
+        "content": "        this();"
       },
       {
         "lineNumber": 43,
         "author": {
           "gitId": "-"
         },
-        "content": "    }"
+        "content": "        resetData(toBeCopied);"
       },
       {
         "lineNumber": 44,
         "author": {
           "gitId": "-"
         },
-        "content": ""
+        "content": "    }"
       },
       {
         "lineNumber": 45,
         "author": {
           "gitId": "-"
         },
-        "content": "    //// list overwrite operations"
+        "content": ""
       },
       {
         "lineNumber": 46,
         "author": {
           "gitId": "-"
         },
-        "content": ""
+        "content": "    //// list overwrite operations"
       },
       {
         "lineNumber": 47,
         "author": {
           "gitId": "-"
         },
-        "content": "    /**"
+        "content": ""
       },
       {
         "lineNumber": 48,
         "author": {
           "gitId": "-"
         },
-        "content": "     * Replaces the contents of the person list with {@code persons}."
+        "content": "    /**"
       },
       {
         "lineNumber": 49,
         "author": {
           "gitId": "-"
         },
-        "content": "     * {@code persons} must not contain duplicate persons."
+        "content": "     * Replaces the contents of the person list with {@code persons}."
       },
       {
         "lineNumber": 50,
         "author": {
           "gitId": "-"
         },
-        "content": "     */"
+        "content": "     * {@code persons} must not contain duplicate persons."
       },
       {
         "lineNumber": 51,
         "author": {
           "gitId": "-"
         },
-        "content": "    public void setPersons(List\u003cPerson\u003e persons) {"
+        "content": "     */"
       },
       {
         "lineNumber": 52,
         "author": {
           "gitId": "-"
         },
-        "content": "        this.persons.setPersons(persons);"
+        "content": "    public void setPersons(List\u003cPerson\u003e persons) {"
       },
       {
         "lineNumber": 53,
         "author": {
           "gitId": "-"
         },
-        "content": "    }"
+        "content": "        this.persons.setPersons(persons);"
       },
       {
         "lineNumber": 54,
         "author": {
           "gitId": "-"
         },
-        "content": ""
+        "content": "    }"
       },
       {
         "lineNumber": 55,
         "author": {
-          "gitId": "ramenmen"
+          "gitId": "-"
         },
-        "content": "    /**"
+        "content": ""
       },
       {
         "lineNumber": 56,
         "author": {
           "gitId": "ramenmen"
         },
-        "content": "     * Replaces the contents of the meeting list with {@code meetings}."
+        "content": "    /**"
       },
       {
         "lineNumber": 57,
         "author": {
           "gitId": "ramenmen"
         },
-        "content": "     * {@code meetings} must not contain duplicate meetings."
+        "content": "     * Replaces the contents of the meeting list with {@code meetings}."
       },
       {
         "lineNumber": 58,
         "author": {
           "gitId": "ramenmen"
         },
-        "content": "     */"
+        "content": "     * {@code meetings} must not contain duplicate meetings."
       },
       {
         "lineNumber": 59,
         "author": {
           "gitId": "ramenmen"
         },
-        "content": "    public void setMeetings(List\u003cMeeting\u003e meetings) {"
+        "content": "     */"
       },
       {
         "lineNumber": 60,
         "author": {
           "gitId": "ramenmen"
         },
-        "content": "        this.meetings.setMeetings(meetings);"
+        "content": "    public void setMeetings(List\u003cMeeting\u003e meetings) {"
       },
       {
         "lineNumber": 61,
         "author": {
           "gitId": "ramenmen"
         },
-        "content": "    }"
+        "content": "        this.meetings.setMeetings(meetings);"
       },
       {
         "lineNumber": 62,
         "author": {
           "gitId": "ramenmen"
         },
-        "content": ""
+        "content": "    }"
       },
       {
         "lineNumber": 63,
         "author": {
-          "gitId": "-"
+          "gitId": "ramenmen"
         },
-        "content": "    /**"
+        "content": ""
       },
       {
         "lineNumber": 64,
         "author": {
           "gitId": "-"
         },
-        "content": "     * Resets the existing data of this {@code AddressBook} with {@code newData}."
+        "content": "    /**"
       },
       {
         "lineNumber": 65,
         "author": {
           "gitId": "-"
         },
-        "content": "     */"
+        "content": "     * Resets the existing data of this {@code AddressBook} with {@code newData}."
       },
       {
         "lineNumber": 66,
         "author": {
           "gitId": "-"
         },
-        "content": "    public void resetData(ReadOnlyAddressBook newData) {"
+        "content": "     */"
       },
       {
         "lineNumber": 67,
         "author": {
           "gitId": "-"
         },
-        "content": "        requireNonNull(newData);"
+        "content": "    public void resetData(ReadOnlyAddressBook newData) {"
       },
       {
         "lineNumber": 68,
         "author": {
           "gitId": "-"
         },
-        "content": ""
+        "content": "        requireNonNull(newData);"
       },
       {
         "lineNumber": 69,
         "author": {
           "gitId": "-"
         },
-        "content": "        setPersons(newData.getPersonList());"
+        "content": ""
       },
       {
         "lineNumber": 70,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "        setPersons(newData.getPersonList());"
+      },
+      {
+        "lineNumber": 71,
         "author": {
           "gitId": "ramenmen"
         },
         "content": "        setMeetings(newData.getMeetingList());"
       },
       {
-        "lineNumber": 71,
-        "author": {
-          "gitId": "-"
-        },
-        "content": "    }"
-      },
-      {
         "lineNumber": 72,
         "author": {
           "gitId": "-"
         },
-        "content": ""
+        "content": "    }"
       },
       {
         "lineNumber": 73,
         "author": {
           "gitId": "-"
         },
-        "content": "    //// person-level operations"
+        "content": ""
       },
       {
         "lineNumber": 74,
         "author": {
           "gitId": "-"
         },
-        "content": ""
+        "content": "    //// person-level operations"
       },
       {
         "lineNumber": 75,
         "author": {
           "gitId": "-"
         },
-        "content": "    /**"
+        "content": ""
       },
       {
         "lineNumber": 76,
         "author": {
           "gitId": "-"
         },
-        "content": "     * Returns true if a person with the same identity as {@code person} exists in the address book."
+        "content": "    /**"
       },
       {
         "lineNumber": 77,
         "author": {
           "gitId": "-"
         },
-        "content": "     */"
+        "content": "     * Returns true if a person with the same identity as {@code person} exists in the address book."
       },
       {
         "lineNumber": 78,
         "author": {
           "gitId": "-"
         },
-        "content": "    public boolean hasPerson(Person person) {"
+        "content": "     */"
       },
       {
         "lineNumber": 79,
         "author": {
           "gitId": "-"
         },
-        "content": "        requireNonNull(person);"
+        "content": "    public boolean hasPerson(Person person) {"
       },
       {
         "lineNumber": 80,
         "author": {
           "gitId": "-"
         },
-        "content": "        return persons.contains(person);"
+        "content": "        requireNonNull(person);"
       },
       {
         "lineNumber": 81,
         "author": {
           "gitId": "-"
         },
-        "content": "    }"
+        "content": "        return persons.contains(person);"
       },
       {
         "lineNumber": 82,
         "author": {
           "gitId": "-"
         },
-        "content": ""
+        "content": "    }"
       },
       {
         "lineNumber": 83,
         "author": {
           "gitId": "-"
         },
-        "content": "    /**"
+        "content": ""
       },
       {
         "lineNumber": 84,
         "author": {
           "gitId": "-"
         },
-        "content": "     * Adds a person to the address book."
+        "content": "    /**"
       },
       {
         "lineNumber": 85,
         "author": {
           "gitId": "-"
         },
-        "content": "     * The person must not already exist in the address book."
+        "content": "     * Adds a person to the address book."
       },
       {
         "lineNumber": 86,
         "author": {
           "gitId": "-"
         },
-        "content": "     */"
+        "content": "     * The person must not already exist in the address book."
       },
       {
         "lineNumber": 87,
         "author": {
           "gitId": "-"
         },
-        "content": "    public void addPerson(Person p) {"
+        "content": "     */"
       },
       {
         "lineNumber": 88,
         "author": {
           "gitId": "-"
         },
-        "content": "        persons.add(p);"
+        "content": "    public void addPerson(Person p) {"
       },
       {
         "lineNumber": 89,
         "author": {
           "gitId": "-"
         },
-        "content": "    }"
+        "content": "        persons.add(p);"
       },
       {
         "lineNumber": 90,
         "author": {
           "gitId": "-"
         },
-        "content": ""
+        "content": "    }"
       },
       {
         "lineNumber": 91,
         "author": {
           "gitId": "-"
         },
-        "content": "    /**"
+        "content": ""
       },
       {
         "lineNumber": 92,
         "author": {
           "gitId": "-"
         },
-        "content": "     * Replaces the given person {@code target} in the list with {@code editedPerson}."
+        "content": "    /**"
       },
       {
         "lineNumber": 93,
         "author": {
           "gitId": "-"
         },
-        "content": "     * {@code target} must exist in the address book."
+        "content": "     * Replaces the given person {@code target} in the list with {@code editedPerson}."
       },
       {
         "lineNumber": 94,
         "author": {
           "gitId": "-"
         },
-        "content": "     * The person identity of {@code editedPerson} must not be the same as another existing person in the address book."
+        "content": "     * {@code target} must exist in the address book."
       },
       {
         "lineNumber": 95,
         "author": {
           "gitId": "-"
         },
-        "content": "     */"
+        "content": "     * The person identity of {@code editedPerson} must not be the same as another existing person in the address book."
       },
       {
         "lineNumber": 96,
         "author": {
           "gitId": "-"
         },
-        "content": "    public void setPerson(Person target, Person editedPerson) {"
+        "content": "     */"
       },
       {
         "lineNumber": 97,
         "author": {
           "gitId": "-"
         },
-        "content": "        requireNonNull(editedPerson);"
+        "content": "    public void setPerson(Person target, Person editedPerson) {"
       },
       {
         "lineNumber": 98,
         "author": {
           "gitId": "-"
         },
-        "content": ""
+        "content": "        requireNonNull(editedPerson);"
       },
       {
         "lineNumber": 99,
         "author": {
           "gitId": "-"
         },
-        "content": "        persons.setPerson(target, editedPerson);"
+        "content": ""
       },
       {
         "lineNumber": 100,
         "author": {
           "gitId": "-"
         },
-        "content": "    }"
+        "content": "        persons.setPerson(target, editedPerson);"
       },
       {
         "lineNumber": 101,
         "author": {
           "gitId": "-"
         },
-        "content": ""
+        "content": "    }"
       },
       {
         "lineNumber": 102,
         "author": {
           "gitId": "-"
         },
-        "content": "    /**"
+        "content": ""
       },
       {
         "lineNumber": 103,
         "author": {
           "gitId": "-"
         },
-        "content": "     * Removes {@code key} from this {@code AddressBook}."
+        "content": "    /**"
       },
       {
         "lineNumber": 104,
         "author": {
           "gitId": "-"
         },
-        "content": "     * {@code key} must exist in the address book."
+        "content": "     * Removes {@code key} from this {@code AddressBook}."
       },
       {
         "lineNumber": 105,
         "author": {
           "gitId": "-"
         },
-        "content": "     */"
+        "content": "     * {@code key} must exist in the address book."
       },
       {
         "lineNumber": 106,
         "author": {
           "gitId": "-"
         },
-        "content": "    public void removePerson(Person key) {"
+        "content": "     */"
       },
       {
         "lineNumber": 107,
         "author": {
           "gitId": "-"
         },
-        "content": "        persons.remove(key);"
+        "content": "    public void removePerson(Person key) {"
       },
       {
         "lineNumber": 108,
         "author": {
           "gitId": "-"
         },
-        "content": "    }"
+        "content": "        persons.remove(key);"
       },
       {
         "lineNumber": 109,
         "author": {
           "gitId": "-"
         },
-        "content": ""
+        "content": "    }"
       },
       {
         "lineNumber": 110,
         "author": {
-          "gitId": "ramenmen"
+          "gitId": "-"
         },
-        "content": "    //// meeting-level operations"
+        "content": ""
       },
       {
         "lineNumber": 111,
         "author": {
           "gitId": "ramenmen"
         },
-        "content": ""
+        "content": "    //// meeting-level operations"
       },
       {
         "lineNumber": 112,
         "author": {
           "gitId": "ramenmen"
         },
-        "content": "    /**"
+        "content": ""
       },
       {
         "lineNumber": 113,
         "author": {
           "gitId": "ramenmen"
         },
-        "content": "     * Returns true if a meeting with the same identity as {@code meeting} exists in the address book."
+        "content": "    /**"
       },
       {
         "lineNumber": 114,
         "author": {
           "gitId": "ramenmen"
         },
-        "content": "     */"
+        "content": "     * Returns true if a meeting with the same identity as {@code meeting} exists in the address book."
       },
       {
         "lineNumber": 115,
         "author": {
           "gitId": "ramenmen"
         },
-        "content": "    public boolean hasMeeting(Meeting meeting) {"
+        "content": "     */"
       },
       {
         "lineNumber": 116,
         "author": {
           "gitId": "ramenmen"
         },
-        "content": "        requireNonNull(meeting);"
+        "content": "    public boolean hasMeeting(Meeting meeting) {"
       },
       {
         "lineNumber": 117,
         "author": {
           "gitId": "ramenmen"
         },
-        "content": "        return meetings.contains(meeting);"
+        "content": "        requireNonNull(meeting);"
       },
       {
         "lineNumber": 118,
         "author": {
           "gitId": "ramenmen"
         },
-        "content": "    }"
+        "content": "        return meetings.contains(meeting);"
       },
       {
         "lineNumber": 119,
         "author": {
           "gitId": "ramenmen"
         },
-        "content": ""
+        "content": "    }"
       },
       {
         "lineNumber": 120,
         "author": {
           "gitId": "ramenmen"
         },
-        "content": "    /**"
+        "content": ""
       },
       {
         "lineNumber": 121,
         "author": {
           "gitId": "ramenmen"
         },
-        "content": "     * Adds a meeting to the address book."
+        "content": "    /**"
       },
       {
         "lineNumber": 122,
         "author": {
           "gitId": "ramenmen"
         },
-        "content": "     * The meeting must not already exist in the address book."
+        "content": "     * Adds a meeting to the address book."
       },
       {
         "lineNumber": 123,
         "author": {
           "gitId": "ramenmen"
         },
-        "content": "     */"
+        "content": "     * The meeting must not already exist in the address book."
       },
       {
         "lineNumber": 124,
         "author": {
           "gitId": "ramenmen"
         },
-        "content": "    public void addMeeting(Meeting m) {"
+        "content": "     */"
       },
       {
         "lineNumber": 125,
         "author": {
           "gitId": "ramenmen"
         },
-        "content": "        meetings.add(m);"
+        "content": "    public void addMeeting(Meeting m) {"
       },
       {
         "lineNumber": 126,
         "author": {
-          "gitId": "ramenmen"
+          "gitId": "zhaohuanqdcn"
         },
-        "content": "    }"
+        "content": "        assert !isNull(m);"
       },
       {
         "lineNumber": 127,
         "author": {
           "gitId": "ramenmen"
         },
-        "content": ""
+        "content": "        meetings.add(m);"
       },
       {
         "lineNumber": 128,
         "author": {
           "gitId": "ramenmen"
         },
-        "content": "    /**"
+        "content": "    }"
       },
       {
         "lineNumber": 129,
         "author": {
           "gitId": "ramenmen"
         },
-        "content": "     * Replaces the given meeting {@code target} in the list with {@code editedMeeting}."
+        "content": ""
       },
       {
         "lineNumber": 130,
         "author": {
           "gitId": "ramenmen"
         },
-        "content": "     * {@code target} must exist in the address book."
+        "content": "    /**"
       },
       {
         "lineNumber": 131,
         "author": {
           "gitId": "ramenmen"
         },
-        "content": "     * The meeting identity of {@code editedMeeting} must not be the same as"
+        "content": "     * Replaces the given meeting {@code target} in the list with {@code editedMeeting}."
       },
       {
         "lineNumber": 132,
         "author": {
           "gitId": "ramenmen"
         },
-        "content": "     * another existing meeting in the address book."
+        "content": "     * {@code target} must exist in the address book."
       },
       {
         "lineNumber": 133,
         "author": {
           "gitId": "ramenmen"
         },
-        "content": "     */"
+        "content": "     * The meeting identity of {@code editedMeeting} must not be the same as"
       },
       {
         "lineNumber": 134,
         "author": {
           "gitId": "ramenmen"
         },
-        "content": "    public void setMeeting(Meeting target, Meeting editedMeeting) {"
+        "content": "     * another existing meeting in the address book."
       },
       {
         "lineNumber": 135,
         "author": {
           "gitId": "ramenmen"
         },
-        "content": "        requireNonNull(editedMeeting);"
+        "content": "     */"
       },
       {
         "lineNumber": 136,
         "author": {
           "gitId": "ramenmen"
         },
-        "content": ""
+        "content": "    public void setMeeting(Meeting target, Meeting editedMeeting) {"
       },
       {
         "lineNumber": 137,
         "author": {
           "gitId": "ramenmen"
         },
-        "content": "        meetings.setMeeting(target, editedMeeting);"
+        "content": "        requireNonNull(editedMeeting);"
       },
       {
         "lineNumber": 138,
         "author": {
           "gitId": "ramenmen"
         },
-        "content": "    }"
+        "content": ""
       },
       {
         "lineNumber": 139,
         "author": {
           "gitId": "ramenmen"
         },
-        "content": ""
+        "content": "        meetings.setMeeting(target, editedMeeting);"
       },
       {
         "lineNumber": 140,
         "author": {
           "gitId": "ramenmen"
         },
-        "content": "    /**"
+        "content": "    }"
       },
       {
         "lineNumber": 141,
         "author": {
           "gitId": "ramenmen"
         },
-        "content": "     * Removes {@code key} from this {@code AddressBook}."
+        "content": ""
       },
       {
         "lineNumber": 142,
         "author": {
           "gitId": "ramenmen"
         },
-        "content": "     * {@code key} must exist in the address book."
+        "content": "    /**"
       },
       {
         "lineNumber": 143,
         "author": {
           "gitId": "ramenmen"
         },
-        "content": "     */"
+        "content": "     * Removes {@code key} from this {@code AddressBook}."
       },
       {
         "lineNumber": 144,
         "author": {
           "gitId": "ramenmen"
         },
-        "content": "    public void removeMeeting(Meeting key) {"
+        "content": "     * {@code key} must exist in the address book."
       },
       {
         "lineNumber": 145,
         "author": {
           "gitId": "ramenmen"
         },
-        "content": "        meetings.remove(key);"
+        "content": "     */"
       },
       {
         "lineNumber": 146,
         "author": {
           "gitId": "ramenmen"
         },
-        "content": "    }"
+        "content": "    public void removeMeeting(Meeting key) {"
       },
       {
         "lineNumber": 147,
         "author": {
-          "gitId": "ramenmen"
+          "gitId": "zhaohuanqdcn"
         },
-        "content": ""
+        "content": "        assert !isNull(key);"
       },
       {
         "lineNumber": 148,
         "author": {
-          "gitId": "-"
+          "gitId": "ramenmen"
         },
-        "content": "    //// util methods"
+        "content": "        meetings.remove(key);"
       },
       {
         "lineNumber": 149,
         "author": {
-          "gitId": "-"
+          "gitId": "ramenmen"
         },
-        "content": ""
+        "content": "    }"
       },
       {
         "lineNumber": 150,
         "author": {
-          "gitId": "-"
+          "gitId": "ramenmen"
         },
-        "content": "    @Override"
+        "content": ""
       },
       {
         "lineNumber": 151,
         "author": {
           "gitId": "-"
         },
-        "content": "    public String toString() {"
+        "content": "    //// util methods"
       },
       {
         "lineNumber": 152,
         "author": {
-          "gitId": "zhaohuanqdcn"
+          "gitId": "-"
         },
-        "content": "        return persons.asUnmodifiableObservableList().size() + \" persons\\n\""
+        "content": ""
       },
       {
         "lineNumber": 153,
         "author": {
-          "gitId": "ramenmen"
+          "gitId": "-"
         },
-        "content": "                + meetings.asUnmodifiableObservableList().size() + \" meetings\";"
+        "content": "    @Override"
       },
       {
         "lineNumber": 154,
         "author": {
           "gitId": "-"
         },
-        "content": "        // TODO: refine later"
+        "content": "    public String toString() {"
       },
       {
         "lineNumber": 155,
         "author": {
-          "gitId": "-"
+          "gitId": "zhaohuanqdcn"
         },
-        "content": "    }"
+        "content": "        return persons.asUnmodifiableObservableList().size() + \" persons\\n\""
       },
       {
         "lineNumber": 156,
         "author": {
-          "gitId": "-"
+          "gitId": "ramenmen"
         },
-        "content": ""
+        "content": "                + meetings.asUnmodifiableObservableList().size() + \" meetings\";"
       },
       {
         "lineNumber": 157,
         "author": {
           "gitId": "-"
         },
-        "content": "    @Override"
+        "content": "        // TODO: refine later"
       },
       {
         "lineNumber": 158,
         "author": {
           "gitId": "-"
         },
-        "content": "    public ObservableList\u003cPerson\u003e getPersonList() {"
+        "content": "    }"
       },
       {
         "lineNumber": 159,
         "author": {
           "gitId": "-"
         },
-        "content": "        return persons.asUnmodifiableObservableList();"
+        "content": ""
       },
       {
         "lineNumber": 160,
         "author": {
           "gitId": "-"
         },
-        "content": "    }"
+        "content": "    @Override"
       },
       {
         "lineNumber": 161,
         "author": {
           "gitId": "-"
         },
-        "content": ""
+        "content": "    public ObservableList\u003cPerson\u003e getPersonList() {"
       },
       {
         "lineNumber": 162,
         "author": {
-          "gitId": "ramenmen"
+          "gitId": "-"
         },
-        "content": "    @Override"
+        "content": "        return persons.asUnmodifiableObservableList();"
       },
       {
         "lineNumber": 163,
         "author": {
-          "gitId": "ramenmen"
+          "gitId": "-"
         },
-        "content": "    public ObservableList\u003cMeeting\u003e getMeetingList() {"
+        "content": "    }"
       },
       {
         "lineNumber": 164,
         "author": {
-          "gitId": "ramenmen"
+          "gitId": "-"
         },
-        "content": "        return meetings.asUnmodifiableObservableList();"
+        "content": ""
       },
       {
         "lineNumber": 165,
         "author": {
           "gitId": "ramenmen"
         },
-        "content": "    }"
+        "content": "    @Override"
       },
       {
         "lineNumber": 166,
         "author": {
           "gitId": "ramenmen"
         },
-        "content": ""
+        "content": "    public ObservableList\u003cMeeting\u003e getMeetingList() {"
       },
       {
         "lineNumber": 167,
         "author": {
-          "gitId": "-"
+          "gitId": "ramenmen"
         },
-        "content": "    @Override"
+        "content": "        return meetings.asUnmodifiableObservableList();"
       },
       {
         "lineNumber": 168,
         "author": {
-          "gitId": "-"
+          "gitId": "ramenmen"
         },
-        "content": "    public boolean equals(Object other) {"
+        "content": "    }"
       },
       {
         "lineNumber": 169,
         "author": {
-          "gitId": "-"
+          "gitId": "ramenmen"
         },
-        "content": "        return other \u003d\u003d this // short circuit if same object"
+        "content": ""
       },
       {
         "lineNumber": 170,
         "author": {
           "gitId": "-"
         },
-        "content": "                || (other instanceof AddressBook // instanceof handles nulls"
+        "content": "    @Override"
       },
       {
         "lineNumber": 171,
         "author": {
-          "gitId": "ramenmen"
+          "gitId": "-"
         },
-        "content": "                \u0026\u0026 persons.equals(((AddressBook) other).persons)"
+        "content": "    public boolean equals(Object other) {"
       },
       {
         "lineNumber": 172,
         "author": {
-          "gitId": "ramenmen"
+          "gitId": "-"
         },
-        "content": "                \u0026\u0026 meetings.equals(((AddressBook) other).meetings));"
+        "content": "        return other \u003d\u003d this // short circuit if same object"
       },
       {
         "lineNumber": 173,
         "author": {
           "gitId": "-"
         },
-        "content": "    }"
+        "content": "                || (other instanceof AddressBook // instanceof handles nulls"
       },
       {
         "lineNumber": 174,
         "author": {
-          "gitId": "-"
+          "gitId": "ramenmen"
         },
-        "content": ""
+        "content": "                \u0026\u0026 persons.equals(((AddressBook) other).persons)"
       },
       {
         "lineNumber": 175,
         "author": {
-          "gitId": "-"
+          "gitId": "ramenmen"
         },
-        "content": "    @Override"
+        "content": "                \u0026\u0026 meetings.equals(((AddressBook) other).meetings));"
       },
       {
         "lineNumber": 176,
         "author": {
           "gitId": "-"
         },
-        "content": "    public int hashCode() {"
+        "content": "    }"
       },
       {
         "lineNumber": 177,
         "author": {
-          "gitId": "ramenmen"
+          "gitId": "-"
         },
-        "content": "        return Objects.hash(persons, meetings);"
+        "content": ""
       },
       {
         "lineNumber": 178,
         "author": {
           "gitId": "-"
         },
-        "content": "    }"
+        "content": "    @Override"
       },
       {
         "lineNumber": 179,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "    public int hashCode() {"
+      },
+      {
+        "lineNumber": 180,
+        "author": {
+          "gitId": "ramenmen"
+        },
+        "content": "        return Objects.hash(persons, meetings);"
+      },
+      {
+        "lineNumber": 181,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "    }"
+      },
+      {
+        "lineNumber": 182,
         "author": {
           "gitId": "-"
         },
@@ -27529,7 +27326,7 @@
       }
     ],
     "authorContributionMap": {
-      "zhaohuanqdcn": 1,
+      "zhaohuanqdcn": 4,
       "ramenmen": 61,
       "-": 117
     }
@@ -61013,14 +60810,14 @@
         "author": {
           "gitId": "zhaohuanqdcn"
         },
-        "content": "    public void addMeeting_nullMeeting_throwsNullPointerException() {"
+        "content": "    public void addMeeting_nullMeeting_throwsAssertionError() {"
       },
       {
         "lineNumber": 90,
         "author": {
           "gitId": "zhaohuanqdcn"
         },
-        "content": "        assertThrows(NullPointerException.class, () -\u003e addressBook.addMeeting(null));"
+        "content": "        assertThrows(AssertionError.class, () -\u003e addressBook.addMeeting(null));"
       },
       {
         "lineNumber": 91,
@@ -61048,56 +60845,56 @@
         "author": {
           "gitId": "zhaohuanqdcn"
         },
-        "content": "    public void hasMeeting_validMeeting_returnsTrue() {"
+        "content": "    public void removeMeeting_nullMeeting_throwsAssertionError() {"
       },
       {
         "lineNumber": 95,
         "author": {
           "gitId": "zhaohuanqdcn"
         },
-        "content": "        addressBook.addMeeting(DISCUSSION);"
+        "content": "        assertThrows(AssertionError.class, () -\u003e addressBook.removeMeeting(null));"
       },
       {
         "lineNumber": 96,
         "author": {
           "gitId": "zhaohuanqdcn"
         },
-        "content": "        assertTrue(addressBook.hasMeeting(DISCUSSION));"
+        "content": "    }"
       },
       {
         "lineNumber": 97,
         "author": {
           "gitId": "zhaohuanqdcn"
         },
-        "content": "    }"
+        "content": ""
       },
       {
         "lineNumber": 98,
         "author": {
           "gitId": "zhaohuanqdcn"
         },
-        "content": ""
+        "content": "    @Test"
       },
       {
         "lineNumber": 99,
         "author": {
           "gitId": "zhaohuanqdcn"
         },
-        "content": "    @Test"
+        "content": "    public void hasMeeting_validMeeting_returnsTrue() {"
       },
       {
         "lineNumber": 100,
         "author": {
           "gitId": "zhaohuanqdcn"
         },
-        "content": "    public void getMeetingList_modifyList_throwsUnsupportedOperationException() {"
+        "content": "        addressBook.addMeeting(DISCUSSION);"
       },
       {
         "lineNumber": 101,
         "author": {
           "gitId": "zhaohuanqdcn"
         },
-        "content": "        assertThrows(UnsupportedOperationException.class, () -\u003e addressBook.getMeetingList().remove(0));"
+        "content": "        assertTrue(addressBook.hasMeeting(DISCUSSION));"
       },
       {
         "lineNumber": 102,
@@ -61116,100 +60913,100 @@
       {
         "lineNumber": 104,
         "author": {
-          "gitId": "-"
+          "gitId": "zhaohuanqdcn"
         },
-        "content": "    /**"
+        "content": "    @Test"
       },
       {
         "lineNumber": 105,
         "author": {
-          "gitId": "-"
+          "gitId": "zhaohuanqdcn"
         },
-        "content": "     * A stub ReadOnlyAddressBook whose persons list can violate interface constraints."
+        "content": "    public void getMeetingList_modifyList_throwsUnsupportedOperationException() {"
       },
       {
         "lineNumber": 106,
         "author": {
-          "gitId": "-"
+          "gitId": "zhaohuanqdcn"
         },
-        "content": "     */"
+        "content": "        assertThrows(UnsupportedOperationException.class, () -\u003e addressBook.getMeetingList().remove(0));"
       },
       {
         "lineNumber": 107,
         "author": {
-          "gitId": "-"
+          "gitId": "zhaohuanqdcn"
         },
-        "content": "    private static class AddressBookStub implements ReadOnlyAddressBook {"
+        "content": "    }"
       },
       {
         "lineNumber": 108,
         "author": {
-          "gitId": "-"
+          "gitId": "zhaohuanqdcn"
         },
-        "content": "        private final ObservableList\u003cPerson\u003e persons \u003d FXCollections.observableArrayList();"
+        "content": ""
       },
       {
         "lineNumber": 109,
         "author": {
-          "gitId": "zhaohuanqdcn"
+          "gitId": "-"
         },
-        "content": "        private final ObservableList\u003cMeeting\u003e meetings \u003d FXCollections.observableArrayList();"
+        "content": "    /**"
       },
       {
         "lineNumber": 110,
         "author": {
           "gitId": "-"
         },
-        "content": ""
+        "content": "     * A stub ReadOnlyAddressBook whose persons list can violate interface constraints."
       },
       {
         "lineNumber": 111,
         "author": {
           "gitId": "-"
         },
-        "content": "        AddressBookStub(Collection\u003cPerson\u003e persons) {"
+        "content": "     */"
       },
       {
         "lineNumber": 112,
         "author": {
           "gitId": "-"
         },
-        "content": "            this.persons.setAll(persons);"
+        "content": "    private static class AddressBookStub implements ReadOnlyAddressBook {"
       },
       {
         "lineNumber": 113,
         "author": {
           "gitId": "-"
         },
-        "content": "        }"
+        "content": "        private final ObservableList\u003cPerson\u003e persons \u003d FXCollections.observableArrayList();"
       },
       {
         "lineNumber": 114,
         "author": {
-          "gitId": "-"
+          "gitId": "zhaohuanqdcn"
         },
-        "content": ""
+        "content": "        private final ObservableList\u003cMeeting\u003e meetings \u003d FXCollections.observableArrayList();"
       },
       {
         "lineNumber": 115,
         "author": {
           "gitId": "-"
         },
-        "content": "        @Override"
+        "content": ""
       },
       {
         "lineNumber": 116,
         "author": {
           "gitId": "-"
         },
-        "content": "        public ObservableList\u003cPerson\u003e getPersonList() {"
+        "content": "        AddressBookStub(Collection\u003cPerson\u003e persons) {"
       },
       {
         "lineNumber": 117,
         "author": {
           "gitId": "-"
         },
-        "content": "            return persons;"
+        "content": "            this.persons.setAll(persons);"
       },
       {
         "lineNumber": 118,
@@ -61221,54 +61018,89 @@
       {
         "lineNumber": 119,
         "author": {
-          "gitId": "zhaohuanqdcn"
+          "gitId": "-"
         },
         "content": ""
       },
       {
         "lineNumber": 120,
         "author": {
-          "gitId": "zhaohuanqdcn"
+          "gitId": "-"
         },
         "content": "        @Override"
       },
       {
         "lineNumber": 121,
         "author": {
-          "gitId": "zhaohuanqdcn"
+          "gitId": "-"
         },
-        "content": "        public ObservableList\u003cMeeting\u003e getMeetingList() {"
+        "content": "        public ObservableList\u003cPerson\u003e getPersonList() {"
       },
       {
         "lineNumber": 122,
         "author": {
-          "gitId": "zhaohuanqdcn"
+          "gitId": "-"
         },
-        "content": "            return meetings;"
+        "content": "            return persons;"
       },
       {
         "lineNumber": 123,
         "author": {
-          "gitId": "zhaohuanqdcn"
+          "gitId": "-"
         },
         "content": "        }"
       },
       {
         "lineNumber": 124,
         "author": {
+          "gitId": "zhaohuanqdcn"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 125,
+        "author": {
+          "gitId": "zhaohuanqdcn"
+        },
+        "content": "        @Override"
+      },
+      {
+        "lineNumber": 126,
+        "author": {
+          "gitId": "zhaohuanqdcn"
+        },
+        "content": "        public ObservableList\u003cMeeting\u003e getMeetingList() {"
+      },
+      {
+        "lineNumber": 127,
+        "author": {
+          "gitId": "zhaohuanqdcn"
+        },
+        "content": "            return meetings;"
+      },
+      {
+        "lineNumber": 128,
+        "author": {
+          "gitId": "zhaohuanqdcn"
+        },
+        "content": "        }"
+      },
+      {
+        "lineNumber": 129,
+        "author": {
           "gitId": "-"
         },
         "content": "    }"
       },
       {
-        "lineNumber": 125,
+        "lineNumber": 130,
         "author": {
           "gitId": "-"
         },
         "content": ""
       },
       {
-        "lineNumber": 126,
+        "lineNumber": 131,
         "author": {
           "gitId": "-"
         },
@@ -61276,7 +61108,7 @@
       }
     ],
     "authorContributionMap": {
-      "zhaohuanqdcn": 24,
+      "zhaohuanqdcn": 29,
       "-": 102
     }
   },
