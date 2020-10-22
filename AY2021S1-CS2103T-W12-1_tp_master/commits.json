@@ -692,6 +692,47 @@
         "date": "2020-10-21",
         "commitResults": [
           {
+            "hash": "927bfa3e1c28fae27c37d078fafefc400e110668",
+            "messageTitle": "ParserUtil: Refactor patient-related methods",
+            "messageBody": "ParserUtil contains methods for both general purposes and parsing\npatient-specific fields.\n\nThis results in a class that is unnecessary large.\n\nLet\u0027s refactor all patient-related methods into PatientParserUtil, keeping\nonly the general methods in ParserUtil. In addition, RoomParserUtil::parseRoomNumber\ncan be treated as a general method and is refactored into ParserUtil::parsePositiveInteger.\nSimilarly, the AddPatientCommand::arePrefixesPresent method is moved to\nParserUtil.\n\nAfter refactoring, the codebase will be more consistent with TaskParserUtil.\n",
+            "fileTypesAndContributionMap": {
+              "functional-code": {
+                "insertions": 172,
+                "deletions": 182
+              },
+              "test-code": {
+                "insertions": 228,
+                "deletions": 156
+              }
+            }
+          },
+          {
+            "hash": "62a96d06a008acdc87a91fb4ec9d40cab0fff424",
+            "messageTitle": "Remove duplicate arePrefixesPresent(...) methods",
+            "messageBody": "Many of the *CommandParser classes use a private arePrefixesPresent(...)\nmethod.\n\nThis results in code duplication.\n\nLet\u0027s use the general-purpose public method ParserUtil::arePrefixesPresent(...)\ninstead and remove the private counterparts.\n",
+            "fileTypesAndContributionMap": {
+              "functional-code": {
+                "insertions": 10,
+                "deletions": 63
+              }
+            }
+          },
+          {
+            "hash": "c339eee3c1c96cb233c19e84b540b37ba71127f6",
+            "messageTitle": "Simplify conditional statements in Search*Parser classes",
+            "messageBody": "Let\u0027s add a method called ParserUtil::isExactlyOnePrefixPresent to avoid\ncomplex conditional statements for prefix checking.\n",
+            "fileTypesAndContributionMap": {
+              "functional-code": {
+                "insertions": 13,
+                "deletions": 7
+              },
+              "test-code": {
+                "insertions": 35,
+                "deletions": 16
+              }
+            }
+          },
+          {
             "hash": "cbb1fefba0b072b64b3088dabdebe9c0e092084d",
             "messageTitle": "Enable assertions",
             "messageBody": "",
@@ -699,6 +740,17 @@
               "other": {
                 "insertions": 4,
                 "deletions": 0
+              }
+            }
+          },
+          {
+            "hash": "3da732dd630eb55395c623c880b8011e1c18ea9b",
+            "messageTitle": "ParserUtilTest: Add whitespace between comments and code",
+            "messageBody": "",
+            "fileTypesAndContributionMap": {
+              "test-code": {
+                "insertions": 14,
+                "deletions": 9
               }
             }
           }
@@ -4488,23 +4540,23 @@
   "authorFileTypeContributionMap": {
     "w-yeehong": {
       "docs": 57,
-      "functional-code": 2065,
-      "test-code": 2545,
+      "functional-code": 2196,
+      "test-code": 2787,
       "other": 8
     },
     "LeeMingDe": {
       "docs": 61,
-      "functional-code": 936,
-      "test-code": 700
+      "functional-code": 906,
+      "test-code": 699
     },
     "chiamyunqing": {
       "docs": 142,
-      "functional-code": 1471,
-      "test-code": 1330
+      "functional-code": 1431,
+      "test-code": 1259
     },
     "raymondge": {
       "docs": 28,
-      "functional-code": 602,
+      "functional-code": 534,
       "test-code": 332
     },
     "itssodium": {
@@ -4514,7 +4566,7 @@
     }
   },
   "authorContributionVariance": {
-    "w-yeehong": 242364.72,
+    "w-yeehong": 251075.86,
     "LeeMingDe": 53098.31,
     "chiamyunqing": 116910.31,
     "raymondge": 5926.0474,

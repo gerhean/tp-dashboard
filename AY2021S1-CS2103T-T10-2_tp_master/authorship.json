@@ -2665,289 +2665,289 @@
       {
         "lineNumber": 136,
         "author": {
-          "gitId": "ruilingk"
+          "gitId": "hanweic53"
         },
-        "content": "### Planner feature \\[coming in v1.3]"
+        "content": "### Categorised Tasks Handling feature in Home tab \\[coming in v1.3] (Han Wei)"
       },
       {
         "lineNumber": 137,
         "author": {
-          "gitId": "ruilingk"
+          "gitId": "hanweic53"
         },
-        "content": "TR4CKER has a planner feature which provides users to view the calendar side-by-side with the tasks that are due on "
+        "content": ""
       },
       {
         "lineNumber": 138,
         "author": {
-          "gitId": "ruilingk"
+          "gitId": "hanweic53"
         },
-        "content": "specified day. This feature is to allow users to have a clearer view of their schedules and allow them to plan their"
+        "content": "### Feature introduction"
       },
       {
         "lineNumber": 139,
         "author": {
-          "gitId": "ruilingk"
+          "gitId": "hanweic53"
         },
-        "content": "time ahead, and hence increasing productivity."
+        "content": "This feature allows users to view and handle tasks under 3 categories separately."
       },
       {
         "lineNumber": 140,
         "author": {
-          "gitId": "ruilingk"
+          "gitId": "hanweic53"
         },
         "content": ""
       },
       {
         "lineNumber": 141,
         "author": {
-          "gitId": "ruilingk"
+          "gitId": "hanweic53"
         },
-        "content": "The 2 main functions of Planner command are to:"
+        "content": "### Implementation details"
       },
       {
         "lineNumber": 142,
         "author": {
-          "gitId": "ruilingk"
+          "gitId": "hanweic53"
         },
-        "content": "1. Switch to planner tab"
+        "content": "This feature comes in the form of a Task List panel, which is made up of three sub-panels:"
       },
       {
         "lineNumber": 143,
         "author": {
-          "gitId": "ruilingk"
+          "gitId": "hanweic53"
         },
-        "content": "2. Display an overview of tasks for today/tomorrow and on specified date/month"
+        "content": "1. Pending tasks (Incomplete tasks that are not overdue)"
       },
       {
         "lineNumber": 144,
         "author": {
-          "gitId": "ruilingk"
+          "gitId": "hanweic53"
         },
-        "content": ""
+        "content": "2. Expired tasks (Incomplete tasks that are overdue)"
       },
       {
         "lineNumber": 145,
         "author": {
-          "gitId": "ruilingk"
+          "gitId": "hanweic53"
         },
-        "content": "#### Implementation"
+        "content": "3. Completed tasks (Archived tasks)"
       },
       {
         "lineNumber": 146,
         "author": {
-          "gitId": "ruilingk"
+          "gitId": "hanweic53"
         },
-        "content": "To implement the UI of this planner feature, there is a `planner` package in `model` and `ui` packages. To implement "
+        "content": ""
       },
       {
         "lineNumber": 147,
         "author": {
-          "gitId": "ruilingk"
+          "gitId": "hanweic53"
         },
-        "content": "the commands of this planner feature, there are `PlannerCommand` and `PlannerCommandParser` classes in `logic` package."
+        "content": "Upon starting the app or refreshing of task lists, tasks which deadlines have passed will automatically appear under Expired tasks panel."
       },
       {
         "lineNumber": 148,
         "author": {
-          "gitId": "ruilingk"
+          "gitId": "hanweic53"
         },
-        "content": "The following class diagram (Figure 1) summarises how the UI aspect of this planner feature is being implemented:"
+        "content": "Users can modify tasks displayed in the Expired task panel using the Edit command."
       },
       {
         "lineNumber": 149,
         "author": {
-          "gitId": "ruilingk"
+          "gitId": "hanweic53"
         },
-        "content": "![PlannerClassDiagram](images/PlannerClassDiagram.png)"
+        "content": ""
       },
       {
         "lineNumber": 150,
         "author": {
-          "gitId": "ruilingk"
+          "gitId": "hanweic53"
         },
-        "content": "Figure 1: Planner Class Diagram"
+        "content": "The following diagram shows the sequence flow of a EditCommand which modifies the deadline of a task in the Expired task list:"
       },
       {
         "lineNumber": 151,
         "author": {
-          "gitId": "ruilingk"
+          "gitId": "hanweic53"
         },
-        "content": ""
+        "content": "![EditActivityDiagram](images/EditActivityDiagram.png)"
       },
       {
         "lineNumber": 152,
         "author": {
-          "gitId": "ruilingk"
+          "gitId": "hanweic53"
         },
-        "content": "During the initialisation of TR4CKER, `PlannerTabWindow` will be initialised, together with `PlannerCalendarPanel` and"
+        "content": "Figure 1: Edit deadline of expired task Activity Diagram"
       },
       {
         "lineNumber": 153,
         "author": {
-          "gitId": "ruilingk"
-        },
-        "content": "`TaskListPanel`. `PlannerTabWindow` will execute `Logic#getPlannerFilteredTaskList` to update the tasks list shown in "
-      },
-      {
-        "lineNumber": 154,
-        "author": {
-          "gitId": "ruilingk"
-        },
-        "content": "Planner tab. The month and year of the calendar will be set in `PlannerCalendarPanel`. There are multiple `PlannerDayCard`"
-      },
-      {
-        "lineNumber": 155,
-        "author": {
-          "gitId": "ruilingk"
-        },
-        "content": "in 1 `PlannerCalendarPanel`. `PlannerDayCard` serves to store the details of each `PlannerDay`, which contains the date"
-      },
-      {
-        "lineNumber": 156,
-        "author": {
-          "gitId": "ruilingk"
-        },
-        "content": "of each grid in the `PlannerCalendarPanel`. When users execute planner commands, The month and year of the calendar will "
-      },
-      {
-        "lineNumber": 157,
-        "author": {
-          "gitId": "ruilingk"
-        },
-        "content": "be updated in `PlannerCalendarPanel`. Existing details of the calendar will also be cleared through "
-      },
-      {
-        "lineNumber": 158,
-        "author": {
-          "gitId": "ruilingk"
-        },
-        "content": "`PlannerCalendarPanel#clearCalendar()` and `PlannerDayCard#clear()`. At the same time, the tasks list will also be updated."
-      },
-      {
-        "lineNumber": 159,
-        "author": {
-          "gitId": "ruilingk"
+          "gitId": "hanweic53"
         },
         "content": ""
       },
       {
+        "lineNumber": 154,
+        "author": {
+          "gitId": "hanweic53"
+        },
+        "content": "Once the user marks a task as complete, it will automatically appear under Completed tasks."
+      },
+      {
+        "lineNumber": 155,
+        "author": {
+          "gitId": "hanweic53"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 156,
+        "author": {
+          "gitId": "hanweic53"
+        },
+        "content": "### Design considerations:"
+      },
+      {
+        "lineNumber": 157,
+        "author": {
+          "gitId": "hanweic53"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 158,
+        "author": {
+          "gitId": "hanweic53"
+        },
+        "content": "#### Aspect 1: How users can easily view and control all the tasks"
+      },
+      {
+        "lineNumber": 159,
+        "author": {
+          "gitId": "hanweic53"
+        },
+        "content": "This design filters the tasks into 3 lists according to their completion statuses and deadlines which will be useful to the users,"
+      },
+      {
         "lineNumber": 160,
         "author": {
-          "gitId": "ruilingk"
+          "gitId": "hanweic53"
         },
-        "content": "The following sequence diagram (Figure 2) shows how the planner feature works when a user executes `planner goto/today`:"
+        "content": "as opposed to having browse through a long task list."
       },
       {
         "lineNumber": 161,
         "author": {
-          "gitId": "ruilingk"
+          "gitId": "hanweic53"
         },
-        "content": "![PlannerSequenceDiagram](images/PlannerSequenceDiagram.png)"
+        "content": ""
       },
       {
         "lineNumber": 162,
         "author": {
-          "gitId": "ruilingk"
+          "gitId": "hanweic53"
         },
-        "content": "Figure 2: Planner Sequence Diagram during execution of `planner goto/today`"
+        "content": "### Planner feature \\[coming in v1.3] (Rui Ling)"
       },
       {
         "lineNumber": 163,
         "author": {
           "gitId": "ruilingk"
         },
-        "content": ""
+        "content": "TR4CKER has a planner feature which provides users to view the calendar side-by-side with the tasks that are due on"
       },
       {
         "lineNumber": 164,
         "author": {
           "gitId": "ruilingk"
         },
-        "content": "When a user executes a `PlannerCommand` of `planner goto/today`, `MainWindow` will be called to execute the command. It will "
+        "content": "specified day. This feature is to allow users to have a clearer view of their schedules and allow them to plan their"
       },
       {
         "lineNumber": 165,
         "author": {
           "gitId": "ruilingk"
         },
-        "content": "then call `LogicManager` to execute, followed by parsing of command in `Tr4ckerParser`. `Tr4ckerParser` will create a new "
+        "content": "time ahead, and hence increasing productivity."
       },
       {
         "lineNumber": 166,
         "author": {
           "gitId": "ruilingk"
         },
-        "content": "instance of `PlannerCommandParser` to parse the user\u0027s input. After parsing and checking the validity of user\u0027s input, a "
+        "content": ""
       },
       {
         "lineNumber": 167,
         "author": {
           "gitId": "ruilingk"
         },
-        "content": "new `PlannerCommand` instance is created. This new instance `plannerCommand` will be passed back to `LogicManager` to execute "
+        "content": "The 2 main functions of Planner command are to:"
       },
       {
         "lineNumber": 168,
         "author": {
           "gitId": "ruilingk"
         },
-        "content": "on the `Model` in `PlannerCommand`. After executing, a new instance `CommandResult` `commandResult` is created. `commandResult` "
+        "content": "1. Switch to planner tab"
       },
       {
         "lineNumber": 169,
         "author": {
           "gitId": "ruilingk"
         },
-        "content": "will be passed back to `MainWindow`, then it will be checked in `PlannerTabWindow` if the user wants to switch to Planner "
+        "content": "2. Display an overview of tasks for today/tomorrow and on specified date/month"
       },
       {
         "lineNumber": 170,
         "author": {
           "gitId": "ruilingk"
         },
-        "content": "tab, or to view a specific date/month. After that, the calendar and tasks list are updated in Planner tab, and user can "
+        "content": ""
       },
       {
         "lineNumber": 171,
         "author": {
           "gitId": "ruilingk"
         },
-        "content": "now see the results."
+        "content": "#### Implementation"
       },
       {
         "lineNumber": 172,
         "author": {
           "gitId": "ruilingk"
         },
-        "content": ""
+        "content": "To implement the UI of this planner feature, there is a `planner` package in `model` and `ui` packages. To implement"
       },
       {
         "lineNumber": 173,
         "author": {
           "gitId": "ruilingk"
         },
-        "content": "The following activity diagram (Figure 3) summarises what happens when a user executes the 2 main functions of "
+        "content": "the commands of this planner feature, there are `PlannerCommand` and `PlannerCommandParser` classes in `logic` package."
       },
       {
         "lineNumber": 174,
         "author": {
           "gitId": "ruilingk"
         },
-        "content": "`PlannerCommand`:"
+        "content": "The following class diagram (Figure 1) summarises how the UI aspect of this planner feature is being implemented:"
       },
       {
         "lineNumber": 175,
         "author": {
           "gitId": "ruilingk"
         },
-        "content": "![PlannerActivityDiagram](images/PlannerActivityDiagram.png)"
+        "content": "![PlannerClassDiagram](images/PlannerClassDiagram.png)"
       },
       {
         "lineNumber": 176,
         "author": {
           "gitId": "ruilingk"
         },
-        "content": "Figure 3: Planner Activity Diagram"
+        "content": "Figure 1: Planner Class Diagram"
       },
       {
         "lineNumber": 177,
@@ -2961,140 +2961,140 @@
         "author": {
           "gitId": "ruilingk"
         },
-        "content": "This activity diagram shows all the possible paths TR4CKER can take when a user executes a `PlannerCommand`. After "
+        "content": "During the initialisation of TR4CKER, `PlannerTabWindow` will be initialised, together with `PlannerCalendarPanel` and"
       },
       {
         "lineNumber": 179,
         "author": {
           "gitId": "ruilingk"
         },
-        "content": "inputting a command, the command is parsed. By checking the arguments provided by the user, it can either mean the "
+        "content": "`TaskListPanel`. `PlannerTabWindow` will execute `Logic#getPlannerFilteredTaskList` to update the tasks list shown in"
       },
       {
         "lineNumber": 180,
         "author": {
           "gitId": "ruilingk"
         },
-        "content": "user wants to:"
+        "content": "Planner tab. The month and year of the calendar will be set in `PlannerCalendarPanel`. There are multiple `PlannerDayCard`"
       },
       {
         "lineNumber": 181,
         "author": {
           "gitId": "ruilingk"
         },
-        "content": "1. switch to Planner tab"
+        "content": "in 1 `PlannerCalendarPanel`. `PlannerDayCard` serves to store the details of each `PlannerDay`, which contains the date"
       },
       {
         "lineNumber": 182,
         "author": {
           "gitId": "ruilingk"
         },
-        "content": "2. display an overview of tasks for today/tomorrow and on a specified date/month."
+        "content": "of each grid in the `PlannerCalendarPanel`. When users execute planner commands, The month and year of the calendar will"
       },
       {
         "lineNumber": 183,
         "author": {
           "gitId": "ruilingk"
         },
-        "content": ""
+        "content": "be updated in `PlannerCalendarPanel`. Existing details of the calendar will also be cleared through"
       },
       {
         "lineNumber": 184,
         "author": {
           "gitId": "ruilingk"
         },
-        "content": "If user wants to switch to Planner tab, TR4CKER will display the planner, and a feedback will be provided to the user. If "
+        "content": "`PlannerCalendarPanel#clearCalendar()` and `PlannerDayCard#clear()`. At the same time, the tasks list will also be updated."
       },
       {
         "lineNumber": 185,
         "author": {
           "gitId": "ruilingk"
         },
-        "content": "user wants to display an overview of tasks, the validity of input will be checked. The input can take these 5 different paths:"
+        "content": ""
       },
       {
         "lineNumber": 186,
         "author": {
           "gitId": "ruilingk"
         },
-        "content": "1. today"
+        "content": "The following sequence diagram (Figure 2) shows how the planner feature works when a user executes `planner goto/today`:"
       },
       {
         "lineNumber": 187,
         "author": {
           "gitId": "ruilingk"
         },
-        "content": "2. tomorrow"
+        "content": "![PlannerSequenceDiagram](images/PlannerSequenceDiagram.png)"
       },
       {
         "lineNumber": 188,
         "author": {
           "gitId": "ruilingk"
         },
-        "content": "3. specified date"
+        "content": "Figure 2: Planner Sequence Diagram during execution of `planner goto/today`"
       },
       {
         "lineNumber": 189,
         "author": {
           "gitId": "ruilingk"
         },
-        "content": "4. specified month"
+        "content": ""
       },
       {
         "lineNumber": 190,
         "author": {
           "gitId": "ruilingk"
         },
-        "content": "5. error (not shown here)."
+        "content": "When a user executes a `PlannerCommand` of `planner goto/today`, `MainWindow` will be called to execute the command. It will"
       },
       {
         "lineNumber": 191,
         "author": {
           "gitId": "ruilingk"
         },
-        "content": ""
+        "content": "then call `LogicManager` to execute, followed by parsing of command in `Tr4ckerParser`. `Tr4ckerParser` will create a new"
       },
       {
         "lineNumber": 192,
         "author": {
           "gitId": "ruilingk"
         },
-        "content": "Depending on the inputs, the calendar view and tasks list will be updated accordingly. Planner tab is then displayed to "
+        "content": "instance of `PlannerCommandParser` to parse the user\u0027s input. After parsing and checking the validity of user\u0027s input, a"
       },
       {
         "lineNumber": 193,
         "author": {
           "gitId": "ruilingk"
         },
-        "content": "the user and a feedback is provided."
+        "content": "new `PlannerCommand` instance is created. This new instance `plannerCommand` will be passed back to `LogicManager` to execute"
       },
       {
         "lineNumber": 194,
         "author": {
           "gitId": "ruilingk"
         },
-        "content": ""
+        "content": "on the `Model` in `PlannerCommand`. After executing, a new instance `CommandResult` `commandResult` is created. `commandResult`"
       },
       {
         "lineNumber": 195,
         "author": {
           "gitId": "ruilingk"
         },
-        "content": "#### Design considerations:"
+        "content": "will be passed back to `MainWindow`, then it will be checked in `PlannerTabWindow` if the user wants to switch to Planner"
       },
       {
         "lineNumber": 196,
         "author": {
           "gitId": "ruilingk"
         },
-        "content": ""
+        "content": "tab, or to view a specific date/month. After that, the calendar and tasks list are updated in Planner tab, and user can"
       },
       {
         "lineNumber": 197,
         "author": {
           "gitId": "ruilingk"
         },
-        "content": "##### Aspect 1: How users can easily navigate to today\u0027s/tomorrow\u0027s tasks list"
+        "content": "now see the results."
       },
       {
         "lineNumber": 198,
@@ -3108,579 +3108,579 @@
         "author": {
           "gitId": "ruilingk"
         },
-        "content": "* **Current Choice:** Use the same `planner` command to navigate to today\u0027s/tomorrow\u0027s tasks list. For example, "
+        "content": "The following activity diagram (Figure 3) summarises what happens when a user executes the 2 main functions of"
       },
       {
         "lineNumber": 200,
         "author": {
           "gitId": "ruilingk"
         },
-        "content": "`planner goto/today` would navigate users to today\u0027s tasks list and `planner goto/tomorrow` would navigate users to "
+        "content": "`PlannerCommand`:"
       },
       {
         "lineNumber": 201,
         "author": {
           "gitId": "ruilingk"
         },
-        "content": "tomorrow\u0027s tasks list. Short forms are also provided such as `tdy` and `tmr`."
+        "content": "![PlannerActivityDiagram](images/PlannerActivityDiagram.png)"
       },
       {
         "lineNumber": 202,
         "author": {
           "gitId": "ruilingk"
         },
-        "content": "  * Pros: User-friendly as users would only need to know 1 command."
+        "content": "Figure 3: Planner Activity Diagram"
       },
       {
         "lineNumber": 203,
         "author": {
           "gitId": "ruilingk"
         },
-        "content": "  * Pros: Users can use short forms, which increase convenience."
+        "content": ""
       },
       {
         "lineNumber": 204,
         "author": {
           "gitId": "ruilingk"
         },
-        "content": "  * Cons: Users may not utilise this feature as they do not know the existence of it."
+        "content": "This activity diagram shows all the possible paths TR4CKER can take when a user executes a `PlannerCommand`. After"
       },
       {
         "lineNumber": 205,
         "author": {
           "gitId": "ruilingk"
         },
-        "content": ""
+        "content": "inputting a command, the command is parsed. By checking the arguments provided by the user, it can either mean the"
       },
       {
         "lineNumber": 206,
         "author": {
           "gitId": "ruilingk"
         },
-        "content": "* **Alternative 1:** Separate commands to allow users to navigate to today\u0027s/tomorrow\u0027s tasks list."
+        "content": "user wants to:"
       },
       {
         "lineNumber": 207,
         "author": {
           "gitId": "ruilingk"
         },
-        "content": "  * Pros: Clearer error messages to prompt users that the input does not conform to standard."
+        "content": "1. switch to Planner tab"
       },
       {
         "lineNumber": 208,
         "author": {
           "gitId": "ruilingk"
         },
-        "content": "  * Cons: Need to ensure that the implementation of each individual command is correct."
+        "content": "2. display an overview of tasks for today/tomorrow and on a specified date/month."
       },
       {
         "lineNumber": 209,
         "author": {
           "gitId": "ruilingk"
         },
-        "content": "  * Cons: Not as user-friendly as users would need to know multiple commands now."
+        "content": ""
       },
       {
         "lineNumber": 210,
         "author": {
           "gitId": "ruilingk"
         },
-        "content": "  "
+        "content": "If user wants to switch to Planner tab, TR4CKER will display the planner, and a feedback will be provided to the user. If"
       },
       {
         "lineNumber": 211,
         "author": {
           "gitId": "ruilingk"
         },
-        "content": "**Justification for current choice:** After thinking about how different commands would also have their own advantages,"
+        "content": "user wants to display an overview of tasks, the validity of input will be checked. The input can take these 5 different paths:"
       },
       {
         "lineNumber": 212,
         "author": {
           "gitId": "ruilingk"
         },
-        "content": "I chose to implement the current choice. The current implementation would allow users to only know 1 command, which would"
+        "content": "1. today"
       },
       {
         "lineNumber": 213,
         "author": {
           "gitId": "ruilingk"
         },
-        "content": "fairly be more user-friendly, especially after considering how TR4CKER also has many other commands available."
+        "content": "2. tomorrow"
       },
       {
         "lineNumber": 214,
         "author": {
           "gitId": "ruilingk"
         },
-        "content": "The problem of users not knowing the existence of this command could be solved by documenting this feature clearly in the"
+        "content": "3. specified date"
       },
       {
         "lineNumber": 215,
         "author": {
           "gitId": "ruilingk"
         },
-        "content": "User Guide of TR4CKER."
+        "content": "4. specified month"
       },
       {
         "lineNumber": 216,
         "author": {
           "gitId": "ruilingk"
         },
-        "content": ""
+        "content": "5. error (not shown here)."
       },
       {
         "lineNumber": 217,
         "author": {
           "gitId": "ruilingk"
         },
-        "content": "##### Aspect 2: \\[tbc]"
+        "content": ""
       },
       {
         "lineNumber": 218,
         "author": {
           "gitId": "ruilingk"
         },
-        "content": ""
+        "content": "Depending on the inputs, the calendar view and tasks list will be updated accordingly. Planner tab is then displayed to"
       },
       {
         "lineNumber": 219,
         "author": {
-          "gitId": "cwenling"
+          "gitId": "ruilingk"
         },
-        "content": "### Countdown feature \\[coming in v1.3]"
+        "content": "the user and a feedback is provided."
       },
       {
         "lineNumber": 220,
         "author": {
-          "gitId": "cwenling"
+          "gitId": "ruilingk"
         },
-        "content": "TR4CKER has a countdowns tab which allows users to add important dates and times that they would like TR4CKER to countdown to."
+        "content": ""
       },
       {
         "lineNumber": 221,
         "author": {
-          "gitId": "cwenling"
+          "gitId": "ruilingk"
         },
-        "content": "This feature allows users to isolate the most important time sensitive events and deadlines, and know exactly how much time "
+        "content": "#### Design considerations:"
       },
       {
         "lineNumber": 222,
         "author": {
-          "gitId": "cwenling"
+          "gitId": "ruilingk"
         },
-        "content": "they have before a certain event, which enhances the tracking experience."
+        "content": ""
       },
       {
         "lineNumber": 223,
         "author": {
-          "gitId": "cwenling"
+          "gitId": "ruilingk"
         },
-        "content": ""
+        "content": "##### Aspect 1: How users can easily navigate to today\u0027s/tomorrow\u0027s tasks list"
       },
       {
         "lineNumber": 224,
         "author": {
-          "gitId": "cwenling"
-        },
-        "content": "The 2 main functions of the Countdown feature are to:"
-      },
-      {
-        "lineNumber": 225,
-        "author": {
-          "gitId": "cwenling"
-        },
-        "content": "1. Display a countdown of all events to be tracked"
-      },
-      {
-        "lineNumber": 226,
-        "author": {
-          "gitId": "cwenling"
-        },
-        "content": "2. Display the next upcoming event"
-      },
-      {
-        "lineNumber": 227,
-        "author": {
-          "gitId": "cwenling"
+          "gitId": "ruilingk"
         },
         "content": ""
       },
       {
+        "lineNumber": 225,
+        "author": {
+          "gitId": "ruilingk"
+        },
+        "content": "* **Current Choice:** Use the same `planner` command to navigate to today\u0027s/tomorrow\u0027s tasks list. For example,"
+      },
+      {
+        "lineNumber": 226,
+        "author": {
+          "gitId": "ruilingk"
+        },
+        "content": "`planner goto/today` would navigate users to today\u0027s tasks list and `planner goto/tomorrow` would navigate users to"
+      },
+      {
+        "lineNumber": 227,
+        "author": {
+          "gitId": "ruilingk"
+        },
+        "content": "tomorrow\u0027s tasks list. Short forms are also provided such as `tdy` and `tmr`."
+      },
+      {
         "lineNumber": 228,
         "author": {
-          "gitId": "cwenling"
+          "gitId": "ruilingk"
         },
-        "content": "#### Implementation \\[will be updated with UML diagrams]"
+        "content": "  * Pros: User-friendly as users would only need to know 1 command."
       },
       {
         "lineNumber": 229,
         "author": {
-          "gitId": "cwenling"
+          "gitId": "ruilingk"
         },
-        "content": "The countdown panel is facilitated by the `CountdownPanel` class, which serves as the entry point to show users the countdown"
+        "content": "  * Pros: Users can use short forms, which increase convenience."
       },
       {
         "lineNumber": 230,
         "author": {
-          "gitId": "cwenling"
+          "gitId": "ruilingk"
         },
-        "content": "events as a list. "
+        "content": "  * Cons: Users may not utilise this feature as they do not know the existence of it."
       },
       {
         "lineNumber": 231,
         "author": {
-          "gitId": "cwenling"
+          "gitId": "ruilingk"
         },
         "content": ""
       },
       {
         "lineNumber": 232,
         "author": {
-          "gitId": "cwenling"
+          "gitId": "ruilingk"
         },
-        "content": "To illustrate how the 2 functions work step-by-step, given below are 3 example usage scenarios:"
+        "content": "* **Alternative 1:** Separate commands to allow users to navigate to today\u0027s/tomorrow\u0027s tasks list."
       },
       {
         "lineNumber": 233,
         "author": {
-          "gitId": "cwenling"
+          "gitId": "ruilingk"
         },
-        "content": ""
+        "content": "  * Pros: Clearer error messages to prompt users that the input does not conform to standard."
       },
       {
         "lineNumber": 234,
         "author": {
-          "gitId": "cwenling"
+          "gitId": "ruilingk"
         },
-        "content": "1. Displays all upcoming countdowns"
+        "content": "  * Cons: Need to ensure that the implementation of each individual command is correct."
       },
       {
         "lineNumber": 235,
         "author": {
-          "gitId": "cwenling"
+          "gitId": "ruilingk"
         },
-        "content": ""
+        "content": "  * Cons: Not as user-friendly as users would need to know multiple commands now."
       },
       {
         "lineNumber": 236,
         "author": {
-          "gitId": "cwenling"
+          "gitId": "ruilingk"
         },
-        "content": "2. Displays the next upcoming event"
+        "content": ""
       },
       {
         "lineNumber": 237,
         "author": {
-          "gitId": "cwenling"
+          "gitId": "ruilingk"
         },
-        "content": ""
+        "content": "**Justification for current choice:** After thinking about how different commands would also have their own advantages,"
       },
       {
         "lineNumber": 238,
         "author": {
-          "gitId": "cwenling"
+          "gitId": "ruilingk"
         },
-        "content": "#### Design considerations:"
+        "content": "I chose to implement the current choice. The current implementation would allow users to only know 1 command, which would"
       },
       {
         "lineNumber": 239,
         "author": {
-          "gitId": "cwenling"
+          "gitId": "ruilingk"
         },
-        "content": ""
+        "content": "fairly be more user-friendly, especially after considering how TR4CKER also has many other commands available."
       },
       {
         "lineNumber": 240,
         "author": {
-          "gitId": "cwenling"
+          "gitId": "ruilingk"
         },
-        "content": "##### Aspect 1: Users should be able to easily view the next most recent event"
+        "content": "The problem of users not knowing the existence of this command could be solved by documenting this feature clearly in the"
       },
       {
         "lineNumber": 241,
         "author": {
-          "gitId": "cwenling"
+          "gitId": "ruilingk"
         },
-        "content": ""
+        "content": "User Guide of TR4CKER."
       },
       {
         "lineNumber": 242,
         "author": {
-          "gitId": "cwenling"
+          "gitId": "ruilingk"
         },
-        "content": "* **Current Choice:** Use the same `countdown` command to navigate to the next event or previous event. For example, "
+        "content": ""
       },
       {
         "lineNumber": 243,
         "author": {
-          "gitId": "cwenling"
+          "gitId": "ruilingk"
         },
-        "content": "`countdown first` would display the earliest upcoming event, `countdown next` will display the event after the one "
+        "content": "##### Aspect 2: \\[tbc]"
       },
       {
         "lineNumber": 244,
         "author": {
-          "gitId": "cwenling"
+          "gitId": "ruilingk"
         },
-        "content": "currently displayed, and `countdown previous` with display the event before the one currently displayed."
+        "content": ""
       },
       {
         "lineNumber": 245,
         "author": {
-          "gitId": "cwenling"
+          "gitId": "hanweic53"
         },
-        "content": "  * Pros: Users can easily know the chronological sequence of events."
+        "content": "### Countdown feature \\[coming in v1.3] (Wen Ling)"
       },
       {
         "lineNumber": 246,
         "author": {
           "gitId": "cwenling"
         },
-        "content": "  * Cons: May be difficult to navigate if there is a long list of events."
+        "content": "TR4CKER has a countdowns tab which allows users to add important dates and times that they would like TR4CKER to countdown to."
       },
       {
         "lineNumber": 247,
         "author": {
           "gitId": "cwenling"
         },
-        "content": ""
+        "content": "This feature allows users to isolate the most important time sensitive events and deadlines, and know exactly how much time"
       },
       {
         "lineNumber": 248,
         "author": {
           "gitId": "cwenling"
         },
-        "content": "* **Alternative 1:** Another command to allow users to navigate to the events in a specified day."
+        "content": "they have before a certain event, which enhances the tracking experience."
       },
       {
         "lineNumber": 249,
         "author": {
           "gitId": "cwenling"
         },
-        "content": "  * Pros: More user-friendly as it is faster to navigate to a particular event on a particular day."
+        "content": ""
       },
       {
         "lineNumber": 250,
         "author": {
           "gitId": "cwenling"
         },
-        "content": "  * Cons: Requires user to already know what days have events in the countdown list."
+        "content": "The 2 main functions of the Countdown feature are to:"
       },
       {
         "lineNumber": 251,
         "author": {
           "gitId": "cwenling"
         },
-        "content": "  "
+        "content": "1. Display a countdown of all events to be tracked"
       },
       {
         "lineNumber": 252,
         "author": {
           "gitId": "cwenling"
         },
-        "content": "**Justification for current choice:** Considering how users who are using the countdown feature will prefer to be able"
+        "content": "2. Display the next upcoming event"
       },
       {
         "lineNumber": 253,
         "author": {
           "gitId": "cwenling"
         },
-        "content": "to know what is the next upcoming event, for example what is the next exam that they have to prepare for. The first implementation"
+        "content": ""
       },
       {
         "lineNumber": 254,
         "author": {
           "gitId": "cwenling"
         },
-        "content": "is also less prone to errors as users do are able to know what is the next event without knowing beforehand what day is it on."
+        "content": "#### Implementation \\[will be updated with UML diagrams]"
       },
       {
         "lineNumber": 255,
         "author": {
           "gitId": "cwenling"
         },
-        "content": ""
+        "content": "The countdown panel is facilitated by the `CountdownPanel` class, which serves as the entry point to show users the countdown"
       },
       {
         "lineNumber": 256,
         "author": {
-          "gitId": "-"
+          "gitId": "cwenling"
         },
-        "content": "### \\[Proposed\\] Undo/redo feature"
+        "content": "events as a list."
       },
       {
         "lineNumber": 257,
         "author": {
-          "gitId": "-"
+          "gitId": "cwenling"
         },
         "content": ""
       },
       {
         "lineNumber": 258,
         "author": {
-          "gitId": "-"
+          "gitId": "cwenling"
         },
-        "content": "#### Proposed Implementation"
+        "content": "To illustrate how the 2 functions work step-by-step, given below are 3 example usage scenarios:"
       },
       {
         "lineNumber": 259,
         "author": {
-          "gitId": "-"
+          "gitId": "cwenling"
         },
         "content": ""
       },
       {
         "lineNumber": 260,
         "author": {
-          "gitId": "ruilingk"
+          "gitId": "cwenling"
         },
-        "content": "The proposed undo/redo mechanism is facilitated by `VersionedAddressBook`. It extends `AddressBook` with an undo/redo "
+        "content": "1. Displays all upcoming countdowns"
       },
       {
         "lineNumber": 261,
         "author": {
-          "gitId": "ruilingk"
+          "gitId": "cwenling"
         },
-        "content": "history, stored internally as an `addressBookStateList` and `currentStatePointer`. Additionally, it implements the "
+        "content": ""
       },
       {
         "lineNumber": 262,
         "author": {
-          "gitId": "ruilingk"
+          "gitId": "cwenling"
         },
-        "content": "following operations:"
+        "content": "2. Displays the next upcoming event"
       },
       {
         "lineNumber": 263,
         "author": {
-          "gitId": "-"
+          "gitId": "cwenling"
         },
         "content": ""
       },
       {
         "lineNumber": 264,
         "author": {
-          "gitId": "yingqi0607"
+          "gitId": "cwenling"
         },
-        "content": "* `VersionedAddressBook#commit()` — Saves the current tr4cker state in its history."
+        "content": "#### Design considerations:"
       },
       {
         "lineNumber": 265,
         "author": {
-          "gitId": "yingqi0607"
+          "gitId": "cwenling"
         },
-        "content": "* `VersionedAddressBook#undo()` — Restores the previous tr4cker state from its history."
+        "content": ""
       },
       {
         "lineNumber": 266,
         "author": {
-          "gitId": "yingqi0607"
+          "gitId": "cwenling"
         },
-        "content": "* `VersionedAddressBook#redo()` — Restores a previously undone tr4cker state from its history."
+        "content": "##### Aspect 1: Users should be able to easily view the next most recent event"
       },
       {
         "lineNumber": 267,
         "author": {
-          "gitId": "-"
+          "gitId": "cwenling"
         },
         "content": ""
       },
       {
         "lineNumber": 268,
         "author": {
-          "gitId": "ruilingk"
+          "gitId": "cwenling"
         },
-        "content": "These operations are exposed in the `Model` interface as `Model#commitAddressBook()`, `Model#undoAddressBook()` and "
+        "content": "* **Current Choice:** Use the same `countdown` command to navigate to the next event or previous event. For example,"
       },
       {
         "lineNumber": 269,
         "author": {
-          "gitId": "ruilingk"
+          "gitId": "cwenling"
         },
-        "content": "`Model#redoAddressBook()` respectively."
+        "content": "`countdown first` would display the earliest upcoming event, `countdown next` will display the event after the one"
       },
       {
         "lineNumber": 270,
         "author": {
-          "gitId": "-"
+          "gitId": "cwenling"
         },
-        "content": ""
+        "content": "currently displayed, and `countdown previous` with display the event before the one currently displayed."
       },
       {
         "lineNumber": 271,
         "author": {
-          "gitId": "-"
+          "gitId": "cwenling"
         },
-        "content": "Given below is an example usage scenario and how the undo/redo mechanism behaves at each step."
+        "content": "  * Pros: Users can easily know the chronological sequence of events."
       },
       {
         "lineNumber": 272,
         "author": {
-          "gitId": "-"
+          "gitId": "cwenling"
         },
-        "content": ""
+        "content": "  * Cons: May be difficult to navigate if there is a long list of events."
       },
       {
         "lineNumber": 273,
         "author": {
-          "gitId": "ruilingk"
-        },
-        "content": "Step 1. The user launches the application for the first time. The `VersionedAddressBook` will be initialized with the "
-      },
-      {
-        "lineNumber": 274,
-        "author": {
-          "gitId": "ruilingk"
-        },
-        "content": "initial tr4cker state, and the `currentStatePointer` pointing to that single tr4cker state."
-      },
-      {
-        "lineNumber": 275,
-        "author": {
-          "gitId": "-"
+          "gitId": "cwenling"
         },
         "content": ""
       },
       {
+        "lineNumber": 274,
+        "author": {
+          "gitId": "cwenling"
+        },
+        "content": "* **Alternative 1:** Another command to allow users to navigate to the events in a specified day."
+      },
+      {
+        "lineNumber": 275,
+        "author": {
+          "gitId": "cwenling"
+        },
+        "content": "  * Pros: More user-friendly as it is faster to navigate to a particular event on a particular day."
+      },
+      {
         "lineNumber": 276,
         "author": {
-          "gitId": "-"
+          "gitId": "cwenling"
         },
-        "content": "![UndoRedoState0](images/UndoRedoState0.png)"
+        "content": "  * Cons: Requires user to already know what days have events in the countdown list."
       },
       {
         "lineNumber": 277,
         "author": {
-          "gitId": "-"
+          "gitId": "cwenling"
         },
         "content": ""
       },
       {
         "lineNumber": 278,
         "author": {
-          "gitId": "ruilingk"
+          "gitId": "cwenling"
         },
-        "content": "Step 2. The user executes `delete 5` command to delete the 5th task in the tr4cker. The `delete` command calls "
+        "content": "**Justification for current choice:** Considering how users who are using the countdown feature will prefer to be able"
       },
       {
         "lineNumber": 279,
         "author": {
-          "gitId": "ruilingk"
+          "gitId": "cwenling"
         },
-        "content": "`Model#commitAddressBook()`, causing the modified state of the tr4cker after the `delete 5` command executes to be saved "
+        "content": "to know what is the next upcoming event, for example what is the next exam that they have to prepare for. The first implementation"
       },
       {
         "lineNumber": 280,
         "author": {
-          "gitId": "ruilingk"
+          "gitId": "cwenling"
         },
-        "content": "in the `addressBookStateList`, and the `currentStatePointer` is shifted to the newly inserted tr4cker state."
+        "content": "is also less prone to errors as users do are able to know what is the next event without knowing beforehand what day is it on."
       },
       {
         "lineNumber": 281,
         "author": {
-          "gitId": "-"
+          "gitId": "cwenling"
         },
         "content": ""
       },
@@ -3689,7 +3689,7 @@
         "author": {
           "gitId": "-"
         },
-        "content": "![UndoRedoState1](images/UndoRedoState1.png)"
+        "content": "### \\[Proposed\\] Undo/redo feature"
       },
       {
         "lineNumber": 283,
@@ -3701,65 +3701,65 @@
       {
         "lineNumber": 284,
         "author": {
-          "gitId": "ruilingk"
+          "gitId": "-"
         },
-        "content": "Step 3. The user executes `add n/task 1 …​` to add a new task. The `add` command also calls "
+        "content": "#### Proposed Implementation"
       },
       {
         "lineNumber": 285,
         "author": {
-          "gitId": "ruilingk"
+          "gitId": "-"
         },
-        "content": "`Model#commitAddressBook()`, causing another modified tr4cker state to be saved into the `tr4ckerStateList`."
+        "content": ""
       },
       {
         "lineNumber": 286,
         "author": {
-          "gitId": "-"
+          "gitId": "ruilingk"
         },
-        "content": ""
+        "content": "The proposed undo/redo mechanism is facilitated by `VersionedAddressBook`. It extends `AddressBook` with an undo/redo"
       },
       {
         "lineNumber": 287,
         "author": {
-          "gitId": "-"
+          "gitId": "ruilingk"
         },
-        "content": "![UndoRedoState2](images/UndoRedoState2.png)"
+        "content": "history, stored internally as an `addressBookStateList` and `currentStatePointer`. Additionally, it implements the"
       },
       {
         "lineNumber": 288,
         "author": {
-          "gitId": "-"
+          "gitId": "ruilingk"
         },
-        "content": ""
+        "content": "following operations:"
       },
       {
         "lineNumber": 289,
         "author": {
-          "gitId": "ruilingk"
-        },
-        "content": "\u003cdiv markdown\u003d\"span\" class\u003d\"alert alert-info\"\u003e:information_source: **Note:** If a command fails its execution, it will "
-      },
-      {
-        "lineNumber": 290,
-        "author": {
-          "gitId": "ruilingk"
-        },
-        "content": "not call `Model#commitAddressBook()`, so the tr4cker state will not be saved into the `tr4ckerStateList`."
-      },
-      {
-        "lineNumber": 291,
-        "author": {
           "gitId": "-"
         },
         "content": ""
       },
       {
+        "lineNumber": 290,
+        "author": {
+          "gitId": "yingqi0607"
+        },
+        "content": "* `VersionedAddressBook#commit()` — Saves the current tr4cker state in its history."
+      },
+      {
+        "lineNumber": 291,
+        "author": {
+          "gitId": "yingqi0607"
+        },
+        "content": "* `VersionedAddressBook#undo()` — Restores the previous tr4cker state from its history."
+      },
+      {
         "lineNumber": 292,
         "author": {
-          "gitId": "-"
+          "gitId": "yingqi0607"
         },
-        "content": "\u003c/div\u003e"
+        "content": "* `VersionedAddressBook#redo()` — Restores a previously undone tr4cker state from its history."
       },
       {
         "lineNumber": 293,
@@ -3773,203 +3773,203 @@
         "author": {
           "gitId": "ruilingk"
         },
-        "content": "Step 4. The user now decides that adding the task was a mistake, and decides to undo that action by executing the `undo` "
+        "content": "These operations are exposed in the `Model` interface as `Model#commitAddressBook()`, `Model#undoAddressBook()` and"
       },
       {
         "lineNumber": 295,
         "author": {
           "gitId": "ruilingk"
         },
-        "content": "command. The `undo` command will call `Model#undoAddressBook()`, which will shift the `currentStatePointer` once to the "
+        "content": "`Model#redoAddressBook()` respectively."
       },
       {
         "lineNumber": 296,
         "author": {
-          "gitId": "ruilingk"
+          "gitId": "-"
         },
-        "content": "left, pointing it to the previous tr4cker state, and restores the tr4cker to that state."
+        "content": ""
       },
       {
         "lineNumber": 297,
         "author": {
           "gitId": "-"
         },
-        "content": ""
+        "content": "Given below is an example usage scenario and how the undo/redo mechanism behaves at each step."
       },
       {
         "lineNumber": 298,
         "author": {
           "gitId": "-"
         },
-        "content": "![UndoRedoState3](images/UndoRedoState3.png)"
+        "content": ""
       },
       {
         "lineNumber": 299,
         "author": {
-          "gitId": "-"
+          "gitId": "ruilingk"
         },
-        "content": ""
+        "content": "Step 1. The user launches the application for the first time. The `VersionedAddressBook` will be initialized with the"
       },
       {
         "lineNumber": 300,
         "author": {
           "gitId": "ruilingk"
         },
-        "content": "\u003cdiv markdown\u003d\"span\" class\u003d\"alert alert-info\"\u003e:information_source: **Note:** If the `currentStatePointer` is at index 0, "
+        "content": "initial tr4cker state, and the `currentStatePointer` pointing to that single tr4cker state."
       },
       {
         "lineNumber": 301,
         "author": {
-          "gitId": "ruilingk"
+          "gitId": "-"
         },
-        "content": "pointing to the initial tr4cker state, then there are no previous tr4cker states to restore. The `undo` command uses "
+        "content": ""
       },
       {
         "lineNumber": 302,
         "author": {
-          "gitId": "ruilingk"
+          "gitId": "-"
         },
-        "content": "`Model#canUndoAddressBook()` to check if this is the case. If so, it will return an error to the user rather"
+        "content": "![UndoRedoState0](images/UndoRedoState0.png)"
       },
       {
         "lineNumber": 303,
         "author": {
           "gitId": "-"
         },
-        "content": "than attempting to perform the undo."
+        "content": ""
       },
       {
         "lineNumber": 304,
         "author": {
-          "gitId": "-"
+          "gitId": "ruilingk"
         },
-        "content": ""
+        "content": "Step 2. The user executes `delete 5` command to delete the 5th task in the tr4cker. The `delete` command calls"
       },
       {
         "lineNumber": 305,
         "author": {
-          "gitId": "-"
+          "gitId": "ruilingk"
         },
-        "content": "\u003c/div\u003e"
+        "content": "`Model#commitAddressBook()`, causing the modified state of the tr4cker after the `delete 5` command executes to be saved"
       },
       {
         "lineNumber": 306,
         "author": {
-          "gitId": "-"
+          "gitId": "ruilingk"
         },
-        "content": ""
+        "content": "in the `addressBookStateList`, and the `currentStatePointer` is shifted to the newly inserted tr4cker state."
       },
       {
         "lineNumber": 307,
         "author": {
           "gitId": "-"
         },
-        "content": "The following sequence diagram shows how the undo operation works:"
+        "content": ""
       },
       {
         "lineNumber": 308,
         "author": {
           "gitId": "-"
         },
-        "content": ""
+        "content": "![UndoRedoState1](images/UndoRedoState1.png)"
       },
       {
         "lineNumber": 309,
         "author": {
           "gitId": "-"
         },
-        "content": "![UndoSequenceDiagram](images/UndoSequenceDiagram.png)"
+        "content": ""
       },
       {
         "lineNumber": 310,
         "author": {
-          "gitId": "-"
+          "gitId": "ruilingk"
         },
-        "content": ""
+        "content": "Step 3. The user executes `add n/task 1 …​` to add a new task. The `add` command also calls"
       },
       {
         "lineNumber": 311,
         "author": {
           "gitId": "ruilingk"
         },
-        "content": "\u003cdiv markdown\u003d\"span\" class\u003d\"alert alert-info\"\u003e:information_source: **Note:** The lifeline for `UndoCommand` should end "
+        "content": "`Model#commitAddressBook()`, causing another modified tr4cker state to be saved into the `tr4ckerStateList`."
       },
       {
         "lineNumber": 312,
         "author": {
-          "gitId": "ruilingk"
+          "gitId": "-"
         },
-        "content": "at the destroy marker (X) but due to a limitation of PlantUML, the lifeline reaches the end of diagram."
+        "content": ""
       },
       {
         "lineNumber": 313,
         "author": {
           "gitId": "-"
         },
-        "content": ""
+        "content": "![UndoRedoState2](images/UndoRedoState2.png)"
       },
       {
         "lineNumber": 314,
         "author": {
           "gitId": "-"
         },
-        "content": "\u003c/div\u003e"
+        "content": ""
       },
       {
         "lineNumber": 315,
         "author": {
-          "gitId": "-"
+          "gitId": "ruilingk"
         },
-        "content": ""
+        "content": "\u003cdiv markdown\u003d\"span\" class\u003d\"alert alert-info\"\u003e:information_source: **Note:** If a command fails its execution, it will"
       },
       {
         "lineNumber": 316,
         "author": {
           "gitId": "ruilingk"
         },
-        "content": "The `redo` command does the opposite — it calls `Model#redoAddressBook()`, which shifts the `currentStatePointer` "
+        "content": "not call `Model#commitAddressBook()`, so the tr4cker state will not be saved into the `tr4ckerStateList`."
       },
       {
         "lineNumber": 317,
-        "author": {
-          "gitId": "ruilingk"
-        },
-        "content": "once to the right, pointing to the previously undone state, and restores the tr4cker to that state."
-      },
-      {
-        "lineNumber": 318,
         "author": {
           "gitId": "-"
         },
         "content": ""
       },
       {
+        "lineNumber": 318,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "\u003c/div\u003e"
+      },
+      {
         "lineNumber": 319,
         "author": {
-          "gitId": "ruilingk"
+          "gitId": "-"
         },
-        "content": "\u003cdiv markdown\u003d\"span\" class\u003d\"alert alert-info\"\u003e:information_source: **Note:** If the `currentStatePointer` is at index "
+        "content": ""
       },
       {
         "lineNumber": 320,
         "author": {
           "gitId": "ruilingk"
         },
-        "content": "`addressBookStateList.size() - 1`, pointing to the latest tr4cker state, then there are no undone AddressBook states to "
+        "content": "Step 4. The user now decides that adding the task was a mistake, and decides to undo that action by executing the `undo`"
       },
       {
         "lineNumber": 321,
         "author": {
           "gitId": "ruilingk"
         },
-        "content": "restore. The `redo` command uses `Model#canRedoAddressBook()` to check if this is the case. If so, it will return an error "
+        "content": "command. The `undo` command will call `Model#undoAddressBook()`, which will shift the `currentStatePointer` once to the"
       },
       {
         "lineNumber": 322,
         "author": {
           "gitId": "ruilingk"
         },
-        "content": "to the user rather than attempting to perform the redo."
+        "content": "left, pointing it to the previous tr4cker state, and restores the tr4cker to that state."
       },
       {
         "lineNumber": 323,
@@ -3983,7 +3983,7 @@
         "author": {
           "gitId": "-"
         },
-        "content": "\u003c/div\u003e"
+        "content": "![UndoRedoState3](images/UndoRedoState3.png)"
       },
       {
         "lineNumber": 325,
@@ -3997,70 +3997,70 @@
         "author": {
           "gitId": "ruilingk"
         },
-        "content": "Step 5. The user then decides to execute the command `list`. Commands that do not modify the tr4cker, such as `list`, "
+        "content": "\u003cdiv markdown\u003d\"span\" class\u003d\"alert alert-info\"\u003e:information_source: **Note:** If the `currentStatePointer` is at index 0,"
       },
       {
         "lineNumber": 327,
         "author": {
           "gitId": "ruilingk"
         },
-        "content": "will usually not call `Model#commitAddressBook()`, `Model#undoAddressBook()` or `Model#redoAddressBook()`. Thus, the "
+        "content": "pointing to the initial tr4cker state, then there are no previous tr4cker states to restore. The `undo` command uses"
       },
       {
         "lineNumber": 328,
         "author": {
           "gitId": "ruilingk"
         },
-        "content": "`addressBookStateList` remains unchanged."
+        "content": "`Model#canUndoAddressBook()` to check if this is the case. If so, it will return an error to the user rather"
       },
       {
         "lineNumber": 329,
         "author": {
           "gitId": "-"
         },
-        "content": ""
+        "content": "than attempting to perform the undo."
       },
       {
         "lineNumber": 330,
         "author": {
           "gitId": "-"
         },
-        "content": "![UndoRedoState4](images/UndoRedoState4.png)"
+        "content": ""
       },
       {
         "lineNumber": 331,
         "author": {
           "gitId": "-"
         },
-        "content": ""
+        "content": "\u003c/div\u003e"
       },
       {
         "lineNumber": 332,
         "author": {
-          "gitId": "ruilingk"
+          "gitId": "-"
         },
-        "content": "Step 6. The user executes `clear`, which calls `Model#commitAddressBook()`. Since the `currentStatePointer` is not "
+        "content": ""
       },
       {
         "lineNumber": 333,
         "author": {
-          "gitId": "ruilingk"
+          "gitId": "-"
         },
-        "content": "pointing at the end of the `addressBookStateList`, all tr4cker states after the `currentStatePointer` will be purged. "
+        "content": "The following sequence diagram shows how the undo operation works:"
       },
       {
         "lineNumber": 334,
         "author": {
-          "gitId": "ruilingk"
+          "gitId": "-"
         },
-        "content": "Reason: It no longer makes sense to redo the `add n/David …​` command. This is the behavior that most modern desktop "
+        "content": ""
       },
       {
         "lineNumber": 335,
         "author": {
-          "gitId": "ruilingk"
+          "gitId": "-"
         },
-        "content": "applications follow."
+        "content": "![UndoSequenceDiagram](images/UndoSequenceDiagram.png)"
       },
       {
         "lineNumber": 336,
@@ -4072,51 +4072,51 @@
       {
         "lineNumber": 337,
         "author": {
-          "gitId": "-"
+          "gitId": "ruilingk"
         },
-        "content": "![UndoRedoState5](images/UndoRedoState5.png)"
+        "content": "\u003cdiv markdown\u003d\"span\" class\u003d\"alert alert-info\"\u003e:information_source: **Note:** The lifeline for `UndoCommand` should end"
       },
       {
         "lineNumber": 338,
         "author": {
-          "gitId": "-"
+          "gitId": "ruilingk"
         },
-        "content": ""
+        "content": "at the destroy marker (X) but due to a limitation of PlantUML, the lifeline reaches the end of diagram."
       },
       {
         "lineNumber": 339,
         "author": {
           "gitId": "-"
         },
-        "content": "The following activity diagram summarizes what happens when a user executes a new command:"
+        "content": ""
       },
       {
         "lineNumber": 340,
         "author": {
           "gitId": "-"
         },
-        "content": ""
+        "content": "\u003c/div\u003e"
       },
       {
         "lineNumber": 341,
         "author": {
           "gitId": "-"
         },
-        "content": "![CommitActivityDiagram](images/CommitActivityDiagram.png)"
+        "content": ""
       },
       {
         "lineNumber": 342,
         "author": {
-          "gitId": "-"
+          "gitId": "ruilingk"
         },
-        "content": ""
+        "content": "The `redo` command does the opposite — it calls `Model#redoAddressBook()`, which shifts the `currentStatePointer`"
       },
       {
         "lineNumber": 343,
         "author": {
-          "gitId": "-"
+          "gitId": "ruilingk"
         },
-        "content": "#### Design consideration:"
+        "content": "once to the right, pointing to the previously undone state, and restores the tr4cker to that state."
       },
       {
         "lineNumber": 344,
@@ -4128,72 +4128,72 @@
       {
         "lineNumber": 345,
         "author": {
-          "gitId": "-"
+          "gitId": "ruilingk"
         },
-        "content": "##### Aspect: How undo \u0026 redo executes"
+        "content": "\u003cdiv markdown\u003d\"span\" class\u003d\"alert alert-info\"\u003e:information_source: **Note:** If the `currentStatePointer` is at index"
       },
       {
         "lineNumber": 346,
         "author": {
-          "gitId": "-"
+          "gitId": "ruilingk"
         },
-        "content": ""
+        "content": "`addressBookStateList.size() - 1`, pointing to the latest tr4cker state, then there are no undone AddressBook states to"
       },
       {
         "lineNumber": 347,
         "author": {
-          "gitId": "yingqi0607"
+          "gitId": "ruilingk"
         },
-        "content": "* **Alternative 1 (current choice):** Saves the entire tr4cker."
+        "content": "restore. The `redo` command uses `Model#canRedoAddressBook()` to check if this is the case. If so, it will return an error"
       },
       {
         "lineNumber": 348,
         "author": {
-          "gitId": "-"
+          "gitId": "ruilingk"
         },
-        "content": "  * Pros: Easy to implement."
+        "content": "to the user rather than attempting to perform the redo."
       },
       {
         "lineNumber": 349,
         "author": {
           "gitId": "-"
         },
-        "content": "  * Cons: May have performance issues in terms of memory usage."
+        "content": ""
       },
       {
         "lineNumber": 350,
         "author": {
           "gitId": "-"
         },
-        "content": ""
+        "content": "\u003c/div\u003e"
       },
       {
         "lineNumber": 351,
         "author": {
           "gitId": "-"
         },
-        "content": "* **Alternative 2:** Individual command knows how to undo/redo by"
+        "content": ""
       },
       {
         "lineNumber": 352,
         "author": {
-          "gitId": "-"
+          "gitId": "ruilingk"
         },
-        "content": "  itself."
+        "content": "Step 5. The user then decides to execute the command `list`. Commands that do not modify the tr4cker, such as `list`,"
       },
       {
         "lineNumber": 353,
         "author": {
-          "gitId": "-"
+          "gitId": "ruilingk"
         },
-        "content": "  * Pros: Will use less memory (e.g. for `delete`, just save the person being deleted)."
+        "content": "will usually not call `Model#commitAddressBook()`, `Model#undoAddressBook()` or `Model#redoAddressBook()`. Thus, the"
       },
       {
         "lineNumber": 354,
         "author": {
-          "gitId": "-"
+          "gitId": "ruilingk"
         },
-        "content": "  * Cons: We must ensure that the implementation of each individual command are correct."
+        "content": "`addressBookStateList` remains unchanged."
       },
       {
         "lineNumber": 355,
@@ -4207,7 +4207,7 @@
         "author": {
           "gitId": "-"
         },
-        "content": "_{more aspects and alternatives to be added}_"
+        "content": "![UndoRedoState4](images/UndoRedoState4.png)"
       },
       {
         "lineNumber": 357,
@@ -4219,30 +4219,30 @@
       {
         "lineNumber": 358,
         "author": {
-          "gitId": "-"
+          "gitId": "ruilingk"
         },
-        "content": "### \\[Proposed\\] Data archiving"
+        "content": "Step 6. The user executes `clear`, which calls `Model#commitAddressBook()`. Since the `currentStatePointer` is not"
       },
       {
         "lineNumber": 359,
         "author": {
-          "gitId": "-"
+          "gitId": "ruilingk"
         },
-        "content": ""
+        "content": "pointing at the end of the `addressBookStateList`, all tr4cker states after the `currentStatePointer` will be purged."
       },
       {
         "lineNumber": 360,
         "author": {
-          "gitId": "-"
+          "gitId": "ruilingk"
         },
-        "content": "_{Explain here how the data archiving feature will be implemented}_"
+        "content": "Reason: It no longer makes sense to redo the `add n/David …​` command. This is the behavior that most modern desktop"
       },
       {
         "lineNumber": 361,
         "author": {
-          "gitId": "-"
+          "gitId": "ruilingk"
         },
-        "content": ""
+        "content": "applications follow."
       },
       {
         "lineNumber": 362,
@@ -4256,7 +4256,7 @@
         "author": {
           "gitId": "-"
         },
-        "content": "--------------------------------------------------------------------------------------------------------------------"
+        "content": "![UndoRedoState5](images/UndoRedoState5.png)"
       },
       {
         "lineNumber": 364,
@@ -4270,7 +4270,7 @@
         "author": {
           "gitId": "-"
         },
-        "content": "## **Documentation, logging, testing, configuration, dev-ops**"
+        "content": "The following activity diagram summarizes what happens when a user executes a new command:"
       },
       {
         "lineNumber": 366,
@@ -4284,35 +4284,35 @@
         "author": {
           "gitId": "-"
         },
-        "content": "* [Documentation guide](Documentation.md)"
+        "content": "![CommitActivityDiagram](images/CommitActivityDiagram.png)"
       },
       {
         "lineNumber": 368,
         "author": {
           "gitId": "-"
         },
-        "content": "* [Testing guide](Testing.md)"
+        "content": ""
       },
       {
         "lineNumber": 369,
         "author": {
           "gitId": "-"
         },
-        "content": "* [Logging guide](Logging.md)"
+        "content": "#### Design consideration:"
       },
       {
         "lineNumber": 370,
         "author": {
           "gitId": "-"
         },
-        "content": "* [Configuration guide](Configuration.md)"
+        "content": ""
       },
       {
         "lineNumber": 371,
         "author": {
           "gitId": "-"
         },
-        "content": "* [DevOps guide](DevOps.md)"
+        "content": "##### Aspect: How undo \u0026 redo executes"
       },
       {
         "lineNumber": 372,
@@ -4324,23 +4324,23 @@
       {
         "lineNumber": 373,
         "author": {
-          "gitId": "-"
+          "gitId": "yingqi0607"
         },
-        "content": "--------------------------------------------------------------------------------------------------------------------"
+        "content": "* **Alternative 1 (current choice):** Saves the entire tr4cker."
       },
       {
         "lineNumber": 374,
         "author": {
           "gitId": "-"
         },
-        "content": ""
+        "content": "  * Pros: Easy to implement."
       },
       {
         "lineNumber": 375,
         "author": {
           "gitId": "-"
         },
-        "content": "## **Appendix: Requirements**"
+        "content": "  * Cons: May have performance issues in terms of memory usage."
       },
       {
         "lineNumber": 376,
@@ -4354,70 +4354,70 @@
         "author": {
           "gitId": "-"
         },
-        "content": "### Product scope"
+        "content": "* **Alternative 2:** Individual command knows how to undo/redo by"
       },
       {
         "lineNumber": 378,
         "author": {
           "gitId": "-"
         },
-        "content": ""
+        "content": "  itself."
       },
       {
         "lineNumber": 379,
         "author": {
           "gitId": "-"
         },
-        "content": "**Target user profile**:"
+        "content": "  * Pros: Will use less memory (e.g. for `delete`, just save the person being deleted)."
       },
       {
         "lineNumber": 380,
         "author": {
           "gitId": "-"
         },
-        "content": ""
+        "content": "  * Cons: We must ensure that the implementation of each individual command are correct."
       },
       {
         "lineNumber": 381,
         "author": {
-          "gitId": "cwenling"
+          "gitId": "-"
         },
-        "content": "* busy SoC students"
+        "content": ""
       },
       {
         "lineNumber": 382,
         "author": {
-          "gitId": "cwenling"
+          "gitId": "-"
         },
-        "content": "* has a need to manage a significant number of tasks, such as assignments"
+        "content": "_{more aspects and alternatives to be added}_"
       },
       {
         "lineNumber": 383,
         "author": {
           "gitId": "-"
         },
-        "content": "* prefer desktop apps over other types"
+        "content": ""
       },
       {
         "lineNumber": 384,
         "author": {
           "gitId": "-"
         },
-        "content": "* can type fast"
+        "content": "### \\[Proposed\\] Data archiving"
       },
       {
         "lineNumber": 385,
         "author": {
           "gitId": "-"
         },
-        "content": "* prefers typing to mouse interactions"
+        "content": ""
       },
       {
         "lineNumber": 386,
         "author": {
           "gitId": "-"
         },
-        "content": "* is reasonably comfortable using CLI apps"
+        "content": "_{Explain here how the data archiving feature will be implemented}_"
       },
       {
         "lineNumber": 387,
@@ -4429,30 +4429,30 @@
       {
         "lineNumber": 388,
         "author": {
-          "gitId": "cwenling"
+          "gitId": "-"
         },
-        "content": "**Value proposition**: TR4CKER is a desktop app that helps SoC students track their tasks, meet their deadlines,"
+        "content": ""
       },
       {
         "lineNumber": 389,
         "author": {
-          "gitId": "cwenling"
+          "gitId": "-"
         },
-        "content": "and stay productive. It is optimized for Computing students familiar with CLI, who can manage their tasks efficiently"
+        "content": "--------------------------------------------------------------------------------------------------------------------"
       },
       {
         "lineNumber": 390,
         "author": {
-          "gitId": "cwenling"
+          "gitId": "-"
         },
-        "content": "by typing in commands."
+        "content": ""
       },
       {
         "lineNumber": 391,
         "author": {
           "gitId": "-"
         },
-        "content": ""
+        "content": "## **Documentation, logging, testing, configuration, dev-ops**"
       },
       {
         "lineNumber": 392,
@@ -4466,91 +4466,91 @@
         "author": {
           "gitId": "-"
         },
-        "content": "### User stories"
+        "content": "* [Documentation guide](Documentation.md)"
       },
       {
         "lineNumber": 394,
         "author": {
           "gitId": "-"
         },
-        "content": ""
+        "content": "* [Testing guide](Testing.md)"
       },
       {
         "lineNumber": 395,
         "author": {
           "gitId": "-"
         },
-        "content": "Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unlikely to have) - `*`"
+        "content": "* [Logging guide](Logging.md)"
       },
       {
         "lineNumber": 396,
         "author": {
           "gitId": "-"
         },
-        "content": ""
+        "content": "* [Configuration guide](Configuration.md)"
       },
       {
         "lineNumber": 397,
         "author": {
           "gitId": "-"
         },
-        "content": "| Priority | As a …​                                    | I want to …​                     | So that I can…​                                                        |"
+        "content": "* [DevOps guide](DevOps.md)"
       },
       {
         "lineNumber": 398,
         "author": {
           "gitId": "-"
         },
-        "content": "| -------- | ------------------------------------------ | ------------------------------ | ---------------------------------------------------------------------- |"
+        "content": ""
       },
       {
         "lineNumber": 399,
         "author": {
-          "gitId": "yingqi0607"
+          "gitId": "-"
         },
-        "content": "| `* * *`  | user                                       | add a new task                 |                                                                        |"
+        "content": "--------------------------------------------------------------------------------------------------------------------"
       },
       {
         "lineNumber": 400,
         "author": {
-          "gitId": "yingqi0607"
+          "gitId": "-"
         },
-        "content": "| `* * *`  | user                                       | delete a task                  | remove tasks that I have completed or no longer need                   |"
+        "content": ""
       },
       {
         "lineNumber": 401,
         "author": {
-          "gitId": "yingqi0607"
+          "gitId": "-"
         },
-        "content": "| `* * *`  | user                                       | edit a task                    | change the tasks that I have entered wrongly without deleting it       |"
+        "content": "## **Appendix: Requirements**"
       },
       {
         "lineNumber": 402,
         "author": {
-          "gitId": "yingqi0607"
+          "gitId": "-"
         },
-        "content": "| `* * *`  | user                                       | view all tasks                 | have a overview of all tasks that I have                               |"
+        "content": ""
       },
       {
         "lineNumber": 403,
         "author": {
-          "gitId": "yingqi0607"
+          "gitId": "-"
         },
-        "content": "| `* * *`  | user                                       | find a task                    | find the tasks that match the keywords that I want to find             |"
+        "content": "### Product scope"
       },
       {
         "lineNumber": 404,
         "author": {
-          "gitId": "yingqi0607"
+          "gitId": "-"
         },
-        "content": "| `* * *`  | user                                       | mark a task as completed       | when I complete a task, I want to mark it as completed                 |"
+        "content": ""
       },
       {
         "lineNumber": 405,
         "author": {
-          "gitId": "yingqi0607"
+          "gitId": "-"
         },
-        "content": "| `* * *`  | user                                       | exit from the program          | indicate that I am done with what I wanted to do                       |"
+        "content": "**Target user profile**:"
       },
       {
         "lineNumber": 406,
@@ -4562,282 +4562,282 @@
       {
         "lineNumber": 407,
         "author": {
-          "gitId": "-"
+          "gitId": "cwenling"
         },
-        "content": "*{More to be added}*"
+        "content": "* busy SoC students"
       },
       {
         "lineNumber": 408,
         "author": {
-          "gitId": "-"
+          "gitId": "cwenling"
         },
-        "content": ""
+        "content": "* has a need to manage a significant number of tasks, such as assignments"
       },
       {
         "lineNumber": 409,
         "author": {
           "gitId": "-"
         },
-        "content": "### Use cases"
+        "content": "* prefer desktop apps over other types"
       },
       {
         "lineNumber": 410,
         "author": {
           "gitId": "-"
         },
-        "content": ""
+        "content": "* can type fast"
       },
       {
         "lineNumber": 411,
         "author": {
-          "gitId": "ethan-l-m-e"
+          "gitId": "-"
         },
-        "content": "(For all use cases below, the **System** is the `TR4CKER`: application and the **Actor** is the `user`, unless specified otherwise)"
+        "content": "* prefers typing to mouse interactions"
       },
       {
         "lineNumber": 412,
         "author": {
           "gitId": "-"
         },
-        "content": ""
+        "content": "* is reasonably comfortable using CLI apps"
       },
       {
         "lineNumber": 413,
         "author": {
-          "gitId": "hanweic53"
+          "gitId": "-"
         },
-        "content": "**Use case: UC01 - Add a new task**"
+        "content": ""
       },
       {
         "lineNumber": 414,
         "author": {
-          "gitId": "-"
+          "gitId": "cwenling"
         },
-        "content": ""
+        "content": "**Value proposition**: TR4CKER is a desktop app that helps SoC students track their tasks, meet their deadlines,"
       },
       {
         "lineNumber": 415,
         "author": {
-          "gitId": "-"
+          "gitId": "cwenling"
         },
-        "content": "**MSS**"
+        "content": "and stay productive. It is optimized for Computing students familiar with CLI, who can manage their tasks efficiently"
       },
       {
         "lineNumber": 416,
+        "author": {
+          "gitId": "cwenling"
+        },
+        "content": "by typing in commands."
+      },
+      {
+        "lineNumber": 417,
         "author": {
           "gitId": "-"
         },
         "content": ""
       },
       {
-        "lineNumber": 417,
-        "author": {
-          "gitId": "hanweic53"
-        },
-        "content": "1.  User requests to add a new task."
-      },
-      {
         "lineNumber": 418,
         "author": {
-          "gitId": "hanweic53"
+          "gitId": "-"
         },
-        "content": "2.  TR4CKER requests for task details."
+        "content": ""
       },
       {
         "lineNumber": 419,
         "author": {
-          "gitId": "hanweic53"
+          "gitId": "-"
         },
-        "content": "3.  User provides task details."
+        "content": "### User stories"
       },
       {
         "lineNumber": 420,
         "author": {
-          "gitId": "hanweic53"
+          "gitId": "-"
         },
-        "content": "4.  TR4CKER inserts the new task to user\u0027s task list."
+        "content": ""
       },
       {
         "lineNumber": 421,
         "author": {
           "gitId": "-"
         },
-        "content": ""
+        "content": "Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unlikely to have) - `*`"
       },
       {
         "lineNumber": 422,
         "author": {
           "gitId": "-"
         },
-        "content": "    Use case ends."
+        "content": ""
       },
       {
         "lineNumber": 423,
         "author": {
           "gitId": "-"
         },
-        "content": ""
+        "content": "| Priority | As a …​                                    | I want to …​                     | So that I can…​                                                        |"
       },
       {
         "lineNumber": 424,
         "author": {
           "gitId": "-"
         },
-        "content": "**Extensions**"
+        "content": "| -------- | ------------------------------------------ | ------------------------------ | ---------------------------------------------------------------------- |"
       },
       {
         "lineNumber": 425,
         "author": {
-          "gitId": "-"
+          "gitId": "yingqi0607"
         },
-        "content": ""
+        "content": "| `* * *`  | user                                       | add a new task                 |                                                                        |"
       },
       {
         "lineNumber": 426,
         "author": {
-          "gitId": "hanweic53"
+          "gitId": "yingqi0607"
         },
-        "content": "* 3a. TR4CKER detects an error in entered task details."
+        "content": "| `* * *`  | user                                       | delete a task                  | remove tasks that I have completed or no longer need                   |"
       },
       {
         "lineNumber": 427,
         "author": {
-          "gitId": "hanweic53"
+          "gitId": "yingqi0607"
         },
-        "content": "    * 3a1. TR4CKER requests for the correct task details."
+        "content": "| `* * *`  | user                                       | edit a task                    | change the tasks that I have entered wrongly without deleting it       |"
       },
       {
         "lineNumber": 428,
         "author": {
-          "gitId": "hanweic53"
+          "gitId": "yingqi0607"
         },
-        "content": "    * 3a2. User enters the new task details."
+        "content": "| `* * *`  | user                                       | view all tasks                 | have a overview of all tasks that I have                               |"
       },
       {
         "lineNumber": 429,
         "author": {
-          "gitId": "-"
+          "gitId": "yingqi0607"
         },
-        "content": ""
+        "content": "| `* * *`  | user                                       | find a task                    | find the tasks that match the keywords that I want to find             |"
       },
       {
         "lineNumber": 430,
         "author": {
-          "gitId": "hanweic53"
+          "gitId": "yingqi0607"
         },
-        "content": "    Steps 3a1-3a2 are repeated until the details entered are correct."
+        "content": "| `* * *`  | user                                       | mark a task as completed       | when I complete a task, I want to mark it as completed                 |"
       },
       {
         "lineNumber": 431,
         "author": {
-          "gitId": "-"
+          "gitId": "yingqi0607"
         },
-        "content": ""
+        "content": "| `* * *`  | user                                       | exit from the program          | indicate that I am done with what I wanted to do                       |"
       },
       {
         "lineNumber": 432,
         "author": {
-          "gitId": "hanweic53"
+          "gitId": "-"
         },
-        "content": "    Use case resumes at step 4."
+        "content": ""
       },
       {
         "lineNumber": 433,
         "author": {
           "gitId": "-"
         },
-        "content": ""
+        "content": "*{More to be added}*"
       },
       {
         "lineNumber": 434,
         "author": {
-          "gitId": "hanweic53"
+          "gitId": "-"
         },
-        "content": "**Use case: UC02 - Edit a task**"
+        "content": ""
       },
       {
         "lineNumber": 435,
         "author": {
           "gitId": "-"
         },
-        "content": ""
+        "content": "### Use cases"
       },
       {
         "lineNumber": 436,
-        "author": {
-          "gitId": "hanweic53"
-        },
-        "content": "**MSS**"
-      },
-      {
-        "lineNumber": 437,
         "author": {
           "gitId": "-"
         },
         "content": ""
       },
       {
+        "lineNumber": 437,
+        "author": {
+          "gitId": "ethan-l-m-e"
+        },
+        "content": "(For all use cases below, the **System** is the `TR4CKER`: application and the **Actor** is the `user`, unless specified otherwise)"
+      },
+      {
         "lineNumber": 438,
         "author": {
-          "gitId": "hanweic53"
+          "gitId": "-"
         },
-        "content": "1.  User requests to \u003cu\u003elist task (UC07)\u003c/u\u003e."
+        "content": ""
       },
       {
         "lineNumber": 439,
         "author": {
           "gitId": "hanweic53"
         },
-        "content": "2.  User requests to edit a specific task in the list."
+        "content": "**Use case: UC01 - Add a new task**"
       },
       {
         "lineNumber": 440,
         "author": {
-          "gitId": "hanweic53"
+          "gitId": "-"
         },
-        "content": "3.  TR4CKER asks for the index."
+        "content": ""
       },
       {
         "lineNumber": 441,
         "author": {
-          "gitId": "hanweic53"
+          "gitId": "-"
         },
-        "content": "4.  User provides index."
+        "content": "**MSS**"
       },
       {
         "lineNumber": 442,
         "author": {
-          "gitId": "hanweic53"
+          "gitId": "-"
         },
-        "content": "5.  TR4CKER asks for the field that User wishes to edit for the task."
+        "content": ""
       },
       {
         "lineNumber": 443,
         "author": {
           "gitId": "hanweic53"
         },
-        "content": "6.  User provides field to edit."
+        "content": "1.  User requests to add a new task."
       },
       {
         "lineNumber": 444,
         "author": {
           "gitId": "hanweic53"
         },
-        "content": "7.  TR4CKER asks for the edited task field."
+        "content": "2.  TR4CKER requests for task details."
       },
       {
         "lineNumber": 445,
         "author": {
           "gitId": "hanweic53"
         },
-        "content": "8.  User provides the new edited task field."
+        "content": "3.  User provides task details."
       },
       {
         "lineNumber": 446,
         "author": {
           "gitId": "hanweic53"
         },
-        "content": "9.  TR4CKER updates the selected field accordingly."
+        "content": "4.  TR4CKER inserts the new task to user\u0027s task list."
       },
       {
         "lineNumber": 447,
@@ -4849,7 +4849,7 @@
       {
         "lineNumber": 448,
         "author": {
-          "gitId": "hanweic53"
+          "gitId": "-"
         },
         "content": "    Use case ends."
       },
@@ -4863,7 +4863,7 @@
       {
         "lineNumber": 450,
         "author": {
-          "gitId": "hanweic53"
+          "gitId": "-"
         },
         "content": "**Extensions**"
       },
@@ -4879,196 +4879,196 @@
         "author": {
           "gitId": "hanweic53"
         },
-        "content": "* 4a. TR4CKER detects an error in entered task index."
+        "content": "* 3a. TR4CKER detects an error in entered task details."
       },
       {
         "lineNumber": 453,
         "author": {
           "gitId": "hanweic53"
         },
-        "content": "    * 4a1. TR4CKER shows an error message."
+        "content": "    * 3a1. TR4CKER requests for the correct task details."
       },
       {
         "lineNumber": 454,
         "author": {
           "gitId": "hanweic53"
         },
-        "content": ""
+        "content": "    * 3a2. User enters the new task details."
       },
       {
         "lineNumber": 455,
         "author": {
-          "gitId": "hanweic53"
+          "gitId": "-"
         },
-        "content": "    Use case end."
+        "content": ""
       },
       {
         "lineNumber": 456,
         "author": {
           "gitId": "hanweic53"
         },
-        "content": ""
+        "content": "    Steps 3a1-3a2 are repeated until the details entered are correct."
       },
       {
         "lineNumber": 457,
         "author": {
-          "gitId": "hanweic53"
+          "gitId": "-"
         },
-        "content": "* 8a. TR4CKER detects an error in edited task field."
+        "content": ""
       },
       {
         "lineNumber": 458,
         "author": {
           "gitId": "hanweic53"
         },
-        "content": "    * 8a1. TR4CKER requests for the correct edited field."
+        "content": "    Use case resumes at step 4."
       },
       {
         "lineNumber": 459,
         "author": {
-          "gitId": "hanweic53"
+          "gitId": "-"
         },
-        "content": "    * 8a2. User enters the new edited field."
+        "content": ""
       },
       {
         "lineNumber": 460,
         "author": {
           "gitId": "hanweic53"
         },
-        "content": ""
+        "content": "**Use case: UC02 - Edit a task**"
       },
       {
         "lineNumber": 461,
         "author": {
-          "gitId": "hanweic53"
+          "gitId": "-"
         },
-        "content": "    Steps 8a1-8a2 are repeated until the edited field entered is correct."
+        "content": ""
       },
       {
         "lineNumber": 462,
         "author": {
           "gitId": "hanweic53"
         },
-        "content": ""
+        "content": "**MSS**"
       },
       {
         "lineNumber": 463,
         "author": {
-          "gitId": "hanweic53"
+          "gitId": "-"
         },
-        "content": "    Use case resumes at step 9."
+        "content": ""
       },
       {
         "lineNumber": 464,
         "author": {
           "gitId": "hanweic53"
         },
-        "content": ""
+        "content": "1.  User requests to \u003cu\u003elist task (UC07)\u003c/u\u003e."
       },
       {
         "lineNumber": 465,
         "author": {
           "gitId": "hanweic53"
         },
-        "content": "**Use case: UC03 - Delete a task**"
+        "content": "2.  User requests to edit a specific task in the list."
       },
       {
         "lineNumber": 466,
         "author": {
           "gitId": "hanweic53"
         },
-        "content": ""
+        "content": "3.  TR4CKER asks for the index."
       },
       {
         "lineNumber": 467,
         "author": {
           "gitId": "hanweic53"
         },
-        "content": "**MSS**"
+        "content": "4.  User provides index."
       },
       {
         "lineNumber": 468,
         "author": {
           "gitId": "hanweic53"
         },
-        "content": ""
+        "content": "5.  TR4CKER asks for the field that User wishes to edit for the task."
       },
       {
         "lineNumber": 469,
         "author": {
           "gitId": "hanweic53"
         },
-        "content": "1.  User requests to \u003cu\u003elist task (UC07)\u003c/u\u003e."
+        "content": "6.  User provides field to edit."
       },
       {
         "lineNumber": 470,
         "author": {
           "gitId": "hanweic53"
         },
-        "content": "2.  User requests to delete a specific task in the list."
+        "content": "7.  TR4CKER asks for the edited task field."
       },
       {
         "lineNumber": 471,
         "author": {
           "gitId": "hanweic53"
         },
-        "content": "3.  TR4CKER asks for the index."
+        "content": "8.  User provides the new edited task field."
       },
       {
         "lineNumber": 472,
         "author": {
           "gitId": "hanweic53"
         },
-        "content": "4.  User provides index."
+        "content": "9.  TR4CKER updates the selected field accordingly."
       },
       {
         "lineNumber": 473,
         "author": {
-          "gitId": "hanweic53"
+          "gitId": "-"
         },
-        "content": "5.  TR4CKER requests for confirmation."
+        "content": ""
       },
       {
         "lineNumber": 474,
         "author": {
           "gitId": "hanweic53"
         },
-        "content": "6.  User confirms."
+        "content": "    Use case ends."
       },
       {
         "lineNumber": 475,
         "author": {
-          "gitId": "hanweic53"
+          "gitId": "-"
         },
-        "content": "7.  TR4CKER deletes the task from the list."
+        "content": ""
       },
       {
         "lineNumber": 476,
         "author": {
           "gitId": "hanweic53"
         },
-        "content": ""
+        "content": "**Extensions**"
       },
       {
         "lineNumber": 477,
         "author": {
-          "gitId": "hanweic53"
+          "gitId": "-"
         },
-        "content": "    Use case ends."
+        "content": ""
       },
       {
         "lineNumber": 478,
         "author": {
           "gitId": "hanweic53"
         },
-        "content": ""
+        "content": "* 4a. TR4CKER detects an error in entered task index."
       },
       {
         "lineNumber": 479,
         "author": {
           "gitId": "hanweic53"
         },
-        "content": "**Extensions**"
+        "content": "    * 4a1. TR4CKER shows an error message."
       },
       {
         "lineNumber": 480,
@@ -5082,215 +5082,215 @@
         "author": {
           "gitId": "hanweic53"
         },
-        "content": "* 4a. TR4CKER detects an error in entered task index."
+        "content": "    Use case end."
       },
       {
         "lineNumber": 482,
         "author": {
           "gitId": "hanweic53"
         },
-        "content": "    * 4a1. TR4CKER shows an error message."
+        "content": ""
       },
       {
         "lineNumber": 483,
         "author": {
           "gitId": "hanweic53"
         },
-        "content": ""
+        "content": "* 8a. TR4CKER detects an error in edited task field."
       },
       {
         "lineNumber": 484,
         "author": {
           "gitId": "hanweic53"
         },
-        "content": "    Use case ends."
+        "content": "    * 8a1. TR4CKER requests for the correct edited field."
       },
       {
         "lineNumber": 485,
         "author": {
           "gitId": "hanweic53"
         },
-        "content": ""
+        "content": "    * 8a2. User enters the new edited field."
       },
       {
         "lineNumber": 486,
         "author": {
-          "gitId": "ethan-l-m-e"
+          "gitId": "hanweic53"
         },
-        "content": "**Use case: UC04 - Mark a task as done**"
+        "content": ""
       },
       {
         "lineNumber": 487,
         "author": {
-          "gitId": "-"
+          "gitId": "hanweic53"
         },
-        "content": ""
+        "content": "    Steps 8a1-8a2 are repeated until the edited field entered is correct."
       },
       {
         "lineNumber": 488,
         "author": {
-          "gitId": "-"
+          "gitId": "hanweic53"
         },
-        "content": "**MSS**"
+        "content": ""
       },
       {
         "lineNumber": 489,
         "author": {
-          "gitId": "-"
+          "gitId": "hanweic53"
         },
-        "content": ""
+        "content": "    Use case resumes at step 9."
       },
       {
         "lineNumber": 490,
         "author": {
-          "gitId": "ethan-l-m-e"
+          "gitId": "hanweic53"
         },
-        "content": "1.  User requests to \u003cu\u003elist task (UC07)\u003c/u\u003e."
+        "content": ""
       },
       {
         "lineNumber": 491,
         "author": {
-          "gitId": "ethan-l-m-e"
+          "gitId": "hanweic53"
         },
-        "content": "2.  User requests to mark a specific task in the list as done."
+        "content": "**Use case: UC03 - Delete a task**"
       },
       {
         "lineNumber": 492,
         "author": {
-          "gitId": "ethan-l-m-e"
+          "gitId": "hanweic53"
         },
-        "content": "3.  TR4CKER marks the task as done."
+        "content": ""
       },
       {
         "lineNumber": 493,
         "author": {
-          "gitId": "ethan-l-m-e"
-        },
-        "content": ""
-      },
-      {
-        "lineNumber": 494,
-        "author": {
-          "gitId": "ethan-l-m-e"
-        },
-        "content": "    Use case ends."
-      },
-      {
-        "lineNumber": 495,
-        "author": {
-          "gitId": "ethan-l-m-e"
-        },
-        "content": ""
-      },
-      {
-        "lineNumber": 496,
-        "author": {
-          "gitId": "ethan-l-m-e"
-        },
-        "content": "**Extensions**"
-      },
-      {
-        "lineNumber": 497,
-        "author": {
-          "gitId": "ethan-l-m-e"
-        },
-        "content": ""
-      },
-      {
-        "lineNumber": 498,
-        "author": {
-          "gitId": "ethan-l-m-e"
-        },
-        "content": "* 2a. TR4CKER detects an error in entered task index."
-      },
-      {
-        "lineNumber": 499,
-        "author": {
-          "gitId": "ethan-l-m-e"
-        },
-        "content": ""
-      },
-      {
-        "lineNumber": 500,
-        "author": {
-          "gitId": "ethan-l-m-e"
-        },
-        "content": "    * 2a1. TR4CKER shows an error message."
-      },
-      {
-        "lineNumber": 501,
-        "author": {
-          "gitId": "-"
-        },
-        "content": ""
-      },
-      {
-        "lineNumber": 502,
-        "author": {
-          "gitId": "-"
-        },
-        "content": "     Use case ends."
-      },
-      {
-        "lineNumber": 503,
-        "author": {
-          "gitId": "-"
-        },
-        "content": ""
-      },
-      {
-        "lineNumber": 504,
-        "author": {
-          "gitId": "ethan-l-m-e"
-        },
-        "content": "**Use case: UC05 - View a task**"
-      },
-      {
-        "lineNumber": 505,
-        "author": {
-          "gitId": "ethan-l-m-e"
-        },
-        "content": ""
-      },
-      {
-        "lineNumber": 506,
-        "author": {
-          "gitId": "ethan-l-m-e"
+          "gitId": "hanweic53"
         },
         "content": "**MSS**"
       },
       {
-        "lineNumber": 507,
+        "lineNumber": 494,
         "author": {
-          "gitId": "ethan-l-m-e"
+          "gitId": "hanweic53"
         },
         "content": ""
       },
       {
-        "lineNumber": 508,
+        "lineNumber": 495,
         "author": {
-          "gitId": "ethan-l-m-e"
+          "gitId": "hanweic53"
         },
         "content": "1.  User requests to \u003cu\u003elist task (UC07)\u003c/u\u003e."
       },
       {
+        "lineNumber": 496,
+        "author": {
+          "gitId": "hanweic53"
+        },
+        "content": "2.  User requests to delete a specific task in the list."
+      },
+      {
+        "lineNumber": 497,
+        "author": {
+          "gitId": "hanweic53"
+        },
+        "content": "3.  TR4CKER asks for the index."
+      },
+      {
+        "lineNumber": 498,
+        "author": {
+          "gitId": "hanweic53"
+        },
+        "content": "4.  User provides index."
+      },
+      {
+        "lineNumber": 499,
+        "author": {
+          "gitId": "hanweic53"
+        },
+        "content": "5.  TR4CKER requests for confirmation."
+      },
+      {
+        "lineNumber": 500,
+        "author": {
+          "gitId": "hanweic53"
+        },
+        "content": "6.  User confirms."
+      },
+      {
+        "lineNumber": 501,
+        "author": {
+          "gitId": "hanweic53"
+        },
+        "content": "7.  TR4CKER deletes the task from the list."
+      },
+      {
+        "lineNumber": 502,
+        "author": {
+          "gitId": "hanweic53"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 503,
+        "author": {
+          "gitId": "hanweic53"
+        },
+        "content": "    Use case ends."
+      },
+      {
+        "lineNumber": 504,
+        "author": {
+          "gitId": "hanweic53"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 505,
+        "author": {
+          "gitId": "hanweic53"
+        },
+        "content": "**Extensions**"
+      },
+      {
+        "lineNumber": 506,
+        "author": {
+          "gitId": "hanweic53"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 507,
+        "author": {
+          "gitId": "hanweic53"
+        },
+        "content": "* 4a. TR4CKER detects an error in entered task index."
+      },
+      {
+        "lineNumber": 508,
+        "author": {
+          "gitId": "hanweic53"
+        },
+        "content": "    * 4a1. TR4CKER shows an error message."
+      },
+      {
         "lineNumber": 509,
         "author": {
-          "gitId": "ethan-l-m-e"
+          "gitId": "hanweic53"
         },
-        "content": "2.  User requests to view a specific task in the list."
+        "content": ""
       },
       {
         "lineNumber": 510,
         "author": {
-          "gitId": "ethan-l-m-e"
+          "gitId": "hanweic53"
         },
-        "content": "3.  TR4CKER shows the details of the task."
+        "content": "    Use case ends."
       },
       {
         "lineNumber": 511,
         "author": {
-          "gitId": "ethan-l-m-e"
+          "gitId": "hanweic53"
         },
         "content": ""
       },
@@ -5299,21 +5299,21 @@
         "author": {
           "gitId": "ethan-l-m-e"
         },
-        "content": "    Use case ends."
+        "content": "**Use case: UC04 - Mark a task as done**"
       },
       {
         "lineNumber": 513,
         "author": {
-          "gitId": "ethan-l-m-e"
+          "gitId": "-"
         },
         "content": ""
       },
       {
         "lineNumber": 514,
         "author": {
-          "gitId": "ethan-l-m-e"
+          "gitId": "-"
         },
-        "content": "**Extensions**"
+        "content": "**MSS**"
       },
       {
         "lineNumber": 515,
@@ -5327,21 +5327,21 @@
         "author": {
           "gitId": "ethan-l-m-e"
         },
-        "content": "* 2a. TR4CKER detects an error in entered task index."
+        "content": "1.  User requests to \u003cu\u003elist task (UC07)\u003c/u\u003e."
       },
       {
         "lineNumber": 517,
         "author": {
-          "gitId": "-"
+          "gitId": "ethan-l-m-e"
         },
-        "content": ""
+        "content": "2.  User requests to mark a specific task in the list as done."
       },
       {
         "lineNumber": 518,
         "author": {
           "gitId": "ethan-l-m-e"
         },
-        "content": "    * 2a1. TR4CKER shows an error message."
+        "content": "3.  TR4CKER marks the task as done."
       },
       {
         "lineNumber": 519,
@@ -5353,14 +5353,14 @@
       {
         "lineNumber": 520,
         "author": {
-          "gitId": "-"
+          "gitId": "ethan-l-m-e"
         },
         "content": "    Use case ends."
       },
       {
         "lineNumber": 521,
         "author": {
-          "gitId": "-"
+          "gitId": "ethan-l-m-e"
         },
         "content": ""
       },
@@ -5369,7 +5369,7 @@
         "author": {
           "gitId": "ethan-l-m-e"
         },
-        "content": "**Use case: UC06 - Find related tasks**"
+        "content": "**Extensions**"
       },
       {
         "lineNumber": 523,
@@ -5383,138 +5383,138 @@
         "author": {
           "gitId": "ethan-l-m-e"
         },
-        "content": "1.  User requests to find tasks using specified keyword(s)."
+        "content": "* 2a. TR4CKER detects an error in entered task index."
       },
       {
         "lineNumber": 525,
         "author": {
           "gitId": "ethan-l-m-e"
         },
-        "content": "2.  TR4CKER shows a list of all tasks that match the given keyword(s)."
+        "content": ""
       },
       {
         "lineNumber": 526,
         "author": {
           "gitId": "ethan-l-m-e"
         },
-        "content": ""
+        "content": "    * 2a1. TR4CKER shows an error message."
       },
       {
         "lineNumber": 527,
         "author": {
-          "gitId": "ethan-l-m-e"
-        },
-        "content": "    Use case ends."
-      },
-      {
-        "lineNumber": 528,
-        "author": {
-          "gitId": "ethan-l-m-e"
+          "gitId": "-"
         },
         "content": ""
       },
       {
+        "lineNumber": 528,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "     Use case ends."
+      },
+      {
         "lineNumber": 529,
         "author": {
-          "gitId": "ethan-l-m-e"
+          "gitId": "-"
         },
-        "content": "**Extensions**"
+        "content": ""
       },
       {
         "lineNumber": 530,
         "author": {
           "gitId": "ethan-l-m-e"
         },
-        "content": ""
+        "content": "**Use case: UC05 - View a task**"
       },
       {
         "lineNumber": 531,
         "author": {
           "gitId": "ethan-l-m-e"
         },
-        "content": "* 2a. No tasks match the specified keyword(s)."
+        "content": ""
       },
       {
         "lineNumber": 532,
         "author": {
           "gitId": "ethan-l-m-e"
         },
-        "content": ""
+        "content": "**MSS**"
       },
       {
         "lineNumber": 533,
         "author": {
           "gitId": "ethan-l-m-e"
         },
-        "content": "    * 2a1. TR4CKER shows a \u0027no matches\u0027 error message."
+        "content": ""
       },
       {
         "lineNumber": 534,
         "author": {
           "gitId": "ethan-l-m-e"
         },
-        "content": ""
+        "content": "1.  User requests to \u003cu\u003elist task (UC07)\u003c/u\u003e."
       },
       {
         "lineNumber": 535,
         "author": {
           "gitId": "ethan-l-m-e"
         },
-        "content": "    Use case ends."
+        "content": "2.  User requests to view a specific task in the list."
       },
       {
         "lineNumber": 536,
         "author": {
           "gitId": "ethan-l-m-e"
         },
-        "content": ""
+        "content": "3.  TR4CKER shows the details of the task."
       },
       {
         "lineNumber": 537,
         "author": {
           "gitId": "ethan-l-m-e"
         },
-        "content": "**Use case: UC07 - List all tasks**"
+        "content": ""
       },
       {
         "lineNumber": 538,
         "author": {
           "gitId": "ethan-l-m-e"
         },
-        "content": ""
+        "content": "    Use case ends."
       },
       {
         "lineNumber": 539,
         "author": {
           "gitId": "ethan-l-m-e"
         },
-        "content": "**MSS**"
+        "content": ""
       },
       {
         "lineNumber": 540,
         "author": {
           "gitId": "ethan-l-m-e"
         },
-        "content": ""
+        "content": "**Extensions**"
       },
       {
         "lineNumber": 541,
         "author": {
-          "gitId": "ethan-l-m-e"
+          "gitId": "-"
         },
-        "content": "1.  User requests to list tasks."
+        "content": ""
       },
       {
         "lineNumber": 542,
         "author": {
           "gitId": "ethan-l-m-e"
         },
-        "content": "2.  TR4CKER shows a list of all tasks."
+        "content": "* 2a. TR4CKER detects an error in entered task index."
       },
       {
         "lineNumber": 543,
         "author": {
-          "gitId": "ethan-l-m-e"
+          "gitId": "-"
         },
         "content": ""
       },
@@ -5523,7 +5523,7 @@
         "author": {
           "gitId": "ethan-l-m-e"
         },
-        "content": "    Use case ends."
+        "content": "    * 2a1. TR4CKER shows an error message."
       },
       {
         "lineNumber": 545,
@@ -5535,14 +5535,14 @@
       {
         "lineNumber": 546,
         "author": {
-          "gitId": "ethan-l-m-e"
+          "gitId": "-"
         },
-        "content": "**Extensions**"
+        "content": "    Use case ends."
       },
       {
         "lineNumber": 547,
         "author": {
-          "gitId": "ethan-l-m-e"
+          "gitId": "-"
         },
         "content": ""
       },
@@ -5551,7 +5551,7 @@
         "author": {
           "gitId": "ethan-l-m-e"
         },
-        "content": "* 2a. TR4CKER\u0027s task list is empty."
+        "content": "**Use case: UC06 - Find related tasks**"
       },
       {
         "lineNumber": 549,
@@ -5565,217 +5565,217 @@
         "author": {
           "gitId": "ethan-l-m-e"
         },
-        "content": "    * 2a1. TR4CKER shows an empty list."
+        "content": "1.  User requests to find tasks using specified keyword(s)."
       },
       {
         "lineNumber": 551,
         "author": {
           "gitId": "ethan-l-m-e"
         },
-        "content": ""
+        "content": "2.  TR4CKER shows a list of all tasks that match the given keyword(s)."
       },
       {
         "lineNumber": 552,
         "author": {
           "gitId": "ethan-l-m-e"
         },
-        "content": "    Use case ends."
+        "content": ""
       },
       {
         "lineNumber": 553,
         "author": {
           "gitId": "ethan-l-m-e"
         },
-        "content": ""
+        "content": "    Use case ends."
       },
       {
         "lineNumber": 554,
         "author": {
-          "gitId": "-"
-        },
-        "content": "### Non-Functional Requirements"
-      },
-      {
-        "lineNumber": 555,
-        "author": {
-          "gitId": "-"
+          "gitId": "ethan-l-m-e"
         },
         "content": ""
       },
       {
+        "lineNumber": 555,
+        "author": {
+          "gitId": "ethan-l-m-e"
+        },
+        "content": "**Extensions**"
+      },
+      {
         "lineNumber": 556,
         "author": {
-          "gitId": "ruilingk"
+          "gitId": "ethan-l-m-e"
         },
-        "content": "1.  TR4CKER should work on any _mainstream OS_ as long as it has Java `11` or above installed."
+        "content": ""
       },
       {
         "lineNumber": 557,
         "author": {
-          "gitId": "ruilingk"
+          "gitId": "ethan-l-m-e"
         },
-        "content": "2.  TR4CKER should be able to hold up to **1000 tasks** without any noticeable sluggishness in performance for typical usage."
+        "content": "* 2a. No tasks match the specified keyword(s)."
       },
       {
         "lineNumber": 558,
         "author": {
-          "gitId": "ruilingk"
+          "gitId": "ethan-l-m-e"
         },
-        "content": "3.  Users should be able to use TR4CKER without Internet connection, but accessing of User Guide or Developer Guide would require Internet."
+        "content": ""
       },
       {
         "lineNumber": 559,
         "author": {
-          "gitId": "ruilingk"
+          "gitId": "ethan-l-m-e"
         },
-        "content": "4.  Users with above average typing speed for regular English text (i.e. not code, not system admin commands) should be able to"
+        "content": "    * 2a1. TR4CKER shows a \u0027no matches\u0027 error message."
       },
       {
         "lineNumber": 560,
         "author": {
-          "gitId": "ruilingk"
+          "gitId": "ethan-l-m-e"
         },
-        "content": "    accomplish most of the tasks faster using commands than using the mouse."
+        "content": ""
       },
       {
         "lineNumber": 561,
         "author": {
-          "gitId": "ruilingk"
+          "gitId": "ethan-l-m-e"
         },
-        "content": "5.  Users should be able to retain their information when they switch laptops if they have the `data folder` (created on first load)"
+        "content": "    Use case ends."
       },
       {
         "lineNumber": 562,
         "author": {
-          "gitId": "ruilingk"
+          "gitId": "ethan-l-m-e"
         },
-        "content": "    in the same directory as the `JAR file` on the other laptop."
+        "content": ""
       },
       {
         "lineNumber": 563,
         "author": {
-          "gitId": "ruilingk"
+          "gitId": "ethan-l-m-e"
         },
-        "content": "6.  The user interface should be intuitive enough for users who are not tech-savvy."
+        "content": "**Use case: UC07 - List all tasks**"
       },
       {
         "lineNumber": 564,
         "author": {
-          "gitId": "ruilingk"
+          "gitId": "ethan-l-m-e"
         },
-        "content": "7.  The response to any inputted commands should become visible within 5 seconds."
+        "content": ""
       },
       {
         "lineNumber": 565,
         "author": {
-          "gitId": "ruilingk"
+          "gitId": "ethan-l-m-e"
         },
-        "content": "8.  The source code should be open source."
+        "content": "**MSS**"
       },
       {
         "lineNumber": 566,
         "author": {
-          "gitId": "-"
+          "gitId": "ethan-l-m-e"
         },
         "content": ""
       },
       {
         "lineNumber": 567,
         "author": {
-          "gitId": "-"
+          "gitId": "ethan-l-m-e"
         },
-        "content": "### Glossary"
+        "content": "1.  User requests to list tasks."
       },
       {
         "lineNumber": 568,
         "author": {
-          "gitId": "-"
+          "gitId": "ethan-l-m-e"
         },
-        "content": ""
+        "content": "2.  TR4CKER shows a list of all tasks."
       },
       {
         "lineNumber": 569,
         "author": {
-          "gitId": "-"
+          "gitId": "ethan-l-m-e"
         },
-        "content": "* **Mainstream OS**: Windows, Linux, Unix, OS-X"
+        "content": ""
       },
       {
         "lineNumber": 570,
         "author": {
-          "gitId": "cwenling"
+          "gitId": "ethan-l-m-e"
         },
-        "content": "* **Task**: An item to be completed by a certain deadline."
+        "content": "    Use case ends."
       },
       {
         "lineNumber": 571,
         "author": {
-          "gitId": "cwenling"
+          "gitId": "ethan-l-m-e"
         },
-        "content": "* **CLI**: Command-Line Interface, a method of interacting with computer programs by typing lines of text."
+        "content": ""
       },
       {
         "lineNumber": 572,
         "author": {
-          "gitId": "-"
+          "gitId": "ethan-l-m-e"
         },
-        "content": ""
+        "content": "**Extensions**"
       },
       {
         "lineNumber": 573,
         "author": {
-          "gitId": "-"
+          "gitId": "ethan-l-m-e"
         },
-        "content": "--------------------------------------------------------------------------------------------------------------------"
+        "content": ""
       },
       {
         "lineNumber": 574,
         "author": {
-          "gitId": "-"
+          "gitId": "ethan-l-m-e"
         },
-        "content": ""
+        "content": "* 2a. TR4CKER\u0027s task list is empty."
       },
       {
         "lineNumber": 575,
         "author": {
-          "gitId": "-"
+          "gitId": "ethan-l-m-e"
         },
-        "content": "## **Appendix: Instructions for manual testing**"
+        "content": ""
       },
       {
         "lineNumber": 576,
         "author": {
-          "gitId": "-"
+          "gitId": "ethan-l-m-e"
         },
-        "content": ""
+        "content": "    * 2a1. TR4CKER shows an empty list."
       },
       {
         "lineNumber": 577,
         "author": {
-          "gitId": "-"
-        },
-        "content": "Given below are instructions to test the app manually."
-      },
-      {
-        "lineNumber": 578,
-        "author": {
-          "gitId": "-"
+          "gitId": "ethan-l-m-e"
         },
         "content": ""
       },
       {
+        "lineNumber": 578,
+        "author": {
+          "gitId": "ethan-l-m-e"
+        },
+        "content": "    Use case ends."
+      },
+      {
         "lineNumber": 579,
         "author": {
-          "gitId": "-"
+          "gitId": "ethan-l-m-e"
         },
-        "content": "\u003cdiv markdown\u003d\"span\" class\u003d\"alert alert-info\"\u003e:information_source: **Note:** These instructions only provide a starting point for testers to work on;"
+        "content": ""
       },
       {
         "lineNumber": 580,
         "author": {
           "gitId": "-"
         },
-        "content": "testers are expected to do more *exploratory* testing."
+        "content": "### Non-Functional Requirements"
       },
       {
         "lineNumber": 581,
@@ -5787,114 +5787,114 @@
       {
         "lineNumber": 582,
         "author": {
-          "gitId": "-"
+          "gitId": "ruilingk"
         },
-        "content": "\u003c/div\u003e"
+        "content": "1.  TR4CKER should work on any _mainstream OS_ as long as it has Java `11` or above installed."
       },
       {
         "lineNumber": 583,
         "author": {
-          "gitId": "-"
+          "gitId": "ruilingk"
         },
-        "content": ""
+        "content": "2.  TR4CKER should be able to hold up to **1000 tasks** without any noticeable sluggishness in performance for typical usage."
       },
       {
         "lineNumber": 584,
         "author": {
-          "gitId": "-"
+          "gitId": "ruilingk"
         },
-        "content": "### Launch and shutdown"
+        "content": "3.  Users should be able to use TR4CKER without Internet connection, but accessing of User Guide or Developer Guide would require Internet."
       },
       {
         "lineNumber": 585,
         "author": {
-          "gitId": "-"
+          "gitId": "ruilingk"
         },
-        "content": ""
+        "content": "4.  Users with above average typing speed for regular English text (i.e. not code, not system admin commands) should be able to"
       },
       {
         "lineNumber": 586,
         "author": {
-          "gitId": "-"
+          "gitId": "ruilingk"
         },
-        "content": "1. Initial launch"
+        "content": "    accomplish most of the tasks faster using commands than using the mouse."
       },
       {
         "lineNumber": 587,
         "author": {
-          "gitId": "-"
+          "gitId": "ruilingk"
         },
-        "content": ""
+        "content": "5.  Users should be able to retain their information when they switch laptops if they have the `data folder` (created on first load)"
       },
       {
         "lineNumber": 588,
         "author": {
-          "gitId": "-"
+          "gitId": "ruilingk"
         },
-        "content": "   1. Download the jar file and copy into an empty folder"
+        "content": "    in the same directory as the `JAR file` on the other laptop."
       },
       {
         "lineNumber": 589,
         "author": {
-          "gitId": "-"
+          "gitId": "ruilingk"
         },
-        "content": ""
+        "content": "6.  The user interface should be intuitive enough for users who are not tech-savvy."
       },
       {
         "lineNumber": 590,
         "author": {
-          "gitId": "-"
+          "gitId": "ruilingk"
         },
-        "content": "   1. Double-click the jar file Expected: Shows the GUI with a set of sample contacts. The window size may not be optimum."
+        "content": "7.  The response to any inputted commands should become visible within 5 seconds."
       },
       {
         "lineNumber": 591,
         "author": {
-          "gitId": "-"
+          "gitId": "ruilingk"
         },
-        "content": ""
+        "content": "8.  The source code should be open source."
       },
       {
         "lineNumber": 592,
         "author": {
           "gitId": "-"
         },
-        "content": "1. Saving window preferences"
+        "content": ""
       },
       {
         "lineNumber": 593,
         "author": {
           "gitId": "-"
         },
-        "content": ""
+        "content": "### Glossary"
       },
       {
         "lineNumber": 594,
         "author": {
           "gitId": "-"
         },
-        "content": "   1. Resize the window to an optimum size. Move the window to a different location. Close the window."
+        "content": ""
       },
       {
         "lineNumber": 595,
         "author": {
           "gitId": "-"
         },
-        "content": ""
+        "content": "* **Mainstream OS**: Windows, Linux, Unix, OS-X"
       },
       {
         "lineNumber": 596,
         "author": {
-          "gitId": "-"
+          "gitId": "cwenling"
         },
-        "content": "   1. Re-launch the app by double-clicking the jar file.\u003cbr\u003e"
+        "content": "* **Task**: An item to be completed by a certain deadline."
       },
       {
         "lineNumber": 597,
         "author": {
-          "gitId": "-"
+          "gitId": "cwenling"
         },
-        "content": "       Expected: The most recent window size and location is retained."
+        "content": "* **CLI**: Command-Line Interface, a method of interacting with computer programs by typing lines of text."
       },
       {
         "lineNumber": 598,
@@ -5908,7 +5908,7 @@
         "author": {
           "gitId": "-"
         },
-        "content": "1. _{ more test cases …​ }_"
+        "content": "--------------------------------------------------------------------------------------------------------------------"
       },
       {
         "lineNumber": 600,
@@ -5922,7 +5922,7 @@
         "author": {
           "gitId": "-"
         },
-        "content": "### Deleting a person"
+        "content": "## **Appendix: Instructions for manual testing**"
       },
       {
         "lineNumber": 602,
@@ -5936,7 +5936,7 @@
         "author": {
           "gitId": "-"
         },
-        "content": "1. Deleting a person while all persons are being shown"
+        "content": "Given below are instructions to test the app manually."
       },
       {
         "lineNumber": 604,
@@ -5950,28 +5950,28 @@
         "author": {
           "gitId": "-"
         },
-        "content": "   1. Prerequisites: List all persons using the `list` command. Multiple persons in the list."
+        "content": "\u003cdiv markdown\u003d\"span\" class\u003d\"alert alert-info\"\u003e:information_source: **Note:** These instructions only provide a starting point for testers to work on;"
       },
       {
         "lineNumber": 606,
         "author": {
           "gitId": "-"
         },
-        "content": ""
+        "content": "testers are expected to do more *exploratory* testing."
       },
       {
         "lineNumber": 607,
         "author": {
           "gitId": "-"
         },
-        "content": "   1. Test case: `delete 1`\u003cbr\u003e"
+        "content": ""
       },
       {
         "lineNumber": 608,
         "author": {
           "gitId": "-"
         },
-        "content": "      Expected: First contact is deleted from the list. Details of the deleted contact shown in the status message. Timestamp in the status bar is updated."
+        "content": "\u003c/div\u003e"
       },
       {
         "lineNumber": 609,
@@ -5985,35 +5985,35 @@
         "author": {
           "gitId": "-"
         },
-        "content": "   1. Test case: `delete 0`\u003cbr\u003e"
+        "content": "### Launch and shutdown"
       },
       {
         "lineNumber": 611,
         "author": {
           "gitId": "-"
         },
-        "content": "      Expected: No person is deleted. Error details shown in the status message. Status bar remains the same."
+        "content": ""
       },
       {
         "lineNumber": 612,
         "author": {
           "gitId": "-"
         },
-        "content": ""
+        "content": "1. Initial launch"
       },
       {
         "lineNumber": 613,
         "author": {
           "gitId": "-"
         },
-        "content": "   1. Other incorrect delete commands to try: `delete`, `delete x`, `...` (where x is larger than the list size)\u003cbr\u003e"
+        "content": ""
       },
       {
         "lineNumber": 614,
         "author": {
           "gitId": "-"
         },
-        "content": "      Expected: Similar to previous."
+        "content": "   1. Download the jar file and copy into an empty folder"
       },
       {
         "lineNumber": 615,
@@ -6027,7 +6027,7 @@
         "author": {
           "gitId": "-"
         },
-        "content": "1. _{ more test cases …​ }_"
+        "content": "   1. Double-click the jar file Expected: Shows the GUI with a set of sample contacts. The window size may not be optimum."
       },
       {
         "lineNumber": 617,
@@ -6041,7 +6041,7 @@
         "author": {
           "gitId": "-"
         },
-        "content": "### Saving data"
+        "content": "1. Saving window preferences"
       },
       {
         "lineNumber": 619,
@@ -6055,7 +6055,7 @@
         "author": {
           "gitId": "-"
         },
-        "content": "1. Dealing with missing/corrupted data files"
+        "content": "   1. Resize the window to an optimum size. Move the window to a different location. Close the window."
       },
       {
         "lineNumber": 621,
@@ -6069,17 +6069,199 @@
         "author": {
           "gitId": "-"
         },
-        "content": "   1. _{explain how to simulate a missing/corrupted file, and the expected behavior}_"
+        "content": "   1. Re-launch the app by double-clicking the jar file.\u003cbr\u003e"
       },
       {
         "lineNumber": 623,
         "author": {
           "gitId": "-"
         },
-        "content": ""
+        "content": "       Expected: The most recent window size and location is retained."
       },
       {
         "lineNumber": 624,
+        "author": {
+          "gitId": "-"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 625,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "1. _{ more test cases …​ }_"
+      },
+      {
+        "lineNumber": 626,
+        "author": {
+          "gitId": "-"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 627,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "### Deleting a person"
+      },
+      {
+        "lineNumber": 628,
+        "author": {
+          "gitId": "-"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 629,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "1. Deleting a person while all persons are being shown"
+      },
+      {
+        "lineNumber": 630,
+        "author": {
+          "gitId": "-"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 631,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "   1. Prerequisites: List all persons using the `list` command. Multiple persons in the list."
+      },
+      {
+        "lineNumber": 632,
+        "author": {
+          "gitId": "-"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 633,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "   1. Test case: `delete 1`\u003cbr\u003e"
+      },
+      {
+        "lineNumber": 634,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "      Expected: First contact is deleted from the list. Details of the deleted contact shown in the status message. Timestamp in the status bar is updated."
+      },
+      {
+        "lineNumber": 635,
+        "author": {
+          "gitId": "-"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 636,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "   1. Test case: `delete 0`\u003cbr\u003e"
+      },
+      {
+        "lineNumber": 637,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "      Expected: No person is deleted. Error details shown in the status message. Status bar remains the same."
+      },
+      {
+        "lineNumber": 638,
+        "author": {
+          "gitId": "-"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 639,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "   1. Other incorrect delete commands to try: `delete`, `delete x`, `...` (where x is larger than the list size)\u003cbr\u003e"
+      },
+      {
+        "lineNumber": 640,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "      Expected: Similar to previous."
+      },
+      {
+        "lineNumber": 641,
+        "author": {
+          "gitId": "-"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 642,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "1. _{ more test cases …​ }_"
+      },
+      {
+        "lineNumber": 643,
+        "author": {
+          "gitId": "-"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 644,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "### Saving data"
+      },
+      {
+        "lineNumber": 645,
+        "author": {
+          "gitId": "-"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 646,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "1. Dealing with missing/corrupted data files"
+      },
+      {
+        "lineNumber": 647,
+        "author": {
+          "gitId": "-"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 648,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "   1. _{explain how to simulate a missing/corrupted file, and the expected behavior}_"
+      },
+      {
+        "lineNumber": 649,
+        "author": {
+          "gitId": "-"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 650,
         "author": {
           "gitId": "-"
         },
@@ -6087,10 +6269,10 @@
       }
     ],
     "authorContributionMap": {
-      "ruilingk": 129,
+      "ruilingk": 128,
       "yingqi0607": 21,
-      "hanweic53": 57,
-      "cwenling": 45,
+      "hanweic53": 85,
+      "cwenling": 44,
       "-": 313,
       "ethan-l-m-e": 59
     }
@@ -6943,14 +7125,14 @@
         "author": {
           "gitId": "-"
         },
-        "content": "   "
+        "content": ""
       },
       {
         "lineNumber": 28,
         "author": {
           "gitId": "ruilingk"
         },
-        "content": "    * **`add`**`n/task 1 dl/2020-09-08 1700 des/task 1 description t/urgent`: Adds a task named `task 1` with description `task 1 "
+        "content": "    * **`add`**`n/task 1 dl/2020-09-08 1700 des/task 1 description t/urgent`: Adds a task named `task 1` with description `task 1"
       },
       {
         "lineNumber": 29,
@@ -7006,7 +7188,7 @@
         "author": {
           "gitId": "-"
         },
-        "content": "    "
+        "content": ""
       },
       {
         "lineNumber": 37,
@@ -7046,7 +7228,7 @@
       {
         "lineNumber": 42,
         "author": {
-          "gitId": "-"
+          "gitId": "ruilingk"
         },
         "content": ""
       },
@@ -7459,7 +7641,7 @@
       {
         "lineNumber": 101,
         "author": {
-          "gitId": "cwenling"
+          "gitId": "-"
         },
         "content": ""
       },
@@ -7487,7 +7669,7 @@
       {
         "lineNumber": 105,
         "author": {
-          "gitId": "cwenling"
+          "gitId": "-"
         },
         "content": ""
       },
@@ -7566,7 +7748,7 @@
         "author": {
           "gitId": "ruilingk"
         },
-        "content": "* Edits the task\u0027s name, deadline and description at the specified `INDEX`. "
+        "content": "* Edits the task\u0027s name, deadline and description at the specified `INDEX`."
       },
       {
         "lineNumber": 117,
@@ -7648,7 +7830,7 @@
       {
         "lineNumber": 128,
         "author": {
-          "gitId": "ruilingk"
+          "gitId": "-"
         },
         "content": ""
       },
@@ -7937,7 +8119,7 @@
         "author": {
           "gitId": "hanweic53"
         },
-        "content": "You can delete an existing task from the task list by providing the "
+        "content": "You can delete an existing task from the task list by providing the"
       },
       {
         "lineNumber": 170,
@@ -8124,7 +8306,7 @@
       {
         "lineNumber": 196,
         "author": {
-          "gitId": "-"
+          "gitId": "yingqi0607"
         },
         "content": ""
       },
@@ -8390,10 +8572,10 @@
     ],
     "authorContributionMap": {
       "ruilingk": 54,
-      "yingqi0607": 17,
+      "yingqi0607": 18,
       "hanweic53": 14,
-      "cwenling": 12,
-      "-": 124,
+      "cwenling": 10,
+      "-": 125,
       "ethan-l-m-e": 12
     }
   },
@@ -8598,7 +8780,7 @@
         "author": {
           "gitId": "cwenling"
         },
-        "content": "TR4CKER is a desktop app that helps SoC students track their tasks, meet their deadlines, and stay productive. It is "
+        "content": "TR4CKER is a desktop app that helps SoC students track their tasks, meet their deadlines, and stay productive. It is"
       },
       {
         "lineNumber": 9,
@@ -8633,7 +8815,7 @@
         "author": {
           "gitId": "cwenling"
         },
-        "content": "* **Morphing of AddressBook:** "
+        "content": "* **Morphing of AddressBook:**"
       },
       {
         "lineNumber": 14,
@@ -8734,7 +8916,7 @@
         "author": {
           "gitId": "ethan-l-m-e"
         },
-        "content": "TR4CKER is a desktop app that helps SoC students track their tasks, meet their deadlines, and stay productive. It is "
+        "content": "TR4CKER is a desktop app that helps SoC students track their tasks, meet their deadlines, and stay productive. It is"
       },
       {
         "lineNumber": 9,
@@ -8769,7 +8951,7 @@
         "author": {
           "gitId": "ethan-l-m-e"
         },
-        "content": "* **Morphing of AddressBook:** "
+        "content": "* **Morphing of AddressBook:**"
       },
       {
         "lineNumber": 14,
@@ -9011,7 +9193,7 @@
         "author": {
           "gitId": "ruilingk"
         },
-        "content": "TR4CKER is a desktop app that helps SoC students track their tasks, meet their deadlines, and stay productive. It is "
+        "content": "TR4CKER is a desktop app that helps SoC students track their tasks, meet their deadlines, and stay productive. It is"
       },
       {
         "lineNumber": 9,
@@ -9060,7 +9242,7 @@
         "author": {
           "gitId": "ruilingk"
         },
-        "content": "* **Morphing of AddressBook:** "
+        "content": "* **Morphing of AddressBook:**"
       },
       {
         "lineNumber": 16,
@@ -9244,7 +9426,7 @@
         "author": {
           "gitId": "yingqi0607"
         },
-        "content": "TR4CKER is a desktop app that helps SoC students track their tasks, meet their deadlines, and stay productive. It is "
+        "content": "TR4CKER is a desktop app that helps SoC students track their tasks, meet their deadlines, and stay productive. It is"
       },
       {
         "lineNumber": 9,
@@ -9279,7 +9461,7 @@
         "author": {
           "gitId": "yingqi0607"
         },
-        "content": "* **Morphing of AddressBook:** "
+        "content": "* **Morphing of AddressBook:**"
       },
       {
         "lineNumber": 14,

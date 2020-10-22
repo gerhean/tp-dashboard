@@ -1531,9 +1531,9 @@
       {
         "lineNumber": 54,
         "author": {
-          "gitId": "-"
+          "gitId": "iamjamestan"
         },
-        "content": "The *Sequence Diagram* below shows how the components interact with each other for the scenario where the user issues the command `delete 1`."
+        "content": "The *Sequence Diagram* below shows how the components interact with each other for the scenario where the user issues the command `delete_client 1`."
       },
       {
         "lineNumber": 55,
@@ -1776,9 +1776,9 @@
       {
         "lineNumber": 89,
         "author": {
-          "gitId": "-"
+          "gitId": "iamjamestan"
         },
-        "content": "Given below is the Sequence Diagram for interactions within the `Logic` component for the `execute(\"delete 1\")` API call."
+        "content": "Given below is the Sequence Diagram for interactions within the `Logic` component for the `execute(\"delete_client 1\")` API call."
       },
       {
         "lineNumber": 90,
@@ -1895,9 +1895,9 @@
       {
         "lineNumber": 106,
         "author": {
-          "gitId": "-"
+          "gitId": "pooty3"
         },
-        "content": "* exposes an unmodifiable `ObservableList\u003cPerson\u003e` that can be \u0027observed\u0027 e.g. the UI can be bound to this list so that the UI automatically updates when the data in the list change."
+        "content": "* exposes an unmodifiable `ObservableList\u003cClient\u003e`, `ObservableList\u003cHairdresser\u003e`, `ObservableList\u003cAppointment\u003e` that can be \u0027observed\u0027 e.g. the UI can be bound to this list so that the UI automatically updates when the data in the list change."
       },
       {
         "lineNumber": 107,
@@ -2021,9 +2021,9 @@
       {
         "lineNumber": 124,
         "author": {
-          "gitId": "-"
+          "gitId": "theyifan"
         },
-        "content": "* can save the address book data in json format and read it back."
+        "content": "* can save the HairStyleX data in json format and read it back."
       },
       {
         "lineNumber": 125,
@@ -2105,721 +2105,721 @@
       {
         "lineNumber": 136,
         "author": {
-          "gitId": "-"
+          "gitId": "pooty3"
         },
-        "content": "### \\[Proposed\\] Undo/redo feature"
+        "content": "### Command Aliasing feature"
       },
       {
         "lineNumber": 137,
         "author": {
-          "gitId": "-"
+          "gitId": "pooty3"
         },
-        "content": ""
+        "content": "This feature allows users to define their own aliases for commands that make it easier for them to type."
       },
       {
         "lineNumber": 138,
         "author": {
-          "gitId": "-"
+          "gitId": "pooty3"
         },
-        "content": "#### Proposed Implementation"
+        "content": "#### CurrentImplementation"
       },
       {
         "lineNumber": 139,
         "author": {
-          "gitId": "-"
+          "gitId": "pooty3"
         },
-        "content": ""
+        "content": "![Structure of the Alias Command Feature](images/CommandAliasClassDiagram.png)"
       },
       {
         "lineNumber": 140,
         "author": {
-          "gitId": "-"
+          "gitId": "pooty3"
         },
-        "content": "The proposed undo/redo mechanism is facilitated by `VersionedAddressBook`. It extends `AddressBook` with an undo/redo history, stored internally as an `addressBookStateList` and `currentStatePointer`. Additionally, it implements the following operations:"
+        "content": ""
       },
       {
         "lineNumber": 141,
         "author": {
-          "gitId": "-"
+          "gitId": "pooty3"
         },
-        "content": ""
+        "content": "This shows the general structure used to implement the Command Alias."
       },
       {
         "lineNumber": 142,
         "author": {
-          "gitId": "-"
+          "gitId": "pooty3"
         },
-        "content": "* `VersionedAddressBook#commit()` — Saves the current address book state in its history."
+        "content": "* `Command Word` - This is an enumeration that corresponds to each command in the application."
       },
       {
         "lineNumber": 143,
         "author": {
-          "gitId": "-"
+          "gitId": "pooty3"
         },
-        "content": "* `VersionedAddressBook#undo()` — Restores the previous address book state from its history."
+        "content": "* `CommandAlias` - This is a class which stores the hashset of strings that correspond to a particular word. This strings "
       },
       {
         "lineNumber": 144,
         "author": {
-          "gitId": "-"
+          "gitId": "pooty3"
         },
-        "content": "* `VersionedAddressBook#redo()` — Restores a previously undone address book state from its history."
+        "content": "are the command word\u0027s aliases."
       },
       {
         "lineNumber": 145,
         "author": {
-          "gitId": "-"
+          "gitId": "pooty3"
         },
-        "content": ""
+        "content": "* `CommandAliasSet` - This is a singleton class which stores all the commandAlias in the application."
       },
       {
         "lineNumber": 146,
         "author": {
-          "gitId": "-"
+          "gitId": "pooty3"
         },
-        "content": "These operations are exposed in the `Model` interface as `Model#commitAddressBook()`, `Model#undoAddressBook()` and `Model#redoAddressBook()` respectively."
+        "content": "It is responsible for finding the command word associated with a given input string and to validate whether the "
       },
       {
         "lineNumber": 147,
         "author": {
-          "gitId": "-"
+          "gitId": "pooty3"
         },
-        "content": ""
+        "content": "new aliases are allowed to be saved into the system."
       },
       {
         "lineNumber": 148,
         "author": {
-          "gitId": "-"
+          "gitId": "pooty3"
         },
-        "content": "Given below is an example usage scenario and how the undo/redo mechanism behaves at each step."
+        "content": ""
       },
       {
         "lineNumber": 149,
         "author": {
-          "gitId": "-"
+          "gitId": "pooty3"
         },
-        "content": ""
+        "content": "Steps: "
       },
       {
         "lineNumber": 150,
         "author": {
-          "gitId": "-"
+          "gitId": "pooty3"
         },
-        "content": "Step 1. The user launches the application for the first time. The `VersionedAddressBook` will be initialized with the initial address book state, and the `currentStatePointer` pointing to that single address book state."
+        "content": "1. User input a command to the system. It is parsed regularly as before. The string representing the command is extracted."
       },
       {
         "lineNumber": 151,
         "author": {
-          "gitId": "-"
+          "gitId": "pooty3"
         },
-        "content": ""
+        "content": "2. `AddressBookParser` will pass the string to `CommandAliasSet` to retrieve the corresponding `CommandWord`."
       },
       {
         "lineNumber": 152,
         "author": {
-          "gitId": "-"
+          "gitId": "pooty3"
         },
-        "content": "![UndoRedoState0](images/UndoRedoState0.png)"
+        "content": "3. Then, the `CommandWord` is processed as usual."
       },
       {
         "lineNumber": 153,
         "author": {
-          "gitId": "-"
+          "gitId": "pooty3"
         },
         "content": ""
       },
       {
         "lineNumber": 154,
         "author": {
-          "gitId": "-"
+          "gitId": "pooty3"
         },
-        "content": "Step 2. The user executes `delete 5` command to delete the 5th person in the address book. The `delete` command calls `Model#commitAddressBook()`, causing the modified state of the address book after the `delete 5` command executes to be saved in the `addressBookStateList`, and the `currentStatePointer` is shifted to the newly inserted address book state."
+        "content": "Steps when adding a new alias:"
       },
       {
         "lineNumber": 155,
         "author": {
-          "gitId": "-"
+          "gitId": "pooty3"
         },
-        "content": ""
+        "content": "1. User inputs an `add_alias` command together with the new alias, and the command it is associated with."
       },
       {
         "lineNumber": 156,
         "author": {
-          "gitId": "-"
+          "gitId": "pooty3"
         },
-        "content": "![UndoRedoState1](images/UndoRedoState1.png)"
+        "content": "2. Upon execution, `CommndAliasSet` will do validation to check if the validity of the new alias. "
       },
       {
         "lineNumber": 157,
         "author": {
-          "gitId": "-"
+          "gitId": "pooty3"
         },
-        "content": ""
+        "content": "3. Finally, `CommandAliasSet` adds the new alias to the `CommandAlias` it is matched to."
       },
       {
         "lineNumber": 158,
         "author": {
-          "gitId": "-"
+          "gitId": "pooty3"
         },
-        "content": "Step 3. The user executes `add n/David …​` to add a new person. The `add` command also calls `Model#commitAddressBook()`, causing another modified address book state to be saved into the `addressBookStateList`."
+        "content": ""
       },
       {
         "lineNumber": 159,
         "author": {
-          "gitId": "-"
+          "gitId": "pooty3"
         },
-        "content": ""
+        "content": "#### Saving the Alias"
       },
       {
         "lineNumber": 160,
         "author": {
-          "gitId": "-"
-        },
-        "content": "![UndoRedoState2](images/UndoRedoState2.png)"
-      },
-      {
-        "lineNumber": 161,
-        "author": {
-          "gitId": "-"
+          "gitId": "pooty3"
         },
         "content": ""
       },
       {
+        "lineNumber": 161,
+        "author": {
+          "gitId": "pooty3"
+        },
+        "content": "`JsonAdapatedAdressBook` saves `CommandAliasSet` as a `JsonAdapatedCommandAliasSet` together with its `JsonAdaptedAlias`."
+      },
+      {
         "lineNumber": 162,
         "author": {
-          "gitId": "-"
+          "gitId": "pooty3"
         },
-        "content": "\u003cdiv markdown\u003d\"span\" class\u003d\"alert alert-info\"\u003e:information_source: **Note:** If a command fails its execution, it will not call `Model#commitAddressBook()`, so the address book state will not be saved into the `addressBookStateList`."
+        "content": "Upon starting the application,  `JsonAdaptedAddressBook` is used to set the singleton `CommandAliasSet`."
       },
       {
         "lineNumber": 163,
         "author": {
-          "gitId": "-"
+          "gitId": "iamjamestan"
         },
         "content": ""
       },
       {
         "lineNumber": 164,
         "author": {
-          "gitId": "-"
+          "gitId": "theyifan"
         },
-        "content": "\u003c/div\u003e"
+        "content": "### Hairdresser Management Features"
       },
       {
         "lineNumber": 165,
         "author": {
-          "gitId": "-"
+          "gitId": "theyifan"
         },
         "content": ""
       },
       {
         "lineNumber": 166,
         "author": {
-          "gitId": "-"
+          "gitId": "theyifan"
         },
-        "content": "Step 4. The user now decides that adding the person was a mistake, and decides to undo that action by executing the `undo` command. The `undo` command will call `Model#undoAddressBook()`, which will shift the `currentStatePointer` once to the left, pointing it to the previous address book state, and restores the address book to that state."
+        "content": "#### Overview of implementation for Hairdresser"
       },
       {
         "lineNumber": 167,
         "author": {
-          "gitId": "-"
+          "gitId": "theyifan"
         },
         "content": ""
       },
       {
         "lineNumber": 168,
         "author": {
-          "gitId": "-"
+          "gitId": "theyifan"
         },
-        "content": "![UndoRedoState3](images/UndoRedoState3.png)"
+        "content": "* `Hairdresser` - This is an entity class to store information regarding an appointment, such as name, phone, email, gender, title, specialisation."
       },
       {
         "lineNumber": 169,
         "author": {
-          "gitId": "-"
+          "gitId": "theyifan"
         },
-        "content": ""
+        "content": "* `Specialisation` - This is class containing an enum which represents the specialisations of a hairdresser, which includes `Color`, `Perm`, `HairExtension`, `Styling`, `HairConditioning`, `Straightening`, `ScalpTreatment`, `HairLossTreatment`."
       },
       {
         "lineNumber": 170,
         "author": {
-          "gitId": "-"
+          "gitId": "theyifan"
         },
-        "content": "\u003cdiv markdown\u003d\"span\" class\u003d\"alert alert-info\"\u003e:information_source: **Note:** If the `currentStatePointer` is at index 0, pointing to the initial AddressBook state, then there are no previous AddressBook states to restore. The `undo` command uses `Model#canUndoAddressBook()` to check if this is the case. If so, it will return an error to the user rather"
+        "content": "* `HairdresserID` - This is a class which represents the unique ID of an appointment."
       },
       {
         "lineNumber": 171,
         "author": {
-          "gitId": "-"
+          "gitId": "theyifan"
         },
-        "content": "than attempting to perform the undo."
+        "content": "* `UniqueHairdresserList` - This is a `UniqueEntityList` which represents all hairdressers. It ensures that no duplicates of hairdresser can be added and supports add, update, delete of hairdressers."
       },
       {
         "lineNumber": 172,
         "author": {
-          "gitId": "-"
+          "gitId": "theyifan"
         },
-        "content": ""
+        "content": "* `JsonAdaptedHairdresser` - This class functions as an adapter between Appointment and the Storage layer. It specifies how to convert from an appointment object to a JSON representation and vice versa. It also serves as validation for correct data format when the save file is loaded."
       },
       {
         "lineNumber": 173,
         "author": {
-          "gitId": "-"
+          "gitId": "theyifan"
         },
-        "content": "\u003c/div\u003e"
+        "content": "* `AddHairdresserCommandParser` - This class parses a user input string to a `HairdresserCommand` object and performs validation."
       },
       {
         "lineNumber": 174,
         "author": {
-          "gitId": "-"
+          "gitId": "theyifan"
         },
-        "content": ""
+        "content": "* `AddHairdresserCommand` - This contains `execute` method which interact with model to perform the add action."
       },
       {
         "lineNumber": 175,
         "author": {
-          "gitId": "-"
+          "gitId": "theyifan"
         },
-        "content": "The following sequence diagram shows how the undo operation works:"
+        "content": ""
       },
       {
         "lineNumber": 176,
         "author": {
-          "gitId": "-"
+          "gitId": "theyifan"
         },
-        "content": ""
+        "content": "#### Add Hairdresser Feature"
       },
       {
         "lineNumber": 177,
         "author": {
-          "gitId": "-"
+          "gitId": "theyifan"
         },
-        "content": "![UndoSequenceDiagram](images/UndoSequenceDiagram.png)"
+        "content": ""
       },
       {
         "lineNumber": 178,
         "author": {
-          "gitId": "-"
+          "gitId": "theyifan"
         },
-        "content": ""
+        "content": "##### Current implementation"
       },
       {
         "lineNumber": 179,
         "author": {
-          "gitId": "-"
+          "gitId": "theyifan"
         },
-        "content": "\u003cdiv markdown\u003d\"span\" class\u003d\"alert alert-info\"\u003e:information_source: **Note:** The lifeline for `UndoCommand` should end at the destroy marker (X) but due to a limitation of PlantUML, the lifeline reaches the end of diagram."
+        "content": ""
       },
       {
         "lineNumber": 180,
         "author": {
-          "gitId": "-"
+          "gitId": "theyifan"
         },
-        "content": ""
+        "content": "The `add_hairdresser` command allows the `LogicManager` to create a new hairdresser and add it to the list of hairdressers. "
       },
       {
         "lineNumber": 181,
         "author": {
-          "gitId": "-"
+          "gitId": "theyifan"
         },
-        "content": "\u003c/div\u003e"
+        "content": ""
       },
       {
         "lineNumber": 182,
         "author": {
-          "gitId": "-"
+          "gitId": "theyifan"
         },
-        "content": ""
+        "content": "The following sequence shows the sequence when the add command is execute by the `LogicManager`:"
       },
       {
         "lineNumber": 183,
         "author": {
-          "gitId": "-"
+          "gitId": "theyifan"
         },
-        "content": "The `redo` command does the opposite — it calls `Model#redoAddressBook()`, which shifts the `currentStatePointer` once to the right, pointing to the previously undone state, and restores the address book to that state."
+        "content": ""
       },
       {
         "lineNumber": 184,
         "author": {
-          "gitId": "-"
+          "gitId": "theyifan"
         },
-        "content": ""
+        "content": "![AddHairdresserSequenceDiagram](images/AddHairdresserSequenceDiagram.png)"
       },
       {
         "lineNumber": 185,
         "author": {
-          "gitId": "-"
+          "gitId": "theyifan"
         },
-        "content": "\u003cdiv markdown\u003d\"span\" class\u003d\"alert alert-info\"\u003e:information_source: **Note:** If the `currentStatePointer` is at index `addressBookStateList.size() - 1`, pointing to the latest address book state, then there are no undone AddressBook states to restore. The `redo` command uses `Model#canRedoAddressBook()` to check if this is the case. If so, it will return an error to the user rather than attempting to perform the redo."
+        "content": ""
       },
       {
         "lineNumber": 186,
         "author": {
-          "gitId": "-"
+          "gitId": "theyifan"
         },
-        "content": ""
+        "content": "From the diagram above:"
       },
       {
         "lineNumber": 187,
         "author": {
-          "gitId": "-"
+          "gitId": "theyifan"
         },
-        "content": "\u003c/div\u003e"
+        "content": ""
       },
       {
         "lineNumber": 188,
         "author": {
-          "gitId": "-"
+          "gitId": "theyifan"
         },
-        "content": ""
+        "content": "1. `LogicManager`’s `execute` is called when `add_hairdresser` is entered and it calls upon `parseCommand` of `AddressBookParser` to parse the command."
       },
       {
         "lineNumber": 189,
         "author": {
-          "gitId": "-"
+          "gitId": "theyifan"
         },
-        "content": "Step 5. The user then decides to execute the command `list`. Commands that do not modify the address book, such as `list`, will usually not call `Model#commitAddressBook()`, `Model#undoAddressBook()` or `Model#redoAddressBook()`. Thus, the `addressBookStateList` remains unchanged."
+        "content": ""
       },
       {
         "lineNumber": 190,
         "author": {
-          "gitId": "-"
+          "gitId": "theyifan"
         },
-        "content": ""
+        "content": "2. `AddressBookParser` will initialize `AddHairdresserCommandParser` and invoke the method `parse` to further parse add hairdresser command"
       },
       {
         "lineNumber": 191,
         "author": {
-          "gitId": "-"
+          "gitId": "theyifan"
         },
-        "content": "![UndoRedoState4](images/UndoRedoState4.png)"
+        "content": ""
       },
       {
         "lineNumber": 192,
         "author": {
-          "gitId": "-"
+          "gitId": "theyifan"
         },
-        "content": ""
+        "content": "3. `parse` will be invoked and passed the parameters of the add hairdresser command."
       },
       {
         "lineNumber": 193,
         "author": {
-          "gitId": "-"
+          "gitId": "theyifan"
         },
-        "content": "Step 6. The user executes `clear`, which calls `Model#commitAddressBook()`. Since the `currentStatePointer` is not pointing at the end of the `addressBookStateList`, all address book states after the `currentStatePointer` will be purged. Reason: It no longer makes sense to redo the `add n/David …​` command. This is the behavior that most modern desktop applications follow."
+        "content": ""
       },
       {
         "lineNumber": 194,
         "author": {
-          "gitId": "-"
+          "gitId": "theyifan"
         },
-        "content": ""
+        "content": "4. If all the arguments of `add_hairdresser` commands are valid, `AddHairdresserCommand` will be returned to the `LogicManager`"
       },
       {
         "lineNumber": 195,
         "author": {
-          "gitId": "-"
+          "gitId": "theyifan"
         },
-        "content": "![UndoRedoState5](images/UndoRedoState5.png)"
+        "content": ""
       },
       {
         "lineNumber": 196,
         "author": {
-          "gitId": "-"
+          "gitId": "theyifan"
         },
-        "content": ""
+        "content": "5. `LogicManger` will then call `execute` method of `AddHairdresserCommand`"
       },
       {
         "lineNumber": 197,
         "author": {
-          "gitId": "-"
+          "gitId": "theyifan"
         },
-        "content": "The following activity diagram summarizes what happens when a user executes a new command:"
+        "content": ""
       },
       {
         "lineNumber": 198,
         "author": {
-          "gitId": "-"
+          "gitId": "theyifan"
         },
-        "content": ""
+        "content": "6. `AddHairdresserCommand` will call `addHairdresser` passing `toAdd` as an argument to `Model` and returns a `result` to the `LogicManager`"
       },
       {
         "lineNumber": 199,
         "author": {
-          "gitId": "-"
+          "gitId": "theyifan"
         },
-        "content": "![CommitActivityDiagram](images/CommitActivityDiagram.png)"
+        "content": ""
       },
       {
         "lineNumber": 200,
         "author": {
-          "gitId": "-"
+          "gitId": "theyifan"
         },
-        "content": ""
+        "content": "7. `LogicManger` will then call `saveAddressBook` method of `Storage`"
       },
       {
         "lineNumber": 201,
         "author": {
-          "gitId": "-"
-        },
-        "content": "#### Design consideration:"
-      },
-      {
-        "lineNumber": 202,
-        "author": {
-          "gitId": "-"
+          "gitId": "theyifan"
         },
         "content": ""
       },
       {
+        "lineNumber": 202,
+        "author": {
+          "gitId": "theyifan"
+        },
+        "content": "8. A `CommandResult` will be returned at the end."
+      },
+      {
         "lineNumber": 203,
         "author": {
-          "gitId": "-"
+          "gitId": "theyifan"
         },
-        "content": "##### Aspect: How undo \u0026 redo executes"
+        "content": ""
       },
       {
         "lineNumber": 204,
         "author": {
-          "gitId": "-"
+          "gitId": "theyifan"
         },
         "content": ""
       },
       {
         "lineNumber": 205,
         "author": {
-          "gitId": "-"
+          "gitId": "nicktohzyu"
         },
-        "content": "* **Alternative 1 (current choice):** Saves the entire address book."
+        "content": "### Appointment feature"
       },
       {
         "lineNumber": 206,
         "author": {
-          "gitId": "-"
+          "gitId": "nicktohzyu"
         },
-        "content": "  * Pros: Easy to implement."
+        "content": "This feature represents an appointment between a hairdresser and a client. An appointment consists of a client and a hairdresser. If one of these persons are deleted, the reference will be replaced with a tombstone value indicating a deleted hairdresser/client. A client can have multiple appointments that do not clash, similarly for hairdressers. An appointment must also have a date, time, and status."
       },
       {
         "lineNumber": 207,
         "author": {
-          "gitId": "-"
+          "gitId": "nicktohzyu"
         },
-        "content": "  * Cons: May have performance issues in terms of memory usage."
+        "content": ""
       },
       {
         "lineNumber": 208,
         "author": {
-          "gitId": "-"
+          "gitId": "nicktohzyu"
         },
-        "content": ""
+        "content": "#### Current Implementation"
       },
       {
         "lineNumber": 209,
         "author": {
-          "gitId": "-"
+          "gitId": "nicktohzyu"
         },
-        "content": "* **Alternative 2:** Individual command knows how to undo/redo by"
+        "content": ""
       },
       {
         "lineNumber": 210,
         "author": {
-          "gitId": "-"
+          "gitId": "nicktohzyu"
         },
-        "content": "  itself."
+        "content": "* `Appointment` - This is an entity class to store information regarding an appointment, such as hairdresser, client, hairdresser ID, client ID, date, time and status."
       },
       {
         "lineNumber": 211,
         "author": {
-          "gitId": "-"
+          "gitId": "nicktohzyu"
         },
-        "content": "  * Pros: Will use less memory (e.g. for `delete`, just save the person being deleted)."
+        "content": "                       "
       },
       {
         "lineNumber": 212,
         "author": {
-          "gitId": "-"
+          "gitId": "nicktohzyu"
         },
-        "content": "  * Cons: We must ensure that the implementation of each individual command are correct."
+        "content": "* `FutureAppointment` - This is an entity class which extends Appointment. This class ensures that a newly created appointment is always in the future compared to the system time."
       },
       {
         "lineNumber": 213,
         "author": {
-          "gitId": "-"
+          "gitId": "nicktohzyu"
         },
-        "content": ""
+        "content": "* `AppointmentStatus` - This is an enum which represents the status of an appointment, which can be `active`, `cancelled`, `completed`, or `missed`."
       },
       {
         "lineNumber": 214,
         "author": {
-          "gitId": "-"
+          "gitId": "nicktohzyu"
         },
-        "content": "_{more aspects and alternatives to be added}_"
+        "content": "* `AppointmentID` - This is a class which represents the unique ID of an appointment."
       },
       {
         "lineNumber": 215,
         "author": {
-          "gitId": "-"
+          "gitId": "nicktohzyu"
         },
-        "content": ""
+        "content": "* `UniqueAppointmentList` - This is a `UniqueEntityList` which represents all appointments. It implements features including ensuring that no duplicate appointments can be added. It allows for clients or hairdressers to be replaced or deleted, and updates the relevant appointments."
       },
       {
         "lineNumber": 216,
         "author": {
-          "gitId": "-"
+          "gitId": "nicktohzyu"
         },
-        "content": "### \\[Proposed\\] Data archiving"
+        "content": "*`JsonAdaptedAppointment` - This class functions as an adapter between Appointment and the Storage layer. It specifies how to convert from an appointment object to a JSON representation and vice versa. It also serves as validation for correct data format when the save file is loaded."
       },
       {
         "lineNumber": 217,
         "author": {
-          "gitId": "-"
+          "gitId": "nicktohzyu"
         },
-        "content": ""
+        "content": "*`AddAppointmentCommandParser` - This class parses a user input string to an AppointmentCommand object. Validation for inputs that do not require access to the model is performed here.                                                                  "
       },
       {
         "lineNumber": 218,
         "author": {
-          "gitId": "-"
+          "gitId": "nicktohzyu"
         },
-        "content": "_{Explain here how the data archiving feature will be implemented}_"
+        "content": "*`AddAppointmentCommand` - This is where majority of the logic of the add appointment command is performed, when the `execute` method is called. It will access the model to ensure there is no duplicate appointment before adding the appointment to the model."
       },
       {
         "lineNumber": 219,
         "author": {
-          "gitId": "-"
+          "gitId": "nicktohzyu"
         },
         "content": ""
       },
       {
         "lineNumber": 220,
         "author": {
-          "gitId": "-"
+          "gitId": "nicktohzyu"
         },
-        "content": ""
+        "content": "Steps:"
       },
       {
         "lineNumber": 221,
         "author": {
-          "gitId": "-"
+          "gitId": "nicktohzyu"
         },
-        "content": "--------------------------------------------------------------------------------------------------------------------"
+        "content": ""
       },
       {
         "lineNumber": 222,
         "author": {
-          "gitId": "-"
+          "gitId": "nicktohzyu"
         },
-        "content": ""
+        "content": "1. The user enters an add appointment command, the input is first validated by AddAppointmentCommandParser. Inputs that do not require access to the model is validated, for example validating the format of hairdresser ID, client ID, date, and time. It ensures that the date/time is valid and is in the future, but does not check whether the hairdresser/client ID corresponds to an actual hairdresser/client (this is validated when the command is executed). A new AddAppointmentCommand object is created."
       },
       {
         "lineNumber": 223,
         "author": {
-          "gitId": "-"
+          "gitId": "nicktohzyu"
         },
-        "content": "## **Documentation, logging, testing, configuration, dev-ops**"
+        "content": ""
       },
       {
         "lineNumber": 224,
         "author": {
-          "gitId": "-"
+          "gitId": "nicktohzyu"
         },
-        "content": ""
+        "content": "1. The Logic layer then executes the AddAppointmentCommand. This checks if the hairdresser/client ID corresponds to an actual hairdresser/client, and the appointment is checked against existing appointments in the model to ensure that there are no duplicates or clashes. The appointment object is then added to the model."
       },
       {
         "lineNumber": 225,
         "author": {
-          "gitId": "-"
-        },
-        "content": "* [Documentation guide](Documentation.md)"
-      },
-      {
-        "lineNumber": 226,
-        "author": {
-          "gitId": "-"
-        },
-        "content": "* [Testing guide](Testing.md)"
-      },
-      {
-        "lineNumber": 227,
-        "author": {
-          "gitId": "-"
-        },
-        "content": "* [Logging guide](Logging.md)"
-      },
-      {
-        "lineNumber": 228,
-        "author": {
-          "gitId": "-"
-        },
-        "content": "* [Configuration guide](Configuration.md)"
-      },
-      {
-        "lineNumber": 229,
-        "author": {
-          "gitId": "-"
-        },
-        "content": "* [DevOps guide](DevOps.md)"
-      },
-      {
-        "lineNumber": 230,
-        "author": {
-          "gitId": "-"
+          "gitId": "nicktohzyu"
         },
         "content": ""
       },
       {
+        "lineNumber": 226,
+        "author": {
+          "gitId": "nicktohzyu"
+        },
+        "content": "1. The model adds the appointment to its internal list `UniqueAppointmentList`. This list is an `javafx.collections.ObservableList` and the UI layer is notified and updated through a `ListChangeListener`. This follows the observer pattern."
+      },
+      {
+        "lineNumber": 227,
+        "author": {
+          "gitId": "nicktohzyu"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 228,
+        "author": {
+          "gitId": "nicktohzyu"
+        },
+        "content": "1. The Logic layer will be notified that the model has been modified through an `InvalidationListener`. This triggers storing information to non-volatile memory using the Storage layer, and the process is detailed there."
+      },
+      {
+        "lineNumber": 229,
+        "author": {
+          "gitId": "nicktohzyu"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 230,
+        "author": {
+          "gitId": "nicktohzyu"
+        },
+        "content": "#### Proposed improvements"
+      },
+      {
         "lineNumber": 231,
         "author": {
-          "gitId": "-"
+          "gitId": "nicktohzyu"
         },
-        "content": "--------------------------------------------------------------------------------------------------------------------"
+        "content": "1. Currently, validation or updating of appointments based on client/hairdresser ID requires iterating through all appointments to check if they involve the relevant client/hairdresser. Hence this process is slow and runs in O(n) time. It can be improved by implementing two `HashMaps` of appointments keyed by `ClientId`/`HairdresserId`  respectively. This will allow for the search to be done in O(1) time. We did not implement this feature as it would introduce unnecessary complexity, and the current solution meets the non-functional requirements regarding performance."
       },
       {
         "lineNumber": 232,
         "author": {
-          "gitId": "-"
+          "gitId": "nicktohzyu"
         },
         "content": ""
       },
       {
         "lineNumber": 233,
         "author": {
-          "gitId": "-"
+          "gitId": "nicktohzyu"
         },
-        "content": "## **Appendix: Requirements**"
+        "content": "1. Currently, the order of appointments in the `UniqueAppointmentList` is not ordered by time. Hence, sorting appointments by appointment time requires O(n log(n)) time. By maintaining a `TreeMap` of appointments keyed by time, a list of appointments ordered by appointment time can be generated in O(n), while the next k appointments after a given appointment can be found in O(k log(n)) time. We did not implement this feature as it would introduce unnecessary complexity, and the current solution meets the non-functional requirements regarding performance."
       },
       {
         "lineNumber": 234,
         "author": {
-          "gitId": "-"
+          "gitId": "theyifan"
         },
         "content": ""
       },
       {
         "lineNumber": 235,
         "author": {
-          "gitId": "-"
+          "gitId": "iamjamestan"
         },
-        "content": "### Product scope"
+        "content": "### ID and ID Counter"
       },
       {
         "lineNumber": 236,
         "author": {
-          "gitId": "-"
+          "gitId": "iamjamestan"
         },
         "content": ""
       },
       {
         "lineNumber": 237,
         "author": {
-          "gitId": "-"
+          "gitId": "iamjamestan"
         },
-        "content": "**Target user profile**:"
+        "content": "To ensure that every entity within the same class can be distinguished from each other, we have implemented an auto incremental ID system that automatically assigns to a new ID to every entity upon creation."
       },
       {
         "lineNumber": 238,
         "author": {
-          "gitId": "-"
+          "gitId": "iamjamestan"
         },
         "content": ""
       },
@@ -2828,54 +2828,54 @@
         "author": {
           "gitId": "iamjamestan"
         },
-        "content": "* managers for budding hair salons"
+        "content": "#### Reasons for Implementation"
       },
       {
         "lineNumber": 240,
         "author": {
           "gitId": "iamjamestan"
         },
-        "content": "* has a growing number of hairstylists and clients"
+        "content": ""
       },
       {
         "lineNumber": 241,
         "author": {
           "gitId": "iamjamestan"
         },
-        "content": "* has a need to keep track of bookings, store supplies, stylist availability, and client information "
+        "content": "Initially, we intended to follow the original AddressBook-3, where each `Person` would be identified by its shown index in the list shown in the GUI. However, we came to the realisation this approach would confuse the user during this scenario:"
       },
       {
         "lineNumber": 242,
         "author": {
           "gitId": "iamjamestan"
         },
-        "content": "* has a desktop at the front desk"
+        "content": ""
       },
       {
         "lineNumber": 243,
         "author": {
-          "gitId": "-"
+          "gitId": "iamjamestan"
         },
-        "content": "* can type fast"
+        "content": "* When the user searches for an entity with filters, the filtered list would show indices that are not corresponding to the original list. As such, the user might erroneously key in the wrong index for his/her selected entity."
       },
       {
         "lineNumber": 244,
         "author": {
-          "gitId": "-"
+          "gitId": "iamjamestan"
         },
-        "content": "* prefers typing to mouse interactions"
+        "content": ""
       },
       {
         "lineNumber": 245,
         "author": {
-          "gitId": "-"
+          "gitId": "iamjamestan"
         },
-        "content": "* is reasonably comfortable using CLI apps"
+        "content": "To tackle this, we concluded that each entity should be identified by a unique ID within its own class, and that this should be displayed to the user and be the primary way of identifying entities for the purposes of editing, deleting, etc."
       },
       {
         "lineNumber": 246,
         "author": {
-          "gitId": "-"
+          "gitId": "iamjamestan"
         },
         "content": ""
       },
@@ -2884,215 +2884,215 @@
         "author": {
           "gitId": "iamjamestan"
         },
-        "content": "**Value proposition**: manage hairstylist, client and appointment information faster than the traditional pen and paper"
+        "content": "#### Current Implementation"
       },
       {
         "lineNumber": 248,
         "author": {
-          "gitId": "-"
+          "gitId": "iamjamestan"
         },
         "content": ""
       },
       {
         "lineNumber": 249,
         "author": {
-          "gitId": "-"
+          "gitId": "iamjamestan"
         },
-        "content": "### User stories"
+        "content": "##### ID Class"
       },
       {
         "lineNumber": 250,
         "author": {
-          "gitId": "-"
+          "gitId": "iamjamestan"
         },
         "content": ""
       },
       {
         "lineNumber": 251,
         "author": {
-          "gitId": "-"
+          "gitId": "iamjamestan"
         },
-        "content": "Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unlikely to have) - `*`"
+        "content": "* The Model package contains an abstract Id class, which is essentially a wrapper for an integer `id` variable, along with a method used to verify the validity of the `id` and error messages to be shown."
       },
       {
         "lineNumber": 252,
         "author": {
-          "gitId": "-"
+          "gitId": "iamjamestan"
         },
-        "content": ""
+        "content": "* The classes AppointmentId, ClientId, and HairdresserId extend the abstract Id class, and reside in their respective packages"
       },
       {
         "lineNumber": 253,
         "author": {
-          "gitId": "-"
+          "gitId": "iamjamestan"
         },
-        "content": "| Priority | As a …​                                 | I want to …​                | So that I can…​                                                     |"
+        "content": ""
       },
       {
         "lineNumber": 254,
         "author": {
-          "gitId": "-"
+          "gitId": "iamjamestan"
         },
-        "content": "| -------- | ------------------------------------------ | ------------------------------ | ---------------------------------------------------------------------- |"
+        "content": "![IDClassDiagram](images/IDClassDiagram.png)"
       },
       {
         "lineNumber": 255,
         "author": {
-          "gitId": "pooty3"
+          "gitId": "iamjamestan"
         },
-        "content": "| `* * *`  | new user                                   | see the instruction guide      | refer to instructions when I forget how to use the App                 |"
+        "content": ""
       },
       {
         "lineNumber": 256,
         "author": {
-          "gitId": "pooty3"
+          "gitId": "iamjamestan"
         },
-        "content": "| `* * *`  | manager                                    | add a new hairdresser          |                                                                        |"
+        "content": "##### ID Counter Class"
       },
       {
         "lineNumber": 257,
         "author": {
-          "gitId": "pooty3"
+          "gitId": "iamjamestan"
         },
-        "content": "| `* * *`  | receptionist                               | add a new client               |                                   |"
+        "content": ""
       },
       {
         "lineNumber": 258,
         "author": {
-          "gitId": "pooty3"
+          "gitId": "iamjamestan"
         },
-        "content": "| `* * *`  | manager                                    | edit a client/hairdresser      | keep my database updated |"
+        "content": "* To ensure that the IDs of each entity created are unique, a final class `IDCounter` is implemented. "
       },
       {
         "lineNumber": 259,
         "author": {
-          "gitId": "pooty3"
+          "gitId": "iamjamestan"
         },
-        "content": "| `* * *`  | user                                       | exit the program               |          |"
+        "content": "* This class is a singleton, and only one instance can exist at any one time."
       },
       {
         "lineNumber": 260,
         "author": {
-          "gitId": "pooty3"
+          "gitId": "iamjamestan"
         },
-        "content": "| `* * *`  | manager                                    | find persons by name           | locate a person easily                                                 |"
+        "content": "* It consists of static attributes that keep track of the next ID to be generated for the respective entities, namely, Clients, Hairdressers, and Appointments."
       },
       {
         "lineNumber": 261,
         "author": {
-          "gitId": "pooty3"
+          "gitId": "iamjamestan"
         },
-        "content": "| `* * *`  | receptionist                               | book appointments              |        |"
+        "content": ""
       },
       {
         "lineNumber": 262,
         "author": {
-          "gitId": "pooty3"
+          "gitId": "iamjamestan"
         },
-        "content": "| `* * *`  | new user                                   | navigate the UI easily         | learn how to use the app quickly                                             |"
+        "content": "![IDCounterClassDiagram](images/IDCounterClassDiagram.png)"
       },
       {
         "lineNumber": 263,
         "author": {
-          "gitId": "-"
+          "gitId": "iamjamestan"
         },
         "content": ""
       },
       {
         "lineNumber": 264,
         "author": {
-          "gitId": "-"
+          "gitId": "iamjamestan"
         },
-        "content": ""
+        "content": "#### Design Considerations"
       },
       {
         "lineNumber": 265,
         "author": {
-          "gitId": "-"
+          "gitId": "iamjamestan"
         },
-        "content": "*{More to be added}*"
+        "content": ""
       },
       {
         "lineNumber": 266,
         "author": {
-          "gitId": "-"
+          "gitId": "iamjamestan"
         },
-        "content": ""
+        "content": "* Alternative 1 (current implementation): Use 3 separate counters for `Client`s, `Hairdresser`s, `Appointment`s"
       },
       {
         "lineNumber": 267,
         "author": {
-          "gitId": "-"
+          "gitId": "iamjamestan"
         },
-        "content": "### Use cases"
+        "content": "  * Pros: Good OOP Design. Error messages can be abstracted out in their respective ID classes"
       },
       {
         "lineNumber": 268,
         "author": {
-          "gitId": "-"
+          "gitId": "iamjamestan"
         },
-        "content": ""
+        "content": "  * Cons: Hassle to keep track of three separate counters, and repetitive to have three separate methods for these counters"
       },
       {
         "lineNumber": 269,
         "author": {
           "gitId": "iamjamestan"
         },
-        "content": "(For all use cases below, the **System** is the `HairStyleX` application, and the **Actor** is the `user`, unless specified otherwise)"
+        "content": ""
       },
       {
         "lineNumber": 270,
         "author": {
           "gitId": "iamjamestan"
         },
-        "content": ""
+        "content": "* Alternative 2: Use 1 single counter for all entities. Every entity contains an ID instance."
       },
       {
         "lineNumber": 271,
         "author": {
           "gitId": "iamjamestan"
         },
-        "content": "(A `person` refers to either a `hairdresser` or a `client`. If a `person` is used in any of the use cases below,"
+        "content": "  * Pros: Easy to implement, no repetitive code."
       },
       {
         "lineNumber": 272,
         "author": {
           "gitId": "iamjamestan"
         },
-        "content": "it means that the use case can be performed similarly on both a `hairdresser` and a `client`)"
+        "content": "  * Cons: Bad OOP design. Error messages would be the same for IDs created in all three classes"
       },
       {
         "lineNumber": 273,
         "author": {
-          "gitId": "-"
+          "gitId": "iamjamestan"
         },
-        "content": ""
+        "content": "  "
       },
       {
         "lineNumber": 274,
         "author": {
-          "gitId": "-"
+          "gitId": "iamjamestan"
         },
-        "content": "**Use case: Delete a person**"
+        "content": "#### Usage Scenario"
       },
       {
         "lineNumber": 275,
         "author": {
-          "gitId": "-"
+          "gitId": "iamjamestan"
         },
         "content": ""
       },
       {
         "lineNumber": 276,
         "author": {
-          "gitId": "-"
+          "gitId": "iamjamestan"
         },
-        "content": "**MSS**"
+        "content": "Given below is the example usage scenario that highlights the generation of a new ID instance when a new Client is created:"
       },
       {
         "lineNumber": 277,
         "author": {
-          "gitId": "-"
+          "gitId": "iamjamestan"
         },
         "content": ""
       },
@@ -3101,721 +3101,721 @@
         "author": {
           "gitId": "iamjamestan"
         },
-        "content": "1.  User requests to list people"
+        "content": "1. The user attempts to create a new client by entering the respective fields in the appropriate format, such as `add_client n/John Doe p/98765432 e/johnd@example.com g/M a/311, Clementi Ave 2, #02-25`"
       },
       {
         "lineNumber": 279,
         "author": {
           "gitId": "iamjamestan"
         },
-        "content": "2.  HairStyleX shows a list of people"
+        "content": ""
       },
       {
         "lineNumber": 280,
         "author": {
-          "gitId": "-"
+          "gitId": "iamjamestan"
         },
-        "content": "3.  User requests to delete a specific person in the list"
+        "content": "1. The AddClientCommandParser extracts the relevant fields from the user input and creates a new Client instance using the Client constructor."
       },
       {
         "lineNumber": 281,
         "author": {
           "gitId": "iamjamestan"
         },
-        "content": "4.  HairStyleX deletes the person"
+        "content": ""
       },
       {
         "lineNumber": 282,
         "author": {
-          "gitId": "-"
+          "gitId": "iamjamestan"
         },
-        "content": ""
+        "content": "1. The Client constructor calls IDCounter to generate a new ClientId instance."
       },
       {
         "lineNumber": 283,
         "author": {
-          "gitId": "-"
+          "gitId": "iamjamestan"
         },
-        "content": "    Use case ends."
+        "content": ""
       },
       {
         "lineNumber": 284,
         "author": {
-          "gitId": "-"
+          "gitId": "iamjamestan"
         },
-        "content": ""
+        "content": "1. The returned ClientId is stored in this client object, which will be used to create AddClientCommand."
       },
       {
         "lineNumber": 285,
         "author": {
-          "gitId": "-"
-        },
-        "content": "**Extensions**"
-      },
-      {
-        "lineNumber": 286,
-        "author": {
-          "gitId": "-"
+          "gitId": "iamjamestan"
         },
         "content": ""
       },
       {
+        "lineNumber": 286,
+        "author": {
+          "gitId": "iamjamestan"
+        },
+        "content": "![IDSequenceDiagram](images/IDSequenceDiagram.png)"
+      },
+      {
         "lineNumber": 287,
         "author": {
-          "gitId": "-"
+          "gitId": "iamjamestan"
         },
-        "content": "* 2a. The list is empty."
+        "content": ""
       },
       {
         "lineNumber": 288,
         "author": {
           "gitId": "-"
         },
-        "content": ""
+        "content": "### \\[Proposed\\] Undo/redo feature"
       },
       {
         "lineNumber": 289,
         "author": {
           "gitId": "-"
         },
-        "content": "  Use case ends."
+        "content": ""
       },
       {
         "lineNumber": 290,
         "author": {
           "gitId": "-"
         },
-        "content": ""
+        "content": "#### Proposed Implementation"
       },
       {
         "lineNumber": 291,
         "author": {
           "gitId": "-"
         },
-        "content": "* 3a. The given index is invalid."
+        "content": ""
       },
       {
         "lineNumber": 292,
         "author": {
           "gitId": "-"
         },
-        "content": ""
+        "content": "The proposed undo/redo mechanism is facilitated by `VersionedAddressBook`. It extends `AddressBook` with an undo/redo history, stored internally as an `addressBookStateList` and `currentStatePointer`. Additionally, it implements the following operations:"
       },
       {
         "lineNumber": 293,
         "author": {
-          "gitId": "iamjamestan"
+          "gitId": "-"
         },
-        "content": "    * 3a1. HairStyleX shows an error message."
+        "content": ""
       },
       {
         "lineNumber": 294,
         "author": {
           "gitId": "-"
         },
-        "content": ""
+        "content": "* `VersionedAddressBook#commit()` — Saves the current address book state in its history."
       },
       {
         "lineNumber": 295,
         "author": {
           "gitId": "-"
         },
-        "content": "      Use case resumes at step 2."
+        "content": "* `VersionedAddressBook#undo()` — Restores the previous address book state from its history."
       },
       {
         "lineNumber": 296,
         "author": {
           "gitId": "-"
         },
-        "content": "      "
+        "content": "* `VersionedAddressBook#redo()` — Restores a previously undone address book state from its history."
       },
       {
         "lineNumber": 297,
         "author": {
-          "gitId": "iamjamestan"
+          "gitId": "-"
         },
-        "content": "**Use case: Add a person**"
+        "content": ""
       },
       {
         "lineNumber": 298,
         "author": {
-          "gitId": "iamjamestan"
+          "gitId": "-"
         },
-        "content": ""
+        "content": "These operations are exposed in the `Model` interface as `Model#commitAddressBook()`, `Model#undoAddressBook()` and `Model#redoAddressBook()` respectively."
       },
       {
         "lineNumber": 299,
         "author": {
-          "gitId": "iamjamestan"
+          "gitId": "-"
         },
-        "content": "**MSS**"
+        "content": ""
       },
       {
         "lineNumber": 300,
         "author": {
-          "gitId": "iamjamestan"
+          "gitId": "-"
         },
-        "content": ""
+        "content": "Given below is an example usage scenario and how the undo/redo mechanism behaves at each step."
       },
       {
         "lineNumber": 301,
         "author": {
-          "gitId": "iamjamestan"
+          "gitId": "-"
         },
-        "content": "1.  User requests to add a specific person in the list"
+        "content": ""
       },
       {
         "lineNumber": 302,
         "author": {
-          "gitId": "iamjamestan"
+          "gitId": "-"
         },
-        "content": "2.  HairStyleX adds the person"
+        "content": "Step 1. The user launches the application for the first time. The `VersionedAddressBook` will be initialized with the initial address book state, and the `currentStatePointer` pointing to that single address book state."
       },
       {
         "lineNumber": 303,
         "author": {
-          "gitId": "iamjamestan"
+          "gitId": "-"
         },
-        "content": "3.  HairStyleX shows a success message"
+        "content": ""
       },
       {
         "lineNumber": 304,
         "author": {
-          "gitId": "iamjamestan"
+          "gitId": "-"
         },
-        "content": ""
+        "content": "![UndoRedoState0](images/UndoRedoState0.png)"
       },
       {
         "lineNumber": 305,
         "author": {
-          "gitId": "iamjamestan"
+          "gitId": "-"
         },
-        "content": "    Use case ends."
+        "content": ""
       },
       {
         "lineNumber": 306,
         "author": {
-          "gitId": "iamjamestan"
+          "gitId": "-"
         },
-        "content": ""
+        "content": "Step 2. The user executes `delete 5` command to delete the 5th person in the address book. The `delete` command calls `Model#commitAddressBook()`, causing the modified state of the address book after the `delete 5` command executes to be saved in the `addressBookStateList`, and the `currentStatePointer` is shifted to the newly inserted address book state."
       },
       {
         "lineNumber": 307,
         "author": {
-          "gitId": "iamjamestan"
+          "gitId": "-"
         },
-        "content": "**Extensions**"
+        "content": ""
       },
       {
         "lineNumber": 308,
         "author": {
-          "gitId": "iamjamestan"
+          "gitId": "-"
         },
-        "content": ""
+        "content": "![UndoRedoState1](images/UndoRedoState1.png)"
       },
       {
         "lineNumber": 309,
         "author": {
-          "gitId": "iamjamestan"
+          "gitId": "-"
         },
-        "content": "* 1a. The input syntax is invalid."
+        "content": ""
       },
       {
         "lineNumber": 310,
         "author": {
-          "gitId": "iamjamestan"
+          "gitId": "-"
         },
-        "content": "    "
+        "content": "Step 3. The user executes `add n/David …​` to add a new person. The `add` command also calls `Model#commitAddressBook()`, causing another modified address book state to be saved into the `addressBookStateList`."
       },
       {
         "lineNumber": 311,
         "author": {
-          "gitId": "iamjamestan"
+          "gitId": "-"
         },
-        "content": "    * 1a1. HairStyleX shows an error message."
+        "content": ""
       },
       {
         "lineNumber": 312,
         "author": {
-          "gitId": "iamjamestan"
+          "gitId": "-"
         },
-        "content": "    "
+        "content": "![UndoRedoState2](images/UndoRedoState2.png)"
       },
       {
         "lineNumber": 313,
         "author": {
-          "gitId": "iamjamestan"
+          "gitId": "-"
         },
-        "content": "      Use case resumes at step 1."
+        "content": ""
       },
       {
         "lineNumber": 314,
         "author": {
-          "gitId": "iamjamestan"
+          "gitId": "-"
         },
-        "content": "          "
+        "content": "\u003cdiv markdown\u003d\"span\" class\u003d\"alert alert-info\"\u003e:information_source: **Note:** If a command fails its execution, it will not call `Model#commitAddressBook()`, so the address book state will not be saved into the `addressBookStateList`."
       },
       {
         "lineNumber": 315,
         "author": {
-          "gitId": "iamjamestan"
+          "gitId": "-"
         },
-        "content": "**Use case: View people**"
+        "content": ""
       },
       {
         "lineNumber": 316,
         "author": {
-          "gitId": "iamjamestan"
+          "gitId": "-"
         },
-        "content": ""
+        "content": "\u003c/div\u003e"
       },
       {
         "lineNumber": 317,
         "author": {
-          "gitId": "iamjamestan"
-        },
-        "content": "**MSS**"
-      },
-      {
-        "lineNumber": 318,
-        "author": {
-          "gitId": "iamjamestan"
+          "gitId": "-"
         },
         "content": ""
       },
       {
+        "lineNumber": 318,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "Step 4. The user now decides that adding the person was a mistake, and decides to undo that action by executing the `undo` command. The `undo` command will call `Model#undoAddressBook()`, which will shift the `currentStatePointer` once to the left, pointing it to the previous address book state, and restores the address book to that state."
+      },
+      {
         "lineNumber": 319,
         "author": {
-          "gitId": "iamjamestan"
+          "gitId": "-"
         },
-        "content": "1.  User requests to view all people in the list"
+        "content": ""
       },
       {
         "lineNumber": 320,
         "author": {
-          "gitId": "iamjamestan"
+          "gitId": "-"
         },
-        "content": "2.  HairStyleX shows all people"
+        "content": "![UndoRedoState3](images/UndoRedoState3.png)"
       },
       {
         "lineNumber": 321,
         "author": {
-          "gitId": "iamjamestan"
+          "gitId": "-"
         },
         "content": ""
       },
       {
         "lineNumber": 322,
         "author": {
-          "gitId": "iamjamestan"
+          "gitId": "-"
         },
-        "content": "    Use case ends."
+        "content": "\u003cdiv markdown\u003d\"span\" class\u003d\"alert alert-info\"\u003e:information_source: **Note:** If the `currentStatePointer` is at index 0, pointing to the initial AddressBook state, then there are no previous AddressBook states to restore. The `undo` command uses `Model#canUndoAddressBook()` to check if this is the case. If so, it will return an error to the user rather"
       },
       {
         "lineNumber": 323,
         "author": {
-          "gitId": "iamjamestan"
+          "gitId": "-"
         },
-        "content": ""
+        "content": "than attempting to perform the undo."
       },
       {
         "lineNumber": 324,
         "author": {
-          "gitId": "iamjamestan"
+          "gitId": "-"
         },
-        "content": "**Extensions**"
+        "content": ""
       },
       {
         "lineNumber": 325,
         "author": {
-          "gitId": "iamjamestan"
+          "gitId": "-"
         },
-        "content": ""
+        "content": "\u003c/div\u003e"
       },
       {
         "lineNumber": 326,
         "author": {
-          "gitId": "iamjamestan"
+          "gitId": "-"
         },
-        "content": "* 1a. The list is empty."
+        "content": ""
       },
       {
         "lineNumber": 327,
         "author": {
-          "gitId": "iamjamestan"
+          "gitId": "-"
         },
-        "content": "    "
+        "content": "The following sequence diagram shows how the undo operation works:"
       },
       {
         "lineNumber": 328,
         "author": {
-          "gitId": "iamjamestan"
+          "gitId": "-"
         },
-        "content": "    Use case ends."
+        "content": ""
       },
       {
         "lineNumber": 329,
         "author": {
-          "gitId": "iamjamestan"
+          "gitId": "-"
         },
-        "content": "    "
+        "content": "![UndoSequenceDiagram](images/UndoSequenceDiagram.png)"
       },
       {
         "lineNumber": 330,
         "author": {
-          "gitId": "iamjamestan"
+          "gitId": "-"
         },
-        "content": "**Use case: Edit Person**"
+        "content": ""
       },
       {
         "lineNumber": 331,
         "author": {
-          "gitId": "iamjamestan"
+          "gitId": "-"
         },
-        "content": ""
+        "content": "\u003cdiv markdown\u003d\"span\" class\u003d\"alert alert-info\"\u003e:information_source: **Note:** The lifeline for `UndoCommand` should end at the destroy marker (X) but due to a limitation of PlantUML, the lifeline reaches the end of diagram."
       },
       {
         "lineNumber": 332,
         "author": {
-          "gitId": "iamjamestan"
-        },
-        "content": "**MSS**"
-      },
-      {
-        "lineNumber": 333,
-        "author": {
-          "gitId": "iamjamestan"
+          "gitId": "-"
         },
         "content": ""
       },
       {
+        "lineNumber": 333,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "\u003c/div\u003e"
+      },
+      {
         "lineNumber": 334,
         "author": {
-          "gitId": "iamjamestan"
+          "gitId": "-"
         },
-        "content": "1.  User requests to view all people in the list"
+        "content": ""
       },
       {
         "lineNumber": 335,
         "author": {
-          "gitId": "iamjamestan"
+          "gitId": "-"
         },
-        "content": "2.  HairStyleX shows all people"
+        "content": "The `redo` command does the opposite — it calls `Model#redoAddressBook()`, which shifts the `currentStatePointer` once to the right, pointing to the previously undone state, and restores the address book to that state."
       },
       {
         "lineNumber": 336,
         "author": {
-          "gitId": "iamjamestan"
+          "gitId": "-"
         },
-        "content": "3.  User requests to edit specific person"
+        "content": ""
       },
       {
         "lineNumber": 337,
         "author": {
-          "gitId": "iamjamestan"
+          "gitId": "-"
         },
-        "content": "4.  HairStyleX displays success message with updated person details"
+        "content": "\u003cdiv markdown\u003d\"span\" class\u003d\"alert alert-info\"\u003e:information_source: **Note:** If the `currentStatePointer` is at index `addressBookStateList.size() - 1`, pointing to the latest address book state, then there are no undone AddressBook states to restore. The `redo` command uses `Model#canRedoAddressBook()` to check if this is the case. If so, it will return an error to the user rather than attempting to perform the redo."
       },
       {
         "lineNumber": 338,
         "author": {
-          "gitId": "iamjamestan"
+          "gitId": "-"
         },
         "content": ""
       },
       {
         "lineNumber": 339,
         "author": {
-          "gitId": "iamjamestan"
+          "gitId": "-"
         },
-        "content": "    Use case ends."
+        "content": "\u003c/div\u003e"
       },
       {
         "lineNumber": 340,
         "author": {
-          "gitId": "iamjamestan"
+          "gitId": "-"
         },
         "content": ""
       },
       {
         "lineNumber": 341,
         "author": {
-          "gitId": "iamjamestan"
+          "gitId": "-"
         },
-        "content": "**Extensions**"
+        "content": "Step 5. The user then decides to execute the command `list`. Commands that do not modify the address book, such as `list`, will usually not call `Model#commitAddressBook()`, `Model#undoAddressBook()` or `Model#redoAddressBook()`. Thus, the `addressBookStateList` remains unchanged."
       },
       {
         "lineNumber": 342,
         "author": {
-          "gitId": "iamjamestan"
+          "gitId": "-"
         },
         "content": ""
       },
       {
         "lineNumber": 343,
         "author": {
-          "gitId": "iamjamestan"
+          "gitId": "-"
         },
-        "content": "* 1a. The list is empty."
+        "content": "![UndoRedoState4](images/UndoRedoState4.png)"
       },
       {
         "lineNumber": 344,
         "author": {
-          "gitId": "iamjamestan"
+          "gitId": "-"
         },
-        "content": "    "
+        "content": ""
       },
       {
         "lineNumber": 345,
         "author": {
-          "gitId": "iamjamestan"
+          "gitId": "-"
         },
-        "content": "    Use case ends."
+        "content": "Step 6. The user executes `clear`, which calls `Model#commitAddressBook()`. Since the `currentStatePointer` is not pointing at the end of the `addressBookStateList`, all address book states after the `currentStatePointer` will be purged. Reason: It no longer makes sense to redo the `add n/David …​` command. This is the behavior that most modern desktop applications follow."
       },
       {
         "lineNumber": 346,
         "author": {
-          "gitId": "iamjamestan"
+          "gitId": "-"
         },
-        "content": "    "
+        "content": ""
       },
       {
         "lineNumber": 347,
         "author": {
-          "gitId": "iamjamestan"
+          "gitId": "-"
         },
-        "content": "**Use case: Find Person**"
+        "content": "![UndoRedoState5](images/UndoRedoState5.png)"
       },
       {
         "lineNumber": 348,
         "author": {
-          "gitId": "iamjamestan"
+          "gitId": "-"
         },
         "content": ""
       },
       {
         "lineNumber": 349,
         "author": {
-          "gitId": "iamjamestan"
+          "gitId": "-"
         },
-        "content": "**MSS**"
+        "content": "The following activity diagram summarizes what happens when a user executes a new command:"
       },
       {
         "lineNumber": 350,
         "author": {
-          "gitId": "iamjamestan"
+          "gitId": "-"
         },
         "content": ""
       },
       {
         "lineNumber": 351,
         "author": {
-          "gitId": "iamjamestan"
+          "gitId": "-"
         },
-        "content": "1.  User requests to find all people whose name contains a specified `string`"
+        "content": "![CommitActivityDiagram](images/CommitActivityDiagram.png)"
       },
       {
         "lineNumber": 352,
         "author": {
-          "gitId": "iamjamestan"
+          "gitId": "-"
         },
-        "content": "2.  HairStyleX shows all people that has names that contain the specified `string`"
+        "content": ""
       },
       {
         "lineNumber": 353,
         "author": {
-          "gitId": "iamjamestan"
+          "gitId": "-"
         },
-        "content": ""
+        "content": "#### Design consideration:"
       },
       {
         "lineNumber": 354,
         "author": {
-          "gitId": "iamjamestan"
+          "gitId": "-"
         },
-        "content": "    Use case ends."
+        "content": ""
       },
       {
         "lineNumber": 355,
         "author": {
-          "gitId": "iamjamestan"
+          "gitId": "-"
         },
-        "content": ""
+        "content": "##### Aspect: How undo \u0026 redo executes"
       },
       {
         "lineNumber": 356,
         "author": {
-          "gitId": "iamjamestan"
+          "gitId": "-"
         },
-        "content": "**Extensions**"
+        "content": ""
       },
       {
         "lineNumber": 357,
         "author": {
-          "gitId": "iamjamestan"
+          "gitId": "-"
         },
-        "content": ""
+        "content": "* **Alternative 1 (current choice):** Saves the entire address book."
       },
       {
         "lineNumber": 358,
         "author": {
-          "gitId": "iamjamestan"
+          "gitId": "-"
         },
-        "content": "* 2a. No people has names that contain that specified `string`."
+        "content": "  * Pros: Easy to implement."
       },
       {
         "lineNumber": 359,
         "author": {
-          "gitId": "iamjamestan"
+          "gitId": "-"
         },
-        "content": "    "
+        "content": "  * Cons: May have performance issues in terms of memory usage."
       },
       {
         "lineNumber": 360,
         "author": {
-          "gitId": "iamjamestan"
-        },
-        "content": "    Use case ends."
-      },
-      {
-        "lineNumber": 361,
-        "author": {
-          "gitId": "iamjamestan"
-        },
-        "content": "    "
-      },
-      {
-        "lineNumber": 362,
-        "author": {
-          "gitId": "iamjamestan"
-        },
-        "content": "**Use case: View help**"
-      },
-      {
-        "lineNumber": 363,
-        "author": {
-          "gitId": "iamjamestan"
+          "gitId": "-"
         },
         "content": ""
       },
       {
+        "lineNumber": 361,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "* **Alternative 2:** Individual command knows how to undo/redo by"
+      },
+      {
+        "lineNumber": 362,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "  itself."
+      },
+      {
+        "lineNumber": 363,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "  * Pros: Will use less memory (e.g. for `delete`, just save the person being deleted)."
+      },
+      {
         "lineNumber": 364,
         "author": {
-          "gitId": "iamjamestan"
+          "gitId": "-"
         },
-        "content": "**MSS**"
+        "content": "  * Cons: We must ensure that the implementation of each individual command are correct."
       },
       {
         "lineNumber": 365,
         "author": {
-          "gitId": "iamjamestan"
+          "gitId": "-"
         },
         "content": ""
       },
       {
         "lineNumber": 366,
         "author": {
-          "gitId": "iamjamestan"
+          "gitId": "-"
         },
-        "content": "1.  User requests to view all valid commands"
+        "content": "_{more aspects and alternatives to be added}_"
       },
       {
         "lineNumber": 367,
         "author": {
-          "gitId": "iamjamestan"
-        },
-        "content": "2.  HairStyleX shows all valid commands"
-      },
-      {
-        "lineNumber": 368,
-        "author": {
-          "gitId": "iamjamestan"
+          "gitId": "-"
         },
         "content": ""
       },
       {
+        "lineNumber": 368,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "### \\[Proposed\\] Data archiving"
+      },
+      {
         "lineNumber": 369,
         "author": {
-          "gitId": "iamjamestan"
+          "gitId": "-"
         },
-        "content": "    Use case ends."
+        "content": ""
       },
       {
         "lineNumber": 370,
         "author": {
           "gitId": "-"
         },
-        "content": ""
+        "content": "_{Explain here how the data archiving feature will be implemented}_"
       },
       {
         "lineNumber": 371,
         "author": {
           "gitId": "-"
         },
-        "content": "*{More to be added}*"
+        "content": ""
       },
       {
         "lineNumber": 372,
         "author": {
           "gitId": "-"
         },
-        "content": ""
+        "content": "--------------------------------------------------------------------------------------------------------------------"
       },
       {
         "lineNumber": 373,
         "author": {
           "gitId": "-"
         },
-        "content": "### Non-Functional Requirements"
+        "content": ""
       },
       {
         "lineNumber": 374,
         "author": {
           "gitId": "-"
         },
-        "content": ""
+        "content": "## **Documentation, logging, testing, configuration, dev-ops**"
       },
       {
         "lineNumber": 375,
         "author": {
           "gitId": "-"
         },
-        "content": "1.  Should work on any _mainstream OS_ as long as it has Java `11` or above installed."
+        "content": ""
       },
       {
         "lineNumber": 376,
         "author": {
-          "gitId": "nicktohzyu"
+          "gitId": "-"
         },
-        "content": "2.  Should be able to hold up to 1000 hairdressers and clients without a noticeable sluggishness in performance for typical usage."
+        "content": "* [Documentation guide](Documentation.md)"
       },
       {
         "lineNumber": 377,
         "author": {
           "gitId": "-"
         },
-        "content": "3.  A user with above average typing speed for regular English text (i.e. not code, not system admin commands) should be able to accomplish most of the tasks faster using commands than using the mouse."
+        "content": "* [Testing guide](Testing.md)"
       },
       {
         "lineNumber": 378,
         "author": {
-          "gitId": "iamjamestan"
+          "gitId": "-"
         },
-        "content": "4.  There is no need for internet connection"
+        "content": "* [Logging guide](Logging.md)"
       },
       {
         "lineNumber": 379,
         "author": {
           "gitId": "-"
         },
-        "content": ""
+        "content": "* [Configuration guide](Configuration.md)"
       },
       {
         "lineNumber": 380,
         "author": {
           "gitId": "-"
         },
-        "content": "*{More to be added}*"
+        "content": "* [DevOps guide](DevOps.md)"
       },
       {
         "lineNumber": 381,
@@ -3829,7 +3829,7 @@
         "author": {
           "gitId": "-"
         },
-        "content": "### Glossary"
+        "content": "--------------------------------------------------------------------------------------------------------------------"
       },
       {
         "lineNumber": 383,
@@ -3843,35 +3843,35 @@
         "author": {
           "gitId": "-"
         },
-        "content": "* **Mainstream OS**: Windows, Linux, Unix, OS-X"
+        "content": "## **Appendix: Requirements**"
       },
       {
         "lineNumber": 385,
         "author": {
-          "gitId": "iamjamestan"
+          "gitId": "-"
         },
-        "content": "* **Hairdresser**: A hair stylist working in the salon"
+        "content": ""
       },
       {
         "lineNumber": 386,
         "author": {
-          "gitId": "iamjamestan"
+          "gitId": "-"
         },
-        "content": "* **Client**: A customer that visits the salon"
+        "content": "### Product scope"
       },
       {
         "lineNumber": 387,
         "author": {
-          "gitId": "iamjamestan"
+          "gitId": "-"
         },
-        "content": "* **Person**: Can refer to either a hairdresser or a client"
+        "content": ""
       },
       {
         "lineNumber": 388,
         "author": {
-          "gitId": "iamjamestan"
+          "gitId": "-"
         },
-        "content": "* **Appointment**: A specified time when a hairdresser services a client."
+        "content": "**Target user profile**:"
       },
       {
         "lineNumber": 389,
@@ -3883,177 +3883,177 @@
       {
         "lineNumber": 390,
         "author": {
-          "gitId": "-"
+          "gitId": "iamjamestan"
         },
-        "content": "--------------------------------------------------------------------------------------------------------------------"
+        "content": "* managers for budding hair salons"
       },
       {
         "lineNumber": 391,
         "author": {
-          "gitId": "-"
+          "gitId": "iamjamestan"
         },
-        "content": ""
+        "content": "* has a growing number of hairstylists and clients"
       },
       {
         "lineNumber": 392,
         "author": {
-          "gitId": "-"
+          "gitId": "iamjamestan"
         },
-        "content": "## **Appendix: Instructions for manual testing**"
+        "content": "* has a need to keep track of bookings, store supplies, stylist availability, and client information "
       },
       {
         "lineNumber": 393,
         "author": {
-          "gitId": "-"
+          "gitId": "iamjamestan"
         },
-        "content": ""
+        "content": "* has a desktop at the front desk"
       },
       {
         "lineNumber": 394,
         "author": {
           "gitId": "-"
         },
-        "content": "Given below are instructions to test the app manually."
+        "content": "* can type fast"
       },
       {
         "lineNumber": 395,
         "author": {
           "gitId": "-"
         },
-        "content": ""
+        "content": "* prefers typing to mouse interactions"
       },
       {
         "lineNumber": 396,
         "author": {
           "gitId": "-"
         },
-        "content": "\u003cdiv markdown\u003d\"span\" class\u003d\"alert alert-info\"\u003e:information_source: **Note:** These instructions only provide a starting point for testers to work on;"
+        "content": "* is reasonably comfortable using CLI apps"
       },
       {
         "lineNumber": 397,
         "author": {
           "gitId": "-"
         },
-        "content": "testers are expected to do more *exploratory* testing."
+        "content": ""
       },
       {
         "lineNumber": 398,
         "author": {
-          "gitId": "-"
+          "gitId": "iamjamestan"
         },
-        "content": ""
+        "content": "**Value proposition**: manage hairstylist, client and appointment information faster than the traditional pen and paper"
       },
       {
         "lineNumber": 399,
         "author": {
           "gitId": "-"
         },
-        "content": "\u003c/div\u003e"
+        "content": ""
       },
       {
         "lineNumber": 400,
         "author": {
           "gitId": "-"
         },
-        "content": ""
+        "content": "### User stories"
       },
       {
         "lineNumber": 401,
         "author": {
           "gitId": "-"
         },
-        "content": "### Launch and shutdown"
+        "content": ""
       },
       {
         "lineNumber": 402,
         "author": {
           "gitId": "-"
         },
-        "content": ""
+        "content": "Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unlikely to have) - `*`"
       },
       {
         "lineNumber": 403,
         "author": {
           "gitId": "-"
         },
-        "content": "1. Initial launch"
+        "content": ""
       },
       {
         "lineNumber": 404,
         "author": {
           "gitId": "-"
         },
-        "content": ""
+        "content": "| Priority | As a …​                                 | I want to …​                | So that I can…​                                                     |"
       },
       {
         "lineNumber": 405,
         "author": {
           "gitId": "-"
         },
-        "content": "   1. Download the jar file and copy into an empty folder"
+        "content": "| -------- | ------------------------------------------ | ------------------------------ | ---------------------------------------------------------------------- |"
       },
       {
         "lineNumber": 406,
         "author": {
-          "gitId": "-"
+          "gitId": "pooty3"
         },
-        "content": ""
+        "content": "| `* * *`  | new user                                   | see the instruction guide      | refer to instructions when I forget how to use the App                 |"
       },
       {
         "lineNumber": 407,
         "author": {
-          "gitId": "-"
+          "gitId": "pooty3"
         },
-        "content": "   1. Double-click the jar file Expected: Shows the GUI with a set of sample contacts. The window size may not be optimum."
+        "content": "| `* * *`  | manager                                    | add a new hairdresser          |                                                                        |"
       },
       {
         "lineNumber": 408,
         "author": {
-          "gitId": "-"
+          "gitId": "pooty3"
         },
-        "content": ""
+        "content": "| `* * *`  | receptionist                               | add a new client               |                                   |"
       },
       {
         "lineNumber": 409,
         "author": {
-          "gitId": "-"
+          "gitId": "pooty3"
         },
-        "content": "1. Saving window preferences"
+        "content": "| `* * *`  | manager                                    | edit a client/hairdresser      | keep my database updated |"
       },
       {
         "lineNumber": 410,
         "author": {
-          "gitId": "-"
+          "gitId": "pooty3"
         },
-        "content": ""
+        "content": "| `* * *`  | user                                       | exit the program               |          |"
       },
       {
         "lineNumber": 411,
         "author": {
-          "gitId": "-"
+          "gitId": "pooty3"
         },
-        "content": "   1. Resize the window to an optimum size. Move the window to a different location. Close the window."
+        "content": "| `* * *`  | manager                                    | find persons by name           | locate a person easily                                                 |"
       },
       {
         "lineNumber": 412,
         "author": {
-          "gitId": "-"
+          "gitId": "pooty3"
         },
-        "content": ""
+        "content": "| `* * *`  | receptionist                               | book appointments              |        |"
       },
       {
         "lineNumber": 413,
         "author": {
-          "gitId": "-"
+          "gitId": "pooty3"
         },
-        "content": "   1. Re-launch the app by double-clicking the jar file.\u003cbr\u003e"
+        "content": "| `* * *`  | new user                                   | navigate the UI easily         | learn how to use the app quickly                                             |"
       },
       {
         "lineNumber": 414,
         "author": {
           "gitId": "-"
         },
-        "content": "       Expected: The most recent window size and location is retained."
+        "content": ""
       },
       {
         "lineNumber": 415,
@@ -4067,7 +4067,7 @@
         "author": {
           "gitId": "-"
         },
-        "content": "1. _{ more test cases …​ }_"
+        "content": "*{More to be added}*"
       },
       {
         "lineNumber": 417,
@@ -4081,7 +4081,7 @@
         "author": {
           "gitId": "-"
         },
-        "content": "### Deleting a person"
+        "content": "### Use cases"
       },
       {
         "lineNumber": 419,
@@ -4093,44 +4093,44 @@
       {
         "lineNumber": 420,
         "author": {
-          "gitId": "-"
+          "gitId": "iamjamestan"
         },
-        "content": "1. Deleting a person while all persons are being shown"
+        "content": "(For all use cases below, the **System** is the `HairStyleX` application, and the **Actor** is the `user`, unless specified otherwise)"
       },
       {
         "lineNumber": 421,
         "author": {
-          "gitId": "-"
+          "gitId": "iamjamestan"
         },
         "content": ""
       },
       {
         "lineNumber": 422,
         "author": {
-          "gitId": "-"
+          "gitId": "iamjamestan"
         },
-        "content": "   1. Prerequisites: List all persons using the `list` command. Multiple persons in the list."
+        "content": "(A `person` refers to either a `hairdresser` or a `client`. If a `person` is used in any of the use cases below,"
       },
       {
         "lineNumber": 423,
         "author": {
-          "gitId": "-"
+          "gitId": "iamjamestan"
         },
-        "content": ""
+        "content": "it means that the use case can be performed similarly on both a `hairdresser` and a `client`)"
       },
       {
         "lineNumber": 424,
         "author": {
           "gitId": "-"
         },
-        "content": "   1. Test case: `delete 1`\u003cbr\u003e"
+        "content": ""
       },
       {
         "lineNumber": 425,
         "author": {
           "gitId": "-"
         },
-        "content": "      Expected: First contact is deleted from the list. Details of the deleted contact shown in the status message. Timestamp in the status bar is updated."
+        "content": "**Use case: Delete a person**"
       },
       {
         "lineNumber": 426,
@@ -4144,101 +4144,1312 @@
         "author": {
           "gitId": "-"
         },
-        "content": "   1. Test case: `delete 0`\u003cbr\u003e"
+        "content": "**MSS**"
       },
       {
         "lineNumber": 428,
         "author": {
           "gitId": "-"
         },
-        "content": "      Expected: No person is deleted. Error details shown in the status message. Status bar remains the same."
+        "content": ""
       },
       {
         "lineNumber": 429,
         "author": {
-          "gitId": "-"
+          "gitId": "iamjamestan"
         },
-        "content": ""
+        "content": "1.  User requests to list people"
       },
       {
         "lineNumber": 430,
         "author": {
-          "gitId": "-"
+          "gitId": "iamjamestan"
         },
-        "content": "   1. Other incorrect delete commands to try: `delete`, `delete x`, `...` (where x is larger than the list size)\u003cbr\u003e"
+        "content": "2.  HairStyleX shows a list of people"
       },
       {
         "lineNumber": 431,
         "author": {
           "gitId": "-"
         },
-        "content": "      Expected: Similar to previous."
+        "content": "3.  User requests to delete a specific person in the list"
       },
       {
         "lineNumber": 432,
         "author": {
-          "gitId": "-"
+          "gitId": "iamjamestan"
         },
-        "content": ""
+        "content": "4.  HairStyleX deletes the person"
       },
       {
         "lineNumber": 433,
         "author": {
           "gitId": "-"
         },
-        "content": "1. _{ more test cases …​ }_"
+        "content": ""
       },
       {
         "lineNumber": 434,
         "author": {
           "gitId": "-"
         },
-        "content": ""
+        "content": "    Use case ends."
       },
       {
         "lineNumber": 435,
         "author": {
           "gitId": "-"
         },
-        "content": "### Saving data"
+        "content": ""
       },
       {
         "lineNumber": 436,
         "author": {
           "gitId": "-"
         },
-        "content": ""
+        "content": "**Extensions**"
       },
       {
         "lineNumber": 437,
         "author": {
           "gitId": "-"
         },
-        "content": "1. Dealing with missing/corrupted data files"
+        "content": ""
       },
       {
         "lineNumber": 438,
         "author": {
           "gitId": "-"
         },
-        "content": ""
+        "content": "* 2a. The list is empty."
       },
       {
         "lineNumber": 439,
         "author": {
           "gitId": "-"
         },
-        "content": "   1. _{explain how to simulate a missing/corrupted file, and the expected behavior}_"
+        "content": ""
       },
       {
         "lineNumber": 440,
         "author": {
           "gitId": "-"
         },
-        "content": ""
+        "content": "  Use case ends."
       },
       {
         "lineNumber": 441,
+        "author": {
+          "gitId": "-"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 442,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "* 3a. The given index is invalid."
+      },
+      {
+        "lineNumber": 443,
+        "author": {
+          "gitId": "-"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 444,
+        "author": {
+          "gitId": "iamjamestan"
+        },
+        "content": "    * 3a1. HairStyleX shows an error message."
+      },
+      {
+        "lineNumber": 445,
+        "author": {
+          "gitId": "-"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 446,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "      Use case resumes at step 2."
+      },
+      {
+        "lineNumber": 447,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "      "
+      },
+      {
+        "lineNumber": 448,
+        "author": {
+          "gitId": "iamjamestan"
+        },
+        "content": "**Use case: Add a person**"
+      },
+      {
+        "lineNumber": 449,
+        "author": {
+          "gitId": "iamjamestan"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 450,
+        "author": {
+          "gitId": "iamjamestan"
+        },
+        "content": "**MSS**"
+      },
+      {
+        "lineNumber": 451,
+        "author": {
+          "gitId": "iamjamestan"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 452,
+        "author": {
+          "gitId": "iamjamestan"
+        },
+        "content": "1.  User requests to add a specific person in the list"
+      },
+      {
+        "lineNumber": 453,
+        "author": {
+          "gitId": "iamjamestan"
+        },
+        "content": "2.  HairStyleX adds the person"
+      },
+      {
+        "lineNumber": 454,
+        "author": {
+          "gitId": "iamjamestan"
+        },
+        "content": "3.  HairStyleX shows a success message"
+      },
+      {
+        "lineNumber": 455,
+        "author": {
+          "gitId": "iamjamestan"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 456,
+        "author": {
+          "gitId": "iamjamestan"
+        },
+        "content": "    Use case ends."
+      },
+      {
+        "lineNumber": 457,
+        "author": {
+          "gitId": "iamjamestan"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 458,
+        "author": {
+          "gitId": "iamjamestan"
+        },
+        "content": "**Extensions**"
+      },
+      {
+        "lineNumber": 459,
+        "author": {
+          "gitId": "iamjamestan"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 460,
+        "author": {
+          "gitId": "iamjamestan"
+        },
+        "content": "* 1a. The input syntax is invalid."
+      },
+      {
+        "lineNumber": 461,
+        "author": {
+          "gitId": "iamjamestan"
+        },
+        "content": "    "
+      },
+      {
+        "lineNumber": 462,
+        "author": {
+          "gitId": "iamjamestan"
+        },
+        "content": "    * 1a1. HairStyleX shows an error message."
+      },
+      {
+        "lineNumber": 463,
+        "author": {
+          "gitId": "iamjamestan"
+        },
+        "content": "    "
+      },
+      {
+        "lineNumber": 464,
+        "author": {
+          "gitId": "iamjamestan"
+        },
+        "content": "      Use case resumes at step 1."
+      },
+      {
+        "lineNumber": 465,
+        "author": {
+          "gitId": "iamjamestan"
+        },
+        "content": "          "
+      },
+      {
+        "lineNumber": 466,
+        "author": {
+          "gitId": "iamjamestan"
+        },
+        "content": "**Use case: View people**"
+      },
+      {
+        "lineNumber": 467,
+        "author": {
+          "gitId": "iamjamestan"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 468,
+        "author": {
+          "gitId": "iamjamestan"
+        },
+        "content": "**MSS**"
+      },
+      {
+        "lineNumber": 469,
+        "author": {
+          "gitId": "iamjamestan"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 470,
+        "author": {
+          "gitId": "iamjamestan"
+        },
+        "content": "1.  User requests to view all people in the list"
+      },
+      {
+        "lineNumber": 471,
+        "author": {
+          "gitId": "iamjamestan"
+        },
+        "content": "2.  HairStyleX shows all people"
+      },
+      {
+        "lineNumber": 472,
+        "author": {
+          "gitId": "iamjamestan"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 473,
+        "author": {
+          "gitId": "iamjamestan"
+        },
+        "content": "    Use case ends."
+      },
+      {
+        "lineNumber": 474,
+        "author": {
+          "gitId": "iamjamestan"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 475,
+        "author": {
+          "gitId": "iamjamestan"
+        },
+        "content": "**Extensions**"
+      },
+      {
+        "lineNumber": 476,
+        "author": {
+          "gitId": "iamjamestan"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 477,
+        "author": {
+          "gitId": "iamjamestan"
+        },
+        "content": "* 1a. The list is empty."
+      },
+      {
+        "lineNumber": 478,
+        "author": {
+          "gitId": "iamjamestan"
+        },
+        "content": "    "
+      },
+      {
+        "lineNumber": 479,
+        "author": {
+          "gitId": "iamjamestan"
+        },
+        "content": "    Use case ends."
+      },
+      {
+        "lineNumber": 480,
+        "author": {
+          "gitId": "iamjamestan"
+        },
+        "content": "    "
+      },
+      {
+        "lineNumber": 481,
+        "author": {
+          "gitId": "iamjamestan"
+        },
+        "content": "**Use case: Edit Person**"
+      },
+      {
+        "lineNumber": 482,
+        "author": {
+          "gitId": "iamjamestan"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 483,
+        "author": {
+          "gitId": "iamjamestan"
+        },
+        "content": "**MSS**"
+      },
+      {
+        "lineNumber": 484,
+        "author": {
+          "gitId": "iamjamestan"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 485,
+        "author": {
+          "gitId": "iamjamestan"
+        },
+        "content": "1.  User requests to view all people in the list"
+      },
+      {
+        "lineNumber": 486,
+        "author": {
+          "gitId": "iamjamestan"
+        },
+        "content": "2.  HairStyleX shows all people"
+      },
+      {
+        "lineNumber": 487,
+        "author": {
+          "gitId": "iamjamestan"
+        },
+        "content": "3.  User requests to edit specific person"
+      },
+      {
+        "lineNumber": 488,
+        "author": {
+          "gitId": "iamjamestan"
+        },
+        "content": "4.  HairStyleX displays success message with updated person details"
+      },
+      {
+        "lineNumber": 489,
+        "author": {
+          "gitId": "iamjamestan"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 490,
+        "author": {
+          "gitId": "iamjamestan"
+        },
+        "content": "    Use case ends."
+      },
+      {
+        "lineNumber": 491,
+        "author": {
+          "gitId": "iamjamestan"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 492,
+        "author": {
+          "gitId": "iamjamestan"
+        },
+        "content": "**Extensions**"
+      },
+      {
+        "lineNumber": 493,
+        "author": {
+          "gitId": "iamjamestan"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 494,
+        "author": {
+          "gitId": "iamjamestan"
+        },
+        "content": "* 1a. The list is empty."
+      },
+      {
+        "lineNumber": 495,
+        "author": {
+          "gitId": "iamjamestan"
+        },
+        "content": "    "
+      },
+      {
+        "lineNumber": 496,
+        "author": {
+          "gitId": "iamjamestan"
+        },
+        "content": "    Use case ends."
+      },
+      {
+        "lineNumber": 497,
+        "author": {
+          "gitId": "iamjamestan"
+        },
+        "content": "    "
+      },
+      {
+        "lineNumber": 498,
+        "author": {
+          "gitId": "iamjamestan"
+        },
+        "content": "**Use case: Find Person**"
+      },
+      {
+        "lineNumber": 499,
+        "author": {
+          "gitId": "iamjamestan"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 500,
+        "author": {
+          "gitId": "iamjamestan"
+        },
+        "content": "**MSS**"
+      },
+      {
+        "lineNumber": 501,
+        "author": {
+          "gitId": "iamjamestan"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 502,
+        "author": {
+          "gitId": "iamjamestan"
+        },
+        "content": "1.  User requests to find all people whose name contains a specified `string`"
+      },
+      {
+        "lineNumber": 503,
+        "author": {
+          "gitId": "iamjamestan"
+        },
+        "content": "2.  HairStyleX shows all people that has names that contain the specified `string`"
+      },
+      {
+        "lineNumber": 504,
+        "author": {
+          "gitId": "iamjamestan"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 505,
+        "author": {
+          "gitId": "iamjamestan"
+        },
+        "content": "    Use case ends."
+      },
+      {
+        "lineNumber": 506,
+        "author": {
+          "gitId": "iamjamestan"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 507,
+        "author": {
+          "gitId": "iamjamestan"
+        },
+        "content": "**Extensions**"
+      },
+      {
+        "lineNumber": 508,
+        "author": {
+          "gitId": "iamjamestan"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 509,
+        "author": {
+          "gitId": "iamjamestan"
+        },
+        "content": "* 2a. No people has names that contain that specified `string`."
+      },
+      {
+        "lineNumber": 510,
+        "author": {
+          "gitId": "iamjamestan"
+        },
+        "content": "    "
+      },
+      {
+        "lineNumber": 511,
+        "author": {
+          "gitId": "iamjamestan"
+        },
+        "content": "    Use case ends."
+      },
+      {
+        "lineNumber": 512,
+        "author": {
+          "gitId": "iamjamestan"
+        },
+        "content": "    "
+      },
+      {
+        "lineNumber": 513,
+        "author": {
+          "gitId": "iamjamestan"
+        },
+        "content": "**Use case: View help**"
+      },
+      {
+        "lineNumber": 514,
+        "author": {
+          "gitId": "iamjamestan"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 515,
+        "author": {
+          "gitId": "iamjamestan"
+        },
+        "content": "**MSS**"
+      },
+      {
+        "lineNumber": 516,
+        "author": {
+          "gitId": "iamjamestan"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 517,
+        "author": {
+          "gitId": "iamjamestan"
+        },
+        "content": "1.  User requests to view all valid commands"
+      },
+      {
+        "lineNumber": 518,
+        "author": {
+          "gitId": "iamjamestan"
+        },
+        "content": "2.  HairStyleX shows all valid commands"
+      },
+      {
+        "lineNumber": 519,
+        "author": {
+          "gitId": "iamjamestan"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 520,
+        "author": {
+          "gitId": "iamjamestan"
+        },
+        "content": "    Use case ends."
+      },
+      {
+        "lineNumber": 521,
+        "author": {
+          "gitId": "iamjamestan"
+        },
+        "content": "    "
+      },
+      {
+        "lineNumber": 522,
+        "author": {
+          "gitId": "pooty3"
+        },
+        "content": "**Use case: Add an alias*"
+      },
+      {
+        "lineNumber": 523,
+        "author": {
+          "gitId": "pooty3"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 524,
+        "author": {
+          "gitId": "pooty3"
+        },
+        "content": "**MSS**"
+      },
+      {
+        "lineNumber": 525,
+        "author": {
+          "gitId": "pooty3"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 526,
+        "author": {
+          "gitId": "pooty3"
+        },
+        "content": "1.  User requests to add an alias"
+      },
+      {
+        "lineNumber": 527,
+        "author": {
+          "gitId": "pooty3"
+        },
+        "content": "2.  HairStyleX adds his requested alias"
+      },
+      {
+        "lineNumber": 528,
+        "author": {
+          "gitId": "pooty3"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 529,
+        "author": {
+          "gitId": "pooty3"
+        },
+        "content": "    Use case ends."
+      },
+      {
+        "lineNumber": 530,
+        "author": {
+          "gitId": "pooty3"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 531,
+        "author": {
+          "gitId": "pooty3"
+        },
+        "content": "**Extensions**"
+      },
+      {
+        "lineNumber": 532,
+        "author": {
+          "gitId": "pooty3"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 533,
+        "author": {
+          "gitId": "pooty3"
+        },
+        "content": "* 1a. The alias already exists."
+      },
+      {
+        "lineNumber": 534,
+        "author": {
+          "gitId": "pooty3"
+        },
+        "content": "    "
+      },
+      {
+        "lineNumber": 535,
+        "author": {
+          "gitId": "pooty3"
+        },
+        "content": "    * 1a1. HairStyleX shows an error message."
+      },
+      {
+        "lineNumber": 536,
+        "author": {
+          "gitId": "pooty3"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 537,
+        "author": {
+          "gitId": "pooty3"
+        },
+        "content": "      Use case ends."
+      },
+      {
+        "lineNumber": 538,
+        "author": {
+          "gitId": "pooty3"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 539,
+        "author": {
+          "gitId": "pooty3"
+        },
+        "content": "* 1b. The user does not specify the correct old alias."
+      },
+      {
+        "lineNumber": 540,
+        "author": {
+          "gitId": "pooty3"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 541,
+        "author": {
+          "gitId": "pooty3"
+        },
+        "content": "    * 1b1. HairStyleX shows an error message."
+      },
+      {
+        "lineNumber": 542,
+        "author": {
+          "gitId": "-"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 543,
+        "author": {
+          "gitId": "pooty3"
+        },
+        "content": "      Use case ends."
+      },
+      {
+        "lineNumber": 544,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "*{More to be added}*"
+      },
+      {
+        "lineNumber": 545,
+        "author": {
+          "gitId": "-"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 546,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "### Non-Functional Requirements"
+      },
+      {
+        "lineNumber": 547,
+        "author": {
+          "gitId": "-"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 548,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "1.  Should work on any _mainstream OS_ as long as it has Java `11` or above installed."
+      },
+      {
+        "lineNumber": 549,
+        "author": {
+          "gitId": "nicktohzyu"
+        },
+        "content": "2.  Should be able to hold up to 1000 hairdressers and clients without a noticeable sluggishness in performance for typical usage."
+      },
+      {
+        "lineNumber": 550,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "3.  A user with above average typing speed for regular English text (i.e. not code, not system admin commands) should be able to accomplish most of the tasks faster using commands than using the mouse."
+      },
+      {
+        "lineNumber": 551,
+        "author": {
+          "gitId": "iamjamestan"
+        },
+        "content": "4.  There is no need for internet connection"
+      },
+      {
+        "lineNumber": 552,
+        "author": {
+          "gitId": "-"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 553,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "*{More to be added}*"
+      },
+      {
+        "lineNumber": 554,
+        "author": {
+          "gitId": "-"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 555,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "### Glossary"
+      },
+      {
+        "lineNumber": 556,
+        "author": {
+          "gitId": "-"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 557,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "* **Mainstream OS**: Windows, Linux, Unix, OS-X"
+      },
+      {
+        "lineNumber": 558,
+        "author": {
+          "gitId": "iamjamestan"
+        },
+        "content": "* **Hairdresser**: A hair stylist working in the salon"
+      },
+      {
+        "lineNumber": 559,
+        "author": {
+          "gitId": "iamjamestan"
+        },
+        "content": "* **Client**: A customer that visits the salon"
+      },
+      {
+        "lineNumber": 560,
+        "author": {
+          "gitId": "iamjamestan"
+        },
+        "content": "* **Person**: Can refer to either a hairdresser or a client"
+      },
+      {
+        "lineNumber": 561,
+        "author": {
+          "gitId": "iamjamestan"
+        },
+        "content": "* **Appointment**: A specified time when a hairdresser services a client."
+      },
+      {
+        "lineNumber": 562,
+        "author": {
+          "gitId": "-"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 563,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "--------------------------------------------------------------------------------------------------------------------"
+      },
+      {
+        "lineNumber": 564,
+        "author": {
+          "gitId": "-"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 565,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "## **Appendix: Instructions for manual testing**"
+      },
+      {
+        "lineNumber": 566,
+        "author": {
+          "gitId": "-"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 567,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "Given below are instructions to test the app manually."
+      },
+      {
+        "lineNumber": 568,
+        "author": {
+          "gitId": "-"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 569,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "\u003cdiv markdown\u003d\"span\" class\u003d\"alert alert-info\"\u003e:information_source: **Note:** These instructions only provide a starting point for testers to work on;"
+      },
+      {
+        "lineNumber": 570,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "testers are expected to do more *exploratory* testing."
+      },
+      {
+        "lineNumber": 571,
+        "author": {
+          "gitId": "-"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 572,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "\u003c/div\u003e"
+      },
+      {
+        "lineNumber": 573,
+        "author": {
+          "gitId": "-"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 574,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "### Launch and shutdown"
+      },
+      {
+        "lineNumber": 575,
+        "author": {
+          "gitId": "-"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 576,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "1. Initial launch"
+      },
+      {
+        "lineNumber": 577,
+        "author": {
+          "gitId": "-"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 578,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "   1. Download the jar file and copy into an empty folder"
+      },
+      {
+        "lineNumber": 579,
+        "author": {
+          "gitId": "-"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 580,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "   1. Double-click the jar file Expected: Shows the GUI with a set of sample contacts. The window size may not be optimum."
+      },
+      {
+        "lineNumber": 581,
+        "author": {
+          "gitId": "-"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 582,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "1. Saving window preferences"
+      },
+      {
+        "lineNumber": 583,
+        "author": {
+          "gitId": "-"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 584,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "   1. Resize the window to an optimum size. Move the window to a different location. Close the window."
+      },
+      {
+        "lineNumber": 585,
+        "author": {
+          "gitId": "-"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 586,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "   1. Re-launch the app by double-clicking the jar file.\u003cbr\u003e"
+      },
+      {
+        "lineNumber": 587,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "       Expected: The most recent window size and location is retained."
+      },
+      {
+        "lineNumber": 588,
+        "author": {
+          "gitId": "-"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 589,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "1. _{ more test cases …​ }_"
+      },
+      {
+        "lineNumber": 590,
+        "author": {
+          "gitId": "-"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 591,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "### Deleting a person"
+      },
+      {
+        "lineNumber": 592,
+        "author": {
+          "gitId": "-"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 593,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "1. Deleting a person while all persons are being shown"
+      },
+      {
+        "lineNumber": 594,
+        "author": {
+          "gitId": "-"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 595,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "   1. Prerequisites: List all persons using the `list` command. Multiple persons in the list."
+      },
+      {
+        "lineNumber": 596,
+        "author": {
+          "gitId": "-"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 597,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "   1. Test case: `delete 1`\u003cbr\u003e"
+      },
+      {
+        "lineNumber": 598,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "      Expected: First contact is deleted from the list. Details of the deleted contact shown in the status message. Timestamp in the status bar is updated."
+      },
+      {
+        "lineNumber": 599,
+        "author": {
+          "gitId": "-"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 600,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "   1. Test case: `delete 0`\u003cbr\u003e"
+      },
+      {
+        "lineNumber": 601,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "      Expected: No person is deleted. Error details shown in the status message. Status bar remains the same."
+      },
+      {
+        "lineNumber": 602,
+        "author": {
+          "gitId": "-"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 603,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "   1. Other incorrect delete commands to try: `delete`, `delete x`, `...` (where x is larger than the list size)\u003cbr\u003e"
+      },
+      {
+        "lineNumber": 604,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "      Expected: Similar to previous."
+      },
+      {
+        "lineNumber": 605,
+        "author": {
+          "gitId": "-"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 606,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "1. _{ more test cases …​ }_"
+      },
+      {
+        "lineNumber": 607,
+        "author": {
+          "gitId": "-"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 608,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "### Saving data"
+      },
+      {
+        "lineNumber": 609,
+        "author": {
+          "gitId": "-"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 610,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "1. Dealing with missing/corrupted data files"
+      },
+      {
+        "lineNumber": 611,
+        "author": {
+          "gitId": "-"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 612,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "   1. _{explain how to simulate a missing/corrupted file, and the expected behavior}_"
+      },
+      {
+        "lineNumber": 613,
+        "author": {
+          "gitId": "-"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 614,
         "author": {
           "gitId": "-"
         },
@@ -4246,10 +5457,11 @@
       }
     ],
     "authorContributionMap": {
-      "iamjamestan": 91,
-      "pooty3": 8,
-      "nicktohzyu": 1,
-      "-": 341
+      "iamjamestan": 148,
+      "pooty3": 57,
+      "nicktohzyu": 30,
+      "theyifan": 43,
+      "-": 336
     }
   },
   {
@@ -4714,7 +5926,7 @@
       {
         "lineNumber": 66,
         "author": {
-          "gitId": "theyifan"
+          "gitId": "-"
         },
         "content": ""
       },
@@ -4945,14 +6157,14 @@
       {
         "lineNumber": 99,
         "author": {
-          "gitId": "-"
+          "gitId": "ya0-yuan"
         },
         "content": ""
       },
       {
         "lineNumber": 100,
         "author": {
-          "gitId": "-"
+          "gitId": "iamjamestan"
         },
         "content": "Examples:"
       },
@@ -4966,7 +6178,7 @@
       {
         "lineNumber": 102,
         "author": {
-          "gitId": "-"
+          "gitId": "iamjamestan"
         },
         "content": ""
       },
@@ -4980,7 +6192,7 @@
       {
         "lineNumber": 104,
         "author": {
-          "gitId": "-"
+          "gitId": "iamjamestan"
         },
         "content": ""
       },
@@ -4994,7 +6206,7 @@
       {
         "lineNumber": 106,
         "author": {
-          "gitId": "-"
+          "gitId": "iamjamestan"
         },
         "content": ""
       },
@@ -5008,7 +6220,7 @@
       {
         "lineNumber": 108,
         "author": {
-          "gitId": "-"
+          "gitId": "iamjamestan"
         },
         "content": ""
       },
@@ -5092,14 +6304,14 @@
       {
         "lineNumber": 120,
         "author": {
-          "gitId": "ya0-yuan"
+          "gitId": "-"
         },
         "content": ""
       },
       {
         "lineNumber": 121,
         "author": {
-          "gitId": "ya0-yuan"
+          "gitId": "-"
         },
         "content": "Examples:"
       },
@@ -5162,7 +6374,7 @@
       {
         "lineNumber": 130,
         "author": {
-          "gitId": "iamjamestan"
+          "gitId": "-"
         },
         "content": ""
       },
@@ -5512,7 +6724,7 @@
       {
         "lineNumber": 180,
         "author": {
-          "gitId": "-"
+          "gitId": "iamjamestan"
         },
         "content": ""
       },
@@ -5568,7 +6780,7 @@
       {
         "lineNumber": 188,
         "author": {
-          "gitId": "iamjamestan"
+          "gitId": "-"
         },
         "content": "Examples:"
       },
@@ -5673,9 +6885,9 @@
       {
         "lineNumber": 203,
         "author": {
-          "gitId": "-"
+          "gitId": "pooty3"
         },
-        "content": "## FAQ"
+        "content": "### Alias commands"
       },
       {
         "lineNumber": 204,
@@ -5687,44 +6899,44 @@
       {
         "lineNumber": 205,
         "author": {
-          "gitId": "-"
+          "gitId": "pooty3"
         },
-        "content": "**Q**: How do I transfer my data to another Computer?\u003cbr\u003e"
+        "content": "#### Adding a command alias : `add_alias`"
       },
       {
         "lineNumber": 206,
         "author": {
-          "gitId": "nicktohzyu"
+          "gitId": "-"
         },
-        "content": "**A**: Install the app in the other computer and overwrite the empty data file it creates with the file that contains the data of your previous HairstyleX home folder."
+        "content": ""
       },
       {
         "lineNumber": 207,
         "author": {
-          "gitId": "-"
+          "gitId": "pooty3"
         },
-        "content": ""
+        "content": "Adds a new command alias to the database."
       },
       {
         "lineNumber": 208,
         "author": {
           "gitId": "-"
         },
-        "content": "--------------------------------------------------------------------------------------------------------------------"
+        "content": ""
       },
       {
         "lineNumber": 209,
         "author": {
-          "gitId": "-"
+          "gitId": "pooty3"
         },
-        "content": ""
+        "content": "Format: `add_alias old/OLD_ALIAS new/NEW_ALIAS`"
       },
       {
         "lineNumber": 210,
         "author": {
           "gitId": "-"
         },
-        "content": "## Command summary"
+        "content": ""
       },
       {
         "lineNumber": 211,
@@ -5736,117 +6948,222 @@
       {
         "lineNumber": 212,
         "author": {
-          "gitId": "-"
+          "gitId": "pooty3"
         },
-        "content": "Action | Format, Examples"
+        "content": "#### Deleting a command_alias : `delete_alias`"
       },
       {
         "lineNumber": 213,
         "author": {
           "gitId": "-"
         },
-        "content": "--------|------------------"
+        "content": ""
       },
       {
         "lineNumber": 214,
+        "author": {
+          "gitId": "pooty3"
+        },
+        "content": "Removes a command alias from the database."
+      },
+      {
+        "lineNumber": 215,
+        "author": {
+          "gitId": "pooty3"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 216,
+        "author": {
+          "gitId": "pooty3"
+        },
+        "content": "Format: `delete_alias ALIAS`"
+      },
+      {
+        "lineNumber": 217,
+        "author": {
+          "gitId": "-"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 218,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "## FAQ"
+      },
+      {
+        "lineNumber": 219,
+        "author": {
+          "gitId": "-"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 220,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "**Q**: How do I transfer my data to another Computer?\u003cbr\u003e"
+      },
+      {
+        "lineNumber": 221,
+        "author": {
+          "gitId": "nicktohzyu"
+        },
+        "content": "**A**: Install the app in the other computer and overwrite the empty data file it creates with the file that contains the data of your previous HairstyleX home folder."
+      },
+      {
+        "lineNumber": 222,
+        "author": {
+          "gitId": "-"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 223,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "--------------------------------------------------------------------------------------------------------------------"
+      },
+      {
+        "lineNumber": 224,
+        "author": {
+          "gitId": "-"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 225,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "## Command summary"
+      },
+      {
+        "lineNumber": 226,
+        "author": {
+          "gitId": "-"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 227,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "Action | Format, Examples"
+      },
+      {
+        "lineNumber": 228,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "--------|------------------"
+      },
+      {
+        "lineNumber": 229,
         "author": {
           "gitId": "-"
         },
         "content": "**Help** | `help`"
       },
       {
-        "lineNumber": 215,
+        "lineNumber": 230,
         "author": {
           "gitId": "iamjamestan"
         },
         "content": "**Clear** | `clear`"
       },
       {
-        "lineNumber": 216,
+        "lineNumber": 231,
         "author": {
           "gitId": "iamjamestan"
         },
         "content": "**Exit** | `exit`"
       },
       {
-        "lineNumber": 217,
+        "lineNumber": 232,
         "author": {
           "gitId": "iamjamestan"
         },
         "content": "**Add Hairdresser** | `add_hairdresser n/NAME p/PHONE_NUMBER e/EMAIL ti/TITLE [s/SPECIALISATION] [t/TAG]…​` \u003cbr\u003e e.g., `add n/James Ho p/22224444 e/jamesho@example.com ti/senior s/colouring t/colleague`"
       },
       {
-        "lineNumber": 218,
+        "lineNumber": 233,
         "author": {
           "gitId": "iamjamestan"
         },
         "content": "**Add Client** | `add_client n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS tr/TREATMENT [p/PREFERENCE] [t/TAG]…​` \u003cbr\u003e e.g., `add n/Nicholas Toh p/12345678 e/niktoh@example.com a/123, Clementi Rd, 1234665 tr/colouring p/female stylist t/frequent`"
       },
       {
-        "lineNumber": 219,
+        "lineNumber": 234,
         "author": {
           "gitId": "iamjamestan"
         },
         "content": "**Add Appointment** | `add_appt cid/CLIENT_ID hid/HAIRDRESSER_ID d/DATE t/TIME` \u003cbr\u003e e.g., `add_appt cid/1 hid/1 d/2020-12-12 t/17:30`"
       },
       {
-        "lineNumber": 220,
+        "lineNumber": 235,
         "author": {
           "gitId": "iamjamestan"
         },
         "content": "**List Hairdressers** | `list_hairdresser`"
       },
       {
-        "lineNumber": 221,
+        "lineNumber": 236,
         "author": {
           "gitId": "iamjamestan"
         },
         "content": "**List Clients** | `list_client`"
       },
       {
-        "lineNumber": 222,
+        "lineNumber": 237,
         "author": {
           "gitId": "iamjamestan"
         },
         "content": "**List Appointments** | `list_appt`"
       },
       {
-        "lineNumber": 223,
+        "lineNumber": 238,
         "author": {
           "gitId": "iamjamestan"
         },
         "content": "**Edit Hairdresser** | `edit_hairdresser ID ID [n/NAME] [p/PHONE_NUMBER] [e/EMAIL] [ti/TITLE] [s/SPECIALISATION] [t/TAG]…​`\u003cbr\u003e e.g.,`edit_hairdresser 2 n/James Lee ti/senior`"
       },
       {
-        "lineNumber": 224,
+        "lineNumber": 239,
         "author": {
           "gitId": "iamjamestan"
         },
         "content": "**Edit Client** | `edit_client ID [n/NAME] [p/PHONE_NUMBER] [e/EMAIL] [a/ADDRESS] [tr/TREATMENT] [p/PREFERENCE] [t/TAG]…​`\u003cbr\u003e e.g.,`edit_client 2 n/James Tan p/Female Stylist`"
       },
       {
-        "lineNumber": 225,
+        "lineNumber": 240,
         "author": {
           "gitId": "iamjamestan"
         },
         "content": "**Edit Appointment** | `edit_appointment ID s/STATUS` \u003cbr\u003e e.g.,`edit_appt 1 s/CANCELLED`"
       },
       {
-        "lineNumber": 226,
+        "lineNumber": 241,
         "author": {
           "gitId": "iamjamestan"
         },
         "content": "**Delete Hairdresser** | `delete_hairdresser ID` \u003cbr\u003e e.g., `delete_hairdresser 3`"
       },
       {
-        "lineNumber": 227,
+        "lineNumber": 242,
         "author": {
           "gitId": "iamjamestan"
         },
         "content": "**Delete Client** | `delete_client ID` \u003cbr\u003e e.g., `delete_client 3`"
       },
       {
-        "lineNumber": 228,
+        "lineNumber": 243,
         "author": {
           "gitId": "iamjamestan"
         },
@@ -5854,12 +7171,12 @@
       }
     ],
     "authorContributionMap": {
-      "iamjamestan": 99,
-      "pooty3": 3,
+      "iamjamestan": 103,
+      "pooty3": 11,
       "nicktohzyu": 3,
-      "theyifan": 5,
-      "ya0-yuan": 6,
-      "-": 112
+      "theyifan": 4,
+      "ya0-yuan": 5,
+      "-": 117
     }
   },
   {
@@ -52587,7 +53904,7 @@
         "author": {
           "gitId": "pooty3"
         },
-        "content": "     * Constructs a {@code JsonAdaptedAppointment} with the given {@code appointment}."
+        "content": "     * Constructs a {@code JsonAdaptedCommandAlias} with the given {@code String and @code List\u003cString\u003e}."
       },
       {
         "lineNumber": 20,
@@ -52657,7 +53974,7 @@
         "author": {
           "gitId": "pooty3"
         },
-        "content": "     * Converts a given {@code Appointment} into this class for Jackson use."
+        "content": "     * Converts a given {@code CommandAlias} into this class for Jackson use."
       },
       {
         "lineNumber": 30,
@@ -52713,7 +54030,7 @@
         "author": {
           "gitId": "pooty3"
         },
-        "content": "     * Converts this Jackson-friendly adapted appointment object into the model\u0027s {@code Appointment} object."
+        "content": "     * Converts this Jackson-friendly adapted commandAlias object into the model\u0027s {@code CommandAlias} object."
       },
       {
         "lineNumber": 38,
@@ -52727,7 +54044,7 @@
         "author": {
           "gitId": "pooty3"
         },
-        "content": "     * @throws IllegalValueException if there were any data constraints violated in the adapted appointment."
+        "content": "     * @throws IllegalValueException if there were any data constraints violated in the adapted commandAlias."
       },
       {
         "lineNumber": 40,
@@ -52981,7 +54298,7 @@
         "author": {
           "gitId": "pooty3"
         },
-        "content": "     * Constructs a {@code JsonAdaptedAppointment} with the given {@code appointment}."
+        "content": "     * Constructs a {@code JsonAdaptedCommandAliasSet} with the given {@code List\u003cJsonAdaptedCommandAlias\u003e}."
       },
       {
         "lineNumber": 22,
@@ -53037,7 +54354,7 @@
         "author": {
           "gitId": "pooty3"
         },
-        "content": "     * Converts a given {@code Appointment} into this class for Jackson use."
+        "content": "     * Converts a given {@code CommandAliasSet} into this class for Jackson use."
       },
       {
         "lineNumber": 30,
@@ -53093,7 +54410,7 @@
         "author": {
           "gitId": "pooty3"
         },
-        "content": "     * Converts this Jackson-friendly adapted appointment object into the model\u0027s {@code Appointment} object."
+        "content": "     * Converts this Jackson-friendly adapted CommandAliasSet object into the model\u0027s {@code CommandAliasSet} object."
       },
       {
         "lineNumber": 38,
@@ -53107,7 +54424,7 @@
         "author": {
           "gitId": "pooty3"
         },
-        "content": "     * @throws IllegalValueException if there were any data constraints violated in the adapted appointment."
+        "content": "     * @throws IllegalValueException if there were any data constraints violated in the adapted commandAliasSet."
       },
       {
         "lineNumber": 40,
