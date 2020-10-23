@@ -993,9 +993,9 @@
       {
         "lineNumber": 51,
         "author": {
-          "gitId": "zeying99"
+          "gitId": "CalistaIo"
         },
-        "content": "\u003cimg src\u003d\"images/wuzeying.png\" width\u003d\"200px\"\u003e"
+        "content": "\u003cimg src\u003d\"images/zeying99.png\" width\u003d\"200px\"\u003e"
       },
       {
         "lineNumber": 52,
@@ -1042,11 +1042,11 @@
     ],
     "authorContributionMap": {
       "jialin7878": 5,
-      "CalistaIo": 4,
+      "CalistaIo": 5,
       "gan-jw": 3,
       "mehak24k": 5,
       "-": 35,
-      "zeying99": 5
+      "zeying99": 4
     }
   },
   {
@@ -2564,126 +2564,126 @@
       {
         "lineNumber": 136,
         "author": {
-          "gitId": "-"
+          "gitId": "CalistaIo"
         },
-        "content": "### \\[Proposed\\] Undo/redo feature"
+        "content": "### Sort feature"
       },
       {
         "lineNumber": 137,
         "author": {
-          "gitId": "-"
+          "gitId": "CalistaIo"
         },
         "content": ""
       },
       {
         "lineNumber": 138,
         "author": {
-          "gitId": "-"
+          "gitId": "CalistaIo"
         },
-        "content": "#### Proposed Implementation"
+        "content": "The sort feature sorts the flashcards in the flashcard list in either ascending or descending order of priority. This feature is implemented"
       },
       {
         "lineNumber": 139,
         "author": {
-          "gitId": "-"
+          "gitId": "CalistaIo"
         },
-        "content": ""
+        "content": "by creating an instance of `SortCommand` that can be executed on the model of the flashcard list. This particular implementation of the sort"
       },
       {
         "lineNumber": 140,
         "author": {
-          "gitId": "-"
+          "gitId": "CalistaIo"
         },
-        "content": "The proposed undo/redo mechanism is facilitated by `VersionedAddressBook`. It extends `AddressBook` with an undo/redo history, stored internally as an `addressBookStateList` and `currentStatePointer`. Additionally, it implements the following operations:"
+        "content": "feature was chosen because it accesses and modifies the internal flashcard list in the same way as other commands such as `ListCommand`, hence"
       },
       {
         "lineNumber": 141,
         "author": {
-          "gitId": "-"
+          "gitId": "CalistaIo"
         },
-        "content": ""
+        "content": "preserving consistency in the program design."
       },
       {
         "lineNumber": 142,
         "author": {
-          "gitId": "mehak24k"
+          "gitId": "CalistaIo"
         },
-        "content": "* `VersionedAddressBook#commit()` — Saves the current definition book state in its history."
+        "content": ""
       },
       {
         "lineNumber": 143,
         "author": {
-          "gitId": "mehak24k"
+          "gitId": "CalistaIo"
         },
-        "content": "* `VersionedAddressBook#undo()` — Restores the previous definition book state from its history."
+        "content": "The following sequence diagram shows how the sort feature works:"
       },
       {
         "lineNumber": 144,
         "author": {
-          "gitId": "mehak24k"
+          "gitId": "CalistaIo"
         },
-        "content": "* `VersionedAddressBook#redo()` — Restores a previously undone definition book state from its history."
+        "content": ""
       },
       {
         "lineNumber": 145,
         "author": {
-          "gitId": "-"
+          "gitId": "CalistaIo"
         },
-        "content": ""
+        "content": "![sort0](images/Sort0.png)"
       },
       {
         "lineNumber": 146,
         "author": {
-          "gitId": "-"
+          "gitId": "CalistaIo"
         },
-        "content": "These operations are exposed in the `Model` interface as `Model#commitAddressBook()`, `Model#undoAddressBook()` and `Model#redoAddressBook()` respectively."
+        "content": ""
       },
       {
         "lineNumber": 147,
         "author": {
-          "gitId": "-"
+          "gitId": "CalistaIo"
         },
-        "content": ""
+        "content": "When the user executes a sort command, e.g. `sort asc`, `ParserUtil#parseSortOrder()` is called. This function trims whitespaces from the user"
       },
       {
         "lineNumber": 148,
         "author": {
-          "gitId": "-"
+          "gitId": "CalistaIo"
         },
-        "content": "Given below is an example usage scenario and how the undo/redo mechanism behaves at each step."
+        "content": "input and converts it to lowercase. Hence, user inputs that are in lowercase, uppercase, or both, e.g. `AsC`, are all valid. If the user does not"
       },
       {
         "lineNumber": 149,
         "author": {
-          "gitId": "-"
+          "gitId": "CalistaIo"
         },
-        "content": ""
+        "content": "provide an argument, `asc` will be passed into the `SortCommand` object and the flashcard list will be sorted in ascending order of priority by"
       },
       {
         "lineNumber": 150,
         "author": {
-          "gitId": "mehak24k"
+          "gitId": "CalistaIo"
         },
-        "content": "Step 1. The user launches the application for the first time. The `VersionedAddressBook` will be initialized with the initial definition book state, and the `currentStatePointer` pointing to that single definition book state."
+        "content": "default."
       },
       {
         "lineNumber": 151,
         "author": {
-          "gitId": "-"
+          "gitId": "CalistaIo"
         },
         "content": ""
       },
       {
         "lineNumber": 152,
         "author": {
-          "gitId": "-"
+          "gitId": "CalistaIo"
         },
-        "content": "![UndoRedoState0](images/UndoRedoState0.png)"
+        "content": "The following activity diagram shows how user input is processed:"
       },
       {
         "lineNumber": 153,
         "author": {
-          "gitId": "-"
+          "gitId": "CalistaIo"
         },
         "content": ""
       },
@@ -2692,12 +2692,12 @@
         "author": {
           "gitId": "CalistaIo"
         },
-        "content": "Step 2. The user executes `delete 5` command to delete the 5th flashcard in the address book. The `delete` command calls `Model#commitAddressBook()`, causing the modified state of the address book after the `delete 5` command executes to be saved in the `addressBookStateList`, and the `currentStatePointer` is shifted to the newly inserted address book state."
+        "content": "![sort1](images/Sort1.png)"
       },
       {
         "lineNumber": 155,
         "author": {
-          "gitId": "-"
+          "gitId": "CalistaIo"
         },
         "content": ""
       },
@@ -2706,7 +2706,7 @@
         "author": {
           "gitId": "-"
         },
-        "content": "![UndoRedoState1](images/UndoRedoState1.png)"
+        "content": "### \\[Proposed\\] Undo/redo feature"
       },
       {
         "lineNumber": 157,
@@ -2718,9 +2718,9 @@
       {
         "lineNumber": 158,
         "author": {
-          "gitId": "CalistaIo"
+          "gitId": "-"
         },
-        "content": "Step 3. The user executes `add n/David …​` to add a new flashcard. The `add` command also calls `Model#commitAddressBook()`, causing another modified address book state to be saved into the `addressBookStateList`."
+        "content": "#### Proposed Implementation"
       },
       {
         "lineNumber": 159,
@@ -2734,7 +2734,7 @@
         "author": {
           "gitId": "-"
         },
-        "content": "![UndoRedoState2](images/UndoRedoState2.png)"
+        "content": "The proposed undo/redo mechanism is facilitated by `VersionedAddressBook`. It extends `AddressBook` with an undo/redo history, stored internally as an `addressBookStateList` and `currentStatePointer`. Additionally, it implements the following operations:"
       },
       {
         "lineNumber": 161,
@@ -2748,21 +2748,21 @@
         "author": {
           "gitId": "mehak24k"
         },
-        "content": "\u003cdiv markdown\u003d\"span\" class\u003d\"alert alert-info\"\u003e:information_source: **Note:** If a command fails its execution, it will not call `Model#commitAddressBook()`, so the definition book state will not be saved into the `addressBookStateList`."
+        "content": "* `VersionedAddressBook#commit()` — Saves the current definition book state in its history."
       },
       {
         "lineNumber": 163,
         "author": {
-          "gitId": "-"
+          "gitId": "mehak24k"
         },
-        "content": ""
+        "content": "* `VersionedAddressBook#undo()` — Restores the previous definition book state from its history."
       },
       {
         "lineNumber": 164,
         "author": {
-          "gitId": "-"
+          "gitId": "mehak24k"
         },
-        "content": "\u003c/div\u003e"
+        "content": "* `VersionedAddressBook#redo()` — Restores a previously undone definition book state from its history."
       },
       {
         "lineNumber": 165,
@@ -2774,9 +2774,9 @@
       {
         "lineNumber": 166,
         "author": {
-          "gitId": "CalistaIo"
+          "gitId": "-"
         },
-        "content": "Step 4. The user now decides that adding the flashcard was a mistake, and decides to undo that action by executing the `undo` command. The `undo` command will call `Model#undoAddressBook()`, which will shift the `currentStatePointer` once to the left, pointing it to the previous address book state, and restores the address book to that state."
+        "content": "These operations are exposed in the `Model` interface as `Model#commitAddressBook()`, `Model#undoAddressBook()` and `Model#redoAddressBook()` respectively."
       },
       {
         "lineNumber": 167,
@@ -2790,7 +2790,7 @@
         "author": {
           "gitId": "-"
         },
-        "content": "![UndoRedoState3](images/UndoRedoState3.png)"
+        "content": "Given below is an example usage scenario and how the undo/redo mechanism behaves at each step."
       },
       {
         "lineNumber": 169,
@@ -2802,156 +2802,156 @@
       {
         "lineNumber": 170,
         "author": {
-          "gitId": "-"
+          "gitId": "mehak24k"
         },
-        "content": "\u003cdiv markdown\u003d\"span\" class\u003d\"alert alert-info\"\u003e:information_source: **Note:** If the `currentStatePointer` is at index 0, pointing to the initial AddressBook state, then there are no previous AddressBook states to restore. The `undo` command uses `Model#canUndoAddressBook()` to check if this is the case. If so, it will return an error to the user rather"
+        "content": "Step 1. The user launches the application for the first time. The `VersionedAddressBook` will be initialized with the initial definition book state, and the `currentStatePointer` pointing to that single definition book state."
       },
       {
         "lineNumber": 171,
         "author": {
           "gitId": "-"
         },
-        "content": "than attempting to perform the undo."
+        "content": ""
       },
       {
         "lineNumber": 172,
         "author": {
           "gitId": "-"
         },
-        "content": ""
+        "content": "![UndoRedoState0](images/UndoRedoState0.png)"
       },
       {
         "lineNumber": 173,
         "author": {
           "gitId": "-"
         },
-        "content": "\u003c/div\u003e"
+        "content": ""
       },
       {
         "lineNumber": 174,
         "author": {
-          "gitId": "-"
+          "gitId": "CalistaIo"
         },
-        "content": ""
+        "content": "Step 2. The user executes `delete 5` command to delete the 5th flashcard in the address book. The `delete` command calls `Model#commitAddressBook()`, causing the modified state of the address book after the `delete 5` command executes to be saved in the `addressBookStateList`, and the `currentStatePointer` is shifted to the newly inserted address book state."
       },
       {
         "lineNumber": 175,
         "author": {
           "gitId": "-"
         },
-        "content": "The following sequence diagram shows how the undo operation works:"
+        "content": ""
       },
       {
         "lineNumber": 176,
         "author": {
           "gitId": "-"
         },
-        "content": ""
+        "content": "![UndoRedoState1](images/UndoRedoState1.png)"
       },
       {
         "lineNumber": 177,
         "author": {
           "gitId": "-"
         },
-        "content": "![UndoSequenceDiagram](images/UndoSequenceDiagram.png)"
+        "content": ""
       },
       {
         "lineNumber": 178,
         "author": {
-          "gitId": "-"
+          "gitId": "CalistaIo"
         },
-        "content": ""
+        "content": "Step 3. The user executes `add n/David …​` to add a new flashcard. The `add` command also calls `Model#commitAddressBook()`, causing another modified address book state to be saved into the `addressBookStateList`."
       },
       {
         "lineNumber": 179,
         "author": {
           "gitId": "-"
         },
-        "content": "\u003cdiv markdown\u003d\"span\" class\u003d\"alert alert-info\"\u003e:information_source: **Note:** The lifeline for `UndoCommand` should end at the destroy marker (X) but due to a limitation of PlantUML, the lifeline reaches the end of diagram."
+        "content": ""
       },
       {
         "lineNumber": 180,
         "author": {
           "gitId": "-"
         },
-        "content": ""
+        "content": "![UndoRedoState2](images/UndoRedoState2.png)"
       },
       {
         "lineNumber": 181,
         "author": {
           "gitId": "-"
         },
-        "content": "\u003c/div\u003e"
+        "content": ""
       },
       {
         "lineNumber": 182,
         "author": {
-          "gitId": "-"
+          "gitId": "mehak24k"
         },
-        "content": ""
+        "content": "\u003cdiv markdown\u003d\"span\" class\u003d\"alert alert-info\"\u003e:information_source: **Note:** If a command fails its execution, it will not call `Model#commitAddressBook()`, so the definition book state will not be saved into the `addressBookStateList`."
       },
       {
         "lineNumber": 183,
         "author": {
-          "gitId": "mehak24k"
+          "gitId": "-"
         },
-        "content": "The `redo` command does the opposite — it calls `Model#redoAddressBook()`, which shifts the `currentStatePointer` once to the right, pointing to the previously undone state, and restores the definition book to that state."
+        "content": ""
       },
       {
         "lineNumber": 184,
         "author": {
           "gitId": "-"
         },
-        "content": ""
+        "content": "\u003c/div\u003e"
       },
       {
         "lineNumber": 185,
         "author": {
-          "gitId": "mehak24k"
+          "gitId": "-"
         },
-        "content": "\u003cdiv markdown\u003d\"span\" class\u003d\"alert alert-info\"\u003e:information_source: **Note:** If the `currentStatePointer` is at index `addressBookStateList.size() - 1`, pointing to the latest definition book state, then there are no undone AddressBook states to restore. The `redo` command uses `Model#canRedoAddressBook()` to check if this is the case. If so, it will return an error to the user rather than attempting to perform the redo."
+        "content": ""
       },
       {
         "lineNumber": 186,
         "author": {
-          "gitId": "-"
+          "gitId": "CalistaIo"
         },
-        "content": ""
+        "content": "Step 4. The user now decides that adding the flashcard was a mistake, and decides to undo that action by executing the `undo` command. The `undo` command will call `Model#undoAddressBook()`, which will shift the `currentStatePointer` once to the left, pointing it to the previous address book state, and restores the address book to that state."
       },
       {
         "lineNumber": 187,
         "author": {
           "gitId": "-"
         },
-        "content": "\u003c/div\u003e"
+        "content": ""
       },
       {
         "lineNumber": 188,
         "author": {
           "gitId": "-"
         },
-        "content": ""
+        "content": "![UndoRedoState3](images/UndoRedoState3.png)"
       },
       {
         "lineNumber": 189,
         "author": {
-          "gitId": "mehak24k"
+          "gitId": "-"
         },
-        "content": "Step 5. The user then decides to execute the command `list`. Commands that do not modify the definition book, such as `list`, will usually not call `Model#commitAddressBook()`, `Model#undoAddressBook()` or `Model#redoAddressBook()`. Thus, the `addressBookStateList` remains unchanged."
+        "content": ""
       },
       {
         "lineNumber": 190,
         "author": {
           "gitId": "-"
         },
-        "content": ""
+        "content": "\u003cdiv markdown\u003d\"span\" class\u003d\"alert alert-info\"\u003e:information_source: **Note:** If the `currentStatePointer` is at index 0, pointing to the initial AddressBook state, then there are no previous AddressBook states to restore. The `undo` command uses `Model#canUndoAddressBook()` to check if this is the case. If so, it will return an error to the user rather"
       },
       {
         "lineNumber": 191,
         "author": {
           "gitId": "-"
         },
-        "content": "![UndoRedoState4](images/UndoRedoState4.png)"
+        "content": "than attempting to perform the undo."
       },
       {
         "lineNumber": 192,
@@ -2963,9 +2963,9 @@
       {
         "lineNumber": 193,
         "author": {
-          "gitId": "mehak24k"
+          "gitId": "-"
         },
-        "content": "Step 6. The user executes `clear`, which calls `Model#commitAddressBook()`. Since the `currentStatePointer` is not pointing at the end of the `addressBookStateList`, all definition book states after the `currentStatePointer` will be purged. Reason: It no longer makes sense to redo the `add n/David …​` command. This is the behavior that most modern desktop applications follow."
+        "content": "\u003c/div\u003e"
       },
       {
         "lineNumber": 194,
@@ -2979,7 +2979,7 @@
         "author": {
           "gitId": "-"
         },
-        "content": "![UndoRedoState5](images/UndoRedoState5.png)"
+        "content": "The following sequence diagram shows how the undo operation works:"
       },
       {
         "lineNumber": 196,
@@ -2993,7 +2993,7 @@
         "author": {
           "gitId": "-"
         },
-        "content": "The following activity diagram summarizes what happens when a user executes a new command:"
+        "content": "![UndoSequenceDiagram](images/UndoSequenceDiagram.png)"
       },
       {
         "lineNumber": 198,
@@ -3007,7 +3007,7 @@
         "author": {
           "gitId": "-"
         },
-        "content": "![CommitActivityDiagram](images/CommitActivityDiagram.png)"
+        "content": "\u003cdiv markdown\u003d\"span\" class\u003d\"alert alert-info\"\u003e:information_source: **Note:** The lifeline for `UndoCommand` should end at the destroy marker (X) but due to a limitation of PlantUML, the lifeline reaches the end of diagram."
       },
       {
         "lineNumber": 200,
@@ -3021,7 +3021,7 @@
         "author": {
           "gitId": "-"
         },
-        "content": "#### Design consideration:"
+        "content": "\u003c/div\u003e"
       },
       {
         "lineNumber": 202,
@@ -3033,9 +3033,9 @@
       {
         "lineNumber": 203,
         "author": {
-          "gitId": "-"
+          "gitId": "mehak24k"
         },
-        "content": "##### Aspect: How undo \u0026 redo executes"
+        "content": "The `redo` command does the opposite — it calls `Model#redoAddressBook()`, which shifts the `currentStatePointer` once to the right, pointing to the previously undone state, and restores the definition book to that state."
       },
       {
         "lineNumber": 204,
@@ -3049,21 +3049,21 @@
         "author": {
           "gitId": "mehak24k"
         },
-        "content": "* **Alternative 1 (current choice):** Saves the entire definition book."
+        "content": "\u003cdiv markdown\u003d\"span\" class\u003d\"alert alert-info\"\u003e:information_source: **Note:** If the `currentStatePointer` is at index `addressBookStateList.size() - 1`, pointing to the latest definition book state, then there are no undone AddressBook states to restore. The `redo` command uses `Model#canRedoAddressBook()` to check if this is the case. If so, it will return an error to the user rather than attempting to perform the redo."
       },
       {
         "lineNumber": 206,
         "author": {
           "gitId": "-"
         },
-        "content": "  * Pros: Easy to implement."
+        "content": ""
       },
       {
         "lineNumber": 207,
         "author": {
           "gitId": "-"
         },
-        "content": "  * Cons: May have performance issues in terms of memory usage."
+        "content": "\u003c/div\u003e"
       },
       {
         "lineNumber": 208,
@@ -3075,79 +3075,79 @@
       {
         "lineNumber": 209,
         "author": {
-          "gitId": "-"
+          "gitId": "mehak24k"
         },
-        "content": "* **Alternative 2:** Individual command knows how to undo/redo by"
+        "content": "Step 5. The user then decides to execute the command `list`. Commands that do not modify the definition book, such as `list`, will usually not call `Model#commitAddressBook()`, `Model#undoAddressBook()` or `Model#redoAddressBook()`. Thus, the `addressBookStateList` remains unchanged."
       },
       {
         "lineNumber": 210,
         "author": {
           "gitId": "-"
         },
-        "content": "  itself."
+        "content": ""
       },
       {
         "lineNumber": 211,
         "author": {
-          "gitId": "CalistaIo"
+          "gitId": "-"
         },
-        "content": "  * Pros: Will use less memory (e.g. for `delete`, just save the flashcard being deleted)."
+        "content": "![UndoRedoState4](images/UndoRedoState4.png)"
       },
       {
         "lineNumber": 212,
         "author": {
           "gitId": "-"
         },
-        "content": "  * Cons: We must ensure that the implementation of each individual command are correct."
+        "content": ""
       },
       {
         "lineNumber": 213,
         "author": {
-          "gitId": "-"
+          "gitId": "mehak24k"
         },
-        "content": ""
+        "content": "Step 6. The user executes `clear`, which calls `Model#commitAddressBook()`. Since the `currentStatePointer` is not pointing at the end of the `addressBookStateList`, all definition book states after the `currentStatePointer` will be purged. Reason: It no longer makes sense to redo the `add n/David …​` command. This is the behavior that most modern desktop applications follow."
       },
       {
         "lineNumber": 214,
         "author": {
           "gitId": "-"
         },
-        "content": "_{more aspects and alternatives to be added}_"
+        "content": ""
       },
       {
         "lineNumber": 215,
         "author": {
           "gitId": "-"
         },
-        "content": ""
+        "content": "![UndoRedoState5](images/UndoRedoState5.png)"
       },
       {
         "lineNumber": 216,
         "author": {
           "gitId": "-"
         },
-        "content": "### \\[Proposed\\] Data archiving"
+        "content": ""
       },
       {
         "lineNumber": 217,
         "author": {
           "gitId": "-"
         },
-        "content": ""
+        "content": "The following activity diagram summarizes what happens when a user executes a new command:"
       },
       {
         "lineNumber": 218,
         "author": {
           "gitId": "-"
         },
-        "content": "_{Explain here how the data archiving feature will be implemented}_"
+        "content": ""
       },
       {
         "lineNumber": 219,
         "author": {
           "gitId": "-"
         },
-        "content": ""
+        "content": "![CommitActivityDiagram](images/CommitActivityDiagram.png)"
       },
       {
         "lineNumber": 220,
@@ -3161,7 +3161,7 @@
         "author": {
           "gitId": "-"
         },
-        "content": "--------------------------------------------------------------------------------------------------------------------"
+        "content": "#### Design consideration:"
       },
       {
         "lineNumber": 222,
@@ -3175,7 +3175,7 @@
         "author": {
           "gitId": "-"
         },
-        "content": "## **Documentation, logging, testing, configuration, dev-ops**"
+        "content": "##### Aspect: How undo \u0026 redo executes"
       },
       {
         "lineNumber": 224,
@@ -3187,191 +3187,191 @@
       {
         "lineNumber": 225,
         "author": {
-          "gitId": "-"
+          "gitId": "mehak24k"
         },
-        "content": "* [Documentation guide](Documentation.md)"
+        "content": "* **Alternative 1 (current choice):** Saves the entire definition book."
       },
       {
         "lineNumber": 226,
         "author": {
           "gitId": "-"
         },
-        "content": "* [Testing guide](Testing.md)"
+        "content": "  * Pros: Easy to implement."
       },
       {
         "lineNumber": 227,
         "author": {
           "gitId": "-"
         },
-        "content": "* [Logging guide](Logging.md)"
+        "content": "  * Cons: May have performance issues in terms of memory usage."
       },
       {
         "lineNumber": 228,
         "author": {
           "gitId": "-"
         },
-        "content": "* [Configuration guide](Configuration.md)"
+        "content": ""
       },
       {
         "lineNumber": 229,
         "author": {
           "gitId": "-"
         },
-        "content": "* [DevOps guide](DevOps.md)"
+        "content": "* **Alternative 2:** Individual command knows how to undo/redo by"
       },
       {
         "lineNumber": 230,
         "author": {
           "gitId": "-"
         },
-        "content": ""
+        "content": "  itself."
       },
       {
         "lineNumber": 231,
         "author": {
-          "gitId": "-"
+          "gitId": "CalistaIo"
         },
-        "content": "--------------------------------------------------------------------------------------------------------------------"
+        "content": "  * Pros: Will use less memory (e.g. for `delete`, just save the flashcard being deleted)."
       },
       {
         "lineNumber": 232,
         "author": {
           "gitId": "-"
         },
-        "content": ""
+        "content": "  * Cons: We must ensure that the implementation of each individual command are correct."
       },
       {
         "lineNumber": 233,
         "author": {
           "gitId": "-"
         },
-        "content": "## **Appendix: Requirements**"
+        "content": ""
       },
       {
         "lineNumber": 234,
         "author": {
           "gitId": "-"
         },
-        "content": ""
+        "content": "_{more aspects and alternatives to be added}_"
       },
       {
         "lineNumber": 235,
         "author": {
           "gitId": "-"
         },
-        "content": "### Product scope"
+        "content": ""
       },
       {
         "lineNumber": 236,
         "author": {
           "gitId": "-"
         },
-        "content": ""
+        "content": "### \\[Proposed\\] Data archiving"
       },
       {
         "lineNumber": 237,
         "author": {
           "gitId": "-"
         },
-        "content": "**Target user profile**:"
+        "content": ""
       },
       {
         "lineNumber": 238,
         "author": {
           "gitId": "-"
         },
-        "content": ""
+        "content": "_{Explain here how the data archiving feature will be implemented}_"
       },
       {
         "lineNumber": 239,
         "author": {
-          "gitId": "jialin7878"
+          "gitId": "-"
         },
-        "content": "* CS2040S students in NUS"
+        "content": ""
       },
       {
         "lineNumber": 240,
         "author": {
           "gitId": "-"
         },
-        "content": "* can type fast"
+        "content": ""
       },
       {
         "lineNumber": 241,
         "author": {
           "gitId": "-"
         },
-        "content": "* prefers typing to mouse interactions"
+        "content": "--------------------------------------------------------------------------------------------------------------------"
       },
       {
         "lineNumber": 242,
         "author": {
           "gitId": "-"
         },
-        "content": "* is reasonably comfortable using CLI apps"
+        "content": ""
       },
       {
         "lineNumber": 243,
         "author": {
-          "gitId": "jialin7878"
+          "gitId": "-"
         },
-        "content": "* wants a way to study 2040 concepts in a condensed format"
+        "content": "## **Documentation, logging, testing, configuration, dev-ops**"
       },
       {
         "lineNumber": 244,
         "author": {
-          "gitId": "jialin7878"
-        },
-        "content": "* wants a way to use fragmented time for effective revision"
-      },
-      {
-        "lineNumber": 245,
-        "author": {
-          "gitId": "jialin7878"
+          "gitId": "-"
         },
         "content": ""
       },
       {
+        "lineNumber": 245,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "* [Documentation guide](Documentation.md)"
+      },
+      {
         "lineNumber": 246,
         "author": {
-          "gitId": "jialin7878"
+          "gitId": "-"
         },
-        "content": "**Value proposition**: "
+        "content": "* [Testing guide](Testing.md)"
       },
       {
         "lineNumber": 247,
         "author": {
-          "gitId": "jialin7878"
+          "gitId": "-"
         },
-        "content": "This product can help students with memory retention of various concepts and formulae in CS2040S. Students can utilize fragmented time to enhance learning."
+        "content": "* [Logging guide](Logging.md)"
       },
       {
         "lineNumber": 248,
         "author": {
-          "gitId": "jialin7878"
+          "gitId": "-"
         },
-        "content": "This product can help with a quick review of concepts for students to check their understanding. Questions are neatly segmented into different topics for better organisation."
+        "content": "* [Configuration guide](Configuration.md)"
       },
       {
         "lineNumber": 249,
         "author": {
-          "gitId": "jialin7878"
+          "gitId": "-"
         },
-        "content": "Concepts and definitions are organised according to different levels of priority for the student to allocate his studying time wisely."
+        "content": "* [DevOps guide](DevOps.md)"
       },
       {
         "lineNumber": 250,
         "author": {
-          "gitId": "jialin7878"
+          "gitId": "-"
         },
-        "content": "Students can bookmark where they left off and resume going through the questions later."
+        "content": ""
       },
       {
         "lineNumber": 251,
         "author": {
-          "gitId": "jialin7878"
+          "gitId": "-"
         },
-        "content": "Students can organise (specify the sequence) the flashcards as well."
+        "content": "--------------------------------------------------------------------------------------------------------------------"
       },
       {
         "lineNumber": 252,
@@ -3385,7 +3385,7 @@
         "author": {
           "gitId": "-"
         },
-        "content": ""
+        "content": "## **Appendix: Requirements**"
       },
       {
         "lineNumber": 254,
@@ -3399,7 +3399,7 @@
         "author": {
           "gitId": "-"
         },
-        "content": "### User stories"
+        "content": "### Product scope"
       },
       {
         "lineNumber": 256,
@@ -3413,7 +3413,7 @@
         "author": {
           "gitId": "-"
         },
-        "content": "Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unlikely to have) - `*`"
+        "content": "**Target user profile**:"
       },
       {
         "lineNumber": 258,
@@ -3425,303 +3425,303 @@
       {
         "lineNumber": 259,
         "author": {
-          "gitId": "-"
+          "gitId": "jialin7878"
         },
-        "content": "| Priority | As a …​                                    | I want to …​                     | So that I can…​                                                      |"
+        "content": "* CS2040S students in NUS"
       },
       {
         "lineNumber": 260,
         "author": {
           "gitId": "-"
         },
-        "content": "| -------- | ------------------------------------------ | ------------------------------ | ---------------------------------------------------------------------- |"
+        "content": "* can type fast"
       },
       {
         "lineNumber": 261,
         "author": {
-          "gitId": "jialin7878"
+          "gitId": "-"
         },
-        "content": "| `* * *`  | new user                                   | view the user manual           | get a brief idea of how to use the app                                 |"
+        "content": "* prefers typing to mouse interactions"
       },
       {
         "lineNumber": 262,
         "author": {
-          "gitId": "jialin7878"
+          "gitId": "-"
         },
-        "content": "| `* * *`  | user                                       | make new flashcards about the definition of a concept | remember my CS2040S content better              |"
+        "content": "* is reasonably comfortable using CLI apps"
       },
       {
         "lineNumber": 263,
         "author": {
           "gitId": "jialin7878"
         },
-        "content": "| `* * *`  | user                                       | delete a flashcard             | remove flashcards with mistakes or those I do not need                 |"
+        "content": "* wants a way to study 2040 concepts in a condensed format"
       },
       {
         "lineNumber": 264,
         "author": {
           "gitId": "jialin7878"
         },
-        "content": "| `* * *`  | user                                       | save the flashcards locally |  review some flashcards that I have previously made                       |"
+        "content": "* wants a way to use fragmented time for effective revision"
       },
       {
         "lineNumber": 265,
         "author": {
           "gitId": "jialin7878"
         },
-        "content": "| `* *`    | user studying for a test                   | practice questions/ quizzes    | get good grades!                                                       |"
+        "content": ""
       },
       {
         "lineNumber": 266,
         "author": {
           "gitId": "jialin7878"
         },
-        "content": "| `* *`    | user studying for a test                   | review past quiz attempts      | so that I can learn from my mistakes                                   |"
+        "content": "**Value proposition**: "
       },
       {
         "lineNumber": 267,
         "author": {
           "gitId": "jialin7878"
         },
-        "content": "| `* *`    | user                                       | study pseudocode               | gain a better understanding of the algorithms                          |"
+        "content": "This product can help students with memory retention of various concepts and formulae in CS2040S. Students can utilize fragmented time to enhance learning."
       },
       {
         "lineNumber": 268,
         "author": {
           "gitId": "jialin7878"
         },
-        "content": "| `* *`    | familiar user                              | search for flashcards using keywords |                                                                  |"
+        "content": "This product can help with a quick review of concepts for students to check their understanding. Questions are neatly segmented into different topics for better organisation."
       },
       {
         "lineNumber": 269,
         "author": {
           "gitId": "jialin7878"
         },
-        "content": "| `* *`    | familiar user and visual learner           | insert diagrams in flashcards | remember the information better                                         |"
+        "content": "Concepts and definitions are organised according to different levels of priority for the student to allocate his studying time wisely."
       },
       {
         "lineNumber": 270,
         "author": {
           "gitId": "jialin7878"
         },
-        "content": "| `* *`    | familiar user                              | delete wrong tags             |                                                                         |"
+        "content": "Students can bookmark where they left off and resume going through the questions later."
       },
       {
         "lineNumber": 271,
         "author": {
           "gitId": "jialin7878"
         },
-        "content": "| `* *`    | familiar user                            | label my flashcards   | sort them into different categories with appropriate tags.                        |"
+        "content": "Students can organise (specify the sequence) the flashcards as well."
       },
       {
         "lineNumber": 272,
-        "author": {
-          "gitId": "jialin7878"
-        },
-        "content": "| `* *`    | familiar user                    | view flashcards according to the different topics   | study topic-by-topic.                                        |"
-      },
-      {
-        "lineNumber": 273,
-        "author": {
-          "gitId": "jialin7878"
-        },
-        "content": "| `* *`    | user with limited time              | I want to save my progress as I may not finish everything    | continue my revision from where I had left off from the previous session.  |"
-      },
-      {
-        "lineNumber": 274,
-        "author": {
-          "gitId": "jialin7878"
-        },
-        "content": "| `*`  | user who is familiar with the app\t\t\t| set reminders indicating when I should study a particular flashcard | so that I can maximise information retention |"
-      },
-      {
-        "lineNumber": 275,
-        "author": {
-          "gitId": "jialin7878"
-        },
-        "content": "| `*`  | expert user\t\t\t\t\t\t\t\t| use shortcuts                  | view my frequently-viewed flashcards more easily                             |"
-      },
-      {
-        "lineNumber": 276,
-        "author": {
-          "gitId": "jialin7878"
-        },
-        "content": "| `*`  | expert user                                | track my history of flashcards that I have viewed over the past specified time period(e.g week/month) | check my study habits regularly |"
-      },
-      {
-        "lineNumber": 277,
-        "author": {
-          "gitId": "jialin7878"
-        },
-        "content": "| `*`  | user who is familiar with the app           | favourite flashcards          | easily access flashcards I have to review more                               |"
-      },
-      {
-        "lineNumber": 278,
-        "author": {
-          "gitId": "jialin7878"
-        },
-        "content": "| `*`  | user studying for a test                   | design my own questions that I want to practice | be better prepared for exams                               |"
-      },
-      {
-        "lineNumber": 279,
-        "author": {
-          "gitId": "jialin7878"
-        },
-        "content": "| `*`  | expert user                                | check my history of my wrong quiz answers/ quiz scores | visualize my improvement in a statistical way      |"
-      },
-      {
-        "lineNumber": 280,
-        "author": {
-          "gitId": "jialin7878"
-        },
-        "content": "| `*`  | user studying for a test                   | add in T/F questions \t\t\t | be better prepared for more types of questions                            |"
-      },
-      {
-        "lineNumber": 281,
-        "author": {
-          "gitId": "jialin7878"
-        },
-        "content": ""
-      },
-      {
-        "lineNumber": 282,
-        "author": {
-          "gitId": "jialin7878"
-        },
-        "content": ""
-      },
-      {
-        "lineNumber": 283,
-        "author": {
-          "gitId": "jialin7878"
-        },
-        "content": "Use Cases"
-      },
-      {
-        "lineNumber": 284,
-        "author": {
-          "gitId": "jialin7878"
-        },
-        "content": "(For all use cases below, the **System** is the `DSAce` and the **Actor** is the `user`, unless specified otherwise)"
-      },
-      {
-        "lineNumber": 285,
-        "author": {
-          "gitId": "jialin7878"
-        },
-        "content": ""
-      },
-      {
-        "lineNumber": 286,
-        "author": {
-          "gitId": "jialin7878"
-        },
-        "content": "**Use case: Delete a flashcard**"
-      },
-      {
-        "lineNumber": 287,
         "author": {
           "gitId": "-"
         },
         "content": ""
       },
       {
+        "lineNumber": 273,
+        "author": {
+          "gitId": "-"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 274,
+        "author": {
+          "gitId": "-"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 275,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "### User stories"
+      },
+      {
+        "lineNumber": 276,
+        "author": {
+          "gitId": "-"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 277,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unlikely to have) - `*`"
+      },
+      {
+        "lineNumber": 278,
+        "author": {
+          "gitId": "-"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 279,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "| Priority | As a …​                                    | I want to …​                     | So that I can…​                                                      |"
+      },
+      {
+        "lineNumber": 280,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "| -------- | ------------------------------------------ | ------------------------------ | ---------------------------------------------------------------------- |"
+      },
+      {
+        "lineNumber": 281,
+        "author": {
+          "gitId": "jialin7878"
+        },
+        "content": "| `* * *`  | new user                                   | view the user manual           | get a brief idea of how to use the app                                 |"
+      },
+      {
+        "lineNumber": 282,
+        "author": {
+          "gitId": "jialin7878"
+        },
+        "content": "| `* * *`  | user                                       | make new flashcards about the definition of a concept | remember my CS2040S content better              |"
+      },
+      {
+        "lineNumber": 283,
+        "author": {
+          "gitId": "jialin7878"
+        },
+        "content": "| `* * *`  | user                                       | delete a flashcard             | remove flashcards with mistakes or those I do not need                 |"
+      },
+      {
+        "lineNumber": 284,
+        "author": {
+          "gitId": "jialin7878"
+        },
+        "content": "| `* * *`  | user                                       | save the flashcards locally |  review some flashcards that I have previously made                       |"
+      },
+      {
+        "lineNumber": 285,
+        "author": {
+          "gitId": "jialin7878"
+        },
+        "content": "| `* *`    | user studying for a test                   | practice questions/ quizzes    | get good grades!                                                       |"
+      },
+      {
+        "lineNumber": 286,
+        "author": {
+          "gitId": "jialin7878"
+        },
+        "content": "| `* *`    | user studying for a test                   | review past quiz attempts      | so that I can learn from my mistakes                                   |"
+      },
+      {
+        "lineNumber": 287,
+        "author": {
+          "gitId": "jialin7878"
+        },
+        "content": "| `* *`    | user                                       | study pseudocode               | gain a better understanding of the algorithms                          |"
+      },
+      {
         "lineNumber": 288,
         "author": {
           "gitId": "jialin7878"
         },
-        "content": "**MSS**"
+        "content": "| `* *`    | familiar user                              | search for flashcards using keywords |                                                                  |"
       },
       {
         "lineNumber": 289,
         "author": {
           "gitId": "jialin7878"
         },
-        "content": ""
+        "content": "| `* *`    | familiar user and visual learner           | insert diagrams in flashcards | remember the information better                                         |"
       },
       {
         "lineNumber": 290,
         "author": {
           "gitId": "jialin7878"
         },
-        "content": "1.  User requests to list flashcards"
+        "content": "| `* *`    | familiar user                              | delete wrong tags             |                                                                         |"
       },
       {
         "lineNumber": 291,
         "author": {
           "gitId": "jialin7878"
         },
-        "content": "2.  DSAce shows a list of flashcards"
+        "content": "| `* *`    | familiar user                            | label my flashcards   | sort them into different categories with appropriate tags.                        |"
       },
       {
         "lineNumber": 292,
         "author": {
           "gitId": "jialin7878"
         },
-        "content": "3.  User requests to delete a specific flashcard in the list"
+        "content": "| `* *`    | familiar user                    | view flashcards according to the different topics   | study topic-by-topic.                                        |"
       },
       {
         "lineNumber": 293,
         "author": {
           "gitId": "jialin7878"
         },
-        "content": "4.  DSAce deletes the flashcard"
+        "content": "| `* *`    | user with limited time              | I want to save my progress as I may not finish everything    | continue my revision from where I had left off from the previous session.  |"
       },
       {
         "lineNumber": 294,
         "author": {
           "gitId": "jialin7878"
         },
-        "content": ""
+        "content": "| `*`  | user who is familiar with the app\t\t\t| set reminders indicating when I should study a particular flashcard | so that I can maximise information retention |"
       },
       {
         "lineNumber": 295,
         "author": {
           "gitId": "jialin7878"
         },
-        "content": "   Use case ends."
+        "content": "| `*`  | expert user\t\t\t\t\t\t\t\t| use shortcuts                  | view my frequently-viewed flashcards more easily                             |"
       },
       {
         "lineNumber": 296,
         "author": {
           "gitId": "jialin7878"
         },
-        "content": ""
+        "content": "| `*`  | expert user                                | track my history of flashcards that I have viewed over the past specified time period(e.g week/month) | check my study habits regularly |"
       },
       {
         "lineNumber": 297,
         "author": {
           "gitId": "jialin7878"
         },
-        "content": "**Extensions**"
+        "content": "| `*`  | user who is familiar with the app           | favourite flashcards          | easily access flashcards I have to review more                               |"
       },
       {
         "lineNumber": 298,
         "author": {
           "gitId": "jialin7878"
         },
-        "content": ""
+        "content": "| `*`  | user studying for a test                   | design my own questions that I want to practice | be better prepared for exams                               |"
       },
       {
         "lineNumber": 299,
         "author": {
           "gitId": "jialin7878"
         },
-        "content": "* 2a. The list is empty."
+        "content": "| `*`  | expert user                                | check my history of my wrong quiz answers/ quiz scores | visualize my improvement in a statistical way      |"
       },
       {
         "lineNumber": 300,
         "author": {
           "gitId": "jialin7878"
         },
-        "content": ""
+        "content": "| `*`  | user studying for a test                   | add in T/F questions \t\t\t | be better prepared for more types of questions                            |"
       },
       {
         "lineNumber": 301,
         "author": {
           "gitId": "jialin7878"
         },
-        "content": " Use case ends."
+        "content": ""
       },
       {
         "lineNumber": 302,
@@ -3735,203 +3735,203 @@
         "author": {
           "gitId": "jialin7878"
         },
-        "content": "* 3a. The given index is invalid."
+        "content": "Use Cases"
       },
       {
         "lineNumber": 304,
         "author": {
-          "gitId": "-"
+          "gitId": "jialin7878"
         },
-        "content": ""
+        "content": "(For all use cases below, the **System** is the `DSAce` and the **Actor** is the `user`, unless specified otherwise)"
       },
       {
         "lineNumber": 305,
         "author": {
           "gitId": "jialin7878"
         },
-        "content": "  * 3a1. DSAce shows an error message."
+        "content": ""
       },
       {
         "lineNumber": 306,
         "author": {
-          "gitId": "-"
+          "gitId": "jialin7878"
         },
-        "content": ""
+        "content": "**Use case: Delete a flashcard**"
       },
       {
         "lineNumber": 307,
         "author": {
-          "gitId": "jialin7878"
+          "gitId": "-"
         },
-        "content": "     Use case resumes at step 2."
+        "content": ""
       },
       {
         "lineNumber": 308,
         "author": {
-          "gitId": "-"
+          "gitId": "jialin7878"
         },
-        "content": ""
+        "content": "**MSS**"
       },
       {
         "lineNumber": 309,
         "author": {
           "gitId": "jialin7878"
         },
-        "content": "**Use case: Add a flashcard**"
+        "content": ""
       },
       {
         "lineNumber": 310,
         "author": {
-          "gitId": "-"
+          "gitId": "jialin7878"
         },
-        "content": ""
+        "content": "1.  User requests to list flashcards"
       },
       {
         "lineNumber": 311,
-        "author": {
-          "gitId": "-"
-        },
-        "content": "**MSS**"
-      },
-      {
-        "lineNumber": 312,
-        "author": {
-          "gitId": "-"
-        },
-        "content": ""
-      },
-      {
-        "lineNumber": 313,
-        "author": {
-          "gitId": "jialin7878"
-        },
-        "content": "1.  User requests to add a flashcards"
-      },
-      {
-        "lineNumber": 314,
-        "author": {
-          "gitId": "jialin7878"
-        },
-        "content": "2.  DSAce adds the flashcard"
-      },
-      {
-        "lineNumber": 315,
-        "author": {
-          "gitId": "-"
-        },
-        "content": ""
-      },
-      {
-        "lineNumber": 316,
-        "author": {
-          "gitId": "jialin7878"
-        },
-        "content": "   Use case ends."
-      },
-      {
-        "lineNumber": 317,
-        "author": {
-          "gitId": "jialin7878"
-        },
-        "content": ""
-      },
-      {
-        "lineNumber": 318,
-        "author": {
-          "gitId": "jialin7878"
-        },
-        "content": "**Extensions**"
-      },
-      {
-        "lineNumber": 319,
-        "author": {
-          "gitId": "jialin7878"
-        },
-        "content": ""
-      },
-      {
-        "lineNumber": 320,
-        "author": {
-          "gitId": "jialin7878"
-        },
-        "content": "* 1a. The given input is invalid."
-      },
-      {
-        "lineNumber": 321,
-        "author": {
-          "gitId": "jialin7878"
-        },
-        "content": ""
-      },
-      {
-        "lineNumber": 322,
-        "author": {
-          "gitId": "jialin7878"
-        },
-        "content": "  * 1a1. DSAce shows an error message."
-      },
-      {
-        "lineNumber": 323,
-        "author": {
-          "gitId": "jialin7878"
-        },
-        "content": ""
-      },
-      {
-        "lineNumber": 324,
-        "author": {
-          "gitId": "jialin7878"
-        },
-        "content": "**Use case: Edit a flashcard**"
-      },
-      {
-        "lineNumber": 325,
-        "author": {
-          "gitId": "jialin7878"
-        },
-        "content": ""
-      },
-      {
-        "lineNumber": 326,
-        "author": {
-          "gitId": "jialin7878"
-        },
-        "content": "**MSS**"
-      },
-      {
-        "lineNumber": 327,
-        "author": {
-          "gitId": "jialin7878"
-        },
-        "content": ""
-      },
-      {
-        "lineNumber": 328,
-        "author": {
-          "gitId": "jialin7878"
-        },
-        "content": "1.  User requests to list flashcards to determine if the flashcard to be edited already exists"
-      },
-      {
-        "lineNumber": 329,
         "author": {
           "gitId": "jialin7878"
         },
         "content": "2.  DSAce shows a list of flashcards"
       },
       {
-        "lineNumber": 330,
+        "lineNumber": 312,
         "author": {
           "gitId": "jialin7878"
         },
-        "content": "3.  User requests to edit a specific flashcard in the list by providing the detail to be edited"
+        "content": "3.  User requests to delete a specific flashcard in the list"
+      },
+      {
+        "lineNumber": 313,
+        "author": {
+          "gitId": "jialin7878"
+        },
+        "content": "4.  DSAce deletes the flashcard"
+      },
+      {
+        "lineNumber": 314,
+        "author": {
+          "gitId": "jialin7878"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 315,
+        "author": {
+          "gitId": "jialin7878"
+        },
+        "content": "   Use case ends."
+      },
+      {
+        "lineNumber": 316,
+        "author": {
+          "gitId": "jialin7878"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 317,
+        "author": {
+          "gitId": "jialin7878"
+        },
+        "content": "**Extensions**"
+      },
+      {
+        "lineNumber": 318,
+        "author": {
+          "gitId": "jialin7878"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 319,
+        "author": {
+          "gitId": "jialin7878"
+        },
+        "content": "* 2a. The list is empty."
+      },
+      {
+        "lineNumber": 320,
+        "author": {
+          "gitId": "-"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 321,
+        "author": {
+          "gitId": "jialin7878"
+        },
+        "content": " Use case ends."
+      },
+      {
+        "lineNumber": 322,
+        "author": {
+          "gitId": "-"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 323,
+        "author": {
+          "gitId": "jialin7878"
+        },
+        "content": "* 3a. The given index is invalid."
+      },
+      {
+        "lineNumber": 324,
+        "author": {
+          "gitId": "-"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 325,
+        "author": {
+          "gitId": "jialin7878"
+        },
+        "content": "  * 3a1. DSAce shows an error message."
+      },
+      {
+        "lineNumber": 326,
+        "author": {
+          "gitId": "-"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 327,
+        "author": {
+          "gitId": "jialin7878"
+        },
+        "content": "     Use case resumes at step 2."
+      },
+      {
+        "lineNumber": 328,
+        "author": {
+          "gitId": "-"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 329,
+        "author": {
+          "gitId": "jialin7878"
+        },
+        "content": "**Use case: Add a flashcard**"
+      },
+      {
+        "lineNumber": 330,
+        "author": {
+          "gitId": "-"
+        },
+        "content": ""
       },
       {
         "lineNumber": 331,
         "author": {
-          "gitId": "jialin7878"
+          "gitId": "-"
         },
-        "content": "4.  DSAce edits the flashcard"
+        "content": "**MSS**"
       },
       {
         "lineNumber": 332,
@@ -3943,478 +3943,478 @@
       {
         "lineNumber": 333,
         "author": {
-          "gitId": "-"
+          "gitId": "jialin7878"
         },
-        "content": "   Use case ends."
+        "content": "1.  User requests to add a flashcards"
       },
       {
         "lineNumber": 334,
         "author": {
-          "gitId": "-"
+          "gitId": "jialin7878"
         },
-        "content": ""
+        "content": "2.  DSAce adds the flashcard"
       },
       {
         "lineNumber": 335,
         "author": {
           "gitId": "-"
         },
-        "content": "**Extensions**"
+        "content": ""
       },
       {
         "lineNumber": 336,
-        "author": {
-          "gitId": "-"
-        },
-        "content": ""
-      },
-      {
-        "lineNumber": 337,
-        "author": {
-          "gitId": "-"
-        },
-        "content": "* 2a. The list is empty."
-      },
-      {
-        "lineNumber": 338,
-        "author": {
-          "gitId": "-"
-        },
-        "content": ""
-      },
-      {
-        "lineNumber": 339,
-        "author": {
-          "gitId": "-"
-        },
-        "content": " Use case ends."
-      },
-      {
-        "lineNumber": 340,
-        "author": {
-          "gitId": "-"
-        },
-        "content": ""
-      },
-      {
-        "lineNumber": 341,
-        "author": {
-          "gitId": "-"
-        },
-        "content": "* 3a. The given index is invalid."
-      },
-      {
-        "lineNumber": 342,
-        "author": {
-          "gitId": "-"
-        },
-        "content": ""
-      },
-      {
-        "lineNumber": 343,
-        "author": {
-          "gitId": "jialin7878"
-        },
-        "content": "  * 3a1. DSAce shows an error message."
-      },
-      {
-        "lineNumber": 344,
-        "author": {
-          "gitId": "-"
-        },
-        "content": ""
-      },
-      {
-        "lineNumber": 345,
-        "author": {
-          "gitId": "-"
-        },
-        "content": "     Use case resumes at step 2."
-      },
-      {
-        "lineNumber": 346,
-        "author": {
-          "gitId": "-"
-        },
-        "content": ""
-      },
-      {
-        "lineNumber": 347,
-        "author": {
-          "gitId": "jialin7878"
-        },
-        "content": "* 3b. The given input is invalid."
-      },
-      {
-        "lineNumber": 348,
-        "author": {
-          "gitId": "-"
-        },
-        "content": ""
-      },
-      {
-        "lineNumber": 349,
-        "author": {
-          "gitId": "jialin7878"
-        },
-        "content": "  * 3b1. DSAce shows an error message."
-      },
-      {
-        "lineNumber": 350,
-        "author": {
-          "gitId": "jialin7878"
-        },
-        "content": ""
-      },
-      {
-        "lineNumber": 351,
-        "author": {
-          "gitId": "jialin7878"
-        },
-        "content": "     Use case resumes at step 2."
-      },
-      {
-        "lineNumber": 352,
-        "author": {
-          "gitId": "jialin7878"
-        },
-        "content": ""
-      },
-      {
-        "lineNumber": 353,
-        "author": {
-          "gitId": "jialin7878"
-        },
-        "content": "**Use case: Take a quiz**"
-      },
-      {
-        "lineNumber": 354,
-        "author": {
-          "gitId": "jialin7878"
-        },
-        "content": ""
-      },
-      {
-        "lineNumber": 355,
-        "author": {
-          "gitId": "jialin7878"
-        },
-        "content": "**MSS**"
-      },
-      {
-        "lineNumber": 356,
-        "author": {
-          "gitId": "jialin7878"
-        },
-        "content": ""
-      },
-      {
-        "lineNumber": 357,
-        "author": {
-          "gitId": "jialin7878"
-        },
-        "content": "1.  User requests to see the list of quiz topics available for study"
-      },
-      {
-        "lineNumber": 358,
-        "author": {
-          "gitId": "jialin7878"
-        },
-        "content": "2.  DSAce shows a list of quiz topics"
-      },
-      {
-        "lineNumber": 359,
-        "author": {
-          "gitId": "jialin7878"
-        },
-        "content": "3.  User requests the topics to be covered in the quiz questions"
-      },
-      {
-        "lineNumber": 360,
-        "author": {
-          "gitId": "jialin7878"
-        },
-        "content": "4.  DSAce displays one question"
-      },
-      {
-        "lineNumber": 361,
-        "author": {
-          "gitId": "jialin7878"
-        },
-        "content": "5.  User inputs their answer for the displayed question"
-      },
-      {
-        "lineNumber": 362,
-        "author": {
-          "gitId": "jialin7878"
-        },
-        "content": "Use case loops through steps 4 and 5 until the quiz runs out of questions or the user inputs a stop command"
-      },
-      {
-        "lineNumber": 363,
-        "author": {
-          "gitId": "jialin7878"
-        },
-        "content": "6.  DSAce shows overall score and a list of questions with their marks"
-      },
-      {
-        "lineNumber": 364,
-        "author": {
-          "gitId": "jialin7878"
-        },
-        "content": "7.  User can request to view a particular question using the index"
-      },
-      {
-        "lineNumber": 365,
-        "author": {
-          "gitId": "jialin7878"
-        },
-        "content": "8.  DSAce displays the question, user’s answer and the correct answer"
-      },
-      {
-        "lineNumber": 366,
-        "author": {
-          "gitId": "jialin7878"
-        },
-        "content": "Use case loops through 7 and 8 upon user request until user inputs exit command"
-      },
-      {
-        "lineNumber": 367,
-        "author": {
-          "gitId": "jialin7878"
-        },
-        "content": ""
-      },
-      {
-        "lineNumber": 368,
         "author": {
           "gitId": "jialin7878"
         },
         "content": "   Use case ends."
       },
       {
-        "lineNumber": 369,
+        "lineNumber": 337,
         "author": {
           "gitId": "jialin7878"
         },
         "content": ""
       },
       {
-        "lineNumber": 370,
+        "lineNumber": 338,
         "author": {
           "gitId": "jialin7878"
         },
         "content": "**Extensions**"
       },
       {
-        "lineNumber": 371,
+        "lineNumber": 339,
         "author": {
           "gitId": "jialin7878"
         },
         "content": ""
       },
       {
-        "lineNumber": 372,
+        "lineNumber": 340,
         "author": {
           "gitId": "jialin7878"
         },
-        "content": "* 2a. The list is empty."
+        "content": "* 1a. The given input is invalid."
       },
       {
-        "lineNumber": 373,
+        "lineNumber": 341,
+        "author": {
+          "gitId": "jialin7878"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 342,
+        "author": {
+          "gitId": "jialin7878"
+        },
+        "content": "  * 1a1. DSAce shows an error message."
+      },
+      {
+        "lineNumber": 343,
+        "author": {
+          "gitId": "jialin7878"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 344,
+        "author": {
+          "gitId": "jialin7878"
+        },
+        "content": "**Use case: Edit a flashcard**"
+      },
+      {
+        "lineNumber": 345,
+        "author": {
+          "gitId": "jialin7878"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 346,
+        "author": {
+          "gitId": "jialin7878"
+        },
+        "content": "**MSS**"
+      },
+      {
+        "lineNumber": 347,
+        "author": {
+          "gitId": "jialin7878"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 348,
+        "author": {
+          "gitId": "jialin7878"
+        },
+        "content": "1.  User requests to list flashcards to determine if the flashcard to be edited already exists"
+      },
+      {
+        "lineNumber": 349,
+        "author": {
+          "gitId": "jialin7878"
+        },
+        "content": "2.  DSAce shows a list of flashcards"
+      },
+      {
+        "lineNumber": 350,
+        "author": {
+          "gitId": "jialin7878"
+        },
+        "content": "3.  User requests to edit a specific flashcard in the list by providing the detail to be edited"
+      },
+      {
+        "lineNumber": 351,
+        "author": {
+          "gitId": "jialin7878"
+        },
+        "content": "4.  DSAce edits the flashcard"
+      },
+      {
+        "lineNumber": 352,
         "author": {
           "gitId": "-"
         },
         "content": ""
       },
       {
-        "lineNumber": 374,
+        "lineNumber": 353,
         "author": {
-          "gitId": "jialin7878"
+          "gitId": "-"
+        },
+        "content": "   Use case ends."
+      },
+      {
+        "lineNumber": 354,
+        "author": {
+          "gitId": "-"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 355,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "**Extensions**"
+      },
+      {
+        "lineNumber": 356,
+        "author": {
+          "gitId": "-"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 357,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "* 2a. The list is empty."
+      },
+      {
+        "lineNumber": 358,
+        "author": {
+          "gitId": "-"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 359,
+        "author": {
+          "gitId": "-"
         },
         "content": " Use case ends."
       },
       {
-        "lineNumber": 375,
+        "lineNumber": 360,
         "author": {
-          "gitId": "jialin7878"
+          "gitId": "-"
         },
         "content": ""
       },
       {
-        "lineNumber": 376,
+        "lineNumber": 361,
         "author": {
-          "gitId": "jialin7878"
+          "gitId": "-"
         },
-        "content": "* 3a. The user input topic index is invalid."
+        "content": "* 3a. The given index is invalid."
       },
       {
-        "lineNumber": 377,
+        "lineNumber": 362,
         "author": {
-          "gitId": "jialin7878"
+          "gitId": "-"
         },
         "content": ""
       },
       {
-        "lineNumber": 378,
+        "lineNumber": 363,
         "author": {
           "gitId": "jialin7878"
         },
         "content": "  * 3a1. DSAce shows an error message."
       },
       {
-        "lineNumber": 379,
+        "lineNumber": 364,
         "author": {
-          "gitId": "jialin7878"
+          "gitId": "-"
         },
         "content": ""
       },
       {
-        "lineNumber": 380,
+        "lineNumber": 365,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "     Use case resumes at step 2."
+      },
+      {
+        "lineNumber": 366,
+        "author": {
+          "gitId": "-"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 367,
+        "author": {
+          "gitId": "jialin7878"
+        },
+        "content": "* 3b. The given input is invalid."
+      },
+      {
+        "lineNumber": 368,
+        "author": {
+          "gitId": "-"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 369,
+        "author": {
+          "gitId": "jialin7878"
+        },
+        "content": "  * 3b1. DSAce shows an error message."
+      },
+      {
+        "lineNumber": 370,
+        "author": {
+          "gitId": "-"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 371,
         "author": {
           "gitId": "jialin7878"
         },
         "content": "     Use case resumes at step 2."
       },
       {
-        "lineNumber": 381,
+        "lineNumber": 372,
         "author": {
           "gitId": "jialin7878"
         },
         "content": ""
+      },
+      {
+        "lineNumber": 373,
+        "author": {
+          "gitId": "jialin7878"
+        },
+        "content": "**Use case: Take a quiz**"
+      },
+      {
+        "lineNumber": 374,
+        "author": {
+          "gitId": "jialin7878"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 375,
+        "author": {
+          "gitId": "jialin7878"
+        },
+        "content": "**MSS**"
+      },
+      {
+        "lineNumber": 376,
+        "author": {
+          "gitId": "jialin7878"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 377,
+        "author": {
+          "gitId": "jialin7878"
+        },
+        "content": "1.  User requests to see the list of quiz topics available for study"
+      },
+      {
+        "lineNumber": 378,
+        "author": {
+          "gitId": "jialin7878"
+        },
+        "content": "2.  DSAce shows a list of quiz topics"
+      },
+      {
+        "lineNumber": 379,
+        "author": {
+          "gitId": "jialin7878"
+        },
+        "content": "3.  User requests the topics to be covered in the quiz questions"
+      },
+      {
+        "lineNumber": 380,
+        "author": {
+          "gitId": "jialin7878"
+        },
+        "content": "4.  DSAce displays one question"
+      },
+      {
+        "lineNumber": 381,
+        "author": {
+          "gitId": "jialin7878"
+        },
+        "content": "5.  User inputs their answer for the displayed question"
       },
       {
         "lineNumber": 382,
         "author": {
           "gitId": "jialin7878"
         },
-        "content": "* 5a. The user input answer is invalid."
+        "content": "Use case loops through steps 4 and 5 until the quiz runs out of questions or the user inputs a stop command"
       },
       {
         "lineNumber": 383,
         "author": {
           "gitId": "jialin7878"
         },
-        "content": ""
+        "content": "6.  DSAce shows overall score and a list of questions with their marks"
       },
       {
         "lineNumber": 384,
         "author": {
           "gitId": "jialin7878"
         },
-        "content": "  * 5b1. DSAce shows an error message."
+        "content": "7.  User can request to view a particular question using the index"
       },
       {
         "lineNumber": 385,
         "author": {
           "gitId": "jialin7878"
         },
-        "content": ""
+        "content": "8.  DSAce displays the question, user’s answer and the correct answer"
       },
       {
         "lineNumber": 386,
         "author": {
           "gitId": "jialin7878"
         },
-        "content": "     Use case resumes at step 4."
+        "content": "Use case loops through 7 and 8 upon user request until user inputs exit command"
       },
       {
         "lineNumber": 387,
         "author": {
-          "gitId": "-"
+          "gitId": "jialin7878"
         },
         "content": ""
       },
       {
         "lineNumber": 388,
         "author": {
-          "gitId": "-"
+          "gitId": "jialin7878"
         },
-        "content": "*{More to be added}*"
+        "content": "   Use case ends."
       },
       {
         "lineNumber": 389,
         "author": {
-          "gitId": "-"
+          "gitId": "jialin7878"
         },
         "content": ""
       },
       {
         "lineNumber": 390,
         "author": {
-          "gitId": "-"
+          "gitId": "jialin7878"
         },
-        "content": ""
+        "content": "**Extensions**"
       },
       {
         "lineNumber": 391,
         "author": {
           "gitId": "jialin7878"
         },
-        "content": "### Non-Functional Requirements"
+        "content": ""
       },
       {
         "lineNumber": 392,
         "author": {
           "gitId": "jialin7878"
         },
-        "content": ""
+        "content": "* 2a. The list is empty."
       },
       {
         "lineNumber": 393,
         "author": {
-          "gitId": "jialin7878"
+          "gitId": "-"
         },
-        "content": "* Should work on any *mainstream OS* as long as it has Java `11` or above installed."
+        "content": ""
       },
       {
         "lineNumber": 394,
         "author": {
           "gitId": "jialin7878"
         },
-        "content": "* Should be able to store up to 1000 flashcards without a noticeable sluggishness in performance for typical usage."
+        "content": " Use case ends."
       },
       {
         "lineNumber": 395,
         "author": {
           "gitId": "jialin7878"
         },
-        "content": "* A user with above average typing speed for regular English text (i.e. not code, not system admin commands) should be able to accomplish most of the tasks faster using commands than using the mouse."
+        "content": ""
       },
       {
         "lineNumber": 396,
         "author": {
           "gitId": "jialin7878"
         },
-        "content": "* Should not take up too much memory in the hard disk (i.e. the entire desktop application should not take up more than 100 MB of space)."
+        "content": "* 3a. The user input topic index is invalid."
       },
       {
         "lineNumber": 397,
         "author": {
           "gitId": "jialin7878"
         },
-        "content": "* The system should work on both 32-bit and 64-bit environments."
+        "content": ""
       },
       {
         "lineNumber": 398,
         "author": {
           "gitId": "jialin7878"
         },
-        "content": "* The flashcards would not be required to support inputs in formats other than utf-8."
+        "content": "  * 3a1. DSAce shows an error message."
       },
       {
         "lineNumber": 399,
         "author": {
           "gitId": "jialin7878"
         },
-        "content": "### Glossary"
+        "content": ""
       },
       {
         "lineNumber": 400,
         "author": {
-          "gitId": "-"
+          "gitId": "jialin7878"
         },
-        "content": "* **Mainstream OS**: Windows, Linux, Unix, OS-X"
+        "content": "     Use case resumes at step 2."
       },
       {
         "lineNumber": 401,
@@ -4426,140 +4426,140 @@
       {
         "lineNumber": 402,
         "author": {
-          "gitId": "-"
+          "gitId": "jialin7878"
         },
-        "content": ""
+        "content": "* 5a. The user input answer is invalid."
       },
       {
         "lineNumber": 403,
         "author": {
-          "gitId": "-"
+          "gitId": "jialin7878"
         },
-        "content": "--------------------------------------------------------------------------------------------------------------------"
+        "content": ""
       },
       {
         "lineNumber": 404,
         "author": {
-          "gitId": "-"
+          "gitId": "jialin7878"
         },
-        "content": ""
+        "content": "  * 5b1. DSAce shows an error message."
       },
       {
         "lineNumber": 405,
         "author": {
-          "gitId": "-"
+          "gitId": "jialin7878"
         },
-        "content": "## **Appendix: Instructions for manual testing**"
+        "content": ""
       },
       {
         "lineNumber": 406,
         "author": {
-          "gitId": "-"
+          "gitId": "jialin7878"
         },
-        "content": ""
+        "content": "     Use case resumes at step 4."
       },
       {
         "lineNumber": 407,
         "author": {
           "gitId": "-"
         },
-        "content": "Given below are instructions to test the app manually."
+        "content": ""
       },
       {
         "lineNumber": 408,
         "author": {
           "gitId": "-"
         },
-        "content": ""
+        "content": "*{More to be added}*"
       },
       {
         "lineNumber": 409,
         "author": {
           "gitId": "-"
         },
-        "content": "\u003cdiv markdown\u003d\"span\" class\u003d\"alert alert-info\"\u003e:information_source: **Note:** These instructions only provide a starting point for testers to work on;"
+        "content": ""
       },
       {
         "lineNumber": 410,
         "author": {
           "gitId": "-"
         },
-        "content": "testers are expected to do more *exploratory* testing."
+        "content": ""
       },
       {
         "lineNumber": 411,
         "author": {
-          "gitId": "-"
+          "gitId": "jialin7878"
         },
-        "content": ""
+        "content": "### Non-Functional Requirements"
       },
       {
         "lineNumber": 412,
         "author": {
-          "gitId": "-"
+          "gitId": "jialin7878"
         },
-        "content": "\u003c/div\u003e"
+        "content": ""
       },
       {
         "lineNumber": 413,
         "author": {
-          "gitId": "-"
+          "gitId": "jialin7878"
         },
-        "content": ""
+        "content": "* Should work on any *mainstream OS* as long as it has Java `11` or above installed."
       },
       {
         "lineNumber": 414,
         "author": {
-          "gitId": "-"
+          "gitId": "jialin7878"
         },
-        "content": "### Launch and shutdown"
+        "content": "* Should be able to store up to 1000 flashcards without a noticeable sluggishness in performance for typical usage."
       },
       {
         "lineNumber": 415,
         "author": {
-          "gitId": "-"
+          "gitId": "jialin7878"
         },
-        "content": ""
+        "content": "* A user with above average typing speed for regular English text (i.e. not code, not system admin commands) should be able to accomplish most of the tasks faster using commands than using the mouse."
       },
       {
         "lineNumber": 416,
         "author": {
-          "gitId": "-"
+          "gitId": "jialin7878"
         },
-        "content": "1. Initial launch"
+        "content": "* Should not take up too much memory in the hard disk (i.e. the entire desktop application should not take up more than 100 MB of space)."
       },
       {
         "lineNumber": 417,
         "author": {
-          "gitId": "-"
+          "gitId": "jialin7878"
         },
-        "content": ""
+        "content": "* The system should work on both 32-bit and 64-bit environments."
       },
       {
         "lineNumber": 418,
         "author": {
-          "gitId": "-"
+          "gitId": "jialin7878"
         },
-        "content": "   1. Download the jar file and copy into an empty folder"
+        "content": "* The flashcards would not be required to support inputs in formats other than utf-8."
       },
       {
         "lineNumber": 419,
         "author": {
-          "gitId": "-"
+          "gitId": "jialin7878"
         },
-        "content": ""
+        "content": "### Glossary"
       },
       {
         "lineNumber": 420,
         "author": {
           "gitId": "-"
         },
-        "content": "   1. Double-click the jar file Expected: Shows the GUI with a set of sample contacts. The window size may not be optimum."
+        "content": "* **Mainstream OS**: Windows, Linux, Unix, OS-X"
       },
       {
         "lineNumber": 421,
         "author": {
-          "gitId": "-"
+          "gitId": "jialin7878"
         },
         "content": ""
       },
@@ -4568,42 +4568,42 @@
         "author": {
           "gitId": "-"
         },
-        "content": "1. Saving window preferences"
+        "content": ""
       },
       {
         "lineNumber": 423,
         "author": {
           "gitId": "-"
         },
-        "content": ""
+        "content": "--------------------------------------------------------------------------------------------------------------------"
       },
       {
         "lineNumber": 424,
         "author": {
           "gitId": "-"
         },
-        "content": "   1. Resize the window to an optimum size. Move the window to a different location. Close the window."
+        "content": ""
       },
       {
         "lineNumber": 425,
         "author": {
           "gitId": "-"
         },
-        "content": ""
+        "content": "## **Appendix: Instructions for manual testing**"
       },
       {
         "lineNumber": 426,
         "author": {
           "gitId": "-"
         },
-        "content": "   1. Re-launch the app by double-clicking the jar file.\u003cbr\u003e"
+        "content": ""
       },
       {
         "lineNumber": 427,
         "author": {
           "gitId": "-"
         },
-        "content": "       Expected: The most recent window size and location is retained."
+        "content": "Given below are instructions to test the app manually."
       },
       {
         "lineNumber": 428,
@@ -4617,70 +4617,70 @@
         "author": {
           "gitId": "-"
         },
-        "content": "1. _{ more test cases …​ }_"
+        "content": "\u003cdiv markdown\u003d\"span\" class\u003d\"alert alert-info\"\u003e:information_source: **Note:** These instructions only provide a starting point for testers to work on;"
       },
       {
         "lineNumber": 430,
         "author": {
           "gitId": "-"
         },
-        "content": ""
+        "content": "testers are expected to do more *exploratory* testing."
       },
       {
         "lineNumber": 431,
         "author": {
-          "gitId": "CalistaIo"
+          "gitId": "-"
         },
-        "content": "### Deleting a flashcard"
+        "content": ""
       },
       {
         "lineNumber": 432,
         "author": {
           "gitId": "-"
         },
-        "content": ""
+        "content": "\u003c/div\u003e"
       },
       {
         "lineNumber": 433,
         "author": {
-          "gitId": "CalistaIo"
+          "gitId": "-"
         },
-        "content": "1. Deleting a flashcard while all flashcards are being shown"
+        "content": ""
       },
       {
         "lineNumber": 434,
         "author": {
           "gitId": "-"
         },
-        "content": ""
+        "content": "### Launch and shutdown"
       },
       {
         "lineNumber": 435,
         "author": {
-          "gitId": "CalistaIo"
+          "gitId": "-"
         },
-        "content": "   1. Prerequisites: List all flashcards using the `list` command. Multiple flashcards in the list."
+        "content": ""
       },
       {
         "lineNumber": 436,
         "author": {
           "gitId": "-"
         },
-        "content": ""
+        "content": "1. Initial launch"
       },
       {
         "lineNumber": 437,
         "author": {
           "gitId": "-"
         },
-        "content": "   1. Test case: `delete 1`\u003cbr\u003e"
+        "content": ""
       },
       {
         "lineNumber": 438,
         "author": {
           "gitId": "-"
         },
-        "content": "      Expected: First contact is deleted from the list. Details of the deleted contact shown in the status message. Timestamp in the status bar is updated."
+        "content": "   1. Download the jar file and copy into an empty folder"
       },
       {
         "lineNumber": 439,
@@ -4694,35 +4694,35 @@
         "author": {
           "gitId": "-"
         },
-        "content": "   1. Test case: `delete 0`\u003cbr\u003e"
+        "content": "   1. Double-click the jar file Expected: Shows the GUI with a set of sample contacts. The window size may not be optimum."
       },
       {
         "lineNumber": 441,
-        "author": {
-          "gitId": "CalistaIo"
-        },
-        "content": "      Expected: No flashcard is deleted. Error details shown in the status message. Status bar remains the same."
-      },
-      {
-        "lineNumber": 442,
         "author": {
           "gitId": "-"
         },
         "content": ""
       },
       {
+        "lineNumber": 442,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "1. Saving window preferences"
+      },
+      {
         "lineNumber": 443,
         "author": {
           "gitId": "-"
         },
-        "content": "   1. Other incorrect delete commands to try: `delete`, `delete x`, `...` (where x is larger than the list size)\u003cbr\u003e"
+        "content": ""
       },
       {
         "lineNumber": 444,
         "author": {
           "gitId": "-"
         },
-        "content": "      Expected: Similar to previous."
+        "content": "   1. Resize the window to an optimum size. Move the window to a different location. Close the window."
       },
       {
         "lineNumber": 445,
@@ -4736,59 +4736,199 @@
         "author": {
           "gitId": "-"
         },
-        "content": "1. _{ more test cases …​ }_"
+        "content": "   1. Re-launch the app by double-clicking the jar file.\u003cbr\u003e"
       },
       {
         "lineNumber": 447,
         "author": {
           "gitId": "-"
         },
-        "content": ""
+        "content": "       Expected: The most recent window size and location is retained."
       },
       {
         "lineNumber": 448,
         "author": {
           "gitId": "-"
         },
-        "content": "### Saving data"
+        "content": ""
       },
       {
         "lineNumber": 449,
         "author": {
           "gitId": "-"
         },
-        "content": ""
+        "content": "1. _{ more test cases …​ }_"
       },
       {
         "lineNumber": 450,
         "author": {
           "gitId": "-"
         },
-        "content": "1. Dealing with missing/corrupted data files"
+        "content": ""
       },
       {
         "lineNumber": 451,
         "author": {
-          "gitId": "-"
+          "gitId": "CalistaIo"
         },
-        "content": ""
+        "content": "### Deleting a flashcard"
       },
       {
         "lineNumber": 452,
         "author": {
           "gitId": "-"
         },
-        "content": "   1. _{explain how to simulate a missing/corrupted file, and the expected behavior}_"
+        "content": ""
       },
       {
         "lineNumber": 453,
+        "author": {
+          "gitId": "CalistaIo"
+        },
+        "content": "1. Deleting a flashcard while all flashcards are being shown"
+      },
+      {
+        "lineNumber": 454,
         "author": {
           "gitId": "-"
         },
         "content": ""
       },
       {
-        "lineNumber": 454,
+        "lineNumber": 455,
+        "author": {
+          "gitId": "CalistaIo"
+        },
+        "content": "   1. Prerequisites: List all flashcards using the `list` command. Multiple flashcards in the list."
+      },
+      {
+        "lineNumber": 456,
+        "author": {
+          "gitId": "-"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 457,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "   1. Test case: `delete 1`\u003cbr\u003e"
+      },
+      {
+        "lineNumber": 458,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "      Expected: First contact is deleted from the list. Details of the deleted contact shown in the status message. Timestamp in the status bar is updated."
+      },
+      {
+        "lineNumber": 459,
+        "author": {
+          "gitId": "-"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 460,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "   1. Test case: `delete 0`\u003cbr\u003e"
+      },
+      {
+        "lineNumber": 461,
+        "author": {
+          "gitId": "CalistaIo"
+        },
+        "content": "      Expected: No flashcard is deleted. Error details shown in the status message. Status bar remains the same."
+      },
+      {
+        "lineNumber": 462,
+        "author": {
+          "gitId": "-"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 463,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "   1. Other incorrect delete commands to try: `delete`, `delete x`, `...` (where x is larger than the list size)\u003cbr\u003e"
+      },
+      {
+        "lineNumber": 464,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "      Expected: Similar to previous."
+      },
+      {
+        "lineNumber": 465,
+        "author": {
+          "gitId": "-"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 466,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "1. _{ more test cases …​ }_"
+      },
+      {
+        "lineNumber": 467,
+        "author": {
+          "gitId": "-"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 468,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "### Saving data"
+      },
+      {
+        "lineNumber": 469,
+        "author": {
+          "gitId": "-"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 470,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "1. Dealing with missing/corrupted data files"
+      },
+      {
+        "lineNumber": 471,
+        "author": {
+          "gitId": "-"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 472,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "   1. _{explain how to simulate a missing/corrupted file, and the expected behavior}_"
+      },
+      {
+        "lineNumber": 473,
+        "author": {
+          "gitId": "-"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 474,
         "author": {
           "gitId": "-"
         },
@@ -4796,10 +4936,10 @@
       }
     ],
     "authorContributionMap": {
-      "jialin7878": 122,
+      "jialin7878": 119,
       "mehak24k": 18,
-      "CalistaIo": 9,
-      "-": 305
+      "CalistaIo": 29,
+      "-": 308
     }
   },
   {

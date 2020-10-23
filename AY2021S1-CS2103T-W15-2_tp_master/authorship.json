@@ -1960,126 +1960,126 @@
       {
         "lineNumber": 136,
         "author": {
-          "gitId": "-"
+          "gitId": "StopTakingAllTheNames"
         },
-        "content": "### \\[Proposed\\] Undo/redo feature"
+        "content": "### 5.3 Overdue payment filter feature"
       },
       {
         "lineNumber": 137,
         "author": {
-          "gitId": "-"
+          "gitId": "StopTakingAllTheNames"
         },
         "content": ""
       },
       {
         "lineNumber": 138,
         "author": {
-          "gitId": "-"
+          "gitId": "StopTakingAllTheNames"
         },
-        "content": "#### Proposed Implementation"
+        "content": "The overdue payment filter feature allows the tutor to find all students who have not paid their tuition fees in the past month. It is handled by the `OverdueCommand`."
       },
       {
         "lineNumber": 139,
         "author": {
-          "gitId": "-"
+          "gitId": "StopTakingAllTheNames"
         },
         "content": ""
       },
       {
         "lineNumber": 140,
         "author": {
-          "gitId": "-"
+          "gitId": "StopTakingAllTheNames"
         },
-        "content": "The proposed undo/redo mechanism is facilitated by `VersionedAddressBook`. It extends `AddressBook` with an undo/redo history, stored internally as an `addressBookStateList` and `currentStatePointer`. Additionally, it implements the following operations:"
+        "content": "The following describes the flow of how `OverdueCommand` is executed."
       },
       {
         "lineNumber": 141,
         "author": {
-          "gitId": "-"
+          "gitId": "StopTakingAllTheNames"
         },
         "content": ""
       },
       {
         "lineNumber": 142,
         "author": {
-          "gitId": "-"
+          "gitId": "StopTakingAllTheNames"
         },
-        "content": "* `VersionedAddressBook#commit()` — Saves the current address book state in its history."
+        "content": "1. Upon successfully parsing the user input, `OverdueCommand#execute(Model model)` is called to filter all students in Reeve whose last date of payment was more than a month ago."
       },
       {
         "lineNumber": 143,
         "author": {
-          "gitId": "-"
+          "gitId": "StopTakingAllTheNames"
         },
-        "content": "* `VersionedAddressBook#undo()` — Restores the previous address book state from its history."
+        "content": "2. `Model#updateFilteredStudentsList(Predicate\u003cStudent\u003e predicate)` is called to find only students that match the above condition. A new `CommandResult` is returned with a successful message indicating the number of matching students."
       },
       {
         "lineNumber": 144,
         "author": {
-          "gitId": "-"
+          "gitId": "StopTakingAllTheNames"
         },
-        "content": "* `VersionedAddressBook#redo()` — Restores a previously undone address book state from its history."
+        "content": "3. The filtered student list replaces the displayed list on the GUI and a success message is shown in the result display."
       },
       {
         "lineNumber": 145,
         "author": {
-          "gitId": "-"
+          "gitId": "StopTakingAllTheNames"
         },
         "content": ""
       },
       {
         "lineNumber": 146,
         "author": {
-          "gitId": "-"
+          "gitId": "StopTakingAllTheNames"
         },
-        "content": "These operations are exposed in the `Model` interface as `Model#commitAddressBook()`, `Model#undoAddressBook()` and `Model#redoAddressBook()` respectively."
+        "content": "The following sequence diagram shows how the question adding operation works."
       },
       {
         "lineNumber": 147,
         "author": {
-          "gitId": "-"
+          "gitId": "StopTakingAllTheNames"
         },
         "content": ""
       },
       {
         "lineNumber": 148,
         "author": {
-          "gitId": "-"
+          "gitId": "StopTakingAllTheNames"
         },
-        "content": "Given below is an example usage scenario and how the undo/redo mechanism behaves at each step."
+        "content": "![OverdueSequence](images/OverdueSequenceDiagram.png)"
       },
       {
         "lineNumber": 149,
         "author": {
-          "gitId": "-"
+          "gitId": "StopTakingAllTheNames"
         },
         "content": ""
       },
       {
         "lineNumber": 150,
         "author": {
-          "gitId": "-"
+          "gitId": "StopTakingAllTheNames"
         },
-        "content": "Step 1. The user launches the application for the first time. The `VersionedAddressBook` will be initialized with the initial address book state, and the `currentStatePointer` pointing to that single address book state."
+        "content": "Figure \\___. Sequence diagram for `OverdueCommand` execution"
       },
       {
         "lineNumber": 151,
         "author": {
-          "gitId": "-"
+          "gitId": "StopTakingAllTheNames"
         },
         "content": ""
       },
       {
         "lineNumber": 152,
         "author": {
-          "gitId": "-"
+          "gitId": "StopTakingAllTheNames"
         },
-        "content": "![UndoRedoState0](images/UndoRedoState0.png)"
+        "content": "The following activity diagram summarises the flow of events when `OverdueCommand` is executed."
       },
       {
         "lineNumber": 153,
         "author": {
-          "gitId": "-"
+          "gitId": "StopTakingAllTheNames"
         },
         "content": ""
       },
@@ -2088,35 +2088,35 @@
         "author": {
           "gitId": "StopTakingAllTheNames"
         },
-        "content": "Step 2. The user executes `delete 5` command to delete the 5th student in the address book. The `delete` command calls `Model#commitAddressBook()`, causing the modified state of the address book after the `delete 5` command executes to be saved in the `addressBookStateList`, and the `currentStatePointer` is shifted to the newly inserted address book state."
+        "content": "![OverdueActivity](images/OverdueActivityDiagram.png)"
       },
       {
         "lineNumber": 155,
         "author": {
-          "gitId": "-"
+          "gitId": "StopTakingAllTheNames"
         },
         "content": ""
       },
       {
         "lineNumber": 156,
         "author": {
-          "gitId": "-"
+          "gitId": "StopTakingAllTheNames"
         },
-        "content": "![UndoRedoState1](images/UndoRedoState1.png)"
+        "content": "Figure \\___. Activity diagram for `OverdueCommand` execution"
       },
       {
         "lineNumber": 157,
         "author": {
-          "gitId": "-"
+          "gitId": "StopTakingAllTheNames"
         },
         "content": ""
       },
       {
         "lineNumber": 158,
         "author": {
-          "gitId": "StopTakingAllTheNames"
+          "gitId": "-"
         },
-        "content": "Step 3. The user executes `add n/David …​` to add a new student. The `add` command also calls `Model#commitAddressBook()`, causing another modified address book state to be saved into the `addressBookStateList`."
+        "content": "### \\[Proposed\\] Undo/redo feature"
       },
       {
         "lineNumber": 159,
@@ -2130,7 +2130,7 @@
         "author": {
           "gitId": "-"
         },
-        "content": "![UndoRedoState2](images/UndoRedoState2.png)"
+        "content": "#### Proposed Implementation"
       },
       {
         "lineNumber": 161,
@@ -2144,7 +2144,7 @@
         "author": {
           "gitId": "-"
         },
-        "content": "\u003cdiv markdown\u003d\"span\" class\u003d\"alert alert-info\"\u003e:information_source: **Note:** If a command fails its execution, it will not call `Model#commitAddressBook()`, so the address book state will not be saved into the `addressBookStateList`."
+        "content": "The proposed undo/redo mechanism is facilitated by `VersionedAddressBook`. It extends `AddressBook` with an undo/redo history, stored internally as an `addressBookStateList` and `currentStatePointer`. Additionally, it implements the following operations:"
       },
       {
         "lineNumber": 163,
@@ -2158,21 +2158,21 @@
         "author": {
           "gitId": "-"
         },
-        "content": "\u003c/div\u003e"
+        "content": "* `VersionedAddressBook#commit()` — Saves the current address book state in its history."
       },
       {
         "lineNumber": 165,
         "author": {
           "gitId": "-"
         },
-        "content": ""
+        "content": "* `VersionedAddressBook#undo()` — Restores the previous address book state from its history."
       },
       {
         "lineNumber": 166,
         "author": {
-          "gitId": "StopTakingAllTheNames"
+          "gitId": "-"
         },
-        "content": "Step 4. The user now decides that adding the student was a mistake, and decides to undo that action by executing the `undo` command. The `undo` command will call `Model#undoAddressBook()`, which will shift the `currentStatePointer` once to the left, pointing it to the previous address book state, and restores the address book to that state."
+        "content": "* `VersionedAddressBook#redo()` — Restores a previously undone address book state from its history."
       },
       {
         "lineNumber": 167,
@@ -2186,7 +2186,7 @@
         "author": {
           "gitId": "-"
         },
-        "content": "![UndoRedoState3](images/UndoRedoState3.png)"
+        "content": "These operations are exposed in the `Model` interface as `Model#commitAddressBook()`, `Model#undoAddressBook()` and `Model#redoAddressBook()` respectively."
       },
       {
         "lineNumber": 169,
@@ -2200,168 +2200,168 @@
         "author": {
           "gitId": "-"
         },
-        "content": "\u003cdiv markdown\u003d\"span\" class\u003d\"alert alert-info\"\u003e:information_source: **Note:** If the `currentStatePointer` is at index 0, pointing to the initial AddressBook state, then there are no previous AddressBook states to restore. The `undo` command uses `Model#canUndoAddressBook()` to check if this is the case. If so, it will return an error to the user rather"
+        "content": "Given below is an example usage scenario and how the undo/redo mechanism behaves at each step."
       },
       {
         "lineNumber": 171,
         "author": {
           "gitId": "-"
         },
-        "content": "than attempting to perform the undo."
+        "content": ""
       },
       {
         "lineNumber": 172,
         "author": {
           "gitId": "-"
         },
-        "content": ""
+        "content": "Step 1. The user launches the application for the first time. The `VersionedAddressBook` will be initialized with the initial address book state, and the `currentStatePointer` pointing to that single address book state."
       },
       {
         "lineNumber": 173,
         "author": {
           "gitId": "-"
         },
-        "content": "\u003c/div\u003e"
+        "content": ""
       },
       {
         "lineNumber": 174,
         "author": {
           "gitId": "-"
         },
-        "content": ""
+        "content": "![UndoRedoState0](images/UndoRedoState0.png)"
       },
       {
         "lineNumber": 175,
         "author": {
           "gitId": "-"
         },
-        "content": "The following sequence diagram shows how the undo operation works:"
+        "content": ""
       },
       {
         "lineNumber": 176,
         "author": {
-          "gitId": "-"
+          "gitId": "StopTakingAllTheNames"
         },
-        "content": ""
+        "content": "Step 2. The user executes `delete 5` command to delete the 5th student in the address book. The `delete` command calls `Model#commitAddressBook()`, causing the modified state of the address book after the `delete 5` command executes to be saved in the `addressBookStateList`, and the `currentStatePointer` is shifted to the newly inserted address book state."
       },
       {
         "lineNumber": 177,
         "author": {
           "gitId": "-"
         },
-        "content": "![UndoSequenceDiagram](images/UndoSequenceDiagram.png)"
+        "content": ""
       },
       {
         "lineNumber": 178,
         "author": {
           "gitId": "-"
         },
-        "content": ""
+        "content": "![UndoRedoState1](images/UndoRedoState1.png)"
       },
       {
         "lineNumber": 179,
         "author": {
           "gitId": "-"
         },
-        "content": "\u003cdiv markdown\u003d\"span\" class\u003d\"alert alert-info\"\u003e:information_source: **Note:** The lifeline for `UndoCommand` should end at the destroy marker (X) but due to a limitation of PlantUML, the lifeline reaches the end of diagram."
+        "content": ""
       },
       {
         "lineNumber": 180,
         "author": {
-          "gitId": "-"
+          "gitId": "StopTakingAllTheNames"
         },
-        "content": ""
+        "content": "Step 3. The user executes `add n/David …​` to add a new student. The `add` command also calls `Model#commitAddressBook()`, causing another modified address book state to be saved into the `addressBookStateList`."
       },
       {
         "lineNumber": 181,
         "author": {
           "gitId": "-"
         },
-        "content": "\u003c/div\u003e"
+        "content": ""
       },
       {
         "lineNumber": 182,
         "author": {
           "gitId": "-"
         },
-        "content": ""
+        "content": "![UndoRedoState2](images/UndoRedoState2.png)"
       },
       {
         "lineNumber": 183,
         "author": {
           "gitId": "-"
         },
-        "content": "The `redo` command does the opposite — it calls `Model#redoAddressBook()`, which shifts the `currentStatePointer` once to the right, pointing to the previously undone state, and restores the address book to that state."
+        "content": ""
       },
       {
         "lineNumber": 184,
         "author": {
           "gitId": "-"
         },
-        "content": ""
+        "content": "\u003cdiv markdown\u003d\"span\" class\u003d\"alert alert-info\"\u003e:information_source: **Note:** If a command fails its execution, it will not call `Model#commitAddressBook()`, so the address book state will not be saved into the `addressBookStateList`."
       },
       {
         "lineNumber": 185,
         "author": {
           "gitId": "-"
         },
-        "content": "\u003cdiv markdown\u003d\"span\" class\u003d\"alert alert-info\"\u003e:information_source: **Note:** If the `currentStatePointer` is at index `addressBookStateList.size() - 1`, pointing to the latest address book state, then there are no undone AddressBook states to restore. The `redo` command uses `Model#canRedoAddressBook()` to check if this is the case. If so, it will return an error to the user rather than attempting to perform the redo."
+        "content": ""
       },
       {
         "lineNumber": 186,
         "author": {
           "gitId": "-"
         },
-        "content": ""
+        "content": "\u003c/div\u003e"
       },
       {
         "lineNumber": 187,
         "author": {
           "gitId": "-"
         },
-        "content": "\u003c/div\u003e"
+        "content": ""
       },
       {
         "lineNumber": 188,
         "author": {
-          "gitId": "-"
+          "gitId": "StopTakingAllTheNames"
         },
-        "content": ""
+        "content": "Step 4. The user now decides that adding the student was a mistake, and decides to undo that action by executing the `undo` command. The `undo` command will call `Model#undoAddressBook()`, which will shift the `currentStatePointer` once to the left, pointing it to the previous address book state, and restores the address book to that state."
       },
       {
         "lineNumber": 189,
         "author": {
           "gitId": "-"
         },
-        "content": "Step 5. The user then decides to execute the command `list`. Commands that do not modify the address book, such as `list`, will usually not call `Model#commitAddressBook()`, `Model#undoAddressBook()` or `Model#redoAddressBook()`. Thus, the `addressBookStateList` remains unchanged."
+        "content": ""
       },
       {
         "lineNumber": 190,
         "author": {
           "gitId": "-"
         },
-        "content": ""
+        "content": "![UndoRedoState3](images/UndoRedoState3.png)"
       },
       {
         "lineNumber": 191,
         "author": {
           "gitId": "-"
         },
-        "content": "![UndoRedoState4](images/UndoRedoState4.png)"
+        "content": ""
       },
       {
         "lineNumber": 192,
         "author": {
           "gitId": "-"
         },
-        "content": ""
+        "content": "\u003cdiv markdown\u003d\"span\" class\u003d\"alert alert-info\"\u003e:information_source: **Note:** If the `currentStatePointer` is at index 0, pointing to the initial AddressBook state, then there are no previous AddressBook states to restore. The `undo` command uses `Model#canUndoAddressBook()` to check if this is the case. If so, it will return an error to the user rather"
       },
       {
         "lineNumber": 193,
         "author": {
           "gitId": "-"
         },
-        "content": "Step 6. The user executes `clear`, which calls `Model#commitAddressBook()`. Since the `currentStatePointer` is not pointing at the end of the `addressBookStateList`, all address book states after the `currentStatePointer` will be purged. Reason: It no longer makes sense to redo the `add n/David …​` command. This is the behavior that most modern desktop applications follow."
+        "content": "than attempting to perform the undo."
       },
       {
         "lineNumber": 194,
@@ -2375,7 +2375,7 @@
         "author": {
           "gitId": "-"
         },
-        "content": "![UndoRedoState5](images/UndoRedoState5.png)"
+        "content": "\u003c/div\u003e"
       },
       {
         "lineNumber": 196,
@@ -2389,7 +2389,7 @@
         "author": {
           "gitId": "-"
         },
-        "content": "The following activity diagram summarizes what happens when a user executes a new command:"
+        "content": "The following sequence diagram shows how the undo operation works:"
       },
       {
         "lineNumber": 198,
@@ -2403,7 +2403,7 @@
         "author": {
           "gitId": "-"
         },
-        "content": "![CommitActivityDiagram](images/CommitActivityDiagram.png)"
+        "content": "![UndoSequenceDiagram](images/UndoSequenceDiagram.png)"
       },
       {
         "lineNumber": 200,
@@ -2417,7 +2417,7 @@
         "author": {
           "gitId": "-"
         },
-        "content": "#### Design consideration:"
+        "content": "\u003cdiv markdown\u003d\"span\" class\u003d\"alert alert-info\"\u003e:information_source: **Note:** The lifeline for `UndoCommand` should end at the destroy marker (X) but due to a limitation of PlantUML, the lifeline reaches the end of diagram."
       },
       {
         "lineNumber": 202,
@@ -2431,7 +2431,7 @@
         "author": {
           "gitId": "-"
         },
-        "content": "##### Aspect: How undo \u0026 redo executes"
+        "content": "\u003c/div\u003e"
       },
       {
         "lineNumber": 204,
@@ -2445,21 +2445,21 @@
         "author": {
           "gitId": "-"
         },
-        "content": "* **Alternative 1 (current choice):** Saves the entire address book."
+        "content": "The `redo` command does the opposite — it calls `Model#redoAddressBook()`, which shifts the `currentStatePointer` once to the right, pointing to the previously undone state, and restores the address book to that state."
       },
       {
         "lineNumber": 206,
         "author": {
           "gitId": "-"
         },
-        "content": "  * Pros: Easy to implement."
+        "content": ""
       },
       {
         "lineNumber": 207,
         "author": {
           "gitId": "-"
         },
-        "content": "  * Cons: May have performance issues in terms of memory usage."
+        "content": "\u003cdiv markdown\u003d\"span\" class\u003d\"alert alert-info\"\u003e:information_source: **Note:** If the `currentStatePointer` is at index `addressBookStateList.size() - 1`, pointing to the latest address book state, then there are no undone AddressBook states to restore. The `redo` command uses `Model#canRedoAddressBook()` to check if this is the case. If so, it will return an error to the user rather than attempting to perform the redo."
       },
       {
         "lineNumber": 208,
@@ -2473,77 +2473,77 @@
         "author": {
           "gitId": "-"
         },
-        "content": "* **Alternative 2:** Individual command knows how to undo/redo by"
+        "content": "\u003c/div\u003e"
       },
       {
         "lineNumber": 210,
         "author": {
           "gitId": "-"
         },
-        "content": "  itself."
+        "content": ""
       },
       {
         "lineNumber": 211,
         "author": {
-          "gitId": "hogantan"
+          "gitId": "-"
         },
-        "content": "  * Pros: Will use less memory (e.g. for `delete`, just save the student being deleted)."
+        "content": "Step 5. The user then decides to execute the command `list`. Commands that do not modify the address book, such as `list`, will usually not call `Model#commitAddressBook()`, `Model#undoAddressBook()` or `Model#redoAddressBook()`. Thus, the `addressBookStateList` remains unchanged."
       },
       {
         "lineNumber": 212,
         "author": {
           "gitId": "-"
         },
-        "content": "  * Cons: We must ensure that the implementation of each individual command are correct."
+        "content": ""
       },
       {
         "lineNumber": 213,
         "author": {
           "gitId": "-"
         },
-        "content": ""
+        "content": "![UndoRedoState4](images/UndoRedoState4.png)"
       },
       {
         "lineNumber": 214,
         "author": {
           "gitId": "-"
         },
-        "content": "_{more aspects and alternatives to be added}_"
+        "content": ""
       },
       {
         "lineNumber": 215,
         "author": {
           "gitId": "-"
         },
-        "content": ""
+        "content": "Step 6. The user executes `clear`, which calls `Model#commitAddressBook()`. Since the `currentStatePointer` is not pointing at the end of the `addressBookStateList`, all address book states after the `currentStatePointer` will be purged. Reason: It no longer makes sense to redo the `add n/David …​` command. This is the behavior that most modern desktop applications follow."
       },
       {
         "lineNumber": 216,
         "author": {
           "gitId": "-"
         },
-        "content": "### \\[Proposed\\] Data archiving"
+        "content": ""
       },
       {
         "lineNumber": 217,
         "author": {
           "gitId": "-"
         },
-        "content": ""
+        "content": "![UndoRedoState5](images/UndoRedoState5.png)"
       },
       {
         "lineNumber": 218,
         "author": {
           "gitId": "-"
         },
-        "content": "_{Explain here how the data archiving feature will be implemented}_"
+        "content": ""
       },
       {
         "lineNumber": 219,
         "author": {
           "gitId": "-"
         },
-        "content": ""
+        "content": "The following activity diagram summarizes what happens when a user executes a new command:"
       },
       {
         "lineNumber": 220,
@@ -2557,7 +2557,7 @@
         "author": {
           "gitId": "-"
         },
-        "content": "--------------------------------------------------------------------------------------------------------------------"
+        "content": "![CommitActivityDiagram](images/CommitActivityDiagram.png)"
       },
       {
         "lineNumber": 222,
@@ -2571,7 +2571,7 @@
         "author": {
           "gitId": "-"
         },
-        "content": "## **Documentation, logging, testing, configuration, dev-ops**"
+        "content": "#### Design consideration:"
       },
       {
         "lineNumber": 224,
@@ -2585,35 +2585,35 @@
         "author": {
           "gitId": "-"
         },
-        "content": "* [Documentation guide](Documentation.md)"
+        "content": "##### Aspect: How undo \u0026 redo executes"
       },
       {
         "lineNumber": 226,
         "author": {
           "gitId": "-"
         },
-        "content": "* [Testing guide](Testing.md)"
+        "content": ""
       },
       {
         "lineNumber": 227,
         "author": {
           "gitId": "-"
         },
-        "content": "* [Logging guide](Logging.md)"
+        "content": "* **Alternative 1 (current choice):** Saves the entire address book."
       },
       {
         "lineNumber": 228,
         "author": {
           "gitId": "-"
         },
-        "content": "* [Configuration guide](Configuration.md)"
+        "content": "  * Pros: Easy to implement."
       },
       {
         "lineNumber": 229,
         "author": {
           "gitId": "-"
         },
-        "content": "* [DevOps guide](DevOps.md)"
+        "content": "  * Cons: May have performance issues in terms of memory usage."
       },
       {
         "lineNumber": 230,
@@ -2627,147 +2627,147 @@
         "author": {
           "gitId": "-"
         },
-        "content": "--------------------------------------------------------------------------------------------------------------------"
+        "content": "* **Alternative 2:** Individual command knows how to undo/redo by"
       },
       {
         "lineNumber": 232,
         "author": {
           "gitId": "-"
         },
-        "content": ""
+        "content": "  itself."
       },
       {
         "lineNumber": 233,
         "author": {
-          "gitId": "-"
+          "gitId": "hogantan"
         },
-        "content": "## **Appendix: Requirements**"
+        "content": "  * Pros: Will use less memory (e.g. for `delete`, just save the student being deleted)."
       },
       {
         "lineNumber": 234,
         "author": {
           "gitId": "-"
         },
-        "content": ""
+        "content": "  * Cons: We must ensure that the implementation of each individual command are correct."
       },
       {
         "lineNumber": 235,
         "author": {
           "gitId": "-"
         },
-        "content": "### Product scope"
+        "content": ""
       },
       {
         "lineNumber": 236,
         "author": {
           "gitId": "-"
         },
-        "content": ""
+        "content": "_{more aspects and alternatives to be added}_"
       },
       {
         "lineNumber": 237,
         "author": {
           "gitId": "-"
         },
-        "content": "**Target user profile**:"
+        "content": ""
       },
       {
         "lineNumber": 238,
         "author": {
           "gitId": "-"
         },
-        "content": ""
+        "content": "### \\[Proposed\\] Data archiving"
       },
       {
         "lineNumber": 239,
         "author": {
-          "gitId": "AlexCQY"
+          "gitId": "-"
         },
-        "content": "* is a Singapore primary/secondary/junior college private tutors"
+        "content": ""
       },
       {
         "lineNumber": 240,
         "author": {
-          "gitId": "AlexCQY"
+          "gitId": "-"
         },
-        "content": "* has a need to manage a significant number of student contacts"
+        "content": "_{Explain here how the data archiving feature will be implemented}_"
       },
       {
         "lineNumber": 241,
         "author": {
-          "gitId": "AlexCQY"
+          "gitId": "-"
         },
-        "content": "* has a need to manage administrative details of students"
+        "content": ""
       },
       {
         "lineNumber": 242,
         "author": {
-          "gitId": "AlexCQY"
+          "gitId": "-"
         },
-        "content": "* has a need to manage administrative details of lessons"
+        "content": ""
       },
       {
         "lineNumber": 243,
         "author": {
           "gitId": "-"
         },
-        "content": "* prefer desktop apps over other types"
+        "content": "--------------------------------------------------------------------------------------------------------------------"
       },
       {
         "lineNumber": 244,
         "author": {
           "gitId": "-"
         },
-        "content": "* can type fast"
+        "content": ""
       },
       {
         "lineNumber": 245,
         "author": {
           "gitId": "-"
         },
-        "content": "* prefers typing to mouse interactions"
+        "content": "## **Documentation, logging, testing, configuration, dev-ops**"
       },
       {
         "lineNumber": 246,
         "author": {
           "gitId": "-"
         },
-        "content": "* is reasonably comfortable using CLI apps"
+        "content": ""
       },
       {
         "lineNumber": 247,
         "author": {
           "gitId": "-"
         },
-        "content": ""
+        "content": "* [Documentation guide](Documentation.md)"
       },
       {
         "lineNumber": 248,
         "author": {
-          "gitId": "AlexCQY"
+          "gitId": "-"
         },
-        "content": "**Value proposition**: Helps tutors organise administrative details of their students and lesson with ease and manage student needs better."
+        "content": "* [Testing guide](Testing.md)"
       },
       {
         "lineNumber": 249,
         "author": {
           "gitId": "-"
         },
-        "content": ""
+        "content": "* [Logging guide](Logging.md)"
       },
       {
         "lineNumber": 250,
         "author": {
           "gitId": "-"
         },
-        "content": ""
+        "content": "* [Configuration guide](Configuration.md)"
       },
       {
         "lineNumber": 251,
         "author": {
           "gitId": "-"
         },
-        "content": "### User stories"
+        "content": "* [DevOps guide](DevOps.md)"
       },
       {
         "lineNumber": 252,
@@ -2781,7 +2781,7 @@
         "author": {
           "gitId": "-"
         },
-        "content": "Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unlikely to have) - `*`"
+        "content": "--------------------------------------------------------------------------------------------------------------------"
       },
       {
         "lineNumber": 254,
@@ -2795,98 +2795,98 @@
         "author": {
           "gitId": "-"
         },
-        "content": "| Priority | As a …​                   | I want to …​                                          | So that I can…​                                                                     |"
+        "content": "## **Appendix: Requirements**"
       },
       {
         "lineNumber": 256,
         "author": {
-          "gitId": "AlexCQY"
+          "gitId": "-"
         },
-        "content": "| -------- | --------------------------| ----------------------------------------------------- | ----------------------------------------------------------------------              |"
+        "content": ""
       },
       {
         "lineNumber": 257,
         "author": {
-          "gitId": "AlexCQY"
+          "gitId": "-"
         },
-        "content": "| `* * *`  | user ready to use Reeve   | input my student’s details (Admin)                    | refer to instructions when I forget how to use the App                              |"
+        "content": "### Product scope"
       },
       {
         "lineNumber": 258,
         "author": {
-          "gitId": "AlexCQY"
+          "gitId": "-"
         },
-        "content": "| `* * *`  | novice user               | be able to save meeting links for online lessons      | keep track of meeting links when my student cannot make it for a physical lesson    |                                                                       |"
+        "content": ""
       },
       {
         "lineNumber": 259,
         "author": {
-          "gitId": "AlexCQY"
+          "gitId": "-"
         },
-        "content": "| `* * *`  | expert user               | view my students\u0027 preferred tutoring location         | figure out how to get that location                                                 |"
+        "content": "**Target user profile**:"
       },
       {
         "lineNumber": 260,
         "author": {
-          "gitId": "AlexCQY"
+          "gitId": "-"
         },
-        "content": "| `* * *`  | expert user               | edit my students\u0027 personal details                    | get rid of outdated data                                                            |"
+        "content": ""
       },
       {
         "lineNumber": 261,
         "author": {
           "gitId": "AlexCQY"
         },
-        "content": "| `* * *`  | expert user               | view my student\u0027s details                             | refer to them when needed                                                           |"
+        "content": "* is a Singapore primary/secondary/junior college private tutors"
       },
       {
         "lineNumber": 262,
         "author": {
           "gitId": "AlexCQY"
         },
-        "content": "| `* * *`  | expert user               | add additional details to each student                | add other miscellaneous details which can allow me to better cater to student needs |"
+        "content": "* has a need to manage a significant number of student contacts"
       },
       {
         "lineNumber": 263,
         "author": {
           "gitId": "AlexCQY"
         },
-        "content": "| `* * *`  | long-time user            | delete students\u0027 data                                 | remove irrelevant data of students who are no longer my tutees                      |"
+        "content": "* has a need to manage administrative details of students"
       },
       {
         "lineNumber": 264,
         "author": {
           "gitId": "AlexCQY"
         },
-        "content": "| `* * *`  | expert user               | find a student\u0027s record                               | retrieve students\u0027 data with ease                                                   |"
+        "content": "* has a need to manage administrative details of lessons"
       },
       {
         "lineNumber": 265,
         "author": {
           "gitId": "-"
         },
-        "content": ""
+        "content": "* prefer desktop apps over other types"
       },
       {
         "lineNumber": 266,
         "author": {
           "gitId": "-"
         },
-        "content": "*{More to be added}*"
+        "content": "* can type fast"
       },
       {
         "lineNumber": 267,
         "author": {
           "gitId": "-"
         },
-        "content": ""
+        "content": "* prefers typing to mouse interactions"
       },
       {
         "lineNumber": 268,
         "author": {
           "gitId": "-"
         },
-        "content": "### Use cases"
+        "content": "* is reasonably comfortable using CLI apps"
       },
       {
         "lineNumber": 269,
@@ -2898,9 +2898,9 @@
       {
         "lineNumber": 270,
         "author": {
-          "gitId": "csiongn"
+          "gitId": "AlexCQY"
         },
-        "content": "(For all use cases below, the **System** is `Reeve` and the **Actor** is the `Tutor (User)`, unless specified otherwise)"
+        "content": "**Value proposition**: Helps tutors organise administrative details of their students and lesson with ease and manage student needs better."
       },
       {
         "lineNumber": 271,
@@ -2912,581 +2912,581 @@
       {
         "lineNumber": 272,
         "author": {
-          "gitId": "StopTakingAllTheNames"
+          "gitId": "-"
         },
-        "content": "**UC01: Adding a student**"
+        "content": ""
       },
       {
         "lineNumber": 273,
         "author": {
           "gitId": "-"
         },
-        "content": ""
+        "content": "### User stories"
       },
       {
         "lineNumber": 274,
         "author": {
           "gitId": "-"
         },
-        "content": "**MSS**"
+        "content": ""
       },
       {
         "lineNumber": 275,
         "author": {
           "gitId": "-"
         },
-        "content": ""
+        "content": "Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unlikely to have) - `*`"
       },
       {
         "lineNumber": 276,
+        "author": {
+          "gitId": "-"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 277,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "| Priority | As a …​                   | I want to …​                                          | So that I can…​                                                                     |"
+      },
+      {
+        "lineNumber": 278,
+        "author": {
+          "gitId": "AlexCQY"
+        },
+        "content": "| -------- | --------------------------| ----------------------------------------------------- | ----------------------------------------------------------------------              |"
+      },
+      {
+        "lineNumber": 279,
+        "author": {
+          "gitId": "AlexCQY"
+        },
+        "content": "| `* * *`  | user ready to use Reeve   | input my student’s details (Admin)                    | refer to instructions when I forget how to use the App                              |"
+      },
+      {
+        "lineNumber": 280,
+        "author": {
+          "gitId": "AlexCQY"
+        },
+        "content": "| `* * *`  | novice user               | be able to save meeting links for online lessons      | keep track of meeting links when my student cannot make it for a physical lesson    |                                                                       |"
+      },
+      {
+        "lineNumber": 281,
+        "author": {
+          "gitId": "AlexCQY"
+        },
+        "content": "| `* * *`  | expert user               | view my students\u0027 preferred tutoring location         | figure out how to get that location                                                 |"
+      },
+      {
+        "lineNumber": 282,
+        "author": {
+          "gitId": "AlexCQY"
+        },
+        "content": "| `* * *`  | expert user               | edit my students\u0027 personal details                    | get rid of outdated data                                                            |"
+      },
+      {
+        "lineNumber": 283,
+        "author": {
+          "gitId": "AlexCQY"
+        },
+        "content": "| `* * *`  | expert user               | view my student\u0027s details                             | refer to them when needed                                                           |"
+      },
+      {
+        "lineNumber": 284,
+        "author": {
+          "gitId": "AlexCQY"
+        },
+        "content": "| `* * *`  | expert user               | add additional details to each student                | add other miscellaneous details which can allow me to better cater to student needs |"
+      },
+      {
+        "lineNumber": 285,
+        "author": {
+          "gitId": "AlexCQY"
+        },
+        "content": "| `* * *`  | long-time user            | delete students\u0027 data                                 | remove irrelevant data of students who are no longer my tutees                      |"
+      },
+      {
+        "lineNumber": 286,
+        "author": {
+          "gitId": "AlexCQY"
+        },
+        "content": "| `* * *`  | expert user               | find a student\u0027s record                               | retrieve students\u0027 data with ease                                                   |"
+      },
+      {
+        "lineNumber": 287,
+        "author": {
+          "gitId": "-"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 288,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "*{More to be added}*"
+      },
+      {
+        "lineNumber": 289,
+        "author": {
+          "gitId": "-"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 290,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "### Use cases"
+      },
+      {
+        "lineNumber": 291,
+        "author": {
+          "gitId": "-"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 292,
+        "author": {
+          "gitId": "csiongn"
+        },
+        "content": "(For all use cases below, the **System** is `Reeve` and the **Actor** is the `Tutor (User)`, unless specified otherwise)"
+      },
+      {
+        "lineNumber": 293,
+        "author": {
+          "gitId": "-"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 294,
+        "author": {
+          "gitId": "StopTakingAllTheNames"
+        },
+        "content": "**UC01: Adding a student**"
+      },
+      {
+        "lineNumber": 295,
+        "author": {
+          "gitId": "-"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 296,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "**MSS**"
+      },
+      {
+        "lineNumber": 297,
+        "author": {
+          "gitId": "-"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 298,
         "author": {
           "gitId": "hogantan"
         },
         "content": "1.  User enters a command to add a student with student details."
       },
       {
-        "lineNumber": 277,
+        "lineNumber": 299,
         "author": {
           "gitId": "hogantan"
         },
         "content": "2.  Reeve saves student data into the students list and displays a success message."
       },
       {
-        "lineNumber": 278,
-        "author": {
-          "gitId": "-"
-        },
-        "content": ""
-      },
-      {
-        "lineNumber": 279,
-        "author": {
-          "gitId": "-"
-        },
-        "content": "    Use case ends."
-      },
-      {
-        "lineNumber": 280,
-        "author": {
-          "gitId": "-"
-        },
-        "content": ""
-      },
-      {
-        "lineNumber": 281,
-        "author": {
-          "gitId": "-"
-        },
-        "content": "**Extensions**"
-      },
-      {
-        "lineNumber": 282,
-        "author": {
-          "gitId": "-"
-        },
-        "content": ""
-      },
-      {
-        "lineNumber": 283,
-        "author": {
-          "gitId": "hogantan"
-        },
-        "content": "* 1a. User provides input with missing compulsory fields."
-      },
-      {
-        "lineNumber": 284,
-        "author": {
-          "gitId": "hogantan"
-        },
-        "content": "    * 1a1. Reeve requests for appropriate input."
-      },
-      {
-        "lineNumber": 285,
-        "author": {
-          "gitId": "StopTakingAllTheNames"
-        },
-        "content": ""
-      },
-      {
-        "lineNumber": 286,
-        "author": {
-          "gitId": "StopTakingAllTheNames"
-        },
-        "content": "      Use case resumes from step 1."
-      },
-      {
-        "lineNumber": 287,
-        "author": {
-          "gitId": "hogantan"
-        },
-        "content": "        \t"
-      },
-      {
-        "lineNumber": 288,
-        "author": {
-          "gitId": "hogantan"
-        },
-        "content": "* 1b. User provides input with invalid format."
-      },
-      {
-        "lineNumber": 289,
-        "author": {
-          "gitId": "hogantan"
-        },
-        "content": "    * 1b1. Reeve requests for appropriate input with valid format."
-      },
-      {
-        "lineNumber": 290,
-        "author": {
-          "gitId": "hogantan"
-        },
-        "content": "      "
-      },
-      {
-        "lineNumber": 291,
-        "author": {
-          "gitId": "StopTakingAllTheNames"
-        },
-        "content": "      Use case resumes from step 1."
-      },
-      {
-        "lineNumber": 292,
-        "author": {
-          "gitId": "StopTakingAllTheNames"
-        },
-        "content": "        \t"
-      },
-      {
-        "lineNumber": 293,
-        "author": {
-          "gitId": "StopTakingAllTheNames"
-        },
-        "content": "**UC02: Searching for a student**"
-      },
-      {
-        "lineNumber": 294,
-        "author": {
-          "gitId": "csiongn"
-        },
-        "content": ""
-      },
-      {
-        "lineNumber": 295,
-        "author": {
-          "gitId": "csiongn"
-        },
-        "content": "**MSS**"
-      },
-      {
-        "lineNumber": 296,
-        "author": {
-          "gitId": "csiongn"
-        },
-        "content": ""
-      },
-      {
-        "lineNumber": 297,
-        "author": {
-          "gitId": "csiongn"
-        },
-        "content": "1.  User enters a command to find all students that match the given search parameter (name, school, year or subject)."
-      },
-      {
-        "lineNumber": 298,
-        "author": {
-          "gitId": "csiongn"
-        },
-        "content": "2.  Reeve displays all students matching the criteria. "
-      },
-      {
-        "lineNumber": 299,
-        "author": {
-          "gitId": "csiongn"
-        },
-        "content": "    "
-      },
-      {
         "lineNumber": 300,
         "author": {
-          "gitId": "csiongn"
+          "gitId": "-"
         },
-        "content": "    Use case ends."
+        "content": ""
       },
       {
         "lineNumber": 301,
         "author": {
           "gitId": "-"
         },
-        "content": ""
+        "content": "    Use case ends."
       },
       {
         "lineNumber": 302,
         "author": {
-          "gitId": "StopTakingAllTheNames"
-        },
-        "content": "**Extensions**"
-      },
-      {
-        "lineNumber": 303,
-        "author": {
-          "gitId": "StopTakingAllTheNames"
+          "gitId": "-"
         },
         "content": ""
       },
       {
+        "lineNumber": 303,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "**Extensions**"
+      },
+      {
         "lineNumber": 304,
         "author": {
-          "gitId": "StopTakingAllTheNames"
+          "gitId": "-"
         },
-        "content": "* 1a. User provides input with invalid data into the search parameter."
+        "content": ""
       },
       {
         "lineNumber": 305,
         "author": {
-          "gitId": "StopTakingAllTheNames"
+          "gitId": "hogantan"
         },
-        "content": "    * 1a1. Reeve displays erroneous field and expected format.       "
+        "content": "* 1a. User provides input with missing compulsory fields."
       },
       {
         "lineNumber": 306,
         "author": {
-          "gitId": "StopTakingAllTheNames"
+          "gitId": "hogantan"
         },
-        "content": "      "
+        "content": "    * 1a1. Reeve requests for appropriate input."
       },
       {
         "lineNumber": 307,
         "author": {
           "gitId": "StopTakingAllTheNames"
         },
-        "content": "      Use case resumes at step 1.      "
+        "content": ""
       },
       {
         "lineNumber": 308,
         "author": {
           "gitId": "StopTakingAllTheNames"
         },
-        "content": "* 1b. User provides input without a search parameter."
+        "content": "      Use case resumes from step 1."
       },
       {
         "lineNumber": 309,
         "author": {
-          "gitId": "StopTakingAllTheNames"
+          "gitId": "hogantan"
         },
-        "content": "    * 1a1. Reeve displays a message indicating a search parameter was not provided.       "
+        "content": "        \t"
       },
       {
         "lineNumber": 310,
         "author": {
-          "gitId": "StopTakingAllTheNames"
+          "gitId": "hogantan"
         },
-        "content": "      "
+        "content": "* 1b. User provides input with invalid format."
       },
       {
         "lineNumber": 311,
         "author": {
-          "gitId": "StopTakingAllTheNames"
+          "gitId": "hogantan"
         },
-        "content": "      Use case resumes at step 1."
+        "content": "    * 1b1. Reeve requests for appropriate input with valid format."
       },
       {
         "lineNumber": 312,
         "author": {
-          "gitId": "StopTakingAllTheNames"
+          "gitId": "hogantan"
         },
-        "content": "* 1c. No students match the given criteria."
+        "content": "      "
       },
       {
         "lineNumber": 313,
         "author": {
           "gitId": "StopTakingAllTheNames"
         },
-        "content": "    * 1c1. Reeve displays a message indicating no match found.    "
+        "content": "      Use case resumes from step 1."
       },
       {
         "lineNumber": 314,
         "author": {
           "gitId": "StopTakingAllTheNames"
         },
-        "content": "      "
+        "content": "        \t"
       },
       {
         "lineNumber": 315,
         "author": {
           "gitId": "StopTakingAllTheNames"
         },
-        "content": "      Use case ends."
+        "content": "**UC02: Searching for a student**"
       },
       {
         "lineNumber": 316,
         "author": {
-          "gitId": "StopTakingAllTheNames"
+          "gitId": "csiongn"
         },
         "content": ""
       },
       {
         "lineNumber": 317,
         "author": {
-          "gitId": "StopTakingAllTheNames"
+          "gitId": "csiongn"
         },
-        "content": "**UC03: Editing a student\u0027s details**"
+        "content": "**MSS**"
       },
       {
         "lineNumber": 318,
         "author": {
-          "gitId": "-"
+          "gitId": "csiongn"
         },
         "content": ""
       },
       {
         "lineNumber": 319,
         "author": {
-          "gitId": "-"
+          "gitId": "csiongn"
         },
-        "content": "**MSS**"
+        "content": "1.  User enters a command to find all students that match the given search parameter (name, school, year or subject)."
       },
       {
         "lineNumber": 320,
+        "author": {
+          "gitId": "csiongn"
+        },
+        "content": "2.  Reeve displays all students matching the criteria. "
+      },
+      {
+        "lineNumber": 321,
+        "author": {
+          "gitId": "csiongn"
+        },
+        "content": "    "
+      },
+      {
+        "lineNumber": 322,
+        "author": {
+          "gitId": "csiongn"
+        },
+        "content": "    Use case ends."
+      },
+      {
+        "lineNumber": 323,
         "author": {
           "gitId": "-"
         },
         "content": ""
       },
       {
-        "lineNumber": 321,
-        "author": {
-          "gitId": "VaishakAnand"
-        },
-        "content": "1.  User enters a command to list all students."
-      },
-      {
-        "lineNumber": 322,
-        "author": {
-          "gitId": "VaishakAnand"
-        },
-        "content": "2.  Reeve shows the list of students."
-      },
-      {
-        "lineNumber": 323,
-        "author": {
-          "gitId": "VaishakAnand"
-        },
-        "content": "3.  User enters command to edit a specific student in the list and provides needed parameters."
-      },
-      {
         "lineNumber": 324,
         "author": {
-          "gitId": "VaishakAnand"
+          "gitId": "StopTakingAllTheNames"
         },
-        "content": "4.  Reeve updates the specified student with the input parameters and displays a success message."
+        "content": "**Extensions**"
       },
       {
         "lineNumber": 325,
         "author": {
-          "gitId": "-"
+          "gitId": "StopTakingAllTheNames"
         },
         "content": ""
       },
       {
         "lineNumber": 326,
         "author": {
-          "gitId": "-"
+          "gitId": "StopTakingAllTheNames"
         },
-        "content": "    Use case ends."
+        "content": "* 1a. User provides input with invalid data into the search parameter."
       },
       {
         "lineNumber": 327,
         "author": {
-          "gitId": "-"
+          "gitId": "StopTakingAllTheNames"
         },
-        "content": ""
+        "content": "    * 1a1. Reeve displays erroneous field and expected format.       "
       },
       {
         "lineNumber": 328,
         "author": {
-          "gitId": "-"
-        },
-        "content": "**Extensions**"
-      },
-      {
-        "lineNumber": 329,
-        "author": {
-          "gitId": "-"
-        },
-        "content": ""
-      },
-      {
-        "lineNumber": 330,
-        "author": {
-          "gitId": "-"
-        },
-        "content": "* 2a. The list is empty."
-      },
-      {
-        "lineNumber": 331,
-        "author": {
-          "gitId": "-"
-        },
-        "content": "  Use case ends."
-      },
-      {
-        "lineNumber": 332,
-        "author": {
-          "gitId": "-"
-        },
-        "content": ""
-      },
-      {
-        "lineNumber": 333,
-        "author": {
-          "gitId": "VaishakAnand"
-        },
-        "content": "* 3a. User provides input with invalid index."
-      },
-      {
-        "lineNumber": 334,
-        "author": {
-          "gitId": "VaishakAnand"
-        },
-        "content": "    * 3a1. Reeve requests for input with valid index."
-      },
-      {
-        "lineNumber": 335,
-        "author": {
-          "gitId": "-"
-        },
-        "content": ""
-      },
-      {
-        "lineNumber": 336,
-        "author": {
-          "gitId": "-"
-        },
-        "content": "      Use case resumes at step 2."
-      },
-      {
-        "lineNumber": 337,
-        "author": {
-          "gitId": "VaishakAnand"
-        },
-        "content": "* 3b. User provides input without any parameters."
-      },
-      {
-        "lineNumber": 338,
-        "author": {
-          "gitId": "VaishakAnand"
-        },
-        "content": "    * 3b1. Reeve requests for input with parameters."
-      },
-      {
-        "lineNumber": 339,
-        "author": {
-          "gitId": "VaishakAnand"
+          "gitId": "StopTakingAllTheNames"
         },
         "content": "      "
       },
       {
+        "lineNumber": 329,
+        "author": {
+          "gitId": "StopTakingAllTheNames"
+        },
+        "content": "      Use case resumes at step 1.      "
+      },
+      {
+        "lineNumber": 330,
+        "author": {
+          "gitId": "StopTakingAllTheNames"
+        },
+        "content": "* 1b. User provides input without a search parameter."
+      },
+      {
+        "lineNumber": 331,
+        "author": {
+          "gitId": "StopTakingAllTheNames"
+        },
+        "content": "    * 1a1. Reeve displays a message indicating a search parameter was not provided.       "
+      },
+      {
+        "lineNumber": 332,
+        "author": {
+          "gitId": "StopTakingAllTheNames"
+        },
+        "content": "      "
+      },
+      {
+        "lineNumber": 333,
+        "author": {
+          "gitId": "StopTakingAllTheNames"
+        },
+        "content": "      Use case resumes at step 1."
+      },
+      {
+        "lineNumber": 334,
+        "author": {
+          "gitId": "StopTakingAllTheNames"
+        },
+        "content": "* 1c. No students match the given criteria."
+      },
+      {
+        "lineNumber": 335,
+        "author": {
+          "gitId": "StopTakingAllTheNames"
+        },
+        "content": "    * 1c1. Reeve displays a message indicating no match found.    "
+      },
+      {
+        "lineNumber": 336,
+        "author": {
+          "gitId": "StopTakingAllTheNames"
+        },
+        "content": "      "
+      },
+      {
+        "lineNumber": 337,
+        "author": {
+          "gitId": "StopTakingAllTheNames"
+        },
+        "content": "      Use case ends."
+      },
+      {
+        "lineNumber": 338,
+        "author": {
+          "gitId": "StopTakingAllTheNames"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 339,
+        "author": {
+          "gitId": "StopTakingAllTheNames"
+        },
+        "content": "**UC03: Editing a student\u0027s details**"
+      },
+      {
         "lineNumber": 340,
         "author": {
-          "gitId": "VaishakAnand"
+          "gitId": "-"
         },
-        "content": "      Use case resumes at step 2."
+        "content": ""
       },
       {
         "lineNumber": 341,
         "author": {
-          "gitId": "VaishakAnand"
+          "gitId": "-"
         },
-        "content": "* 3c. User provides input with invalid format."
+        "content": "**MSS**"
       },
       {
         "lineNumber": 342,
         "author": {
-          "gitId": "VaishakAnand"
+          "gitId": "-"
         },
-        "content": "\t* 3c1. Reeve requests for input with valid format."
+        "content": ""
       },
       {
         "lineNumber": 343,
         "author": {
           "gitId": "VaishakAnand"
         },
-        "content": "\t"
+        "content": "1.  User enters a command to list all students."
       },
       {
         "lineNumber": 344,
         "author": {
           "gitId": "VaishakAnand"
         },
-        "content": "\t  Use case resumes at step 2."
+        "content": "2.  Reeve shows the list of students."
       },
       {
         "lineNumber": 345,
+        "author": {
+          "gitId": "VaishakAnand"
+        },
+        "content": "3.  User enters command to edit a specific student in the list and provides needed parameters."
+      },
+      {
+        "lineNumber": 346,
+        "author": {
+          "gitId": "VaishakAnand"
+        },
+        "content": "4.  Reeve updates the specified student with the input parameters and displays a success message."
+      },
+      {
+        "lineNumber": 347,
         "author": {
           "gitId": "-"
         },
         "content": ""
       },
       {
-        "lineNumber": 346,
-        "author": {
-          "gitId": "hogantan"
-        },
-        "content": "**UC04: Deleting a student**"
-      },
-      {
-        "lineNumber": 347,
-        "author": {
-          "gitId": "VaishakAnand"
-        },
-        "content": ""
-      },
-      {
         "lineNumber": 348,
         "author": {
-          "gitId": "VaishakAnand"
+          "gitId": "-"
         },
-        "content": "**MSS**"
+        "content": "    Use case ends."
       },
       {
         "lineNumber": 349,
         "author": {
-          "gitId": "VaishakAnand"
+          "gitId": "-"
         },
         "content": ""
       },
       {
         "lineNumber": 350,
         "author": {
-          "gitId": "VaishakAnand"
+          "gitId": "-"
         },
-        "content": "1.  User enters a command to list students."
+        "content": "**Extensions**"
       },
       {
         "lineNumber": 351,
         "author": {
-          "gitId": "VaishakAnand"
+          "gitId": "-"
         },
-        "content": "2.  Reeve displays a list of students."
+        "content": ""
       },
       {
         "lineNumber": 352,
         "author": {
-          "gitId": "VaishakAnand"
+          "gitId": "-"
         },
-        "content": "3.  User enters a command to delete a specific student in the list."
+        "content": "* 2a. The list is empty."
       },
       {
         "lineNumber": 353,
         "author": {
-          "gitId": "VaishakAnand"
+          "gitId": "-"
         },
-        "content": "4.  Reeve deletes the student and displays a success message."
+        "content": "  Use case ends."
       },
       {
         "lineNumber": 354,
         "author": {
-          "gitId": "VaishakAnand"
+          "gitId": "-"
         },
         "content": ""
       },
@@ -3495,98 +3495,98 @@
         "author": {
           "gitId": "VaishakAnand"
         },
-        "content": "    Use case ends."
+        "content": "* 3a. User provides input with invalid index."
       },
       {
         "lineNumber": 356,
         "author": {
           "gitId": "VaishakAnand"
         },
-        "content": ""
+        "content": "    * 3a1. Reeve requests for input with valid index."
       },
       {
         "lineNumber": 357,
-        "author": {
-          "gitId": "VaishakAnand"
-        },
-        "content": "**Extensions**"
-      },
-      {
-        "lineNumber": 358,
-        "author": {
-          "gitId": "VaishakAnand"
-        },
-        "content": ""
-      },
-      {
-        "lineNumber": 359,
-        "author": {
-          "gitId": "VaishakAnand"
-        },
-        "content": "* 2a. The list is empty."
-      },
-      {
-        "lineNumber": 360,
-        "author": {
-          "gitId": "VaishakAnand"
-        },
-        "content": ""
-      },
-      {
-        "lineNumber": 361,
-        "author": {
-          "gitId": "VaishakAnand"
-        },
-        "content": "  Use case ends."
-      },
-      {
-        "lineNumber": 362,
-        "author": {
-          "gitId": "VaishakAnand"
-        },
-        "content": ""
-      },
-      {
-        "lineNumber": 363,
-        "author": {
-          "gitId": "VaishakAnand"
-        },
-        "content": "* 3a. User provides input with invalid index."
-      },
-      {
-        "lineNumber": 364,
-        "author": {
-          "gitId": "VaishakAnand"
-        },
-        "content": "    * 3a1. Reeve displays an error message."
-      },
-      {
-        "lineNumber": 365,
         "author": {
           "gitId": "-"
         },
         "content": ""
       },
       {
-        "lineNumber": 366,
+        "lineNumber": 358,
         "author": {
           "gitId": "-"
         },
         "content": "      Use case resumes at step 2."
       },
       {
+        "lineNumber": 359,
+        "author": {
+          "gitId": "VaishakAnand"
+        },
+        "content": "* 3b. User provides input without any parameters."
+      },
+      {
+        "lineNumber": 360,
+        "author": {
+          "gitId": "VaishakAnand"
+        },
+        "content": "    * 3b1. Reeve requests for input with parameters."
+      },
+      {
+        "lineNumber": 361,
+        "author": {
+          "gitId": "VaishakAnand"
+        },
+        "content": "      "
+      },
+      {
+        "lineNumber": 362,
+        "author": {
+          "gitId": "VaishakAnand"
+        },
+        "content": "      Use case resumes at step 2."
+      },
+      {
+        "lineNumber": 363,
+        "author": {
+          "gitId": "VaishakAnand"
+        },
+        "content": "* 3c. User provides input with invalid format."
+      },
+      {
+        "lineNumber": 364,
+        "author": {
+          "gitId": "VaishakAnand"
+        },
+        "content": "\t* 3c1. Reeve requests for input with valid format."
+      },
+      {
+        "lineNumber": 365,
+        "author": {
+          "gitId": "VaishakAnand"
+        },
+        "content": "\t"
+      },
+      {
+        "lineNumber": 366,
+        "author": {
+          "gitId": "VaishakAnand"
+        },
+        "content": "\t  Use case resumes at step 2."
+      },
+      {
         "lineNumber": 367,
         "author": {
           "gitId": "VaishakAnand"
         },
-        "content": "    "
+        "content": ""
       },
       {
         "lineNumber": 368,
         "author": {
-          "gitId": "StopTakingAllTheNames"
+          "gitId": "hogantan"
         },
-        "content": "**UC05: Listing all students** "
+        "content": "**UC04: Deleting a student**"
       },
       {
         "lineNumber": 369,
@@ -3614,252 +3614,252 @@
         "author": {
           "gitId": "VaishakAnand"
         },
-        "content": "1. User enters command to display students list."
+        "content": "1.  User enters a command to list students."
       },
       {
         "lineNumber": 373,
         "author": {
           "gitId": "VaishakAnand"
         },
-        "content": "2. Reeve displays the students list with student details."
+        "content": "2.  Reeve displays a list of students."
       },
       {
         "lineNumber": 374,
         "author": {
           "gitId": "VaishakAnand"
         },
-        "content": ""
+        "content": "3.  User enters a command to delete a specific student in the list."
       },
       {
         "lineNumber": 375,
         "author": {
           "gitId": "VaishakAnand"
         },
-        "content": "   Use case ends."
+        "content": "4.  Reeve deletes the student and displays a success message."
       },
       {
         "lineNumber": 376,
         "author": {
           "gitId": "VaishakAnand"
         },
-        "content": " "
+        "content": ""
       },
       {
         "lineNumber": 377,
         "author": {
           "gitId": "VaishakAnand"
         },
-        "content": ""
+        "content": "    Use case ends."
       },
       {
         "lineNumber": 378,
         "author": {
-          "gitId": "StopTakingAllTheNames"
+          "gitId": "VaishakAnand"
         },
-        "content": "**UC06: Clearing all student records**"
+        "content": ""
       },
       {
         "lineNumber": 379,
         "author": {
           "gitId": "VaishakAnand"
         },
-        "content": ""
+        "content": "**Extensions**"
       },
       {
         "lineNumber": 380,
         "author": {
           "gitId": "VaishakAnand"
         },
-        "content": "**MSS**"
+        "content": ""
       },
       {
         "lineNumber": 381,
         "author": {
-          "gitId": "-"
+          "gitId": "VaishakAnand"
         },
-        "content": ""
+        "content": "* 2a. The list is empty."
       },
       {
         "lineNumber": 382,
         "author": {
-          "gitId": "VaishakAnand"
+          "gitId": "-"
         },
-        "content": "1. User enters a command to clear the students list."
+        "content": ""
       },
       {
         "lineNumber": 383,
         "author": {
           "gitId": "VaishakAnand"
         },
-        "content": "2. Reeve displays a success message."
+        "content": "  Use case ends."
       },
       {
         "lineNumber": 384,
         "author": {
           "gitId": "VaishakAnand"
         },
-        "content": "   "
+        "content": ""
       },
       {
         "lineNumber": 385,
         "author": {
           "gitId": "VaishakAnand"
         },
-        "content": "   Use case ends."
+        "content": "* 3a. User provides input with invalid index."
       },
       {
         "lineNumber": 386,
         "author": {
-          "gitId": "-"
+          "gitId": "VaishakAnand"
         },
-        "content": "   "
+        "content": "    * 3a1. Reeve displays an error message."
       },
       {
         "lineNumber": 387,
         "author": {
           "gitId": "-"
         },
-        "content": "*{More to be added}*"
+        "content": ""
       },
       {
         "lineNumber": 388,
         "author": {
           "gitId": "-"
         },
-        "content": ""
+        "content": "      Use case resumes at step 2."
       },
       {
         "lineNumber": 389,
         "author": {
-          "gitId": "-"
+          "gitId": "VaishakAnand"
         },
-        "content": "### Non-Functional Requirements"
+        "content": "    "
       },
       {
         "lineNumber": 390,
         "author": {
-          "gitId": "-"
+          "gitId": "StopTakingAllTheNames"
         },
-        "content": ""
+        "content": "**UC05: Listing all students** "
       },
       {
         "lineNumber": 391,
         "author": {
           "gitId": "-"
         },
-        "content": "1.  Should work on any _mainstream OS_ as long as it has Java `11` or above installed."
+        "content": ""
       },
       {
         "lineNumber": 392,
         "author": {
-          "gitId": "AlexCQY"
+          "gitId": "VaishakAnand"
         },
-        "content": "2.  The response to any use action should become visible within 5 seconds."
+        "content": "**MSS**"
       },
       {
         "lineNumber": 393,
         "author": {
-          "gitId": "AlexCQY"
+          "gitId": "VaishakAnand"
         },
-        "content": "3.  The program should be able to handle at least 100 students."
+        "content": ""
       },
       {
         "lineNumber": 394,
         "author": {
-          "gitId": "AlexCQY"
+          "gitId": "VaishakAnand"
         },
-        "content": "4.  The graphical user interface should be easy to use for non-IT savvy users."
+        "content": "1. User enters command to display students list."
       },
       {
         "lineNumber": 395,
         "author": {
-          "gitId": "-"
+          "gitId": "VaishakAnand"
         },
-        "content": ""
+        "content": "2. Reeve displays the students list with student details."
       },
       {
         "lineNumber": 396,
         "author": {
-          "gitId": "-"
-        },
-        "content": "*{More to be added}*"
-      },
-      {
-        "lineNumber": 397,
-        "author": {
-          "gitId": "-"
+          "gitId": "VaishakAnand"
         },
         "content": ""
       },
       {
+        "lineNumber": 397,
+        "author": {
+          "gitId": "VaishakAnand"
+        },
+        "content": "   Use case ends."
+      },
+      {
         "lineNumber": 398,
         "author": {
-          "gitId": "-"
+          "gitId": "VaishakAnand"
         },
-        "content": "### Glossary"
+        "content": " "
       },
       {
         "lineNumber": 399,
         "author": {
-          "gitId": "-"
+          "gitId": "VaishakAnand"
         },
         "content": ""
       },
       {
         "lineNumber": 400,
         "author": {
-          "gitId": "-"
+          "gitId": "StopTakingAllTheNames"
         },
-        "content": "* **Mainstream OS**: Windows, Linux, Unix, OS-X"
+        "content": "**UC06: Clearing all student records**"
       },
       {
         "lineNumber": 401,
         "author": {
-          "gitId": "-"
+          "gitId": "VaishakAnand"
         },
-        "content": "* **Private contact detail**: A contact detail that is not meant to be shared with others"
+        "content": ""
       },
       {
         "lineNumber": 402,
         "author": {
-          "gitId": "-"
+          "gitId": "VaishakAnand"
         },
-        "content": ""
+        "content": "**MSS**"
       },
       {
         "lineNumber": 403,
         "author": {
-          "gitId": "-"
+          "gitId": "VaishakAnand"
         },
-        "content": "--------------------------------------------------------------------------------------------------------------------"
+        "content": ""
       },
       {
         "lineNumber": 404,
         "author": {
-          "gitId": "-"
+          "gitId": "VaishakAnand"
         },
-        "content": ""
+        "content": "1. User enters a command to clear the students list."
       },
       {
         "lineNumber": 405,
         "author": {
-          "gitId": "-"
+          "gitId": "VaishakAnand"
         },
-        "content": "## **Appendix: Instructions for manual testing**"
+        "content": "2. Reeve displays a success message."
       },
       {
         "lineNumber": 406,
         "author": {
-          "gitId": "-"
+          "gitId": "VaishakAnand"
         },
-        "content": ""
+        "content": "   "
       },
       {
         "lineNumber": 407,
         "author": {
-          "gitId": "-"
+          "gitId": "VaishakAnand"
         },
-        "content": "Given below are instructions to test the app manually."
+        "content": "   Use case ends."
       },
       {
         "lineNumber": 408,
@@ -3871,149 +3871,149 @@
       {
         "lineNumber": 409,
         "author": {
-          "gitId": "-"
+          "gitId": "StopTakingAllTheNames"
         },
-        "content": "\u003cdiv markdown\u003d\"span\" class\u003d\"alert alert-info\"\u003e:information_source: **Note:** These instructions only provide a starting point for testers to work on;"
+        "content": ""
       },
       {
         "lineNumber": 410,
         "author": {
-          "gitId": "-"
+          "gitId": "StopTakingAllTheNames"
         },
-        "content": "testers are expected to do more *exploratory* testing."
+        "content": "**UC08: Finding all students with overdue tuition fees**"
       },
       {
         "lineNumber": 411,
         "author": {
-          "gitId": "-"
+          "gitId": "StopTakingAllTheNames"
         },
         "content": ""
       },
       {
         "lineNumber": 412,
         "author": {
-          "gitId": "-"
+          "gitId": "StopTakingAllTheNames"
         },
-        "content": "\u003c/div\u003e"
+        "content": "**MSS**"
       },
       {
         "lineNumber": 413,
         "author": {
-          "gitId": "-"
+          "gitId": "StopTakingAllTheNames"
         },
         "content": ""
       },
       {
         "lineNumber": 414,
         "author": {
-          "gitId": "-"
+          "gitId": "StopTakingAllTheNames"
         },
-        "content": "### Launch and shutdown"
+        "content": "1. User enter command to filter all students by those who have not paid their fees in the past month."
       },
       {
         "lineNumber": 415,
         "author": {
-          "gitId": "-"
+          "gitId": "StopTakingAllTheNames"
         },
-        "content": ""
+        "content": "2. Reeve displays all students that match the above criteria."
       },
       {
         "lineNumber": 416,
         "author": {
-          "gitId": "-"
+          "gitId": "StopTakingAllTheNames"
         },
-        "content": "1. Initial launch"
+        "content": ""
       },
       {
         "lineNumber": 417,
         "author": {
-          "gitId": "-"
+          "gitId": "StopTakingAllTheNames"
         },
-        "content": ""
+        "content": "   Use case ends."
       },
       {
         "lineNumber": 418,
         "author": {
-          "gitId": "-"
+          "gitId": "StopTakingAllTheNames"
         },
-        "content": "   1. Download the jar file and copy into an empty folder"
+        "content": "   "
       },
       {
         "lineNumber": 419,
         "author": {
-          "gitId": "-"
+          "gitId": "StopTakingAllTheNames"
         },
-        "content": ""
+        "content": "**Extensions**"
       },
       {
         "lineNumber": 420,
         "author": {
-          "gitId": "-"
+          "gitId": "StopTakingAllTheNames"
         },
-        "content": "   1. Double-click the jar file Expected: Shows the GUI with a set of sample contacts. The window size may not be optimum."
+        "content": ""
       },
       {
         "lineNumber": 421,
         "author": {
-          "gitId": "-"
+          "gitId": "StopTakingAllTheNames"
         },
-        "content": ""
+        "content": "* 1a. The list is empty."
       },
       {
         "lineNumber": 422,
         "author": {
-          "gitId": "-"
+          "gitId": "StopTakingAllTheNames"
         },
-        "content": "1. Saving window preferences"
+        "content": ""
       },
       {
         "lineNumber": 423,
         "author": {
-          "gitId": "-"
+          "gitId": "StopTakingAllTheNames"
         },
-        "content": ""
+        "content": "  Use case ends."
       },
       {
         "lineNumber": 424,
         "author": {
-          "gitId": "-"
-        },
-        "content": "   1. Resize the window to an optimum size. Move the window to a different location. Close the window."
-      },
-      {
-        "lineNumber": 425,
-        "author": {
-          "gitId": "-"
+          "gitId": "StopTakingAllTheNames"
         },
         "content": ""
       },
       {
+        "lineNumber": 425,
+        "author": {
+          "gitId": "StopTakingAllTheNames"
+        },
+        "content": "* 1b. All students have paid their fees in the past month."
+      },
+      {
         "lineNumber": 426,
         "author": {
-          "gitId": "-"
+          "gitId": "StopTakingAllTheNames"
         },
-        "content": "   1. Re-launch the app by double-clicking the jar file.\u003cbr\u003e"
+        "content": ""
       },
       {
         "lineNumber": 427,
         "author": {
-          "gitId": "-"
+          "gitId": "StopTakingAllTheNames"
         },
-        "content": "       Expected: The most recent window size and location is retained."
+        "content": "  * 1b1. Reeve displays an empty list."
       },
       {
         "lineNumber": 428,
         "author": {
-          "gitId": "-"
+          "gitId": "StopTakingAllTheNames"
         },
         "content": ""
       },
       {
         "lineNumber": 429,
         "author": {
-          "gitId": "-"
+          "gitId": "StopTakingAllTheNames"
         },
-        "content": "1. _{ more test cases …​ }_"
+        "content": "    Use case ends."
       },
       {
         "lineNumber": 430,
@@ -4025,9 +4025,9 @@
       {
         "lineNumber": 431,
         "author": {
-          "gitId": "hogantan"
+          "gitId": "-"
         },
-        "content": "### Deleting a student"
+        "content": "### Non-Functional Requirements"
       },
       {
         "lineNumber": 432,
@@ -4039,44 +4039,44 @@
       {
         "lineNumber": 433,
         "author": {
-          "gitId": "hogantan"
+          "gitId": "-"
         },
-        "content": "1. Deleting a student while all students are being shown"
+        "content": "1.  Should work on any _mainstream OS_ as long as it has Java `11` or above installed."
       },
       {
         "lineNumber": 434,
         "author": {
-          "gitId": "-"
+          "gitId": "AlexCQY"
         },
-        "content": ""
+        "content": "2.  The response to any use action should become visible within 5 seconds."
       },
       {
         "lineNumber": 435,
         "author": {
-          "gitId": "hogantan"
+          "gitId": "AlexCQY"
         },
-        "content": "   1. Prerequisites: List all students using the `list` command. Multiple students in the list."
+        "content": "3.  The program should be able to handle at least 100 students."
       },
       {
         "lineNumber": 436,
         "author": {
-          "gitId": "-"
+          "gitId": "AlexCQY"
         },
-        "content": ""
+        "content": "4.  The graphical user interface should be easy to use for non-IT savvy users."
       },
       {
         "lineNumber": 437,
         "author": {
           "gitId": "-"
         },
-        "content": "   1. Test case: `delete 1`\u003cbr\u003e"
+        "content": ""
       },
       {
         "lineNumber": 438,
         "author": {
           "gitId": "-"
         },
-        "content": "      Expected: First contact is deleted from the list. Details of the deleted contact shown in the status message. Timestamp in the status bar is updated."
+        "content": "*{More to be added}*"
       },
       {
         "lineNumber": 439,
@@ -4090,91 +4090,91 @@
         "author": {
           "gitId": "-"
         },
-        "content": "   1. Test case: `delete 0`\u003cbr\u003e"
+        "content": "### Glossary"
       },
       {
         "lineNumber": 441,
         "author": {
-          "gitId": "hogantan"
+          "gitId": "-"
         },
-        "content": "      Expected: No student is deleted. Error details shown in the status message. Status bar remains the same."
+        "content": ""
       },
       {
         "lineNumber": 442,
         "author": {
           "gitId": "-"
         },
-        "content": ""
+        "content": "* **Mainstream OS**: Windows, Linux, Unix, OS-X"
       },
       {
         "lineNumber": 443,
         "author": {
           "gitId": "-"
         },
-        "content": "   1. Other incorrect delete commands to try: `delete`, `delete x`, `...` (where x is larger than the list size)\u003cbr\u003e"
+        "content": "* **Private contact detail**: A contact detail that is not meant to be shared with others"
       },
       {
         "lineNumber": 444,
         "author": {
           "gitId": "-"
         },
-        "content": "      Expected: Similar to previous."
+        "content": ""
       },
       {
         "lineNumber": 445,
         "author": {
           "gitId": "-"
         },
-        "content": ""
+        "content": "--------------------------------------------------------------------------------------------------------------------"
       },
       {
         "lineNumber": 446,
         "author": {
           "gitId": "-"
         },
-        "content": "1. _{ more test cases …​ }_"
+        "content": ""
       },
       {
         "lineNumber": 447,
         "author": {
           "gitId": "-"
         },
-        "content": ""
+        "content": "## **Appendix: Instructions for manual testing**"
       },
       {
         "lineNumber": 448,
         "author": {
           "gitId": "-"
         },
-        "content": "### Saving data"
+        "content": ""
       },
       {
         "lineNumber": 449,
         "author": {
           "gitId": "-"
         },
-        "content": ""
+        "content": "Given below are instructions to test the app manually."
       },
       {
         "lineNumber": 450,
         "author": {
           "gitId": "-"
         },
-        "content": "1. Dealing with missing/corrupted data files"
+        "content": ""
       },
       {
         "lineNumber": 451,
         "author": {
           "gitId": "-"
         },
-        "content": ""
+        "content": "\u003cdiv markdown\u003d\"span\" class\u003d\"alert alert-info\"\u003e:information_source: **Note:** These instructions only provide a starting point for testers to work on;"
       },
       {
         "lineNumber": 452,
         "author": {
           "gitId": "-"
         },
-        "content": "   1. _{explain how to simulate a missing/corrupted file, and the expected behavior}_"
+        "content": "testers are expected to do more *exploratory* testing."
       },
       {
         "lineNumber": 453,
@@ -4188,14 +4188,308 @@
         "author": {
           "gitId": "-"
         },
+        "content": "\u003c/div\u003e"
+      },
+      {
+        "lineNumber": 455,
+        "author": {
+          "gitId": "-"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 456,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "### Launch and shutdown"
+      },
+      {
+        "lineNumber": 457,
+        "author": {
+          "gitId": "-"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 458,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "1. Initial launch"
+      },
+      {
+        "lineNumber": 459,
+        "author": {
+          "gitId": "-"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 460,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "   1. Download the jar file and copy into an empty folder"
+      },
+      {
+        "lineNumber": 461,
+        "author": {
+          "gitId": "-"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 462,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "   1. Double-click the jar file Expected: Shows the GUI with a set of sample contacts. The window size may not be optimum."
+      },
+      {
+        "lineNumber": 463,
+        "author": {
+          "gitId": "-"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 464,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "1. Saving window preferences"
+      },
+      {
+        "lineNumber": 465,
+        "author": {
+          "gitId": "-"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 466,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "   1. Resize the window to an optimum size. Move the window to a different location. Close the window."
+      },
+      {
+        "lineNumber": 467,
+        "author": {
+          "gitId": "-"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 468,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "   1. Re-launch the app by double-clicking the jar file.\u003cbr\u003e"
+      },
+      {
+        "lineNumber": 469,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "       Expected: The most recent window size and location is retained."
+      },
+      {
+        "lineNumber": 470,
+        "author": {
+          "gitId": "-"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 471,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "1. _{ more test cases …​ }_"
+      },
+      {
+        "lineNumber": 472,
+        "author": {
+          "gitId": "-"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 473,
+        "author": {
+          "gitId": "hogantan"
+        },
+        "content": "### Deleting a student"
+      },
+      {
+        "lineNumber": 474,
+        "author": {
+          "gitId": "-"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 475,
+        "author": {
+          "gitId": "hogantan"
+        },
+        "content": "1. Deleting a student while all students are being shown"
+      },
+      {
+        "lineNumber": 476,
+        "author": {
+          "gitId": "-"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 477,
+        "author": {
+          "gitId": "hogantan"
+        },
+        "content": "   1. Prerequisites: List all students using the `list` command. Multiple students in the list."
+      },
+      {
+        "lineNumber": 478,
+        "author": {
+          "gitId": "-"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 479,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "   1. Test case: `delete 1`\u003cbr\u003e"
+      },
+      {
+        "lineNumber": 480,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "      Expected: First contact is deleted from the list. Details of the deleted contact shown in the status message. Timestamp in the status bar is updated."
+      },
+      {
+        "lineNumber": 481,
+        "author": {
+          "gitId": "-"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 482,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "   1. Test case: `delete 0`\u003cbr\u003e"
+      },
+      {
+        "lineNumber": 483,
+        "author": {
+          "gitId": "hogantan"
+        },
+        "content": "      Expected: No student is deleted. Error details shown in the status message. Status bar remains the same."
+      },
+      {
+        "lineNumber": 484,
+        "author": {
+          "gitId": "-"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 485,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "   1. Other incorrect delete commands to try: `delete`, `delete x`, `...` (where x is larger than the list size)\u003cbr\u003e"
+      },
+      {
+        "lineNumber": 486,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "      Expected: Similar to previous."
+      },
+      {
+        "lineNumber": 487,
+        "author": {
+          "gitId": "-"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 488,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "1. _{ more test cases …​ }_"
+      },
+      {
+        "lineNumber": 489,
+        "author": {
+          "gitId": "-"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 490,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "### Saving data"
+      },
+      {
+        "lineNumber": 491,
+        "author": {
+          "gitId": "-"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 492,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "1. Dealing with missing/corrupted data files"
+      },
+      {
+        "lineNumber": 493,
+        "author": {
+          "gitId": "-"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 494,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "   1. _{explain how to simulate a missing/corrupted file, and the expected behavior}_"
+      },
+      {
+        "lineNumber": 495,
+        "author": {
+          "gitId": "-"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 496,
+        "author": {
+          "gitId": "-"
+        },
         "content": "1. _{ more test cases …​ }_"
       }
     ],
     "authorContributionMap": {
       "AlexCQY": 17,
       "VaishakAnand": 48,
-      "StopTakingAllTheNames": 27,
-      "-": 339,
+      "StopTakingAllTheNames": 70,
+      "-": 338,
       "csiongn": 8,
       "hogantan": 15
     }
@@ -80219,7 +80513,7 @@
     }
   },
   {
-    "path": "src/test/java/seedu/address/model/student/admin/OverDueFeePredicateTest.java",
+    "path": "src/test/java/seedu/address/model/student/admin/OverdueFeePredicateTest.java",
     "fileType": "test-code",
     "lines": [
       {
@@ -80318,7 +80612,7 @@
         "author": {
           "gitId": "StopTakingAllTheNames"
         },
-        "content": "public class OverDueFeePredicateTest {"
+        "content": "public class OverdueFeePredicateTest {"
       },
       {
         "lineNumber": 15,
