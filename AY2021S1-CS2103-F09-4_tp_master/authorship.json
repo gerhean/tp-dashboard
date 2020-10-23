@@ -2752,254 +2752,254 @@
       {
         "lineNumber": 241,
         "author": {
-          "gitId": "-"
+          "gitId": "cx0810"
         },
-        "content": "### \\[Proposed\\] Undo/redo feature"
+        "content": "### List Feature"
       },
       {
         "lineNumber": 242,
         "author": {
-          "gitId": "-"
+          "gitId": "cx0810"
         },
         "content": ""
       },
       {
         "lineNumber": 243,
         "author": {
-          "gitId": "-"
+          "gitId": "cx0810"
         },
-        "content": "#### Proposed Implementation"
+        "content": "The list mechanism is split into two functionalities - `List Order` and `List Client`."
       },
       {
         "lineNumber": 244,
         "author": {
-          "gitId": "-"
+          "gitId": "cx0810"
         },
         "content": ""
       },
       {
         "lineNumber": 245,
         "author": {
-          "gitId": "-"
+          "gitId": "cx0810"
         },
-        "content": "The proposed undo/redo mechanism is facilitated by `VersionedAddressBook`. It extends `AddressBook` with an undo/redo history, stored internally as an `addressBookStateList` and `currentStatePointer`. Additionally, it implements the following operations:"
+        "content": "These two commands allows the user to list the `Clients` and `Orders` present in the system respectively."
       },
       {
         "lineNumber": 246,
         "author": {
-          "gitId": "-"
+          "gitId": "cx0810"
         },
         "content": ""
       },
       {
         "lineNumber": 247,
         "author": {
-          "gitId": "-"
+          "gitId": "cx0810"
         },
-        "content": "* `VersionedAddressBook#commit()` — Saves the current address book state in its history."
+        "content": "The list mechanism is facilitated by `ListCommand`, `ListOrderCommand`, `Model`, `ModelManager` and `AddressBook`."
       },
       {
         "lineNumber": 248,
         "author": {
-          "gitId": "-"
+          "gitId": "cx0810"
         },
-        "content": "* `VersionedAddressBook#undo()` — Restores the previous address book state from its history."
+        "content": ""
       },
       {
         "lineNumber": 249,
         "author": {
-          "gitId": "-"
+          "gitId": "cx0810"
         },
-        "content": "* `VersionedAddressBook#redo()` — Restores a previously undone address book state from its history."
+        "content": "`ListCommand` and `ListOrderCommand` extends `Command`. `AddressBook` implements `ReadOnlyAddressBook` and `ModelManager` implements `Model`."
       },
       {
         "lineNumber": 250,
         "author": {
-          "gitId": "-"
+          "gitId": "cx0810"
         },
         "content": ""
       },
       {
         "lineNumber": 251,
         "author": {
-          "gitId": "-"
+          "gitId": "cx0810"
         },
-        "content": "These operations are exposed in the `Model` interface as `Model#commitAddressBook()`, `Model#undoAddressBook()` and `Model#redoAddressBook()` respectively."
+        "content": "These operations are exposed in the `Model` interface as `getFilteredOrderList()` and `getFilteredPersonList()`. They are also exposed in the `AddressBook` as `getOrderList` and `getPersonList`."
       },
       {
         "lineNumber": 252,
         "author": {
-          "gitId": "-"
+          "gitId": "cx0810"
         },
         "content": ""
       },
       {
         "lineNumber": 253,
         "author": {
-          "gitId": "-"
+          "gitId": "cx0810"
         },
-        "content": "Given below is an example usage scenario and how the undo/redo mechanism behaves at each step."
+        "content": "\\[Proposed enhancements\\]:"
       },
       {
         "lineNumber": 254,
         "author": {
-          "gitId": "-"
+          "gitId": "cx0810"
         },
-        "content": ""
+        "content": "* Use `list` to display the orders of each client in the same panel. "
       },
       {
         "lineNumber": 255,
         "author": {
-          "gitId": "-"
+          "gitId": "cx0810"
         },
-        "content": "Step 1. The user launches the application for the first time. The `VersionedAddressBook` will be initialized with the initial address book state, and the `currentStatePointer` pointing to that single address book state."
+        "content": ""
       },
       {
         "lineNumber": 256,
         "author": {
-          "gitId": "-"
+          "gitId": "cx0810"
         },
-        "content": ""
+        "content": "Given below is an example usage scenario of how the list mechanism behaves at each step."
       },
       {
         "lineNumber": 257,
         "author": {
-          "gitId": "-"
-        },
-        "content": "![UndoRedoState0](images/UndoRedoState0.png)"
-      },
-      {
-        "lineNumber": 258,
-        "author": {
-          "gitId": "-"
+          "gitId": "cx0810"
         },
         "content": ""
       },
       {
+        "lineNumber": 258,
+        "author": {
+          "gitId": "cx0810"
+        },
+        "content": "_{Diagrams will be added at a later date}_"
+      },
+      {
         "lineNumber": 259,
         "author": {
-          "gitId": "-"
+          "gitId": "cx0810"
         },
-        "content": "Step 2. The user executes `delete 5` command to delete the 5th person in the address book. The `delete` command calls `Model#commitAddressBook()`, causing the modified state of the address book after the `delete 5` command executes to be saved in the `addressBookStateList`, and the `currentStatePointer` is shifted to the newly inserted address book state."
+        "content": ""
       },
       {
         "lineNumber": 260,
         "author": {
           "gitId": "-"
         },
-        "content": ""
+        "content": "### \\[Proposed\\] Undo/redo feature"
       },
       {
         "lineNumber": 261,
         "author": {
           "gitId": "-"
         },
-        "content": "![UndoRedoState1](images/UndoRedoState1.png)"
+        "content": ""
       },
       {
         "lineNumber": 262,
         "author": {
           "gitId": "-"
         },
-        "content": ""
+        "content": "#### Proposed Implementation"
       },
       {
         "lineNumber": 263,
         "author": {
           "gitId": "-"
         },
-        "content": "Step 3. The user executes `add n/David …​` to add a new person. The `add` command also calls `Model#commitAddressBook()`, causing another modified address book state to be saved into the `addressBookStateList`."
+        "content": ""
       },
       {
         "lineNumber": 264,
         "author": {
           "gitId": "-"
         },
-        "content": ""
+        "content": "The proposed undo/redo mechanism is facilitated by `VersionedAddressBook`. It extends `AddressBook` with an undo/redo history, stored internally as an `addressBookStateList` and `currentStatePointer`. Additionally, it implements the following operations:"
       },
       {
         "lineNumber": 265,
         "author": {
           "gitId": "-"
         },
-        "content": "![UndoRedoState2](images/UndoRedoState2.png)"
+        "content": ""
       },
       {
         "lineNumber": 266,
         "author": {
           "gitId": "-"
         },
-        "content": ""
+        "content": "* `VersionedAddressBook#commit()` — Saves the current address book state in its history."
       },
       {
         "lineNumber": 267,
         "author": {
           "gitId": "-"
         },
-        "content": "\u003cdiv markdown\u003d\"span\" class\u003d\"alert alert-info\"\u003e:information_source: **Note:** If a command fails its execution, it will not call `Model#commitAddressBook()`, so the address book state will not be saved into the `addressBookStateList`."
+        "content": "* `VersionedAddressBook#undo()` — Restores the previous address book state from its history."
       },
       {
         "lineNumber": 268,
         "author": {
           "gitId": "-"
         },
-        "content": ""
+        "content": "* `VersionedAddressBook#redo()` — Restores a previously undone address book state from its history."
       },
       {
         "lineNumber": 269,
         "author": {
           "gitId": "-"
         },
-        "content": "\u003c/div\u003e"
+        "content": ""
       },
       {
         "lineNumber": 270,
         "author": {
           "gitId": "-"
         },
-        "content": ""
+        "content": "These operations are exposed in the `Model` interface as `Model#commitAddressBook()`, `Model#undoAddressBook()` and `Model#redoAddressBook()` respectively."
       },
       {
         "lineNumber": 271,
         "author": {
           "gitId": "-"
         },
-        "content": "Step 4. The user now decides that adding the person was a mistake, and decides to undo that action by executing the `undo` command. The `undo` command will call `Model#undoAddressBook()`, which will shift the `currentStatePointer` once to the left, pointing it to the previous address book state, and restores the address book to that state."
+        "content": ""
       },
       {
         "lineNumber": 272,
         "author": {
           "gitId": "-"
         },
-        "content": ""
+        "content": "Given below is an example usage scenario and how the undo/redo mechanism behaves at each step."
       },
       {
         "lineNumber": 273,
         "author": {
           "gitId": "-"
         },
-        "content": "![UndoRedoState3](images/UndoRedoState3.png)"
+        "content": ""
       },
       {
         "lineNumber": 274,
         "author": {
           "gitId": "-"
         },
-        "content": ""
+        "content": "Step 1. The user launches the application for the first time. The `VersionedAddressBook` will be initialized with the initial address book state, and the `currentStatePointer` pointing to that single address book state."
       },
       {
         "lineNumber": 275,
         "author": {
           "gitId": "-"
         },
-        "content": "\u003cdiv markdown\u003d\"span\" class\u003d\"alert alert-info\"\u003e:information_source: **Note:** If the `currentStatePointer` is at index 0, pointing to the initial AddressBook state, then there are no previous AddressBook states to restore. The `undo` command uses `Model#canUndoAddressBook()` to check if this is the case. If so, it will return an error to the user rather"
+        "content": ""
       },
       {
         "lineNumber": 276,
         "author": {
           "gitId": "-"
         },
-        "content": "than attempting to perform the undo."
+        "content": "![UndoRedoState0](images/UndoRedoState0.png)"
       },
       {
         "lineNumber": 277,
@@ -3013,7 +3013,7 @@
         "author": {
           "gitId": "-"
         },
-        "content": "\u003c/div\u003e"
+        "content": "Step 2. The user executes `delete 5` command to delete the 5th person in the address book. The `delete` command calls `Model#commitAddressBook()`, causing the modified state of the address book after the `delete 5` command executes to be saved in the `addressBookStateList`, and the `currentStatePointer` is shifted to the newly inserted address book state."
       },
       {
         "lineNumber": 279,
@@ -3027,7 +3027,7 @@
         "author": {
           "gitId": "-"
         },
-        "content": "The following sequence diagram shows how the undo operation works:"
+        "content": "![UndoRedoState1](images/UndoRedoState1.png)"
       },
       {
         "lineNumber": 281,
@@ -3041,7 +3041,7 @@
         "author": {
           "gitId": "-"
         },
-        "content": "![UndoSequenceDiagram](images/UndoSequenceDiagram.png)"
+        "content": "Step 3. The user executes `add n/David …​` to add a new person. The `add` command also calls `Model#commitAddressBook()`, causing another modified address book state to be saved into the `addressBookStateList`."
       },
       {
         "lineNumber": 283,
@@ -3055,7 +3055,7 @@
         "author": {
           "gitId": "-"
         },
-        "content": "\u003cdiv markdown\u003d\"span\" class\u003d\"alert alert-info\"\u003e:information_source: **Note:** The lifeline for `UndoCommand` should end at the destroy marker (X) but due to a limitation of PlantUML, the lifeline reaches the end of diagram."
+        "content": "![UndoRedoState2](images/UndoRedoState2.png)"
       },
       {
         "lineNumber": 285,
@@ -3069,7 +3069,7 @@
         "author": {
           "gitId": "-"
         },
-        "content": "\u003c/div\u003e"
+        "content": "\u003cdiv markdown\u003d\"span\" class\u003d\"alert alert-info\"\u003e:information_source: **Note:** If a command fails its execution, it will not call `Model#commitAddressBook()`, so the address book state will not be saved into the `addressBookStateList`."
       },
       {
         "lineNumber": 287,
@@ -3083,7 +3083,7 @@
         "author": {
           "gitId": "-"
         },
-        "content": "The `redo` command does the opposite — it calls `Model#redoAddressBook()`, which shifts the `currentStatePointer` once to the right, pointing to the previously undone state, and restores the address book to that state."
+        "content": "\u003c/div\u003e"
       },
       {
         "lineNumber": 289,
@@ -3097,7 +3097,7 @@
         "author": {
           "gitId": "-"
         },
-        "content": "\u003cdiv markdown\u003d\"span\" class\u003d\"alert alert-info\"\u003e:information_source: **Note:** If the `currentStatePointer` is at index `addressBookStateList.size() - 1`, pointing to the latest address book state, then there are no undone AddressBook states to restore. The `redo` command uses `Model#canRedoAddressBook()` to check if this is the case. If so, it will return an error to the user rather than attempting to perform the redo."
+        "content": "Step 4. The user now decides that adding the person was a mistake, and decides to undo that action by executing the `undo` command. The `undo` command will call `Model#undoAddressBook()`, which will shift the `currentStatePointer` once to the left, pointing it to the previous address book state, and restores the address book to that state."
       },
       {
         "lineNumber": 291,
@@ -3111,7 +3111,7 @@
         "author": {
           "gitId": "-"
         },
-        "content": "\u003c/div\u003e"
+        "content": "![UndoRedoState3](images/UndoRedoState3.png)"
       },
       {
         "lineNumber": 293,
@@ -3125,168 +3125,168 @@
         "author": {
           "gitId": "-"
         },
-        "content": "Step 5. The user then decides to execute the command `list`. Commands that do not modify the address book, such as `list`, will usually not call `Model#commitAddressBook()`, `Model#undoAddressBook()` or `Model#redoAddressBook()`. Thus, the `addressBookStateList` remains unchanged."
+        "content": "\u003cdiv markdown\u003d\"span\" class\u003d\"alert alert-info\"\u003e:information_source: **Note:** If the `currentStatePointer` is at index 0, pointing to the initial AddressBook state, then there are no previous AddressBook states to restore. The `undo` command uses `Model#canUndoAddressBook()` to check if this is the case. If so, it will return an error to the user rather"
       },
       {
         "lineNumber": 295,
         "author": {
           "gitId": "-"
         },
-        "content": ""
+        "content": "than attempting to perform the undo."
       },
       {
         "lineNumber": 296,
         "author": {
           "gitId": "-"
         },
-        "content": "![UndoRedoState4](images/UndoRedoState4.png)"
+        "content": ""
       },
       {
         "lineNumber": 297,
         "author": {
           "gitId": "-"
         },
-        "content": ""
+        "content": "\u003c/div\u003e"
       },
       {
         "lineNumber": 298,
         "author": {
           "gitId": "-"
         },
-        "content": "Step 6. The user executes `clear`, which calls `Model#commitAddressBook()`. Since the `currentStatePointer` is not pointing at the end of the `addressBookStateList`, all address book states after the `currentStatePointer` will be purged. Reason: It no longer makes sense to redo the `add n/David …​` command. This is the behavior that most modern desktop applications follow."
+        "content": ""
       },
       {
         "lineNumber": 299,
         "author": {
           "gitId": "-"
         },
-        "content": ""
+        "content": "The following sequence diagram shows how the undo operation works:"
       },
       {
         "lineNumber": 300,
         "author": {
           "gitId": "-"
         },
-        "content": "![UndoRedoState5](images/UndoRedoState5.png)"
+        "content": ""
       },
       {
         "lineNumber": 301,
         "author": {
           "gitId": "-"
         },
-        "content": ""
+        "content": "![UndoSequenceDiagram](images/UndoSequenceDiagram.png)"
       },
       {
         "lineNumber": 302,
         "author": {
           "gitId": "-"
         },
-        "content": "The following activity diagram summarizes what happens when a user executes a new command:"
+        "content": ""
       },
       {
         "lineNumber": 303,
         "author": {
           "gitId": "-"
         },
-        "content": ""
+        "content": "\u003cdiv markdown\u003d\"span\" class\u003d\"alert alert-info\"\u003e:information_source: **Note:** The lifeline for `UndoCommand` should end at the destroy marker (X) but due to a limitation of PlantUML, the lifeline reaches the end of diagram."
       },
       {
         "lineNumber": 304,
         "author": {
           "gitId": "-"
         },
-        "content": "![CommitActivityDiagram](images/CommitActivityDiagram.png)"
+        "content": ""
       },
       {
         "lineNumber": 305,
         "author": {
           "gitId": "-"
         },
-        "content": ""
+        "content": "\u003c/div\u003e"
       },
       {
         "lineNumber": 306,
         "author": {
           "gitId": "-"
         },
-        "content": "#### Design consideration:"
+        "content": ""
       },
       {
         "lineNumber": 307,
         "author": {
           "gitId": "-"
         },
-        "content": ""
+        "content": "The `redo` command does the opposite — it calls `Model#redoAddressBook()`, which shifts the `currentStatePointer` once to the right, pointing to the previously undone state, and restores the address book to that state."
       },
       {
         "lineNumber": 308,
         "author": {
           "gitId": "-"
         },
-        "content": "##### Aspect: How undo \u0026 redo executes"
+        "content": ""
       },
       {
         "lineNumber": 309,
         "author": {
           "gitId": "-"
         },
-        "content": ""
+        "content": "\u003cdiv markdown\u003d\"span\" class\u003d\"alert alert-info\"\u003e:information_source: **Note:** If the `currentStatePointer` is at index `addressBookStateList.size() - 1`, pointing to the latest address book state, then there are no undone AddressBook states to restore. The `redo` command uses `Model#canRedoAddressBook()` to check if this is the case. If so, it will return an error to the user rather than attempting to perform the redo."
       },
       {
         "lineNumber": 310,
         "author": {
           "gitId": "-"
         },
-        "content": "* **Alternative 1 (current choice):** Saves the entire address book."
+        "content": ""
       },
       {
         "lineNumber": 311,
         "author": {
           "gitId": "-"
         },
-        "content": "  * Pros: Easy to implement."
+        "content": "\u003c/div\u003e"
       },
       {
         "lineNumber": 312,
         "author": {
           "gitId": "-"
         },
-        "content": "  * Cons: May have performance issues in terms of memory usage."
+        "content": ""
       },
       {
         "lineNumber": 313,
         "author": {
           "gitId": "-"
         },
-        "content": ""
+        "content": "Step 5. The user then decides to execute the command `list`. Commands that do not modify the address book, such as `list`, will usually not call `Model#commitAddressBook()`, `Model#undoAddressBook()` or `Model#redoAddressBook()`. Thus, the `addressBookStateList` remains unchanged."
       },
       {
         "lineNumber": 314,
         "author": {
           "gitId": "-"
         },
-        "content": "* **Alternative 2:** Individual command knows how to undo/redo by"
+        "content": ""
       },
       {
         "lineNumber": 315,
         "author": {
           "gitId": "-"
         },
-        "content": "  itself."
+        "content": "![UndoRedoState4](images/UndoRedoState4.png)"
       },
       {
         "lineNumber": 316,
         "author": {
           "gitId": "-"
         },
-        "content": "  * Pros: Will use less memory (e.g. for `delete`, just save the person being deleted)."
+        "content": ""
       },
       {
         "lineNumber": 317,
         "author": {
           "gitId": "-"
         },
-        "content": "  * Cons: We must ensure that the implementation of each individual command are correct."
+        "content": "Step 6. The user executes `clear`, which calls `Model#commitAddressBook()`. Since the `currentStatePointer` is not pointing at the end of the `addressBookStateList`, all address book states after the `currentStatePointer` will be purged. Reason: It no longer makes sense to redo the `add n/David …​` command. This is the behavior that most modern desktop applications follow."
       },
       {
         "lineNumber": 318,
@@ -3300,7 +3300,7 @@
         "author": {
           "gitId": "-"
         },
-        "content": "_{more aspects and alternatives to be added}_"
+        "content": "![UndoRedoState5](images/UndoRedoState5.png)"
       },
       {
         "lineNumber": 320,
@@ -3314,7 +3314,7 @@
         "author": {
           "gitId": "-"
         },
-        "content": "### \\[Proposed\\] Data archiving"
+        "content": "The following activity diagram summarizes what happens when a user executes a new command:"
       },
       {
         "lineNumber": 322,
@@ -3328,7 +3328,7 @@
         "author": {
           "gitId": "-"
         },
-        "content": "_{Explain here how the data archiving feature will be implemented}_"
+        "content": "![CommitActivityDiagram](images/CommitActivityDiagram.png)"
       },
       {
         "lineNumber": 324,
@@ -3340,86 +3340,86 @@
       {
         "lineNumber": 325,
         "author": {
-          "gitId": "xnmng"
+          "gitId": "-"
         },
-        "content": "### Update-client feature"
+        "content": "#### Design consideration:"
       },
       {
         "lineNumber": 326,
         "author": {
-          "gitId": "xnmng"
+          "gitId": "-"
         },
         "content": ""
       },
       {
         "lineNumber": 327,
         "author": {
-          "gitId": "xnmng"
+          "gitId": "-"
         },
-        "content": "The Update-client mechanism is facilitated by `UpdateClientCommand` and `UpdateClientCommandParser`. `UpdateClientCommandParser` implement `Parser`."
+        "content": "##### Aspect: How undo \u0026 redo executes"
       },
       {
         "lineNumber": 328,
         "author": {
-          "gitId": "xnmng"
+          "gitId": "-"
         },
-        "content": "`UpdateClientCommand` extend `Command`."
+        "content": ""
       },
       {
         "lineNumber": 329,
         "author": {
-          "gitId": "xnmng"
+          "gitId": "-"
         },
-        "content": ""
+        "content": "* **Alternative 1 (current choice):** Saves the entire address book."
       },
       {
         "lineNumber": 330,
         "author": {
-          "gitId": "xnmng"
+          "gitId": "-"
         },
-        "content": "This command allows the user to update an existing `Client` by their index."
+        "content": "  * Pros: Easy to implement."
       },
       {
         "lineNumber": 331,
         "author": {
-          "gitId": "xnmng"
+          "gitId": "-"
         },
-        "content": ""
+        "content": "  * Cons: May have performance issues in terms of memory usage."
       },
       {
         "lineNumber": 332,
         "author": {
-          "gitId": "xnmng"
-        },
-        "content": "The parser will split the provided terms into an array, obtain what field is to be updated (`Name`, `Address`, `Email`, `Phone`) and obtain the field that is to be updated."
-      },
-      {
-        "lineNumber": 333,
-        "author": {
-          "gitId": "xnmng"
+          "gitId": "-"
         },
         "content": ""
       },
       {
+        "lineNumber": 333,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "* **Alternative 2:** Individual command knows how to undo/redo by"
+      },
+      {
         "lineNumber": 334,
         "author": {
-          "gitId": "xnmng"
+          "gitId": "-"
         },
-        "content": "Upon calling the `Execute` method in UpdateClientCommand, the model is queried to obtain the list of clients. From this list, the client is obtained, removed and a new client with the updated field is added into the same index as the deleted client."
+        "content": "  itself."
       },
       {
         "lineNumber": 335,
         "author": {
           "gitId": "-"
         },
-        "content": ""
+        "content": "  * Pros: Will use less memory (e.g. for `delete`, just save the person being deleted)."
       },
       {
         "lineNumber": 336,
         "author": {
           "gitId": "-"
         },
-        "content": "--------------------------------------------------------------------------------------------------------------------"
+        "content": "  * Cons: We must ensure that the implementation of each individual command are correct."
       },
       {
         "lineNumber": 337,
@@ -3433,7 +3433,7 @@
         "author": {
           "gitId": "-"
         },
-        "content": "## **Documentation, logging, testing, configuration, dev-ops**"
+        "content": "_{more aspects and alternatives to be added}_"
       },
       {
         "lineNumber": 339,
@@ -3447,182 +3447,182 @@
         "author": {
           "gitId": "-"
         },
-        "content": "* [Documentation guide](Documentation.md)"
+        "content": "### \\[Proposed\\] Data archiving"
       },
       {
         "lineNumber": 341,
         "author": {
           "gitId": "-"
         },
-        "content": "* [Testing guide](Testing.md)"
+        "content": ""
       },
       {
         "lineNumber": 342,
         "author": {
           "gitId": "-"
         },
-        "content": "* [Logging guide](Logging.md)"
+        "content": "_{Explain here how the data archiving feature will be implemented}_"
       },
       {
         "lineNumber": 343,
         "author": {
           "gitId": "-"
         },
-        "content": "* [Configuration guide](Configuration.md)"
+        "content": ""
       },
       {
         "lineNumber": 344,
         "author": {
-          "gitId": "-"
+          "gitId": "xnmng"
         },
-        "content": "* [DevOps guide](DevOps.md)"
+        "content": "### Update-client feature"
       },
       {
         "lineNumber": 345,
         "author": {
-          "gitId": "-"
+          "gitId": "xnmng"
         },
         "content": ""
       },
       {
         "lineNumber": 346,
         "author": {
-          "gitId": "-"
+          "gitId": "xnmng"
         },
-        "content": "--------------------------------------------------------------------------------------------------------------------"
+        "content": "The Update-client mechanism is facilitated by `UpdateClientCommand` and `UpdateClientCommandParser`. `UpdateClientCommandParser` implement `Parser`."
       },
       {
         "lineNumber": 347,
         "author": {
-          "gitId": "-"
+          "gitId": "xnmng"
         },
-        "content": ""
+        "content": "`UpdateClientCommand` extend `Command`."
       },
       {
         "lineNumber": 348,
         "author": {
-          "gitId": "-"
+          "gitId": "xnmng"
         },
-        "content": "## **Appendix: Requirements**"
+        "content": ""
       },
       {
         "lineNumber": 349,
         "author": {
-          "gitId": "-"
+          "gitId": "xnmng"
         },
-        "content": ""
+        "content": "This command allows the user to update an existing `Client` by their index."
       },
       {
         "lineNumber": 350,
         "author": {
-          "gitId": "-"
+          "gitId": "xnmng"
         },
-        "content": "### Product scope"
+        "content": ""
       },
       {
         "lineNumber": 351,
         "author": {
-          "gitId": "-"
+          "gitId": "xnmng"
         },
-        "content": ""
+        "content": "The parser will split the provided terms into an array, obtain what field is to be updated (`Name`, `Address`, `Email`, `Phone`) and obtain the field that is to be updated."
       },
       {
         "lineNumber": 352,
         "author": {
-          "gitId": "-"
+          "gitId": "xnmng"
         },
-        "content": "**Target user profile**:"
+        "content": ""
       },
       {
         "lineNumber": 353,
         "author": {
-          "gitId": "-"
+          "gitId": "xnmng"
         },
-        "content": ""
+        "content": "Upon calling the `Execute` method in UpdateClientCommand, the model is queried to obtain the list of clients. From this list, the client is obtained, removed and a new client with the updated field is added into the same index as the deleted client."
       },
       {
         "lineNumber": 354,
         "author": {
           "gitId": "-"
         },
-        "content": "* has a need to manage a significant number of contacts"
+        "content": ""
       },
       {
         "lineNumber": 355,
         "author": {
           "gitId": "-"
         },
-        "content": "* prefer desktop apps over other types"
+        "content": "--------------------------------------------------------------------------------------------------------------------"
       },
       {
         "lineNumber": 356,
         "author": {
           "gitId": "-"
         },
-        "content": "* can type fast"
+        "content": ""
       },
       {
         "lineNumber": 357,
         "author": {
           "gitId": "-"
         },
-        "content": "* prefers typing to mouse interactions"
+        "content": "## **Documentation, logging, testing, configuration, dev-ops**"
       },
       {
         "lineNumber": 358,
         "author": {
           "gitId": "-"
         },
-        "content": "* is reasonably comfortable using CLI apps"
+        "content": ""
       },
       {
         "lineNumber": 359,
         "author": {
           "gitId": "-"
         },
-        "content": ""
+        "content": "* [Documentation guide](Documentation.md)"
       },
       {
         "lineNumber": 360,
         "author": {
-          "gitId": "cx0810"
+          "gitId": "-"
         },
-        "content": "**Value proposition**: Allows for convenient and fast generation of internal documents for archiving for the logistics clerk."
+        "content": "* [Testing guide](Testing.md)"
       },
       {
         "lineNumber": 361,
         "author": {
-          "gitId": "youyingfeng"
+          "gitId": "-"
         },
-        "content": ""
+        "content": "* [Logging guide](Logging.md)"
       },
       {
         "lineNumber": 362,
         "author": {
-          "gitId": "youyingfeng"
+          "gitId": "-"
         },
-        "content": "The application would speed up their work as they would no longer need to fill up separate forms (invoices, "
+        "content": "* [Configuration guide](Configuration.md)"
       },
       {
         "lineNumber": 363,
         "author": {
-          "gitId": "youyingfeng"
+          "gitId": "-"
         },
-        "content": "shipping manifests etc) with overlapping data as it would now be automated, thus increasing productivity. "
+        "content": "* [DevOps guide](DevOps.md)"
       },
       {
         "lineNumber": 364,
         "author": {
-          "gitId": "youyingfeng"
+          "gitId": "-"
         },
-        "content": "The product will be a base application that can be customized to fit different company standards."
+        "content": ""
       },
       {
         "lineNumber": 365,
         "author": {
           "gitId": "-"
         },
-        "content": ""
+        "content": "--------------------------------------------------------------------------------------------------------------------"
       },
       {
         "lineNumber": 366,
@@ -3636,7 +3636,7 @@
         "author": {
           "gitId": "-"
         },
-        "content": "### User stories"
+        "content": "## **Appendix: Requirements**"
       },
       {
         "lineNumber": 368,
@@ -3650,7 +3650,7 @@
         "author": {
           "gitId": "-"
         },
-        "content": "Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unlikely to have) - `*`"
+        "content": "### Product scope"
       },
       {
         "lineNumber": 370,
@@ -3664,98 +3664,98 @@
         "author": {
           "gitId": "-"
         },
-        "content": "| Priority | As a …​                | I want to …​                                             | So that I can…​                                                    |"
+        "content": "**Target user profile**:"
       },
       {
         "lineNumber": 372,
-        "author": {
-          "gitId": "cx0810"
-        },
-        "content": "| -------- | --------------------- | ------------------------------------------------------- | ----------------------------------------------------------------- |"
-      },
-      {
-        "lineNumber": 373,
-        "author": {
-          "gitId": "youyingfeng"
-        },
-        "content": "| `* * *`  | logistics clerk       | add client information                                  | store data of clients                                             |"
-      },
-      {
-        "lineNumber": 374,
-        "author": {
-          "gitId": "youyingfeng"
-        },
-        "content": "| `* * *`  | logistics clerk       | add order information                                   | store order data of clients                                       |          "
-      },
-      {
-        "lineNumber": 375,
-        "author": {
-          "gitId": "youyingfeng"
-        },
-        "content": "| `* * *`  | logistics clerk       | add warehouse inventory information                     | store inventory data of warehouse                                 |"
-      },
-      {
-        "lineNumber": 376,
-        "author": {
-          "gitId": "youyingfeng"
-        },
-        "content": "| `* * *`  | logistics clerk       | delete client information                               | remove client from the client list                                |"
-      },
-      {
-        "lineNumber": 377,
-        "author": {
-          "gitId": "youyingfeng"
-        },
-        "content": "| `* * *`  | logistics clerk       | delete order information                                | remove order from the data                                        |"
-      },
-      {
-        "lineNumber": 378,
-        "author": {
-          "gitId": "youyingfeng"
-        },
-        "content": "| `* * *`  | logistics clerk       | delete warehouse inventory information                  | remove outdated information                                       |"
-      },
-      {
-        "lineNumber": 379,
-        "author": {
-          "gitId": "youyingfeng"
-        },
-        "content": "| `* * *`  | logistics clerk       | view details of individual orders                       | easily view the information i need for every order placed         | "
-      },
-      {
-        "lineNumber": 380,
-        "author": {
-          "gitId": "cx0810"
-        },
-        "content": "| `* * *`  | logistics clerk       | view details of individual clients                      | easily view the information i need for every client in the system |"
-      },
-      {
-        "lineNumber": 381,
-        "author": {
-          "gitId": "youyingfeng"
-        },
-        "content": "| `* * *`  | logistics clerk       | attach orders to clients                                | easily track all orders involving the particular client           | "
-      },
-      {
-        "lineNumber": 382,
-        "author": {
-          "gitId": "-"
-        },
-        "content": "*{More to be added}*"
-      },
-      {
-        "lineNumber": 383,
         "author": {
           "gitId": "-"
         },
         "content": ""
       },
       {
+        "lineNumber": 373,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "* has a need to manage a significant number of contacts"
+      },
+      {
+        "lineNumber": 374,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "* prefer desktop apps over other types"
+      },
+      {
+        "lineNumber": 375,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "* can type fast"
+      },
+      {
+        "lineNumber": 376,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "* prefers typing to mouse interactions"
+      },
+      {
+        "lineNumber": 377,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "* is reasonably comfortable using CLI apps"
+      },
+      {
+        "lineNumber": 378,
+        "author": {
+          "gitId": "-"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 379,
+        "author": {
+          "gitId": "cx0810"
+        },
+        "content": "**Value proposition**: Allows for convenient and fast generation of internal documents for archiving for the logistics clerk."
+      },
+      {
+        "lineNumber": 380,
+        "author": {
+          "gitId": "youyingfeng"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 381,
+        "author": {
+          "gitId": "youyingfeng"
+        },
+        "content": "The application would speed up their work as they would no longer need to fill up separate forms (invoices, "
+      },
+      {
+        "lineNumber": 382,
+        "author": {
+          "gitId": "youyingfeng"
+        },
+        "content": "shipping manifests etc) with overlapping data as it would now be automated, thus increasing productivity. "
+      },
+      {
+        "lineNumber": 383,
+        "author": {
+          "gitId": "youyingfeng"
+        },
+        "content": "The product will be a base application that can be customized to fit different company standards."
+      },
+      {
         "lineNumber": 384,
         "author": {
           "gitId": "-"
         },
-        "content": "### Use cases"
+        "content": ""
       },
       {
         "lineNumber": 385,
@@ -3767,23 +3767,23 @@
       {
         "lineNumber": 386,
         "author": {
-          "gitId": "xnmng"
+          "gitId": "-"
         },
-        "content": "(For all use cases below, the **System** is the `LogOnce` and the **Actor** is the `user`, unless specified otherwise)"
+        "content": "### User stories"
       },
       {
         "lineNumber": 387,
         "author": {
           "gitId": "-"
         },
-        "content": "      "
+        "content": ""
       },
       {
         "lineNumber": 388,
         "author": {
-          "gitId": "xnmng"
+          "gitId": "-"
         },
-        "content": "**Use case: create client **"
+        "content": "Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unlikely to have) - `*`"
       },
       {
         "lineNumber": 389,
@@ -3797,98 +3797,98 @@
         "author": {
           "gitId": "-"
         },
-        "content": "**MSS**"
+        "content": "| Priority | As a …​                | I want to …​                                             | So that I can…​                                                    |"
       },
       {
         "lineNumber": 391,
         "author": {
-          "gitId": "-"
+          "gitId": "cx0810"
         },
-        "content": ""
+        "content": "| -------- | --------------------- | ------------------------------------------------------- | ----------------------------------------------------------------- |"
       },
       {
         "lineNumber": 392,
         "author": {
-          "gitId": "xnmng"
+          "gitId": "youyingfeng"
         },
-        "content": "1. User requests to create a client"
+        "content": "| `* * *`  | logistics clerk       | add client information                                  | store data of clients                                             |"
       },
       {
         "lineNumber": 393,
         "author": {
-          "gitId": "xnmng"
+          "gitId": "youyingfeng"
         },
-        "content": "2. LogOnce shows a success message, along with the client that was just added."
+        "content": "| `* * *`  | logistics clerk       | add order information                                   | store order data of clients                                       |          "
       },
       {
         "lineNumber": 394,
         "author": {
-          "gitId": "-"
+          "gitId": "youyingfeng"
         },
-        "content": ""
+        "content": "| `* * *`  | logistics clerk       | add warehouse inventory information                     | store inventory data of warehouse                                 |"
       },
       {
         "lineNumber": 395,
         "author": {
-          "gitId": "-"
+          "gitId": "youyingfeng"
         },
-        "content": "    Use case ends."
+        "content": "| `* * *`  | logistics clerk       | delete client information                               | remove client from the client list                                |"
       },
       {
         "lineNumber": 396,
         "author": {
-          "gitId": "-"
+          "gitId": "youyingfeng"
         },
-        "content": "    "
+        "content": "| `* * *`  | logistics clerk       | delete order information                                | remove order from the data                                        |"
       },
       {
         "lineNumber": 397,
         "author": {
-          "gitId": "-"
+          "gitId": "youyingfeng"
         },
-        "content": "**Extensions**"
+        "content": "| `* * *`  | logistics clerk       | delete warehouse inventory information                  | remove outdated information                                       |"
       },
       {
         "lineNumber": 398,
+        "author": {
+          "gitId": "youyingfeng"
+        },
+        "content": "| `* * *`  | logistics clerk       | view details of individual orders                       | easily view the information i need for every order placed         | "
+      },
+      {
+        "lineNumber": 399,
+        "author": {
+          "gitId": "cx0810"
+        },
+        "content": "| `* * *`  | logistics clerk       | view details of individual clients                      | easily view the information i need for every client in the system |"
+      },
+      {
+        "lineNumber": 400,
+        "author": {
+          "gitId": "youyingfeng"
+        },
+        "content": "| `* * *`  | logistics clerk       | attach orders to clients                                | easily track all orders involving the particular client           | "
+      },
+      {
+        "lineNumber": 401,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "*{More to be added}*"
+      },
+      {
+        "lineNumber": 402,
         "author": {
           "gitId": "-"
         },
         "content": ""
       },
       {
-        "lineNumber": 399,
-        "author": {
-          "gitId": "xnmng"
-        },
-        "content": "* 1a. The client name is missing"
-      },
-      {
-        "lineNumber": 400,
-        "author": {
-          "gitId": "xnmng"
-        },
-        "content": "    "
-      },
-      {
-        "lineNumber": 401,
-        "author": {
-          "gitId": "xnmng"
-        },
-        "content": "   * 1a1. LogOnce shows an error message."
-      },
-      {
-        "lineNumber": 402,
-        "author": {
-          "gitId": "xnmng"
-        },
-        "content": "   "
-      },
-      {
         "lineNumber": 403,
         "author": {
-          "gitId": "xnmng"
+          "gitId": "-"
         },
-        "content": "        Use case ends."
+        "content": "### Use cases"
       },
       {
         "lineNumber": 404,
@@ -3902,84 +3902,84 @@
         "author": {
           "gitId": "xnmng"
         },
-        "content": "* 1b. The client\u0027s address is missing"
+        "content": "(For all use cases below, the **System** is the `LogOnce` and the **Actor** is the `user`, unless specified otherwise)"
       },
       {
         "lineNumber": 406,
         "author": {
-          "gitId": "xnmng"
+          "gitId": "-"
         },
-        "content": ""
+        "content": "      "
       },
       {
         "lineNumber": 407,
         "author": {
           "gitId": "xnmng"
         },
-        "content": "    * 1b1. LogOnce shows an error message."
+        "content": "**Use case: create client **"
       },
       {
         "lineNumber": 408,
-        "author": {
-          "gitId": "xnmng"
-        },
-        "content": "        "
-      },
-      {
-        "lineNumber": 409,
-        "author": {
-          "gitId": "xnmng"
-        },
-        "content": "        Use case ends."
-      },
-      {
-        "lineNumber": 410,
-        "author": {
-          "gitId": "xnmng"
-        },
-        "content": "        "
-      },
-      {
-        "lineNumber": 411,
-        "author": {
-          "gitId": "xnmng"
-        },
-        "content": "**Use case: create order **"
-      },
-      {
-        "lineNumber": 412,
         "author": {
           "gitId": "-"
         },
         "content": ""
       },
       {
-        "lineNumber": 413,
+        "lineNumber": 409,
         "author": {
           "gitId": "-"
         },
         "content": "**MSS**"
       },
       {
-        "lineNumber": 414,
+        "lineNumber": 410,
         "author": {
           "gitId": "-"
         },
         "content": ""
       },
       {
-        "lineNumber": 415,
+        "lineNumber": 411,
         "author": {
           "gitId": "xnmng"
         },
-        "content": "1. User requests to create a order, which was ordered by a specific client."
+        "content": "1. User requests to create a client"
+      },
+      {
+        "lineNumber": 412,
+        "author": {
+          "gitId": "xnmng"
+        },
+        "content": "2. LogOnce shows a success message, along with the client that was just added."
+      },
+      {
+        "lineNumber": 413,
+        "author": {
+          "gitId": "-"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 414,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "    Use case ends."
+      },
+      {
+        "lineNumber": 415,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "    "
       },
       {
         "lineNumber": 416,
         "author": {
-          "gitId": "xnmng"
+          "gitId": "-"
         },
-        "content": "2. LogOnce shows a success message, along with the order that was just created and attached to the specified client."
+        "content": "**Extensions**"
       },
       {
         "lineNumber": 417,
@@ -3991,9 +3991,9 @@
       {
         "lineNumber": 418,
         "author": {
-          "gitId": "-"
+          "gitId": "xnmng"
         },
-        "content": "    Use case ends."
+        "content": "* 1a. The client name is missing"
       },
       {
         "lineNumber": 419,
@@ -4007,210 +4007,210 @@
         "author": {
           "gitId": "xnmng"
         },
-        "content": "**Extensions**"
+        "content": "   * 1a1. LogOnce shows an error message."
       },
       {
         "lineNumber": 421,
         "author": {
           "gitId": "xnmng"
         },
-        "content": ""
+        "content": "   "
       },
       {
         "lineNumber": 422,
         "author": {
           "gitId": "xnmng"
         },
-        "content": "* 1a. The client name is invalid"
+        "content": "        Use case ends."
       },
       {
         "lineNumber": 423,
         "author": {
           "gitId": "xnmng"
         },
-        "content": "    "
+        "content": ""
       },
       {
         "lineNumber": 424,
         "author": {
           "gitId": "xnmng"
         },
-        "content": "   * 1a1. LogOnce shows an error message."
+        "content": "* 1b. The client\u0027s address is missing"
       },
       {
         "lineNumber": 425,
         "author": {
           "gitId": "xnmng"
         },
-        "content": "   "
+        "content": ""
       },
       {
         "lineNumber": 426,
         "author": {
           "gitId": "xnmng"
         },
-        "content": "        Use case ends."
+        "content": "    * 1b1. LogOnce shows an error message."
       },
       {
         "lineNumber": 427,
         "author": {
           "gitId": "xnmng"
         },
-        "content": ""
+        "content": "        "
       },
       {
         "lineNumber": 428,
         "author": {
           "gitId": "xnmng"
         },
-        "content": "* 1b. The order description is missing"
+        "content": "        Use case ends."
       },
       {
         "lineNumber": 429,
         "author": {
-          "gitId": "-"
+          "gitId": "xnmng"
         },
-        "content": ""
+        "content": "        "
       },
       {
         "lineNumber": 430,
         "author": {
           "gitId": "xnmng"
         },
-        "content": "    * 1b1. LogOnce shows an error message."
+        "content": "**Use case: create order **"
       },
       {
         "lineNumber": 431,
         "author": {
           "gitId": "xnmng"
         },
-        "content": "        "
+        "content": ""
       },
       {
         "lineNumber": 432,
         "author": {
           "gitId": "xnmng"
         },
-        "content": "        Use case ends."
+        "content": "**MSS**"
       },
       {
         "lineNumber": 433,
         "author": {
           "gitId": "xnmng"
         },
-        "content": "        "
+        "content": ""
       },
       {
         "lineNumber": 434,
         "author": {
-          "gitId": "Syasyazman"
+          "gitId": "xnmng"
         },
-        "content": "**Use case: delete client **"
+        "content": "1. User requests to create a order, which was ordered by a specific client."
       },
       {
         "lineNumber": 435,
         "author": {
-          "gitId": "-"
+          "gitId": "xnmng"
         },
-        "content": ""
+        "content": "2. LogOnce shows a success message, along with the order that was just created and attached to the specified client."
       },
       {
         "lineNumber": 436,
         "author": {
-          "gitId": "-"
-        },
-        "content": "**MSS**"
-      },
-      {
-        "lineNumber": 437,
-        "author": {
-          "gitId": "-"
+          "gitId": "xnmng"
         },
         "content": ""
       },
       {
+        "lineNumber": 437,
+        "author": {
+          "gitId": "xnmng"
+        },
+        "content": "    Use case ends."
+      },
+      {
         "lineNumber": 438,
         "author": {
-          "gitId": "Syasyazman"
+          "gitId": "xnmng"
         },
-        "content": "1. User requests to delete a client from client list"
+        "content": "    "
       },
       {
         "lineNumber": 439,
         "author": {
-          "gitId": "Syasyazman"
+          "gitId": "xnmng"
         },
-        "content": "2. LogOnce shows a success message along with the client that was just removed."
+        "content": "**Extensions**"
       },
       {
         "lineNumber": 440,
         "author": {
-          "gitId": "-"
+          "gitId": "xnmng"
         },
         "content": ""
       },
       {
         "lineNumber": 441,
         "author": {
-          "gitId": "-"
+          "gitId": "xnmng"
         },
-        "content": "    Use case ends."
+        "content": "* 1a. The client name is invalid"
       },
       {
         "lineNumber": 442,
         "author": {
-          "gitId": "-"
+          "gitId": "xnmng"
         },
         "content": "    "
       },
       {
         "lineNumber": 443,
         "author": {
-          "gitId": "-"
-        },
-        "content": "**Extensions**"
-      },
-      {
-        "lineNumber": 444,
-        "author": {
-          "gitId": "-"
-        },
-        "content": ""
-      },
-      {
-        "lineNumber": 445,
-        "author": {
-          "gitId": "xnmng"
-        },
-        "content": "* 1a. The client id is invalid."
-      },
-      {
-        "lineNumber": 446,
-        "author": {
-          "gitId": "xnmng"
-        },
-        "content": "    "
-      },
-      {
-        "lineNumber": 447,
-        "author": {
           "gitId": "xnmng"
         },
         "content": "   * 1a1. LogOnce shows an error message."
       },
       {
-        "lineNumber": 448,
+        "lineNumber": 444,
         "author": {
           "gitId": "xnmng"
         },
         "content": "   "
       },
       {
-        "lineNumber": 449,
+        "lineNumber": 445,
         "author": {
           "gitId": "xnmng"
         },
         "content": "        Use case ends."
+      },
+      {
+        "lineNumber": 446,
+        "author": {
+          "gitId": "xnmng"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 447,
+        "author": {
+          "gitId": "xnmng"
+        },
+        "content": "* 1b. The order description is missing"
+      },
+      {
+        "lineNumber": 448,
+        "author": {
+          "gitId": "-"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 449,
+        "author": {
+          "gitId": "xnmng"
+        },
+        "content": "    * 1b1. LogOnce shows an error message."
       },
       {
         "lineNumber": 450,
@@ -4222,23 +4222,23 @@
       {
         "lineNumber": 451,
         "author": {
-          "gitId": "Syasyazman"
+          "gitId": "xnmng"
         },
-        "content": "**Use case: delete order **"
+        "content": "        Use case ends."
       },
       {
         "lineNumber": 452,
         "author": {
-          "gitId": "-"
+          "gitId": "xnmng"
         },
-        "content": ""
+        "content": "        "
       },
       {
         "lineNumber": 453,
         "author": {
           "gitId": "Syasyazman"
         },
-        "content": "**MSS**"
+        "content": "**Use case: delete client **"
       },
       {
         "lineNumber": 454,
@@ -4250,58 +4250,58 @@
       {
         "lineNumber": 455,
         "author": {
-          "gitId": "Syasyazman"
+          "gitId": "-"
         },
-        "content": "1. User requests to delete an order from order list"
+        "content": "**MSS**"
       },
       {
         "lineNumber": 456,
         "author": {
-          "gitId": "Syasyazman"
+          "gitId": "-"
         },
-        "content": "2. LogOnce shows a success message, along with the order that was just removed, and the client that initially placed the order."
+        "content": ""
       },
       {
         "lineNumber": 457,
         "author": {
-          "gitId": "-"
+          "gitId": "Syasyazman"
         },
-        "content": ""
+        "content": "1. User requests to delete a client from client list"
       },
       {
         "lineNumber": 458,
         "author": {
           "gitId": "Syasyazman"
         },
-        "content": "    Use case ends."
+        "content": "2. LogOnce shows a success message along with the client that was just removed."
       },
       {
         "lineNumber": 459,
-        "author": {
-          "gitId": "Syasyazman"
-        },
-        "content": "    "
-      },
-      {
-        "lineNumber": 460,
-        "author": {
-          "gitId": "Syasyazman"
-        },
-        "content": "**Extensions**"
-      },
-      {
-        "lineNumber": 461,
         "author": {
           "gitId": "-"
         },
         "content": ""
       },
       {
+        "lineNumber": 460,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "    Use case ends."
+      },
+      {
+        "lineNumber": 461,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "    "
+      },
+      {
         "lineNumber": 462,
         "author": {
-          "gitId": "Syasyazman"
+          "gitId": "-"
         },
-        "content": "* 1a. The order id is invalid."
+        "content": "**Extensions**"
       },
       {
         "lineNumber": 463,
@@ -4313,51 +4313,51 @@
       {
         "lineNumber": 464,
         "author": {
-          "gitId": "Syasyazman"
+          "gitId": "xnmng"
         },
-        "content": "    * 1a1. LogOnce shows an error message."
+        "content": "* 1a. The client id is invalid."
       },
       {
         "lineNumber": 465,
         "author": {
           "gitId": "xnmng"
         },
-        "content": "        "
+        "content": "    "
       },
       {
         "lineNumber": 466,
         "author": {
           "gitId": "xnmng"
         },
-        "content": "        Use case ends."
+        "content": "   * 1a1. LogOnce shows an error message."
       },
       {
         "lineNumber": 467,
         "author": {
-          "gitId": "-"
+          "gitId": "xnmng"
         },
-        "content": ""
+        "content": "   "
       },
       {
         "lineNumber": 468,
         "author": {
           "gitId": "xnmng"
         },
-        "content": "**Use case: list **"
+        "content": "        Use case ends."
       },
       {
         "lineNumber": 469,
         "author": {
           "gitId": "xnmng"
         },
-        "content": ""
+        "content": "        "
       },
       {
         "lineNumber": 470,
         "author": {
-          "gitId": "xnmng"
+          "gitId": "Syasyazman"
         },
-        "content": "**MSS**"
+        "content": "**Use case: delete order **"
       },
       {
         "lineNumber": 471,
@@ -4369,154 +4369,154 @@
       {
         "lineNumber": 472,
         "author": {
-          "gitId": "xnmng"
+          "gitId": "Syasyazman"
         },
-        "content": "1. User requests to list all orders in the client list"
+        "content": "**MSS**"
       },
       {
         "lineNumber": 473,
         "author": {
-          "gitId": "xnmng"
-        },
-        "content": "2. LogOnce displays a list of all orders in the order list (and the client that placed the order respectively)."
-      },
-      {
-        "lineNumber": 474,
-        "author": {
-          "gitId": "xnmng"
+          "gitId": "Syasyazman"
         },
         "content": ""
       },
       {
+        "lineNumber": 474,
+        "author": {
+          "gitId": "Syasyazman"
+        },
+        "content": "1. User requests to delete an order from order list"
+      },
+      {
         "lineNumber": 475,
         "author": {
-          "gitId": "xnmng"
+          "gitId": "Syasyazman"
         },
-        "content": "    Use case ends."
+        "content": "2. LogOnce shows a success message, along with the order that was just removed, and the client that initially placed the order."
       },
       {
         "lineNumber": 476,
         "author": {
           "gitId": "-"
         },
-        "content": "    "
+        "content": ""
       },
       {
         "lineNumber": 477,
         "author": {
-          "gitId": "xnmng"
+          "gitId": "Syasyazman"
         },
-        "content": "**Use case: done order **"
+        "content": "    Use case ends."
       },
       {
         "lineNumber": 478,
         "author": {
-          "gitId": "-"
+          "gitId": "Syasyazman"
         },
-        "content": ""
+        "content": "    "
       },
       {
         "lineNumber": 479,
         "author": {
-          "gitId": "xnmng"
+          "gitId": "-"
         },
-        "content": "**MSS**"
+        "content": "**Extensions**"
       },
       {
         "lineNumber": 480,
         "author": {
-          "gitId": "xnmng"
+          "gitId": "-"
         },
         "content": ""
       },
       {
         "lineNumber": 481,
         "author": {
-          "gitId": "xnmng"
+          "gitId": "Syasyazman"
         },
-        "content": "1. User requests to marks an order attached to a certain client as done."
+        "content": "* 1a. The order id is invalid."
       },
       {
         "lineNumber": 482,
         "author": {
-          "gitId": "xnmng"
+          "gitId": "-"
         },
-        "content": "2. LogOnce shows a success message, along with the order that was marked done, and the client that ordered the order."
+        "content": ""
       },
       {
         "lineNumber": 483,
         "author": {
-          "gitId": "-"
+          "gitId": "Syasyazman"
         },
-        "content": ""
+        "content": "    * 1a1. LogOnce shows an error message."
       },
       {
         "lineNumber": 484,
         "author": {
-          "gitId": "-"
+          "gitId": "xnmng"
         },
-        "content": "    Use case ends."
+        "content": "        "
       },
       {
         "lineNumber": 485,
-        "author": {
-          "gitId": "-"
-        },
-        "content": "    "
-      },
-      {
-        "lineNumber": 486,
-        "author": {
-          "gitId": "xnmng"
-        },
-        "content": "**Extensions**"
-      },
-      {
-        "lineNumber": 487,
-        "author": {
-          "gitId": "-"
-        },
-        "content": ""
-      },
-      {
-        "lineNumber": 488,
-        "author": {
-          "gitId": "xnmng"
-        },
-        "content": "* 1a. The client id is invalid."
-      },
-      {
-        "lineNumber": 489,
-        "author": {
-          "gitId": "-"
-        },
-        "content": "    "
-      },
-      {
-        "lineNumber": 490,
-        "author": {
-          "gitId": "xnmng"
-        },
-        "content": "   * 1a1. LogOnce shows an error message."
-      },
-      {
-        "lineNumber": 491,
-        "author": {
-          "gitId": "-"
-        },
-        "content": "   "
-      },
-      {
-        "lineNumber": 492,
         "author": {
           "gitId": "xnmng"
         },
         "content": "        Use case ends."
       },
       {
-        "lineNumber": 493,
+        "lineNumber": 486,
+        "author": {
+          "gitId": "-"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 487,
         "author": {
           "gitId": "xnmng"
+        },
+        "content": "**Use case: list **"
+      },
+      {
+        "lineNumber": 488,
+        "author": {
+          "gitId": "-"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 489,
+        "author": {
+          "gitId": "xnmng"
+        },
+        "content": "**MSS**"
+      },
+      {
+        "lineNumber": 490,
+        "author": {
+          "gitId": "-"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 491,
+        "author": {
+          "gitId": "xnmng"
+        },
+        "content": "1. User requests to list all orders in the client list"
+      },
+      {
+        "lineNumber": 492,
+        "author": {
+          "gitId": "xnmng"
+        },
+        "content": "2. LogOnce displays a list of all orders in the order list (and the client that placed the order respectively)."
+      },
+      {
+        "lineNumber": 493,
+        "author": {
+          "gitId": "-"
         },
         "content": ""
       },
@@ -4525,56 +4525,56 @@
         "author": {
           "gitId": "xnmng"
         },
-        "content": "* 1b. The order id is invalid."
+        "content": "    Use case ends."
       },
       {
         "lineNumber": 495,
         "author": {
-          "gitId": "xnmng"
+          "gitId": "-"
         },
-        "content": "    * 1b1. LogOnce shows an error message."
+        "content": "    "
       },
       {
         "lineNumber": 496,
         "author": {
           "gitId": "xnmng"
         },
-        "content": "        "
+        "content": "**Use case: done order **"
       },
       {
         "lineNumber": 497,
         "author": {
-          "gitId": "xnmng"
+          "gitId": "-"
         },
-        "content": "        Use case ends."
+        "content": ""
       },
       {
         "lineNumber": 498,
         "author": {
-          "gitId": "-"
+          "gitId": "xnmng"
         },
-        "content": ""
+        "content": "**MSS**"
       },
       {
         "lineNumber": 499,
         "author": {
-          "gitId": "-"
-        },
-        "content": "*{More to be added}*"
-      },
-      {
-        "lineNumber": 500,
-        "author": {
-          "gitId": "-"
+          "gitId": "xnmng"
         },
         "content": ""
       },
       {
+        "lineNumber": 500,
+        "author": {
+          "gitId": "xnmng"
+        },
+        "content": "1. User requests to marks an order attached to a certain client as done."
+      },
+      {
         "lineNumber": 501,
         "author": {
-          "gitId": "-"
+          "gitId": "xnmng"
         },
-        "content": "### Non-Functional Requirements"
+        "content": "2. LogOnce shows a success message, along with the order that was marked done, and the client that ordered the order."
       },
       {
         "lineNumber": 502,
@@ -4586,366 +4586,366 @@
       {
         "lineNumber": 503,
         "author": {
-          "gitId": "youyingfeng"
+          "gitId": "-"
         },
-        "content": "1. Technical Requirements"
+        "content": "    Use case ends."
       },
       {
         "lineNumber": 504,
         "author": {
-          "gitId": "youyingfeng"
+          "gitId": "-"
         },
-        "content": "    * Should work on any _mainstream OS_ as long as it has Java `11` or above installed."
+        "content": "    "
       },
       {
         "lineNumber": 505,
         "author": {
-          "gitId": "youyingfeng"
+          "gitId": "xnmng"
         },
-        "content": "    * The system software should work without requiring an installer."
+        "content": "**Extensions**"
       },
       {
         "lineNumber": 506,
         "author": {
-          "gitId": "youyingfeng"
+          "gitId": "-"
         },
-        "content": "    * The system software should not depend on any of the developers\u0027 or user\u0027s remote server."
+        "content": ""
       },
       {
         "lineNumber": 507,
         "author": {
-          "gitId": "youyingfeng"
+          "gitId": "xnmng"
         },
-        "content": "    * The file sizes of the deliverables should not exceed the limit of 100Mb (JAR file) or 15Mb (PDF file)."
+        "content": "* 1a. The client id is invalid."
       },
       {
         "lineNumber": 508,
         "author": {
-          "gitId": "youyingfeng"
+          "gitId": "-"
         },
-        "content": "2. Performance Requirements"
+        "content": "    "
       },
       {
         "lineNumber": 509,
         "author": {
-          "gitId": "youyingfeng"
+          "gitId": "xnmng"
         },
-        "content": "    * Should be able to hold up to 1000 persons without a noticeable sluggishness in performance for typical usage."
+        "content": "   * 1a1. LogOnce shows an error message."
       },
       {
         "lineNumber": 510,
         "author": {
-          "gitId": "youyingfeng"
+          "gitId": "-"
         },
-        "content": "    * Should be able to send a response to user within 2 seconds."
+        "content": "   "
       },
       {
         "lineNumber": 511,
         "author": {
-          "gitId": "youyingfeng"
+          "gitId": "xnmng"
         },
-        "content": "    * Should be able to access the data storage within 2 seconds."
+        "content": "        Use case ends."
       },
       {
         "lineNumber": 512,
         "author": {
-          "gitId": "youyingfeng"
+          "gitId": "xnmng"
         },
-        "content": "    * Tasks that require accessing data storage should be performed immediately upon accessing data storage."
+        "content": ""
       },
       {
         "lineNumber": 513,
         "author": {
-          "gitId": "youyingfeng"
+          "gitId": "xnmng"
         },
-        "content": "3. Quality Requirements"
+        "content": "* 1b. The order id is invalid."
       },
       {
         "lineNumber": 514,
         "author": {
-          "gitId": "youyingfeng"
+          "gitId": "xnmng"
         },
-        "content": "    * A user with above average typing speed for regular English text (i.e. not code, not system admin commands) should be able to accomplish most of the tasks faster using commands than using the mouse."
+        "content": "    * 1b1. LogOnce shows an error message."
       },
       {
         "lineNumber": 515,
         "author": {
-          "gitId": "youyingfeng"
+          "gitId": "xnmng"
         },
-        "content": "    * The system should be usable by a novice logistics clerk who has prior knowledge on logistical operations but no work experience"
+        "content": "        "
       },
       {
         "lineNumber": 516,
         "author": {
-          "gitId": "youyingfeng"
+          "gitId": "xnmng"
         },
-        "content": "    * The system should not contain any audible information or data."
+        "content": "        Use case ends."
       },
       {
         "lineNumber": 517,
         "author": {
-          "gitId": "youyingfeng"
+          "gitId": "-"
         },
-        "content": "    * A user with experience on handling logistical data should be able to adapt to the system easily."
+        "content": ""
       },
       {
         "lineNumber": 518,
         "author": {
-          "gitId": "youyingfeng"
+          "gitId": "-"
         },
-        "content": "    * The system should contain visual information or data."
+        "content": "*{More to be added}*"
       },
       {
         "lineNumber": 519,
         "author": {
-          "gitId": "youyingfeng"
+          "gitId": "-"
         },
-        "content": "    * The user input should be primarily Command Line Interface (CLI)."
+        "content": ""
       },
       {
         "lineNumber": 520,
         "author": {
-          "gitId": "youyingfeng"
+          "gitId": "-"
         },
-        "content": "    * The system should use Graphical User Interface (GUI) to give visual feedback to users."
+        "content": "### Non-Functional Requirements"
       },
       {
         "lineNumber": 521,
         "author": {
-          "gitId": "youyingfeng"
+          "gitId": "-"
         },
-        "content": "4. Security Requirements"
+        "content": ""
       },
       {
         "lineNumber": 522,
         "author": {
           "gitId": "youyingfeng"
         },
-        "content": "    * Any user with access to the system will be able to use it, regardless of administrator rights."
+        "content": "1. Technical Requirements"
       },
       {
         "lineNumber": 523,
         "author": {
           "gitId": "youyingfeng"
         },
-        "content": "5. Business/Domain Requirements"
+        "content": "    * Should work on any _mainstream OS_ as long as it has Java `11` or above installed."
       },
       {
         "lineNumber": 524,
         "author": {
           "gitId": "youyingfeng"
         },
-        "content": "    * The system should abide to general logistics guidelines and operations."
+        "content": "    * The system software should work without requiring an installer."
       },
       {
         "lineNumber": 525,
         "author": {
           "gitId": "youyingfeng"
         },
-        "content": "    * The system does not need to cater specifically to any company\u0027s logistics operations."
+        "content": "    * The system software should not depend on any of the developers\u0027 or user\u0027s remote server."
       },
       {
         "lineNumber": 526,
         "author": {
           "gitId": "youyingfeng"
         },
-        "content": "6. Constraints"
+        "content": "    * The file sizes of the deliverables should not exceed the limit of 100Mb (JAR file) or 15Mb (PDF file)."
       },
       {
         "lineNumber": 527,
         "author": {
           "gitId": "youyingfeng"
         },
-        "content": "    * The system provides general logistical operations and is not catered to any organisation\u0027s guidelines or needs."
+        "content": "2. Performance Requirements"
       },
       {
         "lineNumber": 528,
         "author": {
           "gitId": "youyingfeng"
         },
-        "content": "    * The system should be for a single user."
+        "content": "    * Should be able to hold up to 1000 persons without a noticeable sluggishness in performance for typical usage."
       },
       {
         "lineNumber": 529,
         "author": {
           "gitId": "youyingfeng"
         },
-        "content": "    * The data should be stored locally and should be in a human editable text file."
+        "content": "    * Should be able to send a response to user within 2 seconds."
       },
       {
         "lineNumber": 530,
         "author": {
           "gitId": "youyingfeng"
         },
-        "content": "    * The system should not use any form of Database Management System."
+        "content": "    * Should be able to access the data storage within 2 seconds."
       },
       {
         "lineNumber": 531,
         "author": {
           "gitId": "youyingfeng"
         },
-        "content": "    * The system software should primarily follow the Object-oriented paradigm."
+        "content": "    * Tasks that require accessing data storage should be performed immediately upon accessing data storage."
       },
       {
         "lineNumber": 532,
         "author": {
           "gitId": "youyingfeng"
         },
-        "content": "    * The system software should not be heavily dependent on remote or public APIs."
+        "content": "3. Quality Requirements"
       },
       {
         "lineNumber": 533,
         "author": {
           "gitId": "youyingfeng"
         },
-        "content": "7. Others"
+        "content": "    * A user with above average typing speed for regular English text (i.e. not code, not system admin commands) should be able to accomplish most of the tasks faster using commands than using the mouse."
       },
       {
         "lineNumber": 534,
         "author": {
           "gitId": "youyingfeng"
         },
-        "content": "    * The source code should be open source."
+        "content": "    * The system should be usable by a novice logistics clerk who has prior knowledge on logistical operations but no work experience"
       },
       {
         "lineNumber": 535,
         "author": {
           "gitId": "youyingfeng"
         },
-        "content": "    * The system product should be a free online service.     "
+        "content": "    * The system should not contain any audible information or data."
       },
       {
         "lineNumber": 536,
         "author": {
-          "gitId": "-"
+          "gitId": "youyingfeng"
         },
-        "content": ""
+        "content": "    * A user with experience on handling logistical data should be able to adapt to the system easily."
       },
       {
         "lineNumber": 537,
         "author": {
-          "gitId": "-"
+          "gitId": "youyingfeng"
         },
-        "content": "### Glossary"
+        "content": "    * The system should contain visual information or data."
       },
       {
         "lineNumber": 538,
         "author": {
-          "gitId": "-"
+          "gitId": "youyingfeng"
         },
-        "content": ""
+        "content": "    * The user input should be primarily Command Line Interface (CLI)."
       },
       {
         "lineNumber": 539,
         "author": {
-          "gitId": "-"
+          "gitId": "youyingfeng"
         },
-        "content": "* **Mainstream OS**: Windows, Linux, Unix, OS-X"
+        "content": "    * The system should use Graphical User Interface (GUI) to give visual feedback to users."
       },
       {
         "lineNumber": 540,
         "author": {
-          "gitId": "-"
+          "gitId": "youyingfeng"
         },
-        "content": "* **Private contact detail**: A contact detail that is not meant to be shared with others"
+        "content": "4. Security Requirements"
       },
       {
         "lineNumber": 541,
         "author": {
           "gitId": "youyingfeng"
         },
-        "content": "* **Data entry**: An information that is to be keyed into the logistics database"
+        "content": "    * Any user with access to the system will be able to use it, regardless of administrator rights."
       },
       {
         "lineNumber": 542,
         "author": {
           "gitId": "youyingfeng"
         },
-        "content": "* **Dangerous goods declaration**: Document(s) prepared by a consignor or shipper to certify that the dangerous goods "
+        "content": "5. Business/Domain Requirements"
       },
       {
         "lineNumber": 543,
         "author": {
           "gitId": "youyingfeng"
         },
-        "content": "being transported have been packaged, labeled, and declared in accordance with the standard international shipping regulations"
+        "content": "    * The system should abide to general logistics guidelines and operations."
       },
       {
         "lineNumber": 544,
         "author": {
           "gitId": "youyingfeng"
         },
-        "content": "* **Shipping manifests**: A document that contains a summary of cargo shipping details relevant to the shipping process"
+        "content": "    * The system does not need to cater specifically to any company\u0027s logistics operations."
       },
       {
         "lineNumber": 545,
         "author": {
           "gitId": "youyingfeng"
         },
-        "content": "* **Certificate of origin**: international trade document, certifying that goods in a particular export shipment are "
+        "content": "6. Constraints"
       },
       {
         "lineNumber": 546,
         "author": {
           "gitId": "youyingfeng"
         },
-        "content": "wholly obtained, produced, manufactured or processed in a particular country"
+        "content": "    * The system provides general logistical operations and is not catered to any organisation\u0027s guidelines or needs."
       },
       {
         "lineNumber": 547,
         "author": {
           "gitId": "youyingfeng"
         },
-        "content": "* **Bill of lading**: legal document issued by a carrier to a shipper that details the type, quantity and destination "
+        "content": "    * The system should be for a single user."
       },
       {
         "lineNumber": 548,
         "author": {
           "gitId": "youyingfeng"
         },
-        "content": "of the goods being carried"
+        "content": "    * The data should be stored locally and should be in a human editable text file."
       },
       {
         "lineNumber": 549,
         "author": {
           "gitId": "youyingfeng"
         },
-        "content": "* **Freight forwarder**: Intermediary between a shipper and various transportation services"
+        "content": "    * The system should not use any form of Database Management System."
       },
       {
         "lineNumber": 550,
         "author": {
           "gitId": "youyingfeng"
         },
-        "content": "* **Third party warehousing**: organization\u0027s use of third-party businesses to outsource elements of its distribution, "
+        "content": "    * The system software should primarily follow the Object-oriented paradigm."
       },
       {
         "lineNumber": 551,
         "author": {
           "gitId": "youyingfeng"
         },
-        "content": "warehousing, and fulfillment services"
+        "content": "    * The system software should not be heavily dependent on remote or public APIs."
       },
       {
         "lineNumber": 552,
         "author": {
           "gitId": "youyingfeng"
         },
-        "content": ""
+        "content": "7. Others"
       },
       {
         "lineNumber": 553,
         "author": {
-          "gitId": "-"
+          "gitId": "youyingfeng"
         },
-        "content": ""
+        "content": "    * The source code should be open source."
       },
       {
         "lineNumber": 554,
         "author": {
-          "gitId": "-"
+          "gitId": "youyingfeng"
         },
-        "content": "--------------------------------------------------------------------------------------------------------------------"
+        "content": "    * The system product should be a free online service.     "
       },
       {
         "lineNumber": 555,
@@ -4959,7 +4959,7 @@
         "author": {
           "gitId": "-"
         },
-        "content": "## **Appendix: Instructions for manual testing**"
+        "content": "### Glossary"
       },
       {
         "lineNumber": 557,
@@ -4973,98 +4973,98 @@
         "author": {
           "gitId": "-"
         },
-        "content": "Given below are instructions to test the app manually."
+        "content": "* **Mainstream OS**: Windows, Linux, Unix, OS-X"
       },
       {
         "lineNumber": 559,
         "author": {
           "gitId": "-"
         },
-        "content": ""
+        "content": "* **Private contact detail**: A contact detail that is not meant to be shared with others"
       },
       {
         "lineNumber": 560,
         "author": {
-          "gitId": "-"
+          "gitId": "youyingfeng"
         },
-        "content": "\u003cdiv markdown\u003d\"span\" class\u003d\"alert alert-info\"\u003e:information_source: **Note:** These instructions only provide a starting point for testers to work on;"
+        "content": "* **Data entry**: An information that is to be keyed into the logistics database"
       },
       {
         "lineNumber": 561,
         "author": {
-          "gitId": "-"
+          "gitId": "youyingfeng"
         },
-        "content": "testers are expected to do more *exploratory* testing."
+        "content": "* **Dangerous goods declaration**: Document(s) prepared by a consignor or shipper to certify that the dangerous goods "
       },
       {
         "lineNumber": 562,
         "author": {
-          "gitId": "-"
+          "gitId": "youyingfeng"
         },
-        "content": ""
+        "content": "being transported have been packaged, labeled, and declared in accordance with the standard international shipping regulations"
       },
       {
         "lineNumber": 563,
         "author": {
-          "gitId": "-"
+          "gitId": "youyingfeng"
         },
-        "content": "\u003c/div\u003e"
+        "content": "* **Shipping manifests**: A document that contains a summary of cargo shipping details relevant to the shipping process"
       },
       {
         "lineNumber": 564,
         "author": {
-          "gitId": "-"
+          "gitId": "youyingfeng"
         },
-        "content": ""
+        "content": "* **Certificate of origin**: international trade document, certifying that goods in a particular export shipment are "
       },
       {
         "lineNumber": 565,
         "author": {
-          "gitId": "-"
+          "gitId": "youyingfeng"
         },
-        "content": "### Launch and shutdown"
+        "content": "wholly obtained, produced, manufactured or processed in a particular country"
       },
       {
         "lineNumber": 566,
         "author": {
-          "gitId": "-"
+          "gitId": "youyingfeng"
         },
-        "content": ""
+        "content": "* **Bill of lading**: legal document issued by a carrier to a shipper that details the type, quantity and destination "
       },
       {
         "lineNumber": 567,
         "author": {
-          "gitId": "-"
+          "gitId": "youyingfeng"
         },
-        "content": "1. Initial launch"
+        "content": "of the goods being carried"
       },
       {
         "lineNumber": 568,
         "author": {
-          "gitId": "-"
+          "gitId": "youyingfeng"
         },
-        "content": ""
+        "content": "* **Freight forwarder**: Intermediary between a shipper and various transportation services"
       },
       {
         "lineNumber": 569,
         "author": {
-          "gitId": "-"
+          "gitId": "youyingfeng"
         },
-        "content": "   1. Download the jar file and copy into an empty folder"
+        "content": "* **Third party warehousing**: organization\u0027s use of third-party businesses to outsource elements of its distribution, "
       },
       {
         "lineNumber": 570,
         "author": {
-          "gitId": "-"
+          "gitId": "youyingfeng"
         },
-        "content": ""
+        "content": "warehousing, and fulfillment services"
       },
       {
         "lineNumber": 571,
         "author": {
-          "gitId": "-"
+          "gitId": "youyingfeng"
         },
-        "content": "   1. Double-click the jar file Expected: Shows the GUI with a set of sample contacts. The window size may not be optimum."
+        "content": ""
       },
       {
         "lineNumber": 572,
@@ -5078,7 +5078,7 @@
         "author": {
           "gitId": "-"
         },
-        "content": "1. Saving window preferences"
+        "content": "--------------------------------------------------------------------------------------------------------------------"
       },
       {
         "lineNumber": 574,
@@ -5092,7 +5092,7 @@
         "author": {
           "gitId": "-"
         },
-        "content": "   1. Resize the window to an optimum size. Move the window to a different location. Close the window."
+        "content": "## **Appendix: Instructions for manual testing**"
       },
       {
         "lineNumber": 576,
@@ -5106,28 +5106,28 @@
         "author": {
           "gitId": "-"
         },
-        "content": "   1. Re-launch the app by double-clicking the jar file.\u003cbr\u003e"
+        "content": "Given below are instructions to test the app manually."
       },
       {
         "lineNumber": 578,
         "author": {
           "gitId": "-"
         },
-        "content": "       Expected: The most recent window size and location is retained."
+        "content": ""
       },
       {
         "lineNumber": 579,
         "author": {
           "gitId": "-"
         },
-        "content": ""
+        "content": "\u003cdiv markdown\u003d\"span\" class\u003d\"alert alert-info\"\u003e:information_source: **Note:** These instructions only provide a starting point for testers to work on;"
       },
       {
         "lineNumber": 580,
         "author": {
           "gitId": "-"
         },
-        "content": "1. _{ more test cases …​ }_"
+        "content": "testers are expected to do more *exploratory* testing."
       },
       {
         "lineNumber": 581,
@@ -5141,7 +5141,7 @@
         "author": {
           "gitId": "-"
         },
-        "content": "### Deleting a person"
+        "content": "\u003c/div\u003e"
       },
       {
         "lineNumber": 583,
@@ -5155,7 +5155,7 @@
         "author": {
           "gitId": "-"
         },
-        "content": "1. Deleting a person while all persons are being shown"
+        "content": "### Launch and shutdown"
       },
       {
         "lineNumber": 585,
@@ -5169,7 +5169,7 @@
         "author": {
           "gitId": "-"
         },
-        "content": "   1. Prerequisites: List all persons using the `list` command. Multiple persons in the list."
+        "content": "1. Initial launch"
       },
       {
         "lineNumber": 587,
@@ -5183,35 +5183,35 @@
         "author": {
           "gitId": "-"
         },
-        "content": "   1. Test case: `delete 1`\u003cbr\u003e"
+        "content": "   1. Download the jar file and copy into an empty folder"
       },
       {
         "lineNumber": 589,
         "author": {
           "gitId": "-"
         },
-        "content": "      Expected: First contact is deleted from the list. Details of the deleted contact shown in the status message. Timestamp in the status bar is updated."
+        "content": ""
       },
       {
         "lineNumber": 590,
         "author": {
           "gitId": "-"
         },
-        "content": ""
+        "content": "   1. Double-click the jar file Expected: Shows the GUI with a set of sample contacts. The window size may not be optimum."
       },
       {
         "lineNumber": 591,
         "author": {
           "gitId": "-"
         },
-        "content": "   1. Test case: `delete 0`\u003cbr\u003e"
+        "content": ""
       },
       {
         "lineNumber": 592,
         "author": {
           "gitId": "-"
         },
-        "content": "      Expected: No person is deleted. Error details shown in the status message. Status bar remains the same."
+        "content": "1. Saving window preferences"
       },
       {
         "lineNumber": 593,
@@ -5225,28 +5225,28 @@
         "author": {
           "gitId": "-"
         },
-        "content": "   1. Other incorrect delete commands to try: `delete`, `delete x`, `...` (where x is larger than the list size)\u003cbr\u003e"
+        "content": "   1. Resize the window to an optimum size. Move the window to a different location. Close the window."
       },
       {
         "lineNumber": 595,
         "author": {
           "gitId": "-"
         },
-        "content": "      Expected: Similar to previous."
+        "content": ""
       },
       {
         "lineNumber": 596,
         "author": {
           "gitId": "-"
         },
-        "content": ""
+        "content": "   1. Re-launch the app by double-clicking the jar file.\u003cbr\u003e"
       },
       {
         "lineNumber": 597,
         "author": {
           "gitId": "-"
         },
-        "content": "1. _{ more test cases …​ }_"
+        "content": "       Expected: The most recent window size and location is retained."
       },
       {
         "lineNumber": 598,
@@ -5260,7 +5260,7 @@
         "author": {
           "gitId": "-"
         },
-        "content": "### Saving data"
+        "content": "1. _{ more test cases …​ }_"
       },
       {
         "lineNumber": 600,
@@ -5274,7 +5274,7 @@
         "author": {
           "gitId": "-"
         },
-        "content": "1. Dealing with missing/corrupted data files"
+        "content": "### Deleting a person"
       },
       {
         "lineNumber": 602,
@@ -5288,7 +5288,7 @@
         "author": {
           "gitId": "-"
         },
-        "content": "   1. _{explain how to simulate a missing/corrupted file, and the expected behavior}_"
+        "content": "1. Deleting a person while all persons are being shown"
       },
       {
         "lineNumber": 604,
@@ -5302,14 +5302,147 @@
         "author": {
           "gitId": "-"
         },
+        "content": "   1. Prerequisites: List all persons using the `list` command. Multiple persons in the list."
+      },
+      {
+        "lineNumber": 606,
+        "author": {
+          "gitId": "-"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 607,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "   1. Test case: `delete 1`\u003cbr\u003e"
+      },
+      {
+        "lineNumber": 608,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "      Expected: First contact is deleted from the list. Details of the deleted contact shown in the status message. Timestamp in the status bar is updated."
+      },
+      {
+        "lineNumber": 609,
+        "author": {
+          "gitId": "-"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 610,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "   1. Test case: `delete 0`\u003cbr\u003e"
+      },
+      {
+        "lineNumber": 611,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "      Expected: No person is deleted. Error details shown in the status message. Status bar remains the same."
+      },
+      {
+        "lineNumber": 612,
+        "author": {
+          "gitId": "-"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 613,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "   1. Other incorrect delete commands to try: `delete`, `delete x`, `...` (where x is larger than the list size)\u003cbr\u003e"
+      },
+      {
+        "lineNumber": 614,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "      Expected: Similar to previous."
+      },
+      {
+        "lineNumber": 615,
+        "author": {
+          "gitId": "-"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 616,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "1. _{ more test cases …​ }_"
+      },
+      {
+        "lineNumber": 617,
+        "author": {
+          "gitId": "-"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 618,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "### Saving data"
+      },
+      {
+        "lineNumber": 619,
+        "author": {
+          "gitId": "-"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 620,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "1. Dealing with missing/corrupted data files"
+      },
+      {
+        "lineNumber": 621,
+        "author": {
+          "gitId": "-"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 622,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "   1. _{explain how to simulate a missing/corrupted file, and the expected behavior}_"
+      },
+      {
+        "lineNumber": 623,
+        "author": {
+          "gitId": "-"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 624,
+        "author": {
+          "gitId": "-"
+        },
         "content": "1. _{ more test cases …​ }_"
       }
     ],
     "authorContributionMap": {
       "youyingfeng": 83,
-      "-": 356,
-      "cx0810": 3,
-      "xnmng": 100,
+      "-": 352,
+      "cx0810": 22,
+      "xnmng": 104,
       "Syasyazman": 63
     }
   },

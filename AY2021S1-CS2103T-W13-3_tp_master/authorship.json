@@ -48107,7 +48107,7 @@
         "author": {
           "gitId": "yanlynnnnn"
         },
-        "content": " * Lists all expenses in GrAB3 to the user."
+        "content": " * Lists all expenses in Homerce to the user."
       },
       {
         "lineNumber": 14,
@@ -48191,24 +48191,31 @@
         "author": {
           "gitId": "yanlynnnnn"
         },
-        "content": "        model.updateFilteredExpenseList(PREDICATE_SHOW_ALL_EXPENSES);"
+        "content": "        model.getExpenseTracker().sortDefaultExpenseList();"
       },
       {
         "lineNumber": 26,
+        "author": {
+          "gitId": "yanlynnnnn"
+        },
+        "content": "        model.updateFilteredExpenseList(PREDICATE_SHOW_ALL_EXPENSES);"
+      },
+      {
+        "lineNumber": 27,
         "author": {
           "gitId": "khoongwk"
         },
         "content": "        return new CommandResult(MESSAGE_SUCCESS, ExpenseListPanel.TAB_NAME);"
       },
       {
-        "lineNumber": 27,
+        "lineNumber": 28,
         "author": {
           "gitId": "yanlynnnnn"
         },
         "content": "    }"
       },
       {
-        "lineNumber": 28,
+        "lineNumber": 29,
         "author": {
           "gitId": "yanlynnnnn"
         },
@@ -48219,7 +48226,317 @@
       "RuiFengg": 5,
       "khoongwk": 2,
       "hansebastian": 2,
-      "yanlynnnnn": 19
+      "yanlynnnnn": 20
+    }
+  },
+  {
+    "path": "src/main/java/seedu/homerce/logic/commands/expense/SortExpenseCommand.java",
+    "fileType": "functional-code",
+    "lines": [
+      {
+        "lineNumber": 1,
+        "author": {
+          "gitId": "yanlynnnnn"
+        },
+        "content": "package seedu.homerce.logic.commands.expense;"
+      },
+      {
+        "lineNumber": 2,
+        "author": {
+          "gitId": "yanlynnnnn"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 3,
+        "author": {
+          "gitId": "yanlynnnnn"
+        },
+        "content": "import static java.util.Objects.requireNonNull;"
+      },
+      {
+        "lineNumber": 4,
+        "author": {
+          "gitId": "yanlynnnnn"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 5,
+        "author": {
+          "gitId": "yanlynnnnn"
+        },
+        "content": "import seedu.homerce.logic.commands.Command;"
+      },
+      {
+        "lineNumber": 6,
+        "author": {
+          "gitId": "yanlynnnnn"
+        },
+        "content": "import seedu.homerce.logic.commands.CommandResult;"
+      },
+      {
+        "lineNumber": 7,
+        "author": {
+          "gitId": "yanlynnnnn"
+        },
+        "content": "import seedu.homerce.model.Model;"
+      },
+      {
+        "lineNumber": 8,
+        "author": {
+          "gitId": "yanlynnnnn"
+        },
+        "content": "import seedu.homerce.model.manager.HistoryManager;"
+      },
+      {
+        "lineNumber": 9,
+        "author": {
+          "gitId": "yanlynnnnn"
+        },
+        "content": "import seedu.homerce.ui.expensepanel.ExpenseListPanel;"
+      },
+      {
+        "lineNumber": 10,
+        "author": {
+          "gitId": "yanlynnnnn"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 11,
+        "author": {
+          "gitId": "yanlynnnnn"
+        },
+        "content": "/**"
+      },
+      {
+        "lineNumber": 12,
+        "author": {
+          "gitId": "yanlynnnnn"
+        },
+        "content": " * Sorts all expenses in Homerce to the user."
+      },
+      {
+        "lineNumber": 13,
+        "author": {
+          "gitId": "yanlynnnnn"
+        },
+        "content": " */"
+      },
+      {
+        "lineNumber": 14,
+        "author": {
+          "gitId": "yanlynnnnn"
+        },
+        "content": "public class SortExpenseCommand extends Command {"
+      },
+      {
+        "lineNumber": 15,
+        "author": {
+          "gitId": "yanlynnnnn"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 16,
+        "author": {
+          "gitId": "yanlynnnnn"
+        },
+        "content": "    public static final String COMMAND_WORD \u003d \"sortexp\";"
+      },
+      {
+        "lineNumber": 17,
+        "author": {
+          "gitId": "yanlynnnnn"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 18,
+        "author": {
+          "gitId": "yanlynnnnn"
+        },
+        "content": "    public static final String MESSAGE_SUCCESS \u003d \"Sorted all expenses\";"
+      },
+      {
+        "lineNumber": 19,
+        "author": {
+          "gitId": "yanlynnnnn"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 20,
+        "author": {
+          "gitId": "yanlynnnnn"
+        },
+        "content": "    public static final String MESSAGE_USAGE \u003d COMMAND_WORD"
+      },
+      {
+        "lineNumber": 21,
+        "author": {
+          "gitId": "yanlynnnnn"
+        },
+        "content": "            + \": Sorts the expense based on value.\\n\""
+      },
+      {
+        "lineNumber": 22,
+        "author": {
+          "gitId": "yanlynnnnn"
+        },
+        "content": "            + \"Parameters: ORDER\\n\""
+      },
+      {
+        "lineNumber": 23,
+        "author": {
+          "gitId": "yanlynnnnn"
+        },
+        "content": "            + \"Example: \" + COMMAND_WORD + \" asc\";"
+      },
+      {
+        "lineNumber": 24,
+        "author": {
+          "gitId": "yanlynnnnn"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 25,
+        "author": {
+          "gitId": "yanlynnnnn"
+        },
+        "content": "    private final boolean isAscending;"
+      },
+      {
+        "lineNumber": 26,
+        "author": {
+          "gitId": "yanlynnnnn"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 27,
+        "author": {
+          "gitId": "yanlynnnnn"
+        },
+        "content": "    /**"
+      },
+      {
+        "lineNumber": 28,
+        "author": {
+          "gitId": "yanlynnnnn"
+        },
+        "content": "     * Constructs a SortExpenseCommand."
+      },
+      {
+        "lineNumber": 29,
+        "author": {
+          "gitId": "yanlynnnnn"
+        },
+        "content": "     * @param isAscending"
+      },
+      {
+        "lineNumber": 30,
+        "author": {
+          "gitId": "yanlynnnnn"
+        },
+        "content": "     */"
+      },
+      {
+        "lineNumber": 31,
+        "author": {
+          "gitId": "yanlynnnnn"
+        },
+        "content": "    public SortExpenseCommand(boolean isAscending) {"
+      },
+      {
+        "lineNumber": 32,
+        "author": {
+          "gitId": "yanlynnnnn"
+        },
+        "content": "        this.isAscending \u003d isAscending;"
+      },
+      {
+        "lineNumber": 33,
+        "author": {
+          "gitId": "yanlynnnnn"
+        },
+        "content": "    }"
+      },
+      {
+        "lineNumber": 34,
+        "author": {
+          "gitId": "yanlynnnnn"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 35,
+        "author": {
+          "gitId": "yanlynnnnn"
+        },
+        "content": "    @Override"
+      },
+      {
+        "lineNumber": 36,
+        "author": {
+          "gitId": "yanlynnnnn"
+        },
+        "content": "    public CommandResult execute(Model model, HistoryManager historyManager) {"
+      },
+      {
+        "lineNumber": 37,
+        "author": {
+          "gitId": "yanlynnnnn"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 38,
+        "author": {
+          "gitId": "yanlynnnnn"
+        },
+        "content": "        requireNonNull(model);"
+      },
+      {
+        "lineNumber": 39,
+        "author": {
+          "gitId": "yanlynnnnn"
+        },
+        "content": "        model.getExpenseTracker().sortExpenseList(isAscending);"
+      },
+      {
+        "lineNumber": 40,
+        "author": {
+          "gitId": "yanlynnnnn"
+        },
+        "content": "        return new CommandResult(MESSAGE_SUCCESS, ExpenseListPanel.TAB_NAME);"
+      },
+      {
+        "lineNumber": 41,
+        "author": {
+          "gitId": "yanlynnnnn"
+        },
+        "content": "    }"
+      },
+      {
+        "lineNumber": 42,
+        "author": {
+          "gitId": "yanlynnnnn"
+        },
+        "content": "}"
+      },
+      {
+        "lineNumber": 43,
+        "author": {
+          "gitId": "yanlynnnnn"
+        },
+        "content": ""
+      }
+    ],
+    "authorContributionMap": {
+      "yanlynnnnn": 43
     }
   },
   {
@@ -54836,1139 +55153,1174 @@
       {
         "lineNumber": 34,
         "author": {
-          "gitId": "RuiFengg"
+          "gitId": "yanlynnnnn"
         },
-        "content": "import seedu.homerce.logic.commands.revenue.ClearRevenueCommand;"
+        "content": "import seedu.homerce.logic.commands.expense.SortExpenseCommand;"
       },
       {
         "lineNumber": 35,
         "author": {
           "gitId": "RuiFengg"
         },
-        "content": "import seedu.homerce.logic.commands.revenue.FindRevenueCommand;"
+        "content": "import seedu.homerce.logic.commands.revenue.ClearRevenueCommand;"
       },
       {
         "lineNumber": 36,
         "author": {
           "gitId": "RuiFengg"
         },
-        "content": "import seedu.homerce.logic.commands.revenue.ListRevenueCommand;"
+        "content": "import seedu.homerce.logic.commands.revenue.FindRevenueCommand;"
       },
       {
         "lineNumber": 37,
         "author": {
           "gitId": "RuiFengg"
         },
-        "content": "import seedu.homerce.logic.commands.service.AddServiceCommand;"
+        "content": "import seedu.homerce.logic.commands.revenue.ListRevenueCommand;"
       },
       {
         "lineNumber": 38,
         "author": {
           "gitId": "RuiFengg"
         },
-        "content": "import seedu.homerce.logic.commands.service.ClearServiceCommand;"
+        "content": "import seedu.homerce.logic.commands.service.AddServiceCommand;"
       },
       {
         "lineNumber": 39,
         "author": {
           "gitId": "RuiFengg"
         },
-        "content": "import seedu.homerce.logic.commands.service.DeleteServiceCommand;"
+        "content": "import seedu.homerce.logic.commands.service.ClearServiceCommand;"
       },
       {
         "lineNumber": 40,
         "author": {
           "gitId": "RuiFengg"
         },
-        "content": "import seedu.homerce.logic.commands.service.EditServiceCommand;"
+        "content": "import seedu.homerce.logic.commands.service.DeleteServiceCommand;"
       },
       {
         "lineNumber": 41,
         "author": {
           "gitId": "RuiFengg"
         },
-        "content": "import seedu.homerce.logic.commands.service.FindServiceCommand;"
+        "content": "import seedu.homerce.logic.commands.service.EditServiceCommand;"
       },
       {
         "lineNumber": 42,
         "author": {
           "gitId": "RuiFengg"
         },
-        "content": "import seedu.homerce.logic.commands.service.ListServiceCommand;"
+        "content": "import seedu.homerce.logic.commands.service.FindServiceCommand;"
       },
       {
         "lineNumber": 43,
         "author": {
           "gitId": "RuiFengg"
         },
-        "content": "import seedu.homerce.logic.parser.appointment.AddAppointmentCommandParser;"
+        "content": "import seedu.homerce.logic.commands.service.ListServiceCommand;"
       },
       {
         "lineNumber": 44,
         "author": {
           "gitId": "RuiFengg"
         },
-        "content": "import seedu.homerce.logic.parser.appointment.DeleteAppointmentCommandParser;"
+        "content": "import seedu.homerce.logic.parser.appointment.AddAppointmentCommandParser;"
       },
       {
         "lineNumber": 45,
         "author": {
           "gitId": "RuiFengg"
         },
-        "content": "import seedu.homerce.logic.parser.appointment.DoneAppointmentCommandParser;"
+        "content": "import seedu.homerce.logic.parser.appointment.DeleteAppointmentCommandParser;"
       },
       {
         "lineNumber": 46,
         "author": {
           "gitId": "RuiFengg"
         },
-        "content": "import seedu.homerce.logic.parser.appointment.EditAppointmentCommandParser;"
+        "content": "import seedu.homerce.logic.parser.appointment.DoneAppointmentCommandParser;"
       },
       {
         "lineNumber": 47,
         "author": {
           "gitId": "RuiFengg"
         },
-        "content": "import seedu.homerce.logic.parser.appointment.FindAppointmentCommandParser;"
+        "content": "import seedu.homerce.logic.parser.appointment.EditAppointmentCommandParser;"
       },
       {
         "lineNumber": 48,
         "author": {
           "gitId": "RuiFengg"
         },
-        "content": "import seedu.homerce.logic.parser.appointment.UnDoneAppointmentCommandParser;"
+        "content": "import seedu.homerce.logic.parser.appointment.FindAppointmentCommandParser;"
       },
       {
         "lineNumber": 49,
         "author": {
           "gitId": "RuiFengg"
         },
-        "content": "import seedu.homerce.logic.parser.client.AddClientCommandParser;"
+        "content": "import seedu.homerce.logic.parser.appointment.UnDoneAppointmentCommandParser;"
       },
       {
         "lineNumber": 50,
         "author": {
           "gitId": "RuiFengg"
         },
-        "content": "import seedu.homerce.logic.parser.client.DeleteClientCommandParser;"
+        "content": "import seedu.homerce.logic.parser.client.AddClientCommandParser;"
       },
       {
         "lineNumber": 51,
         "author": {
           "gitId": "RuiFengg"
         },
-        "content": "import seedu.homerce.logic.parser.client.EditClientCommandParser;"
+        "content": "import seedu.homerce.logic.parser.client.DeleteClientCommandParser;"
       },
       {
         "lineNumber": 52,
         "author": {
           "gitId": "RuiFengg"
         },
-        "content": "import seedu.homerce.logic.parser.client.FindClientCommandParser;"
+        "content": "import seedu.homerce.logic.parser.client.EditClientCommandParser;"
       },
       {
         "lineNumber": 53,
         "author": {
           "gitId": "RuiFengg"
         },
-        "content": "import seedu.homerce.logic.parser.exceptions.ParseException;"
+        "content": "import seedu.homerce.logic.parser.client.FindClientCommandParser;"
       },
       {
         "lineNumber": 54,
         "author": {
           "gitId": "RuiFengg"
         },
-        "content": "import seedu.homerce.logic.parser.expense.AddExpenseCommandParser;"
+        "content": "import seedu.homerce.logic.parser.exceptions.ParseException;"
       },
       {
         "lineNumber": 55,
         "author": {
           "gitId": "RuiFengg"
         },
-        "content": "import seedu.homerce.logic.parser.expense.DeleteExpenseCommandParser;"
+        "content": "import seedu.homerce.logic.parser.expense.AddExpenseCommandParser;"
       },
       {
         "lineNumber": 56,
         "author": {
           "gitId": "RuiFengg"
         },
-        "content": "import seedu.homerce.logic.parser.expense.EditExpenseCommandParser;"
+        "content": "import seedu.homerce.logic.parser.expense.DeleteExpenseCommandParser;"
       },
       {
         "lineNumber": 57,
         "author": {
           "gitId": "RuiFengg"
         },
-        "content": "import seedu.homerce.logic.parser.expense.FindExpenseCommandParser;"
+        "content": "import seedu.homerce.logic.parser.expense.EditExpenseCommandParser;"
       },
       {
         "lineNumber": 58,
         "author": {
           "gitId": "RuiFengg"
         },
-        "content": "import seedu.homerce.logic.parser.revenue.FindRevenueCommandParser;"
+        "content": "import seedu.homerce.logic.parser.expense.FindExpenseCommandParser;"
       },
       {
         "lineNumber": 59,
         "author": {
-          "gitId": "RuiFengg"
+          "gitId": "yanlynnnnn"
         },
-        "content": "import seedu.homerce.logic.parser.service.AddServiceCommandParser;"
+        "content": "import seedu.homerce.logic.parser.expense.SortExpenseCommandParser;"
       },
       {
         "lineNumber": 60,
         "author": {
           "gitId": "RuiFengg"
         },
-        "content": "import seedu.homerce.logic.parser.service.DeleteServiceCommandParser;"
+        "content": "import seedu.homerce.logic.parser.revenue.FindRevenueCommandParser;"
       },
       {
         "lineNumber": 61,
         "author": {
           "gitId": "RuiFengg"
         },
-        "content": "import seedu.homerce.logic.parser.service.EditServiceCommandParser;"
+        "content": "import seedu.homerce.logic.parser.service.AddServiceCommandParser;"
       },
       {
         "lineNumber": 62,
         "author": {
           "gitId": "RuiFengg"
         },
-        "content": "import seedu.homerce.logic.parser.service.FindServiceCommandParser;"
+        "content": "import seedu.homerce.logic.parser.service.DeleteServiceCommandParser;"
       },
       {
         "lineNumber": 63,
         "author": {
-          "gitId": "yanlynnnnn"
+          "gitId": "RuiFengg"
         },
-        "content": ""
+        "content": "import seedu.homerce.logic.parser.service.EditServiceCommandParser;"
       },
       {
         "lineNumber": 64,
         "author": {
-          "gitId": "-"
+          "gitId": "RuiFengg"
         },
-        "content": ""
+        "content": "import seedu.homerce.logic.parser.service.FindServiceCommandParser;"
       },
       {
         "lineNumber": 65,
         "author": {
-          "gitId": "-"
+          "gitId": "yanlynnnnn"
         },
-        "content": "/**"
+        "content": ""
       },
       {
         "lineNumber": 66,
         "author": {
           "gitId": "-"
         },
-        "content": " * Parses user input."
+        "content": ""
       },
       {
         "lineNumber": 67,
         "author": {
           "gitId": "-"
         },
-        "content": " */"
+        "content": "/**"
       },
       {
         "lineNumber": 68,
         "author": {
-          "gitId": "RuiFengg"
+          "gitId": "-"
         },
-        "content": "public class HomerceParser {"
+        "content": " * Parses user input."
       },
       {
         "lineNumber": 69,
         "author": {
           "gitId": "-"
         },
-        "content": ""
+        "content": " */"
       },
       {
         "lineNumber": 70,
         "author": {
-          "gitId": "-"
+          "gitId": "RuiFengg"
         },
-        "content": "    /**"
+        "content": "public class HomerceParser {"
       },
       {
         "lineNumber": 71,
         "author": {
           "gitId": "-"
         },
-        "content": "     * Used for initial separation of command word and args."
+        "content": ""
       },
       {
         "lineNumber": 72,
         "author": {
           "gitId": "-"
         },
-        "content": "     */"
+        "content": "    /**"
       },
       {
         "lineNumber": 73,
         "author": {
           "gitId": "-"
         },
-        "content": "    private static final Pattern BASIC_COMMAND_FORMAT \u003d Pattern.compile(\"(?\u003ccommandWord\u003e\\\\S+)(?\u003carguments\u003e.*)\");"
+        "content": "     * Used for initial separation of command word and args."
       },
       {
         "lineNumber": 74,
         "author": {
           "gitId": "-"
         },
-        "content": ""
+        "content": "     */"
       },
       {
         "lineNumber": 75,
         "author": {
           "gitId": "-"
         },
-        "content": "    /**"
+        "content": "    private static final Pattern BASIC_COMMAND_FORMAT \u003d Pattern.compile(\"(?\u003ccommandWord\u003e\\\\S+)(?\u003carguments\u003e.*)\");"
       },
       {
         "lineNumber": 76,
         "author": {
           "gitId": "-"
         },
-        "content": "     * Parses user input into command for execution."
+        "content": ""
       },
       {
         "lineNumber": 77,
         "author": {
           "gitId": "-"
         },
-        "content": "     *"
+        "content": "    /**"
       },
       {
         "lineNumber": 78,
         "author": {
           "gitId": "-"
         },
-        "content": "     * @param userInput full user input string"
+        "content": "     * Parses user input into command for execution."
       },
       {
         "lineNumber": 79,
         "author": {
           "gitId": "-"
         },
-        "content": "     * @return the command based on the user input"
+        "content": "     *"
       },
       {
         "lineNumber": 80,
         "author": {
           "gitId": "-"
         },
-        "content": "     * @throws ParseException if the user input does not conform the expected format"
+        "content": "     * @param userInput full user input string"
       },
       {
         "lineNumber": 81,
         "author": {
           "gitId": "-"
         },
-        "content": "     */"
+        "content": "     * @return the command based on the user input"
       },
       {
         "lineNumber": 82,
         "author": {
           "gitId": "-"
         },
-        "content": "    public Command parseCommand(String userInput) throws ParseException {"
+        "content": "     * @throws ParseException if the user input does not conform the expected format"
       },
       {
         "lineNumber": 83,
         "author": {
           "gitId": "-"
         },
-        "content": "        final Matcher matcher \u003d BASIC_COMMAND_FORMAT.matcher(userInput.trim());"
+        "content": "     */"
       },
       {
         "lineNumber": 84,
         "author": {
           "gitId": "-"
         },
-        "content": "        if (!matcher.matches()) {"
+        "content": "    public Command parseCommand(String userInput) throws ParseException {"
       },
       {
         "lineNumber": 85,
         "author": {
           "gitId": "-"
         },
-        "content": "            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, HelpCommand.MESSAGE_USAGE));"
+        "content": "        final Matcher matcher \u003d BASIC_COMMAND_FORMAT.matcher(userInput.trim());"
       },
       {
         "lineNumber": 86,
         "author": {
           "gitId": "-"
         },
-        "content": "        }"
+        "content": "        if (!matcher.matches()) {"
       },
       {
         "lineNumber": 87,
         "author": {
           "gitId": "-"
         },
-        "content": ""
+        "content": "            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, HelpCommand.MESSAGE_USAGE));"
       },
       {
         "lineNumber": 88,
         "author": {
           "gitId": "-"
         },
-        "content": "        final String commandWord \u003d matcher.group(\"commandWord\");"
+        "content": "        }"
       },
       {
         "lineNumber": 89,
         "author": {
           "gitId": "-"
         },
-        "content": "        final String arguments \u003d matcher.group(\"arguments\");"
+        "content": ""
       },
       {
         "lineNumber": 90,
         "author": {
           "gitId": "-"
         },
-        "content": "        switch (commandWord) {"
+        "content": "        final String commandWord \u003d matcher.group(\"commandWord\");"
       },
       {
         "lineNumber": 91,
         "author": {
           "gitId": "-"
         },
-        "content": ""
+        "content": "        final String arguments \u003d matcher.group(\"arguments\");"
       },
       {
         "lineNumber": 92,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "        switch (commandWord) {"
+      },
+      {
+        "lineNumber": 93,
+        "author": {
+          "gitId": "-"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 94,
         "author": {
           "gitId": "RuiFengg"
         },
         "content": "        case AddClientCommand.COMMAND_WORD:"
       },
       {
-        "lineNumber": 93,
+        "lineNumber": 95,
         "author": {
           "gitId": "RuiFengg"
         },
         "content": "            return new AddClientCommandParser().parse(arguments);"
       },
       {
-        "lineNumber": 94,
+        "lineNumber": 96,
         "author": {
           "gitId": "-"
         },
         "content": ""
       },
       {
-        "lineNumber": 95,
+        "lineNumber": 97,
         "author": {
           "gitId": "RuiFengg"
         },
         "content": "        case EditClientCommand.COMMAND_WORD:"
       },
       {
-        "lineNumber": 96,
+        "lineNumber": 98,
         "author": {
           "gitId": "RuiFengg"
         },
         "content": "            return new EditClientCommandParser().parse(arguments);"
       },
       {
-        "lineNumber": 97,
+        "lineNumber": 99,
         "author": {
           "gitId": "-"
         },
         "content": ""
       },
       {
-        "lineNumber": 98,
+        "lineNumber": 100,
         "author": {
           "gitId": "RuiFengg"
         },
         "content": "        case DeleteClientCommand.COMMAND_WORD:"
       },
       {
-        "lineNumber": 99,
+        "lineNumber": 101,
         "author": {
           "gitId": "RuiFengg"
         },
         "content": "            return new DeleteClientCommandParser().parse(arguments);"
       },
       {
-        "lineNumber": 100,
+        "lineNumber": 102,
         "author": {
           "gitId": "-"
         },
         "content": ""
       },
       {
-        "lineNumber": 101,
+        "lineNumber": 103,
         "author": {
           "gitId": "RuiFengg"
         },
         "content": "        case ClearClientCommand.COMMAND_WORD:"
       },
       {
-        "lineNumber": 102,
+        "lineNumber": 104,
         "author": {
           "gitId": "RuiFengg"
         },
         "content": "            return new ClearClientCommand();"
       },
       {
-        "lineNumber": 103,
+        "lineNumber": 105,
         "author": {
           "gitId": "-"
         },
         "content": ""
       },
       {
-        "lineNumber": 104,
+        "lineNumber": 106,
         "author": {
           "gitId": "RuiFengg"
         },
         "content": "        case FindClientCommand.COMMAND_WORD:"
       },
       {
-        "lineNumber": 105,
+        "lineNumber": 107,
         "author": {
           "gitId": "RuiFengg"
         },
         "content": "            return new FindClientCommandParser().parse(arguments);"
       },
       {
-        "lineNumber": 106,
+        "lineNumber": 108,
         "author": {
           "gitId": "-"
         },
         "content": ""
       },
       {
-        "lineNumber": 107,
+        "lineNumber": 109,
         "author": {
           "gitId": "RuiFengg"
         },
         "content": "        case ListClientCommand.COMMAND_WORD:"
       },
       {
-        "lineNumber": 108,
+        "lineNumber": 110,
         "author": {
           "gitId": "RuiFengg"
         },
         "content": "            return new ListClientCommand();"
       },
       {
-        "lineNumber": 109,
-        "author": {
-          "gitId": "-"
-        },
-        "content": ""
-      },
-      {
-        "lineNumber": 110,
-        "author": {
-          "gitId": "-"
-        },
-        "content": "        case ExitCommand.COMMAND_WORD:"
-      },
-      {
         "lineNumber": 111,
         "author": {
           "gitId": "-"
         },
-        "content": "            return new ExitCommand();"
+        "content": ""
       },
       {
         "lineNumber": 112,
         "author": {
           "gitId": "-"
         },
-        "content": ""
+        "content": "        case ExitCommand.COMMAND_WORD:"
       },
       {
         "lineNumber": 113,
         "author": {
           "gitId": "-"
         },
-        "content": "        case HelpCommand.COMMAND_WORD:"
+        "content": "            return new ExitCommand();"
       },
       {
         "lineNumber": 114,
         "author": {
           "gitId": "-"
         },
-        "content": "            return new HelpCommand();"
+        "content": ""
       },
       {
         "lineNumber": 115,
         "author": {
           "gitId": "-"
         },
-        "content": ""
+        "content": "        case HelpCommand.COMMAND_WORD:"
       },
       {
         "lineNumber": 116,
         "author": {
-          "gitId": "yanlynnnnn"
+          "gitId": "-"
         },
-        "content": "        case AddExpenseCommand.COMMAND_WORD:"
+        "content": "            return new HelpCommand();"
       },
       {
         "lineNumber": 117,
         "author": {
-          "gitId": "yanlynnnnn"
+          "gitId": "-"
         },
-        "content": "            return new AddExpenseCommandParser().parse(arguments);"
+        "content": ""
       },
       {
         "lineNumber": 118,
         "author": {
           "gitId": "yanlynnnnn"
         },
-        "content": ""
+        "content": "        case AddExpenseCommand.COMMAND_WORD:"
       },
       {
         "lineNumber": 119,
         "author": {
           "gitId": "yanlynnnnn"
         },
-        "content": "        case EditExpenseCommand.COMMAND_WORD:"
+        "content": "            return new AddExpenseCommandParser().parse(arguments);"
       },
       {
         "lineNumber": 120,
         "author": {
           "gitId": "yanlynnnnn"
         },
-        "content": "            return new EditExpenseCommandParser().parse(arguments);"
+        "content": ""
       },
       {
         "lineNumber": 121,
         "author": {
           "gitId": "yanlynnnnn"
         },
-        "content": ""
+        "content": "        case EditExpenseCommand.COMMAND_WORD:"
       },
       {
         "lineNumber": 122,
         "author": {
           "gitId": "yanlynnnnn"
         },
-        "content": "        case FindExpenseCommand.COMMAND_WORD:"
+        "content": "            return new EditExpenseCommandParser().parse(arguments);"
       },
       {
         "lineNumber": 123,
         "author": {
           "gitId": "yanlynnnnn"
         },
-        "content": "            return new FindExpenseCommandParser().parse(arguments);"
+        "content": ""
       },
       {
         "lineNumber": 124,
         "author": {
           "gitId": "yanlynnnnn"
         },
-        "content": ""
+        "content": "        case FindExpenseCommand.COMMAND_WORD:"
       },
       {
         "lineNumber": 125,
         "author": {
           "gitId": "yanlynnnnn"
         },
-        "content": "        case DeleteExpenseCommand.COMMAND_WORD:"
+        "content": "            return new FindExpenseCommandParser().parse(arguments);"
       },
       {
         "lineNumber": 126,
         "author": {
           "gitId": "yanlynnnnn"
         },
-        "content": "            return new DeleteExpenseCommandParser().parse(arguments);"
+        "content": ""
       },
       {
         "lineNumber": 127,
         "author": {
           "gitId": "yanlynnnnn"
         },
-        "content": ""
+        "content": "        case DeleteExpenseCommand.COMMAND_WORD:"
       },
       {
         "lineNumber": 128,
         "author": {
           "gitId": "yanlynnnnn"
         },
-        "content": "        case ListExpenseCommand.COMMAND_WORD:"
+        "content": "            return new DeleteExpenseCommandParser().parse(arguments);"
       },
       {
         "lineNumber": 129,
         "author": {
           "gitId": "yanlynnnnn"
         },
-        "content": "            return new ListExpenseCommand();"
+        "content": ""
       },
       {
         "lineNumber": 130,
         "author": {
           "gitId": "yanlynnnnn"
         },
-        "content": ""
+        "content": "        case ListExpenseCommand.COMMAND_WORD:"
       },
       {
         "lineNumber": 131,
         "author": {
           "gitId": "yanlynnnnn"
         },
-        "content": "        case ClearExpenseCommand.COMMAND_WORD:"
+        "content": "            return new ListExpenseCommand();"
       },
       {
         "lineNumber": 132,
         "author": {
           "gitId": "yanlynnnnn"
         },
-        "content": "            return new ClearExpenseCommand();"
+        "content": ""
       },
       {
         "lineNumber": 133,
         "author": {
           "gitId": "yanlynnnnn"
         },
-        "content": ""
+        "content": "        case ClearExpenseCommand.COMMAND_WORD:"
       },
       {
         "lineNumber": 134,
         "author": {
-          "gitId": "hansebastian"
+          "gitId": "yanlynnnnn"
         },
-        "content": "        case AddServiceCommand.COMMAND_WORD:"
+        "content": "            return new ClearExpenseCommand();"
       },
       {
         "lineNumber": 135,
         "author": {
-          "gitId": "hansebastian"
-        },
-        "content": "            return new AddServiceCommandParser().parse(arguments);"
-      },
-      {
-        "lineNumber": 136,
-        "author": {
-          "gitId": "hansebastian"
+          "gitId": "yanlynnnnn"
         },
         "content": ""
       },
       {
+        "lineNumber": 136,
+        "author": {
+          "gitId": "yanlynnnnn"
+        },
+        "content": "        case SortExpenseCommand.COMMAND_WORD:"
+      },
+      {
         "lineNumber": 137,
         "author": {
-          "gitId": "hansebastian"
+          "gitId": "yanlynnnnn"
         },
-        "content": "        case FindServiceCommand.COMMAND_WORD:"
+        "content": "            return new SortExpenseCommandParser().parse(arguments);"
       },
       {
         "lineNumber": 138,
         "author": {
-          "gitId": "hansebastian"
+          "gitId": "yanlynnnnn"
         },
-        "content": "            return new FindServiceCommandParser().parse(arguments);"
+        "content": ""
       },
       {
         "lineNumber": 139,
         "author": {
           "gitId": "hansebastian"
         },
-        "content": ""
+        "content": "        case AddServiceCommand.COMMAND_WORD:"
       },
       {
         "lineNumber": 140,
         "author": {
           "gitId": "hansebastian"
         },
-        "content": "        case ClearServiceCommand.COMMAND_WORD:"
+        "content": "            return new AddServiceCommandParser().parse(arguments);"
       },
       {
         "lineNumber": 141,
         "author": {
           "gitId": "hansebastian"
         },
-        "content": "            return new ClearServiceCommand();"
+        "content": ""
       },
       {
         "lineNumber": 142,
         "author": {
           "gitId": "hansebastian"
         },
-        "content": ""
+        "content": "        case FindServiceCommand.COMMAND_WORD:"
       },
       {
         "lineNumber": 143,
         "author": {
           "gitId": "hansebastian"
         },
-        "content": "        case ListServiceCommand.COMMAND_WORD:"
+        "content": "            return new FindServiceCommandParser().parse(arguments);"
       },
       {
         "lineNumber": 144,
         "author": {
           "gitId": "hansebastian"
         },
-        "content": "            return new ListServiceCommand();"
+        "content": ""
       },
       {
         "lineNumber": 145,
         "author": {
           "gitId": "hansebastian"
         },
-        "content": ""
+        "content": "        case ClearServiceCommand.COMMAND_WORD:"
       },
       {
         "lineNumber": 146,
         "author": {
           "gitId": "hansebastian"
         },
-        "content": "        case DeleteServiceCommand.COMMAND_WORD:"
+        "content": "            return new ClearServiceCommand();"
       },
       {
         "lineNumber": 147,
         "author": {
           "gitId": "hansebastian"
         },
-        "content": "            return new DeleteServiceCommandParser().parse(arguments);"
+        "content": ""
       },
       {
         "lineNumber": 148,
         "author": {
           "gitId": "hansebastian"
         },
-        "content": ""
+        "content": "        case ListServiceCommand.COMMAND_WORD:"
       },
       {
         "lineNumber": 149,
         "author": {
           "gitId": "hansebastian"
         },
-        "content": "        case EditServiceCommand.COMMAND_WORD:"
+        "content": "            return new ListServiceCommand();"
       },
       {
         "lineNumber": 150,
         "author": {
           "gitId": "hansebastian"
         },
-        "content": "            return new EditServiceCommandParser().parse(arguments);"
+        "content": ""
       },
       {
         "lineNumber": 151,
         "author": {
           "gitId": "hansebastian"
         },
-        "content": ""
+        "content": "        case DeleteServiceCommand.COMMAND_WORD:"
       },
       {
         "lineNumber": 152,
         "author": {
-          "gitId": "galvinleow"
+          "gitId": "hansebastian"
         },
-        "content": "        case ListRevenueCommand.COMMAND_WORD:"
+        "content": "            return new DeleteServiceCommandParser().parse(arguments);"
       },
       {
         "lineNumber": 153,
         "author": {
-          "gitId": "galvinleow"
-        },
-        "content": "            return new ListRevenueCommand();"
-      },
-      {
-        "lineNumber": 154,
-        "author": {
-          "gitId": "galvinleow"
+          "gitId": "hansebastian"
         },
         "content": ""
       },
       {
+        "lineNumber": 154,
+        "author": {
+          "gitId": "hansebastian"
+        },
+        "content": "        case EditServiceCommand.COMMAND_WORD:"
+      },
+      {
         "lineNumber": 155,
         "author": {
-          "gitId": "galvinleow"
+          "gitId": "hansebastian"
         },
-        "content": "        case FindRevenueCommand.COMMAND_WORD:"
+        "content": "            return new EditServiceCommandParser().parse(arguments);"
       },
       {
         "lineNumber": 156,
         "author": {
-          "gitId": "galvinleow"
+          "gitId": "hansebastian"
         },
-        "content": "            return new FindRevenueCommandParser().parse(arguments);"
+        "content": ""
       },
       {
         "lineNumber": 157,
         "author": {
           "gitId": "galvinleow"
         },
-        "content": ""
+        "content": "        case ListRevenueCommand.COMMAND_WORD:"
       },
       {
         "lineNumber": 158,
         "author": {
           "gitId": "galvinleow"
         },
-        "content": "        case ClearRevenueCommand.COMMAND_WORD:"
+        "content": "            return new ListRevenueCommand();"
       },
       {
         "lineNumber": 159,
         "author": {
           "gitId": "galvinleow"
         },
-        "content": "            return new ClearRevenueCommand();"
+        "content": ""
       },
       {
         "lineNumber": 160,
         "author": {
           "gitId": "galvinleow"
         },
-        "content": ""
+        "content": "        case FindRevenueCommand.COMMAND_WORD:"
       },
       {
         "lineNumber": 161,
         "author": {
-          "gitId": "khoongwk"
+          "gitId": "galvinleow"
         },
-        "content": "        case AddAppointmentCommand.COMMAND_WORD:"
+        "content": "            return new FindRevenueCommandParser().parse(arguments);"
       },
       {
         "lineNumber": 162,
         "author": {
-          "gitId": "khoongwk"
-        },
-        "content": "            return new AddAppointmentCommandParser().parse(arguments);"
-      },
-      {
-        "lineNumber": 163,
-        "author": {
-          "gitId": "khoongwk"
+          "gitId": "galvinleow"
         },
         "content": ""
       },
       {
+        "lineNumber": 163,
+        "author": {
+          "gitId": "galvinleow"
+        },
+        "content": "        case ClearRevenueCommand.COMMAND_WORD:"
+      },
+      {
         "lineNumber": 164,
         "author": {
-          "gitId": "khoongwk"
+          "gitId": "galvinleow"
         },
-        "content": "        case ListAppointmentCommand.COMMAND_WORD:"
+        "content": "            return new ClearRevenueCommand();"
       },
       {
         "lineNumber": 165,
         "author": {
-          "gitId": "khoongwk"
+          "gitId": "galvinleow"
         },
-        "content": "            return new ListAppointmentCommand();"
+        "content": ""
       },
       {
         "lineNumber": 166,
         "author": {
           "gitId": "khoongwk"
         },
-        "content": ""
+        "content": "        case AddAppointmentCommand.COMMAND_WORD:"
       },
       {
         "lineNumber": 167,
         "author": {
           "gitId": "khoongwk"
         },
-        "content": "        case FindAppointmentCommand.COMMAND_WORD:"
+        "content": "            return new AddAppointmentCommandParser().parse(arguments);"
       },
       {
         "lineNumber": 168,
         "author": {
           "gitId": "khoongwk"
         },
-        "content": "            return new FindAppointmentCommandParser().parse(arguments);"
+        "content": ""
       },
       {
         "lineNumber": 169,
         "author": {
           "gitId": "khoongwk"
         },
-        "content": ""
+        "content": "        case ListAppointmentCommand.COMMAND_WORD:"
       },
       {
         "lineNumber": 170,
         "author": {
           "gitId": "khoongwk"
         },
-        "content": "        case DeleteAppointmentCommand.COMMAND_WORD:"
+        "content": "            return new ListAppointmentCommand();"
       },
       {
         "lineNumber": 171,
         "author": {
           "gitId": "khoongwk"
         },
-        "content": "            return new DeleteAppointmentCommandParser().parse(arguments);"
+        "content": ""
       },
       {
         "lineNumber": 172,
         "author": {
           "gitId": "khoongwk"
         },
-        "content": ""
+        "content": "        case FindAppointmentCommand.COMMAND_WORD:"
       },
       {
         "lineNumber": 173,
         "author": {
           "gitId": "khoongwk"
         },
-        "content": "        case ClearAppointmentCommand.COMMAND_WORD:"
+        "content": "            return new FindAppointmentCommandParser().parse(arguments);"
       },
       {
         "lineNumber": 174,
         "author": {
           "gitId": "khoongwk"
         },
-        "content": "            return new ClearAppointmentCommand();"
+        "content": ""
       },
       {
         "lineNumber": 175,
         "author": {
           "gitId": "khoongwk"
         },
-        "content": ""
+        "content": "        case DeleteAppointmentCommand.COMMAND_WORD:"
       },
       {
         "lineNumber": 176,
         "author": {
           "gitId": "khoongwk"
         },
-        "content": "        case DoneAppointmentCommand.COMMAND_WORD:"
+        "content": "            return new DeleteAppointmentCommandParser().parse(arguments);"
       },
       {
         "lineNumber": 177,
         "author": {
           "gitId": "khoongwk"
         },
-        "content": "            return new DoneAppointmentCommandParser().parse(arguments);"
+        "content": ""
       },
       {
         "lineNumber": 178,
         "author": {
           "gitId": "khoongwk"
         },
-        "content": ""
+        "content": "        case ClearAppointmentCommand.COMMAND_WORD:"
       },
       {
         "lineNumber": 179,
         "author": {
           "gitId": "khoongwk"
         },
-        "content": "        case UnDoneAppointmentCommand.COMMAND_WORD:"
+        "content": "            return new ClearAppointmentCommand();"
       },
       {
         "lineNumber": 180,
         "author": {
           "gitId": "khoongwk"
         },
-        "content": "            return new UnDoneAppointmentCommandParser().parse(arguments);"
+        "content": ""
       },
       {
         "lineNumber": 181,
         "author": {
           "gitId": "khoongwk"
         },
-        "content": ""
+        "content": "        case DoneAppointmentCommand.COMMAND_WORD:"
       },
       {
         "lineNumber": 182,
         "author": {
           "gitId": "khoongwk"
         },
-        "content": "        case EditAppointmentCommand.COMMAND_WORD:"
+        "content": "            return new DoneAppointmentCommandParser().parse(arguments);"
       },
       {
         "lineNumber": 183,
         "author": {
           "gitId": "khoongwk"
         },
-        "content": "            return new EditAppointmentCommandParser().parse(arguments);"
+        "content": ""
       },
       {
         "lineNumber": 184,
         "author": {
           "gitId": "khoongwk"
         },
-        "content": ""
+        "content": "        case UnDoneAppointmentCommand.COMMAND_WORD:"
       },
       {
         "lineNumber": 185,
+        "author": {
+          "gitId": "khoongwk"
+        },
+        "content": "            return new UnDoneAppointmentCommandParser().parse(arguments);"
+      },
+      {
+        "lineNumber": 186,
+        "author": {
+          "gitId": "khoongwk"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 187,
+        "author": {
+          "gitId": "khoongwk"
+        },
+        "content": "        case EditAppointmentCommand.COMMAND_WORD:"
+      },
+      {
+        "lineNumber": 188,
+        "author": {
+          "gitId": "khoongwk"
+        },
+        "content": "            return new EditAppointmentCommandParser().parse(arguments);"
+      },
+      {
+        "lineNumber": 189,
+        "author": {
+          "gitId": "khoongwk"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 190,
         "author": {
           "gitId": "hansebastian"
         },
         "content": "        case UndoCommand.COMMAND_WORD:"
       },
       {
-        "lineNumber": 186,
+        "lineNumber": 191,
         "author": {
           "gitId": "hansebastian"
         },
         "content": "            return new UndoCommand();"
       },
       {
-        "lineNumber": 187,
+        "lineNumber": 192,
         "author": {
           "gitId": "hansebastian"
         },
         "content": ""
       },
       {
-        "lineNumber": 188,
+        "lineNumber": 193,
         "author": {
           "gitId": "yanlynnnnn"
         },
         "content": "        case BreakdownFinanceCommand.COMMAND_WORD:"
       },
       {
-        "lineNumber": 189,
+        "lineNumber": 194,
         "author": {
           "gitId": "yanlynnnnn"
         },
         "content": "            return new BreakdownFinanceCommandParser().parse(arguments);"
       },
       {
-        "lineNumber": 190,
+        "lineNumber": 195,
         "author": {
           "gitId": "RuiFengg"
         },
         "content": ""
       },
       {
-        "lineNumber": 191,
+        "lineNumber": 196,
         "author": {
           "gitId": "-"
         },
         "content": "        default:"
       },
       {
-        "lineNumber": 192,
+        "lineNumber": 197,
         "author": {
           "gitId": "-"
         },
         "content": "            throw new ParseException(MESSAGE_UNKNOWN_COMMAND);"
       },
       {
-        "lineNumber": 193,
+        "lineNumber": 198,
         "author": {
           "gitId": "-"
         },
         "content": "        }"
       },
       {
-        "lineNumber": 194,
+        "lineNumber": 199,
         "author": {
           "gitId": "-"
         },
         "content": "    }"
       },
       {
-        "lineNumber": 195,
+        "lineNumber": 200,
         "author": {
           "gitId": "-"
         },
         "content": ""
       },
       {
-        "lineNumber": 196,
+        "lineNumber": 201,
         "author": {
           "gitId": "-"
         },
@@ -55979,7 +56331,7 @@
       "RuiFengg": 69,
       "khoongwk": 24,
       "hansebastian": 22,
-      "yanlynnnnn": 22,
+      "yanlynnnnn": 27,
       "galvinleow": 9,
       "-": 50
     }
@@ -57499,667 +57851,667 @@
       {
         "lineNumber": 199,
         "author": {
-          "gitId": "hansebastian"
+          "gitId": "yanlynnnnn"
         },
         "content": "    /**"
       },
       {
         "lineNumber": 200,
         "author": {
-          "gitId": "hansebastian"
+          "gitId": "yanlynnnnn"
         },
-        "content": "     * Parses a {@code String Duration} into a {@code {Duration}}."
+        "content": "     * Parses a {@code String order} into a {@code {isAscending}}."
       },
       {
         "lineNumber": 201,
         "author": {
-          "gitId": "hansebastian"
+          "gitId": "yanlynnnnn"
         },
         "content": "     * Leading and trailing whitespaces will be trimmed."
       },
       {
         "lineNumber": 202,
         "author": {
-          "gitId": "hansebastian"
+          "gitId": "yanlynnnnn"
         },
         "content": "     *"
       },
       {
         "lineNumber": 203,
         "author": {
-          "gitId": "hansebastian"
+          "gitId": "yanlynnnnn"
         },
-        "content": "     * @throws ParseException if the given {@code duration} is invalid."
+        "content": "     * @throws ParseException if the given {@code order} is invalid."
       },
       {
         "lineNumber": 204,
         "author": {
-          "gitId": "hansebastian"
+          "gitId": "yanlynnnnn"
         },
         "content": "     */"
       },
       {
         "lineNumber": 205,
         "author": {
-          "gitId": "hansebastian"
+          "gitId": "yanlynnnnn"
         },
-        "content": "    public static Duration parseDuration(String duration) throws ParseException {"
+        "content": "    public static boolean parseOrder(String order) throws ParseException {"
       },
       {
         "lineNumber": 206,
         "author": {
-          "gitId": "hansebastian"
+          "gitId": "yanlynnnnn"
         },
-        "content": "        requireNonNull(duration);"
+        "content": "        requireNonNull(order);"
       },
       {
         "lineNumber": 207,
         "author": {
-          "gitId": "hansebastian"
+          "gitId": "yanlynnnnn"
         },
-        "content": "        duration \u003d duration.trim();"
+        "content": "        order \u003d order.trim();"
       },
       {
         "lineNumber": 208,
         "author": {
-          "gitId": "hansebastian"
+          "gitId": "yanlynnnnn"
         },
         "content": "        try {"
       },
       {
         "lineNumber": 209,
         "author": {
-          "gitId": "hansebastian"
+          "gitId": "yanlynnnnn"
         },
-        "content": "            Double doubleDuration \u003d Double.parseDouble(duration);"
+        "content": "            if (!order.equals(\"asc\") \u0026\u0026 !order.equals(\"desc\")) {"
       },
       {
         "lineNumber": 210,
         "author": {
-          "gitId": "hansebastian"
+          "gitId": "yanlynnnnn"
         },
-        "content": "            if (!Duration.isValidDuration(doubleDuration)) {"
+        "content": "                throw new ParseException(\"Order should be either \u0027asc\u0027 or \u0027desc\u0027\");"
       },
       {
         "lineNumber": 211,
         "author": {
-          "gitId": "hansebastian"
-        },
-        "content": "                throw new ParseException(Duration.MESSAGE_CONSTRAINTS);"
-      },
-      {
-        "lineNumber": 212,
-        "author": {
-          "gitId": "hansebastian"
+          "gitId": "yanlynnnnn"
         },
         "content": "            }"
       },
       {
-        "lineNumber": 213,
+        "lineNumber": 212,
         "author": {
-          "gitId": "hansebastian"
+          "gitId": "yanlynnnnn"
         },
-        "content": "            return new Duration(doubleDuration);"
+        "content": "            return order.equals(\"asc\");"
       },
       {
-        "lineNumber": 214,
+        "lineNumber": 213,
         "author": {
-          "gitId": "hansebastian"
+          "gitId": "yanlynnnnn"
         },
         "content": "        } catch (NumberFormatException e) {"
       },
       {
-        "lineNumber": 215,
+        "lineNumber": 214,
         "author": {
-          "gitId": "hansebastian"
+          "gitId": "yanlynnnnn"
         },
-        "content": "            throw new ParseException(Duration.MESSAGE_CONSTRAINTS);"
+        "content": "            throw new ParseException(\"Order should be either \u0027asc\u0027 or \u0027desc\u0027\");"
       },
       {
-        "lineNumber": 216,
+        "lineNumber": 215,
         "author": {
-          "gitId": "hansebastian"
+          "gitId": "yanlynnnnn"
         },
         "content": "        }"
       },
       {
-        "lineNumber": 217,
+        "lineNumber": 216,
         "author": {
-          "gitId": "hansebastian"
+          "gitId": "yanlynnnnn"
         },
         "content": "    }"
+      },
+      {
+        "lineNumber": 217,
+        "author": {
+          "gitId": "yanlynnnnn"
+        },
+        "content": ""
       },
       {
         "lineNumber": 218,
         "author": {
           "gitId": "hansebastian"
         },
-        "content": ""
+        "content": "    /**"
       },
       {
         "lineNumber": 219,
         "author": {
           "gitId": "hansebastian"
         },
-        "content": "    /**"
+        "content": "     * Parses a {@code String Duration} into a {@code {Duration}}."
       },
       {
         "lineNumber": 220,
         "author": {
-          "gitId": "-"
+          "gitId": "hansebastian"
         },
-        "content": "     * Parses a {@code String serviceCode} into a {@code {ServiceCode}}."
+        "content": "     * Leading and trailing whitespaces will be trimmed."
       },
       {
         "lineNumber": 221,
         "author": {
           "gitId": "hansebastian"
         },
-        "content": "     * Leading and trailing whitespaces will be trimmed."
+        "content": "     *"
       },
       {
         "lineNumber": 222,
         "author": {
           "gitId": "hansebastian"
         },
-        "content": "     *"
+        "content": "     * @throws ParseException if the given {@code duration} is invalid."
       },
       {
         "lineNumber": 223,
         "author": {
-          "gitId": "galvinleow"
+          "gitId": "hansebastian"
         },
-        "content": "     * @throws ParseException if the given {@code serviceCode} is invalid."
+        "content": "     */"
       },
       {
         "lineNumber": 224,
         "author": {
           "gitId": "hansebastian"
         },
-        "content": "     */"
+        "content": "    public static Duration parseDuration(String duration) throws ParseException {"
       },
       {
         "lineNumber": 225,
         "author": {
           "gitId": "hansebastian"
         },
-        "content": "    public static ServiceCode parseServiceCode(String serviceCode) throws ParseException {"
+        "content": "        requireNonNull(duration);"
       },
       {
         "lineNumber": 226,
         "author": {
           "gitId": "hansebastian"
         },
-        "content": "        requireNonNull(serviceCode);"
+        "content": "        duration \u003d duration.trim();"
       },
       {
         "lineNumber": 227,
         "author": {
           "gitId": "hansebastian"
         },
-        "content": "        String trimmedServiceCode \u003d serviceCode.trim().toUpperCase();"
+        "content": "        try {"
       },
       {
         "lineNumber": 228,
         "author": {
           "gitId": "hansebastian"
         },
-        "content": "        if (!ServiceCode.isValidServiceCode(trimmedServiceCode)) {"
+        "content": "            Double doubleDuration \u003d Double.parseDouble(duration);"
       },
       {
         "lineNumber": 229,
         "author": {
           "gitId": "hansebastian"
         },
-        "content": "            throw new ParseException(ServiceCode.MESSAGE_CONSTRAINTS);"
+        "content": "            if (!Duration.isValidDuration(doubleDuration)) {"
       },
       {
         "lineNumber": 230,
         "author": {
           "gitId": "hansebastian"
         },
-        "content": "        }"
+        "content": "                throw new ParseException(Duration.MESSAGE_CONSTRAINTS);"
       },
       {
         "lineNumber": 231,
         "author": {
           "gitId": "hansebastian"
         },
-        "content": "        return new ServiceCode(trimmedServiceCode);"
+        "content": "            }"
       },
       {
         "lineNumber": 232,
         "author": {
           "gitId": "hansebastian"
         },
-        "content": "    }"
+        "content": "            return new Duration(doubleDuration);"
       },
       {
         "lineNumber": 233,
         "author": {
-          "gitId": "RuiFengg"
+          "gitId": "hansebastian"
         },
-        "content": ""
+        "content": "        } catch (NumberFormatException e) {"
       },
       {
         "lineNumber": 234,
         "author": {
-          "gitId": "khoongwk"
+          "gitId": "hansebastian"
         },
-        "content": "    /**"
+        "content": "            throw new ParseException(Duration.MESSAGE_CONSTRAINTS);"
       },
       {
         "lineNumber": 235,
         "author": {
-          "gitId": "RuiFengg"
-        },
-        "content": "     * Parses a {@code String timeOfDay} into a {@code {TimeOfDay}}."
-      },
-      {
-        "lineNumber": 236,
-        "author": {
-          "gitId": "khoongwk"
-        },
-        "content": "     * Leading and trailing whitespaces will be trimmed."
-      },
-      {
-        "lineNumber": 237,
-        "author": {
-          "gitId": "khoongwk"
-        },
-        "content": "     *"
-      },
-      {
-        "lineNumber": 238,
-        "author": {
-          "gitId": "khoongwk"
-        },
-        "content": "     * @throws ParseException if the given {@code timeOfDay} is invalid."
-      },
-      {
-        "lineNumber": 239,
-        "author": {
-          "gitId": "khoongwk"
-        },
-        "content": "     */"
-      },
-      {
-        "lineNumber": 240,
-        "author": {
-          "gitId": "khoongwk"
-        },
-        "content": "    public static TimeOfDay parseTime(String timeOfDay) throws ParseException {"
-      },
-      {
-        "lineNumber": 241,
-        "author": {
-          "gitId": "khoongwk"
-        },
-        "content": "        requireNonNull(timeOfDay);"
-      },
-      {
-        "lineNumber": 242,
-        "author": {
-          "gitId": "khoongwk"
-        },
-        "content": "        String trimmedTimeOfDay \u003d timeOfDay.trim();"
-      },
-      {
-        "lineNumber": 243,
-        "author": {
-          "gitId": "khoongwk"
-        },
-        "content": "        if (!TimeOfDay.isValidTime(trimmedTimeOfDay)) {"
-      },
-      {
-        "lineNumber": 244,
-        "author": {
-          "gitId": "khoongwk"
-        },
-        "content": "            throw new ParseException(TimeOfDay.MESSAGE_CONSTRAINTS);"
-      },
-      {
-        "lineNumber": 245,
-        "author": {
-          "gitId": "khoongwk"
+          "gitId": "hansebastian"
         },
         "content": "        }"
       },
       {
-        "lineNumber": 246,
+        "lineNumber": 236,
         "author": {
-          "gitId": "khoongwk"
-        },
-        "content": "        return new TimeOfDay(trimmedTimeOfDay);"
-      },
-      {
-        "lineNumber": 247,
-        "author": {
-          "gitId": "khoongwk"
+          "gitId": "hansebastian"
         },
         "content": "    }"
       },
       {
-        "lineNumber": 248,
+        "lineNumber": 237,
         "author": {
-          "gitId": "khoongwk"
+          "gitId": "hansebastian"
         },
         "content": ""
       },
       {
-        "lineNumber": 249,
+        "lineNumber": 238,
         "author": {
-          "gitId": "RuiFengg"
+          "gitId": "hansebastian"
         },
         "content": "    /**"
       },
       {
+        "lineNumber": 239,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "     * Parses a {@code String serviceCode} into a {@code {ServiceCode}}."
+      },
+      {
+        "lineNumber": 240,
+        "author": {
+          "gitId": "hansebastian"
+        },
+        "content": "     * Leading and trailing whitespaces will be trimmed."
+      },
+      {
+        "lineNumber": 241,
+        "author": {
+          "gitId": "hansebastian"
+        },
+        "content": "     *"
+      },
+      {
+        "lineNumber": 242,
+        "author": {
+          "gitId": "galvinleow"
+        },
+        "content": "     * @throws ParseException if the given {@code serviceCode} is invalid."
+      },
+      {
+        "lineNumber": 243,
+        "author": {
+          "gitId": "hansebastian"
+        },
+        "content": "     */"
+      },
+      {
+        "lineNumber": 244,
+        "author": {
+          "gitId": "hansebastian"
+        },
+        "content": "    public static ServiceCode parseServiceCode(String serviceCode) throws ParseException {"
+      },
+      {
+        "lineNumber": 245,
+        "author": {
+          "gitId": "hansebastian"
+        },
+        "content": "        requireNonNull(serviceCode);"
+      },
+      {
+        "lineNumber": 246,
+        "author": {
+          "gitId": "hansebastian"
+        },
+        "content": "        String trimmedServiceCode \u003d serviceCode.trim().toUpperCase();"
+      },
+      {
+        "lineNumber": 247,
+        "author": {
+          "gitId": "hansebastian"
+        },
+        "content": "        if (!ServiceCode.isValidServiceCode(trimmedServiceCode)) {"
+      },
+      {
+        "lineNumber": 248,
+        "author": {
+          "gitId": "hansebastian"
+        },
+        "content": "            throw new ParseException(ServiceCode.MESSAGE_CONSTRAINTS);"
+      },
+      {
+        "lineNumber": 249,
+        "author": {
+          "gitId": "hansebastian"
+        },
+        "content": "        }"
+      },
+      {
         "lineNumber": 250,
         "author": {
-          "gitId": "RuiFengg"
+          "gitId": "hansebastian"
         },
-        "content": "     * Parses a {@code String month} into a {@code {Month}}."
+        "content": "        return new ServiceCode(trimmedServiceCode);"
       },
       {
         "lineNumber": 251,
         "author": {
-          "gitId": "RuiFengg"
+          "gitId": "hansebastian"
         },
-        "content": "     * Leading and trailing whitespaces will be trimmed."
+        "content": "    }"
       },
       {
         "lineNumber": 252,
         "author": {
           "gitId": "RuiFengg"
         },
-        "content": "     *"
+        "content": ""
       },
       {
         "lineNumber": 253,
         "author": {
-          "gitId": "RuiFengg"
+          "gitId": "khoongwk"
         },
-        "content": "     * @throws ParseException if the given {@code month} is invalid."
+        "content": "    /**"
       },
       {
         "lineNumber": 254,
         "author": {
           "gitId": "RuiFengg"
         },
-        "content": "     */"
+        "content": "     * Parses a {@code String timeOfDay} into a {@code {TimeOfDay}}."
       },
       {
         "lineNumber": 255,
         "author": {
-          "gitId": "RuiFengg"
-        },
-        "content": "    public static Month parseMonth(String month) throws ParseException {"
-      },
-      {
-        "lineNumber": 256,
-        "author": {
-          "gitId": "RuiFengg"
-        },
-        "content": "        requireNonNull(month);"
-      },
-      {
-        "lineNumber": 257,
-        "author": {
-          "gitId": "RuiFengg"
-        },
-        "content": "        String trimmedMonth \u003d month.trim();"
-      },
-      {
-        "lineNumber": 258,
-        "author": {
-          "gitId": "RuiFengg"
-        },
-        "content": "        if (!isValidMonth(trimmedMonth)) {"
-      },
-      {
-        "lineNumber": 259,
-        "author": {
-          "gitId": "RuiFengg"
-        },
-        "content": "            throw new ParseException(MESSAGE_INVALID_MONTH);"
-      },
-      {
-        "lineNumber": 260,
-        "author": {
-          "gitId": "RuiFengg"
-        },
-        "content": "        }"
-      },
-      {
-        "lineNumber": 261,
-        "author": {
-          "gitId": "RuiFengg"
-        },
-        "content": "        return Month.of(Integer.parseInt(trimmedMonth));"
-      },
-      {
-        "lineNumber": 262,
-        "author": {
-          "gitId": "RuiFengg"
-        },
-        "content": "    }"
-      },
-      {
-        "lineNumber": 263,
-        "author": {
-          "gitId": "RuiFengg"
-        },
-        "content": ""
-      },
-      {
-        "lineNumber": 264,
-        "author": {
-          "gitId": "RuiFengg"
-        },
-        "content": "    /**"
-      },
-      {
-        "lineNumber": 265,
-        "author": {
-          "gitId": "RuiFengg"
-        },
-        "content": "     * Parses a {@code String year} into a {@code {Year}}."
-      },
-      {
-        "lineNumber": 266,
-        "author": {
-          "gitId": "RuiFengg"
+          "gitId": "khoongwk"
         },
         "content": "     * Leading and trailing whitespaces will be trimmed."
       },
       {
-        "lineNumber": 267,
+        "lineNumber": 256,
         "author": {
-          "gitId": "RuiFengg"
+          "gitId": "khoongwk"
         },
         "content": "     *"
+      },
+      {
+        "lineNumber": 257,
+        "author": {
+          "gitId": "khoongwk"
+        },
+        "content": "     * @throws ParseException if the given {@code timeOfDay} is invalid."
+      },
+      {
+        "lineNumber": 258,
+        "author": {
+          "gitId": "khoongwk"
+        },
+        "content": "     */"
+      },
+      {
+        "lineNumber": 259,
+        "author": {
+          "gitId": "khoongwk"
+        },
+        "content": "    public static TimeOfDay parseTime(String timeOfDay) throws ParseException {"
+      },
+      {
+        "lineNumber": 260,
+        "author": {
+          "gitId": "khoongwk"
+        },
+        "content": "        requireNonNull(timeOfDay);"
+      },
+      {
+        "lineNumber": 261,
+        "author": {
+          "gitId": "khoongwk"
+        },
+        "content": "        String trimmedTimeOfDay \u003d timeOfDay.trim();"
+      },
+      {
+        "lineNumber": 262,
+        "author": {
+          "gitId": "khoongwk"
+        },
+        "content": "        if (!TimeOfDay.isValidTime(trimmedTimeOfDay)) {"
+      },
+      {
+        "lineNumber": 263,
+        "author": {
+          "gitId": "khoongwk"
+        },
+        "content": "            throw new ParseException(TimeOfDay.MESSAGE_CONSTRAINTS);"
+      },
+      {
+        "lineNumber": 264,
+        "author": {
+          "gitId": "khoongwk"
+        },
+        "content": "        }"
+      },
+      {
+        "lineNumber": 265,
+        "author": {
+          "gitId": "khoongwk"
+        },
+        "content": "        return new TimeOfDay(trimmedTimeOfDay);"
+      },
+      {
+        "lineNumber": 266,
+        "author": {
+          "gitId": "khoongwk"
+        },
+        "content": "    }"
+      },
+      {
+        "lineNumber": 267,
+        "author": {
+          "gitId": "khoongwk"
+        },
+        "content": ""
       },
       {
         "lineNumber": 268,
         "author": {
           "gitId": "RuiFengg"
         },
-        "content": "     * @throws ParseException if the given {@code year} is invalid."
+        "content": "    /**"
       },
       {
         "lineNumber": 269,
         "author": {
           "gitId": "RuiFengg"
         },
-        "content": "     */"
+        "content": "     * Parses a {@code String month} into a {@code {Month}}."
       },
       {
         "lineNumber": 270,
         "author": {
           "gitId": "RuiFengg"
         },
-        "content": "    public static Year parseYear(String year) throws ParseException {"
+        "content": "     * Leading and trailing whitespaces will be trimmed."
       },
       {
         "lineNumber": 271,
         "author": {
           "gitId": "RuiFengg"
         },
-        "content": "        requireNonNull(year);"
+        "content": "     *"
       },
       {
         "lineNumber": 272,
         "author": {
           "gitId": "RuiFengg"
         },
-        "content": "        String trimmedYear \u003d year.trim();"
+        "content": "     * @throws ParseException if the given {@code month} is invalid."
       },
       {
         "lineNumber": 273,
         "author": {
           "gitId": "RuiFengg"
         },
-        "content": "        if (!isValidYear(trimmedYear)) {"
+        "content": "     */"
       },
       {
         "lineNumber": 274,
         "author": {
           "gitId": "RuiFengg"
         },
-        "content": "            throw new ParseException(MESSAGE_INVALID_YEAR);"
+        "content": "    public static Month parseMonth(String month) throws ParseException {"
       },
       {
         "lineNumber": 275,
         "author": {
           "gitId": "RuiFengg"
         },
-        "content": "        }"
+        "content": "        requireNonNull(month);"
       },
       {
         "lineNumber": 276,
         "author": {
           "gitId": "RuiFengg"
         },
-        "content": "        return Year.of(Integer.parseInt(trimmedYear));"
+        "content": "        String trimmedMonth \u003d month.trim();"
       },
       {
         "lineNumber": 277,
         "author": {
           "gitId": "RuiFengg"
         },
-        "content": "    }"
+        "content": "        if (!isValidMonth(trimmedMonth)) {"
       },
       {
         "lineNumber": 278,
         "author": {
           "gitId": "RuiFengg"
         },
-        "content": ""
+        "content": "            throw new ParseException(MESSAGE_INVALID_MONTH);"
       },
       {
         "lineNumber": 279,
         "author": {
           "gitId": "RuiFengg"
         },
-        "content": "    private static boolean isValidYear(String year) {"
+        "content": "        }"
       },
       {
         "lineNumber": 280,
         "author": {
           "gitId": "RuiFengg"
         },
-        "content": "        // Checks if its a String contains numbers only"
+        "content": "        return Month.of(Integer.parseInt(trimmedMonth));"
       },
       {
         "lineNumber": 281,
         "author": {
           "gitId": "RuiFengg"
         },
-        "content": "        if (!year.matches(\"\\\\d+\")) {"
+        "content": "    }"
       },
       {
         "lineNumber": 282,
         "author": {
           "gitId": "RuiFengg"
         },
-        "content": "            return false;"
+        "content": ""
       },
       {
         "lineNumber": 283,
         "author": {
           "gitId": "RuiFengg"
         },
-        "content": "        }"
+        "content": "    /**"
       },
       {
         "lineNumber": 284,
         "author": {
           "gitId": "RuiFengg"
         },
-        "content": "        int intYear \u003d Integer.parseInt(year);"
+        "content": "     * Parses a {@code String year} into a {@code {Year}}."
       },
       {
         "lineNumber": 285,
         "author": {
-          "gitId": "yanlynnnnn"
+          "gitId": "RuiFengg"
         },
-        "content": "        Year yearObject \u003d Year.of(VALID_YEAR);"
+        "content": "     * Leading and trailing whitespaces will be trimmed."
       },
       {
         "lineNumber": 286,
         "author": {
           "gitId": "RuiFengg"
         },
-        "content": "        ValueRange range \u003d yearObject.range(ChronoField.YEAR);"
+        "content": "     *"
       },
       {
         "lineNumber": 287,
         "author": {
           "gitId": "RuiFengg"
         },
-        "content": "        return range.isValidIntValue(intYear);"
+        "content": "     * @throws ParseException if the given {@code year} is invalid."
       },
       {
         "lineNumber": 288,
         "author": {
           "gitId": "RuiFengg"
         },
-        "content": "    }"
+        "content": "     */"
       },
       {
         "lineNumber": 289,
         "author": {
           "gitId": "RuiFengg"
         },
-        "content": ""
+        "content": "    public static Year parseYear(String year) throws ParseException {"
       },
       {
         "lineNumber": 290,
         "author": {
           "gitId": "RuiFengg"
         },
-        "content": "    private static boolean isValidMonth(String month) {"
+        "content": "        requireNonNull(year);"
       },
       {
         "lineNumber": 291,
         "author": {
           "gitId": "RuiFengg"
         },
-        "content": "        // Checks if its a String contains numbers only"
+        "content": "        String trimmedYear \u003d year.trim();"
       },
       {
         "lineNumber": 292,
         "author": {
           "gitId": "RuiFengg"
         },
-        "content": "        if (!month.matches(\"\\\\d+\")) {"
+        "content": "        if (!isValidYear(trimmedYear)) {"
       },
       {
         "lineNumber": 293,
         "author": {
           "gitId": "RuiFengg"
         },
-        "content": "            return false;"
+        "content": "            throw new ParseException(MESSAGE_INVALID_YEAR);"
       },
       {
         "lineNumber": 294,
@@ -58173,45 +58525,178 @@
         "author": {
           "gitId": "RuiFengg"
         },
-        "content": "        int intMonth \u003d Integer.parseInt(month);"
+        "content": "        return Year.of(Integer.parseInt(trimmedYear));"
       },
       {
         "lineNumber": 296,
-        "author": {
-          "gitId": "yanlynnnnn"
-        },
-        "content": "        Month monthObject \u003d Month.of(VALID_MONTH);"
-      },
-      {
-        "lineNumber": 297,
-        "author": {
-          "gitId": "RuiFengg"
-        },
-        "content": "        ValueRange range \u003d monthObject.range(ChronoField.MONTH_OF_YEAR);"
-      },
-      {
-        "lineNumber": 298,
-        "author": {
-          "gitId": "RuiFengg"
-        },
-        "content": "        return range.isValidIntValue(intMonth);"
-      },
-      {
-        "lineNumber": 299,
         "author": {
           "gitId": "RuiFengg"
         },
         "content": "    }"
       },
       {
+        "lineNumber": 297,
+        "author": {
+          "gitId": "RuiFengg"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 298,
+        "author": {
+          "gitId": "RuiFengg"
+        },
+        "content": "    private static boolean isValidYear(String year) {"
+      },
+      {
+        "lineNumber": 299,
+        "author": {
+          "gitId": "RuiFengg"
+        },
+        "content": "        // Checks if its a String contains numbers only"
+      },
+      {
         "lineNumber": 300,
+        "author": {
+          "gitId": "RuiFengg"
+        },
+        "content": "        if (!year.matches(\"\\\\d+\")) {"
+      },
+      {
+        "lineNumber": 301,
+        "author": {
+          "gitId": "RuiFengg"
+        },
+        "content": "            return false;"
+      },
+      {
+        "lineNumber": 302,
+        "author": {
+          "gitId": "RuiFengg"
+        },
+        "content": "        }"
+      },
+      {
+        "lineNumber": 303,
+        "author": {
+          "gitId": "RuiFengg"
+        },
+        "content": "        int intYear \u003d Integer.parseInt(year);"
+      },
+      {
+        "lineNumber": 304,
+        "author": {
+          "gitId": "yanlynnnnn"
+        },
+        "content": "        Year yearObject \u003d Year.of(VALID_YEAR);"
+      },
+      {
+        "lineNumber": 305,
+        "author": {
+          "gitId": "RuiFengg"
+        },
+        "content": "        ValueRange range \u003d yearObject.range(ChronoField.YEAR);"
+      },
+      {
+        "lineNumber": 306,
+        "author": {
+          "gitId": "RuiFengg"
+        },
+        "content": "        return range.isValidIntValue(intYear);"
+      },
+      {
+        "lineNumber": 307,
+        "author": {
+          "gitId": "RuiFengg"
+        },
+        "content": "    }"
+      },
+      {
+        "lineNumber": 308,
+        "author": {
+          "gitId": "RuiFengg"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 309,
+        "author": {
+          "gitId": "RuiFengg"
+        },
+        "content": "    private static boolean isValidMonth(String month) {"
+      },
+      {
+        "lineNumber": 310,
+        "author": {
+          "gitId": "RuiFengg"
+        },
+        "content": "        // Checks if its a String contains numbers only"
+      },
+      {
+        "lineNumber": 311,
+        "author": {
+          "gitId": "RuiFengg"
+        },
+        "content": "        if (!month.matches(\"\\\\d+\")) {"
+      },
+      {
+        "lineNumber": 312,
+        "author": {
+          "gitId": "RuiFengg"
+        },
+        "content": "            return false;"
+      },
+      {
+        "lineNumber": 313,
+        "author": {
+          "gitId": "RuiFengg"
+        },
+        "content": "        }"
+      },
+      {
+        "lineNumber": 314,
+        "author": {
+          "gitId": "RuiFengg"
+        },
+        "content": "        int intMonth \u003d Integer.parseInt(month);"
+      },
+      {
+        "lineNumber": 315,
+        "author": {
+          "gitId": "yanlynnnnn"
+        },
+        "content": "        Month monthObject \u003d Month.of(VALID_MONTH);"
+      },
+      {
+        "lineNumber": 316,
+        "author": {
+          "gitId": "RuiFengg"
+        },
+        "content": "        ValueRange range \u003d monthObject.range(ChronoField.MONTH_OF_YEAR);"
+      },
+      {
+        "lineNumber": 317,
+        "author": {
+          "gitId": "RuiFengg"
+        },
+        "content": "        return range.isValidIntValue(intMonth);"
+      },
+      {
+        "lineNumber": 318,
+        "author": {
+          "gitId": "RuiFengg"
+        },
+        "content": "    }"
+      },
+      {
+        "lineNumber": 319,
         "author": {
           "gitId": "yanlynnnnn"
         },
         "content": "}"
       },
       {
-        "lineNumber": 301,
+        "lineNumber": 320,
         "author": {
           "gitId": "yanlynnnnn"
         },
@@ -58222,7 +58707,7 @@
       "RuiFengg": 74,
       "khoongwk": 14,
       "hansebastian": 68,
-      "yanlynnnnn": 44,
+      "yanlynnnnn": 63,
       "galvinleow": 2,
       "-": 99
     }
@@ -64471,6 +64956,190 @@
     }
   },
   {
+    "path": "src/main/java/seedu/homerce/logic/parser/expense/SortExpenseCommandParser.java",
+    "fileType": "functional-code",
+    "lines": [
+      {
+        "lineNumber": 1,
+        "author": {
+          "gitId": "yanlynnnnn"
+        },
+        "content": "package seedu.homerce.logic.parser.expense;"
+      },
+      {
+        "lineNumber": 2,
+        "author": {
+          "gitId": "yanlynnnnn"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 3,
+        "author": {
+          "gitId": "yanlynnnnn"
+        },
+        "content": "import static seedu.homerce.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;"
+      },
+      {
+        "lineNumber": 4,
+        "author": {
+          "gitId": "yanlynnnnn"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 5,
+        "author": {
+          "gitId": "yanlynnnnn"
+        },
+        "content": "import seedu.homerce.logic.commands.expense.SortExpenseCommand;"
+      },
+      {
+        "lineNumber": 6,
+        "author": {
+          "gitId": "yanlynnnnn"
+        },
+        "content": "import seedu.homerce.logic.parser.ParserUtil;"
+      },
+      {
+        "lineNumber": 7,
+        "author": {
+          "gitId": "yanlynnnnn"
+        },
+        "content": "import seedu.homerce.logic.parser.exceptions.ParseException;"
+      },
+      {
+        "lineNumber": 8,
+        "author": {
+          "gitId": "yanlynnnnn"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 9,
+        "author": {
+          "gitId": "yanlynnnnn"
+        },
+        "content": "public class SortExpenseCommandParser {"
+      },
+      {
+        "lineNumber": 10,
+        "author": {
+          "gitId": "yanlynnnnn"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 11,
+        "author": {
+          "gitId": "yanlynnnnn"
+        },
+        "content": "    /**"
+      },
+      {
+        "lineNumber": 12,
+        "author": {
+          "gitId": "yanlynnnnn"
+        },
+        "content": "     * Parses the given {@code String} of arguments in the context of the SortExpenseCommand"
+      },
+      {
+        "lineNumber": 13,
+        "author": {
+          "gitId": "yanlynnnnn"
+        },
+        "content": "     * and returns a SortExpenseCommand object for execution."
+      },
+      {
+        "lineNumber": 14,
+        "author": {
+          "gitId": "yanlynnnnn"
+        },
+        "content": "     * @throws ParseException if the user input does not conform the expected format"
+      },
+      {
+        "lineNumber": 15,
+        "author": {
+          "gitId": "yanlynnnnn"
+        },
+        "content": "     */"
+      },
+      {
+        "lineNumber": 16,
+        "author": {
+          "gitId": "yanlynnnnn"
+        },
+        "content": "    public SortExpenseCommand parse(String args) throws ParseException {"
+      },
+      {
+        "lineNumber": 17,
+        "author": {
+          "gitId": "yanlynnnnn"
+        },
+        "content": "        try {"
+      },
+      {
+        "lineNumber": 18,
+        "author": {
+          "gitId": "yanlynnnnn"
+        },
+        "content": "            boolean isAscending \u003d ParserUtil.parseOrder(args);"
+      },
+      {
+        "lineNumber": 19,
+        "author": {
+          "gitId": "yanlynnnnn"
+        },
+        "content": "            return new SortExpenseCommand(isAscending);"
+      },
+      {
+        "lineNumber": 20,
+        "author": {
+          "gitId": "yanlynnnnn"
+        },
+        "content": "        } catch (ParseException pe) {"
+      },
+      {
+        "lineNumber": 21,
+        "author": {
+          "gitId": "yanlynnnnn"
+        },
+        "content": "            throw new ParseException("
+      },
+      {
+        "lineNumber": 22,
+        "author": {
+          "gitId": "yanlynnnnn"
+        },
+        "content": "                    String.format(MESSAGE_INVALID_COMMAND_FORMAT, SortExpenseCommand.MESSAGE_USAGE), pe);"
+      },
+      {
+        "lineNumber": 23,
+        "author": {
+          "gitId": "yanlynnnnn"
+        },
+        "content": "        }"
+      },
+      {
+        "lineNumber": 24,
+        "author": {
+          "gitId": "yanlynnnnn"
+        },
+        "content": "    }"
+      },
+      {
+        "lineNumber": 25,
+        "author": {
+          "gitId": "yanlynnnnn"
+        },
+        "content": "}"
+      }
+    ],
+    "authorContributionMap": {
+      "yanlynnnnn": 25
+    }
+  },
+  {
     "path": "src/main/java/seedu/homerce/logic/parser/revenue/FindRevenueCommandParser.java",
     "fileType": "functional-code",
     "lines": [
@@ -69177,7 +69846,7 @@
         "author": {
           "gitId": "yanlynnnnn"
         },
-        "content": "    private final FilteredList\u003cExpense\u003e filteredExpenses;"
+        "content": "    private FilteredList\u003cExpense\u003e filteredExpenses;"
       },
       {
         "lineNumber": 50,
@@ -81742,6 +82411,206 @@
     }
   },
   {
+    "path": "src/main/java/seedu/homerce/model/expense/ExpenseComparator.java",
+    "fileType": "functional-code",
+    "lines": [
+      {
+        "lineNumber": 1,
+        "author": {
+          "gitId": "yanlynnnnn"
+        },
+        "content": "package seedu.homerce.model.expense;"
+      },
+      {
+        "lineNumber": 2,
+        "author": {
+          "gitId": "yanlynnnnn"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 3,
+        "author": {
+          "gitId": "yanlynnnnn"
+        },
+        "content": "import java.util.Comparator;"
+      },
+      {
+        "lineNumber": 4,
+        "author": {
+          "gitId": "yanlynnnnn"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 5,
+        "author": {
+          "gitId": "yanlynnnnn"
+        },
+        "content": "public class ExpenseComparator implements Comparator\u003cExpense\u003e {"
+      },
+      {
+        "lineNumber": 6,
+        "author": {
+          "gitId": "yanlynnnnn"
+        },
+        "content": "    @Override"
+      },
+      {
+        "lineNumber": 7,
+        "author": {
+          "gitId": "yanlynnnnn"
+        },
+        "content": "    public int compare(Expense t1, Expense t2) {"
+      },
+      {
+        "lineNumber": 8,
+        "author": {
+          "gitId": "yanlynnnnn"
+        },
+        "content": "        return t1.getValue().value.compareTo(t2.getValue().value);"
+      },
+      {
+        "lineNumber": 9,
+        "author": {
+          "gitId": "yanlynnnnn"
+        },
+        "content": "    }"
+      },
+      {
+        "lineNumber": 10,
+        "author": {
+          "gitId": "yanlynnnnn"
+        },
+        "content": "}"
+      }
+    ],
+    "authorContributionMap": {
+      "yanlynnnnn": 10
+    }
+  },
+  {
+    "path": "src/main/java/seedu/homerce/model/expense/ExpenseDefaultComparator.java",
+    "fileType": "functional-code",
+    "lines": [
+      {
+        "lineNumber": 1,
+        "author": {
+          "gitId": "yanlynnnnn"
+        },
+        "content": "package seedu.homerce.model.expense;"
+      },
+      {
+        "lineNumber": 2,
+        "author": {
+          "gitId": "yanlynnnnn"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 3,
+        "author": {
+          "gitId": "yanlynnnnn"
+        },
+        "content": "import java.util.Comparator;"
+      },
+      {
+        "lineNumber": 4,
+        "author": {
+          "gitId": "yanlynnnnn"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 5,
+        "author": {
+          "gitId": "yanlynnnnn"
+        },
+        "content": "public class ExpenseDefaultComparator implements Comparator\u003cExpense\u003e {"
+      },
+      {
+        "lineNumber": 6,
+        "author": {
+          "gitId": "yanlynnnnn"
+        },
+        "content": "    @Override"
+      },
+      {
+        "lineNumber": 7,
+        "author": {
+          "gitId": "yanlynnnnn"
+        },
+        "content": "    public int compare(Expense t1, Expense t2) {"
+      },
+      {
+        "lineNumber": 8,
+        "author": {
+          "gitId": "yanlynnnnn"
+        },
+        "content": "        if (t1.getDate().getLocalDate().isBefore(t2.getDate().getLocalDate())) {"
+      },
+      {
+        "lineNumber": 9,
+        "author": {
+          "gitId": "yanlynnnnn"
+        },
+        "content": "            return 1;"
+      },
+      {
+        "lineNumber": 10,
+        "author": {
+          "gitId": "yanlynnnnn"
+        },
+        "content": "        } else if (t1.getDate().getLocalDate().isAfter(t2.getDate().getLocalDate())) {"
+      },
+      {
+        "lineNumber": 11,
+        "author": {
+          "gitId": "yanlynnnnn"
+        },
+        "content": "            return -1;"
+      },
+      {
+        "lineNumber": 12,
+        "author": {
+          "gitId": "yanlynnnnn"
+        },
+        "content": "        } else {"
+      },
+      {
+        "lineNumber": 13,
+        "author": {
+          "gitId": "yanlynnnnn"
+        },
+        "content": "            return 0;"
+      },
+      {
+        "lineNumber": 14,
+        "author": {
+          "gitId": "yanlynnnnn"
+        },
+        "content": "        }"
+      },
+      {
+        "lineNumber": 15,
+        "author": {
+          "gitId": "yanlynnnnn"
+        },
+        "content": "    }"
+      },
+      {
+        "lineNumber": 16,
+        "author": {
+          "gitId": "yanlynnnnn"
+        },
+        "content": "}"
+      }
+    ],
+    "authorContributionMap": {
+      "yanlynnnnn": 16
+    }
+  },
+  {
     "path": "src/main/java/seedu/homerce/model/expense/IsFixed.java",
     "fileType": "functional-code",
     "lines": [
@@ -85320,128 +86189,128 @@
       {
         "lineNumber": 12,
         "author": {
-          "gitId": "RuiFengg"
+          "gitId": "yanlynnnnn"
         },
-        "content": "import seedu.homerce.model.util.nonuniquelist.NonUniqueList;"
+        "content": "import seedu.homerce.model.expense.ExpenseComparator;"
       },
       {
         "lineNumber": 13,
         "author": {
           "gitId": "yanlynnnnn"
         },
-        "content": ""
+        "content": "import seedu.homerce.model.expense.ExpenseDefaultComparator;"
       },
       {
         "lineNumber": 14,
         "author": {
-          "gitId": "yanlynnnnn"
+          "gitId": "RuiFengg"
         },
-        "content": "public class ExpenseTracker implements ReadOnlyExpenseTracker {"
+        "content": "import seedu.homerce.model.util.nonuniquelist.NonUniqueList;"
       },
       {
         "lineNumber": 15,
         "author": {
           "gitId": "yanlynnnnn"
         },
-        "content": "    private final NonUniqueList\u003cExpense\u003e expenses;"
+        "content": ""
       },
       {
         "lineNumber": 16,
         "author": {
           "gitId": "yanlynnnnn"
         },
-        "content": ""
+        "content": "public class ExpenseTracker implements ReadOnlyExpenseTracker {"
       },
       {
         "lineNumber": 17,
         "author": {
           "gitId": "yanlynnnnn"
         },
-        "content": "    public ExpenseTracker() {"
+        "content": "    private final NonUniqueList\u003cExpense\u003e expenses;"
       },
       {
         "lineNumber": 18,
         "author": {
           "gitId": "yanlynnnnn"
         },
-        "content": "        this.expenses \u003d new NonUniqueList\u003c\u003e();"
+        "content": ""
       },
       {
         "lineNumber": 19,
         "author": {
           "gitId": "yanlynnnnn"
         },
-        "content": "    }"
+        "content": "    public ExpenseTracker() {"
       },
       {
         "lineNumber": 20,
         "author": {
           "gitId": "yanlynnnnn"
         },
-        "content": ""
+        "content": "        this.expenses \u003d new NonUniqueList\u003c\u003e();"
       },
       {
         "lineNumber": 21,
         "author": {
           "gitId": "yanlynnnnn"
         },
-        "content": "    /**"
+        "content": "    }"
       },
       {
         "lineNumber": 22,
         "author": {
           "gitId": "yanlynnnnn"
         },
-        "content": "     * Creates an ExpenseTracker using the Expenses in the {@code toBeCopied}"
+        "content": ""
       },
       {
         "lineNumber": 23,
         "author": {
           "gitId": "yanlynnnnn"
         },
-        "content": "     */"
+        "content": "    /**"
       },
       {
         "lineNumber": 24,
         "author": {
           "gitId": "yanlynnnnn"
         },
-        "content": "    public ExpenseTracker(ReadOnlyExpenseTracker toBeCopied) {"
+        "content": "     * Creates an ExpenseTracker using the Expenses in the {@code toBeCopied}"
       },
       {
         "lineNumber": 25,
         "author": {
           "gitId": "yanlynnnnn"
         },
-        "content": "        this.expenses \u003d new NonUniqueList\u003c\u003e();"
+        "content": "     */"
       },
       {
         "lineNumber": 26,
         "author": {
           "gitId": "yanlynnnnn"
         },
-        "content": "        resetData(toBeCopied);"
+        "content": "    public ExpenseTracker(ReadOnlyExpenseTracker toBeCopied) {"
       },
       {
         "lineNumber": 27,
         "author": {
           "gitId": "yanlynnnnn"
         },
-        "content": "    }"
+        "content": "        this.expenses \u003d new NonUniqueList\u003c\u003e();"
       },
       {
         "lineNumber": 28,
         "author": {
           "gitId": "yanlynnnnn"
         },
-        "content": ""
+        "content": "        resetData(toBeCopied);"
       },
       {
         "lineNumber": 29,
         "author": {
           "gitId": "yanlynnnnn"
         },
-        "content": "    //// list overwrite operations"
+        "content": "    }"
       },
       {
         "lineNumber": 30,
@@ -85455,112 +86324,112 @@
         "author": {
           "gitId": "yanlynnnnn"
         },
-        "content": "    /**"
+        "content": "    //// list overwrite operations"
       },
       {
         "lineNumber": 32,
         "author": {
           "gitId": "yanlynnnnn"
         },
-        "content": "     * Replaces the contents of the expense list with {@code expenses}."
+        "content": ""
       },
       {
         "lineNumber": 33,
         "author": {
           "gitId": "yanlynnnnn"
         },
-        "content": "     */"
+        "content": "    /**"
       },
       {
         "lineNumber": 34,
         "author": {
           "gitId": "yanlynnnnn"
         },
-        "content": "    public void setExpenses(List\u003cExpense\u003e expenses) {"
+        "content": "     * Replaces the contents of the expense list with {@code expenses}."
       },
       {
         "lineNumber": 35,
         "author": {
           "gitId": "yanlynnnnn"
         },
-        "content": "        this.expenses.setItems(expenses);"
+        "content": "     */"
       },
       {
         "lineNumber": 36,
         "author": {
           "gitId": "yanlynnnnn"
         },
-        "content": "    }"
+        "content": "    public void setExpenses(List\u003cExpense\u003e expenses) {"
       },
       {
         "lineNumber": 37,
         "author": {
           "gitId": "yanlynnnnn"
         },
-        "content": ""
+        "content": "        this.expenses.setItems(expenses);"
       },
       {
         "lineNumber": 38,
         "author": {
           "gitId": "yanlynnnnn"
         },
-        "content": "    /**"
+        "content": "    }"
       },
       {
         "lineNumber": 39,
         "author": {
           "gitId": "yanlynnnnn"
         },
-        "content": "     * Resets the existing data of this {@code ExpenseTracker} with {@code newData}."
+        "content": ""
       },
       {
         "lineNumber": 40,
         "author": {
           "gitId": "yanlynnnnn"
         },
-        "content": "     */"
+        "content": "    /**"
       },
       {
         "lineNumber": 41,
         "author": {
           "gitId": "yanlynnnnn"
         },
-        "content": "    public void resetData(ReadOnlyExpenseTracker newData) {"
+        "content": "     * Resets the existing data of this {@code ExpenseTracker} with {@code newData}."
       },
       {
         "lineNumber": 42,
         "author": {
           "gitId": "yanlynnnnn"
         },
-        "content": "        requireNonNull(newData);"
+        "content": "     */"
       },
       {
         "lineNumber": 43,
         "author": {
           "gitId": "yanlynnnnn"
         },
-        "content": "        setExpenses(newData.getExpenseList());"
+        "content": "    public void resetData(ReadOnlyExpenseTracker newData) {"
       },
       {
         "lineNumber": 44,
         "author": {
           "gitId": "yanlynnnnn"
         },
-        "content": "    }"
+        "content": "        requireNonNull(newData);"
       },
       {
         "lineNumber": 45,
         "author": {
           "gitId": "yanlynnnnn"
         },
-        "content": ""
+        "content": "        setExpenses(newData.getExpenseList());"
       },
       {
         "lineNumber": 46,
         "author": {
           "gitId": "yanlynnnnn"
         },
-        "content": "    //// expense-level operations"
+        "content": "    }"
       },
       {
         "lineNumber": 47,
@@ -85574,273 +86443,273 @@
         "author": {
           "gitId": "yanlynnnnn"
         },
-        "content": "    /**"
+        "content": "    //// expense-level operations"
       },
       {
         "lineNumber": 49,
         "author": {
           "gitId": "yanlynnnnn"
         },
-        "content": "     * Adds an expense to the SuperSalon."
+        "content": ""
       },
       {
         "lineNumber": 50,
         "author": {
           "gitId": "yanlynnnnn"
         },
-        "content": "     */"
+        "content": "    /**"
       },
       {
         "lineNumber": 51,
         "author": {
           "gitId": "yanlynnnnn"
         },
-        "content": "    public void addExpense(Expense e) {"
+        "content": "     * Adds an expense to the SuperSalon."
       },
       {
         "lineNumber": 52,
         "author": {
           "gitId": "yanlynnnnn"
         },
-        "content": "        expenses.add(e);"
+        "content": "     */"
       },
       {
         "lineNumber": 53,
         "author": {
           "gitId": "yanlynnnnn"
         },
-        "content": "    }"
+        "content": "    public void addExpense(Expense e) {"
       },
       {
         "lineNumber": 54,
         "author": {
           "gitId": "yanlynnnnn"
         },
-        "content": ""
+        "content": "        expenses.add(e);"
       },
       {
         "lineNumber": 55,
         "author": {
           "gitId": "yanlynnnnn"
         },
-        "content": "    /**"
+        "content": "    }"
       },
       {
         "lineNumber": 56,
         "author": {
           "gitId": "yanlynnnnn"
         },
-        "content": "     * Replaces the given service {@code target} in the list with {@code editedExpense}."
+        "content": ""
       },
       {
         "lineNumber": 57,
         "author": {
           "gitId": "yanlynnnnn"
         },
-        "content": "     * {@code target} must exist in the SuperSalon."
+        "content": "    /**"
       },
       {
         "lineNumber": 58,
         "author": {
           "gitId": "yanlynnnnn"
         },
-        "content": "     */"
+        "content": "     * Replaces the given service {@code target} in the list with {@code editedExpense}."
       },
       {
         "lineNumber": 59,
         "author": {
           "gitId": "yanlynnnnn"
         },
-        "content": "    public void setExpense(Expense target, Expense editedExpense) {"
+        "content": "     * {@code target} must exist in the SuperSalon."
       },
       {
         "lineNumber": 60,
         "author": {
           "gitId": "yanlynnnnn"
         },
-        "content": "        requireNonNull(editedExpense);"
+        "content": "     */"
       },
       {
         "lineNumber": 61,
         "author": {
           "gitId": "yanlynnnnn"
         },
-        "content": ""
+        "content": "    public void setExpense(Expense target, Expense editedExpense) {"
       },
       {
         "lineNumber": 62,
         "author": {
           "gitId": "yanlynnnnn"
         },
-        "content": "        expenses.setItem(target, editedExpense);"
+        "content": "        requireNonNull(editedExpense);"
       },
       {
         "lineNumber": 63,
         "author": {
           "gitId": "yanlynnnnn"
         },
-        "content": "    }"
+        "content": ""
       },
       {
         "lineNumber": 64,
         "author": {
           "gitId": "yanlynnnnn"
         },
-        "content": ""
+        "content": "        expenses.setItem(target, editedExpense);"
       },
       {
         "lineNumber": 65,
         "author": {
-          "gitId": "RuiFengg"
+          "gitId": "yanlynnnnn"
         },
-        "content": "    public List\u003cExpense\u003e filterByMonth(Predicate\u003cExpense\u003e predicate) {"
+        "content": "    }"
       },
       {
         "lineNumber": 66,
         "author": {
-          "gitId": "RuiFengg"
+          "gitId": "yanlynnnnn"
         },
-        "content": "        return expenses.stream().filter(x -\u003e predicate.test(x)).collect(Collectors.toList());"
+        "content": ""
       },
       {
         "lineNumber": 67,
         "author": {
           "gitId": "RuiFengg"
         },
-        "content": "    }"
+        "content": "    public List\u003cExpense\u003e filterByMonth(Predicate\u003cExpense\u003e predicate) {"
       },
       {
         "lineNumber": 68,
         "author": {
           "gitId": "RuiFengg"
         },
-        "content": ""
+        "content": "        return expenses.stream().filter(x -\u003e predicate.test(x)).collect(Collectors.toList());"
       },
       {
         "lineNumber": 69,
         "author": {
           "gitId": "RuiFengg"
         },
-        "content": "    public List\u003cExpense\u003e filterByYear(Predicate\u003cExpense\u003e predicate) {"
+        "content": "    }"
       },
       {
         "lineNumber": 70,
         "author": {
           "gitId": "RuiFengg"
         },
-        "content": "        return expenses.stream().filter(x -\u003e predicate.test(x)).collect(Collectors.toList());"
+        "content": ""
       },
       {
         "lineNumber": 71,
         "author": {
           "gitId": "RuiFengg"
         },
-        "content": "    }"
+        "content": "    public List\u003cExpense\u003e filterByYear(Predicate\u003cExpense\u003e predicate) {"
       },
       {
         "lineNumber": 72,
         "author": {
           "gitId": "RuiFengg"
         },
-        "content": ""
+        "content": "        return expenses.stream().filter(x -\u003e predicate.test(x)).collect(Collectors.toList());"
       },
       {
         "lineNumber": 73,
         "author": {
-          "gitId": "yanlynnnnn"
+          "gitId": "RuiFengg"
         },
-        "content": "    /**"
+        "content": "    }"
       },
       {
         "lineNumber": 74,
         "author": {
-          "gitId": "yanlynnnnn"
+          "gitId": "RuiFengg"
         },
-        "content": "     * Removes {@code key} from this {@code ExpenseTracker}."
+        "content": ""
       },
       {
         "lineNumber": 75,
         "author": {
           "gitId": "yanlynnnnn"
         },
-        "content": "     * {@code key} must exist in the SuperSalon."
+        "content": "    /**"
       },
       {
         "lineNumber": 76,
         "author": {
           "gitId": "yanlynnnnn"
         },
-        "content": "     */"
+        "content": "     * Removes {@code key} from this {@code ExpenseTracker}."
       },
       {
         "lineNumber": 77,
         "author": {
           "gitId": "yanlynnnnn"
         },
-        "content": "    public void removeExpense(Expense key) {"
+        "content": "     * {@code key} must exist in the SuperSalon."
       },
       {
         "lineNumber": 78,
         "author": {
           "gitId": "yanlynnnnn"
         },
-        "content": "        expenses.remove(key);"
+        "content": "     */"
       },
       {
         "lineNumber": 79,
         "author": {
           "gitId": "yanlynnnnn"
         },
-        "content": "    }"
+        "content": "    public void removeExpense(Expense key) {"
       },
       {
         "lineNumber": 80,
         "author": {
           "gitId": "yanlynnnnn"
         },
-        "content": ""
+        "content": "        expenses.remove(key);"
       },
       {
         "lineNumber": 81,
         "author": {
           "gitId": "yanlynnnnn"
         },
-        "content": "    @Override"
+        "content": "    }"
       },
       {
         "lineNumber": 82,
         "author": {
           "gitId": "yanlynnnnn"
         },
-        "content": "    public ObservableList\u003cExpense\u003e getExpenseList() {"
+        "content": ""
       },
       {
         "lineNumber": 83,
         "author": {
           "gitId": "yanlynnnnn"
         },
-        "content": "        return expenses.asUnmodifiableObservableList();"
+        "content": "    @Override"
       },
       {
         "lineNumber": 84,
         "author": {
           "gitId": "yanlynnnnn"
         },
-        "content": "    }"
+        "content": "    public ObservableList\u003cExpense\u003e getExpenseList() {"
       },
       {
         "lineNumber": 85,
         "author": {
           "gitId": "yanlynnnnn"
         },
-        "content": ""
+        "content": "        return expenses.asUnmodifiableObservableList();"
       },
       {
         "lineNumber": 86,
         "author": {
           "gitId": "yanlynnnnn"
         },
-        "content": "    //// util methods"
+        "content": "    }"
       },
       {
         "lineNumber": 87,
@@ -85854,49 +86723,49 @@
         "author": {
           "gitId": "yanlynnnnn"
         },
-        "content": "    @Override"
+        "content": "    //// util methods"
       },
       {
         "lineNumber": 89,
         "author": {
           "gitId": "yanlynnnnn"
         },
-        "content": "    public String toString() {"
+        "content": ""
       },
       {
         "lineNumber": 90,
         "author": {
           "gitId": "yanlynnnnn"
         },
-        "content": "        return \"Expense Tracker:\\n\""
+        "content": "    @Override"
       },
       {
         "lineNumber": 91,
         "author": {
           "gitId": "yanlynnnnn"
         },
-        "content": "                + expenses.stream().map(Expense::toString).collect(Collectors.joining(\"\\n\"))"
+        "content": "    public String toString() {"
       },
       {
         "lineNumber": 92,
         "author": {
           "gitId": "yanlynnnnn"
         },
-        "content": "                + \"\\n Total number of expenses: \" + expenses.size();"
+        "content": "        return \"Expense Tracker:\\n\""
       },
       {
         "lineNumber": 93,
         "author": {
           "gitId": "yanlynnnnn"
         },
-        "content": ""
+        "content": "                + expenses.stream().map(Expense::toString).collect(Collectors.joining(\"\\n\"))"
       },
       {
         "lineNumber": 94,
         "author": {
           "gitId": "yanlynnnnn"
         },
-        "content": "    }"
+        "content": "                + \"\\n Total number of expenses: \" + expenses.size();"
       },
       {
         "lineNumber": 95,
@@ -85910,171 +86779,332 @@
         "author": {
           "gitId": "yanlynnnnn"
         },
-        "content": "    @Override"
+        "content": "    }"
       },
       {
         "lineNumber": 97,
         "author": {
           "gitId": "yanlynnnnn"
         },
-        "content": "    public boolean equals(Object other) {"
+        "content": ""
       },
       {
         "lineNumber": 98,
         "author": {
           "gitId": "yanlynnnnn"
         },
-        "content": "        return other \u003d\u003d this // short circuit if same object"
+        "content": "    @Override"
       },
       {
         "lineNumber": 99,
         "author": {
           "gitId": "yanlynnnnn"
         },
-        "content": "                || (other instanceof ExpenseTracker // instanceof handles nulls"
+        "content": "    public boolean equals(Object other) {"
       },
       {
         "lineNumber": 100,
         "author": {
           "gitId": "yanlynnnnn"
         },
-        "content": "                \u0026\u0026 expenses.equals(((ExpenseTracker) other).expenses));"
+        "content": "        return other \u003d\u003d this // short circuit if same object"
       },
       {
         "lineNumber": 101,
         "author": {
           "gitId": "yanlynnnnn"
         },
-        "content": "    }"
+        "content": "                || (other instanceof ExpenseTracker // instanceof handles nulls"
       },
       {
         "lineNumber": 102,
         "author": {
           "gitId": "yanlynnnnn"
         },
-        "content": ""
+        "content": "                \u0026\u0026 expenses.equals(((ExpenseTracker) other).expenses));"
       },
       {
         "lineNumber": 103,
         "author": {
           "gitId": "yanlynnnnn"
         },
-        "content": "    @Override"
+        "content": "    }"
       },
       {
         "lineNumber": 104,
         "author": {
           "gitId": "yanlynnnnn"
         },
-        "content": "    public int hashCode() {"
+        "content": ""
       },
       {
         "lineNumber": 105,
         "author": {
           "gitId": "yanlynnnnn"
         },
-        "content": "        return Objects.hash(expenses);"
+        "content": "    @Override"
       },
       {
         "lineNumber": 106,
         "author": {
           "gitId": "yanlynnnnn"
         },
-        "content": "    }"
+        "content": "    public int hashCode() {"
       },
       {
         "lineNumber": 107,
         "author": {
-          "gitId": "hansebastian"
+          "gitId": "yanlynnnnn"
         },
-        "content": ""
+        "content": "        return Objects.hash(expenses);"
       },
       {
         "lineNumber": 108,
         "author": {
-          "gitId": "hansebastian"
+          "gitId": "yanlynnnnn"
         },
-        "content": "    /**"
+        "content": "    }"
       },
       {
         "lineNumber": 109,
         "author": {
           "gitId": "hansebastian"
         },
-        "content": "     * Creates a deep copy of all the expenses in the list of expenses."
+        "content": ""
       },
       {
         "lineNumber": 110,
         "author": {
           "gitId": "hansebastian"
         },
-        "content": "     *"
+        "content": "    /**"
       },
       {
         "lineNumber": 111,
         "author": {
           "gitId": "hansebastian"
         },
-        "content": "     * @return a list of expenses."
+        "content": "     * Creates a deep copy of all the expenses in the list of expenses."
       },
       {
         "lineNumber": 112,
         "author": {
           "gitId": "hansebastian"
         },
-        "content": "     */"
+        "content": "     *"
       },
       {
         "lineNumber": 113,
         "author": {
           "gitId": "hansebastian"
         },
-        "content": "    public ExpenseTracker deepCopy() {"
+        "content": "     * @return a list of expenses."
       },
       {
         "lineNumber": 114,
         "author": {
           "gitId": "hansebastian"
         },
-        "content": "        List\u003cExpense\u003e internalListCopy \u003d expenses.deepCopy();"
+        "content": "     */"
       },
       {
         "lineNumber": 115,
         "author": {
           "gitId": "hansebastian"
         },
-        "content": "        ExpenseTracker expenseManagerCopy \u003d new ExpenseTracker();"
+        "content": "    public ExpenseTracker deepCopy() {"
       },
       {
         "lineNumber": 116,
         "author": {
           "gitId": "hansebastian"
         },
-        "content": "        expenseManagerCopy.setExpenses(internalListCopy);"
+        "content": "        List\u003cExpense\u003e internalListCopy \u003d expenses.deepCopy();"
       },
       {
         "lineNumber": 117,
         "author": {
           "gitId": "hansebastian"
         },
-        "content": "        return expenseManagerCopy;"
+        "content": "        ExpenseTracker expenseManagerCopy \u003d new ExpenseTracker();"
       },
       {
         "lineNumber": 118,
         "author": {
           "gitId": "hansebastian"
         },
-        "content": "    }"
+        "content": "        expenseManagerCopy.setExpenses(internalListCopy);"
       },
       {
         "lineNumber": 119,
+        "author": {
+          "gitId": "hansebastian"
+        },
+        "content": "        return expenseManagerCopy;"
+      },
+      {
+        "lineNumber": 120,
+        "author": {
+          "gitId": "hansebastian"
+        },
+        "content": "    }"
+      },
+      {
+        "lineNumber": 121,
+        "author": {
+          "gitId": "yanlynnnnn"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 122,
+        "author": {
+          "gitId": "yanlynnnnn"
+        },
+        "content": "    /**"
+      },
+      {
+        "lineNumber": 123,
+        "author": {
+          "gitId": "yanlynnnnn"
+        },
+        "content": "     * Sorts the expense list by value."
+      },
+      {
+        "lineNumber": 124,
+        "author": {
+          "gitId": "yanlynnnnn"
+        },
+        "content": "     * @param isAscending"
+      },
+      {
+        "lineNumber": 125,
+        "author": {
+          "gitId": "yanlynnnnn"
+        },
+        "content": "     */"
+      },
+      {
+        "lineNumber": 126,
+        "author": {
+          "gitId": "yanlynnnnn"
+        },
+        "content": "    @Override"
+      },
+      {
+        "lineNumber": 127,
+        "author": {
+          "gitId": "yanlynnnnn"
+        },
+        "content": "    public void sortExpenseList(boolean isAscending) {"
+      },
+      {
+        "lineNumber": 128,
+        "author": {
+          "gitId": "yanlynnnnn"
+        },
+        "content": "        if (isAscending) {"
+      },
+      {
+        "lineNumber": 129,
+        "author": {
+          "gitId": "yanlynnnnn"
+        },
+        "content": "            expenses.sort(new ExpenseComparator());"
+      },
+      {
+        "lineNumber": 130,
+        "author": {
+          "gitId": "yanlynnnnn"
+        },
+        "content": "        } else {"
+      },
+      {
+        "lineNumber": 131,
+        "author": {
+          "gitId": "yanlynnnnn"
+        },
+        "content": "            expenses.sort(new ExpenseComparator().reversed());;"
+      },
+      {
+        "lineNumber": 132,
+        "author": {
+          "gitId": "yanlynnnnn"
+        },
+        "content": "        }"
+      },
+      {
+        "lineNumber": 133,
+        "author": {
+          "gitId": "yanlynnnnn"
+        },
+        "content": "    }"
+      },
+      {
+        "lineNumber": 134,
+        "author": {
+          "gitId": "yanlynnnnn"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 135,
+        "author": {
+          "gitId": "yanlynnnnn"
+        },
+        "content": "    /**"
+      },
+      {
+        "lineNumber": 136,
+        "author": {
+          "gitId": "yanlynnnnn"
+        },
+        "content": "     * Sorts the expense list by date (default)."
+      },
+      {
+        "lineNumber": 137,
+        "author": {
+          "gitId": "yanlynnnnn"
+        },
+        "content": "     */"
+      },
+      {
+        "lineNumber": 138,
+        "author": {
+          "gitId": "yanlynnnnn"
+        },
+        "content": "    @Override"
+      },
+      {
+        "lineNumber": 139,
+        "author": {
+          "gitId": "yanlynnnnn"
+        },
+        "content": "    public void sortDefaultExpenseList() {"
+      },
+      {
+        "lineNumber": 140,
+        "author": {
+          "gitId": "yanlynnnnn"
+        },
+        "content": "        expenses.sort(new ExpenseDefaultComparator());"
+      },
+      {
+        "lineNumber": 141,
+        "author": {
+          "gitId": "yanlynnnnn"
+        },
+        "content": "    }"
+      },
+      {
+        "lineNumber": 142,
         "author": {
           "gitId": "yanlynnnnn"
         },
         "content": "}"
       },
       {
-        "lineNumber": 120,
+        "lineNumber": 143,
         "author": {
           "gitId": "yanlynnnnn"
         },
@@ -86084,7 +87114,7 @@
     "authorContributionMap": {
       "RuiFengg": 12,
       "hansebastian": 12,
-      "yanlynnnnn": 96
+      "yanlynnnnn": 119
     }
   },
   {
@@ -87002,12 +88032,89 @@
         "author": {
           "gitId": "yanlynnnnn"
         },
+        "content": ""
+      },
+      {
+        "lineNumber": 12,
+        "author": {
+          "gitId": "yanlynnnnn"
+        },
+        "content": "    /**"
+      },
+      {
+        "lineNumber": 13,
+        "author": {
+          "gitId": "yanlynnnnn"
+        },
+        "content": "     * Sorts the expense list."
+      },
+      {
+        "lineNumber": 14,
+        "author": {
+          "gitId": "yanlynnnnn"
+        },
+        "content": "     * @param isAscending"
+      },
+      {
+        "lineNumber": 15,
+        "author": {
+          "gitId": "yanlynnnnn"
+        },
+        "content": "     */"
+      },
+      {
+        "lineNumber": 16,
+        "author": {
+          "gitId": "yanlynnnnn"
+        },
+        "content": "    public void sortExpenseList(boolean isAscending);"
+      },
+      {
+        "lineNumber": 17,
+        "author": {
+          "gitId": "yanlynnnnn"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 18,
+        "author": {
+          "gitId": "yanlynnnnn"
+        },
+        "content": "    /**"
+      },
+      {
+        "lineNumber": 19,
+        "author": {
+          "gitId": "yanlynnnnn"
+        },
+        "content": "     * Sorts the expense list by date (default)."
+      },
+      {
+        "lineNumber": 20,
+        "author": {
+          "gitId": "yanlynnnnn"
+        },
+        "content": "     */"
+      },
+      {
+        "lineNumber": 21,
+        "author": {
+          "gitId": "yanlynnnnn"
+        },
+        "content": "    public void sortDefaultExpenseList();"
+      },
+      {
+        "lineNumber": 22,
+        "author": {
+          "gitId": "yanlynnnnn"
+        },
         "content": "}"
       }
     ],
     "authorContributionMap": {
       "RuiFengg": 2,
-      "yanlynnnnn": 9
+      "yanlynnnnn": 20
     }
   },
   {
@@ -97106,749 +98213,749 @@
         "author": {
           "gitId": "yanlynnnnn"
         },
-        "content": "import java.util.Iterator;"
+        "content": "import java.util.Comparator;"
       },
       {
         "lineNumber": 8,
         "author": {
           "gitId": "yanlynnnnn"
         },
-        "content": "import java.util.List;"
+        "content": "import java.util.Iterator;"
       },
       {
         "lineNumber": 9,
         "author": {
           "gitId": "yanlynnnnn"
         },
-        "content": "import java.util.stream.Stream;"
+        "content": "import java.util.List;"
       },
       {
         "lineNumber": 10,
         "author": {
           "gitId": "yanlynnnnn"
         },
-        "content": ""
+        "content": "import java.util.stream.Stream;"
       },
       {
         "lineNumber": 11,
         "author": {
           "gitId": "yanlynnnnn"
         },
-        "content": "import javafx.collections.FXCollections;"
+        "content": ""
       },
       {
         "lineNumber": 12,
         "author": {
           "gitId": "yanlynnnnn"
         },
-        "content": "import javafx.collections.ObservableList;"
+        "content": "import javafx.collections.FXCollections;"
       },
       {
         "lineNumber": 13,
+        "author": {
+          "gitId": "yanlynnnnn"
+        },
+        "content": "import javafx.collections.ObservableList;"
+      },
+      {
+        "lineNumber": 14,
         "author": {
           "gitId": "RuiFengg"
         },
         "content": "import seedu.homerce.model.expense.exceptions.ItemNotFoundException;"
       },
       {
-        "lineNumber": 14,
-        "author": {
-          "gitId": "yanlynnnnn"
-        },
-        "content": ""
-      },
-      {
         "lineNumber": 15,
         "author": {
           "gitId": "yanlynnnnn"
         },
-        "content": "public class NonUniqueList\u003cT\u003e implements Iterable\u003cT\u003e {"
+        "content": ""
       },
       {
         "lineNumber": 16,
         "author": {
           "gitId": "yanlynnnnn"
         },
-        "content": ""
+        "content": "public class NonUniqueList\u003cT\u003e implements Iterable\u003cT\u003e {"
       },
       {
         "lineNumber": 17,
         "author": {
           "gitId": "yanlynnnnn"
         },
-        "content": "    private final ObservableList\u003cT\u003e internalList \u003d FXCollections.observableArrayList();"
+        "content": ""
       },
       {
         "lineNumber": 18,
         "author": {
           "gitId": "yanlynnnnn"
         },
-        "content": "    private final ObservableList\u003cT\u003e internalUnmodifiableList \u003d"
+        "content": "    private final ObservableList\u003cT\u003e internalList \u003d FXCollections.observableArrayList();"
       },
       {
         "lineNumber": 19,
         "author": {
           "gitId": "yanlynnnnn"
         },
-        "content": "            FXCollections.unmodifiableObservableList(internalList);"
+        "content": "    private final ObservableList\u003cT\u003e internalUnmodifiableList \u003d"
       },
       {
         "lineNumber": 20,
         "author": {
           "gitId": "yanlynnnnn"
         },
-        "content": ""
+        "content": "            FXCollections.unmodifiableObservableList(internalList);"
       },
       {
         "lineNumber": 21,
         "author": {
           "gitId": "yanlynnnnn"
         },
-        "content": "    /**"
+        "content": ""
       },
       {
         "lineNumber": 22,
         "author": {
           "gitId": "yanlynnnnn"
         },
-        "content": "     * Adds an item to the list."
+        "content": "    /**"
       },
       {
         "lineNumber": 23,
         "author": {
           "gitId": "yanlynnnnn"
         },
-        "content": "     */"
+        "content": "     * Adds an item to the list."
       },
       {
         "lineNumber": 24,
         "author": {
           "gitId": "yanlynnnnn"
         },
-        "content": "    public void add(T toAdd) {"
+        "content": "     */"
       },
       {
         "lineNumber": 25,
         "author": {
           "gitId": "yanlynnnnn"
         },
-        "content": "        requireNonNull(toAdd);"
+        "content": "    public void add(T toAdd) {"
       },
       {
         "lineNumber": 26,
         "author": {
           "gitId": "yanlynnnnn"
         },
-        "content": "        internalList.add(toAdd);"
+        "content": "        requireNonNull(toAdd);"
       },
       {
         "lineNumber": 27,
         "author": {
           "gitId": "yanlynnnnn"
         },
-        "content": "    }"
+        "content": "        internalList.add(toAdd);"
       },
       {
         "lineNumber": 28,
         "author": {
           "gitId": "yanlynnnnn"
         },
-        "content": ""
+        "content": "    }"
       },
       {
         "lineNumber": 29,
         "author": {
           "gitId": "yanlynnnnn"
         },
-        "content": "    /**"
+        "content": ""
       },
       {
         "lineNumber": 30,
         "author": {
           "gitId": "yanlynnnnn"
         },
-        "content": "     * Replaces the item {@code target} in the list with {@code editedExpense} or {@code editedRevenue}."
+        "content": "    /**"
       },
       {
         "lineNumber": 31,
         "author": {
           "gitId": "yanlynnnnn"
         },
-        "content": "     * {@code target} must exist in the list."
+        "content": "     * Replaces the item {@code target} in the list with {@code editedExpense} or {@code editedRevenue}."
       },
       {
         "lineNumber": 32,
         "author": {
           "gitId": "yanlynnnnn"
         },
-        "content": "     */"
+        "content": "     * {@code target} must exist in the list."
       },
       {
         "lineNumber": 33,
         "author": {
           "gitId": "yanlynnnnn"
         },
-        "content": "    public void setItem(T target, T editedItem) {"
+        "content": "     */"
       },
       {
         "lineNumber": 34,
         "author": {
           "gitId": "yanlynnnnn"
         },
-        "content": "        requireAllNonNull(target, editedItem);"
+        "content": "    public void setItem(T target, T editedItem) {"
       },
       {
         "lineNumber": 35,
         "author": {
           "gitId": "yanlynnnnn"
         },
-        "content": ""
+        "content": "        requireAllNonNull(target, editedItem);"
       },
       {
         "lineNumber": 36,
         "author": {
           "gitId": "yanlynnnnn"
         },
-        "content": "        int index \u003d internalList.indexOf(target);"
+        "content": ""
       },
       {
         "lineNumber": 37,
         "author": {
           "gitId": "yanlynnnnn"
         },
-        "content": "        if (index \u003d\u003d -1) {"
+        "content": "        int index \u003d internalList.indexOf(target);"
       },
       {
         "lineNumber": 38,
         "author": {
           "gitId": "yanlynnnnn"
         },
-        "content": "            throw new ItemNotFoundException();"
+        "content": "        if (index \u003d\u003d -1) {"
       },
       {
         "lineNumber": 39,
         "author": {
           "gitId": "yanlynnnnn"
         },
-        "content": "        }"
+        "content": "            throw new ItemNotFoundException();"
       },
       {
         "lineNumber": 40,
         "author": {
           "gitId": "yanlynnnnn"
         },
-        "content": ""
+        "content": "        }"
       },
       {
         "lineNumber": 41,
         "author": {
           "gitId": "yanlynnnnn"
         },
-        "content": "        internalList.set(index, editedItem);"
+        "content": ""
       },
       {
         "lineNumber": 42,
         "author": {
           "gitId": "yanlynnnnn"
         },
-        "content": "    }"
+        "content": "        internalList.set(index, editedItem);"
       },
       {
         "lineNumber": 43,
         "author": {
           "gitId": "yanlynnnnn"
         },
-        "content": ""
+        "content": "    }"
       },
       {
         "lineNumber": 44,
         "author": {
           "gitId": "yanlynnnnn"
         },
-        "content": "    /**"
+        "content": ""
       },
       {
         "lineNumber": 45,
         "author": {
           "gitId": "yanlynnnnn"
         },
-        "content": "     * Removes the equivalent item from the list."
+        "content": "    /**"
       },
       {
         "lineNumber": 46,
         "author": {
           "gitId": "yanlynnnnn"
         },
-        "content": "     * The item must exist in the list."
+        "content": "     * Removes the equivalent item from the list."
       },
       {
         "lineNumber": 47,
         "author": {
           "gitId": "yanlynnnnn"
         },
-        "content": "     */"
+        "content": "     * The item must exist in the list."
       },
       {
         "lineNumber": 48,
         "author": {
           "gitId": "yanlynnnnn"
         },
-        "content": "    public void remove(T toRemove) {"
+        "content": "     */"
       },
       {
         "lineNumber": 49,
         "author": {
           "gitId": "yanlynnnnn"
         },
-        "content": "        requireNonNull(toRemove);"
+        "content": "    public void remove(T toRemove) {"
       },
       {
         "lineNumber": 50,
         "author": {
           "gitId": "yanlynnnnn"
         },
-        "content": "        if (!internalList.remove(toRemove)) {"
+        "content": "        requireNonNull(toRemove);"
       },
       {
         "lineNumber": 51,
         "author": {
           "gitId": "yanlynnnnn"
         },
-        "content": "            throw new ItemNotFoundException();"
+        "content": "        if (!internalList.remove(toRemove)) {"
       },
       {
         "lineNumber": 52,
         "author": {
           "gitId": "yanlynnnnn"
         },
-        "content": "        }"
+        "content": "            throw new ItemNotFoundException();"
       },
       {
         "lineNumber": 53,
         "author": {
           "gitId": "yanlynnnnn"
         },
-        "content": "    }"
+        "content": "        }"
       },
       {
         "lineNumber": 54,
         "author": {
           "gitId": "yanlynnnnn"
         },
-        "content": ""
+        "content": "    }"
       },
       {
         "lineNumber": 55,
         "author": {
           "gitId": "yanlynnnnn"
         },
-        "content": "    public void setItems(NonUniqueList\u003cT\u003e replacement) {"
+        "content": ""
       },
       {
         "lineNumber": 56,
         "author": {
           "gitId": "yanlynnnnn"
         },
-        "content": "        requireNonNull(replacement);"
+        "content": "    public void setItems(NonUniqueList\u003cT\u003e replacement) {"
       },
       {
         "lineNumber": 57,
         "author": {
           "gitId": "yanlynnnnn"
         },
-        "content": "        internalList.setAll(replacement.internalList);"
+        "content": "        requireNonNull(replacement);"
       },
       {
         "lineNumber": 58,
         "author": {
           "gitId": "yanlynnnnn"
         },
-        "content": "    }"
+        "content": "        internalList.setAll(replacement.internalList);"
       },
       {
         "lineNumber": 59,
         "author": {
           "gitId": "yanlynnnnn"
         },
-        "content": ""
+        "content": "    }"
       },
       {
         "lineNumber": 60,
         "author": {
           "gitId": "yanlynnnnn"
         },
-        "content": "    /**"
+        "content": ""
       },
       {
         "lineNumber": 61,
         "author": {
           "gitId": "yanlynnnnn"
         },
-        "content": "     * Replaces the contents of this list with {@code expenses}."
+        "content": "    /**"
       },
       {
         "lineNumber": 62,
         "author": {
           "gitId": "yanlynnnnn"
         },
-        "content": "     */"
+        "content": "     * Replaces the contents of this list with {@code expenses}."
       },
       {
         "lineNumber": 63,
         "author": {
           "gitId": "yanlynnnnn"
         },
-        "content": "    public void setItems(List\u003cT\u003e items) {"
+        "content": "     */"
       },
       {
         "lineNumber": 64,
         "author": {
           "gitId": "yanlynnnnn"
         },
-        "content": "        requireAllNonNull(items);"
+        "content": "    public void setItems(List\u003cT\u003e items) {"
       },
       {
         "lineNumber": 65,
         "author": {
           "gitId": "yanlynnnnn"
         },
-        "content": "        internalList.setAll(items);"
+        "content": "        requireAllNonNull(items);"
       },
       {
         "lineNumber": 66,
         "author": {
           "gitId": "yanlynnnnn"
         },
-        "content": "    }"
+        "content": "        internalList.setAll(items);"
       },
       {
         "lineNumber": 67,
         "author": {
           "gitId": "yanlynnnnn"
         },
-        "content": ""
+        "content": "    }"
       },
       {
         "lineNumber": 68,
         "author": {
           "gitId": "yanlynnnnn"
         },
-        "content": "    /**"
+        "content": ""
       },
       {
         "lineNumber": 69,
         "author": {
           "gitId": "yanlynnnnn"
         },
-        "content": "     * Returns the backing list as an unmodifiable {@code ObservableList}."
+        "content": "    /**"
       },
       {
         "lineNumber": 70,
         "author": {
           "gitId": "yanlynnnnn"
         },
-        "content": "     */"
+        "content": "     * Returns the backing list as an unmodifiable {@code ObservableList}."
       },
       {
         "lineNumber": 71,
         "author": {
           "gitId": "yanlynnnnn"
         },
-        "content": "    public ObservableList\u003cT\u003e asUnmodifiableObservableList() {"
+        "content": "     */"
       },
       {
         "lineNumber": 72,
         "author": {
           "gitId": "yanlynnnnn"
         },
-        "content": "        return internalUnmodifiableList;"
+        "content": "    public ObservableList\u003cT\u003e asUnmodifiableObservableList() {"
       },
       {
         "lineNumber": 73,
         "author": {
           "gitId": "yanlynnnnn"
         },
-        "content": "    }"
+        "content": "        return internalUnmodifiableList;"
       },
       {
         "lineNumber": 74,
         "author": {
           "gitId": "yanlynnnnn"
         },
-        "content": ""
+        "content": "    }"
       },
       {
         "lineNumber": 75,
         "author": {
           "gitId": "yanlynnnnn"
         },
-        "content": "    @Override"
+        "content": ""
       },
       {
         "lineNumber": 76,
         "author": {
           "gitId": "yanlynnnnn"
         },
-        "content": "    public Iterator\u003cT\u003e iterator() {"
+        "content": "    @Override"
       },
       {
         "lineNumber": 77,
         "author": {
           "gitId": "yanlynnnnn"
         },
-        "content": "        return internalList.iterator();"
+        "content": "    public Iterator\u003cT\u003e iterator() {"
       },
       {
         "lineNumber": 78,
         "author": {
           "gitId": "yanlynnnnn"
         },
-        "content": "    }"
+        "content": "        return internalList.iterator();"
       },
       {
         "lineNumber": 79,
         "author": {
           "gitId": "yanlynnnnn"
         },
-        "content": ""
+        "content": "    }"
       },
       {
         "lineNumber": 80,
         "author": {
           "gitId": "yanlynnnnn"
         },
-        "content": "    @Override"
+        "content": ""
       },
       {
         "lineNumber": 81,
         "author": {
           "gitId": "yanlynnnnn"
         },
-        "content": "    public boolean equals(Object other) {"
+        "content": "    @Override"
       },
       {
         "lineNumber": 82,
         "author": {
           "gitId": "yanlynnnnn"
         },
-        "content": "        return other \u003d\u003d this // short circuit if same object"
+        "content": "    public boolean equals(Object other) {"
       },
       {
         "lineNumber": 83,
         "author": {
           "gitId": "yanlynnnnn"
         },
-        "content": "                || (other instanceof NonUniqueList // instanceof handles nulls"
+        "content": "        return other \u003d\u003d this // short circuit if same object"
       },
       {
         "lineNumber": 84,
         "author": {
           "gitId": "yanlynnnnn"
         },
-        "content": "                \u0026\u0026 internalList.equals(((NonUniqueList) other).internalList));"
+        "content": "                || (other instanceof NonUniqueList // instanceof handles nulls"
       },
       {
         "lineNumber": 85,
         "author": {
           "gitId": "yanlynnnnn"
         },
-        "content": "    }"
+        "content": "                \u0026\u0026 internalList.equals(((NonUniqueList) other).internalList));"
       },
       {
         "lineNumber": 86,
         "author": {
           "gitId": "yanlynnnnn"
         },
-        "content": ""
+        "content": "    }"
       },
       {
         "lineNumber": 87,
         "author": {
           "gitId": "yanlynnnnn"
         },
-        "content": "    @Override"
+        "content": ""
       },
       {
         "lineNumber": 88,
         "author": {
           "gitId": "yanlynnnnn"
         },
-        "content": "    public int hashCode() {"
+        "content": "    @Override"
       },
       {
         "lineNumber": 89,
         "author": {
           "gitId": "yanlynnnnn"
         },
-        "content": "        return internalList.hashCode();"
+        "content": "    public int hashCode() {"
       },
       {
         "lineNumber": 90,
         "author": {
           "gitId": "yanlynnnnn"
         },
-        "content": "    }"
+        "content": "        return internalList.hashCode();"
       },
       {
         "lineNumber": 91,
         "author": {
           "gitId": "yanlynnnnn"
         },
-        "content": ""
+        "content": "    }"
       },
       {
         "lineNumber": 92,
         "author": {
           "gitId": "yanlynnnnn"
         },
-        "content": "    public Stream\u003cT\u003e stream() {"
+        "content": ""
       },
       {
         "lineNumber": 93,
         "author": {
           "gitId": "yanlynnnnn"
         },
-        "content": "        return internalList.stream();"
+        "content": "    public Stream\u003cT\u003e stream() {"
       },
       {
         "lineNumber": 94,
         "author": {
           "gitId": "yanlynnnnn"
         },
-        "content": "    }"
+        "content": "        return internalList.stream();"
       },
       {
         "lineNumber": 95,
         "author": {
           "gitId": "yanlynnnnn"
         },
-        "content": ""
+        "content": "    }"
       },
       {
         "lineNumber": 96,
         "author": {
           "gitId": "yanlynnnnn"
         },
-        "content": "    public int size() {"
+        "content": ""
       },
       {
         "lineNumber": 97,
         "author": {
           "gitId": "yanlynnnnn"
         },
-        "content": "        return internalList.size();"
+        "content": "    public int size() {"
       },
       {
         "lineNumber": 98,
         "author": {
           "gitId": "yanlynnnnn"
         },
-        "content": "    }"
+        "content": "        return internalList.size();"
       },
       {
         "lineNumber": 99,
         "author": {
-          "gitId": "hansebastian"
+          "gitId": "yanlynnnnn"
         },
-        "content": ""
+        "content": "    }"
       },
       {
         "lineNumber": 100,
         "author": {
           "gitId": "hansebastian"
         },
-        "content": "    /**"
+        "content": ""
       },
       {
         "lineNumber": 101,
         "author": {
           "gitId": "hansebastian"
         },
-        "content": "     * Creates a deep copy of all the non unique list of items."
+        "content": "    /**"
       },
       {
         "lineNumber": 102,
         "author": {
           "gitId": "hansebastian"
         },
-        "content": "     *"
+        "content": "     * Creates a deep copy of all the non unique list of items."
       },
       {
         "lineNumber": 103,
         "author": {
           "gitId": "hansebastian"
         },
-        "content": "     * @return a list of deep copied items."
+        "content": "     *"
       },
       {
         "lineNumber": 104,
         "author": {
           "gitId": "hansebastian"
         },
-        "content": "     */"
+        "content": "     * @return a list of deep copied items."
       },
       {
         "lineNumber": 105,
         "author": {
           "gitId": "hansebastian"
         },
-        "content": "    public List\u003cT\u003e deepCopy() {"
+        "content": "     */"
       },
       {
         "lineNumber": 106,
         "author": {
           "gitId": "hansebastian"
         },
-        "content": "        Iterator\u003cT\u003e iterator \u003d this.iterator();"
+        "content": "    public List\u003cT\u003e deepCopy() {"
       },
       {
         "lineNumber": 107,
         "author": {
           "gitId": "hansebastian"
         },
-        "content": "        List\u003cT\u003e itemsCopy \u003d new ArrayList\u003c\u003e();"
+        "content": "        Iterator\u003cT\u003e iterator \u003d this.iterator();"
       },
       {
         "lineNumber": 108,
         "author": {
           "gitId": "hansebastian"
         },
-        "content": "        while (iterator.hasNext()) {"
+        "content": "        List\u003cT\u003e itemsCopy \u003d new ArrayList\u003c\u003e();"
       },
       {
         "lineNumber": 109,
         "author": {
           "gitId": "hansebastian"
         },
-        "content": "            itemsCopy.add(iterator.next());"
+        "content": "        while (iterator.hasNext()) {"
       },
       {
         "lineNumber": 110,
         "author": {
           "gitId": "hansebastian"
         },
-        "content": "        }"
+        "content": "            itemsCopy.add(iterator.next());"
       },
       {
         "lineNumber": 111,
         "author": {
           "gitId": "hansebastian"
         },
-        "content": "        return itemsCopy;"
+        "content": "        }"
       },
       {
         "lineNumber": 112,
         "author": {
           "gitId": "hansebastian"
         },
-        "content": "    }"
+        "content": "        return itemsCopy;"
       },
       {
         "lineNumber": 113,
         "author": {
-          "gitId": "yanlynnnnn"
+          "gitId": "hansebastian"
         },
-        "content": "}"
+        "content": "    }"
       },
       {
         "lineNumber": 114,
@@ -97862,13 +98969,69 @@
         "author": {
           "gitId": "yanlynnnnn"
         },
+        "content": "    /**"
+      },
+      {
+        "lineNumber": 116,
+        "author": {
+          "gitId": "yanlynnnnn"
+        },
+        "content": "     * Sorts the Non Unique List."
+      },
+      {
+        "lineNumber": 117,
+        "author": {
+          "gitId": "yanlynnnnn"
+        },
+        "content": "     */"
+      },
+      {
+        "lineNumber": 118,
+        "author": {
+          "gitId": "yanlynnnnn"
+        },
+        "content": "    public void sort(Comparator\u003cT\u003e comparator) {"
+      },
+      {
+        "lineNumber": 119,
+        "author": {
+          "gitId": "yanlynnnnn"
+        },
+        "content": "        FXCollections.sort(internalList, comparator);"
+      },
+      {
+        "lineNumber": 120,
+        "author": {
+          "gitId": "yanlynnnnn"
+        },
+        "content": "    }"
+      },
+      {
+        "lineNumber": 121,
+        "author": {
+          "gitId": "yanlynnnnn"
+        },
+        "content": "}"
+      },
+      {
+        "lineNumber": 122,
+        "author": {
+          "gitId": "yanlynnnnn"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 123,
+        "author": {
+          "gitId": "yanlynnnnn"
+        },
         "content": ""
       }
     ],
     "authorContributionMap": {
       "RuiFengg": 3,
       "hansebastian": 15,
-      "yanlynnnnn": 97
+      "yanlynnnnn": 105
     }
   },
   {
