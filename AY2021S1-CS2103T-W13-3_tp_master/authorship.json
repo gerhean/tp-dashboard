@@ -92886,35 +92886,35 @@
         "author": {
           "gitId": "hansebastian"
         },
-        "content": "    @Override"
+        "content": "    /**"
       },
       {
         "lineNumber": 39,
         "author": {
           "gitId": "hansebastian"
         },
-        "content": "    public boolean equals(Object other) {"
+        "content": "     * Get the integer ID of the service code for ordering with other service codes."
       },
       {
         "lineNumber": 40,
         "author": {
           "gitId": "hansebastian"
         },
-        "content": "        return other \u003d\u003d this // short circuit if same object"
+        "content": "     */"
       },
       {
         "lineNumber": 41,
         "author": {
           "gitId": "hansebastian"
         },
-        "content": "            || (other instanceof ServiceCode// instanceof handles nulls"
+        "content": "    public int getID() {"
       },
       {
         "lineNumber": 42,
         "author": {
           "gitId": "hansebastian"
         },
-        "content": "            \u0026\u0026 value.equals(((ServiceCode) other).value)); // state check"
+        "content": "        return Integer.valueOf(value.substring(2).replaceFirst(LEADING_ZEROES_REGEX, \"\"));"
       },
       {
         "lineNumber": 43,
@@ -92942,24 +92942,73 @@
         "author": {
           "gitId": "hansebastian"
         },
-        "content": "    public String toString() {"
+        "content": "    public boolean equals(Object other) {"
       },
       {
         "lineNumber": 47,
         "author": {
           "gitId": "hansebastian"
         },
-        "content": "        return value;"
+        "content": "        return other \u003d\u003d this // short circuit if same object"
       },
       {
         "lineNumber": 48,
         "author": {
           "gitId": "hansebastian"
         },
-        "content": "    }"
+        "content": "            || (other instanceof ServiceCode// instanceof handles nulls"
       },
       {
         "lineNumber": 49,
+        "author": {
+          "gitId": "hansebastian"
+        },
+        "content": "            \u0026\u0026 value.equals(((ServiceCode) other).value)); // state check"
+      },
+      {
+        "lineNumber": 50,
+        "author": {
+          "gitId": "hansebastian"
+        },
+        "content": "    }"
+      },
+      {
+        "lineNumber": 51,
+        "author": {
+          "gitId": "hansebastian"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 52,
+        "author": {
+          "gitId": "hansebastian"
+        },
+        "content": "    @Override"
+      },
+      {
+        "lineNumber": 53,
+        "author": {
+          "gitId": "hansebastian"
+        },
+        "content": "    public String toString() {"
+      },
+      {
+        "lineNumber": 54,
+        "author": {
+          "gitId": "hansebastian"
+        },
+        "content": "        return value;"
+      },
+      {
+        "lineNumber": 55,
+        "author": {
+          "gitId": "hansebastian"
+        },
+        "content": "    }"
+      },
+      {
+        "lineNumber": 56,
         "author": {
           "gitId": "RuiFengg"
         },
@@ -92968,8 +93017,178 @@
     ],
     "authorContributionMap": {
       "RuiFengg": 4,
-      "hansebastian": 41,
+      "hansebastian": 48,
       "galvinleow": 4
+    }
+  },
+  {
+    "path": "src/main/java/seedu/homerce/model/service/ServiceComparator.java",
+    "fileType": "functional-code",
+    "lines": [
+      {
+        "lineNumber": 1,
+        "author": {
+          "gitId": "hansebastian"
+        },
+        "content": "package seedu.homerce.model.service;"
+      },
+      {
+        "lineNumber": 2,
+        "author": {
+          "gitId": "hansebastian"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 3,
+        "author": {
+          "gitId": "hansebastian"
+        },
+        "content": "import java.util.Comparator;"
+      },
+      {
+        "lineNumber": 4,
+        "author": {
+          "gitId": "hansebastian"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 5,
+        "author": {
+          "gitId": "hansebastian"
+        },
+        "content": "/**"
+      },
+      {
+        "lineNumber": 6,
+        "author": {
+          "gitId": "hansebastian"
+        },
+        "content": " * Compares two services and orders the service with a smaller code before a service with"
+      },
+      {
+        "lineNumber": 7,
+        "author": {
+          "gitId": "hansebastian"
+        },
+        "content": " * a larger code."
+      },
+      {
+        "lineNumber": 8,
+        "author": {
+          "gitId": "hansebastian"
+        },
+        "content": " */"
+      },
+      {
+        "lineNumber": 9,
+        "author": {
+          "gitId": "hansebastian"
+        },
+        "content": "public class ServiceComparator implements Comparator\u003cService\u003e {"
+      },
+      {
+        "lineNumber": 10,
+        "author": {
+          "gitId": "hansebastian"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 11,
+        "author": {
+          "gitId": "hansebastian"
+        },
+        "content": "    @Override"
+      },
+      {
+        "lineNumber": 12,
+        "author": {
+          "gitId": "hansebastian"
+        },
+        "content": "    public int compare(Service s1, Service s2) {"
+      },
+      {
+        "lineNumber": 13,
+        "author": {
+          "gitId": "hansebastian"
+        },
+        "content": "        int firstServiceID \u003d s1.getServiceCode().getID();"
+      },
+      {
+        "lineNumber": 14,
+        "author": {
+          "gitId": "hansebastian"
+        },
+        "content": "        int otherServiceID \u003d s2.getServiceCode().getID();"
+      },
+      {
+        "lineNumber": 15,
+        "author": {
+          "gitId": "hansebastian"
+        },
+        "content": "        if (firstServiceID \u003c otherServiceID) {"
+      },
+      {
+        "lineNumber": 16,
+        "author": {
+          "gitId": "hansebastian"
+        },
+        "content": "            return -1;"
+      },
+      {
+        "lineNumber": 17,
+        "author": {
+          "gitId": "hansebastian"
+        },
+        "content": "        } else if (firstServiceID \u003e otherServiceID) {"
+      },
+      {
+        "lineNumber": 18,
+        "author": {
+          "gitId": "hansebastian"
+        },
+        "content": "            return 1;"
+      },
+      {
+        "lineNumber": 19,
+        "author": {
+          "gitId": "hansebastian"
+        },
+        "content": "        } else { // This case should not even happen as ServiceCodes are unique"
+      },
+      {
+        "lineNumber": 20,
+        "author": {
+          "gitId": "hansebastian"
+        },
+        "content": "            return 0;"
+      },
+      {
+        "lineNumber": 21,
+        "author": {
+          "gitId": "hansebastian"
+        },
+        "content": "        }"
+      },
+      {
+        "lineNumber": 22,
+        "author": {
+          "gitId": "hansebastian"
+        },
+        "content": "    }"
+      },
+      {
+        "lineNumber": 23,
+        "author": {
+          "gitId": "hansebastian"
+        },
+        "content": "}"
+      }
+    ],
+    "authorContributionMap": {
+      "hansebastian": 23
     }
   },
   {
@@ -93042,177 +93261,177 @@
       {
         "lineNumber": 10,
         "author": {
-          "gitId": "RuiFengg"
+          "gitId": "hansebastian"
         },
-        "content": "import seedu.homerce.model.service.exceptions.ServiceNotFoundException;"
+        "content": "import javafx.collections.FXCollections;"
       },
       {
         "lineNumber": 11,
         "author": {
           "gitId": "RuiFengg"
         },
-        "content": "import seedu.homerce.model.util.uniquelist.UniqueList;"
+        "content": "import seedu.homerce.model.service.exceptions.ServiceNotFoundException;"
       },
       {
         "lineNumber": 12,
         "author": {
-          "gitId": "khoongwk"
+          "gitId": "RuiFengg"
         },
-        "content": ""
+        "content": "import seedu.homerce.model.util.uniquelist.UniqueList;"
       },
       {
         "lineNumber": 13,
         "author": {
           "gitId": "khoongwk"
         },
-        "content": "public class UniqueServiceList extends UniqueList\u003cService\u003e {"
+        "content": ""
       },
       {
         "lineNumber": 14,
         "author": {
           "gitId": "khoongwk"
         },
-        "content": ""
+        "content": "public class UniqueServiceList extends UniqueList\u003cService\u003e {"
       },
       {
         "lineNumber": 15,
         "author": {
-          "gitId": "khoongwk"
+          "gitId": "hansebastian"
         },
-        "content": "    /**"
+        "content": "    private final ServiceComparator serviceComparator \u003d new ServiceComparator();"
       },
       {
         "lineNumber": 16,
         "author": {
-          "gitId": "khoongwk"
-        },
-        "content": "     * Returns true if the list contains an equivalent item as the given argument."
-      },
-      {
-        "lineNumber": 17,
-        "author": {
-          "gitId": "khoongwk"
-        },
-        "content": "     */"
-      },
-      {
-        "lineNumber": 18,
-        "author": {
-          "gitId": "khoongwk"
-        },
-        "content": "    public boolean contains(ServiceCode toCheck) {"
-      },
-      {
-        "lineNumber": 19,
-        "author": {
-          "gitId": "khoongwk"
-        },
-        "content": "        requireNonNull(toCheck);"
-      },
-      {
-        "lineNumber": 20,
-        "author": {
-          "gitId": "khoongwk"
-        },
-        "content": "        return internalList.stream().anyMatch(x -\u003e x.getServiceCode().equals(toCheck));"
-      },
-      {
-        "lineNumber": 21,
-        "author": {
-          "gitId": "khoongwk"
-        },
-        "content": "    }"
-      },
-      {
-        "lineNumber": 22,
-        "author": {
-          "gitId": "khoongwk"
+          "gitId": "hansebastian"
         },
         "content": ""
       },
       {
+        "lineNumber": 17,
+        "author": {
+          "gitId": "hansebastian"
+        },
+        "content": "    @Override"
+      },
+      {
+        "lineNumber": 18,
+        "author": {
+          "gitId": "hansebastian"
+        },
+        "content": "    public void add(Service toAdd) {"
+      },
+      {
+        "lineNumber": 19,
+        "author": {
+          "gitId": "hansebastian"
+        },
+        "content": "        super.add(toAdd);"
+      },
+      {
+        "lineNumber": 20,
+        "author": {
+          "gitId": "hansebastian"
+        },
+        "content": "        FXCollections.sort(internalList, serviceComparator);"
+      },
+      {
+        "lineNumber": 21,
+        "author": {
+          "gitId": "hansebastian"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 22,
+        "author": {
+          "gitId": "hansebastian"
+        },
+        "content": "    }"
+      },
+      {
         "lineNumber": 23,
         "author": {
-          "gitId": "khoongwk"
+          "gitId": "hansebastian"
         },
-        "content": "    /**"
+        "content": ""
       },
       {
         "lineNumber": 24,
         "author": {
-          "gitId": "khoongwk"
+          "gitId": "hansebastian"
         },
-        "content": "     * Find the service based on service code. If service code does not match a service, exception is thrown."
+        "content": "    @Override"
       },
       {
         "lineNumber": 25,
         "author": {
-          "gitId": "khoongwk"
+          "gitId": "hansebastian"
         },
-        "content": "     */"
+        "content": "    public void setItem(Service target, Service edited) {"
       },
       {
         "lineNumber": 26,
         "author": {
-          "gitId": "khoongwk"
+          "gitId": "hansebastian"
         },
-        "content": "    public Service getServiceByServiceCode(ServiceCode serviceCode) {"
+        "content": "        super.setItem(target, edited);"
       },
       {
         "lineNumber": 27,
         "author": {
-          "gitId": "khoongwk"
+          "gitId": "hansebastian"
         },
-        "content": "        requireAllNonNull(serviceCode);"
+        "content": "        FXCollections.sort(internalList, serviceComparator);"
       },
       {
         "lineNumber": 28,
         "author": {
-          "gitId": "khoongwk"
+          "gitId": "hansebastian"
         },
-        "content": "        for (Service service : internalList) {"
+        "content": ""
       },
       {
         "lineNumber": 29,
         "author": {
-          "gitId": "khoongwk"
+          "gitId": "hansebastian"
         },
-        "content": "            if (service.getServiceCode().equals(serviceCode)) {"
+        "content": "    }"
       },
       {
         "lineNumber": 30,
         "author": {
-          "gitId": "khoongwk"
+          "gitId": "hansebastian"
         },
-        "content": "                return service;"
+        "content": ""
       },
       {
         "lineNumber": 31,
         "author": {
-          "gitId": "khoongwk"
+          "gitId": "hansebastian"
         },
-        "content": "            }"
+        "content": "    @Override"
       },
       {
         "lineNumber": 32,
         "author": {
-          "gitId": "khoongwk"
+          "gitId": "hansebastian"
         },
-        "content": "        }"
+        "content": "    public void setItems(UniqueList\u003cService\u003e replacement) {"
       },
       {
         "lineNumber": 33,
         "author": {
-          "gitId": "khoongwk"
+          "gitId": "hansebastian"
         },
-        "content": "        throw new ServiceNotFoundException();"
+        "content": "        super.setItems(replacement);"
       },
       {
         "lineNumber": 34,
         "author": {
-          "gitId": "khoongwk"
+          "gitId": "hansebastian"
         },
-        "content": "    }"
+        "content": "        FXCollections.sort(internalList, serviceComparator);"
       },
       {
         "lineNumber": 35,
@@ -93226,94 +93445,304 @@
         "author": {
           "gitId": "hansebastian"
         },
-        "content": "    /**"
+        "content": "    }"
       },
       {
         "lineNumber": 37,
         "author": {
           "gitId": "hansebastian"
         },
-        "content": "     * Creates a deep copy of all the services in the unique list of services."
+        "content": ""
       },
       {
         "lineNumber": 38,
         "author": {
           "gitId": "hansebastian"
         },
-        "content": "     *"
+        "content": "    @Override"
       },
       {
         "lineNumber": 39,
         "author": {
           "gitId": "hansebastian"
         },
-        "content": "     * @return a list of services."
+        "content": "    public void setItems(List\u003cService\u003e items) {"
       },
       {
         "lineNumber": 40,
         "author": {
           "gitId": "hansebastian"
         },
-        "content": "     */"
+        "content": "        super.setItems(items);"
       },
       {
         "lineNumber": 41,
         "author": {
           "gitId": "hansebastian"
         },
-        "content": "    public List\u003cService\u003e deepCopy() {"
+        "content": "        FXCollections.sort(internalList, serviceComparator);"
       },
       {
         "lineNumber": 42,
         "author": {
           "gitId": "hansebastian"
         },
-        "content": "        Iterator\u003cService\u003e iterator \u003d this.iterator();"
+        "content": ""
       },
       {
         "lineNumber": 43,
         "author": {
           "gitId": "hansebastian"
         },
-        "content": "        List\u003cService\u003e servicesCopy \u003d new ArrayList\u003c\u003e();"
+        "content": "    }"
       },
       {
         "lineNumber": 44,
+        "author": {
+          "gitId": "khoongwk"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 45,
+        "author": {
+          "gitId": "khoongwk"
+        },
+        "content": "    /**"
+      },
+      {
+        "lineNumber": 46,
+        "author": {
+          "gitId": "khoongwk"
+        },
+        "content": "     * Returns true if the list contains an equivalent item as the given argument."
+      },
+      {
+        "lineNumber": 47,
+        "author": {
+          "gitId": "khoongwk"
+        },
+        "content": "     */"
+      },
+      {
+        "lineNumber": 48,
+        "author": {
+          "gitId": "khoongwk"
+        },
+        "content": "    public boolean contains(ServiceCode toCheck) {"
+      },
+      {
+        "lineNumber": 49,
+        "author": {
+          "gitId": "khoongwk"
+        },
+        "content": "        requireNonNull(toCheck);"
+      },
+      {
+        "lineNumber": 50,
+        "author": {
+          "gitId": "khoongwk"
+        },
+        "content": "        return internalList.stream().anyMatch(x -\u003e x.getServiceCode().equals(toCheck));"
+      },
+      {
+        "lineNumber": 51,
+        "author": {
+          "gitId": "khoongwk"
+        },
+        "content": "    }"
+      },
+      {
+        "lineNumber": 52,
+        "author": {
+          "gitId": "khoongwk"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 53,
+        "author": {
+          "gitId": "khoongwk"
+        },
+        "content": "    /**"
+      },
+      {
+        "lineNumber": 54,
+        "author": {
+          "gitId": "khoongwk"
+        },
+        "content": "     * Find the service based on service code. If service code does not match a service, exception is thrown."
+      },
+      {
+        "lineNumber": 55,
+        "author": {
+          "gitId": "khoongwk"
+        },
+        "content": "     */"
+      },
+      {
+        "lineNumber": 56,
+        "author": {
+          "gitId": "khoongwk"
+        },
+        "content": "    public Service getServiceByServiceCode(ServiceCode serviceCode) {"
+      },
+      {
+        "lineNumber": 57,
+        "author": {
+          "gitId": "khoongwk"
+        },
+        "content": "        requireAllNonNull(serviceCode);"
+      },
+      {
+        "lineNumber": 58,
+        "author": {
+          "gitId": "khoongwk"
+        },
+        "content": "        for (Service service : internalList) {"
+      },
+      {
+        "lineNumber": 59,
+        "author": {
+          "gitId": "khoongwk"
+        },
+        "content": "            if (service.getServiceCode().equals(serviceCode)) {"
+      },
+      {
+        "lineNumber": 60,
+        "author": {
+          "gitId": "khoongwk"
+        },
+        "content": "                return service;"
+      },
+      {
+        "lineNumber": 61,
+        "author": {
+          "gitId": "khoongwk"
+        },
+        "content": "            }"
+      },
+      {
+        "lineNumber": 62,
+        "author": {
+          "gitId": "khoongwk"
+        },
+        "content": "        }"
+      },
+      {
+        "lineNumber": 63,
+        "author": {
+          "gitId": "khoongwk"
+        },
+        "content": "        throw new ServiceNotFoundException();"
+      },
+      {
+        "lineNumber": 64,
+        "author": {
+          "gitId": "khoongwk"
+        },
+        "content": "    }"
+      },
+      {
+        "lineNumber": 65,
+        "author": {
+          "gitId": "hansebastian"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 66,
+        "author": {
+          "gitId": "hansebastian"
+        },
+        "content": "    /**"
+      },
+      {
+        "lineNumber": 67,
+        "author": {
+          "gitId": "hansebastian"
+        },
+        "content": "     * Creates a deep copy of all the services in the unique list of services."
+      },
+      {
+        "lineNumber": 68,
+        "author": {
+          "gitId": "hansebastian"
+        },
+        "content": "     *"
+      },
+      {
+        "lineNumber": 69,
+        "author": {
+          "gitId": "hansebastian"
+        },
+        "content": "     * @return a list of services."
+      },
+      {
+        "lineNumber": 70,
+        "author": {
+          "gitId": "hansebastian"
+        },
+        "content": "     */"
+      },
+      {
+        "lineNumber": 71,
+        "author": {
+          "gitId": "hansebastian"
+        },
+        "content": "    public List\u003cService\u003e deepCopy() {"
+      },
+      {
+        "lineNumber": 72,
+        "author": {
+          "gitId": "hansebastian"
+        },
+        "content": "        Iterator\u003cService\u003e iterator \u003d this.iterator();"
+      },
+      {
+        "lineNumber": 73,
+        "author": {
+          "gitId": "hansebastian"
+        },
+        "content": "        List\u003cService\u003e servicesCopy \u003d new ArrayList\u003c\u003e();"
+      },
+      {
+        "lineNumber": 74,
         "author": {
           "gitId": "hansebastian"
         },
         "content": "        while (iterator.hasNext()) {"
       },
       {
-        "lineNumber": 45,
+        "lineNumber": 75,
         "author": {
           "gitId": "hansebastian"
         },
         "content": "            servicesCopy.add(iterator.next());"
       },
       {
-        "lineNumber": 46,
+        "lineNumber": 76,
         "author": {
           "gitId": "hansebastian"
         },
         "content": "        }"
       },
       {
-        "lineNumber": 47,
+        "lineNumber": 77,
         "author": {
           "gitId": "hansebastian"
         },
         "content": "        return servicesCopy;"
       },
       {
-        "lineNumber": 48,
+        "lineNumber": 78,
         "author": {
           "gitId": "hansebastian"
         },
         "content": "    }"
       },
       {
-        "lineNumber": 49,
+        "lineNumber": 79,
         "author": {
           "gitId": "khoongwk"
         },
@@ -93323,7 +93752,7 @@
     "authorContributionMap": {
       "RuiFengg": 4,
       "khoongwk": 27,
-      "hansebastian": 18
+      "hansebastian": 48
     }
   },
   {
