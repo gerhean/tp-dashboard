@@ -24168,7 +24168,7 @@
         "author": {
           "gitId": "ChooJiaXin"
         },
-        "content": "            + \"used in the displayed assignment list.\""
+        "content": "            + \"used in the displayed reminders list.\""
       },
       {
         "lineNumber": 33,
@@ -24210,140 +24210,140 @@
         "author": {
           "gitId": "ChooJiaXin"
         },
-        "content": "    public static final String MESSAGE_UNREMINDED_ASSIGNMENT \u003d \"This assignment does not have reminders set.\";"
+        "content": ""
       },
       {
         "lineNumber": 39,
         "author": {
           "gitId": "ChooJiaXin"
         },
-        "content": ""
+        "content": "    /**"
       },
       {
         "lineNumber": 40,
         "author": {
           "gitId": "ChooJiaXin"
         },
-        "content": "    /**"
+        "content": "     * Constructs an UnremindCommand to remove reminders from the specified assignment."
       },
       {
         "lineNumber": 41,
         "author": {
           "gitId": "ChooJiaXin"
         },
-        "content": "     * Constructs an UnremindCommand to remove reminders from the specified assignment."
+        "content": "     * @param targetIndex index of the assignment in the reminded assignments list to remove reminders"
       },
       {
         "lineNumber": 42,
         "author": {
           "gitId": "ChooJiaXin"
         },
-        "content": "     * @param targetIndex index of the assignment in the filtered assignment list to remove reminders"
+        "content": "     */"
       },
       {
         "lineNumber": 43,
         "author": {
           "gitId": "ChooJiaXin"
         },
-        "content": "     */"
+        "content": "    public UnremindCommand(Index targetIndex) {"
       },
       {
         "lineNumber": 44,
         "author": {
           "gitId": "ChooJiaXin"
         },
-        "content": "    public UnremindCommand(Index targetIndex) {"
+        "content": "        super(targetIndex);"
       },
       {
         "lineNumber": 45,
         "author": {
           "gitId": "ChooJiaXin"
         },
-        "content": "        super(targetIndex);"
+        "content": "    }"
       },
       {
         "lineNumber": 46,
         "author": {
           "gitId": "ChooJiaXin"
         },
-        "content": "    }"
+        "content": ""
       },
       {
         "lineNumber": 47,
         "author": {
           "gitId": "ChooJiaXin"
         },
-        "content": ""
+        "content": "    @Override"
       },
       {
         "lineNumber": 48,
         "author": {
           "gitId": "ChooJiaXin"
         },
-        "content": "    @Override"
+        "content": "    public CommandResult execute(Model model) throws CommandException {"
       },
       {
         "lineNumber": 49,
         "author": {
           "gitId": "ChooJiaXin"
         },
-        "content": "    public CommandResult execute(Model model) throws CommandException {"
+        "content": "        requireNonNull(model);"
       },
       {
         "lineNumber": 50,
         "author": {
           "gitId": "ChooJiaXin"
         },
-        "content": "        requireNonNull(model);"
+        "content": "        List\u003cAssignment\u003e remindedAssignmentsList \u003d model.getRemindedAssignmentsList();"
       },
       {
         "lineNumber": 51,
         "author": {
           "gitId": "ChooJiaXin"
         },
-        "content": "        List\u003cAssignment\u003e lastShownList \u003d model.getFilteredAssignmentList();"
+        "content": ""
       },
       {
         "lineNumber": 52,
         "author": {
           "gitId": "ChooJiaXin"
         },
-        "content": ""
+        "content": "        if (getTargetIndex().getZeroBased() \u003e\u003d remindedAssignmentsList.size()) {"
       },
       {
         "lineNumber": 53,
         "author": {
           "gitId": "ChooJiaXin"
         },
-        "content": "        if (getTargetIndex().getZeroBased() \u003e\u003d lastShownList.size()) {"
+        "content": "            throw new CommandException(Messages.MESSAGE_INVALID_ASSIGNMENT_DISPLAYED_INDEX);"
       },
       {
         "lineNumber": 54,
         "author": {
           "gitId": "ChooJiaXin"
         },
-        "content": "            throw new CommandException(Messages.MESSAGE_INVALID_ASSIGNMENT_DISPLAYED_INDEX);"
+        "content": "        }"
       },
       {
         "lineNumber": 55,
         "author": {
           "gitId": "ChooJiaXin"
         },
-        "content": "        }"
+        "content": ""
       },
       {
         "lineNumber": 56,
         "author": {
           "gitId": "ChooJiaXin"
         },
-        "content": ""
+        "content": "        Assignment assignmentToUnremind \u003d remindedAssignmentsList.get(getTargetIndex().getZeroBased());"
       },
       {
         "lineNumber": 57,
         "author": {
           "gitId": "ChooJiaXin"
         },
-        "content": "        Assignment assignmentToUnremind \u003d lastShownList.get(getTargetIndex().getZeroBased());"
+        "content": "        assert(assignmentToUnremind.isReminded());"
       },
       {
         "lineNumber": 58,
@@ -24357,42 +24357,42 @@
         "author": {
           "gitId": "ChooJiaXin"
         },
-        "content": "        if (!assignmentToUnremind.isReminded() \u0026\u0026 model.hasAssignment(assignmentToUnremind)) {"
+        "content": "        Assignment unremindedAssignment \u003d createUnremindedAssignment(assignmentToUnremind);"
       },
       {
         "lineNumber": 60,
         "author": {
           "gitId": "ChooJiaXin"
         },
-        "content": "            throw new CommandException(MESSAGE_UNREMINDED_ASSIGNMENT);"
+        "content": ""
       },
       {
         "lineNumber": 61,
         "author": {
           "gitId": "ChooJiaXin"
         },
-        "content": "        }"
+        "content": "        model.setAssignment(assignmentToUnremind, unremindedAssignment);"
       },
       {
         "lineNumber": 62,
         "author": {
           "gitId": "ChooJiaXin"
         },
-        "content": ""
+        "content": "        model.updateFilteredAssignmentList(PREDICATE_SHOW_ALL_ASSIGNMENT);"
       },
       {
         "lineNumber": 63,
         "author": {
           "gitId": "ChooJiaXin"
         },
-        "content": "        assert(assignmentToUnremind.isReminded());"
+        "content": "        return new CommandResult(String.format(MESSAGE_UNREMIND_ASSIGNMENT_SUCCESS, unremindedAssignment));"
       },
       {
         "lineNumber": 64,
         "author": {
           "gitId": "ChooJiaXin"
         },
-        "content": "        Assignment unremindedAssignment \u003d createUnremindedAssignment(assignmentToUnremind);"
+        "content": "    }"
       },
       {
         "lineNumber": 65,
@@ -24406,206 +24406,171 @@
         "author": {
           "gitId": "ChooJiaXin"
         },
-        "content": "        model.setAssignment(assignmentToUnremind, unremindedAssignment);"
+        "content": "    /**"
       },
       {
         "lineNumber": 67,
         "author": {
           "gitId": "ChooJiaXin"
         },
-        "content": "        model.updateFilteredAssignmentList(PREDICATE_SHOW_ALL_ASSIGNMENT);"
+        "content": "     * Creates and returns an {@code Assignment} with the details of {@code assignmentToUnremind}."
       },
       {
         "lineNumber": 68,
         "author": {
           "gitId": "ChooJiaXin"
         },
-        "content": "        return new CommandResult(String.format(MESSAGE_UNREMIND_ASSIGNMENT_SUCCESS, unremindedAssignment));"
+        "content": "     */"
       },
       {
         "lineNumber": 69,
         "author": {
           "gitId": "ChooJiaXin"
         },
-        "content": "    }"
+        "content": "    private static Assignment createUnremindedAssignment(Assignment assignmentToUnremind) {"
       },
       {
         "lineNumber": 70,
         "author": {
           "gitId": "ChooJiaXin"
         },
-        "content": ""
+        "content": "        assert assignmentToUnremind !\u003d null;"
       },
       {
         "lineNumber": 71,
         "author": {
           "gitId": "ChooJiaXin"
         },
-        "content": "    /**"
+        "content": ""
       },
       {
         "lineNumber": 72,
         "author": {
           "gitId": "ChooJiaXin"
         },
-        "content": "     * Creates and returns an {@code Assignment} with the details of {@code assignmentToUnremind}."
+        "content": "        Name updatedName \u003d assignmentToUnremind.getName();"
       },
       {
         "lineNumber": 73,
         "author": {
           "gitId": "ChooJiaXin"
         },
-        "content": "     */"
+        "content": "        Deadline updatedDeadline \u003d assignmentToUnremind.getDeadline();"
       },
       {
         "lineNumber": 74,
         "author": {
           "gitId": "ChooJiaXin"
         },
-        "content": "    private static Assignment createUnremindedAssignment(Assignment assignmentToUnremind) {"
+        "content": "        ModuleCode updatedModuleCode \u003d assignmentToUnremind.getModuleCode();"
       },
       {
         "lineNumber": 75,
         "author": {
           "gitId": "ChooJiaXin"
         },
-        "content": "        assert assignmentToUnremind !\u003d null;"
-      },
-      {
-        "lineNumber": 76,
-        "author": {
-          "gitId": "ChooJiaXin"
-        },
-        "content": ""
-      },
-      {
-        "lineNumber": 77,
-        "author": {
-          "gitId": "ChooJiaXin"
-        },
-        "content": "        Name updatedName \u003d assignmentToUnremind.getName();"
-      },
-      {
-        "lineNumber": 78,
-        "author": {
-          "gitId": "ChooJiaXin"
-        },
-        "content": "        Deadline updatedDeadline \u003d assignmentToUnremind.getDeadline();"
-      },
-      {
-        "lineNumber": 79,
-        "author": {
-          "gitId": "ChooJiaXin"
-        },
-        "content": "        ModuleCode updatedModuleCode \u003d assignmentToUnremind.getModuleCode();"
-      },
-      {
-        "lineNumber": 80,
-        "author": {
-          "gitId": "ChooJiaXin"
-        },
         "content": "        Remind updatedRemind \u003d new Remind();"
       },
       {
-        "lineNumber": 81,
+        "lineNumber": 76,
         "author": {
           "gitId": "minhhhnguyen2000"
         },
         "content": "        Schedule updatedSchedule \u003d assignmentToUnremind.getSchedule();"
       },
       {
-        "lineNumber": 82,
+        "lineNumber": 77,
         "author": {
           "gitId": "hyngkng"
         },
         "content": "        Priority priority \u003d assignmentToUnremind.getPriority();"
       },
       {
-        "lineNumber": 83,
+        "lineNumber": 78,
         "author": {
           "gitId": "printinghelloworld"
         },
         "content": "        Done updatedDone \u003d assignmentToUnremind.getDone();"
       },
       {
-        "lineNumber": 84,
+        "lineNumber": 79,
         "author": {
           "gitId": "ChooJiaXin"
         },
         "content": ""
       },
       {
-        "lineNumber": 85,
+        "lineNumber": 80,
         "author": {
           "gitId": "hyngkng"
         },
         "content": "        return new Assignment(updatedName, updatedDeadline, updatedModuleCode, updatedRemind, updatedSchedule,"
       },
       {
-        "lineNumber": 86,
+        "lineNumber": 81,
         "author": {
           "gitId": "printinghelloworld"
         },
         "content": "                priority, updatedDone);"
       },
       {
-        "lineNumber": 87,
+        "lineNumber": 82,
         "author": {
           "gitId": "ChooJiaXin"
         },
         "content": "    }"
       },
       {
-        "lineNumber": 88,
+        "lineNumber": 83,
         "author": {
           "gitId": "ChooJiaXin"
         },
         "content": ""
       },
       {
-        "lineNumber": 89,
+        "lineNumber": 84,
         "author": {
           "gitId": "ChooJiaXin"
         },
         "content": "    @Override"
       },
       {
-        "lineNumber": 90,
+        "lineNumber": 85,
         "author": {
           "gitId": "ChooJiaXin"
         },
         "content": "    public boolean equals(Object other) {"
       },
       {
-        "lineNumber": 91,
+        "lineNumber": 86,
         "author": {
           "gitId": "ChooJiaXin"
         },
         "content": "        return other \u003d\u003d this // short circuit if same object"
       },
       {
-        "lineNumber": 92,
+        "lineNumber": 87,
         "author": {
           "gitId": "ChooJiaXin"
         },
         "content": "                || (other instanceof UnremindCommand // instanceof handles nulls"
       },
       {
-        "lineNumber": 93,
+        "lineNumber": 88,
         "author": {
           "gitId": "ChooJiaXin"
         },
         "content": "                \u0026\u0026 getTargetIndex().equals(((UnremindCommand) other).getTargetIndex())); // state check"
       },
       {
-        "lineNumber": 94,
+        "lineNumber": 89,
         "author": {
           "gitId": "ChooJiaXin"
         },
         "content": "    }"
       },
       {
-        "lineNumber": 95,
+        "lineNumber": 90,
         "author": {
           "gitId": "ChooJiaXin"
         },
@@ -24613,7 +24578,7 @@
       }
     ],
     "authorContributionMap": {
-      "ChooJiaXin": 87,
+      "ChooJiaXin": 82,
       "hyngkng": 3,
       "minhhhnguyen2000": 2,
       "printinghelloworld": 3
@@ -71578,42 +71543,42 @@
         "author": {
           "gitId": "ChooJiaXin"
         },
-        "content": "import static seedu.address.logic.commands.CommandTestUtil.showAssignmentAtIndex;"
+        "content": "import static seedu.address.testutil.Assert.assertThrows;"
       },
       {
         "lineNumber": 8,
         "author": {
           "gitId": "ChooJiaXin"
         },
-        "content": "import static seedu.address.model.Model.PREDICATE_SHOW_ALL_ASSIGNMENT;"
+        "content": "import static seedu.address.testutil.TypicalAssignments.getTypicalAddressBook;"
       },
       {
         "lineNumber": 9,
         "author": {
           "gitId": "ChooJiaXin"
         },
-        "content": "import static seedu.address.testutil.Assert.assertThrows;"
+        "content": "import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_ASSIGNMENT;"
       },
       {
         "lineNumber": 10,
         "author": {
           "gitId": "ChooJiaXin"
         },
-        "content": "import static seedu.address.testutil.TypicalAssignments.getTypicalAddressBook;"
+        "content": "import static seedu.address.testutil.TypicalIndexes.INDEX_SECOND_ASSIGNMENT;"
       },
       {
         "lineNumber": 11,
         "author": {
           "gitId": "ChooJiaXin"
         },
-        "content": "import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_ASSIGNMENT;"
+        "content": ""
       },
       {
         "lineNumber": 12,
         "author": {
           "gitId": "ChooJiaXin"
         },
-        "content": "import static seedu.address.testutil.TypicalIndexes.INDEX_SECOND_ASSIGNMENT;"
+        "content": "import org.junit.jupiter.api.Test;"
       },
       {
         "lineNumber": 13,
@@ -71627,63 +71592,63 @@
         "author": {
           "gitId": "ChooJiaXin"
         },
-        "content": "import org.junit.jupiter.api.Test;"
+        "content": "import seedu.address.commons.core.Messages;"
       },
       {
         "lineNumber": 15,
         "author": {
           "gitId": "ChooJiaXin"
         },
-        "content": ""
+        "content": "import seedu.address.commons.core.index.Index;"
       },
       {
         "lineNumber": 16,
         "author": {
           "gitId": "ChooJiaXin"
         },
-        "content": "import seedu.address.commons.core.Messages;"
+        "content": "import seedu.address.model.Model;"
       },
       {
         "lineNumber": 17,
         "author": {
           "gitId": "ChooJiaXin"
         },
-        "content": "import seedu.address.commons.core.index.Index;"
+        "content": "import seedu.address.model.ModelManager;"
       },
       {
         "lineNumber": 18,
         "author": {
           "gitId": "ChooJiaXin"
         },
-        "content": "import seedu.address.model.Model;"
+        "content": "import seedu.address.model.UserPrefs;"
       },
       {
         "lineNumber": 19,
         "author": {
           "gitId": "ChooJiaXin"
         },
-        "content": "import seedu.address.model.ModelManager;"
+        "content": "import seedu.address.model.assignment.Assignment;"
       },
       {
         "lineNumber": 20,
         "author": {
           "gitId": "ChooJiaXin"
         },
-        "content": "import seedu.address.model.UserPrefs;"
+        "content": "import seedu.address.testutil.AssignmentBuilder;"
       },
       {
         "lineNumber": 21,
         "author": {
           "gitId": "ChooJiaXin"
         },
-        "content": "import seedu.address.model.assignment.Assignment;"
+        "content": ""
       },
       {
         "lineNumber": 22,
         "author": {
           "gitId": "ChooJiaXin"
         },
-        "content": "import seedu.address.testutil.AssignmentBuilder;"
+        "content": "public class UnremindCommandTest {"
       },
       {
         "lineNumber": 23,
@@ -71695,9 +71660,9 @@
       {
         "lineNumber": 24,
         "author": {
-          "gitId": "ChooJiaXin"
+          "gitId": "minhhhnguyen2000"
         },
-        "content": "public class UnremindCommandTest {"
+        "content": "    private Model model \u003d new ModelManager(getTypicalAddressBook(), new UserPrefs(), null);"
       },
       {
         "lineNumber": 25,
@@ -71709,303 +71674,303 @@
       {
         "lineNumber": 26,
         "author": {
-          "gitId": "minhhhnguyen2000"
+          "gitId": "ChooJiaXin"
         },
-        "content": "    private Model model \u003d new ModelManager(getTypicalAddressBook(), new UserPrefs(), null);"
+        "content": "    @Test"
       },
       {
         "lineNumber": 27,
         "author": {
           "gitId": "ChooJiaXin"
         },
-        "content": ""
+        "content": "    public void constructor_nullAssignment_throwsNullPointerException() {"
       },
       {
         "lineNumber": 28,
         "author": {
           "gitId": "ChooJiaXin"
         },
-        "content": "    @Test"
+        "content": "        assertThrows(NullPointerException.class, () -\u003e new UnremindCommand(null));"
       },
       {
         "lineNumber": 29,
         "author": {
           "gitId": "ChooJiaXin"
         },
-        "content": "    public void constructor_nullAssignment_throwsNullPointerException() {"
+        "content": "    }"
       },
       {
         "lineNumber": 30,
         "author": {
           "gitId": "ChooJiaXin"
         },
-        "content": "        assertThrows(NullPointerException.class, () -\u003e new UnremindCommand(null));"
+        "content": ""
       },
       {
         "lineNumber": 31,
         "author": {
           "gitId": "ChooJiaXin"
         },
-        "content": "    }"
+        "content": "    @Test"
       },
       {
         "lineNumber": 32,
         "author": {
           "gitId": "ChooJiaXin"
         },
-        "content": ""
+        "content": "    public void execute_validIndex_success() {"
       },
       {
         "lineNumber": 33,
         "author": {
           "gitId": "ChooJiaXin"
         },
-        "content": "    @Test"
+        "content": "        remindFirstAssignment();"
       },
       {
         "lineNumber": 34,
         "author": {
           "gitId": "ChooJiaXin"
         },
-        "content": "    public void execute_validIndexUnfilteredList_success() {"
+        "content": "        Assignment assignmentToUnremind \u003d model.getRemindedAssignmentsList().get(INDEX_FIRST_ASSIGNMENT.getZeroBased());"
       },
       {
         "lineNumber": 35,
         "author": {
           "gitId": "ChooJiaXin"
         },
-        "content": "        remindFirstAssignment();"
+        "content": "        UnremindCommand unremindCommand \u003d new UnremindCommand(INDEX_FIRST_ASSIGNMENT);"
       },
       {
         "lineNumber": 36,
         "author": {
           "gitId": "ChooJiaXin"
         },
-        "content": "        Assignment assignmentToUnremind \u003d model.getFilteredAssignmentList().get(INDEX_FIRST_ASSIGNMENT.getZeroBased());"
+        "content": ""
       },
       {
         "lineNumber": 37,
         "author": {
           "gitId": "ChooJiaXin"
         },
-        "content": "        UnremindCommand unremindCommand \u003d new UnremindCommand(INDEX_FIRST_ASSIGNMENT);"
+        "content": "        String expectedMessage \u003d String.format("
       },
       {
         "lineNumber": 38,
         "author": {
           "gitId": "ChooJiaXin"
         },
-        "content": ""
+        "content": "                UnremindCommand.MESSAGE_UNREMIND_ASSIGNMENT_SUCCESS, assignmentToUnremind);"
       },
       {
         "lineNumber": 39,
         "author": {
           "gitId": "ChooJiaXin"
         },
-        "content": "        String expectedMessage \u003d String.format("
-      },
-      {
-        "lineNumber": 40,
-        "author": {
-          "gitId": "ChooJiaXin"
-        },
-        "content": "                UnremindCommand.MESSAGE_UNREMIND_ASSIGNMENT_SUCCESS, assignmentToUnremind);"
-      },
-      {
-        "lineNumber": 41,
-        "author": {
-          "gitId": "ChooJiaXin"
-        },
         "content": ""
       },
       {
-        "lineNumber": 42,
+        "lineNumber": 40,
         "author": {
           "gitId": "minhhhnguyen2000"
         },
         "content": "        ModelManager expectedModel \u003d new ModelManager(model.getAddressBook(), new UserPrefs(),"
       },
       {
-        "lineNumber": 43,
+        "lineNumber": 41,
         "author": {
           "gitId": "minhhhnguyen2000"
         },
         "content": "                model.getPreviousModel());"
       },
       {
-        "lineNumber": 44,
+        "lineNumber": 42,
         "author": {
           "gitId": "ChooJiaXin"
         },
-        "content": "        expectedModel.setAssignment(model.getFilteredAssignmentList().get(0), assignmentToUnremind);"
+        "content": "        expectedModel.setAssignment(model.getRemindedAssignmentsList().get(0), assignmentToUnremind);"
       },
       {
-        "lineNumber": 45,
+        "lineNumber": 43,
         "author": {
           "gitId": "ChooJiaXin"
         },
         "content": ""
       },
       {
-        "lineNumber": 46,
+        "lineNumber": 44,
         "author": {
           "gitId": "ChooJiaXin"
         },
         "content": "        assertCommandSuccess(unremindCommand, model, expectedMessage, expectedModel);"
       },
       {
-        "lineNumber": 47,
+        "lineNumber": 45,
         "author": {
           "gitId": "ChooJiaXin"
         },
         "content": "    }"
+      },
+      {
+        "lineNumber": 46,
+        "author": {
+          "gitId": "ChooJiaXin"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 47,
+        "author": {
+          "gitId": "ChooJiaXin"
+        },
+        "content": "    @Test"
       },
       {
         "lineNumber": 48,
         "author": {
           "gitId": "ChooJiaXin"
         },
-        "content": ""
+        "content": "    public void execute_invalidIndex_throwsCommandException() {"
       },
       {
         "lineNumber": 49,
         "author": {
           "gitId": "ChooJiaXin"
         },
-        "content": "    @Test"
+        "content": "        Index outOfBoundIndex \u003d Index.fromOneBased(model.getRemindedAssignmentsList().size() + 1);"
       },
       {
         "lineNumber": 50,
         "author": {
           "gitId": "ChooJiaXin"
         },
-        "content": "    public void execute_invalidIndexUnfilteredList_throwsCommandException() {"
+        "content": "        UnremindCommand unremindCommand \u003d new UnremindCommand(outOfBoundIndex);"
       },
       {
         "lineNumber": 51,
         "author": {
           "gitId": "ChooJiaXin"
         },
-        "content": "        Index outOfBoundIndex \u003d Index.fromOneBased(model.getFilteredAssignmentList().size() + 1);"
+        "content": ""
       },
       {
         "lineNumber": 52,
         "author": {
           "gitId": "ChooJiaXin"
         },
-        "content": "        UnremindCommand unremindCommand \u003d new UnremindCommand(outOfBoundIndex);"
+        "content": "        assertCommandFailure(unremindCommand, model, Messages.MESSAGE_INVALID_ASSIGNMENT_DISPLAYED_INDEX);"
       },
       {
         "lineNumber": 53,
         "author": {
           "gitId": "ChooJiaXin"
         },
-        "content": ""
+        "content": "    }"
       },
       {
         "lineNumber": 54,
         "author": {
           "gitId": "ChooJiaXin"
         },
-        "content": "        assertCommandFailure(unremindCommand, model, Messages.MESSAGE_INVALID_ASSIGNMENT_DISPLAYED_INDEX);"
+        "content": ""
       },
       {
         "lineNumber": 55,
         "author": {
           "gitId": "ChooJiaXin"
         },
-        "content": "    }"
+        "content": "    @Test"
       },
       {
         "lineNumber": 56,
         "author": {
           "gitId": "ChooJiaXin"
         },
-        "content": ""
+        "content": "    public void equals() {"
       },
       {
         "lineNumber": 57,
         "author": {
           "gitId": "ChooJiaXin"
         },
-        "content": "    @Test"
+        "content": "        remindFirstAssignment();"
       },
       {
         "lineNumber": 58,
         "author": {
           "gitId": "ChooJiaXin"
         },
-        "content": "    public void execute_validIndexFilteredList_success() {"
+        "content": "        remindSecondAssignment();"
       },
       {
         "lineNumber": 59,
         "author": {
           "gitId": "ChooJiaXin"
         },
-        "content": "        showAssignmentAtIndex(model, INDEX_FIRST_ASSIGNMENT);"
+        "content": ""
       },
       {
         "lineNumber": 60,
         "author": {
           "gitId": "ChooJiaXin"
         },
-        "content": ""
+        "content": "        UnremindCommand unremindFirstCommand \u003d new UnremindCommand(INDEX_FIRST_ASSIGNMENT);"
       },
       {
         "lineNumber": 61,
         "author": {
           "gitId": "ChooJiaXin"
         },
-        "content": "        remindFirstAssignment();"
+        "content": "        UnremindCommand unremindSecondCommand \u003d new UnremindCommand(INDEX_SECOND_ASSIGNMENT);"
       },
       {
         "lineNumber": 62,
         "author": {
           "gitId": "ChooJiaXin"
         },
-        "content": "        model.updateFilteredAssignmentList(PREDICATE_SHOW_ALL_ASSIGNMENT);"
+        "content": ""
       },
       {
         "lineNumber": 63,
         "author": {
           "gitId": "ChooJiaXin"
         },
-        "content": ""
+        "content": "        // same object -\u003e returns true"
       },
       {
         "lineNumber": 64,
         "author": {
           "gitId": "ChooJiaXin"
         },
-        "content": "        Assignment assignmentToUnremind \u003d model.getFilteredAssignmentList().get(INDEX_FIRST_ASSIGNMENT.getZeroBased());"
+        "content": "        assertTrue(unremindFirstCommand.equals(unremindFirstCommand));"
       },
       {
         "lineNumber": 65,
         "author": {
           "gitId": "ChooJiaXin"
         },
-        "content": "        UnremindCommand unremindCommand \u003d new UnremindCommand(INDEX_FIRST_ASSIGNMENT);"
+        "content": ""
       },
       {
         "lineNumber": 66,
         "author": {
           "gitId": "ChooJiaXin"
         },
-        "content": ""
+        "content": "        // same values -\u003e returns true"
       },
       {
         "lineNumber": 67,
         "author": {
           "gitId": "ChooJiaXin"
         },
-        "content": "        String expectedMessage \u003d String.format("
+        "content": "        UnremindCommand unremindFirstCommandCopy \u003d new UnremindCommand(INDEX_FIRST_ASSIGNMENT);"
       },
       {
         "lineNumber": 68,
         "author": {
           "gitId": "ChooJiaXin"
         },
-        "content": "                UnremindCommand.MESSAGE_UNREMIND_ASSIGNMENT_SUCCESS, assignmentToUnremind);"
+        "content": "        assertTrue(unremindFirstCommand.equals(unremindFirstCommandCopy));"
       },
       {
         "lineNumber": 69,
@@ -72017,16 +71982,16 @@
       {
         "lineNumber": 70,
         "author": {
-          "gitId": "minhhhnguyen2000"
+          "gitId": "ChooJiaXin"
         },
-        "content": "        Model expectedModel \u003d new ModelManager(model.getAddressBook(), new UserPrefs(), model.getPreviousModel());"
+        "content": "        // different types -\u003e returns false"
       },
       {
         "lineNumber": 71,
         "author": {
           "gitId": "ChooJiaXin"
         },
-        "content": "        expectedModel.setAssignment(model.getFilteredAssignmentList().get(0), assignmentToUnremind);"
+        "content": "        assertFalse(unremindFirstCommand.equals(1));"
       },
       {
         "lineNumber": 72,
@@ -72040,14 +72005,14 @@
         "author": {
           "gitId": "ChooJiaXin"
         },
-        "content": "        assertCommandSuccess(unremindCommand, model, expectedMessage, expectedModel);"
+        "content": "        // null -\u003e returns false"
       },
       {
         "lineNumber": 74,
         "author": {
           "gitId": "ChooJiaXin"
         },
-        "content": "    }"
+        "content": "        assertFalse(unremindFirstCommand.equals(null));"
       },
       {
         "lineNumber": 75,
@@ -72061,21 +72026,21 @@
         "author": {
           "gitId": "ChooJiaXin"
         },
-        "content": "    @Test"
+        "content": "        // different assignment -\u003e returns false"
       },
       {
         "lineNumber": 77,
         "author": {
           "gitId": "ChooJiaXin"
         },
-        "content": "    public void execute_invalidIndexFilteredList_throwsCommandException() {"
+        "content": "        assertFalse(unremindFirstCommand.equals(unremindSecondCommand));"
       },
       {
         "lineNumber": 78,
         "author": {
           "gitId": "ChooJiaXin"
         },
-        "content": "        showAssignmentAtIndex(model, INDEX_FIRST_ASSIGNMENT);"
+        "content": "    }"
       },
       {
         "lineNumber": 79,
@@ -72089,49 +72054,49 @@
         "author": {
           "gitId": "ChooJiaXin"
         },
-        "content": "        Index outOfBoundIndex \u003d INDEX_SECOND_ASSIGNMENT;"
+        "content": "    // Reminded first assignment in filtered list"
       },
       {
         "lineNumber": 81,
         "author": {
           "gitId": "ChooJiaXin"
         },
-        "content": "        // ensures that outOfBoundIndex is still in bounds of address book list"
+        "content": "    private void remindFirstAssignment() {"
       },
       {
         "lineNumber": 82,
         "author": {
           "gitId": "ChooJiaXin"
         },
-        "content": "        assertTrue(outOfBoundIndex.getZeroBased() \u003c model.getAddressBook().getAssignmentList().size());"
+        "content": "        // Set reminders for assignment in filtered list in address book"
       },
       {
         "lineNumber": 83,
         "author": {
           "gitId": "ChooJiaXin"
         },
-        "content": ""
+        "content": "        Assignment assignmentInList \u003d model.getAddressBook().getAssignmentList()"
       },
       {
         "lineNumber": 84,
         "author": {
           "gitId": "ChooJiaXin"
         },
-        "content": "        UnremindCommand unremindCommand \u003d new UnremindCommand(outOfBoundIndex);"
+        "content": "                .get(INDEX_FIRST_ASSIGNMENT.getZeroBased());"
       },
       {
         "lineNumber": 85,
         "author": {
           "gitId": "ChooJiaXin"
         },
-        "content": ""
+        "content": "        Assignment assignmentInListReminded \u003d new AssignmentBuilder(assignmentInList).withRemindersSet().build();"
       },
       {
         "lineNumber": 86,
         "author": {
           "gitId": "ChooJiaXin"
         },
-        "content": "        assertCommandFailure(unremindCommand, model, Messages.MESSAGE_INVALID_ASSIGNMENT_DISPLAYED_INDEX);"
+        "content": "        model.setAssignment(assignmentInList, assignmentInListReminded);"
       },
       {
         "lineNumber": 87,
@@ -72152,409 +72117,59 @@
         "author": {
           "gitId": "ChooJiaXin"
         },
-        "content": "    @Test"
+        "content": "    // Reminded second assignment in filtered list"
       },
       {
         "lineNumber": 90,
         "author": {
           "gitId": "ChooJiaXin"
         },
-        "content": "    public void execute_alreadyUnremindedAssignmentUnfilteredList_failure() {"
+        "content": "    private void remindSecondAssignment() {"
       },
       {
         "lineNumber": 91,
         "author": {
           "gitId": "ChooJiaXin"
         },
-        "content": "        UnremindCommand unremindCommand \u003d new UnremindCommand(INDEX_FIRST_ASSIGNMENT);"
+        "content": "        // Set reminders for assignment in filtered list in address book"
       },
       {
         "lineNumber": 92,
         "author": {
           "gitId": "ChooJiaXin"
         },
-        "content": ""
+        "content": "        Assignment assignmentInList \u003d model.getAddressBook().getAssignmentList()"
       },
       {
         "lineNumber": 93,
         "author": {
           "gitId": "ChooJiaXin"
         },
-        "content": "        assertCommandFailure(unremindCommand, model, UnremindCommand.MESSAGE_UNREMINDED_ASSIGNMENT);"
+        "content": "                .get(INDEX_SECOND_ASSIGNMENT.getZeroBased());"
       },
       {
         "lineNumber": 94,
         "author": {
           "gitId": "ChooJiaXin"
         },
-        "content": "    }"
+        "content": "        Assignment assignmentInListReminded \u003d new AssignmentBuilder(assignmentInList).withRemindersSet().build();"
       },
       {
         "lineNumber": 95,
         "author": {
           "gitId": "ChooJiaXin"
         },
-        "content": ""
+        "content": "        model.setAssignment(assignmentInList, assignmentInListReminded);"
       },
       {
         "lineNumber": 96,
         "author": {
           "gitId": "ChooJiaXin"
         },
-        "content": "    @Test"
+        "content": "    }"
       },
       {
         "lineNumber": 97,
-        "author": {
-          "gitId": "ChooJiaXin"
-        },
-        "content": "    public void execute_alreadyUnremindedAssignmentFilteredList_failure() {"
-      },
-      {
-        "lineNumber": 98,
-        "author": {
-          "gitId": "ChooJiaXin"
-        },
-        "content": "        showAssignmentAtIndex(model, INDEX_FIRST_ASSIGNMENT);"
-      },
-      {
-        "lineNumber": 99,
-        "author": {
-          "gitId": "ChooJiaXin"
-        },
-        "content": ""
-      },
-      {
-        "lineNumber": 100,
-        "author": {
-          "gitId": "ChooJiaXin"
-        },
-        "content": "        UnremindCommand unremindCommand \u003d new UnremindCommand(INDEX_FIRST_ASSIGNMENT);"
-      },
-      {
-        "lineNumber": 101,
-        "author": {
-          "gitId": "ChooJiaXin"
-        },
-        "content": ""
-      },
-      {
-        "lineNumber": 102,
-        "author": {
-          "gitId": "ChooJiaXin"
-        },
-        "content": "        assertCommandFailure(unremindCommand, model, UnremindCommand.MESSAGE_UNREMINDED_ASSIGNMENT);"
-      },
-      {
-        "lineNumber": 103,
-        "author": {
-          "gitId": "ChooJiaXin"
-        },
-        "content": "    }"
-      },
-      {
-        "lineNumber": 104,
-        "author": {
-          "gitId": "ChooJiaXin"
-        },
-        "content": ""
-      },
-      {
-        "lineNumber": 105,
-        "author": {
-          "gitId": "ChooJiaXin"
-        },
-        "content": "    @Test"
-      },
-      {
-        "lineNumber": 106,
-        "author": {
-          "gitId": "ChooJiaXin"
-        },
-        "content": "    public void equals() {"
-      },
-      {
-        "lineNumber": 107,
-        "author": {
-          "gitId": "ChooJiaXin"
-        },
-        "content": "        remindFirstAssignment();"
-      },
-      {
-        "lineNumber": 108,
-        "author": {
-          "gitId": "ChooJiaXin"
-        },
-        "content": "        remindSecondAssignment();"
-      },
-      {
-        "lineNumber": 109,
-        "author": {
-          "gitId": "ChooJiaXin"
-        },
-        "content": ""
-      },
-      {
-        "lineNumber": 110,
-        "author": {
-          "gitId": "ChooJiaXin"
-        },
-        "content": "        UnremindCommand unremindFirstCommand \u003d new UnremindCommand(INDEX_FIRST_ASSIGNMENT);"
-      },
-      {
-        "lineNumber": 111,
-        "author": {
-          "gitId": "ChooJiaXin"
-        },
-        "content": "        UnremindCommand unremindSecondCommand \u003d new UnremindCommand(INDEX_SECOND_ASSIGNMENT);"
-      },
-      {
-        "lineNumber": 112,
-        "author": {
-          "gitId": "ChooJiaXin"
-        },
-        "content": ""
-      },
-      {
-        "lineNumber": 113,
-        "author": {
-          "gitId": "ChooJiaXin"
-        },
-        "content": "        // same object -\u003e returns true"
-      },
-      {
-        "lineNumber": 114,
-        "author": {
-          "gitId": "ChooJiaXin"
-        },
-        "content": "        assertTrue(unremindFirstCommand.equals(unremindFirstCommand));"
-      },
-      {
-        "lineNumber": 115,
-        "author": {
-          "gitId": "ChooJiaXin"
-        },
-        "content": ""
-      },
-      {
-        "lineNumber": 116,
-        "author": {
-          "gitId": "ChooJiaXin"
-        },
-        "content": "        // same values -\u003e returns true"
-      },
-      {
-        "lineNumber": 117,
-        "author": {
-          "gitId": "ChooJiaXin"
-        },
-        "content": "        UnremindCommand unremindFirstCommandCopy \u003d new UnremindCommand(INDEX_FIRST_ASSIGNMENT);"
-      },
-      {
-        "lineNumber": 118,
-        "author": {
-          "gitId": "ChooJiaXin"
-        },
-        "content": "        assertTrue(unremindFirstCommand.equals(unremindFirstCommandCopy));"
-      },
-      {
-        "lineNumber": 119,
-        "author": {
-          "gitId": "ChooJiaXin"
-        },
-        "content": ""
-      },
-      {
-        "lineNumber": 120,
-        "author": {
-          "gitId": "ChooJiaXin"
-        },
-        "content": "        // different types -\u003e returns false"
-      },
-      {
-        "lineNumber": 121,
-        "author": {
-          "gitId": "ChooJiaXin"
-        },
-        "content": "        assertFalse(unremindFirstCommand.equals(1));"
-      },
-      {
-        "lineNumber": 122,
-        "author": {
-          "gitId": "ChooJiaXin"
-        },
-        "content": ""
-      },
-      {
-        "lineNumber": 123,
-        "author": {
-          "gitId": "ChooJiaXin"
-        },
-        "content": "        // null -\u003e returns false"
-      },
-      {
-        "lineNumber": 124,
-        "author": {
-          "gitId": "ChooJiaXin"
-        },
-        "content": "        assertFalse(unremindFirstCommand.equals(null));"
-      },
-      {
-        "lineNumber": 125,
-        "author": {
-          "gitId": "ChooJiaXin"
-        },
-        "content": ""
-      },
-      {
-        "lineNumber": 126,
-        "author": {
-          "gitId": "ChooJiaXin"
-        },
-        "content": "        // different assignment -\u003e returns false"
-      },
-      {
-        "lineNumber": 127,
-        "author": {
-          "gitId": "ChooJiaXin"
-        },
-        "content": "        assertFalse(unremindFirstCommand.equals(unremindSecondCommand));"
-      },
-      {
-        "lineNumber": 128,
-        "author": {
-          "gitId": "ChooJiaXin"
-        },
-        "content": "    }"
-      },
-      {
-        "lineNumber": 129,
-        "author": {
-          "gitId": "ChooJiaXin"
-        },
-        "content": ""
-      },
-      {
-        "lineNumber": 130,
-        "author": {
-          "gitId": "ChooJiaXin"
-        },
-        "content": "    // Reminded first assignment in filtered list"
-      },
-      {
-        "lineNumber": 131,
-        "author": {
-          "gitId": "ChooJiaXin"
-        },
-        "content": "    private void remindFirstAssignment() {"
-      },
-      {
-        "lineNumber": 132,
-        "author": {
-          "gitId": "ChooJiaXin"
-        },
-        "content": "        // Set reminders for assignment in filtered list in address book"
-      },
-      {
-        "lineNumber": 133,
-        "author": {
-          "gitId": "ChooJiaXin"
-        },
-        "content": "        Assignment assignmentInList \u003d model.getAddressBook().getAssignmentList()"
-      },
-      {
-        "lineNumber": 134,
-        "author": {
-          "gitId": "ChooJiaXin"
-        },
-        "content": "                .get(INDEX_FIRST_ASSIGNMENT.getZeroBased());"
-      },
-      {
-        "lineNumber": 135,
-        "author": {
-          "gitId": "ChooJiaXin"
-        },
-        "content": "        Assignment assignmentInListReminded \u003d new AssignmentBuilder(assignmentInList).withRemindersSet().build();"
-      },
-      {
-        "lineNumber": 136,
-        "author": {
-          "gitId": "ChooJiaXin"
-        },
-        "content": "        model.setAssignment(assignmentInList, assignmentInListReminded);"
-      },
-      {
-        "lineNumber": 137,
-        "author": {
-          "gitId": "ChooJiaXin"
-        },
-        "content": "    }"
-      },
-      {
-        "lineNumber": 138,
-        "author": {
-          "gitId": "ChooJiaXin"
-        },
-        "content": ""
-      },
-      {
-        "lineNumber": 139,
-        "author": {
-          "gitId": "ChooJiaXin"
-        },
-        "content": "    // Reminded second assignment in filtered list"
-      },
-      {
-        "lineNumber": 140,
-        "author": {
-          "gitId": "ChooJiaXin"
-        },
-        "content": "    private void remindSecondAssignment() {"
-      },
-      {
-        "lineNumber": 141,
-        "author": {
-          "gitId": "ChooJiaXin"
-        },
-        "content": "        // Set reminders for assignment in filtered list in address book"
-      },
-      {
-        "lineNumber": 142,
-        "author": {
-          "gitId": "ChooJiaXin"
-        },
-        "content": "        Assignment assignmentInList \u003d model.getAddressBook().getAssignmentList()"
-      },
-      {
-        "lineNumber": 143,
-        "author": {
-          "gitId": "ChooJiaXin"
-        },
-        "content": "                .get(INDEX_SECOND_ASSIGNMENT.getZeroBased());"
-      },
-      {
-        "lineNumber": 144,
-        "author": {
-          "gitId": "ChooJiaXin"
-        },
-        "content": "        Assignment assignmentInListReminded \u003d new AssignmentBuilder(assignmentInList).withRemindersSet().build();"
-      },
-      {
-        "lineNumber": 145,
-        "author": {
-          "gitId": "ChooJiaXin"
-        },
-        "content": "        model.setAssignment(assignmentInList, assignmentInListReminded);"
-      },
-      {
-        "lineNumber": 146,
-        "author": {
-          "gitId": "ChooJiaXin"
-        },
-        "content": "    }"
-      },
-      {
-        "lineNumber": 147,
         "author": {
           "gitId": "ChooJiaXin"
         },
@@ -72562,8 +72177,8 @@
       }
     ],
     "authorContributionMap": {
-      "ChooJiaXin": 143,
-      "minhhhnguyen2000": 4
+      "ChooJiaXin": 94,
+      "minhhhnguyen2000": 3
     }
   },
   {

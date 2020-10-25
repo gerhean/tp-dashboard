@@ -3157,7 +3157,7 @@
         "author": {
           "gitId": "minzzelo"
         },
-        "content": "### \\[Proposed\\] Sort feature"
+        "content": "### \\[Implemented\\] Sort feature"
       },
       {
         "lineNumber": 294,
@@ -3171,7 +3171,7 @@
         "author": {
           "gitId": "minzzelo"
         },
-        "content": "#### Proposed Implementation"
+        "content": "#### Current Implementation"
       },
       {
         "lineNumber": 296,
@@ -3183,9 +3183,9 @@
       {
         "lineNumber": 297,
         "author": {
-          "gitId": "kimberlyohq"
+          "gitId": "minzzelo"
         },
-        "content": "The proposed sort mechanism is facilitated by `ModelManager`. `reviewFrequency` and `successRate` attributes is stored internally in `Flashcard`, to keep track of review frequency and correctness percentage respectively based on the review activity done by the user. When the user enters review mode, the user activity will be tracked and the data will be sent and stored inside the individual `Flashcard`. This activity will then be used to facilitate the sort mechanism. "
+        "content": "The sort mechanism is facilitated by `ModelManager`. `Statistics` attribute is stored internally in `Flashcard`, to keep track of review frequency and correctness percentage respectively based on the review activity done by the user. When the user enters review mode, the user activity will be tracked and the data will be sent and stored inside `Statistics` of the individual `Flashcard`. This activity will then be used to facilitate the sort mechanism, through the enum `SortCriteria` which provides the comparator needed for the respective sort critera."
       },
       {
         "lineNumber": 298,
@@ -3206,28 +3206,28 @@
         "author": {
           "gitId": "minzzelo"
         },
-        "content": "* `ModelManager#updateSortedFlashcardList(Comparator \u003cFlashcard\u003e)` - sorts the flashcard list according to a given condition, and updates the flashcard list shown."
+        "content": "* `ModelManager#sortFilteredFlashcardList(Comparator \u003cFlashcard\u003e comparator)` - sorts the flashcard list according to the given comparator, and updates the flashcard list shown."
       },
       {
         "lineNumber": 301,
         "author": {
           "gitId": "minzzelo"
         },
-        "content": "* `Flashcard#incrementReviewFrequency()` - increases the review frequency of a flashcard."
+        "content": "* `SortCriteria#getCriteria(String criteria)` - retrieves the enum according to the criteria given."
       },
       {
         "lineNumber": 302,
         "author": {
           "gitId": "minzzelo"
         },
-        "content": "* `Flashcard#incrementSuccessRate()` - increases the success rate of a flashcard."
+        "content": ""
       },
       {
         "lineNumber": 303,
         "author": {
           "gitId": "minzzelo"
         },
-        "content": "* `Flashcard#decrementSuccessRate()` - decreases the success rate of a flashcard."
+        "content": "The `ModelManager#sortFilteredFlashcardList(Comparator\u003cFlashcard\u003e comparator)` operation is exposed in the `Model` interface as `Model#updateSortedFlashcardList(Comparator \u003cFlashcard\u003e comparator)`."
       },
       {
         "lineNumber": 304,
@@ -3241,7 +3241,7 @@
         "author": {
           "gitId": "minzzelo"
         },
-        "content": "The `ModelManager#updateSortedFlashcardList(Comparator\u003cFlashcard\u003e)` operation is exposed in the `Model` interface as `Model#updateSortedFlashcardList(Comparator \u003cFlashcard\u003e)`."
+        "content": "Given below is an example usage scenario and how the sort mechanism behaves at each step."
       },
       {
         "lineNumber": 306,
@@ -3255,7 +3255,7 @@
         "author": {
           "gitId": "minzzelo"
         },
-        "content": "Given below is an example usage scenario and how the sort mechanism behaves at each step."
+        "content": "Step 1. The user launches the application."
       },
       {
         "lineNumber": 308,
@@ -3269,7 +3269,7 @@
         "author": {
           "gitId": "minzzelo"
         },
-        "content": "Step 1. The user launches the application."
+        "content": "Step 2. The user executes `review` command to review the flashcard deck. The user reviews 3 out of 5 flashcards and exits review mode. The review command calls `Statistics#incrementReviewFrequency()` for each flashcard that has been reviewed and `Statistics#incrementSuccessFrequency()` depending on whether the user successfully answers the question, hence updating the state of the flashcard."
       },
       {
         "lineNumber": 310,
@@ -3283,7 +3283,7 @@
         "author": {
           "gitId": "minzzelo"
         },
-        "content": "![SortState0](images/SortState0.png)"
+        "content": "Step 3. The user executes `sort reviewed -d`. The command gets parsed to retrieve the appropriate `SortCriteria`. The `sort` command calls `Model#sortFilteredFlashcardList` with this `SortCriteria`, causing the flashcards to be sorted by review frequency, in descending order."
       },
       {
         "lineNumber": 312,
@@ -3297,7 +3297,7 @@
         "author": {
           "gitId": "minzzelo"
         },
-        "content": "Step 2. The user executes `review` command to review the flashcard deck. The user reviews 3 out of 5 flashcards and exits review mode. The review command calls `Flashcard#incrementReviewFrequency()` for each flashcard that has been reviewed and `Flashcard#incrementSuccessRate()` or `Flashcard#decrementSuccessRate()` depending on whether the user successfully answers the question."
+        "content": "The following sequence diagram shows how the sort operation works:"
       },
       {
         "lineNumber": 314,
@@ -3311,7 +3311,7 @@
         "author": {
           "gitId": "minzzelo"
         },
-        "content": "![SortState1](images/SortState1.png)"
+        "content": "![SortSequenceDiagram](images/SortSequenceDiagram.png)"
       },
       {
         "lineNumber": 316,
@@ -3325,7 +3325,7 @@
         "author": {
           "gitId": "minzzelo"
         },
-        "content": "Step 3. The user executes `sort leastReviewed`. The `sort` command calls `Model#updateSortedFlashcardList`, causing the flashcards to be sorted by review frequency, in ascending order."
+        "content": "\u003cdiv markdown\u003d\"span\" class\u003d\"alert alert-info\"\u003e:information_source: **Note:** The lifeline for `SortCommand` should end at the destroy marker (X) but due to a limitation of PlantUML, the lifeline reaches the end of diagram."
       },
       {
         "lineNumber": 318,
@@ -3339,7 +3339,7 @@
         "author": {
           "gitId": "minzzelo"
         },
-        "content": "![SortState2](images/SortState2.png)"
+        "content": "\u003c/div\u003e"
       },
       {
         "lineNumber": 320,
@@ -3353,7 +3353,7 @@
         "author": {
           "gitId": "minzzelo"
         },
-        "content": "The following sequence diagram shows how the sort operation works:"
+        "content": "The following activity diagram summarizes what happens when a user executes a new command:"
       },
       {
         "lineNumber": 322,
@@ -3367,7 +3367,7 @@
         "author": {
           "gitId": "minzzelo"
         },
-        "content": "![SortSequenceDiagram](images/SortSequenceDiagram.png)"
+        "content": "![SortActivityDiagram](images/SortActivityDiagram.png)"
       },
       {
         "lineNumber": 324,
@@ -3381,7 +3381,7 @@
         "author": {
           "gitId": "minzzelo"
         },
-        "content": "\u003cdiv markdown\u003d\"span\" class\u003d\"alert alert-info\"\u003e:information_source: **Note:** The lifeline for `SortCommand` should end at the destroy marker (X) but due to a limitation of PlantUML, the lifeline reaches the end of diagram."
+        "content": "#### Design consideration:"
       },
       {
         "lineNumber": 326,
@@ -3395,7 +3395,7 @@
         "author": {
           "gitId": "minzzelo"
         },
-        "content": "\u003c/div\u003e"
+        "content": "##### Aspect: How sort executes"
       },
       {
         "lineNumber": 328,
@@ -3409,21 +3409,21 @@
         "author": {
           "gitId": "minzzelo"
         },
-        "content": "The following activity diagram summarizes what happens when a user executes a new command:"
+        "content": "* **Alternative 1 (current choice):** Stores statistics in Flashcard and compares flashcard directly."
       },
       {
         "lineNumber": 330,
         "author": {
           "gitId": "minzzelo"
         },
-        "content": ""
+        "content": "  * Pros: Easy to implement."
       },
       {
         "lineNumber": 331,
         "author": {
           "gitId": "minzzelo"
         },
-        "content": "![SortActivityDiagram](images/SortActivityDiagram.png)"
+        "content": "  * Cons: Flashcard will have to keep track of many data."
       },
       {
         "lineNumber": 332,
@@ -3437,21 +3437,21 @@
         "author": {
           "gitId": "minzzelo"
         },
-        "content": "#### Design consideration:"
+        "content": "* **Alternative 2:** Using a data structure (e.g. HashMap) to store statistics."
       },
       {
         "lineNumber": 334,
         "author": {
           "gitId": "minzzelo"
         },
-        "content": ""
+        "content": "  * Pros: Will use more memory, since the HashMap will have to be committed to local storage too."
       },
       {
         "lineNumber": 335,
         "author": {
           "gitId": "minzzelo"
         },
-        "content": "##### Aspect: How sort executes"
+        "content": "  * Cons: We must ensure that the any changes/updates to a flashcard will be reflected in the HashMap."
       },
       {
         "lineNumber": 336,
@@ -3463,79 +3463,79 @@
       {
         "lineNumber": 337,
         "author": {
-          "gitId": "minzzelo"
-        },
-        "content": "* **Alternative 1 (current choice):** Stores statistics in Flashcard and compares flashcard directly."
-      },
-      {
-        "lineNumber": 338,
-        "author": {
-          "gitId": "minzzelo"
-        },
-        "content": "  * Pros: Easy to implement."
-      },
-      {
-        "lineNumber": 339,
-        "author": {
-          "gitId": "minzzelo"
-        },
-        "content": "  * Cons: Flashcard will have to keep track of many data."
-      },
-      {
-        "lineNumber": 340,
-        "author": {
-          "gitId": "minzzelo"
-        },
-        "content": ""
-      },
-      {
-        "lineNumber": 341,
-        "author": {
-          "gitId": "minzzelo"
-        },
-        "content": "* **Alternative 2:** Using a data structure (e.g. HashMap) to store statistics."
-      },
-      {
-        "lineNumber": 342,
-        "author": {
-          "gitId": "minzzelo"
-        },
-        "content": "  * Pros: Will use more memory, since the HashMap will have to be committed to local storage too."
-      },
-      {
-        "lineNumber": 343,
-        "author": {
-          "gitId": "minzzelo"
-        },
-        "content": "  * Cons: We must ensure that the any changes/updates to a flashcard will be reflected in the HashMap."
-      },
-      {
-        "lineNumber": 344,
-        "author": {
-          "gitId": "minzzelo"
-        },
-        "content": ""
-      },
-      {
-        "lineNumber": 345,
-        "author": {
           "gitId": "moyj01"
         },
         "content": "### \\[Implemented\\] Favourite/Unfavourite feature "
       },
       {
-        "lineNumber": 346,
+        "lineNumber": 338,
         "author": {
           "gitId": "kimberlyohq"
         },
         "content": ""
       },
       {
-        "lineNumber": 347,
+        "lineNumber": 339,
         "author": {
           "gitId": "moyj01"
         },
         "content": "#### Current Implementation"
+      },
+      {
+        "lineNumber": 340,
+        "author": {
+          "gitId": "kimberlyohq"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 341,
+        "author": {
+          "gitId": "kimberlyohq"
+        },
+        "content": "The favourite/unfavourite mechanism is faciliated by `LogicManager` and `ModelManager`."
+      },
+      {
+        "lineNumber": 342,
+        "author": {
+          "gitId": "kimberlyohq"
+        },
+        "content": "A `isFavourite` attribute is stored internally in `Flashcard`, to keep track of whether the flashcard is favourited. When the user favourites a flashcard, `isFavourite` is set to true, and set to false otherwise. "
+      },
+      {
+        "lineNumber": 343,
+        "author": {
+          "gitId": "kimberlyohq"
+        },
+        "content": " "
+      },
+      {
+        "lineNumber": 344,
+        "author": {
+          "gitId": "kimberlyohq"
+        },
+        "content": "It implements the following operations:"
+      },
+      {
+        "lineNumber": 345,
+        "author": {
+          "gitId": "kimberlyohq"
+        },
+        "content": "* `Flashcard#isFavourite()` - Checks whether the current flashcard is favourited"
+      },
+      {
+        "lineNumber": 346,
+        "author": {
+          "gitId": "kimberlyohq"
+        },
+        "content": "* `FavCommand#createFavouriteFlashcard(Flashcard flashcardToFavourite)` - Duplicates the flashcard and set `isFavourite` attribute to `true`"
+      },
+      {
+        "lineNumber": 347,
+        "author": {
+          "gitId": "kimberlyohq"
+        },
+        "content": "* `UnfavCommand#createUnfavouriteFlashcard(Flashcard flashcardToUnfavourite)` - Duplicates the flashcard and set `isFavourite` attribute to `false`."
       },
       {
         "lineNumber": 348,
@@ -3549,231 +3549,231 @@
         "author": {
           "gitId": "kimberlyohq"
         },
-        "content": "The favourite/unfavourite mechanism is faciliated by `LogicManager` and `ModelManager`."
+        "content": "Given below is an example usage scenario and how the favourite/unfavourite mechanism behaves at each step."
       },
       {
         "lineNumber": 350,
         "author": {
           "gitId": "kimberlyohq"
         },
-        "content": "A `isFavourite` attribute is stored internally in `Flashcard`, to keep track of whether the flashcard is favourited. When the user favourites a flashcard, `isFavourite` is set to true, and set to false otherwise. "
+        "content": ""
       },
       {
         "lineNumber": 351,
         "author": {
           "gitId": "kimberlyohq"
         },
-        "content": " "
+        "content": "Step 1: The user launches the application "
       },
       {
         "lineNumber": 352,
         "author": {
           "gitId": "kimberlyohq"
         },
-        "content": "It implements the following operations:"
+        "content": ""
       },
       {
         "lineNumber": 353,
         "author": {
           "gitId": "kimberlyohq"
         },
-        "content": "* `Flashcard#isFavourite()` - Checks whether the current flashcard is favourited"
+        "content": "![FavUnfavState0](images/FavUnfavState0.png)"
       },
       {
         "lineNumber": 354,
         "author": {
           "gitId": "kimberlyohq"
         },
-        "content": "* `FavCommand#createFavouriteFlashcard(Flashcard flashcardToFavourite)` - Duplicates the flashcard and set `isFavourite` attribute to `true`"
+        "content": ""
       },
       {
         "lineNumber": 355,
         "author": {
           "gitId": "kimberlyohq"
         },
-        "content": "* `UnfavCommand#createUnfavouriteFlashcard(Flashcard flashcardToUnfavourite)` - Duplicates the flashcard and set `isFavourite` attribute to `false`."
+        "content": "Step 2: The user executes `fav 1` command to favourite the 1st flashcard in the displayed flashcard deck. `fav` Command calls "
       },
       {
         "lineNumber": 356,
         "author": {
           "gitId": "kimberlyohq"
         },
-        "content": ""
+        "content": "`Flashcard#isFavourite()` method to check whether the flashcard at index 1, `f1`,  has been favourited. If the flashcard is not favourited, "
       },
       {
         "lineNumber": 357,
         "author": {
           "gitId": "kimberlyohq"
         },
-        "content": "Given below is an example usage scenario and how the favourite/unfavourite mechanism behaves at each step."
+        "content": "`fav` Command calls `FavCommand#createFavouriteFlashcard(f1)` to create a new flashcard, `fav1`,  by duplicating the existing data fields and set the `isFavourite` attribute to `true`."
       },
       {
         "lineNumber": 358,
         "author": {
           "gitId": "kimberlyohq"
         },
-        "content": ""
+        "content": "`fav` Command then calls `ModelManager#setFlashcard(f1, fav1)` to replace the current flashcard, `f1`,  with the favourited flashcard, `fav1`."
       },
       {
         "lineNumber": 359,
         "author": {
           "gitId": "kimberlyohq"
         },
-        "content": "Step 1: The user launches the application "
+        "content": ""
       },
       {
         "lineNumber": 360,
         "author": {
           "gitId": "kimberlyohq"
         },
-        "content": ""
+        "content": "![FavUnfavState1](images/FavUnfavState1.png)"
       },
       {
         "lineNumber": 361,
         "author": {
           "gitId": "kimberlyohq"
         },
-        "content": "![FavUnfavState0](images/FavUnfavState0.png)"
+        "content": ""
       },
       {
         "lineNumber": 362,
         "author": {
           "gitId": "kimberlyohq"
         },
-        "content": ""
+        "content": "The following sequence diagram shows how the `fav` operation works:"
       },
       {
         "lineNumber": 363,
         "author": {
           "gitId": "kimberlyohq"
         },
-        "content": "Step 2: The user executes `fav 1` command to favourite the 1st flashcard in the displayed flashcard deck. `fav` Command calls "
+        "content": ""
       },
       {
         "lineNumber": 364,
         "author": {
           "gitId": "kimberlyohq"
         },
-        "content": "`Flashcard#isFavourite()` method to check whether the flashcard at index 1, `f1`,  has been favourited. If the flashcard is not favourited, "
+        "content": "![FavouriteSequenceDiagram](images/FavouriteSequenceDiagram.png)"
       },
       {
         "lineNumber": 365,
         "author": {
           "gitId": "kimberlyohq"
         },
-        "content": "`fav` Command calls `FavCommand#createFavouriteFlashcard(f1)` to create a new flashcard, `fav1`,  by duplicating the existing data fields and set the `isFavourite` attribute to `true`."
+        "content": ""
       },
       {
         "lineNumber": 366,
         "author": {
           "gitId": "kimberlyohq"
         },
-        "content": "`fav` Command then calls `ModelManager#setFlashcard(f1, fav1)` to replace the current flashcard, `f1`,  with the favourited flashcard, `fav1`."
+        "content": "Step 3: The user executes `unfav 1` command to unfavourite the 1st flashcard in the displayed flashcard deck. `unfav` Command calls "
       },
       {
         "lineNumber": 367,
         "author": {
           "gitId": "kimberlyohq"
         },
-        "content": ""
+        "content": "`Flashcard#isFavourite()` method to check whether the flashcard at index 1, `fav1`,  has been favourited. `fav1` is favourited in step 2, hence, "
       },
       {
         "lineNumber": 368,
         "author": {
           "gitId": "kimberlyohq"
         },
-        "content": "![FavUnfavState1](images/FavUnfavState1.png)"
+        "content": "`unfav` Command calls `UnfavCommand#createUnfavouriteFlashcard(fav1)` to create a new flashcard, `f1`,  by duplicating the existing data fields and set the `isFavourite` attribute to `false`."
       },
       {
         "lineNumber": 369,
         "author": {
           "gitId": "kimberlyohq"
         },
-        "content": ""
+        "content": "`unfav` Command then calls `ModelManager#setFlashcard(fav1, f1)` to replace the current flashcard, `fav1`,  with the unfavourited flashcard, `f1`."
       },
       {
         "lineNumber": 370,
         "author": {
           "gitId": "kimberlyohq"
         },
-        "content": "The following sequence diagram shows how the `fav` operation works:"
+        "content": ""
       },
       {
         "lineNumber": 371,
         "author": {
           "gitId": "kimberlyohq"
         },
-        "content": ""
+        "content": "![FavUnfavState2](images/FavUnfavState2.png)"
       },
       {
         "lineNumber": 372,
         "author": {
           "gitId": "kimberlyohq"
         },
-        "content": "![FavouriteSequenceDiagram](images/FavouriteSequenceDiagram.png)"
+        "content": ""
       },
       {
         "lineNumber": 373,
         "author": {
           "gitId": "kimberlyohq"
         },
-        "content": ""
+        "content": "The following sequence diagram shows how the `unfav` operation works:"
       },
       {
         "lineNumber": 374,
         "author": {
           "gitId": "kimberlyohq"
         },
-        "content": "Step 3: The user executes `unfav 1` command to unfavourite the 1st flashcard in the displayed flashcard deck. `unfav` Command calls "
+        "content": ""
       },
       {
         "lineNumber": 375,
         "author": {
           "gitId": "kimberlyohq"
         },
-        "content": "`Flashcard#isFavourite()` method to check whether the flashcard at index 1, `fav1`,  has been favourited. `fav1` is favourited in step 2, hence, "
+        "content": "![UnfavouriteSequenceDiagram](images/UnfavouriteSequenceDiagram.png)"
       },
       {
         "lineNumber": 376,
         "author": {
           "gitId": "kimberlyohq"
         },
-        "content": "`unfav` Command calls `UnfavCommand#createUnfavouriteFlashcard(fav1)` to create a new flashcard, `f1`,  by duplicating the existing data fields and set the `isFavourite` attribute to `false`."
+        "content": ""
       },
       {
         "lineNumber": 377,
         "author": {
           "gitId": "kimberlyohq"
         },
-        "content": "`unfav` Command then calls `ModelManager#setFlashcard(fav1, f1)` to replace the current flashcard, `fav1`,  with the unfavourited flashcard, `f1`."
+        "content": ""
       },
       {
         "lineNumber": 378,
         "author": {
           "gitId": "kimberlyohq"
         },
-        "content": ""
+        "content": "The following activity diagram summarizes what happens when a user executes a favourite/unfavourite command:"
       },
       {
         "lineNumber": 379,
         "author": {
           "gitId": "kimberlyohq"
         },
-        "content": "![FavUnfavState2](images/FavUnfavState2.png)"
+        "content": ""
       },
       {
         "lineNumber": 380,
         "author": {
           "gitId": "kimberlyohq"
         },
-        "content": ""
+        "content": "![FavouriteUnfavouriteActivityDiagram.png](images/FavouriteUnfavouriteActivityDiagram.png)"
       },
       {
         "lineNumber": 381,
         "author": {
           "gitId": "kimberlyohq"
         },
-        "content": "The following sequence diagram shows how the `unfav` operation works:"
+        "content": ""
       },
       {
         "lineNumber": 382,
@@ -3787,7 +3787,7 @@
         "author": {
           "gitId": "kimberlyohq"
         },
-        "content": "![UnfavouriteSequenceDiagram](images/UnfavouriteSequenceDiagram.png)"
+        "content": "#### Design consideration:"
       },
       {
         "lineNumber": 384,
@@ -3801,35 +3801,35 @@
         "author": {
           "gitId": "kimberlyohq"
         },
-        "content": ""
+        "content": "##### Aspect: How fav \u0026 unfav executes"
       },
       {
         "lineNumber": 386,
         "author": {
           "gitId": "kimberlyohq"
         },
-        "content": "The following activity diagram summarizes what happens when a user executes a favourite/unfavourite command:"
+        "content": ""
       },
       {
         "lineNumber": 387,
         "author": {
           "gitId": "kimberlyohq"
         },
-        "content": ""
+        "content": "* **Alternative 1 (current choice):** Creates a new flashcard everytime `isFavourite` changes"
       },
       {
         "lineNumber": 388,
         "author": {
           "gitId": "kimberlyohq"
         },
-        "content": "![FavouriteUnfavouriteActivityDiagram.png](images/FavouriteUnfavouriteActivityDiagram.png)"
+        "content": "  * Pros: Flashcard remains immutable."
       },
       {
         "lineNumber": 389,
         "author": {
           "gitId": "kimberlyohq"
         },
-        "content": ""
+        "content": "  * Cons: Execution time is longer compared to Alternative 2 since a new flashcard is created if flashcard\u0027s state changes."
       },
       {
         "lineNumber": 390,
@@ -3843,21 +3843,21 @@
         "author": {
           "gitId": "kimberlyohq"
         },
-        "content": "#### Design consideration:"
+        "content": "* **Alternative 2:** Toggle `isFavourite` using a setter such as `setFavouriteStatus` in `Flashcard`."
       },
       {
         "lineNumber": 392,
         "author": {
           "gitId": "kimberlyohq"
         },
-        "content": ""
+        "content": "  * Pros: Easy to implement as there is no need to create a new flashcard every time the state is changed."
       },
       {
         "lineNumber": 393,
         "author": {
           "gitId": "kimberlyohq"
         },
-        "content": "##### Aspect: How fav \u0026 unfav executes"
+        "content": "  * Cons: Flashcard would not be immutable"
       },
       {
         "lineNumber": 394,
@@ -3871,182 +3871,182 @@
         "author": {
           "gitId": "kimberlyohq"
         },
-        "content": "* **Alternative 1 (current choice):** Creates a new flashcard everytime `isFavourite` changes"
+        "content": ""
       },
       {
         "lineNumber": 396,
-        "author": {
-          "gitId": "kimberlyohq"
-        },
-        "content": "  * Pros: Flashcard remains immutable."
-      },
-      {
-        "lineNumber": 397,
-        "author": {
-          "gitId": "kimberlyohq"
-        },
-        "content": "  * Cons: Execution time is longer compared to Alternative 2 since a new flashcard is created if flashcard\u0027s state changes."
-      },
-      {
-        "lineNumber": 398,
-        "author": {
-          "gitId": "kimberlyohq"
-        },
-        "content": ""
-      },
-      {
-        "lineNumber": 399,
-        "author": {
-          "gitId": "kimberlyohq"
-        },
-        "content": "* **Alternative 2:** Toggle `isFavourite` using a setter such as `setFavouriteStatus` in `Flashcard`."
-      },
-      {
-        "lineNumber": 400,
-        "author": {
-          "gitId": "kimberlyohq"
-        },
-        "content": "  * Pros: Easy to implement as there is no need to create a new flashcard every time the state is changed."
-      },
-      {
-        "lineNumber": 401,
-        "author": {
-          "gitId": "kimberlyohq"
-        },
-        "content": "  * Cons: Flashcard would not be immutable"
-      },
-      {
-        "lineNumber": 402,
-        "author": {
-          "gitId": "kimberlyohq"
-        },
-        "content": ""
-      },
-      {
-        "lineNumber": 403,
-        "author": {
-          "gitId": "kimberlyohq"
-        },
-        "content": ""
-      },
-      {
-        "lineNumber": 404,
         "author": {
           "gitId": "minzzelo"
         },
         "content": "_{more aspects and alternatives to be added}_"
       },
       {
-        "lineNumber": 405,
+        "lineNumber": 397,
         "author": {
           "gitId": "minzzelo"
         },
         "content": ""
       },
       {
-        "lineNumber": 406,
+        "lineNumber": 398,
         "author": {
           "gitId": "moyj01"
         },
         "content": "### \\[Implemented\\] Filter feature"
       },
       {
-        "lineNumber": 407,
+        "lineNumber": 399,
         "author": {
           "gitId": "tanzhuoyao-nus"
         },
         "content": ""
       },
       {
-        "lineNumber": 408,
+        "lineNumber": 400,
         "author": {
           "gitId": "moyj01"
         },
         "content": "#### Current Implementation"
       },
       {
-        "lineNumber": 409,
+        "lineNumber": 401,
         "author": {
           "gitId": "tanzhuoyao-nus"
         },
         "content": "The filtering mechanism is facilitated by `LogicManager` and `ModelManager`."
       },
       {
-        "lineNumber": 410,
+        "lineNumber": 402,
         "author": {
           "gitId": "tanzhuoyao-nus"
         },
         "content": "It works when the `LogicManager` listens for a filter command input from the user and"
       },
       {
-        "lineNumber": 411,
+        "lineNumber": 403,
         "author": {
           "gitId": "tanzhuoyao-nus"
         },
         "content": "parses the command to filter out relevant flashcards based on the category or categories "
       },
       {
-        "lineNumber": 412,
+        "lineNumber": 404,
         "author": {
           "gitId": "tanzhuoyao-nus"
         },
         "content": "chosen. The filter feature supports filtering of multiple categories by parsing the command"
       },
       {
-        "lineNumber": 413,
+        "lineNumber": 405,
         "author": {
           "gitId": "tanzhuoyao-nus"
         },
         "content": "using `ParserUtil.parseCategories(Collection\u003cString\u003e categories)`."
       },
       {
-        "lineNumber": 414,
+        "lineNumber": 406,
         "author": {
           "gitId": "tanzhuoyao-nus"
         },
         "content": ""
       },
       {
-        "lineNumber": 415,
+        "lineNumber": 407,
         "author": {
           "gitId": "tanzhuoyao-nus"
         },
         "content": "It implements the following operations:"
       },
       {
-        "lineNumber": 416,
+        "lineNumber": 408,
         "author": {
           "gitId": "tanzhuoyao-nus"
         },
         "content": "* `FilterCommand#execute(Model model)` to update `Model` to show only the filtered flashcards"
       },
       {
-        "lineNumber": 417,
+        "lineNumber": 409,
         "author": {
           "gitId": "tanzhuoyao-nus"
         },
         "content": "* `CategoryEqualsKeywordsPredicate#test(Flashcard flashcard)` to check every flashcard in `Model` against the list of "
       },
       {
-        "lineNumber": 418,
+        "lineNumber": 410,
         "author": {
           "gitId": "tanzhuoyao-nus"
         },
         "content": "categories parsed from `FilterCommandParser#parse(String args)`"
       },
       {
-        "lineNumber": 419,
+        "lineNumber": 411,
         "author": {
           "gitId": "tanzhuoyao-nus"
         },
         "content": "* `ModelManager#updateFilteredFlashcardList(Predicate\u003cFlashcard\u003e predicate)` takes in a predicate to update "
       },
       {
-        "lineNumber": 420,
+        "lineNumber": 412,
         "author": {
           "gitId": "tanzhuoyao-nus"
         },
         "content": "`filteredFlashcards` attribute within  `ModelManager`."
+      },
+      {
+        "lineNumber": 413,
+        "author": {
+          "gitId": "tanzhuoyao-nus"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 414,
+        "author": {
+          "gitId": "tanzhuoyao-nus"
+        },
+        "content": "Given below is an example usage scenario and how the filter mechanism behaves at each step."
+      },
+      {
+        "lineNumber": 415,
+        "author": {
+          "gitId": "tanzhuoyao-nus"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 416,
+        "author": {
+          "gitId": "tanzhuoyao-nus"
+        },
+        "content": "Step 1. The user launches the application."
+      },
+      {
+        "lineNumber": 417,
+        "author": {
+          "gitId": "tanzhuoyao-nus"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 418,
+        "author": {
+          "gitId": "tanzhuoyao-nus"
+        },
+        "content": "Step 2: The user executes `filter c/SDLC` command to filter and display all the flashcards in the flashcard deck"
+      },
+      {
+        "lineNumber": 419,
+        "author": {
+          "gitId": "tanzhuoyao-nus"
+        },
+        "content": "belonging to SDLC category. `LogicManager` calls   `FlashcardDeckParser#parseCommand(String args))` and   "
+      },
+      {
+        "lineNumber": 420,
+        "author": {
+          "gitId": "tanzhuoyao-nus"
+        },
+        "content": "`FilterCommandParser#parse(String args)` to ultimately return a `FilterCommand` object."
       },
       {
         "lineNumber": 421,
@@ -4060,7 +4060,7 @@
         "author": {
           "gitId": "tanzhuoyao-nus"
         },
-        "content": "Given below is an example usage scenario and how the filter mechanism behaves at each step."
+        "content": "Step 3: After parsing, `LogicManager` then calls `FilterCommand#execute(Model model)`."
       },
       {
         "lineNumber": 423,
@@ -4074,35 +4074,35 @@
         "author": {
           "gitId": "tanzhuoyao-nus"
         },
-        "content": "Step 1. The user launches the application."
+        "content": "Step 4: `FilterCommand` then updates the list of filtered flashcards by calling "
       },
       {
         "lineNumber": 425,
         "author": {
           "gitId": "tanzhuoyao-nus"
         },
-        "content": ""
+        "content": "`Model#updateFilteredFlashcardList(predicate)`."
       },
       {
         "lineNumber": 426,
         "author": {
           "gitId": "tanzhuoyao-nus"
         },
-        "content": "Step 2: The user executes `filter c/SDLC` command to filter and display all the flashcards in the flashcard deck"
+        "content": ""
       },
       {
         "lineNumber": 427,
         "author": {
           "gitId": "tanzhuoyao-nus"
         },
-        "content": "belonging to SDLC category. `LogicManager` calls   `FlashcardDeckParser#parseCommand(String args))` and   "
+        "content": "Step 5: A `CommandResult` is generated and Model updates the `filteredFlashcardList` which is then updated"
       },
       {
         "lineNumber": 428,
         "author": {
           "gitId": "tanzhuoyao-nus"
         },
-        "content": "`FilterCommandParser#parse(String args)` to ultimately return a `FilterCommand` object."
+        "content": "in the UI."
       },
       {
         "lineNumber": 429,
@@ -4116,7 +4116,7 @@
         "author": {
           "gitId": "tanzhuoyao-nus"
         },
-        "content": "Step 3: After parsing, `LogicManager` then calls `FilterCommand#execute(Model model)`."
+        "content": "The following sequence diagram shows how the filter operation works:"
       },
       {
         "lineNumber": 431,
@@ -4130,112 +4130,112 @@
         "author": {
           "gitId": "tanzhuoyao-nus"
         },
-        "content": "Step 4: `FilterCommand` then updates the list of filtered flashcards by calling "
+        "content": " ![FilterSequenceDiagram](images/FilterSequenceDiagram.png)"
       },
       {
         "lineNumber": 433,
         "author": {
           "gitId": "tanzhuoyao-nus"
         },
-        "content": "`Model#updateFilteredFlashcardList(predicate)`."
+        "content": " "
       },
       {
         "lineNumber": 434,
         "author": {
           "gitId": "tanzhuoyao-nus"
         },
-        "content": ""
+        "content": " The following activity diagram shows how the `filter` command works when a user executes it:"
       },
       {
         "lineNumber": 435,
         "author": {
           "gitId": "tanzhuoyao-nus"
         },
-        "content": "Step 5: A `CommandResult` is generated and Model updates the `filteredFlashcardList` which is then updated"
+        "content": " "
       },
       {
         "lineNumber": 436,
         "author": {
           "gitId": "tanzhuoyao-nus"
         },
-        "content": "in the UI."
+        "content": " ![FilterActivityDiagram](images/FilterActivityDiagram.png)"
       },
       {
         "lineNumber": 437,
         "author": {
           "gitId": "tanzhuoyao-nus"
         },
-        "content": ""
+        "content": " "
       },
       {
         "lineNumber": 438,
         "author": {
-          "gitId": "tanzhuoyao-nus"
+          "gitId": "-"
         },
-        "content": "The following sequence diagram shows how the filter operation works:"
+        "content": " "
       },
       {
         "lineNumber": 439,
         "author": {
-          "gitId": "tanzhuoyao-nus"
+          "gitId": "-"
         },
-        "content": ""
+        "content": "--------------------------------------------------------------------------------------------------------------------"
       },
       {
         "lineNumber": 440,
         "author": {
-          "gitId": "tanzhuoyao-nus"
+          "gitId": "-"
         },
-        "content": " ![FilterSequenceDiagram](images/FilterSequenceDiagram.png)"
+        "content": ""
       },
       {
         "lineNumber": 441,
         "author": {
-          "gitId": "tanzhuoyao-nus"
+          "gitId": "-"
         },
-        "content": " "
+        "content": "## **Documentation, logging, testing, configuration, dev-ops**"
       },
       {
         "lineNumber": 442,
         "author": {
-          "gitId": "tanzhuoyao-nus"
+          "gitId": "-"
         },
-        "content": " The following activity diagram shows how the `filter` command works when a user executes it:"
+        "content": ""
       },
       {
         "lineNumber": 443,
         "author": {
-          "gitId": "tanzhuoyao-nus"
+          "gitId": "-"
         },
-        "content": " "
+        "content": "* [Documentation guide](Documentation.md)"
       },
       {
         "lineNumber": 444,
         "author": {
-          "gitId": "tanzhuoyao-nus"
+          "gitId": "-"
         },
-        "content": " ![FilterActivityDiagram](images/FilterActivityDiagram.png)"
+        "content": "* [Testing guide](Testing.md)"
       },
       {
         "lineNumber": 445,
         "author": {
-          "gitId": "tanzhuoyao-nus"
+          "gitId": "-"
         },
-        "content": " "
+        "content": "* [Logging guide](Logging.md)"
       },
       {
         "lineNumber": 446,
         "author": {
           "gitId": "-"
         },
-        "content": " "
+        "content": "* [Configuration guide](Configuration.md)"
       },
       {
         "lineNumber": 447,
         "author": {
           "gitId": "-"
         },
-        "content": "--------------------------------------------------------------------------------------------------------------------"
+        "content": "* [DevOps guide](DevOps.md)"
       },
       {
         "lineNumber": 448,
@@ -4249,7 +4249,7 @@
         "author": {
           "gitId": "-"
         },
-        "content": "## **Documentation, logging, testing, configuration, dev-ops**"
+        "content": "--------------------------------------------------------------------------------------------------------------------"
       },
       {
         "lineNumber": 450,
@@ -4263,35 +4263,35 @@
         "author": {
           "gitId": "-"
         },
-        "content": "* [Documentation guide](Documentation.md)"
+        "content": "## **Appendix: Requirements**"
       },
       {
         "lineNumber": 452,
         "author": {
           "gitId": "-"
         },
-        "content": "* [Testing guide](Testing.md)"
+        "content": ""
       },
       {
         "lineNumber": 453,
         "author": {
           "gitId": "-"
         },
-        "content": "* [Logging guide](Logging.md)"
+        "content": "### Product scope"
       },
       {
         "lineNumber": 454,
         "author": {
           "gitId": "-"
         },
-        "content": "* [Configuration guide](Configuration.md)"
+        "content": ""
       },
       {
         "lineNumber": 455,
         "author": {
           "gitId": "-"
         },
-        "content": "* [DevOps guide](DevOps.md)"
+        "content": "**Target user profile**:"
       },
       {
         "lineNumber": 456,
@@ -4303,37 +4303,37 @@
       {
         "lineNumber": 457,
         "author": {
-          "gitId": "-"
+          "gitId": "minzzelo"
         },
-        "content": "--------------------------------------------------------------------------------------------------------------------"
+        "content": "* has a need to manage a significant number of flashcards"
       },
       {
         "lineNumber": 458,
         "author": {
           "gitId": "-"
         },
-        "content": ""
+        "content": "* prefer desktop apps over other types"
       },
       {
         "lineNumber": 459,
         "author": {
           "gitId": "-"
         },
-        "content": "## **Appendix: Requirements**"
+        "content": "* can type fast"
       },
       {
         "lineNumber": 460,
         "author": {
           "gitId": "-"
         },
-        "content": ""
+        "content": "* prefers typing to mouse interactions"
       },
       {
         "lineNumber": 461,
         "author": {
           "gitId": "-"
         },
-        "content": "### Product scope"
+        "content": "* is reasonably comfortable using CLI apps"
       },
       {
         "lineNumber": 462,
@@ -4345,51 +4345,51 @@
       {
         "lineNumber": 463,
         "author": {
-          "gitId": "-"
+          "gitId": "minzzelo"
         },
-        "content": "**Target user profile**:"
+        "content": "**Value proposition**:"
       },
       {
         "lineNumber": 464,
         "author": {
-          "gitId": "-"
+          "gitId": "minzzelo"
         },
-        "content": ""
+        "content": "* Remind students on what is due soon"
       },
       {
         "lineNumber": 465,
         "author": {
           "gitId": "minzzelo"
         },
-        "content": "* has a need to manage a significant number of flashcards"
+        "content": "* Help students keep track of their CS2103T progress (assignments, results)"
       },
       {
         "lineNumber": 466,
         "author": {
-          "gitId": "-"
+          "gitId": "minzzelo"
         },
-        "content": "* prefer desktop apps over other types"
+        "content": "* Provide students with the ease of access to CS2103T content"
       },
       {
         "lineNumber": 467,
         "author": {
-          "gitId": "-"
+          "gitId": "minzzelo"
         },
-        "content": "* can type fast"
+        "content": "* Aid students in learning and revision of CS2103T topics (through flashcards and “self-quiz”)"
       },
       {
         "lineNumber": 468,
         "author": {
-          "gitId": "-"
+          "gitId": "minzzelo"
         },
-        "content": "* prefers typing to mouse interactions"
+        "content": ""
       },
       {
         "lineNumber": 469,
         "author": {
           "gitId": "-"
         },
-        "content": "* is reasonably comfortable using CLI apps"
+        "content": ""
       },
       {
         "lineNumber": 470,
@@ -4401,79 +4401,79 @@
       {
         "lineNumber": 471,
         "author": {
-          "gitId": "minzzelo"
+          "gitId": "-"
         },
-        "content": "**Value proposition**:"
+        "content": "### User stories"
       },
       {
         "lineNumber": 472,
         "author": {
-          "gitId": "minzzelo"
+          "gitId": "-"
         },
-        "content": "* Remind students on what is due soon"
+        "content": ""
       },
       {
         "lineNumber": 473,
         "author": {
-          "gitId": "minzzelo"
+          "gitId": "-"
         },
-        "content": "* Help students keep track of their CS2103T progress (assignments, results)"
+        "content": "Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unlikely to have) - `*`"
       },
       {
         "lineNumber": 474,
         "author": {
-          "gitId": "minzzelo"
+          "gitId": "-"
         },
-        "content": "* Provide students with the ease of access to CS2103T content"
+        "content": ""
       },
       {
         "lineNumber": 475,
         "author": {
-          "gitId": "minzzelo"
+          "gitId": "-"
         },
-        "content": "* Aid students in learning and revision of CS2103T topics (through flashcards and “self-quiz”)"
+        "content": "| Priority | As a …​                                 | I want to …​                | So that I can…​                                                     |"
       },
       {
         "lineNumber": 476,
         "author": {
-          "gitId": "minzzelo"
+          "gitId": "-"
         },
-        "content": ""
+        "content": "| -------- | ------------------------------------------ | ------------------------------ | ---------------------------------------------------------------------- |"
       },
       {
         "lineNumber": 477,
         "author": {
           "gitId": "-"
         },
-        "content": ""
+        "content": "| `* * *`  | new user                                   | see usage instructions         | refer to instructions when I forget how to use the App                 |"
       },
       {
         "lineNumber": 478,
         "author": {
-          "gitId": "-"
+          "gitId": "minzzelo"
         },
-        "content": ""
+        "content": "| `* * *`  | busy student                               | add a new flashcard            |                                                                        |"
       },
       {
         "lineNumber": 479,
         "author": {
-          "gitId": "-"
+          "gitId": "minzzelo"
         },
-        "content": "### User stories"
+        "content": "| `* * *`  | student                                    | delete a flashcard             | remove entries that that are not relevant or helpful to my learning.   |"
       },
       {
         "lineNumber": 480,
         "author": {
-          "gitId": "-"
+          "gitId": "minzzelo"
         },
-        "content": ""
+        "content": "| `* * *`  | student                                    | list the flashcards            |                                                                        |"
       },
       {
         "lineNumber": 481,
         "author": {
-          "gitId": "-"
+          "gitId": "minzzelo"
         },
-        "content": "Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unlikely to have) - `*`"
+        "content": "| `* * *`  | student                                    | review the flashcards          |                                                                        |"
       },
       {
         "lineNumber": 482,
@@ -4487,49 +4487,49 @@
         "author": {
           "gitId": "-"
         },
-        "content": "| Priority | As a …​                                 | I want to …​                | So that I can…​                                                     |"
+        "content": "*{More to be added}*"
       },
       {
         "lineNumber": 484,
         "author": {
           "gitId": "-"
         },
-        "content": "| -------- | ------------------------------------------ | ------------------------------ | ---------------------------------------------------------------------- |"
+        "content": ""
       },
       {
         "lineNumber": 485,
         "author": {
           "gitId": "-"
         },
-        "content": "| `* * *`  | new user                                   | see usage instructions         | refer to instructions when I forget how to use the App                 |"
+        "content": "### Use cases"
       },
       {
         "lineNumber": 486,
         "author": {
-          "gitId": "minzzelo"
+          "gitId": "-"
         },
-        "content": "| `* * *`  | busy student                               | add a new flashcard            |                                                                        |"
+        "content": ""
       },
       {
         "lineNumber": 487,
         "author": {
           "gitId": "minzzelo"
         },
-        "content": "| `* * *`  | student                                    | delete a flashcard             | remove entries that that are not relevant or helpful to my learning.   |"
+        "content": "(For all use cases below, the **System** is the `FlashcardList` and the **Actor** is the `user`, unless specified otherwise)"
       },
       {
         "lineNumber": 488,
         "author": {
-          "gitId": "minzzelo"
+          "gitId": "-"
         },
-        "content": "| `* * *`  | student                                    | list the flashcards            |                                                                        |"
+        "content": ""
       },
       {
         "lineNumber": 489,
         "author": {
           "gitId": "minzzelo"
         },
-        "content": "| `* * *`  | student                                    | review the flashcards          |                                                                        |"
+        "content": "**Use case: Delete a flashcard**"
       },
       {
         "lineNumber": 490,
@@ -4543,7 +4543,7 @@
         "author": {
           "gitId": "-"
         },
-        "content": "*{More to be added}*"
+        "content": "**MSS**"
       },
       {
         "lineNumber": 492,
@@ -4555,86 +4555,86 @@
       {
         "lineNumber": 493,
         "author": {
-          "gitId": "-"
-        },
-        "content": "### Use cases"
-      },
-      {
-        "lineNumber": 494,
-        "author": {
-          "gitId": "-"
-        },
-        "content": ""
-      },
-      {
-        "lineNumber": 495,
-        "author": {
-          "gitId": "minzzelo"
-        },
-        "content": "(For all use cases below, the **System** is the `FlashcardList` and the **Actor** is the `user`, unless specified otherwise)"
-      },
-      {
-        "lineNumber": 496,
-        "author": {
-          "gitId": "-"
-        },
-        "content": ""
-      },
-      {
-        "lineNumber": 497,
-        "author": {
-          "gitId": "minzzelo"
-        },
-        "content": "**Use case: Delete a flashcard**"
-      },
-      {
-        "lineNumber": 498,
-        "author": {
-          "gitId": "-"
-        },
-        "content": ""
-      },
-      {
-        "lineNumber": 499,
-        "author": {
-          "gitId": "-"
-        },
-        "content": "**MSS**"
-      },
-      {
-        "lineNumber": 500,
-        "author": {
-          "gitId": "-"
-        },
-        "content": ""
-      },
-      {
-        "lineNumber": 501,
-        "author": {
           "gitId": "minzzelo"
         },
         "content": "1.  User requests to list flashcards"
       },
       {
-        "lineNumber": 502,
+        "lineNumber": 494,
         "author": {
           "gitId": "minzzelo"
         },
         "content": "2.  FlashcardList shows a list of flashcards"
       },
       {
-        "lineNumber": 503,
+        "lineNumber": 495,
         "author": {
           "gitId": "minzzelo"
         },
         "content": "3.  User requests to delete a specific flashcard in the list"
       },
       {
-        "lineNumber": 504,
+        "lineNumber": 496,
         "author": {
           "gitId": "minzzelo"
         },
         "content": "4.  FlashcardList deletes the flashcard"
+      },
+      {
+        "lineNumber": 497,
+        "author": {
+          "gitId": "-"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 498,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "    Use case ends."
+      },
+      {
+        "lineNumber": 499,
+        "author": {
+          "gitId": "-"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 500,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "**Extensions**"
+      },
+      {
+        "lineNumber": 501,
+        "author": {
+          "gitId": "-"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 502,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "* 2a. The list is empty."
+      },
+      {
+        "lineNumber": 503,
+        "author": {
+          "gitId": "-"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 504,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "  Use case ends."
       },
       {
         "lineNumber": 505,
@@ -4648,7 +4648,7 @@
         "author": {
           "gitId": "-"
         },
-        "content": "    Use case ends."
+        "content": "* 3a. The given index is invalid."
       },
       {
         "lineNumber": 507,
@@ -4660,9 +4660,9 @@
       {
         "lineNumber": 508,
         "author": {
-          "gitId": "-"
+          "gitId": "minzzelo"
         },
-        "content": "**Extensions**"
+        "content": "    * 3a1. FlashcardList shows an error message."
       },
       {
         "lineNumber": 509,
@@ -4676,7 +4676,7 @@
         "author": {
           "gitId": "-"
         },
-        "content": "* 2a. The list is empty."
+        "content": "      Use case resumes at step 2."
       },
       {
         "lineNumber": 511,
@@ -4690,7 +4690,7 @@
         "author": {
           "gitId": "-"
         },
-        "content": "  Use case ends."
+        "content": "*{More to be added}*"
       },
       {
         "lineNumber": 513,
@@ -4704,7 +4704,7 @@
         "author": {
           "gitId": "-"
         },
-        "content": "* 3a. The given index is invalid."
+        "content": "### Non-Functional Requirements"
       },
       {
         "lineNumber": 515,
@@ -4716,23 +4716,23 @@
       {
         "lineNumber": 516,
         "author": {
-          "gitId": "minzzelo"
+          "gitId": "-"
         },
-        "content": "    * 3a1. FlashcardList shows an error message."
+        "content": "1.  Should work on any _mainstream OS_ as long as it has Java `11` or above installed."
       },
       {
         "lineNumber": 517,
         "author": {
-          "gitId": "-"
+          "gitId": "minzzelo"
         },
-        "content": ""
+        "content": "2.  Should be able to hold up to 1000 flashcards without a noticeable sluggishness in performance for typical usage."
       },
       {
         "lineNumber": 518,
         "author": {
           "gitId": "-"
         },
-        "content": "      Use case resumes at step 2."
+        "content": "3.  A user with above average typing speed for regular English text (i.e. not code, not system admin commands) should be able to accomplish most of the tasks faster using commands than using the mouse."
       },
       {
         "lineNumber": 519,
@@ -4760,7 +4760,7 @@
         "author": {
           "gitId": "-"
         },
-        "content": "### Non-Functional Requirements"
+        "content": "### Glossary"
       },
       {
         "lineNumber": 523,
@@ -4774,21 +4774,21 @@
         "author": {
           "gitId": "-"
         },
-        "content": "1.  Should work on any _mainstream OS_ as long as it has Java `11` or above installed."
+        "content": "* **Mainstream OS**: Windows, Linux, Unix, OS-X"
       },
       {
         "lineNumber": 525,
         "author": {
-          "gitId": "minzzelo"
+          "gitId": "-"
         },
-        "content": "2.  Should be able to hold up to 1000 flashcards without a noticeable sluggishness in performance for typical usage."
+        "content": ""
       },
       {
         "lineNumber": 526,
         "author": {
           "gitId": "-"
         },
-        "content": "3.  A user with above average typing speed for regular English text (i.e. not code, not system admin commands) should be able to accomplish most of the tasks faster using commands than using the mouse."
+        "content": "--------------------------------------------------------------------------------------------------------------------"
       },
       {
         "lineNumber": 527,
@@ -4802,7 +4802,7 @@
         "author": {
           "gitId": "-"
         },
-        "content": "*{More to be added}*"
+        "content": "## **Appendix: Instructions for manual testing**"
       },
       {
         "lineNumber": 529,
@@ -4816,7 +4816,7 @@
         "author": {
           "gitId": "-"
         },
-        "content": "### Glossary"
+        "content": "Given below are instructions to test the app manually."
       },
       {
         "lineNumber": 531,
@@ -4830,70 +4830,70 @@
         "author": {
           "gitId": "-"
         },
-        "content": "* **Mainstream OS**: Windows, Linux, Unix, OS-X"
+        "content": "\u003cdiv markdown\u003d\"span\" class\u003d\"alert alert-info\"\u003e:information_source: **Note:** These instructions only provide a starting point for testers to work on;"
       },
       {
         "lineNumber": 533,
         "author": {
           "gitId": "-"
         },
-        "content": ""
+        "content": "testers are expected to do more *exploratory* testing."
       },
       {
         "lineNumber": 534,
         "author": {
           "gitId": "-"
         },
-        "content": "--------------------------------------------------------------------------------------------------------------------"
+        "content": ""
       },
       {
         "lineNumber": 535,
         "author": {
           "gitId": "-"
         },
-        "content": ""
+        "content": "\u003c/div\u003e"
       },
       {
         "lineNumber": 536,
         "author": {
           "gitId": "-"
         },
-        "content": "## **Appendix: Instructions for manual testing**"
+        "content": ""
       },
       {
         "lineNumber": 537,
         "author": {
           "gitId": "-"
         },
-        "content": ""
+        "content": "### Launch and shutdown"
       },
       {
         "lineNumber": 538,
         "author": {
           "gitId": "-"
         },
-        "content": "Given below are instructions to test the app manually."
+        "content": ""
       },
       {
         "lineNumber": 539,
         "author": {
           "gitId": "-"
         },
-        "content": ""
+        "content": "1. Initial launch"
       },
       {
         "lineNumber": 540,
         "author": {
           "gitId": "-"
         },
-        "content": "\u003cdiv markdown\u003d\"span\" class\u003d\"alert alert-info\"\u003e:information_source: **Note:** These instructions only provide a starting point for testers to work on;"
+        "content": ""
       },
       {
         "lineNumber": 541,
         "author": {
           "gitId": "-"
         },
-        "content": "testers are expected to do more *exploratory* testing."
+        "content": "   1. Download the jar file and copy into an empty folder"
       },
       {
         "lineNumber": 542,
@@ -4907,7 +4907,7 @@
         "author": {
           "gitId": "-"
         },
-        "content": "\u003c/div\u003e"
+        "content": "   1. Double-click the jar file Expected: Shows the GUI with a set of sample contacts. The window size may not be optimum."
       },
       {
         "lineNumber": 544,
@@ -4921,7 +4921,7 @@
         "author": {
           "gitId": "-"
         },
-        "content": "### Launch and shutdown"
+        "content": "1. Saving window preferences"
       },
       {
         "lineNumber": 546,
@@ -4935,7 +4935,7 @@
         "author": {
           "gitId": "-"
         },
-        "content": "1. Initial launch"
+        "content": "   1. Resize the window to an optimum size. Move the window to a different location. Close the window."
       },
       {
         "lineNumber": 548,
@@ -4949,70 +4949,70 @@
         "author": {
           "gitId": "-"
         },
-        "content": "   1. Download the jar file and copy into an empty folder"
+        "content": "   1. Re-launch the app by double-clicking the jar file.\u003cbr\u003e"
       },
       {
         "lineNumber": 550,
         "author": {
           "gitId": "-"
         },
-        "content": ""
+        "content": "       Expected: The most recent window size and location is retained."
       },
       {
         "lineNumber": 551,
         "author": {
           "gitId": "-"
         },
-        "content": "   1. Double-click the jar file Expected: Shows the GUI with a set of sample contacts. The window size may not be optimum."
+        "content": ""
       },
       {
         "lineNumber": 552,
         "author": {
           "gitId": "-"
         },
-        "content": ""
+        "content": "1. _{ more test cases …​ }_"
       },
       {
         "lineNumber": 553,
         "author": {
           "gitId": "-"
         },
-        "content": "1. Saving window preferences"
+        "content": ""
       },
       {
         "lineNumber": 554,
         "author": {
           "gitId": "-"
         },
-        "content": ""
+        "content": "### Deleting a person"
       },
       {
         "lineNumber": 555,
         "author": {
           "gitId": "-"
         },
-        "content": "   1. Resize the window to an optimum size. Move the window to a different location. Close the window."
+        "content": ""
       },
       {
         "lineNumber": 556,
         "author": {
           "gitId": "-"
         },
-        "content": ""
+        "content": "1. Deleting a person while all persons are being shown"
       },
       {
         "lineNumber": 557,
         "author": {
           "gitId": "-"
         },
-        "content": "   1. Re-launch the app by double-clicking the jar file.\u003cbr\u003e"
+        "content": ""
       },
       {
         "lineNumber": 558,
         "author": {
           "gitId": "-"
         },
-        "content": "       Expected: The most recent window size and location is retained."
+        "content": "   1. Prerequisites: List all persons using the `list` command. Multiple persons in the list."
       },
       {
         "lineNumber": 559,
@@ -5026,35 +5026,35 @@
         "author": {
           "gitId": "-"
         },
-        "content": "1. _{ more test cases …​ }_"
+        "content": "   1. Test case: `delete 1`\u003cbr\u003e"
       },
       {
         "lineNumber": 561,
         "author": {
           "gitId": "-"
         },
-        "content": ""
+        "content": "      Expected: First contact is deleted from the list. Details of the deleted contact shown in the status message. Timestamp in the status bar is updated."
       },
       {
         "lineNumber": 562,
         "author": {
           "gitId": "-"
         },
-        "content": "### Deleting a person"
+        "content": ""
       },
       {
         "lineNumber": 563,
         "author": {
           "gitId": "-"
         },
-        "content": ""
+        "content": "   1. Test case: `delete 0`\u003cbr\u003e"
       },
       {
         "lineNumber": 564,
         "author": {
           "gitId": "-"
         },
-        "content": "1. Deleting a person while all persons are being shown"
+        "content": "      Expected: No person is deleted. Error details shown in the status message. Status bar remains the same."
       },
       {
         "lineNumber": 565,
@@ -5068,28 +5068,28 @@
         "author": {
           "gitId": "-"
         },
-        "content": "   1. Prerequisites: List all persons using the `list` command. Multiple persons in the list."
+        "content": "   1. Other incorrect delete commands to try: `delete`, `delete x`, `...` (where x is larger than the list size)\u003cbr\u003e"
       },
       {
         "lineNumber": 567,
         "author": {
           "gitId": "-"
         },
-        "content": ""
+        "content": "      Expected: Similar to previous."
       },
       {
         "lineNumber": 568,
         "author": {
           "gitId": "-"
         },
-        "content": "   1. Test case: `delete 1`\u003cbr\u003e"
+        "content": ""
       },
       {
         "lineNumber": 569,
         "author": {
           "gitId": "-"
         },
-        "content": "      Expected: First contact is deleted from the list. Details of the deleted contact shown in the status message. Timestamp in the status bar is updated."
+        "content": "1. _{ more test cases …​ }_"
       },
       {
         "lineNumber": 570,
@@ -5103,35 +5103,35 @@
         "author": {
           "gitId": "-"
         },
-        "content": "   1. Test case: `delete 0`\u003cbr\u003e"
+        "content": "### Saving data"
       },
       {
         "lineNumber": 572,
         "author": {
           "gitId": "-"
         },
-        "content": "      Expected: No person is deleted. Error details shown in the status message. Status bar remains the same."
+        "content": ""
       },
       {
         "lineNumber": 573,
         "author": {
           "gitId": "-"
         },
-        "content": ""
+        "content": "1. Dealing with missing/corrupted data files"
       },
       {
         "lineNumber": 574,
         "author": {
           "gitId": "-"
         },
-        "content": "   1. Other incorrect delete commands to try: `delete`, `delete x`, `...` (where x is larger than the list size)\u003cbr\u003e"
+        "content": ""
       },
       {
         "lineNumber": 575,
         "author": {
           "gitId": "-"
         },
-        "content": "      Expected: Similar to previous."
+        "content": "   1. _{explain how to simulate a missing/corrupted file, and the expected behavior}_"
       },
       {
         "lineNumber": 576,
@@ -5146,71 +5146,15 @@
           "gitId": "-"
         },
         "content": "1. _{ more test cases …​ }_"
-      },
-      {
-        "lineNumber": 578,
-        "author": {
-          "gitId": "-"
-        },
-        "content": ""
-      },
-      {
-        "lineNumber": 579,
-        "author": {
-          "gitId": "-"
-        },
-        "content": "### Saving data"
-      },
-      {
-        "lineNumber": 580,
-        "author": {
-          "gitId": "-"
-        },
-        "content": ""
-      },
-      {
-        "lineNumber": 581,
-        "author": {
-          "gitId": "-"
-        },
-        "content": "1. Dealing with missing/corrupted data files"
-      },
-      {
-        "lineNumber": 582,
-        "author": {
-          "gitId": "-"
-        },
-        "content": ""
-      },
-      {
-        "lineNumber": 583,
-        "author": {
-          "gitId": "-"
-        },
-        "content": "   1. _{explain how to simulate a missing/corrupted file, and the expected behavior}_"
-      },
-      {
-        "lineNumber": 584,
-        "author": {
-          "gitId": "-"
-        },
-        "content": ""
-      },
-      {
-        "lineNumber": 585,
-        "author": {
-          "gitId": "-"
-        },
-        "content": "1. _{ more test cases …​ }_"
       }
     ],
     "authorContributionMap": {
       "moyj01": 29,
-      "minzzelo": 72,
+      "minzzelo": 65,
       "-": 341,
       "tanzhuoyao-nus": 38,
       "sgn00": 47,
-      "kimberlyohq": 58
+      "kimberlyohq": 57
     }
   },
   {
@@ -5968,86 +5912,86 @@
       {
         "lineNumber": 14,
         "author": {
-          "gitId": "moyj01"
+          "gitId": "minzzelo"
         },
-        "content": "        - Listing all flashcards: `list`"
+        "content": "        - Editing a flashcard: `edit`"
       },
       {
         "lineNumber": 15,
         "author": {
           "gitId": "moyj01"
         },
-        "content": "        - Review all flashcards : `review`"
+        "content": "        - Listing all flashcards: `list`"
       },
       {
         "lineNumber": 16,
+        "author": {
+          "gitId": "moyj01"
+        },
+        "content": "        - Review all flashcards : `review`"
+      },
+      {
+        "lineNumber": 17,
+        "author": {
+          "gitId": "minzzelo"
+        },
+        "content": "        - Sort all flashcards: `sort`"
+      },
+      {
+        "lineNumber": 18,
         "author": {
           "gitId": "kimberlyohq"
         },
         "content": "        - Favourite a flashcard : `fav`"
       },
       {
-        "lineNumber": 17,
+        "lineNumber": 19,
         "author": {
           "gitId": "kimberlyohq"
         },
         "content": "        - Unfavourite a flashcard: `unfav`"
       },
       {
-        "lineNumber": 18,
+        "lineNumber": 20,
         "author": {
           "gitId": "moyj01"
         },
         "content": "        - Exiting the program: `exit`"
       },
       {
-        "lineNumber": 19,
+        "lineNumber": 21,
         "author": {
           "gitId": "sgn00"
         },
         "content": "        - View a flashcard: `view`"
       },
       {
-        "lineNumber": 20,
+        "lineNumber": 22,
         "author": {
           "gitId": "moyj01"
         },
         "content": "        - Saving the data"
       },
       {
-        "lineNumber": 21,
+        "lineNumber": 23,
         "author": {
           "gitId": "moyj01"
         },
         "content": "    - FAQ"
       },
       {
-        "lineNumber": 22,
+        "lineNumber": 24,
         "author": {
           "gitId": "moyj01"
         },
         "content": "    - Command summary"
       },
       {
-        "lineNumber": 23,
+        "lineNumber": 25,
         "author": {
           "gitId": "moyj01"
         },
         "content": "        "
-      },
-      {
-        "lineNumber": 24,
-        "author": {
-          "gitId": "-"
-        },
-        "content": ""
-      },
-      {
-        "lineNumber": 25,
-        "author": {
-          "gitId": "-"
-        },
-        "content": "--------------------------------------------------------------------------------------------------------------------"
       },
       {
         "lineNumber": 26,
@@ -6061,7 +6005,7 @@
         "author": {
           "gitId": "-"
         },
-        "content": "## Quick start"
+        "content": "--------------------------------------------------------------------------------------------------------------------"
       },
       {
         "lineNumber": 28,
@@ -6075,7 +6019,7 @@
         "author": {
           "gitId": "-"
         },
-        "content": "1. Ensure you have Java `11` or above installed in your Computer."
+        "content": "## Quick start"
       },
       {
         "lineNumber": 30,
@@ -6087,9 +6031,9 @@
       {
         "lineNumber": 31,
         "author": {
-          "gitId": "moyj01"
+          "gitId": "-"
         },
-        "content": "1. Download the latest `swee.jar` from [here](https://github.com/AY2021S1-CS2103T-T17-2/tp/releases)."
+        "content": "1. Ensure you have Java `11` or above installed in your Computer."
       },
       {
         "lineNumber": 32,
@@ -6103,7 +6047,7 @@
         "author": {
           "gitId": "moyj01"
         },
-        "content": "1. Copy the file to the folder you want to use as the _home folder_ for SWEe!."
+        "content": "1. Download the latest `swee.jar` from [here](https://github.com/AY2021S1-CS2103T-T17-2/tp/releases)."
       },
       {
         "lineNumber": 34,
@@ -6117,28 +6061,28 @@
         "author": {
           "gitId": "moyj01"
         },
-        "content": "1. Type the command in the command box and press Enter to execute it.\u003cbr\u003e"
+        "content": "1. Copy the file to the folder you want to use as the _home folder_ for SWEe!."
       },
       {
         "lineNumber": 36,
         "author": {
           "gitId": "-"
         },
-        "content": "   Some example commands you can try:"
+        "content": ""
       },
       {
         "lineNumber": 37,
         "author": {
-          "gitId": "-"
+          "gitId": "moyj01"
         },
-        "content": ""
+        "content": "1. Type the command in the command box and press Enter to execute it.\u003cbr\u003e"
       },
       {
         "lineNumber": 38,
         "author": {
-          "gitId": "kimberlyohq"
+          "gitId": "-"
         },
-        "content": "   * **`add q/What does OOP stand for? a/Object Oriented Programming c/General`** : Adds a flashcard with a question and answer into the General category."
+        "content": "   Some example commands you can try:"
       },
       {
         "lineNumber": 39,
@@ -6152,35 +6096,35 @@
         "author": {
           "gitId": "kimberlyohq"
         },
-        "content": "   * **`delete 3`**: Deletes the 3rd flashcard in the current list."
+        "content": "   * **`add q/What does OOP stand for? a/Object Oriented Programming c/General`** : Adds a flashcard with a question and answer into the General category."
       },
       {
         "lineNumber": 41,
         "author": {
           "gitId": "-"
         },
-        "content": "   "
+        "content": ""
       },
       {
         "lineNumber": 42,
         "author": {
-          "gitId": "minzzelo"
+          "gitId": "kimberlyohq"
         },
-        "content": "   * **`edit 2 q/What is a revision control software? a/It is the software tool that automate the process of Revision Control`**: Edits the 2nd flashcard in the current list with the specified attributes."
+        "content": "   * **`delete 3`**: Deletes the 3rd flashcard in the current list."
       },
       {
         "lineNumber": 43,
         "author": {
           "gitId": "-"
         },
-        "content": ""
+        "content": "   "
       },
       {
         "lineNumber": 44,
         "author": {
-          "gitId": "moyj01"
+          "gitId": "minzzelo"
         },
-        "content": "   * **`list`** : Lists all flashcards."
+        "content": "   * **`edit 2 q/What is a revision control software? a/It is the software tool that automate the process of Revision Control`**: Edits the 2nd flashcard in the current list with the specified attributes."
       },
       {
         "lineNumber": 45,
@@ -6192,100 +6136,100 @@
       {
         "lineNumber": 46,
         "author": {
-          "gitId": "sgn00"
+          "gitId": "moyj01"
         },
-        "content": "   * **`review`** : Reviews the current list of flashcards."
+        "content": "   * **`list`** : Lists all flashcards."
       },
       {
         "lineNumber": 47,
         "author": {
           "gitId": "-"
         },
-        "content": "   "
+        "content": ""
       },
       {
         "lineNumber": 48,
         "author": {
-          "gitId": "kimberlyohq"
+          "gitId": "sgn00"
         },
-        "content": "   * **`fav 1`** : Favourite the 1st flashcard in the current list."
+        "content": "   * **`review`** : Reviews the current list of flashcards."
       },
       {
         "lineNumber": 49,
         "author": {
-          "gitId": "kimberlyohq"
+          "gitId": "-"
         },
-        "content": "      "
+        "content": "   "
       },
       {
         "lineNumber": 50,
         "author": {
-          "gitId": "kimberlyohq"
+          "gitId": "minzzelo"
         },
-        "content": "   * **`unfav 1`** : Unfavourite the 1st flashcard in the current list."
+        "content": "   * **`sort reviewed -d`** : Sorts the list of flashcards according to review frequency in descending order."
       },
       {
         "lineNumber": 51,
         "author": {
-          "gitId": "kimberlyohq"
+          "gitId": "minzzelo"
         },
         "content": "   "
       },
       {
         "lineNumber": 52,
         "author": {
-          "gitId": "sgn00"
+          "gitId": "kimberlyohq"
         },
-        "content": "   * **`view 1`** : Views the 1st flashcard in the current list."
+        "content": "   * **`fav 1`** : Favourite the 1st flashcard in the current list."
       },
       {
         "lineNumber": 53,
         "author": {
-          "gitId": "-"
+          "gitId": "kimberlyohq"
         },
-        "content": ""
+        "content": "      "
       },
       {
         "lineNumber": 54,
         "author": {
-          "gitId": "-"
+          "gitId": "kimberlyohq"
         },
-        "content": "   * **`exit`** : Exits the app."
+        "content": "   * **`unfav 1`** : Unfavourite the 1st flashcard in the current list."
       },
       {
         "lineNumber": 55,
         "author": {
-          "gitId": "-"
+          "gitId": "kimberlyohq"
         },
-        "content": "  "
+        "content": "   "
       },
       {
         "lineNumber": 56,
         "author": {
-          "gitId": "-"
+          "gitId": "sgn00"
         },
-        "content": ""
+        "content": "   * **`view 1`** : Views the 1st flashcard in the current list."
       },
       {
         "lineNumber": 57,
         "author": {
           "gitId": "-"
         },
-        "content": "1. Refer to the [Features](#features) below for details of each command."
+        "content": ""
       },
       {
         "lineNumber": 58,
         "author": {
           "gitId": "-"
         },
-        "content": ""
+        "content": "   * **`exit`** : Exits the app."
       },
       {
         "lineNumber": 59,
         "author": {
           "gitId": "-"
         },
-        "content": "--------------------------------------------------------------------------------------------------------------------"
+        "content": "  "
       },
       {
         "lineNumber": 60,
@@ -6299,7 +6243,7 @@
         "author": {
           "gitId": "-"
         },
-        "content": "## Features"
+        "content": "1. Refer to the [Features](#features) below for details of each command."
       },
       {
         "lineNumber": 62,
@@ -6313,7 +6257,7 @@
         "author": {
           "gitId": "-"
         },
-        "content": "\u003cdiv markdown\u003d\"block\" class\u003d\"alert alert-info\"\u003e"
+        "content": "--------------------------------------------------------------------------------------------------------------------"
       },
       {
         "lineNumber": 64,
@@ -6327,7 +6271,7 @@
         "author": {
           "gitId": "-"
         },
-        "content": "**:information_source: Notes about the command format:**\u003cbr\u003e"
+        "content": "## Features"
       },
       {
         "lineNumber": 66,
@@ -6339,135 +6283,135 @@
       {
         "lineNumber": 67,
         "author": {
-          "gitId": "moyj01"
+          "gitId": "-"
         },
-        "content": "* Words in UPPER_CASE are the parameters to be supplied by the user.\u003cbr\u003e"
+        "content": "\u003cdiv markdown\u003d\"block\" class\u003d\"alert alert-info\"\u003e"
       },
       {
         "lineNumber": 68,
         "author": {
-          "gitId": "moyj01"
+          "gitId": "-"
         },
-        "content": "  e.g. in add `q/QUESTION`, `QUESTION` is a parameter which can be used as `add q/`What is my name?"
+        "content": ""
       },
       {
         "lineNumber": 69,
         "author": {
           "gitId": "-"
         },
-        "content": ""
+        "content": "**:information_source: Notes about the command format:**\u003cbr\u003e"
       },
       {
         "lineNumber": 70,
         "author": {
           "gitId": "-"
         },
-        "content": "* Items in square brackets are optional.\u003cbr\u003e"
+        "content": ""
       },
       {
         "lineNumber": 71,
         "author": {
           "gitId": "moyj01"
         },
-        "content": "  e.g `q/QUESTION [c/CATEGORY]` can be used as `q/What is my name? c/topic 1` or as `q/What is my name?`"
+        "content": "* Words in UPPER_CASE are the parameters to be supplied by the user.\u003cbr\u003e"
       },
       {
         "lineNumber": 72,
         "author": {
-          "gitId": "-"
+          "gitId": "moyj01"
         },
-        "content": ""
+        "content": "  e.g. in add `q/QUESTION`, `QUESTION` is a parameter which can be used as `add q/`What is my name?"
       },
       {
         "lineNumber": 73,
         "author": {
           "gitId": "-"
         },
-        "content": "* Parameters can be in any order.\u003cbr\u003e"
+        "content": ""
       },
       {
         "lineNumber": 74,
         "author": {
-          "gitId": "moyj01"
+          "gitId": "-"
         },
-        "content": "  e.g. if the command specifies `q/QUESTION a/ANSWER, a/ANSWER q/QUESTION` is also acceptable."
+        "content": "* Items in square brackets are optional.\u003cbr\u003e"
       },
       {
         "lineNumber": 75,
         "author": {
-          "gitId": "-"
+          "gitId": "moyj01"
         },
-        "content": ""
+        "content": "  e.g `q/QUESTION [c/CATEGORY]` can be used as `q/What is my name? c/topic 1` or as `q/What is my name?`"
       },
       {
         "lineNumber": 76,
         "author": {
           "gitId": "-"
         },
-        "content": "\u003c/div\u003e"
+        "content": ""
       },
       {
         "lineNumber": 77,
         "author": {
           "gitId": "-"
         },
-        "content": ""
+        "content": "* Parameters can be in any order.\u003cbr\u003e"
       },
       {
         "lineNumber": 78,
         "author": {
           "gitId": "moyj01"
         },
-        "content": "### Adding a flashcard : `add`"
+        "content": "  e.g. if the command specifies `q/QUESTION a/ANSWER, a/ANSWER q/QUESTION` is also acceptable."
       },
       {
         "lineNumber": 79,
         "author": {
           "gitId": "-"
         },
-        "content": ""
+        "content": "  "
       },
       {
         "lineNumber": 80,
         "author": {
-          "gitId": "moyj01"
+          "gitId": "minzzelo"
         },
-        "content": "Adds a flashcard."
+        "content": "* Items in angle brackets are either/or options. Each option is delineated by a | . "
       },
       {
         "lineNumber": 81,
         "author": {
-          "gitId": "-"
+          "gitId": "minzzelo"
         },
-        "content": ""
+        "content": "  e.g \u003csuccess|reviewed\u003e can be used as success or reviewed but not both."
       },
       {
         "lineNumber": 82,
         "author": {
-          "gitId": "moyj01"
+          "gitId": "-"
         },
-        "content": "Format: `add q/QUESTION a/ANSWER [c/CATEGORY] [r/RATING] [n/NOTE] [d/DIAGRAM]`"
+        "content": ""
       },
       {
         "lineNumber": 83,
         "author": {
           "gitId": "-"
         },
-        "content": ""
+        "content": "\u003c/div\u003e"
       },
       {
         "lineNumber": 84,
         "author": {
-          "gitId": "sgn00"
+          "gitId": "-"
         },
-        "content": "* If a rating is specified, it must be a number between 1 and 5 inclusive. It is intended to follow the star rating on CS2103T website."
+        "content": ""
       },
       {
         "lineNumber": 85,
         "author": {
           "gitId": "moyj01"
         },
-        "content": "* Diagram can be defined by a valid relative or absolute path."
+        "content": "### Adding a flashcard : `add`"
       },
       {
         "lineNumber": 86,
@@ -6479,23 +6423,23 @@
       {
         "lineNumber": 87,
         "author": {
-          "gitId": "-"
+          "gitId": "moyj01"
         },
-        "content": "\u003cdiv markdown\u003d\"span\" class\u003d\"alert alert-primary\"\u003e:bulb: **Tip:**"
+        "content": "Adds a flashcard."
       },
       {
         "lineNumber": 88,
         "author": {
-          "gitId": "moyj01"
+          "gitId": "-"
         },
-        "content": "If the category does not exist, it will be created."
+        "content": ""
       },
       {
         "lineNumber": 89,
         "author": {
-          "gitId": "-"
+          "gitId": "moyj01"
         },
-        "content": "\u003c/div\u003e"
+        "content": "Format: `add q/QUESTION a/ANSWER [c/CATEGORY] [r/RATING] [n/NOTE] [d/DIAGRAM]`"
       },
       {
         "lineNumber": 90,
@@ -6507,44 +6451,44 @@
       {
         "lineNumber": 91,
         "author": {
-          "gitId": "-"
+          "gitId": "sgn00"
         },
-        "content": "Examples:"
+        "content": "* If a rating is specified, it must be a number between 1 and 5 inclusive. It is intended to follow the star rating on CS2103T website."
       },
       {
         "lineNumber": 92,
         "author": {
           "gitId": "moyj01"
         },
-        "content": "* `add q/What does OOP stand for? a/Object Oriented Programming c/General`"
+        "content": "* Diagram can be defined by a valid relative or absolute path."
       },
       {
         "lineNumber": 93,
         "author": {
-          "gitId": "moyj01"
+          "gitId": "-"
         },
-        "content": "* `add q/What does OOP stand for? a/Object Oriented Programming`"
+        "content": ""
       },
       {
         "lineNumber": 94,
         "author": {
-          "gitId": "minzzelo"
+          "gitId": "-"
         },
-        "content": "* `add q/What does OOP stand for? a/Object Oriented Programming c/General n/Important question!`"
+        "content": "\u003cdiv markdown\u003d\"span\" class\u003d\"alert alert-primary\"\u003e:bulb: **Tip:**"
       },
       {
         "lineNumber": 95,
         "author": {
           "gitId": "moyj01"
         },
-        "content": "* `add q/What does OOP stand for? a/Object Oriented Programming d/images/diagram`"
+        "content": "If the category does not exist, it will be created."
       },
       {
         "lineNumber": 96,
         "author": {
-          "gitId": "moyj01"
+          "gitId": "-"
         },
-        "content": "* `add q/What does OOP stand for? a/Object Oriented Programming c/General n/Important question! d/images/diagram`"
+        "content": "\u003c/div\u003e"
       },
       {
         "lineNumber": 97,
@@ -6558,42 +6502,42 @@
         "author": {
           "gitId": "-"
         },
-        "content": ""
+        "content": "Examples:"
       },
       {
         "lineNumber": 99,
         "author": {
           "gitId": "moyj01"
         },
-        "content": "### Deleting a flashcard  : `delete`"
+        "content": "* `add q/What does OOP stand for? a/Object Oriented Programming c/General`"
       },
       {
         "lineNumber": 100,
         "author": {
-          "gitId": "-"
+          "gitId": "moyj01"
         },
-        "content": ""
+        "content": "* `add q/What does OOP stand for? a/Object Oriented Programming`"
       },
       {
         "lineNumber": 101,
         "author": {
-          "gitId": "moyj01"
+          "gitId": "minzzelo"
         },
-        "content": "Deletes the specified flashcard."
+        "content": "* `add q/What does OOP stand for? a/Object Oriented Programming c/General n/Important question!`"
       },
       {
         "lineNumber": 102,
         "author": {
-          "gitId": "-"
+          "gitId": "moyj01"
         },
-        "content": ""
+        "content": "* `add q/What does OOP stand for? a/Object Oriented Programming d/images/diagram`"
       },
       {
         "lineNumber": 103,
         "author": {
           "gitId": "moyj01"
         },
-        "content": "Format: `delete INDEX`"
+        "content": "* `add q/What does OOP stand for? a/Object Oriented Programming c/General n/Important question! d/images/diagram`"
       },
       {
         "lineNumber": 104,
@@ -6605,44 +6549,44 @@
       {
         "lineNumber": 105,
         "author": {
-          "gitId": "moyj01"
+          "gitId": "-"
         },
-        "content": "* Deletes the flashcard at the specified INDEX."
+        "content": ""
       },
       {
         "lineNumber": 106,
         "author": {
           "gitId": "moyj01"
         },
-        "content": "* The index refers to the index number shown in the displayed flashcard list."
+        "content": "### Deleting a flashcard  : `delete`"
       },
       {
         "lineNumber": 107,
-        "author": {
-          "gitId": "moyj01"
-        },
-        "content": "* The index **must be a positive integer** 1, 2, 3, …"
-      },
-      {
-        "lineNumber": 108,
         "author": {
           "gitId": "-"
         },
         "content": ""
       },
       {
+        "lineNumber": 108,
+        "author": {
+          "gitId": "moyj01"
+        },
+        "content": "Deletes the specified flashcard."
+      },
+      {
         "lineNumber": 109,
         "author": {
           "gitId": "-"
         },
-        "content": "Examples:"
+        "content": ""
       },
       {
         "lineNumber": 110,
         "author": {
           "gitId": "moyj01"
         },
-        "content": "*  `list` followed by `delete 2` deletes the 2nd flashcard in the flashcard list."
+        "content": "Format: `delete INDEX`"
       },
       {
         "lineNumber": 111,
@@ -6654,23 +6598,23 @@
       {
         "lineNumber": 112,
         "author": {
-          "gitId": "minzzelo"
+          "gitId": "moyj01"
         },
-        "content": "### Editing a flashcard  : `edit`"
+        "content": "* Deletes the flashcard at the specified INDEX."
       },
       {
         "lineNumber": 113,
         "author": {
-          "gitId": "-"
+          "gitId": "moyj01"
         },
-        "content": ""
+        "content": "* The index refers to the index number shown in the displayed flashcard list."
       },
       {
         "lineNumber": 114,
         "author": {
-          "gitId": "minzzelo"
+          "gitId": "moyj01"
         },
-        "content": "Edits a flashcard."
+        "content": "* The index **must be a positive integer** 1, 2, 3, …"
       },
       {
         "lineNumber": 115,
@@ -6682,100 +6626,100 @@
       {
         "lineNumber": 116,
         "author": {
-          "gitId": "moyj01"
+          "gitId": "-"
         },
-        "content": "Format: `edit INDEX [q/QUESTION] [a/ANSWER] [c/CATEGORY] [n/NOTE] [r/RATING] [d/DIAGRAM]`"
+        "content": "Examples:"
       },
       {
         "lineNumber": 117,
         "author": {
-          "gitId": "minzzelo"
+          "gitId": "moyj01"
         },
-        "content": ""
+        "content": "*  `list` followed by `delete 2` deletes the 2nd flashcard in the flashcard list."
       },
       {
         "lineNumber": 118,
         "author": {
-          "gitId": "minzzelo"
+          "gitId": "-"
         },
-        "content": "* Edits the flashcard at the specified INDEX."
+        "content": ""
       },
       {
         "lineNumber": 119,
         "author": {
           "gitId": "minzzelo"
         },
-        "content": "* The index refers to the index number shown in the displayed flashcard list."
+        "content": "### Editing a flashcard  : `edit`"
       },
       {
         "lineNumber": 120,
         "author": {
-          "gitId": "minzzelo"
+          "gitId": "-"
         },
-        "content": "* The index **must be a positive integer** 1, 2, 3, …"
+        "content": ""
       },
       {
         "lineNumber": 121,
         "author": {
           "gitId": "minzzelo"
         },
-        "content": "* At least one attribute must be given"
+        "content": "Edits a flashcard."
       },
       {
         "lineNumber": 122,
         "author": {
-          "gitId": "sgn00"
+          "gitId": "-"
         },
-        "content": "* Specifying empty values to note or rating eg. `r/` will remove the corresponding field in the flashcard."
+        "content": ""
       },
       {
         "lineNumber": 123,
         "author": {
-          "gitId": "-"
+          "gitId": "moyj01"
         },
-        "content": ""
+        "content": "Format: `edit INDEX [q/QUESTION] [a/ANSWER] [c/CATEGORY] [n/NOTE] [r/RATING] [d/DIAGRAM]`"
       },
       {
         "lineNumber": 124,
         "author": {
           "gitId": "-"
         },
-        "content": "Examples:"
+        "content": ""
       },
       {
         "lineNumber": 125,
         "author": {
           "gitId": "minzzelo"
         },
-        "content": "* `edit 3 q/What does OOP stand for? a/Object Oriented Programming c/General`"
+        "content": "* Edits the flashcard at the specified INDEX."
       },
       {
         "lineNumber": 126,
         "author": {
           "gitId": "minzzelo"
         },
-        "content": "* `edit 3 q/What does OOP stand for? a/Object Oriented Programming`"
+        "content": "* The index refers to the index number shown in the displayed flashcard list."
       },
       {
         "lineNumber": 127,
         "author": {
           "gitId": "minzzelo"
         },
-        "content": "* `edit 3 n/Important question!`"
+        "content": "* The index **must be a positive integer** 1, 2, 3, …"
       },
       {
         "lineNumber": 128,
         "author": {
-          "gitId": "-"
+          "gitId": "minzzelo"
         },
-        "content": ""
+        "content": "* At least one attribute must be given"
       },
       {
         "lineNumber": 129,
         "author": {
-          "gitId": "tanzhuoyao-nus"
+          "gitId": "sgn00"
         },
-        "content": "### Filtering out flashcards  : `filter`"
+        "content": "* Specifying empty values to note or rating eg. `r/` will remove the corresponding field in the flashcard."
       },
       {
         "lineNumber": 130,
@@ -6787,100 +6731,100 @@
       {
         "lineNumber": 131,
         "author": {
-          "gitId": "tanzhuoyao-nus"
+          "gitId": "minzzelo"
         },
-        "content": "Filters the specified flashcard based on category input(s) by user."
+        "content": "Examples:"
       },
       {
         "lineNumber": 132,
         "author": {
-          "gitId": "-"
+          "gitId": "minzzelo"
         },
-        "content": ""
+        "content": "* `edit 3 q/What does OOP stand for? a/Object Oriented Programming c/General`"
       },
       {
         "lineNumber": 133,
         "author": {
-          "gitId": "tanzhuoyao-nus"
+          "gitId": "minzzelo"
         },
-        "content": "Format: `filter c/CATEGORY`"
+        "content": "* `edit 3 q/What does OOP stand for? a/Object Oriented Programming`"
       },
       {
         "lineNumber": 134,
         "author": {
-          "gitId": "-"
+          "gitId": "minzzelo"
         },
-        "content": ""
+        "content": "* `edit 3 n/Important question!`"
       },
       {
         "lineNumber": 135,
         "author": {
-          "gitId": "tanzhuoyao-nus"
+          "gitId": "minzzelo"
         },
-        "content": "* Filters the specified flashcard based on category."
+        "content": ""
       },
       {
         "lineNumber": 136,
         "author": {
           "gitId": "tanzhuoyao-nus"
         },
-        "content": "* Supports filtering of one or more categories. For example:"
+        "content": "### Filtering out flashcards  : `filter`"
       },
       {
         "lineNumber": 137,
         "author": {
-          "gitId": "tanzhuoyao-nus"
+          "gitId": "-"
         },
-        "content": "* `filter c/SDLC c/Revision History`"
+        "content": ""
       },
       {
         "lineNumber": 138,
         "author": {
-          "gitId": "-"
+          "gitId": "tanzhuoyao-nus"
         },
-        "content": ""
+        "content": "Filters the specified flashcard based on category input(s) by user."
       },
       {
         "lineNumber": 139,
         "author": {
           "gitId": "-"
         },
-        "content": "Examples:"
+        "content": ""
       },
       {
         "lineNumber": 140,
         "author": {
           "gitId": "tanzhuoyao-nus"
         },
-        "content": "*  `filter` followed by `c/SDLC` filters and lists all flashcards belonging n the SDLC category."
+        "content": "Format: `filter c/CATEGORY`"
       },
       {
         "lineNumber": 141,
         "author": {
-          "gitId": "-"
+          "gitId": "tanzhuoyao-nus"
         },
         "content": ""
       },
       {
         "lineNumber": 142,
         "author": {
-          "gitId": "moyj01"
+          "gitId": "tanzhuoyao-nus"
         },
-        "content": "### Listing all flashcards : `list`"
+        "content": "* Filters the specified flashcard based on category."
       },
       {
         "lineNumber": 143,
         "author": {
-          "gitId": "-"
+          "gitId": "tanzhuoyao-nus"
         },
-        "content": ""
+        "content": "* Supports filtering of one or more categories. For example:"
       },
       {
         "lineNumber": 144,
         "author": {
-          "gitId": "moyj01"
+          "gitId": "tanzhuoyao-nus"
         },
-        "content": "Shows a list of all flashcards."
+        "content": "* `filter c/SDLC c/Revision History`"
       },
       {
         "lineNumber": 145,
@@ -6892,261 +6836,261 @@
       {
         "lineNumber": 146,
         "author": {
-          "gitId": "moyj01"
+          "gitId": "-"
         },
-        "content": "Format: `list`"
+        "content": "Examples:"
       },
       {
         "lineNumber": 147,
         "author": {
-          "gitId": "-"
+          "gitId": "tanzhuoyao-nus"
         },
-        "content": ""
+        "content": "*  `filter` followed by `c/SDLC` filters and lists all flashcards belonging n the SDLC category."
       },
       {
         "lineNumber": 148,
         "author": {
-          "gitId": "moyj01"
+          "gitId": "-"
         },
-        "content": "### Reviewing all flashcards: `review`"
+        "content": ""
       },
       {
         "lineNumber": 149,
         "author": {
-          "gitId": "-"
+          "gitId": "moyj01"
         },
-        "content": ""
+        "content": "### Listing all flashcards : `list`"
       },
       {
         "lineNumber": 150,
         "author": {
-          "gitId": "sgn00"
+          "gitId": "-"
         },
-        "content": "Reviews the current list of flashcards. This puts the user in review mode and the user can no longer input commands to the textbox."
+        "content": ""
       },
       {
         "lineNumber": 151,
         "author": {
-          "gitId": "-"
+          "gitId": "moyj01"
         },
-        "content": ""
+        "content": "Shows a list of all flashcards."
       },
       {
         "lineNumber": 152,
         "author": {
-          "gitId": "moyj01"
+          "gitId": "-"
         },
-        "content": "Format: `review`"
+        "content": ""
       },
       {
         "lineNumber": 153,
         "author": {
-          "gitId": "-"
+          "gitId": "moyj01"
         },
-        "content": ""
+        "content": "Format: `list`"
       },
       {
         "lineNumber": 154,
         "author": {
           "gitId": "-"
         },
-        "content": "Examples:"
+        "content": ""
       },
       {
         "lineNumber": 155,
         "author": {
-          "gitId": "sgn00"
+          "gitId": "moyj01"
         },
-        "content": "* `review` followed by:"
+        "content": "### Reviewing all flashcards: `review`"
       },
       {
         "lineNumber": 156,
         "author": {
-          "gitId": "sgn00"
+          "gitId": "-"
         },
-        "content": "    - `[down key]` shows answer and notes of the current flashcard"
+        "content": ""
       },
       {
         "lineNumber": 157,
         "author": {
           "gitId": "sgn00"
         },
-        "content": "    - `[up key]` hides answer and notes of the current flashcard"
+        "content": "Reviews the current list of flashcards. This puts the user in review mode and the user can no longer input commands to the textbox."
       },
       {
         "lineNumber": 158,
         "author": {
-          "gitId": "moyj01"
+          "gitId": "-"
         },
-        "content": "    - `[right key]` skips the current flashcard and moves on to the next flashcard"
+        "content": ""
       },
       {
         "lineNumber": 159,
         "author": {
           "gitId": "moyj01"
         },
-        "content": "    - `[left key]` returns the previous flashcard"
+        "content": "Format: `review`"
       },
       {
         "lineNumber": 160,
         "author": {
-          "gitId": "sgn00"
+          "gitId": "-"
         },
-        "content": "    - `q` quits review mode"
+        "content": ""
       },
       {
         "lineNumber": 161,
         "author": {
           "gitId": "-"
         },
-        "content": "    "
+        "content": "Examples:"
       },
       {
         "lineNumber": 162,
         "author": {
-          "gitId": "kimberlyohq"
+          "gitId": "sgn00"
         },
-        "content": "### Favourite a flashcard  : `fav`"
+        "content": "* `review` followed by:"
       },
       {
         "lineNumber": 163,
         "author": {
-          "gitId": "-"
+          "gitId": "sgn00"
         },
-        "content": ""
+        "content": "    - `[down key]` shows answer and notes of the current flashcard"
       },
       {
         "lineNumber": 164,
         "author": {
-          "gitId": "kimberlyohq"
+          "gitId": "sgn00"
         },
-        "content": "Favourites the specified flashcard."
+        "content": "    - `[up key]` hides answer and notes of the current flashcard"
       },
       {
         "lineNumber": 165,
         "author": {
-          "gitId": "-"
+          "gitId": "moyj01"
         },
-        "content": ""
+        "content": "    - `[right key]` skips the current flashcard and moves on to the next flashcard"
       },
       {
         "lineNumber": 166,
         "author": {
-          "gitId": "kimberlyohq"
+          "gitId": "moyj01"
         },
-        "content": "Format: `fav INDEX`"
+        "content": "    - `[left key]` returns the previous flashcard"
       },
       {
         "lineNumber": 167,
         "author": {
-          "gitId": "-"
+          "gitId": "sgn00"
         },
-        "content": ""
+        "content": "    - `q` quits review mode"
       },
       {
         "lineNumber": 168,
         "author": {
-          "gitId": "kimberlyohq"
+          "gitId": "-"
         },
-        "content": "* Favourite the flashcard at the specified INDEX."
+        "content": "    "
       },
       {
         "lineNumber": 169,
         "author": {
-          "gitId": "kimberlyohq"
+          "gitId": "minzzelo"
         },
-        "content": "* The index refers to the index number shown in the displayed flashcard list."
+        "content": "### Sort all flashcards : `sort`"
       },
       {
         "lineNumber": 170,
         "author": {
-          "gitId": "kimberlyohq"
+          "gitId": "-"
         },
-        "content": "* The index **must be a positive integer** 1, 2, 3, …"
+        "content": ""
       },
       {
         "lineNumber": 171,
         "author": {
-          "gitId": "-"
+          "gitId": "minzzelo"
         },
-        "content": ""
+        "content": "Sorts a list of all flashcards according to the criteria given."
       },
       {
         "lineNumber": 172,
         "author": {
-          "gitId": "kimberlyohq"
+          "gitId": "-"
         },
-        "content": "### Unfavourite a flashcard  : `unfav`"
+        "content": ""
       },
       {
         "lineNumber": 173,
         "author": {
-          "gitId": "-"
+          "gitId": "minzzelo"
         },
-        "content": ""
+        "content": "Format: `sort \u003csuccess|reviewed\u003e \u003c-a|-d\u003e`"
       },
       {
         "lineNumber": 174,
         "author": {
-          "gitId": "kimberlyohq"
+          "gitId": "-"
         },
-        "content": "Unfavourite the specified flashcard."
+        "content": ""
       },
       {
         "lineNumber": 175,
         "author": {
-          "gitId": "-"
+          "gitId": "minzzelo"
         },
-        "content": ""
+        "content": "Examples: "
       },
       {
         "lineNumber": 176,
         "author": {
-          "gitId": "kimberlyohq"
+          "gitId": "minzzelo"
         },
-        "content": "Format: `unfav INDEX`"
+        "content": "* sort followed by:"
       },
       {
         "lineNumber": 177,
         "author": {
-          "gitId": "-"
+          "gitId": "minzzelo"
         },
-        "content": ""
+        "content": "    - `reviewed -a` shows a list of all flashcards sorted according to review frequency in ascending order"
       },
       {
         "lineNumber": 178,
         "author": {
-          "gitId": "kimberlyohq"
+          "gitId": "minzzelo"
         },
-        "content": "* Unfavourite the flashcard at the specified INDEX."
+        "content": "    - `reviewed -d` shows a list of all flashcards sorted according to review frequency in descending order"
       },
       {
         "lineNumber": 179,
         "author": {
-          "gitId": "kimberlyohq"
+          "gitId": "minzzelo"
         },
-        "content": "* The index refers to the index number shown in the displayed flashcard list."
+        "content": "    - `success -a` shows a list of all flashcards sorted according to success rate in ascending order"
       },
       {
         "lineNumber": 180,
         "author": {
-          "gitId": "kimberlyohq"
+          "gitId": "minzzelo"
         },
-        "content": "* The index **must be a positive integer** 1, 2, 3, …"
+        "content": "    - `success -d` shows a list of all flashcards sorted according to success rate in descending order"
       },
       {
         "lineNumber": 181,
         "author": {
-          "gitId": "-"
+          "gitId": "minzzelo"
         },
-        "content": ""
+        "content": "    "
       },
       {
         "lineNumber": 182,
         "author": {
-          "gitId": "sgn00"
+          "gitId": "kimberlyohq"
         },
-        "content": "### Views a flashcard  : `view`"
+        "content": "### Favourite a flashcard  : `fav`"
       },
       {
         "lineNumber": 183,
@@ -7158,23 +7102,23 @@
       {
         "lineNumber": 184,
         "author": {
-          "gitId": "sgn00"
+          "gitId": "kimberlyohq"
         },
-        "content": "View the specified flashcard. A \"snapshot\" of the flashcard is taken and displayed in the view pane to the user.  "
+        "content": "Favourites the specified flashcard."
       },
       {
         "lineNumber": 185,
         "author": {
-          "gitId": "sgn00"
+          "gitId": "-"
         },
-        "content": "\u003cdiv markdown\u003d\"span\" class\u003d\"alert alert-primary\"\u003e:bulb: Note: If the viewed flashcard is changed (eg. edited or deleted), the view shown remains unchanged."
+        "content": ""
       },
       {
         "lineNumber": 186,
         "author": {
-          "gitId": "sgn00"
+          "gitId": "kimberlyohq"
         },
-        "content": "\u003c/div\u003e"
+        "content": "Format: `fav INDEX`"
       },
       {
         "lineNumber": 187,
@@ -7186,37 +7130,37 @@
       {
         "lineNumber": 188,
         "author": {
-          "gitId": "sgn00"
+          "gitId": "kimberlyohq"
         },
-        "content": "Format: `view INDEX`"
+        "content": "* Favourite the flashcard at the specified INDEX."
       },
       {
         "lineNumber": 189,
+        "author": {
+          "gitId": "kimberlyohq"
+        },
+        "content": "* The index refers to the index number shown in the displayed flashcard list."
+      },
+      {
+        "lineNumber": 190,
+        "author": {
+          "gitId": "kimberlyohq"
+        },
+        "content": "* The index **must be a positive integer** 1, 2, 3, …"
+      },
+      {
+        "lineNumber": 191,
         "author": {
           "gitId": "-"
         },
         "content": ""
       },
       {
-        "lineNumber": 190,
-        "author": {
-          "gitId": "sgn00"
-        },
-        "content": "* View the flashcard at the specified INDEX."
-      },
-      {
-        "lineNumber": 191,
-        "author": {
-          "gitId": "sgn00"
-        },
-        "content": "* The index refers to the index number shown in the displayed flashcard list."
-      },
-      {
         "lineNumber": 192,
         "author": {
-          "gitId": "sgn00"
+          "gitId": "kimberlyohq"
         },
-        "content": "* The index **must be a positive integer** 1, 2, 3, …"
+        "content": "### Unfavourite a flashcard  : `unfav`"
       },
       {
         "lineNumber": 193,
@@ -7228,9 +7172,9 @@
       {
         "lineNumber": 194,
         "author": {
-          "gitId": "-"
+          "gitId": "kimberlyohq"
         },
-        "content": "### Exiting the program : `exit`"
+        "content": "Unfavourite the specified flashcard."
       },
       {
         "lineNumber": 195,
@@ -7242,9 +7186,9 @@
       {
         "lineNumber": 196,
         "author": {
-          "gitId": "-"
+          "gitId": "kimberlyohq"
         },
-        "content": "Exits the program."
+        "content": "Format: `unfav INDEX`"
       },
       {
         "lineNumber": 197,
@@ -7256,23 +7200,23 @@
       {
         "lineNumber": 198,
         "author": {
-          "gitId": "-"
+          "gitId": "kimberlyohq"
         },
-        "content": "Format: `exit`"
+        "content": "* Unfavourite the flashcard at the specified INDEX."
       },
       {
         "lineNumber": 199,
         "author": {
-          "gitId": "-"
+          "gitId": "kimberlyohq"
         },
-        "content": ""
+        "content": "* The index refers to the index number shown in the displayed flashcard list."
       },
       {
         "lineNumber": 200,
         "author": {
-          "gitId": "-"
+          "gitId": "kimberlyohq"
         },
-        "content": "### Saving the data"
+        "content": "* The index **must be a positive integer** 1, 2, 3, …"
       },
       {
         "lineNumber": 201,
@@ -7284,9 +7228,9 @@
       {
         "lineNumber": 202,
         "author": {
-          "gitId": "moyj01"
+          "gitId": "sgn00"
         },
-        "content": "Flashcards data are saved in the hard disk automatically after any command that changes the data. There is no need to save manually."
+        "content": "### Views a flashcard  : `view`"
       },
       {
         "lineNumber": 203,
@@ -7298,23 +7242,23 @@
       {
         "lineNumber": 204,
         "author": {
-          "gitId": "-"
+          "gitId": "sgn00"
         },
-        "content": "--------------------------------------------------------------------------------------------------------------------"
+        "content": "View the specified flashcard. A \"snapshot\" of the flashcard is taken and displayed in the view pane to the user.  "
       },
       {
         "lineNumber": 205,
         "author": {
-          "gitId": "-"
+          "gitId": "sgn00"
         },
-        "content": ""
+        "content": "\u003cdiv markdown\u003d\"span\" class\u003d\"alert alert-primary\"\u003e:bulb: Note: If the viewed flashcard is changed (eg. edited or deleted), the view shown remains unchanged."
       },
       {
         "lineNumber": 206,
         "author": {
-          "gitId": "-"
+          "gitId": "sgn00"
         },
-        "content": "## Command summary"
+        "content": "\u003c/div\u003e"
       },
       {
         "lineNumber": 207,
@@ -7326,75 +7270,222 @@
       {
         "lineNumber": 208,
         "author": {
-          "gitId": "-"
+          "gitId": "sgn00"
         },
-        "content": "Action | Format, Examples"
+        "content": "Format: `view INDEX`"
       },
       {
         "lineNumber": 209,
         "author": {
           "gitId": "-"
         },
-        "content": "--------|------------------"
+        "content": ""
       },
       {
         "lineNumber": 210,
         "author": {
-          "gitId": "moyj01"
+          "gitId": "sgn00"
         },
-        "content": "**Add** | `add q/QUESTION a/ANSWER [c/CATEGORY] [n/NOTE] [r/RATING] [d/DIAGRAM]` \u003cbr\u003e e.g., `add q/What does OOP stand for? a/Object Oriented Programming c/General n/Important question! d/images/diagram.jpeg`"
+        "content": "* View the flashcard at the specified INDEX."
       },
       {
         "lineNumber": 211,
         "author": {
-          "gitId": "-"
+          "gitId": "sgn00"
         },
-        "content": "**Delete** | `delete INDEX` \u003cbr\u003e e.g., `delete 3`"
+        "content": "* The index refers to the index number shown in the displayed flashcard list."
       },
       {
         "lineNumber": 212,
         "author": {
-          "gitId": "moyj01"
+          "gitId": "sgn00"
         },
-        "content": "**Edit** | `edit INDEX [q/QUESTION] [a/ANSWER] [c/CATEGORY] [n/NOTE] [r/RATING] [d/DIAGRAM]` \u003cbr\u003e e.g., `edit 3 q/What does OOP stand for? a/Object Oriented Programming`"
+        "content": "* The index **must be a positive integer** 1, 2, 3, …"
       },
       {
         "lineNumber": 213,
         "author": {
           "gitId": "-"
         },
-        "content": "**List** | `list`"
+        "content": ""
       },
       {
         "lineNumber": 214,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "### Exiting the program : `exit`"
+      },
+      {
+        "lineNumber": 215,
+        "author": {
+          "gitId": "-"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 216,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "Exits the program."
+      },
+      {
+        "lineNumber": 217,
+        "author": {
+          "gitId": "-"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 218,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "Format: `exit`"
+      },
+      {
+        "lineNumber": 219,
+        "author": {
+          "gitId": "-"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 220,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "### Saving the data"
+      },
+      {
+        "lineNumber": 221,
+        "author": {
+          "gitId": "-"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 222,
+        "author": {
+          "gitId": "moyj01"
+        },
+        "content": "Flashcards data are saved in the hard disk automatically after any command that changes the data. There is no need to save manually."
+      },
+      {
+        "lineNumber": 223,
+        "author": {
+          "gitId": "-"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 224,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "--------------------------------------------------------------------------------------------------------------------"
+      },
+      {
+        "lineNumber": 225,
+        "author": {
+          "gitId": "-"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 226,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "## Command summary"
+      },
+      {
+        "lineNumber": 227,
+        "author": {
+          "gitId": "-"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 228,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "Action | Format, Examples"
+      },
+      {
+        "lineNumber": 229,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "--------|------------------"
+      },
+      {
+        "lineNumber": 230,
+        "author": {
+          "gitId": "moyj01"
+        },
+        "content": "**Add** | `add q/QUESTION a/ANSWER [c/CATEGORY] [n/NOTE] [r/RATING] [d/DIAGRAM]` \u003cbr\u003e e.g., `add q/What does OOP stand for? a/Object Oriented Programming c/General n/Important question! d/images/diagram.jpeg`"
+      },
+      {
+        "lineNumber": 231,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "**Delete** | `delete INDEX` \u003cbr\u003e e.g., `delete 3`"
+      },
+      {
+        "lineNumber": 232,
+        "author": {
+          "gitId": "moyj01"
+        },
+        "content": "**Edit** | `edit INDEX [q/QUESTION] [a/ANSWER] [c/CATEGORY] [n/NOTE] [r/RATING] [d/DIAGRAM]` \u003cbr\u003e e.g., `edit 3 q/What does OOP stand for? a/Object Oriented Programming`"
+      },
+      {
+        "lineNumber": 233,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "**List** | `list`"
+      },
+      {
+        "lineNumber": 234,
         "author": {
           "gitId": "moyj01"
         },
         "content": "**Review** | `review`"
       },
       {
-        "lineNumber": 215,
+        "lineNumber": 235,
+        "author": {
+          "gitId": "minzzelo"
+        },
+        "content": "**Sort** | \u003ccode\u003esort \u003csuccess\u0026#124;reviewed\u003e \u003c-a\u0026#124;-d\u003e`\u003c/code\u003e \u003cbr\u003e e.g. sort success -a"
+      },
+      {
+        "lineNumber": 236,
         "author": {
           "gitId": "kimberlyohq"
         },
         "content": "**Fav** | `fav INDEX` \u003cbr\u003e e.g., `fav 1`"
       },
       {
-        "lineNumber": 216,
+        "lineNumber": 237,
         "author": {
           "gitId": "kimberlyohq"
         },
         "content": "**Unfav** | `unfav INDEX` \u003cbr\u003e e.g., `unfav 1`"
       },
       {
-        "lineNumber": 217,
+        "lineNumber": 238,
         "author": {
           "gitId": "sgn00"
         },
         "content": "**View** | `view INDEX` \u003cbr\u003e e.g., `view 1`"
       },
       {
-        "lineNumber": 218,
+        "lineNumber": 239,
         "author": {
           "gitId": "moyj01"
         },
@@ -7403,9 +7494,9 @@
     ],
     "authorContributionMap": {
       "moyj01": 50,
-      "minzzelo": 12,
-      "-": 108,
-      "tanzhuoyao-nus": 7,
+      "minzzelo": 30,
+      "-": 110,
+      "tanzhuoyao-nus": 8,
       "kimberlyohq": 22,
       "sgn00": 19
     }
