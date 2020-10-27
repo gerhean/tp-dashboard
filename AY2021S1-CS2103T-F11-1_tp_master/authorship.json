@@ -21803,6 +21803,673 @@
     }
   },
   {
+    "path": "src/main/java/seedu/address/logic/commands/AttendCommand.java",
+    "fileType": "functional-code",
+    "lines": [
+      {
+        "lineNumber": 1,
+        "author": {
+          "gitId": "sun-yitao"
+        },
+        "content": "package seedu.address.logic.commands;"
+      },
+      {
+        "lineNumber": 2,
+        "author": {
+          "gitId": "sun-yitao"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 3,
+        "author": {
+          "gitId": "sun-yitao"
+        },
+        "content": "import static java.util.Objects.requireNonNull;"
+      },
+      {
+        "lineNumber": 4,
+        "author": {
+          "gitId": "sun-yitao"
+        },
+        "content": "import static seedu.address.logic.parser.CliSyntax.PREFIX_DATE;"
+      },
+      {
+        "lineNumber": 5,
+        "author": {
+          "gitId": "sun-yitao"
+        },
+        "content": "import static seedu.address.model.Model.PREDICATE_SHOW_ALL_PERSONS;"
+      },
+      {
+        "lineNumber": 6,
+        "author": {
+          "gitId": "sun-yitao"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 7,
+        "author": {
+          "gitId": "sun-yitao"
+        },
+        "content": "import java.util.List;"
+      },
+      {
+        "lineNumber": 8,
+        "author": {
+          "gitId": "sun-yitao"
+        },
+        "content": "import java.util.SortedSet;"
+      },
+      {
+        "lineNumber": 9,
+        "author": {
+          "gitId": "sun-yitao"
+        },
+        "content": "import java.util.TreeSet;"
+      },
+      {
+        "lineNumber": 10,
+        "author": {
+          "gitId": "sun-yitao"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 11,
+        "author": {
+          "gitId": "sun-yitao"
+        },
+        "content": "import seedu.address.commons.core.Messages;"
+      },
+      {
+        "lineNumber": 12,
+        "author": {
+          "gitId": "sun-yitao"
+        },
+        "content": "import seedu.address.commons.core.index.Index;"
+      },
+      {
+        "lineNumber": 13,
+        "author": {
+          "gitId": "sun-yitao"
+        },
+        "content": "import seedu.address.logic.commands.exceptions.CommandException;"
+      },
+      {
+        "lineNumber": 14,
+        "author": {
+          "gitId": "sun-yitao"
+        },
+        "content": "import seedu.address.model.Model;"
+      },
+      {
+        "lineNumber": 15,
+        "author": {
+          "gitId": "sun-yitao"
+        },
+        "content": "import seedu.address.model.attendance.Attendance;"
+      },
+      {
+        "lineNumber": 16,
+        "author": {
+          "gitId": "sun-yitao"
+        },
+        "content": "import seedu.address.model.person.Person;"
+      },
+      {
+        "lineNumber": 17,
+        "author": {
+          "gitId": "sun-yitao"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 18,
+        "author": {
+          "gitId": "sun-yitao"
+        },
+        "content": "/**"
+      },
+      {
+        "lineNumber": 19,
+        "author": {
+          "gitId": "sun-yitao"
+        },
+        "content": " * Adds attendance for a person identified using it\u0027s displayed index from the address book."
+      },
+      {
+        "lineNumber": 20,
+        "author": {
+          "gitId": "sun-yitao"
+        },
+        "content": " */"
+      },
+      {
+        "lineNumber": 21,
+        "author": {
+          "gitId": "sun-yitao"
+        },
+        "content": "public class AttendCommand extends Command {"
+      },
+      {
+        "lineNumber": 22,
+        "author": {
+          "gitId": "sun-yitao"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 23,
+        "author": {
+          "gitId": "sun-yitao"
+        },
+        "content": "    public static final String COMMAND_WORD \u003d \"attend\";"
+      },
+      {
+        "lineNumber": 24,
+        "author": {
+          "gitId": "sun-yitao"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 25,
+        "author": {
+          "gitId": "sun-yitao"
+        },
+        "content": "    public static final String MESSAGE_USAGE \u003d COMMAND_WORD"
+      },
+      {
+        "lineNumber": 26,
+        "author": {
+          "gitId": "sun-yitao"
+        },
+        "content": "            + \": Adds attendance for the person identified by the index number used in the displayed person list.\\n\""
+      },
+      {
+        "lineNumber": 27,
+        "author": {
+          "gitId": "sun-yitao"
+        },
+        "content": "            + \"Attendance date should be in dd/MM/yyyy format.\\n\""
+      },
+      {
+        "lineNumber": 28,
+        "author": {
+          "gitId": "sun-yitao"
+        },
+        "content": "            + \"Parameters: INDEX (must be a positive integer) \""
+      },
+      {
+        "lineNumber": 29,
+        "author": {
+          "gitId": "sun-yitao"
+        },
+        "content": "            + PREFIX_DATE + \"DATE\\n\""
+      },
+      {
+        "lineNumber": 30,
+        "author": {
+          "gitId": "sun-yitao"
+        },
+        "content": "            + \"Example: \" + COMMAND_WORD + \" 1 \" + PREFIX_DATE + \"27/03/1998\";"
+      },
+      {
+        "lineNumber": 31,
+        "author": {
+          "gitId": "sun-yitao"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 32,
+        "author": {
+          "gitId": "sun-yitao"
+        },
+        "content": "    public static final String MESSAGE_ALREADY_ATTENDED \u003d \"%1$s already attended on %2$s\";"
+      },
+      {
+        "lineNumber": 33,
+        "author": {
+          "gitId": "sun-yitao"
+        },
+        "content": "    public static final String MESSAGE_ATTEND_SUCCESS \u003d \"Added attendance for person: %1$s\";"
+      },
+      {
+        "lineNumber": 34,
+        "author": {
+          "gitId": "sun-yitao"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 35,
+        "author": {
+          "gitId": "sun-yitao"
+        },
+        "content": "    private final Index targetIndex;"
+      },
+      {
+        "lineNumber": 36,
+        "author": {
+          "gitId": "sun-yitao"
+        },
+        "content": "    private final Attendance attendance;"
+      },
+      {
+        "lineNumber": 37,
+        "author": {
+          "gitId": "sun-yitao"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 38,
+        "author": {
+          "gitId": "sun-yitao"
+        },
+        "content": "    /**"
+      },
+      {
+        "lineNumber": 39,
+        "author": {
+          "gitId": "sun-yitao"
+        },
+        "content": "     * Creates an {@code Attend} with corresponding target index and {@code Attendance}."
+      },
+      {
+        "lineNumber": 40,
+        "author": {
+          "gitId": "sun-yitao"
+        },
+        "content": "     * @param targetIndex of the person in the filtered person list to edit"
+      },
+      {
+        "lineNumber": 41,
+        "author": {
+          "gitId": "sun-yitao"
+        },
+        "content": "     * @param attendance {@code Attendance}"
+      },
+      {
+        "lineNumber": 42,
+        "author": {
+          "gitId": "sun-yitao"
+        },
+        "content": "     */"
+      },
+      {
+        "lineNumber": 43,
+        "author": {
+          "gitId": "sun-yitao"
+        },
+        "content": "    public AttendCommand(Index targetIndex, Attendance attendance) {"
+      },
+      {
+        "lineNumber": 44,
+        "author": {
+          "gitId": "sun-yitao"
+        },
+        "content": "        this.targetIndex \u003d targetIndex;"
+      },
+      {
+        "lineNumber": 45,
+        "author": {
+          "gitId": "sun-yitao"
+        },
+        "content": "        this.attendance \u003d attendance;"
+      },
+      {
+        "lineNumber": 46,
+        "author": {
+          "gitId": "sun-yitao"
+        },
+        "content": "    }"
+      },
+      {
+        "lineNumber": 47,
+        "author": {
+          "gitId": "sun-yitao"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 48,
+        "author": {
+          "gitId": "sun-yitao"
+        },
+        "content": "    @Override"
+      },
+      {
+        "lineNumber": 49,
+        "author": {
+          "gitId": "sun-yitao"
+        },
+        "content": "    public CommandResult execute(Model model) throws CommandException {"
+      },
+      {
+        "lineNumber": 50,
+        "author": {
+          "gitId": "sun-yitao"
+        },
+        "content": "        requireNonNull(model);"
+      },
+      {
+        "lineNumber": 51,
+        "author": {
+          "gitId": "sun-yitao"
+        },
+        "content": "        List\u003cPerson\u003e lastShownList \u003d model.getFilteredPersonList();"
+      },
+      {
+        "lineNumber": 52,
+        "author": {
+          "gitId": "sun-yitao"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 53,
+        "author": {
+          "gitId": "sun-yitao"
+        },
+        "content": "        if (targetIndex.getZeroBased() \u003e\u003d lastShownList.size()) {"
+      },
+      {
+        "lineNumber": 54,
+        "author": {
+          "gitId": "sun-yitao"
+        },
+        "content": "            throw new CommandException(Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);"
+      },
+      {
+        "lineNumber": 55,
+        "author": {
+          "gitId": "sun-yitao"
+        },
+        "content": "        }"
+      },
+      {
+        "lineNumber": 56,
+        "author": {
+          "gitId": "sun-yitao"
+        },
+        "content": "        if (attendance \u003d\u003d null) {"
+      },
+      {
+        "lineNumber": 57,
+        "author": {
+          "gitId": "sun-yitao"
+        },
+        "content": "            throw new CommandException("
+      },
+      {
+        "lineNumber": 58,
+        "author": {
+          "gitId": "sun-yitao"
+        },
+        "content": "                    String.format(Messages.MESSAGE_INVALID_COMMAND_FORMAT, AttendCommand.MESSAGE_USAGE));"
+      },
+      {
+        "lineNumber": 59,
+        "author": {
+          "gitId": "sun-yitao"
+        },
+        "content": "        }"
+      },
+      {
+        "lineNumber": 60,
+        "author": {
+          "gitId": "sun-yitao"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 61,
+        "author": {
+          "gitId": "sun-yitao"
+        },
+        "content": "        Person personToAttend \u003d lastShownList.get(targetIndex.getZeroBased());"
+      },
+      {
+        "lineNumber": 62,
+        "author": {
+          "gitId": "sun-yitao"
+        },
+        "content": "        Person attendedPerson \u003d updateAttendanceForPerson(personToAttend, attendance);"
+      },
+      {
+        "lineNumber": 63,
+        "author": {
+          "gitId": "sun-yitao"
+        },
+        "content": "        model.setPerson(personToAttend, attendedPerson);"
+      },
+      {
+        "lineNumber": 64,
+        "author": {
+          "gitId": "sun-yitao"
+        },
+        "content": "        model.updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);"
+      },
+      {
+        "lineNumber": 65,
+        "author": {
+          "gitId": "sun-yitao"
+        },
+        "content": "        return new CommandResult(String.format(MESSAGE_ATTEND_SUCCESS, personToAttend));"
+      },
+      {
+        "lineNumber": 66,
+        "author": {
+          "gitId": "sun-yitao"
+        },
+        "content": "    }"
+      },
+      {
+        "lineNumber": 67,
+        "author": {
+          "gitId": "sun-yitao"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 68,
+        "author": {
+          "gitId": "sun-yitao"
+        },
+        "content": "    private static Person updateAttendanceForPerson(Person personToAttend, Attendance attendance)"
+      },
+      {
+        "lineNumber": 69,
+        "author": {
+          "gitId": "sun-yitao"
+        },
+        "content": "            throws CommandException {"
+      },
+      {
+        "lineNumber": 70,
+        "author": {
+          "gitId": "sun-yitao"
+        },
+        "content": "        assert personToAttend !\u003d null;"
+      },
+      {
+        "lineNumber": 71,
+        "author": {
+          "gitId": "sun-yitao"
+        },
+        "content": "        SortedSet\u003cAttendance\u003e updatedAttendances \u003d new TreeSet\u003c\u003e(personToAttend.getAttendances());"
+      },
+      {
+        "lineNumber": 72,
+        "author": {
+          "gitId": "sun-yitao"
+        },
+        "content": "        if (updatedAttendances.contains(attendance)) {"
+      },
+      {
+        "lineNumber": 73,
+        "author": {
+          "gitId": "sun-yitao"
+        },
+        "content": "            throw new CommandException(String.format(MESSAGE_ALREADY_ATTENDED, personToAttend.getName(), attendance));"
+      },
+      {
+        "lineNumber": 74,
+        "author": {
+          "gitId": "sun-yitao"
+        },
+        "content": "        }"
+      },
+      {
+        "lineNumber": 75,
+        "author": {
+          "gitId": "sun-yitao"
+        },
+        "content": "        updatedAttendances.add(attendance);"
+      },
+      {
+        "lineNumber": 76,
+        "author": {
+          "gitId": "sun-yitao"
+        },
+        "content": "        return new Person(personToAttend.getName(),"
+      },
+      {
+        "lineNumber": 77,
+        "author": {
+          "gitId": "sun-yitao"
+        },
+        "content": "                personToAttend.getPhone(),"
+      },
+      {
+        "lineNumber": 78,
+        "author": {
+          "gitId": "sun-yitao"
+        },
+        "content": "                personToAttend.getEmail(),"
+      },
+      {
+        "lineNumber": 79,
+        "author": {
+          "gitId": "sun-yitao"
+        },
+        "content": "                personToAttend.getTelegram(),"
+      },
+      {
+        "lineNumber": 80,
+        "author": {
+          "gitId": "sun-yitao"
+        },
+        "content": "                personToAttend.getMatricNumber(),"
+      },
+      {
+        "lineNumber": 81,
+        "author": {
+          "gitId": "sun-yitao"
+        },
+        "content": "                personToAttend.getTags(),"
+      },
+      {
+        "lineNumber": 82,
+        "author": {
+          "gitId": "sun-yitao"
+        },
+        "content": "                updatedAttendances);"
+      },
+      {
+        "lineNumber": 83,
+        "author": {
+          "gitId": "sun-yitao"
+        },
+        "content": "    }"
+      },
+      {
+        "lineNumber": 84,
+        "author": {
+          "gitId": "sun-yitao"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 85,
+        "author": {
+          "gitId": "sun-yitao"
+        },
+        "content": "    @Override"
+      },
+      {
+        "lineNumber": 86,
+        "author": {
+          "gitId": "sun-yitao"
+        },
+        "content": "    public boolean equals(Object other) {"
+      },
+      {
+        "lineNumber": 87,
+        "author": {
+          "gitId": "sun-yitao"
+        },
+        "content": "        return other \u003d\u003d this // short circuit if same object"
+      },
+      {
+        "lineNumber": 88,
+        "author": {
+          "gitId": "sun-yitao"
+        },
+        "content": "                || (other instanceof AttendCommand // instanceof handles nulls"
+      },
+      {
+        "lineNumber": 89,
+        "author": {
+          "gitId": "sun-yitao"
+        },
+        "content": "                \u0026\u0026 targetIndex.equals(((AttendCommand) other).targetIndex)); // state check"
+      },
+      {
+        "lineNumber": 90,
+        "author": {
+          "gitId": "sun-yitao"
+        },
+        "content": "    }"
+      },
+      {
+        "lineNumber": 91,
+        "author": {
+          "gitId": "sun-yitao"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 92,
+        "author": {
+          "gitId": "sun-yitao"
+        },
+        "content": "    private static class AlreadyAttendedException extends Exception {"
+      },
+      {
+        "lineNumber": 93,
+        "author": {
+          "gitId": "sun-yitao"
+        },
+        "content": "    }"
+      },
+      {
+        "lineNumber": 94,
+        "author": {
+          "gitId": "sun-yitao"
+        },
+        "content": "}"
+      }
+    ],
+    "authorContributionMap": {
+      "sun-yitao": 94
+    }
+  },
+  {
     "path": "src/main/java/seedu/address/logic/commands/ClearCommand.java",
     "fileType": "functional-code",
     "lines": [
@@ -24490,488 +25157,516 @@
       {
         "lineNumber": 11,
         "author": {
-          "gitId": "-"
+          "gitId": "sun-yitao"
         },
-        "content": "import seedu.address.logic.commands.ClearCommand;"
+        "content": "import seedu.address.logic.commands.AttendCommand;"
       },
       {
         "lineNumber": 12,
         "author": {
           "gitId": "-"
         },
-        "content": "import seedu.address.logic.commands.Command;"
+        "content": "import seedu.address.logic.commands.ClearCommand;"
       },
       {
         "lineNumber": 13,
         "author": {
           "gitId": "-"
         },
-        "content": "import seedu.address.logic.commands.DeleteCommand;"
+        "content": "import seedu.address.logic.commands.Command;"
       },
       {
         "lineNumber": 14,
         "author": {
           "gitId": "-"
         },
-        "content": "import seedu.address.logic.commands.EditCommand;"
+        "content": "import seedu.address.logic.commands.DeleteCommand;"
       },
       {
         "lineNumber": 15,
         "author": {
           "gitId": "-"
         },
-        "content": "import seedu.address.logic.commands.ExitCommand;"
+        "content": "import seedu.address.logic.commands.EditCommand;"
       },
       {
         "lineNumber": 16,
         "author": {
           "gitId": "-"
         },
-        "content": "import seedu.address.logic.commands.FindCommand;"
+        "content": "import seedu.address.logic.commands.ExitCommand;"
       },
       {
         "lineNumber": 17,
         "author": {
           "gitId": "-"
         },
-        "content": "import seedu.address.logic.commands.HelpCommand;"
+        "content": "import seedu.address.logic.commands.FindCommand;"
       },
       {
         "lineNumber": 18,
         "author": {
           "gitId": "-"
         },
-        "content": "import seedu.address.logic.commands.ListCommand;"
+        "content": "import seedu.address.logic.commands.HelpCommand;"
       },
       {
         "lineNumber": 19,
         "author": {
           "gitId": "-"
         },
-        "content": "import seedu.address.logic.parser.exceptions.ParseException;"
+        "content": "import seedu.address.logic.commands.ListCommand;"
       },
       {
         "lineNumber": 20,
         "author": {
           "gitId": "-"
         },
-        "content": ""
+        "content": "import seedu.address.logic.parser.exceptions.ParseException;"
       },
       {
         "lineNumber": 21,
         "author": {
           "gitId": "-"
         },
-        "content": "/**"
+        "content": ""
       },
       {
         "lineNumber": 22,
         "author": {
           "gitId": "-"
         },
-        "content": " * Parses user input."
+        "content": "/**"
       },
       {
         "lineNumber": 23,
         "author": {
           "gitId": "-"
         },
-        "content": " */"
+        "content": " * Parses user input."
       },
       {
         "lineNumber": 24,
         "author": {
           "gitId": "-"
         },
-        "content": "public class AddressBookParser {"
+        "content": " */"
       },
       {
         "lineNumber": 25,
         "author": {
           "gitId": "-"
         },
-        "content": ""
+        "content": "public class AddressBookParser {"
       },
       {
         "lineNumber": 26,
         "author": {
           "gitId": "-"
         },
-        "content": "    /**"
+        "content": ""
       },
       {
         "lineNumber": 27,
         "author": {
           "gitId": "-"
         },
-        "content": "     * Used for initial separation of command word and args."
+        "content": "    /**"
       },
       {
         "lineNumber": 28,
         "author": {
           "gitId": "-"
         },
-        "content": "     */"
+        "content": "     * Used for initial separation of command word and args."
       },
       {
         "lineNumber": 29,
         "author": {
           "gitId": "-"
         },
-        "content": "    private static final Pattern BASIC_COMMAND_FORMAT \u003d Pattern.compile(\"(?\u003ccommandWord\u003e\\\\S+)(?\u003carguments\u003e.*)\");"
+        "content": "     */"
       },
       {
         "lineNumber": 30,
         "author": {
           "gitId": "-"
         },
-        "content": ""
+        "content": "    private static final Pattern BASIC_COMMAND_FORMAT \u003d Pattern.compile(\"(?\u003ccommandWord\u003e\\\\S+)(?\u003carguments\u003e.*)\");"
       },
       {
         "lineNumber": 31,
         "author": {
           "gitId": "-"
         },
-        "content": "    /**"
+        "content": ""
       },
       {
         "lineNumber": 32,
         "author": {
           "gitId": "-"
         },
-        "content": "     * Parses user input into command for execution."
+        "content": "    /**"
       },
       {
         "lineNumber": 33,
         "author": {
           "gitId": "-"
         },
-        "content": "     *"
+        "content": "     * Parses user input into command for execution."
       },
       {
         "lineNumber": 34,
         "author": {
           "gitId": "-"
         },
-        "content": "     * @param userInput full user input string"
+        "content": "     *"
       },
       {
         "lineNumber": 35,
         "author": {
           "gitId": "-"
         },
-        "content": "     * @return the command based on the user input"
+        "content": "     * @param userInput full user input string"
       },
       {
         "lineNumber": 36,
         "author": {
           "gitId": "-"
         },
-        "content": "     * @throws ParseException if the user input does not conform the expected format"
+        "content": "     * @return the command based on the user input"
       },
       {
         "lineNumber": 37,
         "author": {
           "gitId": "-"
         },
-        "content": "     */"
+        "content": "     * @throws ParseException if the user input does not conform the expected format"
       },
       {
         "lineNumber": 38,
         "author": {
           "gitId": "-"
         },
-        "content": "    public Command parseCommand(String userInput) throws ParseException {"
+        "content": "     */"
       },
       {
         "lineNumber": 39,
         "author": {
           "gitId": "-"
         },
-        "content": "        final Matcher matcher \u003d BASIC_COMMAND_FORMAT.matcher(userInput.trim());"
+        "content": "    public Command parseCommand(String userInput) throws ParseException {"
       },
       {
         "lineNumber": 40,
         "author": {
           "gitId": "-"
         },
-        "content": "        if (!matcher.matches()) {"
+        "content": "        final Matcher matcher \u003d BASIC_COMMAND_FORMAT.matcher(userInput.trim());"
       },
       {
         "lineNumber": 41,
         "author": {
           "gitId": "-"
         },
-        "content": "            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, HelpCommand.MESSAGE_USAGE));"
+        "content": "        if (!matcher.matches()) {"
       },
       {
         "lineNumber": 42,
         "author": {
           "gitId": "-"
         },
-        "content": "        }"
+        "content": "            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, HelpCommand.MESSAGE_USAGE));"
       },
       {
         "lineNumber": 43,
         "author": {
           "gitId": "-"
         },
-        "content": ""
+        "content": "        }"
       },
       {
         "lineNumber": 44,
         "author": {
           "gitId": "-"
         },
-        "content": "        final String commandWord \u003d matcher.group(\"commandWord\");"
+        "content": ""
       },
       {
         "lineNumber": 45,
         "author": {
           "gitId": "-"
         },
-        "content": "        final String arguments \u003d matcher.group(\"arguments\");"
+        "content": "        final String commandWord \u003d matcher.group(\"commandWord\");"
       },
       {
         "lineNumber": 46,
         "author": {
           "gitId": "-"
         },
-        "content": "        switch (commandWord) {"
+        "content": "        final String arguments \u003d matcher.group(\"arguments\");"
       },
       {
         "lineNumber": 47,
         "author": {
           "gitId": "-"
         },
-        "content": ""
+        "content": "        switch (commandWord) {"
       },
       {
         "lineNumber": 48,
         "author": {
           "gitId": "-"
         },
-        "content": "        case AddCommand.COMMAND_WORD:"
+        "content": ""
       },
       {
         "lineNumber": 49,
         "author": {
           "gitId": "-"
         },
-        "content": "            return new AddCommandParser().parse(arguments);"
+        "content": "        case AddCommand.COMMAND_WORD:"
       },
       {
         "lineNumber": 50,
         "author": {
           "gitId": "-"
         },
-        "content": ""
+        "content": "            return new AddCommandParser().parse(arguments);"
       },
       {
         "lineNumber": 51,
         "author": {
           "gitId": "-"
         },
-        "content": "        case EditCommand.COMMAND_WORD:"
+        "content": ""
       },
       {
         "lineNumber": 52,
         "author": {
           "gitId": "-"
         },
-        "content": "            return new EditCommandParser().parse(arguments);"
+        "content": "        case EditCommand.COMMAND_WORD:"
       },
       {
         "lineNumber": 53,
         "author": {
           "gitId": "-"
         },
-        "content": ""
+        "content": "            return new EditCommandParser().parse(arguments);"
       },
       {
         "lineNumber": 54,
         "author": {
           "gitId": "-"
         },
-        "content": "        case DeleteCommand.COMMAND_WORD:"
+        "content": ""
       },
       {
         "lineNumber": 55,
         "author": {
           "gitId": "-"
         },
-        "content": "            return new DeleteCommandParser().parse(arguments);"
+        "content": "        case DeleteCommand.COMMAND_WORD:"
       },
       {
         "lineNumber": 56,
         "author": {
           "gitId": "-"
         },
-        "content": ""
+        "content": "            return new DeleteCommandParser().parse(arguments);"
       },
       {
         "lineNumber": 57,
         "author": {
           "gitId": "-"
         },
-        "content": "        case ClearCommand.COMMAND_WORD:"
+        "content": ""
       },
       {
         "lineNumber": 58,
         "author": {
           "gitId": "-"
         },
-        "content": "            return new ClearCommand();"
+        "content": "        case ClearCommand.COMMAND_WORD:"
       },
       {
         "lineNumber": 59,
         "author": {
           "gitId": "-"
         },
-        "content": ""
+        "content": "            return new ClearCommand();"
       },
       {
         "lineNumber": 60,
         "author": {
           "gitId": "-"
         },
-        "content": "        case FindCommand.COMMAND_WORD:"
+        "content": ""
       },
       {
         "lineNumber": 61,
         "author": {
           "gitId": "-"
         },
-        "content": "            return new FindCommandParser().parse(arguments);"
+        "content": "        case FindCommand.COMMAND_WORD:"
       },
       {
         "lineNumber": 62,
         "author": {
           "gitId": "-"
         },
-        "content": ""
+        "content": "            return new FindCommandParser().parse(arguments);"
       },
       {
         "lineNumber": 63,
         "author": {
           "gitId": "-"
         },
-        "content": "        case ListCommand.COMMAND_WORD:"
+        "content": ""
       },
       {
         "lineNumber": 64,
         "author": {
           "gitId": "-"
         },
-        "content": "            return new ListCommand();"
+        "content": "        case ListCommand.COMMAND_WORD:"
       },
       {
         "lineNumber": 65,
         "author": {
           "gitId": "-"
         },
-        "content": ""
+        "content": "            return new ListCommand();"
       },
       {
         "lineNumber": 66,
         "author": {
           "gitId": "-"
         },
-        "content": "        case ExitCommand.COMMAND_WORD:"
+        "content": ""
       },
       {
         "lineNumber": 67,
+        "author": {
+          "gitId": "sun-yitao"
+        },
+        "content": "        case AttendCommand.COMMAND_WORD:"
+      },
+      {
+        "lineNumber": 68,
+        "author": {
+          "gitId": "sun-yitao"
+        },
+        "content": "            return new AttendCommandParser().parse(arguments);"
+      },
+      {
+        "lineNumber": 69,
+        "author": {
+          "gitId": "sun-yitao"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 70,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "        case ExitCommand.COMMAND_WORD:"
+      },
+      {
+        "lineNumber": 71,
         "author": {
           "gitId": "-"
         },
         "content": "            return new ExitCommand();"
       },
       {
-        "lineNumber": 68,
+        "lineNumber": 72,
         "author": {
           "gitId": "-"
         },
         "content": ""
       },
       {
-        "lineNumber": 69,
+        "lineNumber": 73,
         "author": {
           "gitId": "Rishi5154"
         },
         "content": "        case ArchiveCommand.COMMAND_WORD:"
       },
       {
-        "lineNumber": 70,
+        "lineNumber": 74,
         "author": {
           "gitId": "Rishi5154"
         },
         "content": "            return new ArchiveCommand();"
       },
       {
-        "lineNumber": 71,
+        "lineNumber": 75,
         "author": {
           "gitId": "Rishi5154"
         },
         "content": ""
       },
       {
-        "lineNumber": 72,
+        "lineNumber": 76,
         "author": {
           "gitId": "-"
         },
         "content": "        case HelpCommand.COMMAND_WORD:"
       },
       {
-        "lineNumber": 73,
+        "lineNumber": 77,
         "author": {
           "gitId": "-"
         },
         "content": "            return new HelpCommand();"
       },
       {
-        "lineNumber": 74,
-        "author": {
-          "gitId": "-"
-        },
-        "content": ""
-      },
-      {
-        "lineNumber": 75,
-        "author": {
-          "gitId": "-"
-        },
-        "content": "        default:"
-      },
-      {
-        "lineNumber": 76,
-        "author": {
-          "gitId": "-"
-        },
-        "content": "            throw new ParseException(MESSAGE_UNKNOWN_COMMAND);"
-      },
-      {
-        "lineNumber": 77,
-        "author": {
-          "gitId": "-"
-        },
-        "content": "        }"
-      },
-      {
         "lineNumber": 78,
         "author": {
           "gitId": "-"
         },
-        "content": "    }"
+        "content": ""
       },
       {
         "lineNumber": 79,
         "author": {
           "gitId": "-"
         },
-        "content": ""
+        "content": "        default:"
       },
       {
         "lineNumber": 80,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "            throw new ParseException(MESSAGE_UNKNOWN_COMMAND);"
+      },
+      {
+        "lineNumber": 81,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "        }"
+      },
+      {
+        "lineNumber": 82,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "    }"
+      },
+      {
+        "lineNumber": 83,
+        "author": {
+          "gitId": "-"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 84,
         "author": {
           "gitId": "-"
         },
@@ -24980,7 +25675,283 @@
     ],
     "authorContributionMap": {
       "Rishi5154": 4,
+      "sun-yitao": 4,
       "-": 76
+    }
+  },
+  {
+    "path": "src/main/java/seedu/address/logic/parser/AttendCommandParser.java",
+    "fileType": "functional-code",
+    "lines": [
+      {
+        "lineNumber": 1,
+        "author": {
+          "gitId": "sun-yitao"
+        },
+        "content": "package seedu.address.logic.parser;"
+      },
+      {
+        "lineNumber": 2,
+        "author": {
+          "gitId": "sun-yitao"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 3,
+        "author": {
+          "gitId": "sun-yitao"
+        },
+        "content": "import static java.util.Objects.requireNonNull;"
+      },
+      {
+        "lineNumber": 4,
+        "author": {
+          "gitId": "sun-yitao"
+        },
+        "content": "import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;"
+      },
+      {
+        "lineNumber": 5,
+        "author": {
+          "gitId": "sun-yitao"
+        },
+        "content": "import static seedu.address.logic.parser.CliSyntax.PREFIX_DATE;"
+      },
+      {
+        "lineNumber": 6,
+        "author": {
+          "gitId": "sun-yitao"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 7,
+        "author": {
+          "gitId": "sun-yitao"
+        },
+        "content": "import seedu.address.commons.core.index.Index;"
+      },
+      {
+        "lineNumber": 8,
+        "author": {
+          "gitId": "sun-yitao"
+        },
+        "content": "import seedu.address.logic.commands.AttendCommand;"
+      },
+      {
+        "lineNumber": 9,
+        "author": {
+          "gitId": "sun-yitao"
+        },
+        "content": "import seedu.address.logic.parser.exceptions.ParseException;"
+      },
+      {
+        "lineNumber": 10,
+        "author": {
+          "gitId": "sun-yitao"
+        },
+        "content": "import seedu.address.model.attendance.Attendance;"
+      },
+      {
+        "lineNumber": 11,
+        "author": {
+          "gitId": "sun-yitao"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 12,
+        "author": {
+          "gitId": "sun-yitao"
+        },
+        "content": "public class AttendCommandParser implements Parser\u003cAttendCommand\u003e {"
+      },
+      {
+        "lineNumber": 13,
+        "author": {
+          "gitId": "sun-yitao"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 14,
+        "author": {
+          "gitId": "sun-yitao"
+        },
+        "content": "    /**"
+      },
+      {
+        "lineNumber": 15,
+        "author": {
+          "gitId": "sun-yitao"
+        },
+        "content": "     * Parses the given {@code String} of arguments in the context of the AttendCommand"
+      },
+      {
+        "lineNumber": 16,
+        "author": {
+          "gitId": "sun-yitao"
+        },
+        "content": "     * and returns a AttendCommand object for execution."
+      },
+      {
+        "lineNumber": 17,
+        "author": {
+          "gitId": "sun-yitao"
+        },
+        "content": "     * @throws ParseException if the user input does not conform the expected format"
+      },
+      {
+        "lineNumber": 18,
+        "author": {
+          "gitId": "sun-yitao"
+        },
+        "content": "     */"
+      },
+      {
+        "lineNumber": 19,
+        "author": {
+          "gitId": "sun-yitao"
+        },
+        "content": "    public AttendCommand parse(String args) throws ParseException {"
+      },
+      {
+        "lineNumber": 20,
+        "author": {
+          "gitId": "sun-yitao"
+        },
+        "content": "        requireNonNull(args);"
+      },
+      {
+        "lineNumber": 21,
+        "author": {
+          "gitId": "sun-yitao"
+        },
+        "content": "        Index index;"
+      },
+      {
+        "lineNumber": 22,
+        "author": {
+          "gitId": "sun-yitao"
+        },
+        "content": "        ArgumentMultimap argMultimap \u003d ArgumentTokenizer.tokenize(args, PREFIX_DATE);"
+      },
+      {
+        "lineNumber": 23,
+        "author": {
+          "gitId": "sun-yitao"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 24,
+        "author": {
+          "gitId": "sun-yitao"
+        },
+        "content": "        if (argMultimap.getValue(PREFIX_DATE).isEmpty() || argMultimap.getPreamble().isEmpty()) {"
+      },
+      {
+        "lineNumber": 25,
+        "author": {
+          "gitId": "sun-yitao"
+        },
+        "content": "            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, AttendCommand.MESSAGE_USAGE));"
+      },
+      {
+        "lineNumber": 26,
+        "author": {
+          "gitId": "sun-yitao"
+        },
+        "content": "        }"
+      },
+      {
+        "lineNumber": 27,
+        "author": {
+          "gitId": "sun-yitao"
+        },
+        "content": "        try {"
+      },
+      {
+        "lineNumber": 28,
+        "author": {
+          "gitId": "sun-yitao"
+        },
+        "content": "            index \u003d ParserUtil.parseIndex(argMultimap.getPreamble());"
+      },
+      {
+        "lineNumber": 29,
+        "author": {
+          "gitId": "sun-yitao"
+        },
+        "content": "        } catch (ParseException pe) {"
+      },
+      {
+        "lineNumber": 30,
+        "author": {
+          "gitId": "sun-yitao"
+        },
+        "content": "            throw new ParseException("
+      },
+      {
+        "lineNumber": 31,
+        "author": {
+          "gitId": "sun-yitao"
+        },
+        "content": "                    String.format(MESSAGE_INVALID_COMMAND_FORMAT, AttendCommand.MESSAGE_USAGE), pe);"
+      },
+      {
+        "lineNumber": 32,
+        "author": {
+          "gitId": "sun-yitao"
+        },
+        "content": "        }"
+      },
+      {
+        "lineNumber": 33,
+        "author": {
+          "gitId": "sun-yitao"
+        },
+        "content": "        Attendance attendance \u003d ParserUtil.parseAttendance(argMultimap.getValue(PREFIX_DATE).get());"
+      },
+      {
+        "lineNumber": 34,
+        "author": {
+          "gitId": "sun-yitao"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 35,
+        "author": {
+          "gitId": "sun-yitao"
+        },
+        "content": "        return new AttendCommand(index, attendance);"
+      },
+      {
+        "lineNumber": 36,
+        "author": {
+          "gitId": "sun-yitao"
+        },
+        "content": "    }"
+      },
+      {
+        "lineNumber": 37,
+        "author": {
+          "gitId": "sun-yitao"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 38,
+        "author": {
+          "gitId": "sun-yitao"
+        },
+        "content": "}"
+      }
+    ],
+    "authorContributionMap": {
+      "sun-yitao": 38
     }
   },
   {
@@ -25839,894 +26810,1013 @@
       {
         "lineNumber": 12,
         "author": {
+          "gitId": "sun-yitao"
+        },
+        "content": "import seedu.address.model.attendance.Attendance;"
+      },
+      {
+        "lineNumber": 13,
+        "author": {
           "gitId": "-"
         },
         "content": "import seedu.address.model.person.Email;"
       },
       {
-        "lineNumber": 13,
+        "lineNumber": 14,
         "author": {
           "gitId": "kwannoel"
         },
         "content": "import seedu.address.model.person.MatricNumber;"
       },
       {
-        "lineNumber": 14,
+        "lineNumber": 15,
         "author": {
           "gitId": "-"
         },
         "content": "import seedu.address.model.person.Name;"
       },
       {
-        "lineNumber": 15,
+        "lineNumber": 16,
         "author": {
           "gitId": "-"
         },
         "content": "import seedu.address.model.person.Phone;"
       },
       {
-        "lineNumber": 16,
+        "lineNumber": 17,
         "author": {
           "gitId": "kwannoel"
         },
         "content": "import seedu.address.model.person.Telegram;"
       },
       {
-        "lineNumber": 17,
+        "lineNumber": 18,
         "author": {
           "gitId": "-"
         },
         "content": "import seedu.address.model.tag.Tag;"
       },
       {
-        "lineNumber": 18,
-        "author": {
-          "gitId": "-"
-        },
-        "content": ""
-      },
-      {
         "lineNumber": 19,
         "author": {
           "gitId": "-"
         },
-        "content": "/**"
+        "content": ""
       },
       {
         "lineNumber": 20,
         "author": {
           "gitId": "-"
         },
-        "content": " * Contains utility methods used for parsing strings in the various *Parser classes."
+        "content": "/**"
       },
       {
         "lineNumber": 21,
         "author": {
           "gitId": "-"
         },
-        "content": " */"
+        "content": " * Contains utility methods used for parsing strings in the various *Parser classes."
       },
       {
         "lineNumber": 22,
         "author": {
           "gitId": "-"
         },
-        "content": "public class ParserUtil {"
+        "content": " */"
       },
       {
         "lineNumber": 23,
         "author": {
           "gitId": "-"
         },
-        "content": ""
+        "content": "public class ParserUtil {"
       },
       {
         "lineNumber": 24,
         "author": {
           "gitId": "-"
         },
-        "content": "    public static final String MESSAGE_INVALID_INDEX \u003d \"Index is not a non-zero unsigned integer.\";"
+        "content": ""
       },
       {
         "lineNumber": 25,
         "author": {
           "gitId": "-"
         },
-        "content": ""
+        "content": "    public static final String MESSAGE_INVALID_INDEX \u003d \"Index is not a non-zero unsigned integer.\";"
       },
       {
         "lineNumber": 26,
         "author": {
           "gitId": "-"
         },
-        "content": "    /**"
+        "content": ""
       },
       {
         "lineNumber": 27,
         "author": {
           "gitId": "-"
         },
-        "content": "     * Parses {@code oneBasedIndex} into an {@code Index} and returns it. Leading and trailing whitespaces will be"
+        "content": "    /**"
       },
       {
         "lineNumber": 28,
         "author": {
           "gitId": "-"
         },
-        "content": "     * trimmed."
+        "content": "     * Parses {@code oneBasedIndex} into an {@code Index} and returns it. Leading and trailing whitespaces will be"
       },
       {
         "lineNumber": 29,
         "author": {
           "gitId": "-"
         },
-        "content": "     * @throws ParseException if the specified index is invalid (not non-zero unsigned integer)."
+        "content": "     * trimmed."
       },
       {
         "lineNumber": 30,
         "author": {
           "gitId": "-"
         },
-        "content": "     */"
+        "content": "     * @throws ParseException if the specified index is invalid (not non-zero unsigned integer)."
       },
       {
         "lineNumber": 31,
         "author": {
           "gitId": "-"
         },
-        "content": "    public static Index parseIndex(String oneBasedIndex) throws ParseException {"
+        "content": "     */"
       },
       {
         "lineNumber": 32,
         "author": {
           "gitId": "-"
         },
-        "content": "        String trimmedIndex \u003d oneBasedIndex.trim();"
+        "content": "    public static Index parseIndex(String oneBasedIndex) throws ParseException {"
       },
       {
         "lineNumber": 33,
         "author": {
           "gitId": "-"
         },
-        "content": "        if (!StringUtil.isNonZeroUnsignedInteger(trimmedIndex)) {"
+        "content": "        String trimmedIndex \u003d oneBasedIndex.trim();"
       },
       {
         "lineNumber": 34,
         "author": {
           "gitId": "-"
         },
-        "content": "            throw new ParseException(MESSAGE_INVALID_INDEX);"
+        "content": "        if (!StringUtil.isNonZeroUnsignedInteger(trimmedIndex)) {"
       },
       {
         "lineNumber": 35,
         "author": {
           "gitId": "-"
         },
-        "content": "        }"
+        "content": "            throw new ParseException(MESSAGE_INVALID_INDEX);"
       },
       {
         "lineNumber": 36,
         "author": {
           "gitId": "-"
         },
-        "content": "        return Index.fromOneBased(Integer.parseInt(trimmedIndex));"
+        "content": "        }"
       },
       {
         "lineNumber": 37,
         "author": {
           "gitId": "-"
         },
-        "content": "    }"
+        "content": "        return Index.fromOneBased(Integer.parseInt(trimmedIndex));"
       },
       {
         "lineNumber": 38,
         "author": {
           "gitId": "-"
         },
-        "content": ""
+        "content": "    }"
       },
       {
         "lineNumber": 39,
         "author": {
           "gitId": "-"
         },
-        "content": "    /**"
+        "content": ""
       },
       {
         "lineNumber": 40,
         "author": {
           "gitId": "-"
         },
-        "content": "     * Parses a {@code String name} into a {@code Name}."
+        "content": "    /**"
       },
       {
         "lineNumber": 41,
         "author": {
           "gitId": "-"
         },
-        "content": "     * Leading and trailing whitespaces will be trimmed."
+        "content": "     * Parses a {@code String name} into a {@code Name}."
       },
       {
         "lineNumber": 42,
         "author": {
           "gitId": "-"
         },
-        "content": "     *"
+        "content": "     * Leading and trailing whitespaces will be trimmed."
       },
       {
         "lineNumber": 43,
         "author": {
           "gitId": "-"
         },
-        "content": "     * @throws ParseException if the given {@code name} is invalid."
+        "content": "     *"
       },
       {
         "lineNumber": 44,
         "author": {
           "gitId": "-"
         },
-        "content": "     */"
+        "content": "     * @throws ParseException if the given {@code name} is invalid."
       },
       {
         "lineNumber": 45,
         "author": {
           "gitId": "-"
         },
-        "content": "    public static Name parseName(String name) throws ParseException {"
+        "content": "     */"
       },
       {
         "lineNumber": 46,
         "author": {
           "gitId": "-"
         },
-        "content": "        requireNonNull(name);"
+        "content": "    public static Name parseName(String name) throws ParseException {"
       },
       {
         "lineNumber": 47,
         "author": {
           "gitId": "-"
         },
-        "content": "        String trimmedName \u003d name.trim();"
+        "content": "        requireNonNull(name);"
       },
       {
         "lineNumber": 48,
         "author": {
           "gitId": "-"
         },
-        "content": "        if (!Name.isValidName(trimmedName)) {"
+        "content": "        String trimmedName \u003d name.trim();"
       },
       {
         "lineNumber": 49,
         "author": {
           "gitId": "-"
         },
-        "content": "            throw new ParseException(Name.MESSAGE_CONSTRAINTS);"
+        "content": "        if (!Name.isValidName(trimmedName)) {"
       },
       {
         "lineNumber": 50,
         "author": {
           "gitId": "-"
         },
-        "content": "        }"
+        "content": "            throw new ParseException(Name.MESSAGE_CONSTRAINTS);"
       },
       {
         "lineNumber": 51,
         "author": {
           "gitId": "-"
         },
-        "content": "        return new Name(trimmedName);"
+        "content": "        }"
       },
       {
         "lineNumber": 52,
         "author": {
           "gitId": "-"
         },
-        "content": "    }"
+        "content": "        return new Name(trimmedName);"
       },
       {
         "lineNumber": 53,
         "author": {
           "gitId": "-"
         },
-        "content": ""
+        "content": "    }"
       },
       {
         "lineNumber": 54,
         "author": {
           "gitId": "-"
         },
-        "content": "    /**"
+        "content": ""
       },
       {
         "lineNumber": 55,
         "author": {
           "gitId": "-"
         },
-        "content": "     * Parses a {@code String phone} into a {@code Phone}."
+        "content": "    /**"
       },
       {
         "lineNumber": 56,
         "author": {
           "gitId": "-"
         },
-        "content": "     * Leading and trailing whitespaces will be trimmed."
+        "content": "     * Parses a {@code String phone} into a {@code Phone}."
       },
       {
         "lineNumber": 57,
         "author": {
           "gitId": "-"
         },
-        "content": "     *"
+        "content": "     * Leading and trailing whitespaces will be trimmed."
       },
       {
         "lineNumber": 58,
         "author": {
           "gitId": "-"
         },
-        "content": "     * @throws ParseException if the given {@code phone} is invalid."
+        "content": "     *"
       },
       {
         "lineNumber": 59,
         "author": {
           "gitId": "-"
         },
-        "content": "     */"
+        "content": "     * @throws ParseException if the given {@code phone} is invalid."
       },
       {
         "lineNumber": 60,
         "author": {
           "gitId": "-"
         },
-        "content": "    public static Phone parsePhone(String phone) throws ParseException {"
+        "content": "     */"
       },
       {
         "lineNumber": 61,
         "author": {
           "gitId": "-"
         },
-        "content": "        requireNonNull(phone);"
+        "content": "    public static Phone parsePhone(String phone) throws ParseException {"
       },
       {
         "lineNumber": 62,
         "author": {
           "gitId": "-"
         },
-        "content": "        String trimmedPhone \u003d phone.trim();"
+        "content": "        requireNonNull(phone);"
       },
       {
         "lineNumber": 63,
         "author": {
           "gitId": "-"
         },
-        "content": "        if (!Phone.isValidPhone(trimmedPhone)) {"
+        "content": "        String trimmedPhone \u003d phone.trim();"
       },
       {
         "lineNumber": 64,
         "author": {
           "gitId": "-"
         },
-        "content": "            throw new ParseException(Phone.MESSAGE_CONSTRAINTS);"
+        "content": "        if (!Phone.isValidPhone(trimmedPhone)) {"
       },
       {
         "lineNumber": 65,
         "author": {
           "gitId": "-"
         },
-        "content": "        }"
+        "content": "            throw new ParseException(Phone.MESSAGE_CONSTRAINTS);"
       },
       {
         "lineNumber": 66,
         "author": {
           "gitId": "-"
         },
-        "content": "        return new Phone(trimmedPhone);"
+        "content": "        }"
       },
       {
         "lineNumber": 67,
         "author": {
           "gitId": "-"
         },
-        "content": "    }"
+        "content": "        return new Phone(trimmedPhone);"
       },
       {
         "lineNumber": 68,
         "author": {
           "gitId": "-"
         },
-        "content": "    /**"
+        "content": "    }"
       },
       {
         "lineNumber": 69,
         "author": {
           "gitId": "-"
         },
-        "content": "     * Parses a {@code String email} into an {@code Email}."
+        "content": "    /**"
       },
       {
         "lineNumber": 70,
         "author": {
           "gitId": "-"
         },
-        "content": "     * Leading and trailing whitespaces will be trimmed."
+        "content": "     * Parses a {@code String email} into an {@code Email}."
       },
       {
         "lineNumber": 71,
         "author": {
           "gitId": "-"
         },
-        "content": "     *"
+        "content": "     * Leading and trailing whitespaces will be trimmed."
       },
       {
         "lineNumber": 72,
         "author": {
           "gitId": "-"
         },
-        "content": "     * @throws ParseException if the given {@code email} is invalid."
+        "content": "     *"
       },
       {
         "lineNumber": 73,
         "author": {
           "gitId": "-"
         },
-        "content": "     */"
+        "content": "     * @throws ParseException if the given {@code email} is invalid."
       },
       {
         "lineNumber": 74,
         "author": {
           "gitId": "-"
         },
-        "content": "    public static Email parseEmail(String email) throws ParseException {"
+        "content": "     */"
       },
       {
         "lineNumber": 75,
         "author": {
           "gitId": "-"
         },
-        "content": "        requireNonNull(email);"
+        "content": "    public static Email parseEmail(String email) throws ParseException {"
       },
       {
         "lineNumber": 76,
         "author": {
           "gitId": "-"
         },
-        "content": "        String trimmedEmail \u003d email.trim();"
+        "content": "        requireNonNull(email);"
       },
       {
         "lineNumber": 77,
         "author": {
           "gitId": "-"
         },
-        "content": "        if (!Email.isValidEmail(trimmedEmail)) {"
+        "content": "        String trimmedEmail \u003d email.trim();"
       },
       {
         "lineNumber": 78,
         "author": {
           "gitId": "-"
         },
-        "content": "            throw new ParseException(Email.MESSAGE_CONSTRAINTS);"
+        "content": "        if (!Email.isValidEmail(trimmedEmail)) {"
       },
       {
         "lineNumber": 79,
         "author": {
           "gitId": "-"
         },
-        "content": "        }"
+        "content": "            throw new ParseException(Email.MESSAGE_CONSTRAINTS);"
       },
       {
         "lineNumber": 80,
         "author": {
           "gitId": "-"
         },
-        "content": "        return new Email(trimmedEmail);"
+        "content": "        }"
       },
       {
         "lineNumber": 81,
         "author": {
           "gitId": "-"
         },
-        "content": "    }"
+        "content": "        return new Email(trimmedEmail);"
       },
       {
         "lineNumber": 82,
         "author": {
           "gitId": "-"
         },
-        "content": ""
+        "content": "    }"
       },
       {
         "lineNumber": 83,
         "author": {
-          "gitId": "kwannoel"
+          "gitId": "-"
         },
-        "content": "    /**"
+        "content": ""
       },
       {
         "lineNumber": 84,
         "author": {
           "gitId": "kwannoel"
         },
-        "content": "     * Parses a {@code String telegram} into an {@code Telegram}."
+        "content": "    /**"
       },
       {
         "lineNumber": 85,
         "author": {
           "gitId": "kwannoel"
         },
-        "content": "     * Leading and trailing whitespaces will be trimmed."
+        "content": "     * Parses a {@code String telegram} into an {@code Telegram}."
       },
       {
         "lineNumber": 86,
         "author": {
           "gitId": "kwannoel"
         },
-        "content": "     *"
+        "content": "     * Leading and trailing whitespaces will be trimmed."
       },
       {
         "lineNumber": 87,
         "author": {
           "gitId": "kwannoel"
         },
-        "content": "     * @throws ParseException if the given {@code telegram} is invalid."
+        "content": "     *"
       },
       {
         "lineNumber": 88,
         "author": {
           "gitId": "kwannoel"
         },
-        "content": "     */"
+        "content": "     * @throws ParseException if the given {@code telegram} is invalid."
       },
       {
         "lineNumber": 89,
         "author": {
           "gitId": "kwannoel"
         },
-        "content": "    public static Telegram parseTelegram(String telegram) throws ParseException {"
+        "content": "     */"
       },
       {
         "lineNumber": 90,
         "author": {
           "gitId": "kwannoel"
         },
-        "content": "        requireNonNull(telegram);"
+        "content": "    public static Telegram parseTelegram(String telegram) throws ParseException {"
       },
       {
         "lineNumber": 91,
         "author": {
           "gitId": "kwannoel"
         },
-        "content": "        String trimmedTelegram \u003d telegram.trim();"
+        "content": "        requireNonNull(telegram);"
       },
       {
         "lineNumber": 92,
         "author": {
           "gitId": "kwannoel"
         },
-        "content": "        if (!Telegram.isValidTelegram(telegram)) {"
+        "content": "        String trimmedTelegram \u003d telegram.trim();"
       },
       {
         "lineNumber": 93,
+        "author": {
+          "gitId": "kwannoel"
+        },
+        "content": "        if (!Telegram.isValidTelegram(telegram)) {"
+      },
+      {
+        "lineNumber": 94,
         "author": {
           "gitId": "rnmy"
         },
         "content": "            throw new ParseException(Telegram.MESSAGE_CONSTRAINTS);"
       },
       {
-        "lineNumber": 94,
-        "author": {
-          "gitId": "kwannoel"
-        },
-        "content": "        }"
-      },
-      {
         "lineNumber": 95,
         "author": {
           "gitId": "kwannoel"
         },
-        "content": "        return new Telegram(trimmedTelegram);"
+        "content": "        }"
       },
       {
         "lineNumber": 96,
         "author": {
           "gitId": "kwannoel"
         },
-        "content": "    }"
+        "content": "        return new Telegram(trimmedTelegram);"
       },
       {
         "lineNumber": 97,
         "author": {
           "gitId": "kwannoel"
         },
-        "content": ""
+        "content": "    }"
       },
       {
         "lineNumber": 98,
         "author": {
           "gitId": "kwannoel"
         },
-        "content": "    /**"
+        "content": ""
       },
       {
         "lineNumber": 99,
         "author": {
           "gitId": "kwannoel"
         },
-        "content": "     * Parses a {@code String matricNumber} into an {@code MatricNumber}."
+        "content": "    /**"
       },
       {
         "lineNumber": 100,
         "author": {
           "gitId": "kwannoel"
         },
-        "content": "     * Leading and trailing whitespaces will be trimmed."
+        "content": "     * Parses a {@code String matricNumber} into an {@code MatricNumber}."
       },
       {
         "lineNumber": 101,
         "author": {
           "gitId": "kwannoel"
         },
-        "content": "     *"
+        "content": "     * Leading and trailing whitespaces will be trimmed."
       },
       {
         "lineNumber": 102,
         "author": {
           "gitId": "kwannoel"
         },
-        "content": "     * @throws ParseException if the given {@code matricNumber} is invalid."
+        "content": "     *"
       },
       {
         "lineNumber": 103,
         "author": {
           "gitId": "kwannoel"
         },
-        "content": "     */"
+        "content": "     * @throws ParseException if the given {@code matricNumber} is invalid."
       },
       {
         "lineNumber": 104,
         "author": {
           "gitId": "kwannoel"
         },
-        "content": "    public static MatricNumber parseMatricNumber(String matricNumber) throws ParseException {"
+        "content": "     */"
       },
       {
         "lineNumber": 105,
         "author": {
           "gitId": "kwannoel"
         },
-        "content": "        requireNonNull(matricNumber);"
+        "content": "    public static MatricNumber parseMatricNumber(String matricNumber) throws ParseException {"
       },
       {
         "lineNumber": 106,
         "author": {
           "gitId": "kwannoel"
         },
-        "content": "        String trimmedMatricNumber \u003d matricNumber.trim();"
+        "content": "        requireNonNull(matricNumber);"
       },
       {
         "lineNumber": 107,
         "author": {
           "gitId": "kwannoel"
         },
-        "content": "        if (!MatricNumber.isValidMatricNumber(trimmedMatricNumber)) {"
+        "content": "        String trimmedMatricNumber \u003d matricNumber.trim();"
       },
       {
         "lineNumber": 108,
         "author": {
           "gitId": "kwannoel"
         },
-        "content": "            throw new ParseException(MatricNumber.MESSAGE_CONSTRAINTS);"
+        "content": "        if (!MatricNumber.isValidMatricNumber(trimmedMatricNumber)) {"
       },
       {
         "lineNumber": 109,
         "author": {
           "gitId": "kwannoel"
         },
-        "content": "        }"
+        "content": "            throw new ParseException(MatricNumber.MESSAGE_CONSTRAINTS);"
       },
       {
         "lineNumber": 110,
         "author": {
           "gitId": "kwannoel"
         },
-        "content": "        return new MatricNumber(trimmedMatricNumber);"
+        "content": "        }"
       },
       {
         "lineNumber": 111,
         "author": {
           "gitId": "kwannoel"
         },
-        "content": "    }"
+        "content": "        return new MatricNumber(trimmedMatricNumber);"
       },
       {
         "lineNumber": 112,
         "author": {
           "gitId": "kwannoel"
         },
-        "content": ""
+        "content": "    }"
       },
       {
         "lineNumber": 113,
         "author": {
-          "gitId": "-"
+          "gitId": "kwannoel"
         },
-        "content": "    /**"
+        "content": ""
       },
       {
         "lineNumber": 114,
         "author": {
           "gitId": "-"
         },
-        "content": "     * Parses a {@code String tag} into a {@code Tag}."
+        "content": "    /**"
       },
       {
         "lineNumber": 115,
         "author": {
           "gitId": "-"
         },
-        "content": "     * Leading and trailing whitespaces will be trimmed."
+        "content": "     * Parses a {@code String tag} into a {@code Tag}."
       },
       {
         "lineNumber": 116,
         "author": {
           "gitId": "-"
         },
-        "content": "     *"
+        "content": "     * Leading and trailing whitespaces will be trimmed."
       },
       {
         "lineNumber": 117,
         "author": {
           "gitId": "-"
         },
-        "content": "     * @throws ParseException if the given {@code tag} is invalid."
+        "content": "     *"
       },
       {
         "lineNumber": 118,
         "author": {
           "gitId": "-"
         },
-        "content": "     */"
+        "content": "     * @throws ParseException if the given {@code tag} is invalid."
       },
       {
         "lineNumber": 119,
         "author": {
           "gitId": "-"
         },
-        "content": "    public static Tag parseTag(String tag) throws ParseException {"
+        "content": "     */"
       },
       {
         "lineNumber": 120,
         "author": {
           "gitId": "-"
         },
-        "content": "        requireNonNull(tag);"
+        "content": "    public static Tag parseTag(String tag) throws ParseException {"
       },
       {
         "lineNumber": 121,
         "author": {
           "gitId": "-"
         },
-        "content": "        String trimmedTag \u003d tag.trim();"
+        "content": "        requireNonNull(tag);"
       },
       {
         "lineNumber": 122,
         "author": {
           "gitId": "-"
         },
-        "content": "        if (!Tag.isValidTagName(trimmedTag)) {"
+        "content": "        String trimmedTag \u003d tag.trim();"
       },
       {
         "lineNumber": 123,
         "author": {
           "gitId": "-"
         },
-        "content": "            throw new ParseException(Tag.MESSAGE_CONSTRAINTS);"
+        "content": "        if (!Tag.isValidTagName(trimmedTag)) {"
       },
       {
         "lineNumber": 124,
         "author": {
           "gitId": "-"
         },
-        "content": "        }"
+        "content": "            throw new ParseException(Tag.MESSAGE_CONSTRAINTS);"
       },
       {
         "lineNumber": 125,
         "author": {
           "gitId": "-"
         },
-        "content": "        return new Tag(trimmedTag);"
+        "content": "        }"
       },
       {
         "lineNumber": 126,
         "author": {
           "gitId": "-"
         },
-        "content": "    }"
+        "content": "        return new Tag(trimmedTag);"
       },
       {
         "lineNumber": 127,
         "author": {
           "gitId": "-"
         },
-        "content": ""
+        "content": "    }"
       },
       {
         "lineNumber": 128,
         "author": {
           "gitId": "-"
         },
-        "content": "    /**"
+        "content": ""
       },
       {
         "lineNumber": 129,
         "author": {
           "gitId": "-"
         },
-        "content": "     * Parses {@code Collection\u003cString\u003e tags} into a {@code Set\u003cTag\u003e}."
+        "content": "    /**"
       },
       {
         "lineNumber": 130,
         "author": {
           "gitId": "-"
         },
-        "content": "     */"
+        "content": "     * Parses {@code Collection\u003cString\u003e tags} into a {@code Set\u003cTag\u003e}."
       },
       {
         "lineNumber": 131,
         "author": {
           "gitId": "-"
         },
-        "content": "    public static Set\u003cTag\u003e parseTags(Collection\u003cString\u003e tags) throws ParseException {"
+        "content": "     */"
       },
       {
         "lineNumber": 132,
         "author": {
           "gitId": "-"
         },
-        "content": "        requireNonNull(tags);"
+        "content": "    public static Set\u003cTag\u003e parseTags(Collection\u003cString\u003e tags) throws ParseException {"
       },
       {
         "lineNumber": 133,
         "author": {
           "gitId": "-"
         },
-        "content": "        final Set\u003cTag\u003e tagSet \u003d new HashSet\u003c\u003e();"
+        "content": "        requireNonNull(tags);"
       },
       {
         "lineNumber": 134,
         "author": {
           "gitId": "-"
         },
-        "content": "        for (String tagName : tags) {"
+        "content": "        final Set\u003cTag\u003e tagSet \u003d new HashSet\u003c\u003e();"
       },
       {
         "lineNumber": 135,
         "author": {
           "gitId": "-"
         },
-        "content": "            tagSet.add(parseTag(tagName));"
+        "content": "        for (String tagName : tags) {"
       },
       {
         "lineNumber": 136,
         "author": {
           "gitId": "-"
         },
-        "content": "        }"
+        "content": "            tagSet.add(parseTag(tagName));"
       },
       {
         "lineNumber": 137,
         "author": {
           "gitId": "-"
         },
-        "content": "        return tagSet;"
+        "content": "        }"
       },
       {
         "lineNumber": 138,
         "author": {
           "gitId": "-"
         },
-        "content": "    }"
+        "content": "        return tagSet;"
       },
       {
         "lineNumber": 139,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "    }"
+      },
+      {
+        "lineNumber": 140,
+        "author": {
+          "gitId": "sun-yitao"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 141,
+        "author": {
+          "gitId": "sun-yitao"
+        },
+        "content": "    /**"
+      },
+      {
+        "lineNumber": 142,
+        "author": {
+          "gitId": "sun-yitao"
+        },
+        "content": "     * Creates an {@code Attendance} by parsing the input date."
+      },
+      {
+        "lineNumber": 143,
+        "author": {
+          "gitId": "sun-yitao"
+        },
+        "content": "     * @param input Input date string"
+      },
+      {
+        "lineNumber": 144,
+        "author": {
+          "gitId": "sun-yitao"
+        },
+        "content": "     * @return {@code Attendance}"
+      },
+      {
+        "lineNumber": 145,
+        "author": {
+          "gitId": "sun-yitao"
+        },
+        "content": "     * @throws ParseException if date cannot be parsed"
+      },
+      {
+        "lineNumber": 146,
+        "author": {
+          "gitId": "sun-yitao"
+        },
+        "content": "     */"
+      },
+      {
+        "lineNumber": 147,
+        "author": {
+          "gitId": "sun-yitao"
+        },
+        "content": "    public static Attendance parseAttendance(String input) throws ParseException {"
+      },
+      {
+        "lineNumber": 148,
+        "author": {
+          "gitId": "sun-yitao"
+        },
+        "content": "        requireNonNull(input);"
+      },
+      {
+        "lineNumber": 149,
+        "author": {
+          "gitId": "sun-yitao"
+        },
+        "content": "        try {"
+      },
+      {
+        "lineNumber": 150,
+        "author": {
+          "gitId": "sun-yitao"
+        },
+        "content": "            return Attendance.fromDateString(input);"
+      },
+      {
+        "lineNumber": 151,
+        "author": {
+          "gitId": "sun-yitao"
+        },
+        "content": "        } catch (IllegalArgumentException e) {"
+      },
+      {
+        "lineNumber": 152,
+        "author": {
+          "gitId": "sun-yitao"
+        },
+        "content": "            throw new ParseException(Attendance.MESSAGE_CONSTRAINTS);"
+      },
+      {
+        "lineNumber": 153,
+        "author": {
+          "gitId": "sun-yitao"
+        },
+        "content": "        }"
+      },
+      {
+        "lineNumber": 154,
+        "author": {
+          "gitId": "sun-yitao"
+        },
+        "content": "    }"
+      },
+      {
+        "lineNumber": 155,
+        "author": {
+          "gitId": "sun-yitao"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 156,
         "author": {
           "gitId": "-"
         },
@@ -26734,6 +27824,7 @@
       }
     ],
     "authorContributionMap": {
+      "sun-yitao": 17,
       "kwannoel": 31,
       "-": 107,
       "rnmy": 1
@@ -30381,16 +31472,16 @@
       {
         "lineNumber": 23,
         "author": {
-          "gitId": "kwannoel"
+          "gitId": "sun-yitao"
         },
-        "content": "     * Users should only use fromDateString to safely generate Attendance"
+        "content": "     * Creates a new {@code Attendance} using a {@code Date}"
       },
       {
         "lineNumber": 24,
         "author": {
-          "gitId": "kwannoel"
+          "gitId": "sun-yitao"
         },
-        "content": "     * @param date"
+        "content": "     * @param date {@code Date} that corresponds to input date"
       },
       {
         "lineNumber": 25,
@@ -30402,9 +31493,9 @@
       {
         "lineNumber": 26,
         "author": {
-          "gitId": "kwannoel"
+          "gitId": "sun-yitao"
         },
-        "content": "    private Attendance(Date date) {"
+        "content": "    public Attendance(Date date) {"
       },
       {
         "lineNumber": 27,
@@ -30479,9 +31570,9 @@
       {
         "lineNumber": 37,
         "author": {
-          "gitId": "chrisgzf"
+          "gitId": "sun-yitao"
         },
-        "content": "    public static final Attendance fromDateString(String input) {"
+        "content": "    public static Attendance fromDateString(String input) {"
       },
       {
         "lineNumber": 38,
@@ -30758,8 +31849,9 @@
       }
     ],
     "authorContributionMap": {
-      "kwannoel": 12,
-      "chrisgzf": 64
+      "sun-yitao": 4,
+      "kwannoel": 9,
+      "chrisgzf": 63
     }
   },
   {
@@ -46624,6 +47716,967 @@
     }
   },
   {
+    "path": "src/test/java/seedu/address/logic/commands/AttendCommandTest.java",
+    "fileType": "test-code",
+    "lines": [
+      {
+        "lineNumber": 1,
+        "author": {
+          "gitId": "sun-yitao"
+        },
+        "content": "package seedu.address.logic.commands;"
+      },
+      {
+        "lineNumber": 2,
+        "author": {
+          "gitId": "sun-yitao"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 3,
+        "author": {
+          "gitId": "sun-yitao"
+        },
+        "content": "import static org.junit.jupiter.api.Assertions.assertFalse;"
+      },
+      {
+        "lineNumber": 4,
+        "author": {
+          "gitId": "sun-yitao"
+        },
+        "content": "import static org.junit.jupiter.api.Assertions.assertTrue;"
+      },
+      {
+        "lineNumber": 5,
+        "author": {
+          "gitId": "sun-yitao"
+        },
+        "content": "import static seedu.address.logic.commands.CommandTestUtil.VALID_ATTENDANCE_AMY;"
+      },
+      {
+        "lineNumber": 6,
+        "author": {
+          "gitId": "sun-yitao"
+        },
+        "content": "import static seedu.address.logic.commands.CommandTestUtil.assertCommandFailure;"
+      },
+      {
+        "lineNumber": 7,
+        "author": {
+          "gitId": "sun-yitao"
+        },
+        "content": "import static seedu.address.logic.commands.CommandTestUtil.assertCommandSuccess;"
+      },
+      {
+        "lineNumber": 8,
+        "author": {
+          "gitId": "sun-yitao"
+        },
+        "content": "import static seedu.address.logic.commands.CommandTestUtil.showPersonAtIndex;"
+      },
+      {
+        "lineNumber": 9,
+        "author": {
+          "gitId": "sun-yitao"
+        },
+        "content": "import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_PERSON;"
+      },
+      {
+        "lineNumber": 10,
+        "author": {
+          "gitId": "sun-yitao"
+        },
+        "content": "import static seedu.address.testutil.TypicalIndexes.INDEX_SECOND_PERSON;"
+      },
+      {
+        "lineNumber": 11,
+        "author": {
+          "gitId": "sun-yitao"
+        },
+        "content": "import static seedu.address.testutil.TypicalPersons.getTypicalAddressBook;"
+      },
+      {
+        "lineNumber": 12,
+        "author": {
+          "gitId": "sun-yitao"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 13,
+        "author": {
+          "gitId": "sun-yitao"
+        },
+        "content": "import org.junit.jupiter.api.Test;"
+      },
+      {
+        "lineNumber": 14,
+        "author": {
+          "gitId": "sun-yitao"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 15,
+        "author": {
+          "gitId": "sun-yitao"
+        },
+        "content": "import seedu.address.commons.core.Messages;"
+      },
+      {
+        "lineNumber": 16,
+        "author": {
+          "gitId": "sun-yitao"
+        },
+        "content": "import seedu.address.commons.core.index.Index;"
+      },
+      {
+        "lineNumber": 17,
+        "author": {
+          "gitId": "sun-yitao"
+        },
+        "content": "import seedu.address.model.Model;"
+      },
+      {
+        "lineNumber": 18,
+        "author": {
+          "gitId": "sun-yitao"
+        },
+        "content": "import seedu.address.model.ModelManager;"
+      },
+      {
+        "lineNumber": 19,
+        "author": {
+          "gitId": "sun-yitao"
+        },
+        "content": "import seedu.address.model.Tasker;"
+      },
+      {
+        "lineNumber": 20,
+        "author": {
+          "gitId": "sun-yitao"
+        },
+        "content": "import seedu.address.model.UserPrefs;"
+      },
+      {
+        "lineNumber": 21,
+        "author": {
+          "gitId": "sun-yitao"
+        },
+        "content": "import seedu.address.model.attendance.Attendance;"
+      },
+      {
+        "lineNumber": 22,
+        "author": {
+          "gitId": "sun-yitao"
+        },
+        "content": "import seedu.address.model.person.Person;"
+      },
+      {
+        "lineNumber": 23,
+        "author": {
+          "gitId": "sun-yitao"
+        },
+        "content": "import seedu.address.testutil.PersonBuilder;"
+      },
+      {
+        "lineNumber": 24,
+        "author": {
+          "gitId": "sun-yitao"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 25,
+        "author": {
+          "gitId": "sun-yitao"
+        },
+        "content": "/**"
+      },
+      {
+        "lineNumber": 26,
+        "author": {
+          "gitId": "sun-yitao"
+        },
+        "content": " * Contains integration tests and unit tests for AttendCommand."
+      },
+      {
+        "lineNumber": 27,
+        "author": {
+          "gitId": "sun-yitao"
+        },
+        "content": " */"
+      },
+      {
+        "lineNumber": 28,
+        "author": {
+          "gitId": "sun-yitao"
+        },
+        "content": "public class AttendCommandTest {"
+      },
+      {
+        "lineNumber": 29,
+        "author": {
+          "gitId": "sun-yitao"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 30,
+        "author": {
+          "gitId": "sun-yitao"
+        },
+        "content": "    private static final String NEW_ATTENDANCE_STRING \u003d \"01/01/2020\";"
+      },
+      {
+        "lineNumber": 31,
+        "author": {
+          "gitId": "sun-yitao"
+        },
+        "content": "    private static final Attendance NEW_ATTENDANCE \u003d Attendance.fromDateString(NEW_ATTENDANCE_STRING);"
+      },
+      {
+        "lineNumber": 32,
+        "author": {
+          "gitId": "sun-yitao"
+        },
+        "content": "    private static final Attendance AMY_ATTENDANCE \u003d Attendance.fromDateString(VALID_ATTENDANCE_AMY);"
+      },
+      {
+        "lineNumber": 33,
+        "author": {
+          "gitId": "sun-yitao"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 34,
+        "author": {
+          "gitId": "sun-yitao"
+        },
+        "content": "    private Model model \u003d new ModelManager(getTypicalAddressBook(), new UserPrefs());"
+      },
+      {
+        "lineNumber": 35,
+        "author": {
+          "gitId": "sun-yitao"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 36,
+        "author": {
+          "gitId": "sun-yitao"
+        },
+        "content": "    @Test"
+      },
+      {
+        "lineNumber": 37,
+        "author": {
+          "gitId": "sun-yitao"
+        },
+        "content": "    public void execute_allFieldsSpecifiedUnfilteredList_success() {"
+      },
+      {
+        "lineNumber": 38,
+        "author": {
+          "gitId": "sun-yitao"
+        },
+        "content": "        Person attendedPerson \u003d model.getFilteredPersonList().get(0);"
+      },
+      {
+        "lineNumber": 39,
+        "author": {
+          "gitId": "sun-yitao"
+        },
+        "content": "        attendedPerson \u003d new PersonBuilder(attendedPerson)"
+      },
+      {
+        "lineNumber": 40,
+        "author": {
+          "gitId": "sun-yitao"
+        },
+        "content": "                .withAttendance(VALID_ATTENDANCE_AMY, NEW_ATTENDANCE_STRING).build();"
+      },
+      {
+        "lineNumber": 41,
+        "author": {
+          "gitId": "sun-yitao"
+        },
+        "content": "        AttendCommand attendCommand \u003d new AttendCommand(INDEX_FIRST_PERSON, NEW_ATTENDANCE);"
+      },
+      {
+        "lineNumber": 42,
+        "author": {
+          "gitId": "sun-yitao"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 43,
+        "author": {
+          "gitId": "sun-yitao"
+        },
+        "content": "        String expectedMessage \u003d String.format(AttendCommand.MESSAGE_ATTEND_SUCCESS, attendedPerson);"
+      },
+      {
+        "lineNumber": 44,
+        "author": {
+          "gitId": "sun-yitao"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 45,
+        "author": {
+          "gitId": "sun-yitao"
+        },
+        "content": "        Model expectedModel \u003d new ModelManager(new Tasker(model.getAddressBook()), new UserPrefs());"
+      },
+      {
+        "lineNumber": 46,
+        "author": {
+          "gitId": "sun-yitao"
+        },
+        "content": "        expectedModel.setPerson(model.getFilteredPersonList().get(0), attendedPerson);"
+      },
+      {
+        "lineNumber": 47,
+        "author": {
+          "gitId": "sun-yitao"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 48,
+        "author": {
+          "gitId": "sun-yitao"
+        },
+        "content": "        assertCommandSuccess(attendCommand, model, expectedMessage, expectedModel);"
+      },
+      {
+        "lineNumber": 49,
+        "author": {
+          "gitId": "sun-yitao"
+        },
+        "content": "    }"
+      },
+      {
+        "lineNumber": 50,
+        "author": {
+          "gitId": "sun-yitao"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 51,
+        "author": {
+          "gitId": "sun-yitao"
+        },
+        "content": "    @Test"
+      },
+      {
+        "lineNumber": 52,
+        "author": {
+          "gitId": "sun-yitao"
+        },
+        "content": "    public void execute_filteredList_success() {"
+      },
+      {
+        "lineNumber": 53,
+        "author": {
+          "gitId": "sun-yitao"
+        },
+        "content": "        showPersonAtIndex(model, INDEX_FIRST_PERSON);"
+      },
+      {
+        "lineNumber": 54,
+        "author": {
+          "gitId": "sun-yitao"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 55,
+        "author": {
+          "gitId": "sun-yitao"
+        },
+        "content": "        Person personInFilteredList \u003d model.getFilteredPersonList().get(INDEX_FIRST_PERSON.getZeroBased());"
+      },
+      {
+        "lineNumber": 56,
+        "author": {
+          "gitId": "sun-yitao"
+        },
+        "content": "        Person attendedPerson \u003d new PersonBuilder(personInFilteredList)"
+      },
+      {
+        "lineNumber": 57,
+        "author": {
+          "gitId": "sun-yitao"
+        },
+        "content": "                .withAttendance(VALID_ATTENDANCE_AMY, NEW_ATTENDANCE_STRING).build();"
+      },
+      {
+        "lineNumber": 58,
+        "author": {
+          "gitId": "sun-yitao"
+        },
+        "content": "        AttendCommand attendCommand \u003d new AttendCommand(INDEX_FIRST_PERSON, NEW_ATTENDANCE);"
+      },
+      {
+        "lineNumber": 59,
+        "author": {
+          "gitId": "sun-yitao"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 60,
+        "author": {
+          "gitId": "sun-yitao"
+        },
+        "content": "        String expectedMessage \u003d String.format(AttendCommand.MESSAGE_ATTEND_SUCCESS, attendedPerson);"
+      },
+      {
+        "lineNumber": 61,
+        "author": {
+          "gitId": "sun-yitao"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 62,
+        "author": {
+          "gitId": "sun-yitao"
+        },
+        "content": "        Model expectedModel \u003d new ModelManager(new Tasker(model.getAddressBook()), new UserPrefs());"
+      },
+      {
+        "lineNumber": 63,
+        "author": {
+          "gitId": "sun-yitao"
+        },
+        "content": "        expectedModel.setPerson(model.getFilteredPersonList().get(0), attendedPerson);"
+      },
+      {
+        "lineNumber": 64,
+        "author": {
+          "gitId": "sun-yitao"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 65,
+        "author": {
+          "gitId": "sun-yitao"
+        },
+        "content": "        assertCommandSuccess(attendCommand, model, expectedMessage, expectedModel);"
+      },
+      {
+        "lineNumber": 66,
+        "author": {
+          "gitId": "sun-yitao"
+        },
+        "content": "    }"
+      },
+      {
+        "lineNumber": 67,
+        "author": {
+          "gitId": "sun-yitao"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 68,
+        "author": {
+          "gitId": "sun-yitao"
+        },
+        "content": "    @Test"
+      },
+      {
+        "lineNumber": 69,
+        "author": {
+          "gitId": "sun-yitao"
+        },
+        "content": "    public void execute_nullAttendanceUnfilteredList_failure() {"
+      },
+      {
+        "lineNumber": 70,
+        "author": {
+          "gitId": "sun-yitao"
+        },
+        "content": "        AttendCommand attendCommand \u003d new AttendCommand(INDEX_FIRST_PERSON, null);"
+      },
+      {
+        "lineNumber": 71,
+        "author": {
+          "gitId": "sun-yitao"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 72,
+        "author": {
+          "gitId": "sun-yitao"
+        },
+        "content": "        assertCommandFailure(attendCommand, model,"
+      },
+      {
+        "lineNumber": 73,
+        "author": {
+          "gitId": "sun-yitao"
+        },
+        "content": "                String.format(Messages.MESSAGE_INVALID_COMMAND_FORMAT, AttendCommand.MESSAGE_USAGE));"
+      },
+      {
+        "lineNumber": 74,
+        "author": {
+          "gitId": "sun-yitao"
+        },
+        "content": "    }"
+      },
+      {
+        "lineNumber": 75,
+        "author": {
+          "gitId": "sun-yitao"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 76,
+        "author": {
+          "gitId": "sun-yitao"
+        },
+        "content": "    @Test"
+      },
+      {
+        "lineNumber": 77,
+        "author": {
+          "gitId": "sun-yitao"
+        },
+        "content": "    public void execute_duplicateAttendanceFilteredList_failure() {"
+      },
+      {
+        "lineNumber": 78,
+        "author": {
+          "gitId": "sun-yitao"
+        },
+        "content": "        showPersonAtIndex(model, INDEX_FIRST_PERSON);"
+      },
+      {
+        "lineNumber": 79,
+        "author": {
+          "gitId": "sun-yitao"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 80,
+        "author": {
+          "gitId": "sun-yitao"
+        },
+        "content": "        Person personToAttend \u003d model.getAddressBook().getPersonList().get(INDEX_FIRST_PERSON.getZeroBased());"
+      },
+      {
+        "lineNumber": 81,
+        "author": {
+          "gitId": "sun-yitao"
+        },
+        "content": "        AttendCommand attendCommand \u003d new AttendCommand(INDEX_FIRST_PERSON, AMY_ATTENDANCE);"
+      },
+      {
+        "lineNumber": 82,
+        "author": {
+          "gitId": "sun-yitao"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 83,
+        "author": {
+          "gitId": "sun-yitao"
+        },
+        "content": "        assertCommandFailure(attendCommand, model, String.format(AttendCommand.MESSAGE_ALREADY_ATTENDED,"
+      },
+      {
+        "lineNumber": 84,
+        "author": {
+          "gitId": "sun-yitao"
+        },
+        "content": "                personToAttend.getName(), AMY_ATTENDANCE));"
+      },
+      {
+        "lineNumber": 85,
+        "author": {
+          "gitId": "sun-yitao"
+        },
+        "content": "    }"
+      },
+      {
+        "lineNumber": 86,
+        "author": {
+          "gitId": "sun-yitao"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 87,
+        "author": {
+          "gitId": "sun-yitao"
+        },
+        "content": "    @Test"
+      },
+      {
+        "lineNumber": 88,
+        "author": {
+          "gitId": "sun-yitao"
+        },
+        "content": "    public void execute_invalidPersonIndexUnfilteredList_failure() {"
+      },
+      {
+        "lineNumber": 89,
+        "author": {
+          "gitId": "sun-yitao"
+        },
+        "content": "        Index outOfBoundIndex \u003d Index.fromOneBased(model.getFilteredPersonList().size() + 1);"
+      },
+      {
+        "lineNumber": 90,
+        "author": {
+          "gitId": "sun-yitao"
+        },
+        "content": "        AttendCommand attendCommand \u003d new AttendCommand(outOfBoundIndex, NEW_ATTENDANCE);"
+      },
+      {
+        "lineNumber": 91,
+        "author": {
+          "gitId": "sun-yitao"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 92,
+        "author": {
+          "gitId": "sun-yitao"
+        },
+        "content": "        assertCommandFailure(attendCommand, model, Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);"
+      },
+      {
+        "lineNumber": 93,
+        "author": {
+          "gitId": "sun-yitao"
+        },
+        "content": "    }"
+      },
+      {
+        "lineNumber": 94,
+        "author": {
+          "gitId": "sun-yitao"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 95,
+        "author": {
+          "gitId": "sun-yitao"
+        },
+        "content": "    /**"
+      },
+      {
+        "lineNumber": 96,
+        "author": {
+          "gitId": "sun-yitao"
+        },
+        "content": "     * Attend filtered list where index is larger than size of filtered list,"
+      },
+      {
+        "lineNumber": 97,
+        "author": {
+          "gitId": "sun-yitao"
+        },
+        "content": "     * but smaller than size of address book"
+      },
+      {
+        "lineNumber": 98,
+        "author": {
+          "gitId": "sun-yitao"
+        },
+        "content": "     */"
+      },
+      {
+        "lineNumber": 99,
+        "author": {
+          "gitId": "sun-yitao"
+        },
+        "content": "    @Test"
+      },
+      {
+        "lineNumber": 100,
+        "author": {
+          "gitId": "sun-yitao"
+        },
+        "content": "    public void execute_invalidPersonIndexFilteredList_failure() {"
+      },
+      {
+        "lineNumber": 101,
+        "author": {
+          "gitId": "sun-yitao"
+        },
+        "content": "        showPersonAtIndex(model, INDEX_FIRST_PERSON);"
+      },
+      {
+        "lineNumber": 102,
+        "author": {
+          "gitId": "sun-yitao"
+        },
+        "content": "        Index outOfBoundIndex \u003d INDEX_SECOND_PERSON;"
+      },
+      {
+        "lineNumber": 103,
+        "author": {
+          "gitId": "sun-yitao"
+        },
+        "content": "        // ensures that outOfBoundIndex is still in bounds of address book list"
+      },
+      {
+        "lineNumber": 104,
+        "author": {
+          "gitId": "sun-yitao"
+        },
+        "content": "        assertTrue(outOfBoundIndex.getZeroBased() \u003c model.getAddressBook().getPersonList().size());"
+      },
+      {
+        "lineNumber": 105,
+        "author": {
+          "gitId": "sun-yitao"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 106,
+        "author": {
+          "gitId": "sun-yitao"
+        },
+        "content": "        AttendCommand attendCommand \u003d new AttendCommand(outOfBoundIndex, NEW_ATTENDANCE);"
+      },
+      {
+        "lineNumber": 107,
+        "author": {
+          "gitId": "sun-yitao"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 108,
+        "author": {
+          "gitId": "sun-yitao"
+        },
+        "content": "        assertCommandFailure(attendCommand, model, Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);"
+      },
+      {
+        "lineNumber": 109,
+        "author": {
+          "gitId": "sun-yitao"
+        },
+        "content": "    }"
+      },
+      {
+        "lineNumber": 110,
+        "author": {
+          "gitId": "sun-yitao"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 111,
+        "author": {
+          "gitId": "sun-yitao"
+        },
+        "content": "    @Test"
+      },
+      {
+        "lineNumber": 112,
+        "author": {
+          "gitId": "sun-yitao"
+        },
+        "content": "    public void equals() {"
+      },
+      {
+        "lineNumber": 113,
+        "author": {
+          "gitId": "sun-yitao"
+        },
+        "content": "        Index index1 \u003d Index.fromOneBased(1);"
+      },
+      {
+        "lineNumber": 114,
+        "author": {
+          "gitId": "sun-yitao"
+        },
+        "content": "        Index index2 \u003d Index.fromOneBased(2);"
+      },
+      {
+        "lineNumber": 115,
+        "author": {
+          "gitId": "sun-yitao"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 116,
+        "author": {
+          "gitId": "sun-yitao"
+        },
+        "content": "        AttendCommand attendCommand1 \u003d new AttendCommand(index1, NEW_ATTENDANCE);"
+      },
+      {
+        "lineNumber": 117,
+        "author": {
+          "gitId": "sun-yitao"
+        },
+        "content": "        AttendCommand attendCommand2 \u003d new AttendCommand(index2, NEW_ATTENDANCE);"
+      },
+      {
+        "lineNumber": 118,
+        "author": {
+          "gitId": "sun-yitao"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 119,
+        "author": {
+          "gitId": "sun-yitao"
+        },
+        "content": "        // same object -\u003e returns true"
+      },
+      {
+        "lineNumber": 120,
+        "author": {
+          "gitId": "sun-yitao"
+        },
+        "content": "        assertTrue(attendCommand1.equals(attendCommand1));"
+      },
+      {
+        "lineNumber": 121,
+        "author": {
+          "gitId": "sun-yitao"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 122,
+        "author": {
+          "gitId": "sun-yitao"
+        },
+        "content": "        // same values -\u003e returns true"
+      },
+      {
+        "lineNumber": 123,
+        "author": {
+          "gitId": "sun-yitao"
+        },
+        "content": "        AttendCommand attendCommand1Copy \u003d new AttendCommand(index1, NEW_ATTENDANCE);"
+      },
+      {
+        "lineNumber": 124,
+        "author": {
+          "gitId": "sun-yitao"
+        },
+        "content": "        assertTrue(attendCommand1.equals(attendCommand1Copy));"
+      },
+      {
+        "lineNumber": 125,
+        "author": {
+          "gitId": "sun-yitao"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 126,
+        "author": {
+          "gitId": "sun-yitao"
+        },
+        "content": "        // different types -\u003e returns false"
+      },
+      {
+        "lineNumber": 127,
+        "author": {
+          "gitId": "sun-yitao"
+        },
+        "content": "        assertFalse(attendCommand1.equals(1));"
+      },
+      {
+        "lineNumber": 128,
+        "author": {
+          "gitId": "sun-yitao"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 129,
+        "author": {
+          "gitId": "sun-yitao"
+        },
+        "content": "        // null -\u003e returns false"
+      },
+      {
+        "lineNumber": 130,
+        "author": {
+          "gitId": "sun-yitao"
+        },
+        "content": "        assertFalse(attendCommand1.equals(null));"
+      },
+      {
+        "lineNumber": 131,
+        "author": {
+          "gitId": "sun-yitao"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 132,
+        "author": {
+          "gitId": "sun-yitao"
+        },
+        "content": "        // different person -\u003e returns false"
+      },
+      {
+        "lineNumber": 133,
+        "author": {
+          "gitId": "sun-yitao"
+        },
+        "content": "        assertFalse(attendCommand1.equals(attendCommand2));"
+      },
+      {
+        "lineNumber": 134,
+        "author": {
+          "gitId": "sun-yitao"
+        },
+        "content": "    }"
+      },
+      {
+        "lineNumber": 135,
+        "author": {
+          "gitId": "sun-yitao"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 136,
+        "author": {
+          "gitId": "sun-yitao"
+        },
+        "content": "}"
+      }
+    ],
+    "authorContributionMap": {
+      "sun-yitao": 136
+    }
+  },
+  {
     "path": "src/test/java/seedu/address/logic/commands/ClearCommandTest.java",
     "fileType": "test-code",
     "lines": [
@@ -50220,6 +52273,470 @@
       "Rishi5154": 18,
       "-": 102,
       "rnmy": 31
+    }
+  },
+  {
+    "path": "src/test/java/seedu/address/logic/parser/AttendCommandParserTest.java",
+    "fileType": "test-code",
+    "lines": [
+      {
+        "lineNumber": 1,
+        "author": {
+          "gitId": "sun-yitao"
+        },
+        "content": "package seedu.address.logic.parser;"
+      },
+      {
+        "lineNumber": 2,
+        "author": {
+          "gitId": "sun-yitao"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 3,
+        "author": {
+          "gitId": "sun-yitao"
+        },
+        "content": "import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;"
+      },
+      {
+        "lineNumber": 4,
+        "author": {
+          "gitId": "sun-yitao"
+        },
+        "content": "import static seedu.address.logic.commands.CommandTestUtil.ATTENDANCE_DESC_AMY;"
+      },
+      {
+        "lineNumber": 5,
+        "author": {
+          "gitId": "sun-yitao"
+        },
+        "content": "import static seedu.address.logic.commands.CommandTestUtil.INVALID_ATTENDANCE_DESC;"
+      },
+      {
+        "lineNumber": 6,
+        "author": {
+          "gitId": "sun-yitao"
+        },
+        "content": "import static seedu.address.logic.commands.CommandTestUtil.VALID_ATTENDANCE_AMY;"
+      },
+      {
+        "lineNumber": 7,
+        "author": {
+          "gitId": "sun-yitao"
+        },
+        "content": "import static seedu.address.logic.parser.CommandParserTestUtil.assertParseFailure;"
+      },
+      {
+        "lineNumber": 8,
+        "author": {
+          "gitId": "sun-yitao"
+        },
+        "content": "import static seedu.address.logic.parser.CommandParserTestUtil.assertParseSuccess;"
+      },
+      {
+        "lineNumber": 9,
+        "author": {
+          "gitId": "sun-yitao"
+        },
+        "content": "import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_PERSON;"
+      },
+      {
+        "lineNumber": 10,
+        "author": {
+          "gitId": "sun-yitao"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 11,
+        "author": {
+          "gitId": "sun-yitao"
+        },
+        "content": "import org.junit.jupiter.api.Test;"
+      },
+      {
+        "lineNumber": 12,
+        "author": {
+          "gitId": "sun-yitao"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 13,
+        "author": {
+          "gitId": "sun-yitao"
+        },
+        "content": "import seedu.address.commons.core.index.Index;"
+      },
+      {
+        "lineNumber": 14,
+        "author": {
+          "gitId": "sun-yitao"
+        },
+        "content": "import seedu.address.logic.commands.AttendCommand;"
+      },
+      {
+        "lineNumber": 15,
+        "author": {
+          "gitId": "sun-yitao"
+        },
+        "content": "import seedu.address.model.attendance.Attendance;"
+      },
+      {
+        "lineNumber": 16,
+        "author": {
+          "gitId": "sun-yitao"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 17,
+        "author": {
+          "gitId": "sun-yitao"
+        },
+        "content": "public class AttendCommandParserTest {"
+      },
+      {
+        "lineNumber": 18,
+        "author": {
+          "gitId": "sun-yitao"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 19,
+        "author": {
+          "gitId": "sun-yitao"
+        },
+        "content": "    private static final String MESSAGE_INVALID_FORMAT \u003d"
+      },
+      {
+        "lineNumber": 20,
+        "author": {
+          "gitId": "sun-yitao"
+        },
+        "content": "            String.format(MESSAGE_INVALID_COMMAND_FORMAT, AttendCommand.MESSAGE_USAGE);"
+      },
+      {
+        "lineNumber": 21,
+        "author": {
+          "gitId": "sun-yitao"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 22,
+        "author": {
+          "gitId": "sun-yitao"
+        },
+        "content": "    private AttendCommandParser parser \u003d new AttendCommandParser();"
+      },
+      {
+        "lineNumber": 23,
+        "author": {
+          "gitId": "sun-yitao"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 24,
+        "author": {
+          "gitId": "sun-yitao"
+        },
+        "content": "    @Test"
+      },
+      {
+        "lineNumber": 25,
+        "author": {
+          "gitId": "sun-yitao"
+        },
+        "content": "    public void parse_missingParts_failure() {"
+      },
+      {
+        "lineNumber": 26,
+        "author": {
+          "gitId": "sun-yitao"
+        },
+        "content": "        // no index specified"
+      },
+      {
+        "lineNumber": 27,
+        "author": {
+          "gitId": "sun-yitao"
+        },
+        "content": "        assertParseFailure(parser, ATTENDANCE_DESC_AMY, MESSAGE_INVALID_FORMAT);"
+      },
+      {
+        "lineNumber": 28,
+        "author": {
+          "gitId": "sun-yitao"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 29,
+        "author": {
+          "gitId": "sun-yitao"
+        },
+        "content": "        // no field specified"
+      },
+      {
+        "lineNumber": 30,
+        "author": {
+          "gitId": "sun-yitao"
+        },
+        "content": "        assertParseFailure(parser, \"1\", MESSAGE_INVALID_FORMAT);"
+      },
+      {
+        "lineNumber": 31,
+        "author": {
+          "gitId": "sun-yitao"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 32,
+        "author": {
+          "gitId": "sun-yitao"
+        },
+        "content": "        // no index and no field specified"
+      },
+      {
+        "lineNumber": 33,
+        "author": {
+          "gitId": "sun-yitao"
+        },
+        "content": "        assertParseFailure(parser, \"\", MESSAGE_INVALID_FORMAT);"
+      },
+      {
+        "lineNumber": 34,
+        "author": {
+          "gitId": "sun-yitao"
+        },
+        "content": "    }"
+      },
+      {
+        "lineNumber": 35,
+        "author": {
+          "gitId": "sun-yitao"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 36,
+        "author": {
+          "gitId": "sun-yitao"
+        },
+        "content": "    @Test"
+      },
+      {
+        "lineNumber": 37,
+        "author": {
+          "gitId": "sun-yitao"
+        },
+        "content": "    public void parse_invalidPreamble_failure() {"
+      },
+      {
+        "lineNumber": 38,
+        "author": {
+          "gitId": "sun-yitao"
+        },
+        "content": "        // negative index"
+      },
+      {
+        "lineNumber": 39,
+        "author": {
+          "gitId": "sun-yitao"
+        },
+        "content": "        assertParseFailure(parser, \"-5\" + ATTENDANCE_DESC_AMY, MESSAGE_INVALID_FORMAT);"
+      },
+      {
+        "lineNumber": 40,
+        "author": {
+          "gitId": "sun-yitao"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 41,
+        "author": {
+          "gitId": "sun-yitao"
+        },
+        "content": "        // zero index"
+      },
+      {
+        "lineNumber": 42,
+        "author": {
+          "gitId": "sun-yitao"
+        },
+        "content": "        assertParseFailure(parser, \"0\" + ATTENDANCE_DESC_AMY, MESSAGE_INVALID_FORMAT);"
+      },
+      {
+        "lineNumber": 43,
+        "author": {
+          "gitId": "sun-yitao"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 44,
+        "author": {
+          "gitId": "sun-yitao"
+        },
+        "content": "        // invalid arguments being parsed as preamble"
+      },
+      {
+        "lineNumber": 45,
+        "author": {
+          "gitId": "sun-yitao"
+        },
+        "content": "        assertParseFailure(parser, \"1 some random string\", MESSAGE_INVALID_FORMAT);"
+      },
+      {
+        "lineNumber": 46,
+        "author": {
+          "gitId": "sun-yitao"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 47,
+        "author": {
+          "gitId": "sun-yitao"
+        },
+        "content": "        // invalid prefix being parsed as preamble"
+      },
+      {
+        "lineNumber": 48,
+        "author": {
+          "gitId": "sun-yitao"
+        },
+        "content": "        assertParseFailure(parser, \"1 i/ string\", MESSAGE_INVALID_FORMAT);"
+      },
+      {
+        "lineNumber": 49,
+        "author": {
+          "gitId": "sun-yitao"
+        },
+        "content": "    }"
+      },
+      {
+        "lineNumber": 50,
+        "author": {
+          "gitId": "sun-yitao"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 51,
+        "author": {
+          "gitId": "sun-yitao"
+        },
+        "content": "    @Test"
+      },
+      {
+        "lineNumber": 52,
+        "author": {
+          "gitId": "sun-yitao"
+        },
+        "content": "    public void parse_invalidValue_failure() {"
+      },
+      {
+        "lineNumber": 53,
+        "author": {
+          "gitId": "sun-yitao"
+        },
+        "content": "        assertParseFailure(parser, \"1\" + INVALID_ATTENDANCE_DESC, Attendance.MESSAGE_CONSTRAINTS); // invalid attendance"
+      },
+      {
+        "lineNumber": 54,
+        "author": {
+          "gitId": "sun-yitao"
+        },
+        "content": "    }"
+      },
+      {
+        "lineNumber": 55,
+        "author": {
+          "gitId": "sun-yitao"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 56,
+        "author": {
+          "gitId": "sun-yitao"
+        },
+        "content": "    @Test"
+      },
+      {
+        "lineNumber": 57,
+        "author": {
+          "gitId": "sun-yitao"
+        },
+        "content": "    public void parse_oneFieldSpecified_success() {"
+      },
+      {
+        "lineNumber": 58,
+        "author": {
+          "gitId": "sun-yitao"
+        },
+        "content": "        // name"
+      },
+      {
+        "lineNumber": 59,
+        "author": {
+          "gitId": "sun-yitao"
+        },
+        "content": "        Index targetIndex \u003d INDEX_FIRST_PERSON;"
+      },
+      {
+        "lineNumber": 60,
+        "author": {
+          "gitId": "sun-yitao"
+        },
+        "content": "        String userInput \u003d targetIndex.getOneBased() + ATTENDANCE_DESC_AMY;"
+      },
+      {
+        "lineNumber": 61,
+        "author": {
+          "gitId": "sun-yitao"
+        },
+        "content": "        AttendCommand expectedCommand \u003d new AttendCommand(targetIndex, Attendance.fromDateString(VALID_ATTENDANCE_AMY));"
+      },
+      {
+        "lineNumber": 62,
+        "author": {
+          "gitId": "sun-yitao"
+        },
+        "content": "        assertParseSuccess(parser, userInput, expectedCommand);"
+      },
+      {
+        "lineNumber": 63,
+        "author": {
+          "gitId": "sun-yitao"
+        },
+        "content": "    }"
+      },
+      {
+        "lineNumber": 64,
+        "author": {
+          "gitId": "sun-yitao"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 65,
+        "author": {
+          "gitId": "sun-yitao"
+        },
+        "content": "}"
+      }
+    ],
+    "authorContributionMap": {
+      "sun-yitao": 65
     }
   },
   {

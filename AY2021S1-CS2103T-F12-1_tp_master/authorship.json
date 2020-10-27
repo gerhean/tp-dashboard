@@ -19850,47 +19850,54 @@
       {
         "lineNumber": 24,
         "author": {
-          "gitId": "HynRidge"
+          "gitId": "li-s"
         },
-        "content": "            + String.format(STRING_FORMAT, UntagCommand.COMMAND_WORD, UntagCommand.UNTAG_MESSAGE_USAGE + \"\\n\");"
+        "content": "            + String.format(STRING_FORMAT, UntagCommand.COMMAND_WORD, UntagCommand.UNTAG_MESSAGE_USAGE + \"\\n\")"
       },
       {
         "lineNumber": 25,
         "author": {
-          "gitId": "-"
+          "gitId": "li-s"
         },
-        "content": ""
+        "content": "            + String.format(STRING_FORMAT, LabelCommand.COMMAND_WORD, LabelCommand.LABEL_COMMAND_USAGE + \"\\n\");"
       },
       {
         "lineNumber": 26,
         "author": {
           "gitId": "-"
         },
-        "content": "    @Override"
+        "content": ""
       },
       {
         "lineNumber": 27,
         "author": {
           "gitId": "-"
         },
-        "content": "    public CommandResult execute(Model model) {"
+        "content": "    @Override"
       },
       {
         "lineNumber": 28,
         "author": {
           "gitId": "-"
         },
-        "content": "        return new CommandResult(SHOWING_HELP_MESSAGE, true, false);"
+        "content": "    public CommandResult execute(Model model) {"
       },
       {
         "lineNumber": 29,
         "author": {
           "gitId": "-"
         },
-        "content": "    }"
+        "content": "        return new CommandResult(SHOWING_HELP_MESSAGE, true, false);"
       },
       {
         "lineNumber": 30,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "    }"
+      },
+      {
+        "lineNumber": 31,
         "author": {
           "gitId": "-"
         },
@@ -19898,8 +19905,697 @@
       }
     ],
     "authorContributionMap": {
-      "HynRidge": 11,
+      "li-s": 2,
+      "HynRidge": 10,
       "-": 19
+    }
+  },
+  {
+    "path": "src/main/java/seedu/address/logic/commands/LabelCommand.java",
+    "fileType": "functional-code",
+    "lines": [
+      {
+        "lineNumber": 1,
+        "author": {
+          "gitId": "li-s"
+        },
+        "content": "package seedu.address.logic.commands;"
+      },
+      {
+        "lineNumber": 2,
+        "author": {
+          "gitId": "li-s"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 3,
+        "author": {
+          "gitId": "li-s"
+        },
+        "content": "import static java.util.Objects.requireNonNull;"
+      },
+      {
+        "lineNumber": 4,
+        "author": {
+          "gitId": "li-s"
+        },
+        "content": "import static seedu.address.logic.parser.CliSyntax.PREFIX_LABEL_NAME;"
+      },
+      {
+        "lineNumber": 5,
+        "author": {
+          "gitId": "li-s"
+        },
+        "content": "import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG_NAME;"
+      },
+      {
+        "lineNumber": 6,
+        "author": {
+          "gitId": "li-s"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 7,
+        "author": {
+          "gitId": "li-s"
+        },
+        "content": "import java.util.List;"
+      },
+      {
+        "lineNumber": 8,
+        "author": {
+          "gitId": "li-s"
+        },
+        "content": "import java.util.Set;"
+      },
+      {
+        "lineNumber": 9,
+        "author": {
+          "gitId": "li-s"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 10,
+        "author": {
+          "gitId": "li-s"
+        },
+        "content": "import seedu.address.logic.commands.exceptions.CommandException;"
+      },
+      {
+        "lineNumber": 11,
+        "author": {
+          "gitId": "li-s"
+        },
+        "content": "import seedu.address.model.Model;"
+      },
+      {
+        "lineNumber": 12,
+        "author": {
+          "gitId": "li-s"
+        },
+        "content": "import seedu.address.model.label.Label;"
+      },
+      {
+        "lineNumber": 13,
+        "author": {
+          "gitId": "li-s"
+        },
+        "content": "import seedu.address.model.tag.FileAddress;"
+      },
+      {
+        "lineNumber": 14,
+        "author": {
+          "gitId": "li-s"
+        },
+        "content": "import seedu.address.model.tag.Tag;"
+      },
+      {
+        "lineNumber": 15,
+        "author": {
+          "gitId": "li-s"
+        },
+        "content": "import seedu.address.model.tag.TagName;"
+      },
+      {
+        "lineNumber": 16,
+        "author": {
+          "gitId": "li-s"
+        },
+        "content": "import seedu.address.model.tag.TagNameEqualsKeywordPredicate;"
+      },
+      {
+        "lineNumber": 17,
+        "author": {
+          "gitId": "li-s"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 18,
+        "author": {
+          "gitId": "li-s"
+        },
+        "content": "/**"
+      },
+      {
+        "lineNumber": 19,
+        "author": {
+          "gitId": "li-s"
+        },
+        "content": " * Adds label(s) to a specified tag."
+      },
+      {
+        "lineNumber": 20,
+        "author": {
+          "gitId": "li-s"
+        },
+        "content": " */"
+      },
+      {
+        "lineNumber": 21,
+        "author": {
+          "gitId": "li-s"
+        },
+        "content": "public class LabelCommand extends Command {"
+      },
+      {
+        "lineNumber": 22,
+        "author": {
+          "gitId": "li-s"
+        },
+        "content": "    public static final String COMMAND_WORD \u003d \"label\";"
+      },
+      {
+        "lineNumber": 23,
+        "author": {
+          "gitId": "li-s"
+        },
+        "content": "    public static final String MESSAGE_USAGE \u003d COMMAND_WORD + \": Adds Label(s) to an existing Tag. \""
+      },
+      {
+        "lineNumber": 24,
+        "author": {
+          "gitId": "li-s"
+        },
+        "content": "            + \"\\nParameters: \""
+      },
+      {
+        "lineNumber": 25,
+        "author": {
+          "gitId": "li-s"
+        },
+        "content": "            + PREFIX_TAG_NAME + \"TAG_NAME \""
+      },
+      {
+        "lineNumber": 26,
+        "author": {
+          "gitId": "li-s"
+        },
+        "content": "            + PREFIX_LABEL_NAME + \"LABEL_NAME \""
+      },
+      {
+        "lineNumber": 27,
+        "author": {
+          "gitId": "li-s"
+        },
+        "content": "            + \"[\" + PREFIX_LABEL_NAME + \"LABEL_NAME\" + \"]...\\n\""
+      },
+      {
+        "lineNumber": 28,
+        "author": {
+          "gitId": "li-s"
+        },
+        "content": "            + \"\\nExample: \" + COMMAND_WORD + \" \""
+      },
+      {
+        "lineNumber": 29,
+        "author": {
+          "gitId": "li-s"
+        },
+        "content": "            + PREFIX_TAG_NAME + \"cs2103 \""
+      },
+      {
+        "lineNumber": 30,
+        "author": {
+          "gitId": "li-s"
+        },
+        "content": "            + PREFIX_LABEL_NAME + \"notes \""
+      },
+      {
+        "lineNumber": 31,
+        "author": {
+          "gitId": "li-s"
+        },
+        "content": "            + PREFIX_LABEL_NAME + \"CS2103T\";"
+      },
+      {
+        "lineNumber": 32,
+        "author": {
+          "gitId": "li-s"
+        },
+        "content": "    public static final String LABEL_COMMAND_USAGE \u003d COMMAND_WORD + \" \" + PREFIX_TAG_NAME + \"\u003cTAG_NAME\u003e\""
+      },
+      {
+        "lineNumber": 33,
+        "author": {
+          "gitId": "li-s"
+        },
+        "content": "            + \" \" + PREFIX_LABEL_NAME + \"\u003cFILEPATH\u003e\";"
+      },
+      {
+        "lineNumber": 34,
+        "author": {
+          "gitId": "li-s"
+        },
+        "content": "    public static final String MESSAGE_SUCCESS \u003d \"Tag successfully updated: %1$s!\";"
+      },
+      {
+        "lineNumber": 35,
+        "author": {
+          "gitId": "li-s"
+        },
+        "content": "    public static final String MESSAGE_TAG_NOT_FOUND \u003d \"Tag: %s not found!\""
+      },
+      {
+        "lineNumber": 36,
+        "author": {
+          "gitId": "li-s"
+        },
+        "content": "            + \" Please make sure that Tag is present before labeling.\";"
+      },
+      {
+        "lineNumber": 37,
+        "author": {
+          "gitId": "li-s"
+        },
+        "content": "    public static final String MESSAGE_DUPLICATE_LABEL \u003d \"Duplicate Label!\";"
+      },
+      {
+        "lineNumber": 38,
+        "author": {
+          "gitId": "li-s"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 39,
+        "author": {
+          "gitId": "li-s"
+        },
+        "content": "    private final TagName tagName;"
+      },
+      {
+        "lineNumber": 40,
+        "author": {
+          "gitId": "li-s"
+        },
+        "content": "    private final Set\u003cLabel\u003e labels;"
+      },
+      {
+        "lineNumber": 41,
+        "author": {
+          "gitId": "li-s"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 42,
+        "author": {
+          "gitId": "li-s"
+        },
+        "content": "    /**"
+      },
+      {
+        "lineNumber": 43,
+        "author": {
+          "gitId": "li-s"
+        },
+        "content": "     * Creates a LabelCommand to add labels to the specified {@code tagName}"
+      },
+      {
+        "lineNumber": 44,
+        "author": {
+          "gitId": "li-s"
+        },
+        "content": "     */"
+      },
+      {
+        "lineNumber": 45,
+        "author": {
+          "gitId": "li-s"
+        },
+        "content": "    public LabelCommand(TagName tagName, Set\u003cLabel\u003e labels) {"
+      },
+      {
+        "lineNumber": 46,
+        "author": {
+          "gitId": "li-s"
+        },
+        "content": "        this.tagName \u003d tagName;"
+      },
+      {
+        "lineNumber": 47,
+        "author": {
+          "gitId": "li-s"
+        },
+        "content": "        this.labels \u003d labels;"
+      },
+      {
+        "lineNumber": 48,
+        "author": {
+          "gitId": "li-s"
+        },
+        "content": "    }"
+      },
+      {
+        "lineNumber": 49,
+        "author": {
+          "gitId": "li-s"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 50,
+        "author": {
+          "gitId": "li-s"
+        },
+        "content": "    /**"
+      },
+      {
+        "lineNumber": 51,
+        "author": {
+          "gitId": "li-s"
+        },
+        "content": "     * Executes the command and adds the labels to a specified tag in the model"
+      },
+      {
+        "lineNumber": 52,
+        "author": {
+          "gitId": "li-s"
+        },
+        "content": "     *"
+      },
+      {
+        "lineNumber": 53,
+        "author": {
+          "gitId": "li-s"
+        },
+        "content": "     * @param model {@code Model} which the command should operate on."
+      },
+      {
+        "lineNumber": 54,
+        "author": {
+          "gitId": "li-s"
+        },
+        "content": "     * @return A Command result of executing LabelCommand."
+      },
+      {
+        "lineNumber": 55,
+        "author": {
+          "gitId": "li-s"
+        },
+        "content": "     * @throws CommandException"
+      },
+      {
+        "lineNumber": 56,
+        "author": {
+          "gitId": "li-s"
+        },
+        "content": "     */"
+      },
+      {
+        "lineNumber": 57,
+        "author": {
+          "gitId": "li-s"
+        },
+        "content": "    public CommandResult execute(Model model) throws CommandException {"
+      },
+      {
+        "lineNumber": 58,
+        "author": {
+          "gitId": "li-s"
+        },
+        "content": "        requireNonNull(model);"
+      },
+      {
+        "lineNumber": 59,
+        "author": {
+          "gitId": "li-s"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 60,
+        "author": {
+          "gitId": "li-s"
+        },
+        "content": "        // Check if tag exists"
+      },
+      {
+        "lineNumber": 61,
+        "author": {
+          "gitId": "li-s"
+        },
+        "content": "        List\u003cTag\u003e tagList \u003d model.findFilteredTagList(new TagNameEqualsKeywordPredicate(tagName));"
+      },
+      {
+        "lineNumber": 62,
+        "author": {
+          "gitId": "li-s"
+        },
+        "content": "        if (tagList.isEmpty()) {"
+      },
+      {
+        "lineNumber": 63,
+        "author": {
+          "gitId": "li-s"
+        },
+        "content": "            throw new CommandException(String.format(MESSAGE_TAG_NOT_FOUND, tagName.toString()));"
+      },
+      {
+        "lineNumber": 64,
+        "author": {
+          "gitId": "li-s"
+        },
+        "content": "        }"
+      },
+      {
+        "lineNumber": 65,
+        "author": {
+          "gitId": "li-s"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 66,
+        "author": {
+          "gitId": "li-s"
+        },
+        "content": "        // Get the tag"
+      },
+      {
+        "lineNumber": 67,
+        "author": {
+          "gitId": "li-s"
+        },
+        "content": "        Tag tagToChange \u003d tagList.get(0);"
+      },
+      {
+        "lineNumber": 68,
+        "author": {
+          "gitId": "li-s"
+        },
+        "content": "        // Get file address, previous labels"
+      },
+      {
+        "lineNumber": 69,
+        "author": {
+          "gitId": "li-s"
+        },
+        "content": "        FileAddress fileAddress \u003d tagToChange.getFileAddress();"
+      },
+      {
+        "lineNumber": 70,
+        "author": {
+          "gitId": "li-s"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 71,
+        "author": {
+          "gitId": "li-s"
+        },
+        "content": "        assert fileAddress.isValidFileAddress(fileAddress.value);"
+      },
+      {
+        "lineNumber": 72,
+        "author": {
+          "gitId": "li-s"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 73,
+        "author": {
+          "gitId": "li-s"
+        },
+        "content": "        Set\u003cLabel\u003e previousLabels \u003d tagToChange.getLabels();"
+      },
+      {
+        "lineNumber": 74,
+        "author": {
+          "gitId": "li-s"
+        },
+        "content": "        // Delete old tag"
+      },
+      {
+        "lineNumber": 75,
+        "author": {
+          "gitId": "li-s"
+        },
+        "content": "        model.deleteTag(tagToChange);"
+      },
+      {
+        "lineNumber": 76,
+        "author": {
+          "gitId": "li-s"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 77,
+        "author": {
+          "gitId": "li-s"
+        },
+        "content": "        // Append new labels into previous labels"
+      },
+      {
+        "lineNumber": 78,
+        "author": {
+          "gitId": "li-s"
+        },
+        "content": "        labels.addAll(previousLabels);"
+      },
+      {
+        "lineNumber": 79,
+        "author": {
+          "gitId": "li-s"
+        },
+        "content": "        // Create new tag"
+      },
+      {
+        "lineNumber": 80,
+        "author": {
+          "gitId": "li-s"
+        },
+        "content": "        Tag newTag \u003d new Tag(tagName, fileAddress, labels);"
+      },
+      {
+        "lineNumber": 81,
+        "author": {
+          "gitId": "li-s"
+        },
+        "content": "        // Place tag into AB3"
+      },
+      {
+        "lineNumber": 82,
+        "author": {
+          "gitId": "li-s"
+        },
+        "content": "        model.addTag(newTag);"
+      },
+      {
+        "lineNumber": 83,
+        "author": {
+          "gitId": "li-s"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 84,
+        "author": {
+          "gitId": "li-s"
+        },
+        "content": "        // Save commit for undo"
+      },
+      {
+        "lineNumber": 85,
+        "author": {
+          "gitId": "li-s"
+        },
+        "content": "        model.commitAddressBook();"
+      },
+      {
+        "lineNumber": 86,
+        "author": {
+          "gitId": "li-s"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 87,
+        "author": {
+          "gitId": "li-s"
+        },
+        "content": "        return new CommandResult(String.format(MESSAGE_SUCCESS, newTag));"
+      },
+      {
+        "lineNumber": 88,
+        "author": {
+          "gitId": "li-s"
+        },
+        "content": "    }"
+      },
+      {
+        "lineNumber": 89,
+        "author": {
+          "gitId": "li-s"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 90,
+        "author": {
+          "gitId": "li-s"
+        },
+        "content": "    @Override"
+      },
+      {
+        "lineNumber": 91,
+        "author": {
+          "gitId": "li-s"
+        },
+        "content": "    public boolean equals(Object other) {"
+      },
+      {
+        "lineNumber": 92,
+        "author": {
+          "gitId": "li-s"
+        },
+        "content": "        return other \u003d\u003d this // short circuit if same object"
+      },
+      {
+        "lineNumber": 93,
+        "author": {
+          "gitId": "li-s"
+        },
+        "content": "                || (other instanceof LabelCommand // instanceof handles nulls"
+      },
+      {
+        "lineNumber": 94,
+        "author": {
+          "gitId": "li-s"
+        },
+        "content": "                \u0026\u0026 (this.labels.equals(((LabelCommand) other).labels))"
+      },
+      {
+        "lineNumber": 95,
+        "author": {
+          "gitId": "li-s"
+        },
+        "content": "                        \u0026\u0026 this.tagName.equals(((LabelCommand) other).tagName));"
+      },
+      {
+        "lineNumber": 96,
+        "author": {
+          "gitId": "li-s"
+        },
+        "content": "    }"
+      },
+      {
+        "lineNumber": 97,
+        "author": {
+          "gitId": "li-s"
+        },
+        "content": "}"
+      }
+    ],
+    "authorContributionMap": {
+      "li-s": 97
     }
   },
   {
@@ -22047,9 +22743,9 @@
       {
         "lineNumber": 5,
         "author": {
-          "gitId": "HynRidge"
+          "gitId": "li-s"
         },
-        "content": "import static seedu.address.logic.parser.CliSyntax.PREFIX_LABEL;"
+        "content": "import static seedu.address.logic.parser.CliSyntax.PREFIX_LABEL_NAME;"
       },
       {
         "lineNumber": 6,
@@ -22187,9 +22883,9 @@
       {
         "lineNumber": 25,
         "author": {
-          "gitId": "HynRidge"
+          "gitId": "li-s"
         },
-        "content": "            + \"[\" + PREFIX_LABEL + \"LABEL\" + \"]...\\n\""
+        "content": "            + \"[\" + PREFIX_LABEL_NAME + \"LABEL_NAME\" + \"]...\\n\""
       },
       {
         "lineNumber": 26,
@@ -22215,9 +22911,9 @@
       {
         "lineNumber": 29,
         "author": {
-          "gitId": "HynRidge"
+          "gitId": "li-s"
         },
-        "content": "            + PREFIX_LABEL + \"CS2103T\";"
+        "content": "            + PREFIX_LABEL_NAME + \"CS2103T\";"
       },
       {
         "lineNumber": 30,
@@ -22704,10 +23400,10 @@
       }
     ],
     "authorContributionMap": {
+      "li-s": 4,
       "luo-git": 36,
-      "li-s": 1,
       "Anthony6401": 18,
-      "HynRidge": 14,
+      "HynRidge": 11,
       "-": 29
     }
   },
@@ -23509,572 +24205,600 @@
       {
         "lineNumber": 15,
         "author": {
+          "gitId": "li-s"
+        },
+        "content": "import seedu.address.logic.commands.LabelCommand;"
+      },
+      {
+        "lineNumber": 16,
+        "author": {
           "gitId": "-"
         },
         "content": "import seedu.address.logic.commands.ListCommand;"
       },
       {
-        "lineNumber": 16,
+        "lineNumber": 17,
         "author": {
           "gitId": "Ma-Yueran"
         },
         "content": "import seedu.address.logic.commands.OpenCommand;"
       },
       {
-        "lineNumber": 17,
+        "lineNumber": 18,
         "author": {
           "gitId": "luo-git"
         },
         "content": "import seedu.address.logic.commands.RedoCommand;"
       },
       {
-        "lineNumber": 18,
+        "lineNumber": 19,
         "author": {
           "gitId": "Ma-Yueran"
         },
         "content": "import seedu.address.logic.commands.RetagCommand;"
       },
       {
-        "lineNumber": 19,
+        "lineNumber": 20,
         "author": {
           "gitId": "Ma-Yueran"
         },
         "content": "import seedu.address.logic.commands.ShowCommand;"
       },
       {
-        "lineNumber": 20,
+        "lineNumber": 21,
         "author": {
           "gitId": "Ma-Yueran"
         },
         "content": "import seedu.address.logic.commands.TagCommand;"
       },
       {
-        "lineNumber": 21,
+        "lineNumber": 22,
         "author": {
           "gitId": "luo-git"
         },
         "content": "import seedu.address.logic.commands.UndoCommand;"
       },
       {
-        "lineNumber": 22,
+        "lineNumber": 23,
         "author": {
           "gitId": "Ma-Yueran"
         },
         "content": "import seedu.address.logic.commands.UntagCommand;"
       },
       {
-        "lineNumber": 23,
+        "lineNumber": 24,
         "author": {
           "gitId": "-"
         },
         "content": "import seedu.address.logic.parser.exceptions.ParseException;"
       },
       {
-        "lineNumber": 24,
-        "author": {
-          "gitId": "-"
-        },
-        "content": ""
-      },
-      {
         "lineNumber": 25,
         "author": {
           "gitId": "-"
         },
-        "content": "/**"
+        "content": ""
       },
       {
         "lineNumber": 26,
         "author": {
           "gitId": "-"
         },
-        "content": " * Parses user input."
+        "content": "/**"
       },
       {
         "lineNumber": 27,
         "author": {
           "gitId": "-"
         },
-        "content": " */"
+        "content": " * Parses user input."
       },
       {
         "lineNumber": 28,
         "author": {
           "gitId": "-"
         },
-        "content": "public class AddressBookParser {"
+        "content": " */"
       },
       {
         "lineNumber": 29,
         "author": {
           "gitId": "-"
         },
-        "content": ""
+        "content": "public class AddressBookParser {"
       },
       {
         "lineNumber": 30,
         "author": {
           "gitId": "-"
         },
-        "content": "    /**"
+        "content": ""
       },
       {
         "lineNumber": 31,
         "author": {
           "gitId": "-"
         },
-        "content": "     * Used for initial separation of command word and args."
+        "content": "    /**"
       },
       {
         "lineNumber": 32,
         "author": {
           "gitId": "-"
         },
-        "content": "     */"
+        "content": "     * Used for initial separation of command word and args."
       },
       {
         "lineNumber": 33,
         "author": {
           "gitId": "-"
         },
-        "content": "    private static final Pattern BASIC_COMMAND_FORMAT \u003d Pattern.compile(\"(?\u003ccommandWord\u003e\\\\S+)(?\u003carguments\u003e.*)\");"
+        "content": "     */"
       },
       {
         "lineNumber": 34,
         "author": {
           "gitId": "-"
         },
-        "content": ""
+        "content": "    private static final Pattern BASIC_COMMAND_FORMAT \u003d Pattern.compile(\"(?\u003ccommandWord\u003e\\\\S+)(?\u003carguments\u003e.*)\");"
       },
       {
         "lineNumber": 35,
         "author": {
           "gitId": "-"
         },
-        "content": "    /**"
+        "content": ""
       },
       {
         "lineNumber": 36,
         "author": {
           "gitId": "-"
         },
-        "content": "     * Parses user input into command for execution."
+        "content": "    /**"
       },
       {
         "lineNumber": 37,
         "author": {
           "gitId": "-"
         },
-        "content": "     *"
+        "content": "     * Parses user input into command for execution."
       },
       {
         "lineNumber": 38,
         "author": {
           "gitId": "-"
         },
-        "content": "     * @param userInput full user input string"
+        "content": "     *"
       },
       {
         "lineNumber": 39,
         "author": {
           "gitId": "-"
         },
-        "content": "     * @return the command based on the user input"
+        "content": "     * @param userInput full user input string"
       },
       {
         "lineNumber": 40,
         "author": {
           "gitId": "-"
         },
-        "content": "     * @throws ParseException if the user input does not conform the expected format"
+        "content": "     * @return the command based on the user input"
       },
       {
         "lineNumber": 41,
         "author": {
           "gitId": "-"
         },
-        "content": "     */"
+        "content": "     * @throws ParseException if the user input does not conform the expected format"
       },
       {
         "lineNumber": 42,
         "author": {
           "gitId": "-"
         },
-        "content": "    public Command parseCommand(String userInput) throws ParseException {"
+        "content": "     */"
       },
       {
         "lineNumber": 43,
         "author": {
           "gitId": "-"
         },
-        "content": "        final Matcher matcher \u003d BASIC_COMMAND_FORMAT.matcher(userInput.trim());"
+        "content": "    public Command parseCommand(String userInput) throws ParseException {"
       },
       {
         "lineNumber": 44,
         "author": {
           "gitId": "-"
         },
-        "content": "        if (!matcher.matches()) {"
+        "content": "        final Matcher matcher \u003d BASIC_COMMAND_FORMAT.matcher(userInput.trim());"
       },
       {
         "lineNumber": 45,
         "author": {
           "gitId": "-"
         },
-        "content": "            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, HelpCommand.MESSAGE_USAGE));"
+        "content": "        if (!matcher.matches()) {"
       },
       {
         "lineNumber": 46,
         "author": {
           "gitId": "-"
         },
-        "content": "        }"
+        "content": "            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, HelpCommand.MESSAGE_USAGE));"
       },
       {
         "lineNumber": 47,
         "author": {
           "gitId": "-"
         },
-        "content": ""
+        "content": "        }"
       },
       {
         "lineNumber": 48,
         "author": {
           "gitId": "-"
         },
-        "content": "        final String commandWord \u003d matcher.group(\"commandWord\");"
+        "content": ""
       },
       {
         "lineNumber": 49,
         "author": {
           "gitId": "-"
         },
-        "content": "        final String arguments \u003d matcher.group(\"arguments\");"
+        "content": "        final String commandWord \u003d matcher.group(\"commandWord\");"
       },
       {
         "lineNumber": 50,
         "author": {
           "gitId": "-"
         },
-        "content": "        switch (commandWord) {"
+        "content": "        final String arguments \u003d matcher.group(\"arguments\");"
       },
       {
         "lineNumber": 51,
         "author": {
           "gitId": "-"
         },
-        "content": ""
+        "content": "        switch (commandWord) {"
       },
       {
         "lineNumber": 52,
         "author": {
-          "gitId": "luo-git"
+          "gitId": "-"
         },
-        "content": "        case TagCommand.COMMAND_WORD:"
+        "content": ""
       },
       {
         "lineNumber": 53,
         "author": {
           "gitId": "luo-git"
         },
-        "content": "            return new TagCommandParser().parse(arguments);"
+        "content": "        case TagCommand.COMMAND_WORD:"
       },
       {
         "lineNumber": 54,
         "author": {
-          "gitId": "-"
+          "gitId": "luo-git"
         },
-        "content": ""
+        "content": "            return new TagCommandParser().parse(arguments);"
       },
       {
         "lineNumber": 55,
         "author": {
-          "gitId": "li-s"
+          "gitId": "-"
         },
-        "content": "        case UntagCommand.COMMAND_WORD:"
+        "content": ""
       },
       {
         "lineNumber": 56,
         "author": {
           "gitId": "li-s"
         },
-        "content": "            return new UntagCommandParser().parse(arguments);"
+        "content": "        case UntagCommand.COMMAND_WORD:"
       },
       {
         "lineNumber": 57,
         "author": {
-          "gitId": "-"
+          "gitId": "li-s"
         },
-        "content": ""
+        "content": "            return new UntagCommandParser().parse(arguments);"
       },
       {
         "lineNumber": 58,
         "author": {
-          "gitId": "li-s"
+          "gitId": "-"
         },
-        "content": "        case RetagCommand.COMMAND_WORD:"
+        "content": ""
       },
       {
         "lineNumber": 59,
         "author": {
           "gitId": "li-s"
         },
-        "content": "            return new RetagCommandParser().parse(arguments);"
+        "content": "        case RetagCommand.COMMAND_WORD:"
       },
       {
         "lineNumber": 60,
         "author": {
           "gitId": "li-s"
         },
-        "content": ""
+        "content": "            return new RetagCommandParser().parse(arguments);"
       },
       {
         "lineNumber": 61,
         "author": {
-          "gitId": "luo-git"
+          "gitId": "li-s"
         },
-        "content": "        case OpenCommand.COMMAND_WORD:"
+        "content": ""
       },
       {
         "lineNumber": 62,
         "author": {
           "gitId": "luo-git"
         },
-        "content": "            return new OpenCommandParser().parse(arguments);"
+        "content": "        case OpenCommand.COMMAND_WORD:"
       },
       {
         "lineNumber": 63,
         "author": {
-          "gitId": "-"
+          "gitId": "luo-git"
         },
-        "content": ""
+        "content": "            return new OpenCommandParser().parse(arguments);"
       },
       {
         "lineNumber": 64,
         "author": {
           "gitId": "-"
         },
-        "content": "        case ClearCommand.COMMAND_WORD:"
+        "content": ""
       },
       {
         "lineNumber": 65,
         "author": {
           "gitId": "-"
         },
-        "content": "            return new ClearCommand();"
+        "content": "        case ClearCommand.COMMAND_WORD:"
       },
       {
         "lineNumber": 66,
         "author": {
           "gitId": "-"
         },
-        "content": ""
+        "content": "            return new ClearCommand();"
       },
       {
         "lineNumber": 67,
         "author": {
-          "gitId": "Anthony6401"
+          "gitId": "-"
         },
-        "content": "        case ShowCommand.COMMAND_WORD:"
+        "content": ""
       },
       {
         "lineNumber": 68,
         "author": {
           "gitId": "Anthony6401"
         },
-        "content": "            return new ShowCommandParser().parse(arguments);"
+        "content": "        case ShowCommand.COMMAND_WORD:"
       },
       {
         "lineNumber": 69,
         "author": {
           "gitId": "Anthony6401"
         },
-        "content": ""
+        "content": "            return new ShowCommandParser().parse(arguments);"
       },
       {
         "lineNumber": 70,
         "author": {
-          "gitId": "-"
+          "gitId": "Anthony6401"
         },
-        "content": "        case FindCommand.COMMAND_WORD:"
+        "content": ""
       },
       {
         "lineNumber": 71,
         "author": {
           "gitId": "-"
         },
-        "content": "            return new FindCommandParser().parse(arguments);"
+        "content": "        case FindCommand.COMMAND_WORD:"
       },
       {
         "lineNumber": 72,
         "author": {
           "gitId": "-"
         },
-        "content": ""
+        "content": "            return new FindCommandParser().parse(arguments);"
       },
       {
         "lineNumber": 73,
         "author": {
           "gitId": "-"
         },
-        "content": "        case ListCommand.COMMAND_WORD:"
+        "content": ""
       },
       {
         "lineNumber": 74,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "        case ListCommand.COMMAND_WORD:"
+      },
+      {
+        "lineNumber": 75,
         "author": {
           "gitId": "Anthony6401"
         },
         "content": "            return new ListCommandParser().parse(arguments);"
       },
       {
-        "lineNumber": 75,
-        "author": {
-          "gitId": "-"
-        },
-        "content": ""
-      },
-      {
         "lineNumber": 76,
         "author": {
           "gitId": "-"
         },
-        "content": "        case ExitCommand.COMMAND_WORD:"
+        "content": ""
       },
       {
         "lineNumber": 77,
         "author": {
-          "gitId": "-"
+          "gitId": "li-s"
         },
-        "content": "            return new ExitCommand();"
+        "content": "        case LabelCommand.COMMAND_WORD:"
       },
       {
         "lineNumber": 78,
         "author": {
-          "gitId": "-"
+          "gitId": "li-s"
         },
-        "content": ""
+        "content": "            return new LabelCommandParser().parse(arguments);"
       },
       {
         "lineNumber": 79,
         "author": {
           "gitId": "-"
         },
-        "content": "        case HelpCommand.COMMAND_WORD:"
+        "content": ""
       },
       {
         "lineNumber": 80,
         "author": {
           "gitId": "-"
         },
-        "content": "            return new HelpCommand();"
+        "content": "        case ExitCommand.COMMAND_WORD:"
       },
       {
         "lineNumber": 81,
         "author": {
           "gitId": "-"
         },
-        "content": ""
+        "content": "            return new ExitCommand();"
       },
       {
         "lineNumber": 82,
+        "author": {
+          "gitId": "-"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 83,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "        case HelpCommand.COMMAND_WORD:"
+      },
+      {
+        "lineNumber": 84,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "            return new HelpCommand();"
+      },
+      {
+        "lineNumber": 85,
+        "author": {
+          "gitId": "-"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 86,
         "author": {
           "gitId": "Ma-Yueran"
         },
         "content": "        case CdCommand.COMMAND_WORD:"
       },
       {
-        "lineNumber": 83,
+        "lineNumber": 87,
         "author": {
           "gitId": "Ma-Yueran"
         },
         "content": "            return new CdCommandParser().parse(arguments);"
       },
       {
-        "lineNumber": 84,
+        "lineNumber": 88,
         "author": {
           "gitId": "Ma-Yueran"
         },
         "content": ""
       },
       {
-        "lineNumber": 85,
+        "lineNumber": 89,
         "author": {
           "gitId": "luo-git"
         },
         "content": "        case UndoCommand.COMMAND_WORD:"
       },
       {
-        "lineNumber": 86,
+        "lineNumber": 90,
         "author": {
           "gitId": "luo-git"
         },
         "content": "            return new UndoCommandParser().parse(arguments);"
       },
       {
-        "lineNumber": 87,
+        "lineNumber": 91,
         "author": {
           "gitId": "luo-git"
         },
         "content": ""
       },
       {
-        "lineNumber": 88,
+        "lineNumber": 92,
         "author": {
           "gitId": "luo-git"
         },
         "content": "        case RedoCommand.COMMAND_WORD:"
       },
       {
-        "lineNumber": 89,
+        "lineNumber": 93,
         "author": {
           "gitId": "luo-git"
         },
         "content": "            return new RedoCommandParser().parse(arguments);"
       },
       {
-        "lineNumber": 90,
+        "lineNumber": 94,
         "author": {
           "gitId": "luo-git"
         },
         "content": ""
       },
       {
-        "lineNumber": 91,
+        "lineNumber": 95,
         "author": {
           "gitId": "-"
         },
         "content": "        default:"
       },
       {
-        "lineNumber": 92,
+        "lineNumber": 96,
         "author": {
           "gitId": "-"
         },
         "content": "            throw new ParseException(MESSAGE_UNKNOWN_COMMAND);"
       },
       {
-        "lineNumber": 93,
+        "lineNumber": 97,
         "author": {
           "gitId": "-"
         },
         "content": "        }"
       },
       {
-        "lineNumber": 94,
+        "lineNumber": 98,
         "author": {
           "gitId": "-"
         },
         "content": "    }"
       },
       {
-        "lineNumber": 95,
+        "lineNumber": 99,
         "author": {
           "gitId": "-"
         },
         "content": ""
       },
       {
-        "lineNumber": 96,
+        "lineNumber": 100,
         "author": {
           "gitId": "-"
         },
@@ -24082,11 +24806,11 @@
       }
     ],
     "authorContributionMap": {
+      "li-s": 8,
       "luo-git": 12,
-      "li-s": 5,
       "Anthony6401": 4,
       "Ma-Yueran": 9,
-      "-": 66
+      "-": 67
     }
   },
   {
@@ -24658,19 +25382,12 @@
       {
         "lineNumber": 15,
         "author": {
-          "gitId": "HynRidge"
+          "gitId": "li-s"
         },
-        "content": "    public static final Prefix PREFIX_LABEL \u003d new Prefix(\"l/\");"
+        "content": "    public static final Prefix PREFIX_LABEL_NAME \u003d new Prefix(\"l/\");"
       },
       {
         "lineNumber": 16,
-        "author": {
-          "gitId": "-"
-        },
-        "content": ""
-      },
-      {
-        "lineNumber": 17,
         "author": {
           "gitId": "-"
         },
@@ -24679,9 +25396,9 @@
     ],
     "authorContributionMap": {
       "luo-git": 4,
+      "li-s": 1,
       "Ma-Yueran": 2,
-      "HynRidge": 1,
-      "-": 10
+      "-": 9
     }
   },
   {
@@ -24959,6 +25676,337 @@
       "luo-git": 2,
       "HynRidge": 5,
       "-": 31
+    }
+  },
+  {
+    "path": "src/main/java/seedu/address/logic/parser/LabelCommandParser.java",
+    "fileType": "functional-code",
+    "lines": [
+      {
+        "lineNumber": 1,
+        "author": {
+          "gitId": "li-s"
+        },
+        "content": "package seedu.address.logic.parser;"
+      },
+      {
+        "lineNumber": 2,
+        "author": {
+          "gitId": "li-s"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 3,
+        "author": {
+          "gitId": "li-s"
+        },
+        "content": "import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;"
+      },
+      {
+        "lineNumber": 4,
+        "author": {
+          "gitId": "li-s"
+        },
+        "content": "import static seedu.address.logic.parser.CliSyntax.PREFIX_LABEL_NAME;"
+      },
+      {
+        "lineNumber": 5,
+        "author": {
+          "gitId": "li-s"
+        },
+        "content": "import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG_NAME;"
+      },
+      {
+        "lineNumber": 6,
+        "author": {
+          "gitId": "li-s"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 7,
+        "author": {
+          "gitId": "li-s"
+        },
+        "content": "import java.util.Set;"
+      },
+      {
+        "lineNumber": 8,
+        "author": {
+          "gitId": "li-s"
+        },
+        "content": "import java.util.stream.Stream;"
+      },
+      {
+        "lineNumber": 9,
+        "author": {
+          "gitId": "li-s"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 10,
+        "author": {
+          "gitId": "li-s"
+        },
+        "content": "import seedu.address.logic.commands.LabelCommand;"
+      },
+      {
+        "lineNumber": 11,
+        "author": {
+          "gitId": "li-s"
+        },
+        "content": "import seedu.address.logic.parser.exceptions.ParseException;"
+      },
+      {
+        "lineNumber": 12,
+        "author": {
+          "gitId": "li-s"
+        },
+        "content": "import seedu.address.model.label.Label;"
+      },
+      {
+        "lineNumber": 13,
+        "author": {
+          "gitId": "li-s"
+        },
+        "content": "import seedu.address.model.tag.TagName;"
+      },
+      {
+        "lineNumber": 14,
+        "author": {
+          "gitId": "li-s"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 15,
+        "author": {
+          "gitId": "li-s"
+        },
+        "content": "/**"
+      },
+      {
+        "lineNumber": 16,
+        "author": {
+          "gitId": "li-s"
+        },
+        "content": " * Parses input arguments and creates a new LabelCommand object"
+      },
+      {
+        "lineNumber": 17,
+        "author": {
+          "gitId": "li-s"
+        },
+        "content": " */"
+      },
+      {
+        "lineNumber": 18,
+        "author": {
+          "gitId": "li-s"
+        },
+        "content": "public class LabelCommandParser implements Parser\u003cLabelCommand\u003e {"
+      },
+      {
+        "lineNumber": 19,
+        "author": {
+          "gitId": "li-s"
+        },
+        "content": "    /**"
+      },
+      {
+        "lineNumber": 20,
+        "author": {
+          "gitId": "li-s"
+        },
+        "content": "     * Parses the given {@code String} of arguments in the context of the LabelCommand"
+      },
+      {
+        "lineNumber": 21,
+        "author": {
+          "gitId": "li-s"
+        },
+        "content": "     * and returns an LabelCommand object for execution."
+      },
+      {
+        "lineNumber": 22,
+        "author": {
+          "gitId": "li-s"
+        },
+        "content": "     * @throws ParseException if the user input does not conform the expected format"
+      },
+      {
+        "lineNumber": 23,
+        "author": {
+          "gitId": "li-s"
+        },
+        "content": "     */"
+      },
+      {
+        "lineNumber": 24,
+        "author": {
+          "gitId": "li-s"
+        },
+        "content": "    public LabelCommand parse(String args) throws ParseException {"
+      },
+      {
+        "lineNumber": 25,
+        "author": {
+          "gitId": "li-s"
+        },
+        "content": "        ArgumentMultimap argMultimap \u003d"
+      },
+      {
+        "lineNumber": 26,
+        "author": {
+          "gitId": "li-s"
+        },
+        "content": "                ArgumentTokenizer.tokenize(args, PREFIX_TAG_NAME, PREFIX_LABEL_NAME);"
+      },
+      {
+        "lineNumber": 27,
+        "author": {
+          "gitId": "li-s"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 28,
+        "author": {
+          "gitId": "li-s"
+        },
+        "content": "        if (!arePrefixesPresent(argMultimap, PREFIX_TAG_NAME, PREFIX_LABEL_NAME)"
+      },
+      {
+        "lineNumber": 29,
+        "author": {
+          "gitId": "li-s"
+        },
+        "content": "                || !argMultimap.getPreamble().isEmpty()) {"
+      },
+      {
+        "lineNumber": 30,
+        "author": {
+          "gitId": "li-s"
+        },
+        "content": "            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, LabelCommand.MESSAGE_USAGE));"
+      },
+      {
+        "lineNumber": 31,
+        "author": {
+          "gitId": "li-s"
+        },
+        "content": "        }"
+      },
+      {
+        "lineNumber": 32,
+        "author": {
+          "gitId": "li-s"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 33,
+        "author": {
+          "gitId": "li-s"
+        },
+        "content": "        TagName tagName \u003d ParserUtil.parseTagName(argMultimap.getValue(PREFIX_TAG_NAME).get());"
+      },
+      {
+        "lineNumber": 34,
+        "author": {
+          "gitId": "li-s"
+        },
+        "content": "        Set\u003cLabel\u003e labels \u003d ParserUtil.parseLabels(argMultimap.getAllValues(PREFIX_LABEL_NAME));"
+      },
+      {
+        "lineNumber": 35,
+        "author": {
+          "gitId": "li-s"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 36,
+        "author": {
+          "gitId": "li-s"
+        },
+        "content": "        return new LabelCommand(tagName, labels);"
+      },
+      {
+        "lineNumber": 37,
+        "author": {
+          "gitId": "li-s"
+        },
+        "content": "    }"
+      },
+      {
+        "lineNumber": 38,
+        "author": {
+          "gitId": "li-s"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 39,
+        "author": {
+          "gitId": "li-s"
+        },
+        "content": "    /**"
+      },
+      {
+        "lineNumber": 40,
+        "author": {
+          "gitId": "li-s"
+        },
+        "content": "     * Returns true if none of the prefixes contains empty {@code Optional} values in the given"
+      },
+      {
+        "lineNumber": 41,
+        "author": {
+          "gitId": "li-s"
+        },
+        "content": "     * {@code ArgumentMultimap}."
+      },
+      {
+        "lineNumber": 42,
+        "author": {
+          "gitId": "li-s"
+        },
+        "content": "     */"
+      },
+      {
+        "lineNumber": 43,
+        "author": {
+          "gitId": "li-s"
+        },
+        "content": "    private static boolean arePrefixesPresent(ArgumentMultimap argumentMultimap, Prefix... prefixes) {"
+      },
+      {
+        "lineNumber": 44,
+        "author": {
+          "gitId": "li-s"
+        },
+        "content": "        return Stream.of(prefixes).allMatch(prefix -\u003e argumentMultimap.getValue(prefix).isPresent());"
+      },
+      {
+        "lineNumber": 45,
+        "author": {
+          "gitId": "li-s"
+        },
+        "content": "    }"
+      },
+      {
+        "lineNumber": 46,
+        "author": {
+          "gitId": "li-s"
+        },
+        "content": "}"
+      }
+    ],
+    "authorContributionMap": {
+      "li-s": 46
     }
   },
   {
@@ -27533,9 +28581,9 @@
       {
         "lineNumber": 5,
         "author": {
-          "gitId": "HynRidge"
+          "gitId": "li-s"
         },
-        "content": "import static seedu.address.logic.parser.CliSyntax.PREFIX_LABEL;"
+        "content": "import static seedu.address.logic.parser.CliSyntax.PREFIX_LABEL_NAME;"
       },
       {
         "lineNumber": 6,
@@ -27708,9 +28756,9 @@
       {
         "lineNumber": 30,
         "author": {
-          "gitId": "HynRidge"
+          "gitId": "li-s"
         },
-        "content": "                ArgumentTokenizer.tokenize(args, PREFIX_TAG_NAME, PREFIX_FILE_ADDRESS, PREFIX_LABEL);"
+        "content": "                ArgumentTokenizer.tokenize(args, PREFIX_TAG_NAME, PREFIX_FILE_ADDRESS, PREFIX_LABEL_NAME);"
       },
       {
         "lineNumber": 31,
@@ -27771,9 +28819,9 @@
       {
         "lineNumber": 39,
         "author": {
-          "gitId": "HynRidge"
+          "gitId": "li-s"
         },
-        "content": "        Set\u003cLabel\u003e labels \u003d ParserUtil.parseLabels(argMultimap.getAllValues(PREFIX_LABEL));"
+        "content": "        Set\u003cLabel\u003e labels \u003d ParserUtil.parseLabels(argMultimap.getAllValues(PREFIX_LABEL_NAME));"
       },
       {
         "lineNumber": 40,
@@ -27875,8 +28923,9 @@
       }
     ],
     "authorContributionMap": {
+      "li-s": 3,
       "luo-git": 7,
-      "HynRidge": 14,
+      "HynRidge": 11,
       "-": 32
     }
   },
@@ -57430,9 +58479,9 @@
       {
         "lineNumber": 85,
         "author": {
-          "gitId": "luo-git"
+          "gitId": "li-s"
         },
-        "content": "        Tag expectedTag \u003d new TagBuilder(CS2101).build();"
+        "content": "        Tag expectedTag \u003d new TagBuilder(CS2101).withLabels().build();"
       },
       {
         "lineNumber": 86,
@@ -57989,8 +59038,8 @@
       }
     ],
     "authorContributionMap": {
-      "luo-git": 7,
-      "li-s": 6,
+      "luo-git": 6,
+      "li-s": 7,
       "Anthony6401": 5,
       "HynRidge": 4,
       "-": 142
@@ -58543,147 +59592,147 @@
         "author": {
           "gitId": "li-s"
         },
-        "content": "import static seedu.address.logic.parser.CliSyntax.PREFIX_OLD_TAG_NAME;"
+        "content": "import static seedu.address.logic.parser.CliSyntax.PREFIX_LABEL_NAME;"
       },
       {
         "lineNumber": 7,
+        "author": {
+          "gitId": "li-s"
+        },
+        "content": "import static seedu.address.logic.parser.CliSyntax.PREFIX_OLD_TAG_NAME;"
+      },
+      {
+        "lineNumber": 8,
         "author": {
           "gitId": "HynRidge"
         },
         "content": "import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG_NAME;"
       },
       {
-        "lineNumber": 8,
+        "lineNumber": 9,
         "author": {
           "gitId": "-"
         },
         "content": "import static seedu.address.testutil.Assert.assertThrows;"
       },
       {
-        "lineNumber": 9,
-        "author": {
-          "gitId": "-"
-        },
-        "content": ""
-      },
-      {
         "lineNumber": 10,
         "author": {
           "gitId": "-"
         },
-        "content": "import java.util.ArrayList;"
+        "content": ""
       },
       {
         "lineNumber": 11,
         "author": {
           "gitId": "-"
         },
-        "content": "import java.util.Arrays;"
+        "content": "import java.util.ArrayList;"
       },
       {
         "lineNumber": 12,
         "author": {
           "gitId": "-"
         },
-        "content": "import java.util.List;"
+        "content": "import java.util.Arrays;"
       },
       {
         "lineNumber": 13,
         "author": {
           "gitId": "-"
         },
-        "content": ""
+        "content": "import java.util.List;"
       },
       {
         "lineNumber": 14,
         "author": {
           "gitId": "-"
         },
-        "content": "import seedu.address.commons.core.index.Index;"
+        "content": ""
       },
       {
         "lineNumber": 15,
         "author": {
           "gitId": "-"
         },
-        "content": "import seedu.address.logic.commands.exceptions.CommandException;"
+        "content": "import seedu.address.commons.core.index.Index;"
       },
       {
         "lineNumber": 16,
         "author": {
           "gitId": "-"
         },
-        "content": "import seedu.address.model.AddressBook;"
+        "content": "import seedu.address.logic.commands.exceptions.CommandException;"
       },
       {
         "lineNumber": 17,
         "author": {
           "gitId": "-"
         },
-        "content": "import seedu.address.model.Model;"
+        "content": "import seedu.address.model.AddressBook;"
       },
       {
         "lineNumber": 18,
         "author": {
-          "gitId": "HynRidge"
+          "gitId": "-"
         },
-        "content": "import seedu.address.model.tag.Tag;"
+        "content": "import seedu.address.model.Model;"
       },
       {
         "lineNumber": 19,
         "author": {
           "gitId": "HynRidge"
         },
-        "content": "import seedu.address.model.tag.TagNameContainsKeywordsPredicate;"
+        "content": "import seedu.address.model.tag.Tag;"
       },
       {
         "lineNumber": 20,
         "author": {
-          "gitId": "-"
+          "gitId": "HynRidge"
         },
-        "content": ""
+        "content": "import seedu.address.model.tag.TagNameContainsKeywordsPredicate;"
       },
       {
         "lineNumber": 21,
         "author": {
           "gitId": "-"
         },
-        "content": "/**"
+        "content": ""
       },
       {
         "lineNumber": 22,
         "author": {
           "gitId": "-"
         },
-        "content": " * Contains helper methods for testing commands."
+        "content": "/**"
       },
       {
         "lineNumber": 23,
         "author": {
           "gitId": "-"
         },
-        "content": " */"
+        "content": " * Contains helper methods for testing commands."
       },
       {
         "lineNumber": 24,
         "author": {
           "gitId": "-"
         },
-        "content": "public class CommandTestUtil {"
+        "content": " */"
       },
       {
         "lineNumber": 25,
         "author": {
           "gitId": "-"
         },
-        "content": ""
+        "content": "public class CommandTestUtil {"
       },
       {
         "lineNumber": 26,
         "author": {
-          "gitId": "HynRidge"
+          "gitId": "-"
         },
-        "content": "    // TODO: All of these needs to be updated!"
+        "content": ""
       },
       {
         "lineNumber": 27,
@@ -58793,79 +59842,79 @@
       {
         "lineNumber": 42,
         "author": {
+          "gitId": "li-s"
+        },
+        "content": "    public static final String VALID_LABEL_DESC \u003d \" \" + PREFIX_LABEL_NAME + VALID_LABEL;"
+      },
+      {
+        "lineNumber": 43,
+        "author": {
+          "gitId": "li-s"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 44,
+        "author": {
           "gitId": "HynRidge"
         },
         "content": ""
       },
       {
-        "lineNumber": 43,
+        "lineNumber": 45,
         "author": {
           "gitId": "luo-git"
         },
         "content": "    public static final String FILE_ADDRESS_DESC_CS2103 \u003d \" \" + PREFIX_FILE_ADDRESS + VALID_FILE_ADDRESS_CS2103;"
       },
       {
-        "lineNumber": 44,
+        "lineNumber": 46,
         "author": {
           "gitId": "luo-git"
         },
         "content": "    public static final String FILE_ADDRESS_DESC_CS2101 \u003d \" \" + PREFIX_FILE_ADDRESS + VALID_FILE_ADDRESS_CS2101;"
       },
       {
-        "lineNumber": 45,
+        "lineNumber": 47,
         "author": {
           "gitId": "-"
         },
         "content": ""
-      },
-      {
-        "lineNumber": 46,
-        "author": {
-          "gitId": "li-s"
-        },
-        "content": "    public static final String INVALID_OLD_TAG_DESC \u003d \" \" + PREFIX_OLD_TAG_NAME + INVALID_TAG_NAME;"
-      },
-      {
-        "lineNumber": 47,
-        "author": {
-          "gitId": "li-s"
-        },
-        "content": "    public static final String INVALID_TAG_DESC \u003d \" \" + PREFIX_TAG_NAME + INVALID_TAG_NAME;"
       },
       {
         "lineNumber": 48,
         "author": {
           "gitId": "li-s"
         },
-        "content": "    // empty string not allowed for addresses"
+        "content": "    public static final String INVALID_OLD_TAG_DESC \u003d \" \" + PREFIX_OLD_TAG_NAME + INVALID_TAG_NAME;"
       },
       {
         "lineNumber": 49,
         "author": {
           "gitId": "li-s"
         },
-        "content": "    public static final String INVALID_FILE_ADDRESS_DESC \u003d \" \" + PREFIX_FILE_ADDRESS;"
+        "content": "    public static final String INVALID_TAG_DESC \u003d \" \" + PREFIX_TAG_NAME + INVALID_TAG_NAME;"
       },
       {
         "lineNumber": 50,
         "author": {
-          "gitId": "-"
+          "gitId": "li-s"
         },
-        "content": ""
+        "content": "    public static final String INVALID_LABEL_DESC \u003d \" \" + PREFIX_LABEL_NAME + INVALID_LABEL;"
       },
       {
         "lineNumber": 51,
         "author": {
-          "gitId": "-"
+          "gitId": "li-s"
         },
-        "content": "    public static final String PREAMBLE_WHITESPACE \u003d \"\\t  \\r  \\n\";"
+        "content": "    // empty string not allowed for addresses"
       },
       {
         "lineNumber": 52,
         "author": {
-          "gitId": "-"
+          "gitId": "li-s"
         },
-        "content": "    public static final String PREAMBLE_NON_EMPTY \u003d \"NonEmptyPreamble\";"
+        "content": "    public static final String INVALID_FILE_ADDRESS_DESC \u003d \" \" + PREFIX_FILE_ADDRESS;"
       },
       {
         "lineNumber": 53,
@@ -58879,385 +59928,385 @@
         "author": {
           "gitId": "-"
         },
-        "content": "    /**"
+        "content": "    public static final String PREAMBLE_WHITESPACE \u003d \"\\t  \\r  \\n\";"
       },
       {
         "lineNumber": 55,
         "author": {
           "gitId": "-"
         },
-        "content": "     * Executes the given {@code command}, confirms that \u003cbr\u003e"
+        "content": "    public static final String PREAMBLE_NON_EMPTY \u003d \"NonEmptyPreamble\";"
       },
       {
         "lineNumber": 56,
         "author": {
           "gitId": "-"
         },
-        "content": "     * - the returned {@link CommandResult} matches {@code expectedCommandResult} \u003cbr\u003e"
+        "content": ""
       },
       {
         "lineNumber": 57,
         "author": {
           "gitId": "-"
         },
-        "content": "     * - the {@code actualModel} matches {@code expectedModel}"
+        "content": "    /**"
       },
       {
         "lineNumber": 58,
         "author": {
           "gitId": "-"
         },
-        "content": "     */"
+        "content": "     * Executes the given {@code command}, confirms that \u003cbr\u003e"
       },
       {
         "lineNumber": 59,
         "author": {
           "gitId": "-"
         },
-        "content": "    public static void assertCommandSuccess(Command command, Model actualModel, CommandResult expectedCommandResult,"
+        "content": "     * - the returned {@link CommandResult} matches {@code expectedCommandResult} \u003cbr\u003e"
       },
       {
         "lineNumber": 60,
         "author": {
           "gitId": "-"
         },
-        "content": "            Model expectedModel) {"
+        "content": "     * - the {@code actualModel} matches {@code expectedModel}"
       },
       {
         "lineNumber": 61,
         "author": {
           "gitId": "-"
         },
-        "content": "        try {"
+        "content": "     */"
       },
       {
         "lineNumber": 62,
         "author": {
           "gitId": "-"
         },
-        "content": "            CommandResult result \u003d command.execute(actualModel);"
+        "content": "    public static void assertCommandSuccess(Command command, Model actualModel, CommandResult expectedCommandResult,"
       },
       {
         "lineNumber": 63,
         "author": {
           "gitId": "-"
         },
-        "content": "            assertEquals(expectedCommandResult, result);"
+        "content": "            Model expectedModel) {"
       },
       {
         "lineNumber": 64,
         "author": {
           "gitId": "-"
         },
-        "content": "            assertEquals(expectedModel, actualModel);"
+        "content": "        try {"
       },
       {
         "lineNumber": 65,
         "author": {
           "gitId": "-"
         },
-        "content": "        } catch (CommandException ce) {"
+        "content": "            CommandResult result \u003d command.execute(actualModel);"
       },
       {
         "lineNumber": 66,
         "author": {
           "gitId": "-"
         },
-        "content": "            throw new AssertionError(\"Execution of command should not fail.\", ce);"
+        "content": "            assertEquals(expectedCommandResult, result);"
       },
       {
         "lineNumber": 67,
         "author": {
           "gitId": "-"
         },
-        "content": "        }"
+        "content": "            assertEquals(expectedModel, actualModel);"
       },
       {
         "lineNumber": 68,
         "author": {
           "gitId": "-"
         },
-        "content": "    }"
+        "content": "        } catch (CommandException ce) {"
       },
       {
         "lineNumber": 69,
         "author": {
           "gitId": "-"
         },
-        "content": ""
+        "content": "            throw new AssertionError(\"Execution of command should not fail.\", ce);"
       },
       {
         "lineNumber": 70,
         "author": {
           "gitId": "-"
         },
-        "content": "    /**"
+        "content": "        }"
       },
       {
         "lineNumber": 71,
         "author": {
           "gitId": "-"
         },
-        "content": "     * Convenience wrapper to {@link #assertCommandSuccess(Command, Model, CommandResult, Model)}"
+        "content": "    }"
       },
       {
         "lineNumber": 72,
         "author": {
           "gitId": "-"
         },
-        "content": "     * that takes a string {@code expectedMessage}."
+        "content": ""
       },
       {
         "lineNumber": 73,
         "author": {
           "gitId": "-"
         },
-        "content": "     */"
+        "content": "    /**"
       },
       {
         "lineNumber": 74,
         "author": {
           "gitId": "-"
         },
-        "content": "    public static void assertCommandSuccess(Command command, Model actualModel, String expectedMessage,"
+        "content": "     * Convenience wrapper to {@link #assertCommandSuccess(Command, Model, CommandResult, Model)}"
       },
       {
         "lineNumber": 75,
         "author": {
           "gitId": "-"
         },
-        "content": "            Model expectedModel) {"
+        "content": "     * that takes a string {@code expectedMessage}."
       },
       {
         "lineNumber": 76,
         "author": {
           "gitId": "-"
         },
-        "content": "        CommandResult expectedCommandResult \u003d new CommandResult(expectedMessage);"
+        "content": "     */"
       },
       {
         "lineNumber": 77,
         "author": {
           "gitId": "-"
         },
-        "content": "        assertCommandSuccess(command, actualModel, expectedCommandResult, expectedModel);"
+        "content": "    public static void assertCommandSuccess(Command command, Model actualModel, String expectedMessage,"
       },
       {
         "lineNumber": 78,
         "author": {
           "gitId": "-"
         },
-        "content": "    }"
+        "content": "            Model expectedModel) {"
       },
       {
         "lineNumber": 79,
         "author": {
           "gitId": "-"
         },
-        "content": ""
+        "content": "        CommandResult expectedCommandResult \u003d new CommandResult(expectedMessage);"
       },
       {
         "lineNumber": 80,
         "author": {
           "gitId": "-"
         },
-        "content": "    /**"
+        "content": "        assertCommandSuccess(command, actualModel, expectedCommandResult, expectedModel);"
       },
       {
         "lineNumber": 81,
         "author": {
           "gitId": "-"
         },
-        "content": "     * Executes the given {@code command}, confirms that \u003cbr\u003e"
+        "content": "    }"
       },
       {
         "lineNumber": 82,
         "author": {
           "gitId": "-"
         },
-        "content": "     * - a {@code CommandException} is thrown \u003cbr\u003e"
+        "content": ""
       },
       {
         "lineNumber": 83,
         "author": {
           "gitId": "-"
         },
-        "content": "     * - the CommandException message matches {@code expectedMessage} \u003cbr\u003e"
+        "content": "    /**"
       },
       {
         "lineNumber": 84,
         "author": {
-          "gitId": "li-s"
+          "gitId": "-"
         },
-        "content": "     * - the address book, filtered tag list and selected tag in {@code actualModel} remain unchanged"
+        "content": "     * Executes the given {@code command}, confirms that \u003cbr\u003e"
       },
       {
         "lineNumber": 85,
         "author": {
           "gitId": "-"
         },
-        "content": "     */"
+        "content": "     * - a {@code CommandException} is thrown \u003cbr\u003e"
       },
       {
         "lineNumber": 86,
         "author": {
           "gitId": "-"
         },
-        "content": "    public static void assertCommandFailure(Command command, Model actualModel, String expectedMessage) {"
+        "content": "     * - the CommandException message matches {@code expectedMessage} \u003cbr\u003e"
       },
       {
         "lineNumber": 87,
         "author": {
-          "gitId": "-"
+          "gitId": "li-s"
         },
-        "content": "        // we are unable to defensively copy the model for comparison later, so we can"
+        "content": "     * - the address book, filtered tag list and selected tag in {@code actualModel} remain unchanged"
       },
       {
         "lineNumber": 88,
         "author": {
           "gitId": "-"
         },
-        "content": "        // only do so by copying its components."
+        "content": "     */"
       },
       {
         "lineNumber": 89,
         "author": {
           "gitId": "-"
         },
-        "content": "        AddressBook expectedAddressBook \u003d new AddressBook(actualModel.getAddressBook());"
+        "content": "    public static void assertCommandFailure(Command command, Model actualModel, String expectedMessage) {"
       },
       {
         "lineNumber": 90,
         "author": {
-          "gitId": "HynRidge"
+          "gitId": "-"
         },
-        "content": "        List\u003cTag\u003e expectedFilteredList \u003d new ArrayList\u003c\u003e(actualModel.getFilteredTagList());"
+        "content": "        // we are unable to defensively copy the model for comparison later, so we can"
       },
       {
         "lineNumber": 91,
         "author": {
           "gitId": "-"
         },
-        "content": ""
+        "content": "        // only do so by copying its components."
       },
       {
         "lineNumber": 92,
         "author": {
           "gitId": "-"
         },
-        "content": "        assertThrows(CommandException.class, expectedMessage, () -\u003e command.execute(actualModel));"
+        "content": "        AddressBook expectedAddressBook \u003d new AddressBook(actualModel.getAddressBook());"
       },
       {
         "lineNumber": 93,
         "author": {
-          "gitId": "-"
+          "gitId": "HynRidge"
         },
-        "content": "        assertEquals(expectedAddressBook, actualModel.getAddressBook());"
+        "content": "        List\u003cTag\u003e expectedFilteredList \u003d new ArrayList\u003c\u003e(actualModel.getFilteredTagList());"
       },
       {
         "lineNumber": 94,
         "author": {
-          "gitId": "HynRidge"
+          "gitId": "-"
         },
-        "content": "        assertEquals(expectedFilteredList, actualModel.getFilteredTagList());"
+        "content": ""
       },
       {
         "lineNumber": 95,
         "author": {
           "gitId": "-"
         },
-        "content": "    }"
+        "content": "        assertThrows(CommandException.class, expectedMessage, () -\u003e command.execute(actualModel));"
       },
       {
         "lineNumber": 96,
         "author": {
           "gitId": "-"
         },
-        "content": "    /**"
+        "content": "        assertEquals(expectedAddressBook, actualModel.getAddressBook());"
       },
       {
         "lineNumber": 97,
         "author": {
-          "gitId": "-"
+          "gitId": "HynRidge"
         },
-        "content": "     * Updates {@code model}\u0027s filtered list to show only the person at the given {@code targetIndex} in the"
+        "content": "        assertEquals(expectedFilteredList, actualModel.getFilteredTagList());"
       },
       {
         "lineNumber": 98,
         "author": {
           "gitId": "-"
         },
-        "content": "     * {@code model}\u0027s address book."
+        "content": "    }"
       },
       {
         "lineNumber": 99,
         "author": {
           "gitId": "-"
         },
-        "content": "     */"
+        "content": "    /**"
       },
       {
         "lineNumber": 100,
         "author": {
-          "gitId": "HynRidge"
+          "gitId": "-"
         },
-        "content": "    public static void showTagAtIndex(Model model, Index targetIndex) {"
+        "content": "     * Updates {@code model}\u0027s filtered list to show only the person at the given {@code targetIndex} in the"
       },
       {
         "lineNumber": 101,
         "author": {
-          "gitId": "HynRidge"
+          "gitId": "-"
         },
-        "content": "        assertTrue(targetIndex.getZeroBased() \u003c model.getFilteredTagList().size());"
+        "content": "     * {@code model}\u0027s address book."
       },
       {
         "lineNumber": 102,
         "author": {
           "gitId": "-"
         },
-        "content": ""
+        "content": "     */"
       },
       {
         "lineNumber": 103,
         "author": {
           "gitId": "HynRidge"
         },
-        "content": "        Tag person \u003d model.getFilteredTagList().get(targetIndex.getZeroBased());"
+        "content": "    public static void showTagAtIndex(Model model, Index targetIndex) {"
       },
       {
         "lineNumber": 104,
         "author": {
           "gitId": "HynRidge"
         },
-        "content": "        final String[] splitName \u003d person.getTagName().tagName.split(\"\\\\s+\");"
+        "content": "        assertTrue(targetIndex.getZeroBased() \u003c model.getFilteredTagList().size());"
       },
       {
         "lineNumber": 105,
-        "author": {
-          "gitId": "HynRidge"
-        },
-        "content": "        model.updateFilteredTagList(new TagNameContainsKeywordsPredicate(Arrays.asList(splitName[0])));"
-      },
-      {
-        "lineNumber": 106,
         "author": {
           "gitId": "-"
         },
         "content": ""
       },
       {
+        "lineNumber": 106,
+        "author": {
+          "gitId": "HynRidge"
+        },
+        "content": "        Tag person \u003d model.getFilteredTagList().get(targetIndex.getZeroBased());"
+      },
+      {
         "lineNumber": 107,
         "author": {
           "gitId": "HynRidge"
         },
-        "content": "        assertEquals(1, model.getFilteredTagList().size());"
+        "content": "        final String[] splitName \u003d person.getTagName().tagName.split(\"\\\\s+\");"
       },
       {
         "lineNumber": 108,
         "author": {
-          "gitId": "-"
+          "gitId": "HynRidge"
         },
-        "content": "    }"
+        "content": "        model.updateFilteredTagList(new TagNameContainsKeywordsPredicate(Arrays.asList(splitName[0])));"
       },
       {
         "lineNumber": 109,
@@ -59269,16 +60318,37 @@
       {
         "lineNumber": 110,
         "author": {
+          "gitId": "HynRidge"
+        },
+        "content": "        assertEquals(1, model.getFilteredTagList().size());"
+      },
+      {
+        "lineNumber": 111,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "    }"
+      },
+      {
+        "lineNumber": 112,
+        "author": {
+          "gitId": "-"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 113,
+        "author": {
           "gitId": "-"
         },
         "content": "}"
       }
     ],
     "authorContributionMap": {
-      "li-s": 15,
+      "li-s": 19,
       "luo-git": 4,
       "Anthony6401": 1,
-      "HynRidge": 16,
+      "HynRidge": 15,
       "-": 74
     }
   },
@@ -59879,6 +60949,722 @@
       "li-s": 6,
       "HynRidge": 18,
       "-": 60
+    }
+  },
+  {
+    "path": "src/test/java/seedu/address/logic/commands/LabelCommandTest.java",
+    "fileType": "test-code",
+    "lines": [
+      {
+        "lineNumber": 1,
+        "author": {
+          "gitId": "li-s"
+        },
+        "content": "package seedu.address.logic.commands;"
+      },
+      {
+        "lineNumber": 2,
+        "author": {
+          "gitId": "li-s"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 3,
+        "author": {
+          "gitId": "li-s"
+        },
+        "content": "import static org.junit.jupiter.api.Assertions.assertFalse;"
+      },
+      {
+        "lineNumber": 4,
+        "author": {
+          "gitId": "li-s"
+        },
+        "content": "import static org.junit.jupiter.api.Assertions.assertTrue;"
+      },
+      {
+        "lineNumber": 5,
+        "author": {
+          "gitId": "li-s"
+        },
+        "content": "import static seedu.address.logic.commands.CommandTestUtil.VALID_LABEL;"
+      },
+      {
+        "lineNumber": 6,
+        "author": {
+          "gitId": "li-s"
+        },
+        "content": "import static seedu.address.logic.commands.CommandTestUtil.assertCommandSuccess;"
+      },
+      {
+        "lineNumber": 7,
+        "author": {
+          "gitId": "li-s"
+        },
+        "content": "import static seedu.address.testutil.Assert.assertThrows;"
+      },
+      {
+        "lineNumber": 8,
+        "author": {
+          "gitId": "li-s"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 9,
+        "author": {
+          "gitId": "li-s"
+        },
+        "content": "import java.util.HashSet;"
+      },
+      {
+        "lineNumber": 10,
+        "author": {
+          "gitId": "li-s"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 11,
+        "author": {
+          "gitId": "li-s"
+        },
+        "content": "import org.junit.jupiter.api.BeforeEach;"
+      },
+      {
+        "lineNumber": 12,
+        "author": {
+          "gitId": "li-s"
+        },
+        "content": "import org.junit.jupiter.api.Test;"
+      },
+      {
+        "lineNumber": 13,
+        "author": {
+          "gitId": "li-s"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 14,
+        "author": {
+          "gitId": "li-s"
+        },
+        "content": "import seedu.address.logic.commands.exceptions.CommandException;"
+      },
+      {
+        "lineNumber": 15,
+        "author": {
+          "gitId": "li-s"
+        },
+        "content": "import seedu.address.model.label.Label;"
+      },
+      {
+        "lineNumber": 16,
+        "author": {
+          "gitId": "li-s"
+        },
+        "content": "import seedu.address.model.tag.Tag;"
+      },
+      {
+        "lineNumber": 17,
+        "author": {
+          "gitId": "li-s"
+        },
+        "content": "import seedu.address.model.tag.TagName;"
+      },
+      {
+        "lineNumber": 18,
+        "author": {
+          "gitId": "li-s"
+        },
+        "content": "import seedu.address.testutil.TagBuilder;"
+      },
+      {
+        "lineNumber": 19,
+        "author": {
+          "gitId": "li-s"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 20,
+        "author": {
+          "gitId": "li-s"
+        },
+        "content": "public class LabelCommandTest {"
+      },
+      {
+        "lineNumber": 21,
+        "author": {
+          "gitId": "li-s"
+        },
+        "content": "    private ModelStubWithTag modelStub;"
+      },
+      {
+        "lineNumber": 22,
+        "author": {
+          "gitId": "li-s"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 23,
+        "author": {
+          "gitId": "li-s"
+        },
+        "content": "    @BeforeEach"
+      },
+      {
+        "lineNumber": 24,
+        "author": {
+          "gitId": "li-s"
+        },
+        "content": "    public void setUp() {"
+      },
+      {
+        "lineNumber": 25,
+        "author": {
+          "gitId": "li-s"
+        },
+        "content": "        Tag newTag \u003d new TagBuilder().build();"
+      },
+      {
+        "lineNumber": 26,
+        "author": {
+          "gitId": "li-s"
+        },
+        "content": "        modelStub \u003d new ModelStubWithTag(newTag);"
+      },
+      {
+        "lineNumber": 27,
+        "author": {
+          "gitId": "li-s"
+        },
+        "content": "    }"
+      },
+      {
+        "lineNumber": 28,
+        "author": {
+          "gitId": "li-s"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 29,
+        "author": {
+          "gitId": "li-s"
+        },
+        "content": "    @Test"
+      },
+      {
+        "lineNumber": 30,
+        "author": {
+          "gitId": "li-s"
+        },
+        "content": "    public void execute_allFieldsPresent_success() {"
+      },
+      {
+        "lineNumber": 31,
+        "author": {
+          "gitId": "li-s"
+        },
+        "content": "        Tag newTag \u003d new TagBuilder().withLabels(\"testLabel\", VALID_LABEL).build();"
+      },
+      {
+        "lineNumber": 32,
+        "author": {
+          "gitId": "li-s"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 33,
+        "author": {
+          "gitId": "li-s"
+        },
+        "content": "        ModelStubWithTag expectedModelStub \u003d new ModelStubWithTag(newTag);"
+      },
+      {
+        "lineNumber": 34,
+        "author": {
+          "gitId": "li-s"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 35,
+        "author": {
+          "gitId": "li-s"
+        },
+        "content": "        HashSet\u003cLabel\u003e labels \u003d new HashSet\u003c\u003e();"
+      },
+      {
+        "lineNumber": 36,
+        "author": {
+          "gitId": "li-s"
+        },
+        "content": "        labels.add(new Label(\"testLabel\"));"
+      },
+      {
+        "lineNumber": 37,
+        "author": {
+          "gitId": "li-s"
+        },
+        "content": "        labels.add(new Label(VALID_LABEL));"
+      },
+      {
+        "lineNumber": 38,
+        "author": {
+          "gitId": "li-s"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 39,
+        "author": {
+          "gitId": "li-s"
+        },
+        "content": "        LabelCommand labelCommand \u003d new LabelCommand(newTag.getTagName(), labels);"
+      },
+      {
+        "lineNumber": 40,
+        "author": {
+          "gitId": "li-s"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 41,
+        "author": {
+          "gitId": "li-s"
+        },
+        "content": "        assertCommandSuccess(labelCommand, modelStub,"
+      },
+      {
+        "lineNumber": 42,
+        "author": {
+          "gitId": "li-s"
+        },
+        "content": "                String.format(LabelCommand.MESSAGE_SUCCESS, newTag), expectedModelStub);"
+      },
+      {
+        "lineNumber": 43,
+        "author": {
+          "gitId": "li-s"
+        },
+        "content": "    }"
+      },
+      {
+        "lineNumber": 44,
+        "author": {
+          "gitId": "li-s"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 45,
+        "author": {
+          "gitId": "li-s"
+        },
+        "content": "    @Test"
+      },
+      {
+        "lineNumber": 46,
+        "author": {
+          "gitId": "li-s"
+        },
+        "content": "    public void execute_emptyLabels_success() {"
+      },
+      {
+        "lineNumber": 47,
+        "author": {
+          "gitId": "li-s"
+        },
+        "content": "        Tag newTag \u003d new TagBuilder().withLabels(\"testLabel\").build();"
+      },
+      {
+        "lineNumber": 48,
+        "author": {
+          "gitId": "li-s"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 49,
+        "author": {
+          "gitId": "li-s"
+        },
+        "content": "        ModelStubWithTag expectedModelStub \u003d new ModelStubWithTag(newTag);"
+      },
+      {
+        "lineNumber": 50,
+        "author": {
+          "gitId": "li-s"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 51,
+        "author": {
+          "gitId": "li-s"
+        },
+        "content": "        HashSet\u003cLabel\u003e labels \u003d new HashSet\u003c\u003e();"
+      },
+      {
+        "lineNumber": 52,
+        "author": {
+          "gitId": "li-s"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 53,
+        "author": {
+          "gitId": "li-s"
+        },
+        "content": "        LabelCommand labelCommand \u003d new LabelCommand(newTag.getTagName(), labels);"
+      },
+      {
+        "lineNumber": 54,
+        "author": {
+          "gitId": "li-s"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 55,
+        "author": {
+          "gitId": "li-s"
+        },
+        "content": "        assertCommandSuccess(labelCommand, modelStub,"
+      },
+      {
+        "lineNumber": 56,
+        "author": {
+          "gitId": "li-s"
+        },
+        "content": "                String.format(LabelCommand.MESSAGE_SUCCESS, newTag), expectedModelStub);"
+      },
+      {
+        "lineNumber": 57,
+        "author": {
+          "gitId": "li-s"
+        },
+        "content": "    }"
+      },
+      {
+        "lineNumber": 58,
+        "author": {
+          "gitId": "li-s"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 59,
+        "author": {
+          "gitId": "li-s"
+        },
+        "content": "    @Test"
+      },
+      {
+        "lineNumber": 60,
+        "author": {
+          "gitId": "li-s"
+        },
+        "content": "    public void execute_tagNotInModel_throwCommandException() {"
+      },
+      {
+        "lineNumber": 61,
+        "author": {
+          "gitId": "li-s"
+        },
+        "content": "        TagName nonExistingTagName \u003d new TagName(\"noExist\");"
+      },
+      {
+        "lineNumber": 62,
+        "author": {
+          "gitId": "li-s"
+        },
+        "content": "        HashSet\u003cLabel\u003e labels \u003d new HashSet\u003c\u003e();"
+      },
+      {
+        "lineNumber": 63,
+        "author": {
+          "gitId": "li-s"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 64,
+        "author": {
+          "gitId": "li-s"
+        },
+        "content": "        LabelCommand labelCommand \u003d new LabelCommand(nonExistingTagName, labels);"
+      },
+      {
+        "lineNumber": 65,
+        "author": {
+          "gitId": "li-s"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 66,
+        "author": {
+          "gitId": "li-s"
+        },
+        "content": "        assertThrows(CommandException.class, String.format(LabelCommand.MESSAGE_TAG_NOT_FOUND,"
+      },
+      {
+        "lineNumber": 67,
+        "author": {
+          "gitId": "li-s"
+        },
+        "content": "                nonExistingTagName.tagName), () -\u003e labelCommand.execute(modelStub));"
+      },
+      {
+        "lineNumber": 68,
+        "author": {
+          "gitId": "li-s"
+        },
+        "content": "    }"
+      },
+      {
+        "lineNumber": 69,
+        "author": {
+          "gitId": "li-s"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 70,
+        "author": {
+          "gitId": "li-s"
+        },
+        "content": "    @Test"
+      },
+      {
+        "lineNumber": 71,
+        "author": {
+          "gitId": "li-s"
+        },
+        "content": "    public void equals() {"
+      },
+      {
+        "lineNumber": 72,
+        "author": {
+          "gitId": "li-s"
+        },
+        "content": "        TagName oldTagName \u003d new TagName(\"oldTag\");"
+      },
+      {
+        "lineNumber": 73,
+        "author": {
+          "gitId": "li-s"
+        },
+        "content": "        TagName newTagName \u003d new TagName(\"newTag\");"
+      },
+      {
+        "lineNumber": 74,
+        "author": {
+          "gitId": "li-s"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 75,
+        "author": {
+          "gitId": "li-s"
+        },
+        "content": "        HashSet\u003cLabel\u003e emptyLabels \u003d new HashSet\u003c\u003e();"
+      },
+      {
+        "lineNumber": 76,
+        "author": {
+          "gitId": "li-s"
+        },
+        "content": "        HashSet\u003cLabel\u003e labels \u003d new HashSet\u003c\u003e();"
+      },
+      {
+        "lineNumber": 77,
+        "author": {
+          "gitId": "li-s"
+        },
+        "content": "        labels.add(new Label(\"testLabel\"));"
+      },
+      {
+        "lineNumber": 78,
+        "author": {
+          "gitId": "li-s"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 79,
+        "author": {
+          "gitId": "li-s"
+        },
+        "content": "        LabelCommand labelCommand1 \u003d new LabelCommand(newTagName, emptyLabels);"
+      },
+      {
+        "lineNumber": 80,
+        "author": {
+          "gitId": "li-s"
+        },
+        "content": "        LabelCommand labelCommand2 \u003d new LabelCommand(oldTagName, labels);"
+      },
+      {
+        "lineNumber": 81,
+        "author": {
+          "gitId": "li-s"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 82,
+        "author": {
+          "gitId": "li-s"
+        },
+        "content": "        // same object -\u003e returns true"
+      },
+      {
+        "lineNumber": 83,
+        "author": {
+          "gitId": "li-s"
+        },
+        "content": "        assertTrue(labelCommand1.equals(labelCommand1));"
+      },
+      {
+        "lineNumber": 84,
+        "author": {
+          "gitId": "li-s"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 85,
+        "author": {
+          "gitId": "li-s"
+        },
+        "content": "        // same values -\u003e returns true"
+      },
+      {
+        "lineNumber": 86,
+        "author": {
+          "gitId": "li-s"
+        },
+        "content": "        LabelCommand labelommand1Copy \u003d new LabelCommand(newTagName, emptyLabels);"
+      },
+      {
+        "lineNumber": 87,
+        "author": {
+          "gitId": "li-s"
+        },
+        "content": "        assertTrue(labelCommand1.equals(labelommand1Copy));"
+      },
+      {
+        "lineNumber": 88,
+        "author": {
+          "gitId": "li-s"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 89,
+        "author": {
+          "gitId": "li-s"
+        },
+        "content": "        // different types -\u003e returns false"
+      },
+      {
+        "lineNumber": 90,
+        "author": {
+          "gitId": "li-s"
+        },
+        "content": "        assertFalse(labelCommand1.equals(1));"
+      },
+      {
+        "lineNumber": 91,
+        "author": {
+          "gitId": "li-s"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 92,
+        "author": {
+          "gitId": "li-s"
+        },
+        "content": "        // null -\u003e returns false"
+      },
+      {
+        "lineNumber": 93,
+        "author": {
+          "gitId": "li-s"
+        },
+        "content": "        assertFalse(labelCommand1.equals(null));"
+      },
+      {
+        "lineNumber": 94,
+        "author": {
+          "gitId": "li-s"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 95,
+        "author": {
+          "gitId": "li-s"
+        },
+        "content": "        // different tagName -\u003e returns false"
+      },
+      {
+        "lineNumber": 96,
+        "author": {
+          "gitId": "li-s"
+        },
+        "content": "        assertFalse(labelCommand1.equals(labelCommand2));"
+      },
+      {
+        "lineNumber": 97,
+        "author": {
+          "gitId": "li-s"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 98,
+        "author": {
+          "gitId": "li-s"
+        },
+        "content": "        // different labels -\u003e returns false"
+      },
+      {
+        "lineNumber": 99,
+        "author": {
+          "gitId": "li-s"
+        },
+        "content": "        assertFalse(labelCommand1.equals(labelCommand2));"
+      },
+      {
+        "lineNumber": 100,
+        "author": {
+          "gitId": "li-s"
+        },
+        "content": "    }"
+      },
+      {
+        "lineNumber": 101,
+        "author": {
+          "gitId": "li-s"
+        },
+        "content": "}"
+      }
+    ],
+    "authorContributionMap": {
+      "li-s": 101
     }
   },
   {
@@ -62156,86 +63942,86 @@
       {
         "lineNumber": 5,
         "author": {
-          "gitId": "luo-git"
+          "gitId": "li-s"
         },
-        "content": "import seedu.address.model.tag.Tag;"
+        "content": "import java.util.ArrayList;"
       },
       {
         "lineNumber": 6,
         "author": {
-          "gitId": "luo-git"
+          "gitId": "li-s"
         },
-        "content": ""
+        "content": "import java.util.List;"
       },
       {
         "lineNumber": 7,
         "author": {
-          "gitId": "luo-git"
+          "gitId": "li-s"
         },
-        "content": "/**"
+        "content": "import java.util.function.Predicate;"
       },
       {
         "lineNumber": 8,
         "author": {
-          "gitId": "luo-git"
+          "gitId": "li-s"
         },
-        "content": " * A Model stub that contains a single tag."
+        "content": "import java.util.stream.Collectors;"
       },
       {
         "lineNumber": 9,
         "author": {
-          "gitId": "luo-git"
+          "gitId": "li-s"
         },
-        "content": " */"
+        "content": ""
       },
       {
         "lineNumber": 10,
         "author": {
           "gitId": "luo-git"
         },
-        "content": "class ModelStubWithTag extends ModelStub {"
+        "content": "import seedu.address.model.tag.Tag;"
       },
       {
         "lineNumber": 11,
         "author": {
           "gitId": "luo-git"
         },
-        "content": "    private final Tag tag;"
+        "content": ""
       },
       {
         "lineNumber": 12,
         "author": {
           "gitId": "luo-git"
         },
-        "content": ""
+        "content": "/**"
       },
       {
         "lineNumber": 13,
         "author": {
           "gitId": "luo-git"
         },
-        "content": "    ModelStubWithTag(Tag tag) {"
+        "content": " * A Model stub that contains a single tag."
       },
       {
         "lineNumber": 14,
         "author": {
           "gitId": "luo-git"
         },
-        "content": "        requireNonNull(tag);"
+        "content": " */"
       },
       {
         "lineNumber": 15,
         "author": {
           "gitId": "luo-git"
         },
-        "content": "        this.tag \u003d tag;"
+        "content": "class ModelStubWithTag extends ModelStub {"
       },
       {
         "lineNumber": 16,
         "author": {
-          "gitId": "luo-git"
+          "gitId": "li-s"
         },
-        "content": "    }"
+        "content": "    private Tag tag;"
       },
       {
         "lineNumber": 17,
@@ -62249,38 +64035,283 @@
         "author": {
           "gitId": "luo-git"
         },
-        "content": "    @Override"
+        "content": "    ModelStubWithTag(Tag tag) {"
       },
       {
         "lineNumber": 19,
         "author": {
           "gitId": "luo-git"
         },
-        "content": "    public boolean hasTag(Tag tag) {"
+        "content": "        requireNonNull(tag);"
       },
       {
         "lineNumber": 20,
         "author": {
           "gitId": "luo-git"
         },
-        "content": "        requireNonNull(tag);"
+        "content": "        this.tag \u003d tag;"
       },
       {
         "lineNumber": 21,
         "author": {
           "gitId": "luo-git"
         },
-        "content": "        return this.tag.isSameTag(tag);"
+        "content": "    }"
       },
       {
         "lineNumber": 22,
         "author": {
           "gitId": "luo-git"
         },
-        "content": "    }"
+        "content": ""
       },
       {
         "lineNumber": 23,
+        "author": {
+          "gitId": "luo-git"
+        },
+        "content": "    @Override"
+      },
+      {
+        "lineNumber": 24,
+        "author": {
+          "gitId": "luo-git"
+        },
+        "content": "    public boolean hasTag(Tag tag) {"
+      },
+      {
+        "lineNumber": 25,
+        "author": {
+          "gitId": "luo-git"
+        },
+        "content": "        requireNonNull(tag);"
+      },
+      {
+        "lineNumber": 26,
+        "author": {
+          "gitId": "luo-git"
+        },
+        "content": "        return this.tag.isSameTag(tag);"
+      },
+      {
+        "lineNumber": 27,
+        "author": {
+          "gitId": "luo-git"
+        },
+        "content": "    }"
+      },
+      {
+        "lineNumber": 28,
+        "author": {
+          "gitId": "li-s"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 29,
+        "author": {
+          "gitId": "li-s"
+        },
+        "content": "    @Override"
+      },
+      {
+        "lineNumber": 30,
+        "author": {
+          "gitId": "li-s"
+        },
+        "content": "    public List\u003cTag\u003e findFilteredTagList(Predicate\u003cTag\u003e predicate) {"
+      },
+      {
+        "lineNumber": 31,
+        "author": {
+          "gitId": "li-s"
+        },
+        "content": "        ArrayList\u003cTag\u003e tagList \u003d new ArrayList\u003c\u003e();"
+      },
+      {
+        "lineNumber": 32,
+        "author": {
+          "gitId": "li-s"
+        },
+        "content": "        tagList.add(tag);"
+      },
+      {
+        "lineNumber": 33,
+        "author": {
+          "gitId": "li-s"
+        },
+        "content": "        return tagList.stream()"
+      },
+      {
+        "lineNumber": 34,
+        "author": {
+          "gitId": "li-s"
+        },
+        "content": "                .filter(predicate)"
+      },
+      {
+        "lineNumber": 35,
+        "author": {
+          "gitId": "li-s"
+        },
+        "content": "                .collect(Collectors.toList());"
+      },
+      {
+        "lineNumber": 36,
+        "author": {
+          "gitId": "li-s"
+        },
+        "content": "    }"
+      },
+      {
+        "lineNumber": 37,
+        "author": {
+          "gitId": "li-s"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 38,
+        "author": {
+          "gitId": "li-s"
+        },
+        "content": "    @Override"
+      },
+      {
+        "lineNumber": 39,
+        "author": {
+          "gitId": "li-s"
+        },
+        "content": "    public void deleteTag(Tag target) {"
+      },
+      {
+        "lineNumber": 40,
+        "author": {
+          "gitId": "li-s"
+        },
+        "content": "        this.tag \u003d null;"
+      },
+      {
+        "lineNumber": 41,
+        "author": {
+          "gitId": "li-s"
+        },
+        "content": "    }"
+      },
+      {
+        "lineNumber": 42,
+        "author": {
+          "gitId": "li-s"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 43,
+        "author": {
+          "gitId": "li-s"
+        },
+        "content": "    @Override"
+      },
+      {
+        "lineNumber": 44,
+        "author": {
+          "gitId": "li-s"
+        },
+        "content": "    public void addTag(Tag tag) {"
+      },
+      {
+        "lineNumber": 45,
+        "author": {
+          "gitId": "li-s"
+        },
+        "content": "        this.tag \u003d tag;"
+      },
+      {
+        "lineNumber": 46,
+        "author": {
+          "gitId": "li-s"
+        },
+        "content": "    }"
+      },
+      {
+        "lineNumber": 47,
+        "author": {
+          "gitId": "li-s"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 48,
+        "author": {
+          "gitId": "li-s"
+        },
+        "content": "    @Override"
+      },
+      {
+        "lineNumber": 49,
+        "author": {
+          "gitId": "li-s"
+        },
+        "content": "    public void commitAddressBook() {"
+      },
+      {
+        "lineNumber": 50,
+        "author": {
+          "gitId": "li-s"
+        },
+        "content": "    }"
+      },
+      {
+        "lineNumber": 51,
+        "author": {
+          "gitId": "li-s"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 52,
+        "author": {
+          "gitId": "li-s"
+        },
+        "content": "    @Override"
+      },
+      {
+        "lineNumber": 53,
+        "author": {
+          "gitId": "li-s"
+        },
+        "content": "    public boolean equals(Object other) {"
+      },
+      {
+        "lineNumber": 54,
+        "author": {
+          "gitId": "li-s"
+        },
+        "content": "        return other \u003d\u003d this // short circuit if same object"
+      },
+      {
+        "lineNumber": 55,
+        "author": {
+          "gitId": "li-s"
+        },
+        "content": "                || (other instanceof ModelStubWithTag // instanceof handles nulls"
+      },
+      {
+        "lineNumber": 56,
+        "author": {
+          "gitId": "li-s"
+        },
+        "content": "                \u0026\u0026 this.tag.equals(((ModelStubWithTag) other).tag));"
+      },
+      {
+        "lineNumber": 57,
+        "author": {
+          "gitId": "li-s"
+        },
+        "content": "    }"
+      },
+      {
+        "lineNumber": 58,
         "author": {
           "gitId": "luo-git"
         },
@@ -62288,7 +64319,8 @@
       }
     ],
     "authorContributionMap": {
-      "luo-git": 23
+      "luo-git": 22,
+      "li-s": 36
     }
   },
   {
@@ -68474,6 +70506,519 @@
     "authorContributionMap": {
       "HynRidge": 2,
       "-": 32
+    }
+  },
+  {
+    "path": "src/test/java/seedu/address/logic/parser/LabelCommandParserTest.java",
+    "fileType": "test-code",
+    "lines": [
+      {
+        "lineNumber": 1,
+        "author": {
+          "gitId": "li-s"
+        },
+        "content": "package seedu.address.logic.parser;"
+      },
+      {
+        "lineNumber": 2,
+        "author": {
+          "gitId": "li-s"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 3,
+        "author": {
+          "gitId": "li-s"
+        },
+        "content": "import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;"
+      },
+      {
+        "lineNumber": 4,
+        "author": {
+          "gitId": "li-s"
+        },
+        "content": "import static seedu.address.logic.commands.CommandTestUtil.INVALID_LABEL_DESC;"
+      },
+      {
+        "lineNumber": 5,
+        "author": {
+          "gitId": "li-s"
+        },
+        "content": "import static seedu.address.logic.commands.CommandTestUtil.INVALID_TAG_DESC;"
+      },
+      {
+        "lineNumber": 6,
+        "author": {
+          "gitId": "li-s"
+        },
+        "content": "import static seedu.address.logic.commands.CommandTestUtil.TAG_DESC_CS2103;"
+      },
+      {
+        "lineNumber": 7,
+        "author": {
+          "gitId": "li-s"
+        },
+        "content": "import static seedu.address.logic.commands.CommandTestUtil.VALID_LABEL;"
+      },
+      {
+        "lineNumber": 8,
+        "author": {
+          "gitId": "li-s"
+        },
+        "content": "import static seedu.address.logic.commands.CommandTestUtil.VALID_LABEL_DESC;"
+      },
+      {
+        "lineNumber": 9,
+        "author": {
+          "gitId": "li-s"
+        },
+        "content": "import static seedu.address.logic.commands.CommandTestUtil.VALID_TAG_NAME_CS2103;"
+      },
+      {
+        "lineNumber": 10,
+        "author": {
+          "gitId": "li-s"
+        },
+        "content": "import static seedu.address.logic.parser.CommandParserTestUtil.assertParseFailure;"
+      },
+      {
+        "lineNumber": 11,
+        "author": {
+          "gitId": "li-s"
+        },
+        "content": "import static seedu.address.logic.parser.CommandParserTestUtil.assertParseSuccess;"
+      },
+      {
+        "lineNumber": 12,
+        "author": {
+          "gitId": "li-s"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 13,
+        "author": {
+          "gitId": "li-s"
+        },
+        "content": "import java.util.Set;"
+      },
+      {
+        "lineNumber": 14,
+        "author": {
+          "gitId": "li-s"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 15,
+        "author": {
+          "gitId": "li-s"
+        },
+        "content": "import org.junit.jupiter.api.Test;"
+      },
+      {
+        "lineNumber": 16,
+        "author": {
+          "gitId": "li-s"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 17,
+        "author": {
+          "gitId": "li-s"
+        },
+        "content": "import seedu.address.logic.commands.LabelCommand;"
+      },
+      {
+        "lineNumber": 18,
+        "author": {
+          "gitId": "li-s"
+        },
+        "content": "import seedu.address.model.label.Label;"
+      },
+      {
+        "lineNumber": 19,
+        "author": {
+          "gitId": "li-s"
+        },
+        "content": "import seedu.address.model.tag.TagName;"
+      },
+      {
+        "lineNumber": 20,
+        "author": {
+          "gitId": "li-s"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 21,
+        "author": {
+          "gitId": "li-s"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 22,
+        "author": {
+          "gitId": "li-s"
+        },
+        "content": "public class LabelCommandParserTest {"
+      },
+      {
+        "lineNumber": 23,
+        "author": {
+          "gitId": "li-s"
+        },
+        "content": "    private LabelCommandParser parser \u003d new LabelCommandParser();"
+      },
+      {
+        "lineNumber": 24,
+        "author": {
+          "gitId": "li-s"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 25,
+        "author": {
+          "gitId": "li-s"
+        },
+        "content": "    @Test"
+      },
+      {
+        "lineNumber": 26,
+        "author": {
+          "gitId": "li-s"
+        },
+        "content": "    public void parse_allFieldsPresent_success() {"
+      },
+      {
+        "lineNumber": 27,
+        "author": {
+          "gitId": "li-s"
+        },
+        "content": "        TagName tagName \u003d new TagName(VALID_TAG_NAME_CS2103);"
+      },
+      {
+        "lineNumber": 28,
+        "author": {
+          "gitId": "li-s"
+        },
+        "content": "        Label label \u003d new Label(VALID_LABEL);"
+      },
+      {
+        "lineNumber": 29,
+        "author": {
+          "gitId": "li-s"
+        },
+        "content": "        Set\u003cLabel\u003e labels \u003d Set.of(label);"
+      },
+      {
+        "lineNumber": 30,
+        "author": {
+          "gitId": "li-s"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 31,
+        "author": {
+          "gitId": "li-s"
+        },
+        "content": "        String userInput \u003d TAG_DESC_CS2103 + VALID_LABEL_DESC;"
+      },
+      {
+        "lineNumber": 32,
+        "author": {
+          "gitId": "li-s"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 33,
+        "author": {
+          "gitId": "li-s"
+        },
+        "content": "        LabelCommand labelCommand \u003d new LabelCommand(tagName, labels);"
+      },
+      {
+        "lineNumber": 34,
+        "author": {
+          "gitId": "li-s"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 35,
+        "author": {
+          "gitId": "li-s"
+        },
+        "content": "        assertParseSuccess(parser, userInput, labelCommand);"
+      },
+      {
+        "lineNumber": 36,
+        "author": {
+          "gitId": "li-s"
+        },
+        "content": "    }"
+      },
+      {
+        "lineNumber": 37,
+        "author": {
+          "gitId": "li-s"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 38,
+        "author": {
+          "gitId": "li-s"
+        },
+        "content": "    @Test"
+      },
+      {
+        "lineNumber": 39,
+        "author": {
+          "gitId": "li-s"
+        },
+        "content": "    public void parse_compulsoryFieldMissing_failure() {"
+      },
+      {
+        "lineNumber": 40,
+        "author": {
+          "gitId": "li-s"
+        },
+        "content": "        String expectedMessage \u003d String.format(MESSAGE_INVALID_COMMAND_FORMAT, LabelCommand.MESSAGE_USAGE);"
+      },
+      {
+        "lineNumber": 41,
+        "author": {
+          "gitId": "li-s"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 42,
+        "author": {
+          "gitId": "li-s"
+        },
+        "content": "        // missing tag name prefix"
+      },
+      {
+        "lineNumber": 43,
+        "author": {
+          "gitId": "li-s"
+        },
+        "content": "        assertParseFailure(parser, VALID_TAG_NAME_CS2103 + VALID_LABEL_DESC,"
+      },
+      {
+        "lineNumber": 44,
+        "author": {
+          "gitId": "li-s"
+        },
+        "content": "                expectedMessage);"
+      },
+      {
+        "lineNumber": 45,
+        "author": {
+          "gitId": "li-s"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 46,
+        "author": {
+          "gitId": "li-s"
+        },
+        "content": "        // missing tag"
+      },
+      {
+        "lineNumber": 47,
+        "author": {
+          "gitId": "li-s"
+        },
+        "content": "        assertParseFailure(parser, VALID_LABEL_DESC,"
+      },
+      {
+        "lineNumber": 48,
+        "author": {
+          "gitId": "li-s"
+        },
+        "content": "                expectedMessage);"
+      },
+      {
+        "lineNumber": 49,
+        "author": {
+          "gitId": "li-s"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 50,
+        "author": {
+          "gitId": "li-s"
+        },
+        "content": "        // missing label name prefix"
+      },
+      {
+        "lineNumber": 51,
+        "author": {
+          "gitId": "li-s"
+        },
+        "content": "        assertParseFailure(parser, TAG_DESC_CS2103 + VALID_LABEL,"
+      },
+      {
+        "lineNumber": 52,
+        "author": {
+          "gitId": "li-s"
+        },
+        "content": "                expectedMessage);"
+      },
+      {
+        "lineNumber": 53,
+        "author": {
+          "gitId": "li-s"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 54,
+        "author": {
+          "gitId": "li-s"
+        },
+        "content": "        // missing label"
+      },
+      {
+        "lineNumber": 55,
+        "author": {
+          "gitId": "li-s"
+        },
+        "content": "        assertParseFailure(parser, TAG_DESC_CS2103,"
+      },
+      {
+        "lineNumber": 56,
+        "author": {
+          "gitId": "li-s"
+        },
+        "content": "                expectedMessage);"
+      },
+      {
+        "lineNumber": 57,
+        "author": {
+          "gitId": "li-s"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 58,
+        "author": {
+          "gitId": "li-s"
+        },
+        "content": "        // all prefixes missing"
+      },
+      {
+        "lineNumber": 59,
+        "author": {
+          "gitId": "li-s"
+        },
+        "content": "        assertParseFailure(parser, VALID_TAG_NAME_CS2103 + VALID_LABEL, expectedMessage);"
+      },
+      {
+        "lineNumber": 60,
+        "author": {
+          "gitId": "li-s"
+        },
+        "content": "    }"
+      },
+      {
+        "lineNumber": 61,
+        "author": {
+          "gitId": "li-s"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 62,
+        "author": {
+          "gitId": "li-s"
+        },
+        "content": "    @Test"
+      },
+      {
+        "lineNumber": 63,
+        "author": {
+          "gitId": "li-s"
+        },
+        "content": "    public void parse_invalidTagInput_failure() {"
+      },
+      {
+        "lineNumber": 64,
+        "author": {
+          "gitId": "li-s"
+        },
+        "content": "        // wrong tag format"
+      },
+      {
+        "lineNumber": 65,
+        "author": {
+          "gitId": "li-s"
+        },
+        "content": "        assertParseFailure(parser, INVALID_TAG_DESC + VALID_LABEL_DESC,"
+      },
+      {
+        "lineNumber": 66,
+        "author": {
+          "gitId": "li-s"
+        },
+        "content": "                TagName.MESSAGE_CONSTRAINTS);"
+      },
+      {
+        "lineNumber": 67,
+        "author": {
+          "gitId": "li-s"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 68,
+        "author": {
+          "gitId": "li-s"
+        },
+        "content": "        // wrong label format"
+      },
+      {
+        "lineNumber": 69,
+        "author": {
+          "gitId": "li-s"
+        },
+        "content": "        assertParseFailure(parser, TAG_DESC_CS2103 + INVALID_LABEL_DESC,"
+      },
+      {
+        "lineNumber": 70,
+        "author": {
+          "gitId": "li-s"
+        },
+        "content": "                Label.MESSAGE_CONSTRAINTS);"
+      },
+      {
+        "lineNumber": 71,
+        "author": {
+          "gitId": "li-s"
+        },
+        "content": "    }"
+      },
+      {
+        "lineNumber": 72,
+        "author": {
+          "gitId": "li-s"
+        },
+        "content": "}"
+      }
+    ],
+    "authorContributionMap": {
+      "li-s": 72
     }
   },
   {
@@ -76569,56 +79114,56 @@
         "author": {
           "gitId": "HynRidge"
         },
-        "content": "        //Words contain one character longer than keyword"
+        "content": "        TagNameContainsCharPredicate firstPredicate \u003d new TagNameContainsCharPredicate("
       },
       {
         "lineNumber": 67,
         "author": {
-          "gitId": "HynRidge"
+          "gitId": "li-s"
         },
-        "content": "        TagNameContainsCharPredicate firstPredicate \u003d new TagNameContainsCharPredicate("
+        "content": "                Arrays.asList(\"arr\", \"4567\"));"
       },
       {
         "lineNumber": 68,
         "author": {
-          "gitId": "HynRidge"
+          "gitId": "li-s"
         },
-        "content": "                Arrays.asList(\"tes\", \"4567\"));"
+        "content": ""
       },
       {
         "lineNumber": 69,
         "author": {
-          "gitId": "HynRidge"
+          "gitId": "li-s"
         },
-        "content": "        assertFalse(firstPredicate.test(new TagBuilder().withTagName(\"te\").build()));"
+        "content": "        //Words contain one character longer than keyword"
       },
       {
         "lineNumber": 70,
         "author": {
-          "gitId": "HynRidge"
+          "gitId": "li-s"
         },
-        "content": ""
+        "content": "        assertFalse(firstPredicate.test(new TagBuilder().withTagName(\"ar\").build()));"
       },
       {
         "lineNumber": 71,
         "author": {
           "gitId": "HynRidge"
         },
-        "content": "        //Different Keyword"
+        "content": ""
       },
       {
         "lineNumber": 72,
         "author": {
           "gitId": "HynRidge"
         },
-        "content": "        assertFalse(firstPredicate.test(new TagBuilder().withTagName(\"1234\").build()));"
+        "content": "        //Different Keyword"
       },
       {
         "lineNumber": 73,
         "author": {
           "gitId": "HynRidge"
         },
-        "content": ""
+        "content": "        assertFalse(firstPredicate.test(new TagBuilder().withTagName(\"1234\").build()));"
       },
       {
         "lineNumber": 74,
@@ -76636,7 +79181,8 @@
       }
     ],
     "authorContributionMap": {
-      "HynRidge": 75
+      "li-s": 4,
+      "HynRidge": 71
     }
   },
   {
@@ -82821,189 +85367,189 @@
         "author": {
           "gitId": "-"
         },
-        "content": ""
-      },
-      {
-        "lineNumber": 27,
-        "author": {
-          "gitId": "-"
-        },
         "content": "    /**"
       },
       {
-        "lineNumber": 28,
+        "lineNumber": 27,
         "author": {
           "gitId": "HynRidge"
         },
         "content": "     * Creates a {@code TagBuilder} with the default details."
       },
       {
-        "lineNumber": 29,
+        "lineNumber": 28,
         "author": {
           "gitId": "-"
         },
         "content": "     */"
       },
       {
-        "lineNumber": 30,
+        "lineNumber": 29,
         "author": {
           "gitId": "HynRidge"
         },
         "content": "    public TagBuilder() {"
       },
       {
+        "lineNumber": 30,
+        "author": {
+          "gitId": "li-s"
+        },
+        "content": "        this.tagName \u003d new TagName(DEFAULT_TAG_NAME);"
+      },
+      {
         "lineNumber": 31,
         "author": {
-          "gitId": "HynRidge"
+          "gitId": "li-s"
         },
-        "content": "        tagName \u003d new TagName(DEFAULT_TAG_NAME);"
+        "content": "        this.fileAddress \u003d new FileAddress(DEFAULT_FILE_ADDRESS);"
       },
       {
         "lineNumber": 32,
         "author": {
-          "gitId": "HynRidge"
+          "gitId": "li-s"
         },
-        "content": "        fileAddress \u003d new FileAddress(DEFAULT_FILE_ADDRESS);"
+        "content": "        Set\u003cLabel\u003e labels \u003d new HashSet\u003c\u003e();"
       },
       {
         "lineNumber": 33,
         "author": {
-          "gitId": "HynRidge"
+          "gitId": "li-s"
         },
-        "content": "        labels \u003d new HashSet\u003c\u003e();"
+        "content": "        labels.add(new Label(DEFAULT_LABEL));"
       },
       {
         "lineNumber": 34,
         "author": {
-          "gitId": "-"
+          "gitId": "li-s"
         },
-        "content": "    }"
+        "content": "        this.labels \u003d labels;"
       },
       {
         "lineNumber": 35,
         "author": {
           "gitId": "-"
         },
-        "content": ""
+        "content": "    }"
       },
       {
         "lineNumber": 36,
         "author": {
           "gitId": "-"
         },
-        "content": "    /**"
+        "content": ""
       },
       {
         "lineNumber": 37,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "    /**"
+      },
+      {
+        "lineNumber": 38,
         "author": {
           "gitId": "HynRidge"
         },
         "content": "     * Initializes the TagBuilder with the data of {@code tagToCopy}."
       },
       {
-        "lineNumber": 38,
+        "lineNumber": 39,
         "author": {
           "gitId": "-"
         },
         "content": "     */"
-      },
-      {
-        "lineNumber": 39,
-        "author": {
-          "gitId": "HynRidge"
-        },
-        "content": "    public TagBuilder(Tag tagToCopy) {"
       },
       {
         "lineNumber": 40,
         "author": {
           "gitId": "HynRidge"
         },
-        "content": "        tagName \u003d tagToCopy.getTagName();"
+        "content": "    public TagBuilder(Tag tagToCopy) {"
       },
       {
         "lineNumber": 41,
         "author": {
           "gitId": "HynRidge"
         },
-        "content": "        fileAddress \u003d tagToCopy.getFileAddress();"
+        "content": "        tagName \u003d tagToCopy.getTagName();"
       },
       {
         "lineNumber": 42,
+        "author": {
+          "gitId": "HynRidge"
+        },
+        "content": "        fileAddress \u003d tagToCopy.getFileAddress();"
+      },
+      {
+        "lineNumber": 43,
         "author": {
           "gitId": "Anthony6401"
         },
         "content": "        labels \u003d tagToCopy.getLabels();"
       },
       {
-        "lineNumber": 43,
-        "author": {
-          "gitId": "-"
-        },
-        "content": "    }"
-      },
-      {
         "lineNumber": 44,
         "author": {
           "gitId": "-"
         },
-        "content": ""
+        "content": "    }"
       },
       {
         "lineNumber": 45,
         "author": {
           "gitId": "-"
         },
-        "content": "    /**"
+        "content": ""
       },
       {
         "lineNumber": 46,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "    /**"
+      },
+      {
+        "lineNumber": 47,
         "author": {
           "gitId": "HynRidge"
         },
         "content": "     * Sets the {@code TagName} of the {@code Tag} that we are building."
       },
       {
-        "lineNumber": 47,
+        "lineNumber": 48,
         "author": {
           "gitId": "-"
         },
         "content": "     */"
       },
       {
-        "lineNumber": 48,
+        "lineNumber": 49,
         "author": {
           "gitId": "HynRidge"
         },
         "content": "    public TagBuilder withTagName(String tagName) {"
       },
       {
-        "lineNumber": 49,
+        "lineNumber": 50,
         "author": {
           "gitId": "HynRidge"
         },
         "content": "        this.tagName \u003d new TagName(tagName);"
       },
       {
-        "lineNumber": 50,
+        "lineNumber": 51,
         "author": {
           "gitId": "-"
         },
         "content": "        return this;"
       },
       {
-        "lineNumber": 51,
-        "author": {
-          "gitId": "-"
-        },
-        "content": "    }"
-      },
-      {
         "lineNumber": 52,
         "author": {
           "gitId": "-"
         },
-        "content": ""
+        "content": "    }"
       },
       {
         "lineNumber": 53,
@@ -83017,136 +85563,143 @@
         "author": {
           "gitId": "-"
         },
-        "content": "    /**"
+        "content": ""
       },
       {
         "lineNumber": 55,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "    /**"
+      },
+      {
+        "lineNumber": 56,
         "author": {
           "gitId": "HynRidge"
         },
         "content": "     * Sets the {@code FileAddress} of the {@code Tag} that we are building."
       },
       {
-        "lineNumber": 56,
+        "lineNumber": 57,
         "author": {
           "gitId": "-"
         },
         "content": "     */"
-      },
-      {
-        "lineNumber": 57,
-        "author": {
-          "gitId": "HynRidge"
-        },
-        "content": "    public TagBuilder withFileAddress(String fileAddress) {"
       },
       {
         "lineNumber": 58,
         "author": {
           "gitId": "HynRidge"
         },
-        "content": "        this.fileAddress \u003d new FileAddress(fileAddress);"
+        "content": "    public TagBuilder withFileAddress(String fileAddress) {"
       },
       {
         "lineNumber": 59,
         "author": {
-          "gitId": "-"
+          "gitId": "HynRidge"
         },
-        "content": "        return this;"
+        "content": "        this.fileAddress \u003d new FileAddress(fileAddress);"
       },
       {
         "lineNumber": 60,
         "author": {
           "gitId": "-"
         },
-        "content": "    }"
+        "content": "        return this;"
       },
       {
         "lineNumber": 61,
         "author": {
           "gitId": "-"
         },
-        "content": ""
+        "content": "    }"
       },
       {
         "lineNumber": 62,
+        "author": {
+          "gitId": "-"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 63,
         "author": {
           "gitId": "HynRidge"
         },
         "content": "    /**"
       },
       {
-        "lineNumber": 63,
+        "lineNumber": 64,
         "author": {
           "gitId": "Anthony6401"
         },
         "content": "     * Parses the {@code labels} into a {@code Set\u003cLabel\u003e} and set it to the {@code Tag} that we are building."
       },
       {
-        "lineNumber": 64,
+        "lineNumber": 65,
         "author": {
           "gitId": "HynRidge"
         },
         "content": "     */"
       },
       {
-        "lineNumber": 65,
+        "lineNumber": 66,
         "author": {
           "gitId": "HynRidge"
         },
         "content": "    public TagBuilder withLabels(String ... labels) {"
       },
       {
-        "lineNumber": 66,
+        "lineNumber": 67,
         "author": {
           "gitId": "HynRidge"
         },
         "content": "        this.labels \u003d SampleDataUtil.getLabelSet(labels);"
       },
       {
-        "lineNumber": 67,
+        "lineNumber": 68,
         "author": {
           "gitId": "HynRidge"
         },
         "content": "        return this;"
       },
       {
-        "lineNumber": 68,
-        "author": {
-          "gitId": "HynRidge"
-        },
-        "content": "    }"
-      },
-      {
         "lineNumber": 69,
         "author": {
           "gitId": "HynRidge"
         },
-        "content": ""
+        "content": "    }"
       },
       {
         "lineNumber": 70,
         "author": {
           "gitId": "HynRidge"
         },
-        "content": "    public Tag build() {"
+        "content": ""
       },
       {
         "lineNumber": 71,
         "author": {
           "gitId": "HynRidge"
         },
-        "content": "        return new Tag(tagName, fileAddress, labels);"
+        "content": "    public Tag build() {"
       },
       {
         "lineNumber": 72,
+        "author": {
+          "gitId": "HynRidge"
+        },
+        "content": "        return new Tag(tagName, fileAddress, labels);"
+      },
+      {
+        "lineNumber": 73,
         "author": {
           "gitId": "-"
         },
         "content": "    }"
       },
       {
-        "lineNumber": 73,
+        "lineNumber": 74,
         "author": {
           "gitId": "-"
         },
@@ -83155,9 +85708,10 @@
     ],
     "authorContributionMap": {
       "luo-git": 2,
+      "li-s": 5,
       "Anthony6401": 2,
-      "HynRidge": 38,
-      "-": 31
+      "HynRidge": 35,
+      "-": 30
     }
   },
   {
@@ -83188,194 +85742,257 @@
       {
         "lineNumber": 4,
         "author": {
+          "gitId": "li-s"
+        },
+        "content": "import static seedu.address.logic.parser.CliSyntax.PREFIX_LABEL_NAME;"
+      },
+      {
+        "lineNumber": 5,
+        "author": {
           "gitId": "HynRidge"
         },
         "content": "import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG_NAME;"
       },
       {
-        "lineNumber": 5,
+        "lineNumber": 6,
         "author": {
           "gitId": "-"
         },
         "content": ""
       },
       {
-        "lineNumber": 6,
+        "lineNumber": 7,
         "author": {
           "gitId": "luo-git"
         },
         "content": "import seedu.address.logic.commands.TagCommand;"
       },
       {
-        "lineNumber": 7,
+        "lineNumber": 8,
+        "author": {
+          "gitId": "li-s"
+        },
+        "content": "import seedu.address.model.label.Label;"
+      },
+      {
+        "lineNumber": 9,
         "author": {
           "gitId": "HynRidge"
         },
         "content": "import seedu.address.model.tag.Tag;"
       },
       {
-        "lineNumber": 8,
-        "author": {
-          "gitId": "-"
-        },
-        "content": ""
-      },
-      {
-        "lineNumber": 9,
-        "author": {
-          "gitId": "-"
-        },
-        "content": ""
-      },
-      {
         "lineNumber": 10,
         "author": {
           "gitId": "-"
         },
-        "content": "/**"
+        "content": ""
       },
       {
         "lineNumber": 11,
         "author": {
-          "gitId": "HynRidge"
+          "gitId": "-"
         },
-        "content": " * A utility class for Tag."
+        "content": ""
       },
       {
         "lineNumber": 12,
         "author": {
           "gitId": "-"
         },
-        "content": " */"
+        "content": "/**"
       },
       {
         "lineNumber": 13,
         "author": {
           "gitId": "HynRidge"
         },
-        "content": "public class TagUtil {"
+        "content": " * A utility class for Tag."
       },
       {
         "lineNumber": 14,
         "author": {
           "gitId": "-"
         },
-        "content": ""
+        "content": " */"
       },
       {
         "lineNumber": 15,
         "author": {
-          "gitId": "-"
+          "gitId": "HynRidge"
         },
-        "content": "    /**"
+        "content": "public class TagUtil {"
       },
       {
         "lineNumber": 16,
         "author": {
-          "gitId": "HynRidge"
+          "gitId": "-"
         },
-        "content": "     * Returns an add command string for adding the {@code tag}."
+        "content": ""
       },
       {
         "lineNumber": 17,
         "author": {
           "gitId": "-"
         },
-        "content": "     */"
+        "content": "    /**"
       },
       {
         "lineNumber": 18,
+        "author": {
+          "gitId": "HynRidge"
+        },
+        "content": "     * Returns an add command string for adding the {@code tag}."
+      },
+      {
+        "lineNumber": 19,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "     */"
+      },
+      {
+        "lineNumber": 20,
         "author": {
           "gitId": "luo-git"
         },
         "content": "    public static String getTagCommand(Tag tag) {"
       },
       {
-        "lineNumber": 19,
+        "lineNumber": 21,
         "author": {
           "gitId": "luo-git"
         },
         "content": "        return TagCommand.COMMAND_WORD + \" \" + getTagDetails(tag);"
       },
       {
-        "lineNumber": 20,
+        "lineNumber": 22,
         "author": {
           "gitId": "-"
         },
         "content": "    }"
       },
       {
-        "lineNumber": 21,
+        "lineNumber": 23,
         "author": {
           "gitId": "-"
         },
         "content": ""
       },
       {
-        "lineNumber": 22,
+        "lineNumber": 24,
         "author": {
           "gitId": "-"
         },
         "content": "    /**"
       },
       {
-        "lineNumber": 23,
+        "lineNumber": 25,
         "author": {
           "gitId": "HynRidge"
         },
         "content": "     * Returns the part of command string for the given {@code tag}\u0027s details."
       },
       {
-        "lineNumber": 24,
+        "lineNumber": 26,
         "author": {
           "gitId": "-"
         },
         "content": "     */"
       },
       {
-        "lineNumber": 25,
+        "lineNumber": 27,
         "author": {
           "gitId": "HynRidge"
         },
         "content": "    public static String getTagDetails(Tag tag) {"
       },
       {
-        "lineNumber": 26,
+        "lineNumber": 28,
         "author": {
           "gitId": "-"
         },
         "content": "        StringBuilder sb \u003d new StringBuilder();"
       },
       {
-        "lineNumber": 27,
+        "lineNumber": 29,
         "author": {
           "gitId": "HynRidge"
         },
         "content": "        sb.append(PREFIX_TAG_NAME + tag.getTagName().tagName + \" \");"
       },
       {
-        "lineNumber": 28,
+        "lineNumber": 30,
         "author": {
           "gitId": "HynRidge"
         },
         "content": "        sb.append(PREFIX_FILE_ADDRESS + tag.getFileAddress().value + \" \");"
       },
       {
-        "lineNumber": 29,
+        "lineNumber": 31,
+        "author": {
+          "gitId": "li-s"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 32,
+        "author": {
+          "gitId": "li-s"
+        },
+        "content": "        StringBuilder labels \u003d new StringBuilder();"
+      },
+      {
+        "lineNumber": 33,
+        "author": {
+          "gitId": "li-s"
+        },
+        "content": "        for (Label label : tag.getLabels()) {"
+      },
+      {
+        "lineNumber": 34,
+        "author": {
+          "gitId": "li-s"
+        },
+        "content": "            labels.append(PREFIX_LABEL_NAME + label.getLabel() + \" \");"
+      },
+      {
+        "lineNumber": 35,
+        "author": {
+          "gitId": "li-s"
+        },
+        "content": "        }"
+      },
+      {
+        "lineNumber": 36,
+        "author": {
+          "gitId": "li-s"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 37,
+        "author": {
+          "gitId": "li-s"
+        },
+        "content": "        sb.append(labels);"
+      },
+      {
+        "lineNumber": 38,
         "author": {
           "gitId": "-"
         },
         "content": "        return sb.toString();"
       },
       {
-        "lineNumber": 30,
+        "lineNumber": 39,
         "author": {
           "gitId": "-"
         },
         "content": "    }"
       },
       {
-        "lineNumber": 31,
+        "lineNumber": 40,
         "author": {
           "gitId": "-"
         },
@@ -83383,6 +86000,7 @@
       }
     ],
     "authorContributionMap": {
+      "li-s": 9,
       "luo-git": 3,
       "HynRidge": 10,
       "-": 18
