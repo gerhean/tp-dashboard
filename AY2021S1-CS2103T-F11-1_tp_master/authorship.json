@@ -9138,9 +9138,9 @@
       {
         "lineNumber": 153,
         "author": {
-          "gitId": "sun-yitao"
+          "gitId": "Rishi5154"
         },
-        "content": "### Marking Attendance [coming soon] : `attend`"
+        "content": "### Marking Attendance : `attend`"
       },
       {
         "lineNumber": 154,
@@ -9180,9 +9180,9 @@
       {
         "lineNumber": 159,
         "author": {
-          "gitId": "sun-yitao"
+          "gitId": "Rishi5154"
         },
-        "content": "### Unmarking Attendance [coming soon] : `unattend`"
+        "content": "### Unmarking Attendance : `unattend`"
       },
       {
         "lineNumber": 160,
@@ -9208,9 +9208,9 @@
       {
         "lineNumber": 163,
         "author": {
-          "gitId": "sun-yitao"
+          "gitId": "Rishi5154"
         },
-        "content": "Format: `unattend INDEX d/DATE`"
+        "content": "Format: `unattend [INDEX] d/DATE`"
       },
       {
         "lineNumber": 164,
@@ -9635,9 +9635,9 @@
       {
         "lineNumber": 224,
         "author": {
-          "gitId": "sun-yitao"
+          "gitId": "Rishi5154"
         },
-        "content": "| **Unmarking Attendance** | `unattend INDEX d/DATE`                                                                                                                                                                                                    |"
+        "content": "| **Unmarking Attendance** | `unattend [INDEX] d/DATE`                                                                                                                                                                                                    |"
       },
       {
         "lineNumber": 225,
@@ -9669,8 +9669,8 @@
       }
     ],
     "authorContributionMap": {
-      "Rishi5154": 2,
-      "sun-yitao": 112,
+      "Rishi5154": 6,
+      "sun-yitao": 108,
       "-": 110,
       "chrisgzf": 4
     }
@@ -24564,6 +24564,659 @@
     }
   },
   {
+    "path": "src/main/java/seedu/address/logic/commands/UnattendCommand.java",
+    "fileType": "functional-code",
+    "lines": [
+      {
+        "lineNumber": 1,
+        "author": {
+          "gitId": "Rishi5154"
+        },
+        "content": "package seedu.address.logic.commands;"
+      },
+      {
+        "lineNumber": 2,
+        "author": {
+          "gitId": "Rishi5154"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 3,
+        "author": {
+          "gitId": "Rishi5154"
+        },
+        "content": "import static java.util.Objects.requireNonNull;"
+      },
+      {
+        "lineNumber": 4,
+        "author": {
+          "gitId": "Rishi5154"
+        },
+        "content": "import static seedu.address.logic.parser.CliSyntax.PREFIX_DATE;"
+      },
+      {
+        "lineNumber": 5,
+        "author": {
+          "gitId": "Rishi5154"
+        },
+        "content": "import static seedu.address.model.Model.PREDICATE_SHOW_ALL_PERSONS;"
+      },
+      {
+        "lineNumber": 6,
+        "author": {
+          "gitId": "Rishi5154"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 7,
+        "author": {
+          "gitId": "Rishi5154"
+        },
+        "content": "import java.util.List;"
+      },
+      {
+        "lineNumber": 8,
+        "author": {
+          "gitId": "Rishi5154"
+        },
+        "content": "import java.util.SortedSet;"
+      },
+      {
+        "lineNumber": 9,
+        "author": {
+          "gitId": "Rishi5154"
+        },
+        "content": "import java.util.TreeSet;"
+      },
+      {
+        "lineNumber": 10,
+        "author": {
+          "gitId": "Rishi5154"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 11,
+        "author": {
+          "gitId": "Rishi5154"
+        },
+        "content": "import seedu.address.commons.core.Messages;"
+      },
+      {
+        "lineNumber": 12,
+        "author": {
+          "gitId": "Rishi5154"
+        },
+        "content": "import seedu.address.commons.core.index.Index;"
+      },
+      {
+        "lineNumber": 13,
+        "author": {
+          "gitId": "Rishi5154"
+        },
+        "content": "import seedu.address.logic.commands.exceptions.CommandException;"
+      },
+      {
+        "lineNumber": 14,
+        "author": {
+          "gitId": "Rishi5154"
+        },
+        "content": "import seedu.address.model.Model;"
+      },
+      {
+        "lineNumber": 15,
+        "author": {
+          "gitId": "Rishi5154"
+        },
+        "content": "import seedu.address.model.attendance.Attendance;"
+      },
+      {
+        "lineNumber": 16,
+        "author": {
+          "gitId": "Rishi5154"
+        },
+        "content": "import seedu.address.model.person.Person;"
+      },
+      {
+        "lineNumber": 17,
+        "author": {
+          "gitId": "Rishi5154"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 18,
+        "author": {
+          "gitId": "Rishi5154"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 19,
+        "author": {
+          "gitId": "Rishi5154"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 20,
+        "author": {
+          "gitId": "Rishi5154"
+        },
+        "content": "public class UnattendCommand extends Command {"
+      },
+      {
+        "lineNumber": 21,
+        "author": {
+          "gitId": "Rishi5154"
+        },
+        "content": "    public static final String COMMAND_WORD \u003d \"unattend\";"
+      },
+      {
+        "lineNumber": 22,
+        "author": {
+          "gitId": "Rishi5154"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 23,
+        "author": {
+          "gitId": "Rishi5154"
+        },
+        "content": "    public static final String MESSAGE_USAGE \u003d COMMAND_WORD"
+      },
+      {
+        "lineNumber": 24,
+        "author": {
+          "gitId": "Rishi5154"
+        },
+        "content": "            + \": Marks absence for the person identified by the index number used in the displayed person list.\\n\""
+      },
+      {
+        "lineNumber": 25,
+        "author": {
+          "gitId": "Rishi5154"
+        },
+        "content": "            + \"Attendance date should be in dd/MM/yyyy format.\\n\""
+      },
+      {
+        "lineNumber": 26,
+        "author": {
+          "gitId": "Rishi5154"
+        },
+        "content": "            + \"Parameters: INDEX (must be a positive integer) \""
+      },
+      {
+        "lineNumber": 27,
+        "author": {
+          "gitId": "Rishi5154"
+        },
+        "content": "            + PREFIX_DATE + \"DATE\\n\""
+      },
+      {
+        "lineNumber": 28,
+        "author": {
+          "gitId": "Rishi5154"
+        },
+        "content": "            + \"Example: \" + COMMAND_WORD + \" 1 \" + PREFIX_DATE + \"27/03/1998\";"
+      },
+      {
+        "lineNumber": 29,
+        "author": {
+          "gitId": "Rishi5154"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 30,
+        "author": {
+          "gitId": "Rishi5154"
+        },
+        "content": "    public static final String MESSAGE_ALREADY_UNATTENDED \u003d \"%1$s already unattended on %2$s\";"
+      },
+      {
+        "lineNumber": 31,
+        "author": {
+          "gitId": "Rishi5154"
+        },
+        "content": "    public static final String MESSAGE_UNATTEND_SUCCESS \u003d \"Marked absence for person: %1$s\";"
+      },
+      {
+        "lineNumber": 32,
+        "author": {
+          "gitId": "Rishi5154"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 33,
+        "author": {
+          "gitId": "Rishi5154"
+        },
+        "content": "    private final Index targetIndex;"
+      },
+      {
+        "lineNumber": 34,
+        "author": {
+          "gitId": "Rishi5154"
+        },
+        "content": "    private final Attendance attendance;"
+      },
+      {
+        "lineNumber": 35,
+        "author": {
+          "gitId": "Rishi5154"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 36,
+        "author": {
+          "gitId": "Rishi5154"
+        },
+        "content": "    /**"
+      },
+      {
+        "lineNumber": 37,
+        "author": {
+          "gitId": "Rishi5154"
+        },
+        "content": "     * Creates an {@code Attend} with corresponding target index and {@code Attendance}."
+      },
+      {
+        "lineNumber": 38,
+        "author": {
+          "gitId": "Rishi5154"
+        },
+        "content": "     * @param targetIndex of the person in the filtered person list to edit"
+      },
+      {
+        "lineNumber": 39,
+        "author": {
+          "gitId": "Rishi5154"
+        },
+        "content": "     * @param attendance {@code Attendance}"
+      },
+      {
+        "lineNumber": 40,
+        "author": {
+          "gitId": "Rishi5154"
+        },
+        "content": "     */"
+      },
+      {
+        "lineNumber": 41,
+        "author": {
+          "gitId": "Rishi5154"
+        },
+        "content": "    public UnattendCommand(Index targetIndex, Attendance attendance) {"
+      },
+      {
+        "lineNumber": 42,
+        "author": {
+          "gitId": "Rishi5154"
+        },
+        "content": "        this.targetIndex \u003d targetIndex;"
+      },
+      {
+        "lineNumber": 43,
+        "author": {
+          "gitId": "Rishi5154"
+        },
+        "content": "        this.attendance \u003d attendance;"
+      },
+      {
+        "lineNumber": 44,
+        "author": {
+          "gitId": "Rishi5154"
+        },
+        "content": "    }"
+      },
+      {
+        "lineNumber": 45,
+        "author": {
+          "gitId": "Rishi5154"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 46,
+        "author": {
+          "gitId": "Rishi5154"
+        },
+        "content": "    @Override"
+      },
+      {
+        "lineNumber": 47,
+        "author": {
+          "gitId": "Rishi5154"
+        },
+        "content": "    public CommandResult execute(Model model) throws CommandException {"
+      },
+      {
+        "lineNumber": 48,
+        "author": {
+          "gitId": "Rishi5154"
+        },
+        "content": "        requireNonNull(model);"
+      },
+      {
+        "lineNumber": 49,
+        "author": {
+          "gitId": "Rishi5154"
+        },
+        "content": "        List\u003cPerson\u003e persons \u003d model.getFilteredPersonList();"
+      },
+      {
+        "lineNumber": 50,
+        "author": {
+          "gitId": "Rishi5154"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 51,
+        "author": {
+          "gitId": "Rishi5154"
+        },
+        "content": "        if (targetIndex.getZeroBased() \u003e\u003d persons.size()) {"
+      },
+      {
+        "lineNumber": 52,
+        "author": {
+          "gitId": "Rishi5154"
+        },
+        "content": "            throw new CommandException(Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);"
+      },
+      {
+        "lineNumber": 53,
+        "author": {
+          "gitId": "Rishi5154"
+        },
+        "content": "        }"
+      },
+      {
+        "lineNumber": 54,
+        "author": {
+          "gitId": "Rishi5154"
+        },
+        "content": "        if (attendance \u003d\u003d null) {"
+      },
+      {
+        "lineNumber": 55,
+        "author": {
+          "gitId": "Rishi5154"
+        },
+        "content": "            throw new CommandException("
+      },
+      {
+        "lineNumber": 56,
+        "author": {
+          "gitId": "Rishi5154"
+        },
+        "content": "                    String.format(Messages.MESSAGE_INVALID_COMMAND_FORMAT, UnattendCommand.MESSAGE_USAGE));"
+      },
+      {
+        "lineNumber": 57,
+        "author": {
+          "gitId": "Rishi5154"
+        },
+        "content": "        }"
+      },
+      {
+        "lineNumber": 58,
+        "author": {
+          "gitId": "Rishi5154"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 59,
+        "author": {
+          "gitId": "Rishi5154"
+        },
+        "content": "        Person personToAttend \u003d persons.get(targetIndex.getZeroBased());"
+      },
+      {
+        "lineNumber": 60,
+        "author": {
+          "gitId": "Rishi5154"
+        },
+        "content": "        Person unattendedPerson \u003d updateAttendanceForPerson(personToAttend, attendance);"
+      },
+      {
+        "lineNumber": 61,
+        "author": {
+          "gitId": "Rishi5154"
+        },
+        "content": "        model.setPerson(personToAttend, unattendedPerson);"
+      },
+      {
+        "lineNumber": 62,
+        "author": {
+          "gitId": "Rishi5154"
+        },
+        "content": "        model.updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);"
+      },
+      {
+        "lineNumber": 63,
+        "author": {
+          "gitId": "Rishi5154"
+        },
+        "content": "        return new CommandResult(String.format(MESSAGE_UNATTEND_SUCCESS, personToAttend));"
+      },
+      {
+        "lineNumber": 64,
+        "author": {
+          "gitId": "Rishi5154"
+        },
+        "content": "    }"
+      },
+      {
+        "lineNumber": 65,
+        "author": {
+          "gitId": "Rishi5154"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 66,
+        "author": {
+          "gitId": "Rishi5154"
+        },
+        "content": "    private static Person updateAttendanceForPerson(Person personToAttend, Attendance attendance)"
+      },
+      {
+        "lineNumber": 67,
+        "author": {
+          "gitId": "Rishi5154"
+        },
+        "content": "            throws CommandException {"
+      },
+      {
+        "lineNumber": 68,
+        "author": {
+          "gitId": "Rishi5154"
+        },
+        "content": "        assert personToAttend !\u003d null;"
+      },
+      {
+        "lineNumber": 69,
+        "author": {
+          "gitId": "Rishi5154"
+        },
+        "content": "        SortedSet\u003cAttendance\u003e updatedAttendances \u003d new TreeSet\u003c\u003e(personToAttend.getAttendances());"
+      },
+      {
+        "lineNumber": 70,
+        "author": {
+          "gitId": "Rishi5154"
+        },
+        "content": "        if (updatedAttendances.contains(attendance)) {"
+      },
+      {
+        "lineNumber": 71,
+        "author": {
+          "gitId": "Rishi5154"
+        },
+        "content": "            throw new CommandException(String.format(MESSAGE_ALREADY_UNATTENDED, personToAttend.getName(), attendance));"
+      },
+      {
+        "lineNumber": 72,
+        "author": {
+          "gitId": "Rishi5154"
+        },
+        "content": "        }"
+      },
+      {
+        "lineNumber": 73,
+        "author": {
+          "gitId": "Rishi5154"
+        },
+        "content": "        updatedAttendances.add(attendance);"
+      },
+      {
+        "lineNumber": 74,
+        "author": {
+          "gitId": "Rishi5154"
+        },
+        "content": "        return new Person(personToAttend.getName(),"
+      },
+      {
+        "lineNumber": 75,
+        "author": {
+          "gitId": "Rishi5154"
+        },
+        "content": "                personToAttend.getPhone(),"
+      },
+      {
+        "lineNumber": 76,
+        "author": {
+          "gitId": "Rishi5154"
+        },
+        "content": "                personToAttend.getEmail(),"
+      },
+      {
+        "lineNumber": 77,
+        "author": {
+          "gitId": "Rishi5154"
+        },
+        "content": "                personToAttend.getTelegram(),"
+      },
+      {
+        "lineNumber": 78,
+        "author": {
+          "gitId": "Rishi5154"
+        },
+        "content": "                personToAttend.getMatricNumber(),"
+      },
+      {
+        "lineNumber": 79,
+        "author": {
+          "gitId": "Rishi5154"
+        },
+        "content": "                personToAttend.getTags(),"
+      },
+      {
+        "lineNumber": 80,
+        "author": {
+          "gitId": "Rishi5154"
+        },
+        "content": "                updatedAttendances);"
+      },
+      {
+        "lineNumber": 81,
+        "author": {
+          "gitId": "Rishi5154"
+        },
+        "content": "    }"
+      },
+      {
+        "lineNumber": 82,
+        "author": {
+          "gitId": "Rishi5154"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 83,
+        "author": {
+          "gitId": "Rishi5154"
+        },
+        "content": "    @Override"
+      },
+      {
+        "lineNumber": 84,
+        "author": {
+          "gitId": "Rishi5154"
+        },
+        "content": "    public boolean equals(Object other) {"
+      },
+      {
+        "lineNumber": 85,
+        "author": {
+          "gitId": "Rishi5154"
+        },
+        "content": "        return other \u003d\u003d this // short circuit if same object"
+      },
+      {
+        "lineNumber": 86,
+        "author": {
+          "gitId": "Rishi5154"
+        },
+        "content": "                || (other instanceof UnattendCommand // instanceof handles nulls"
+      },
+      {
+        "lineNumber": 87,
+        "author": {
+          "gitId": "Rishi5154"
+        },
+        "content": "                \u0026\u0026 targetIndex.equals(((UnattendCommand) other).targetIndex)); // state check"
+      },
+      {
+        "lineNumber": 88,
+        "author": {
+          "gitId": "Rishi5154"
+        },
+        "content": "    }"
+      },
+      {
+        "lineNumber": 89,
+        "author": {
+          "gitId": "Rishi5154"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 90,
+        "author": {
+          "gitId": "Rishi5154"
+        },
+        "content": "    private static class AlreadyUnattendedException extends Exception {"
+      },
+      {
+        "lineNumber": 91,
+        "author": {
+          "gitId": "Rishi5154"
+        },
+        "content": "    }"
+      },
+      {
+        "lineNumber": 92,
+        "author": {
+          "gitId": "Rishi5154"
+        },
+        "content": "}"
+      }
+    ],
+    "authorContributionMap": {
+      "Rishi5154": 92
+    }
+  },
+  {
     "path": "src/main/java/seedu/address/logic/parser/AddCommandParser.java",
     "fileType": "functional-code",
     "lines": [
@@ -25220,453 +25873,481 @@
       {
         "lineNumber": 20,
         "author": {
-          "gitId": "-"
+          "gitId": "Rishi5154"
         },
-        "content": "import seedu.address.logic.parser.exceptions.ParseException;"
+        "content": "import seedu.address.logic.commands.UnattendCommand;"
       },
       {
         "lineNumber": 21,
         "author": {
           "gitId": "-"
         },
-        "content": ""
+        "content": "import seedu.address.logic.parser.exceptions.ParseException;"
       },
       {
         "lineNumber": 22,
         "author": {
           "gitId": "-"
         },
-        "content": "/**"
+        "content": ""
       },
       {
         "lineNumber": 23,
         "author": {
           "gitId": "-"
         },
-        "content": " * Parses user input."
+        "content": "/**"
       },
       {
         "lineNumber": 24,
         "author": {
           "gitId": "-"
         },
-        "content": " */"
+        "content": " * Parses user input."
       },
       {
         "lineNumber": 25,
         "author": {
           "gitId": "-"
         },
-        "content": "public class AddressBookParser {"
+        "content": " */"
       },
       {
         "lineNumber": 26,
         "author": {
           "gitId": "-"
         },
-        "content": ""
+        "content": "public class AddressBookParser {"
       },
       {
         "lineNumber": 27,
         "author": {
           "gitId": "-"
         },
-        "content": "    /**"
+        "content": ""
       },
       {
         "lineNumber": 28,
         "author": {
           "gitId": "-"
         },
-        "content": "     * Used for initial separation of command word and args."
+        "content": "    /**"
       },
       {
         "lineNumber": 29,
         "author": {
           "gitId": "-"
         },
-        "content": "     */"
+        "content": "     * Used for initial separation of command word and args."
       },
       {
         "lineNumber": 30,
         "author": {
           "gitId": "-"
         },
-        "content": "    private static final Pattern BASIC_COMMAND_FORMAT \u003d Pattern.compile(\"(?\u003ccommandWord\u003e\\\\S+)(?\u003carguments\u003e.*)\");"
+        "content": "     */"
       },
       {
         "lineNumber": 31,
         "author": {
           "gitId": "-"
         },
-        "content": ""
+        "content": "    private static final Pattern BASIC_COMMAND_FORMAT \u003d Pattern.compile(\"(?\u003ccommandWord\u003e\\\\S+)(?\u003carguments\u003e.*)\");"
       },
       {
         "lineNumber": 32,
         "author": {
           "gitId": "-"
         },
-        "content": "    /**"
+        "content": ""
       },
       {
         "lineNumber": 33,
         "author": {
           "gitId": "-"
         },
-        "content": "     * Parses user input into command for execution."
+        "content": "    /**"
       },
       {
         "lineNumber": 34,
         "author": {
           "gitId": "-"
         },
-        "content": "     *"
+        "content": "     * Parses user input into command for execution."
       },
       {
         "lineNumber": 35,
         "author": {
           "gitId": "-"
         },
-        "content": "     * @param userInput full user input string"
+        "content": "     *"
       },
       {
         "lineNumber": 36,
         "author": {
           "gitId": "-"
         },
-        "content": "     * @return the command based on the user input"
+        "content": "     * @param userInput full user input string"
       },
       {
         "lineNumber": 37,
         "author": {
           "gitId": "-"
         },
-        "content": "     * @throws ParseException if the user input does not conform the expected format"
+        "content": "     * @return the command based on the user input"
       },
       {
         "lineNumber": 38,
         "author": {
           "gitId": "-"
         },
-        "content": "     */"
+        "content": "     * @throws ParseException if the user input does not conform the expected format"
       },
       {
         "lineNumber": 39,
         "author": {
           "gitId": "-"
         },
-        "content": "    public Command parseCommand(String userInput) throws ParseException {"
+        "content": "     */"
       },
       {
         "lineNumber": 40,
         "author": {
           "gitId": "-"
         },
-        "content": "        final Matcher matcher \u003d BASIC_COMMAND_FORMAT.matcher(userInput.trim());"
+        "content": "    public Command parseCommand(String userInput) throws ParseException {"
       },
       {
         "lineNumber": 41,
         "author": {
           "gitId": "-"
         },
-        "content": "        if (!matcher.matches()) {"
+        "content": "        final Matcher matcher \u003d BASIC_COMMAND_FORMAT.matcher(userInput.trim());"
       },
       {
         "lineNumber": 42,
         "author": {
           "gitId": "-"
         },
-        "content": "            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, HelpCommand.MESSAGE_USAGE));"
+        "content": "        if (!matcher.matches()) {"
       },
       {
         "lineNumber": 43,
         "author": {
           "gitId": "-"
         },
-        "content": "        }"
+        "content": "            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, HelpCommand.MESSAGE_USAGE));"
       },
       {
         "lineNumber": 44,
         "author": {
           "gitId": "-"
         },
-        "content": ""
+        "content": "        }"
       },
       {
         "lineNumber": 45,
         "author": {
           "gitId": "-"
         },
-        "content": "        final String commandWord \u003d matcher.group(\"commandWord\");"
+        "content": ""
       },
       {
         "lineNumber": 46,
         "author": {
           "gitId": "-"
         },
-        "content": "        final String arguments \u003d matcher.group(\"arguments\");"
+        "content": "        final String commandWord \u003d matcher.group(\"commandWord\");"
       },
       {
         "lineNumber": 47,
         "author": {
           "gitId": "-"
         },
-        "content": "        switch (commandWord) {"
+        "content": "        final String arguments \u003d matcher.group(\"arguments\");"
       },
       {
         "lineNumber": 48,
         "author": {
           "gitId": "-"
         },
-        "content": ""
+        "content": "        switch (commandWord) {"
       },
       {
         "lineNumber": 49,
         "author": {
           "gitId": "-"
         },
-        "content": "        case AddCommand.COMMAND_WORD:"
+        "content": ""
       },
       {
         "lineNumber": 50,
         "author": {
           "gitId": "-"
         },
-        "content": "            return new AddCommandParser().parse(arguments);"
+        "content": "        case AddCommand.COMMAND_WORD:"
       },
       {
         "lineNumber": 51,
         "author": {
           "gitId": "-"
         },
-        "content": ""
+        "content": "            return new AddCommandParser().parse(arguments);"
       },
       {
         "lineNumber": 52,
         "author": {
           "gitId": "-"
         },
-        "content": "        case EditCommand.COMMAND_WORD:"
+        "content": ""
       },
       {
         "lineNumber": 53,
         "author": {
           "gitId": "-"
         },
-        "content": "            return new EditCommandParser().parse(arguments);"
+        "content": "        case EditCommand.COMMAND_WORD:"
       },
       {
         "lineNumber": 54,
         "author": {
           "gitId": "-"
         },
-        "content": ""
+        "content": "            return new EditCommandParser().parse(arguments);"
       },
       {
         "lineNumber": 55,
         "author": {
           "gitId": "-"
         },
-        "content": "        case DeleteCommand.COMMAND_WORD:"
+        "content": ""
       },
       {
         "lineNumber": 56,
         "author": {
           "gitId": "-"
         },
-        "content": "            return new DeleteCommandParser().parse(arguments);"
+        "content": "        case DeleteCommand.COMMAND_WORD:"
       },
       {
         "lineNumber": 57,
         "author": {
           "gitId": "-"
         },
-        "content": ""
+        "content": "            return new DeleteCommandParser().parse(arguments);"
       },
       {
         "lineNumber": 58,
         "author": {
           "gitId": "-"
         },
-        "content": "        case ClearCommand.COMMAND_WORD:"
+        "content": ""
       },
       {
         "lineNumber": 59,
         "author": {
           "gitId": "-"
         },
-        "content": "            return new ClearCommand();"
+        "content": "        case ClearCommand.COMMAND_WORD:"
       },
       {
         "lineNumber": 60,
         "author": {
           "gitId": "-"
         },
-        "content": ""
+        "content": "            return new ClearCommand();"
       },
       {
         "lineNumber": 61,
         "author": {
           "gitId": "-"
         },
-        "content": "        case FindCommand.COMMAND_WORD:"
+        "content": ""
       },
       {
         "lineNumber": 62,
         "author": {
           "gitId": "-"
         },
-        "content": "            return new FindCommandParser().parse(arguments);"
+        "content": "        case FindCommand.COMMAND_WORD:"
       },
       {
         "lineNumber": 63,
         "author": {
           "gitId": "-"
         },
-        "content": ""
+        "content": "            return new FindCommandParser().parse(arguments);"
       },
       {
         "lineNumber": 64,
         "author": {
           "gitId": "-"
         },
-        "content": "        case ListCommand.COMMAND_WORD:"
+        "content": ""
       },
       {
         "lineNumber": 65,
         "author": {
           "gitId": "-"
         },
-        "content": "            return new ListCommand();"
+        "content": "        case ListCommand.COMMAND_WORD:"
       },
       {
         "lineNumber": 66,
         "author": {
           "gitId": "-"
         },
-        "content": ""
+        "content": "            return new ListCommand();"
       },
       {
         "lineNumber": 67,
         "author": {
-          "gitId": "sun-yitao"
+          "gitId": "-"
         },
-        "content": "        case AttendCommand.COMMAND_WORD:"
+        "content": ""
       },
       {
         "lineNumber": 68,
         "author": {
           "gitId": "sun-yitao"
         },
-        "content": "            return new AttendCommandParser().parse(arguments);"
+        "content": "        case AttendCommand.COMMAND_WORD:"
       },
       {
         "lineNumber": 69,
         "author": {
           "gitId": "sun-yitao"
         },
-        "content": ""
+        "content": "            return new AttendCommandParser().parse(arguments);"
       },
       {
         "lineNumber": 70,
         "author": {
-          "gitId": "-"
+          "gitId": "sun-yitao"
         },
-        "content": "        case ExitCommand.COMMAND_WORD:"
+        "content": ""
       },
       {
         "lineNumber": 71,
         "author": {
-          "gitId": "-"
+          "gitId": "Rishi5154"
         },
-        "content": "            return new ExitCommand();"
+        "content": "        case UnattendCommand.COMMAND_WORD:"
       },
       {
         "lineNumber": 72,
         "author": {
-          "gitId": "-"
+          "gitId": "Rishi5154"
         },
-        "content": ""
+        "content": "            return new UnattendCommandParser().parse(arguments);"
       },
       {
         "lineNumber": 73,
         "author": {
           "gitId": "Rishi5154"
         },
-        "content": "        case ArchiveCommand.COMMAND_WORD:"
+        "content": ""
       },
       {
         "lineNumber": 74,
         "author": {
-          "gitId": "Rishi5154"
+          "gitId": "-"
         },
-        "content": "            return new ArchiveCommand();"
+        "content": "        case ExitCommand.COMMAND_WORD:"
       },
       {
         "lineNumber": 75,
         "author": {
-          "gitId": "Rishi5154"
+          "gitId": "-"
         },
-        "content": ""
+        "content": "            return new ExitCommand();"
       },
       {
         "lineNumber": 76,
         "author": {
           "gitId": "-"
         },
-        "content": "        case HelpCommand.COMMAND_WORD:"
+        "content": ""
       },
       {
         "lineNumber": 77,
         "author": {
-          "gitId": "-"
+          "gitId": "Rishi5154"
         },
-        "content": "            return new HelpCommand();"
+        "content": "        case ArchiveCommand.COMMAND_WORD:"
       },
       {
         "lineNumber": 78,
         "author": {
-          "gitId": "-"
+          "gitId": "Rishi5154"
         },
-        "content": ""
+        "content": "            return new ArchiveCommand();"
       },
       {
         "lineNumber": 79,
         "author": {
-          "gitId": "-"
+          "gitId": "Rishi5154"
         },
-        "content": "        default:"
+        "content": ""
       },
       {
         "lineNumber": 80,
         "author": {
           "gitId": "-"
         },
-        "content": "            throw new ParseException(MESSAGE_UNKNOWN_COMMAND);"
+        "content": "        case HelpCommand.COMMAND_WORD:"
       },
       {
         "lineNumber": 81,
         "author": {
           "gitId": "-"
         },
-        "content": "        }"
+        "content": "            return new HelpCommand();"
       },
       {
         "lineNumber": 82,
         "author": {
           "gitId": "-"
         },
-        "content": "    }"
+        "content": ""
       },
       {
         "lineNumber": 83,
         "author": {
           "gitId": "-"
         },
-        "content": ""
+        "content": "        default:"
       },
       {
         "lineNumber": 84,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "            throw new ParseException(MESSAGE_UNKNOWN_COMMAND);"
+      },
+      {
+        "lineNumber": 85,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "        }"
+      },
+      {
+        "lineNumber": 86,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "    }"
+      },
+      {
+        "lineNumber": 87,
+        "author": {
+          "gitId": "-"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 88,
         "author": {
           "gitId": "-"
         },
@@ -25674,7 +26355,7 @@
       }
     ],
     "authorContributionMap": {
-      "Rishi5154": 4,
+      "Rishi5154": 8,
       "sun-yitao": 4,
       "-": 76
     }
@@ -28146,6 +28827,267 @@
     "authorContributionMap": {
       "Rishi5154": 5,
       "-": 39
+    }
+  },
+  {
+    "path": "src/main/java/seedu/address/logic/parser/UnattendCommandParser.java",
+    "fileType": "functional-code",
+    "lines": [
+      {
+        "lineNumber": 1,
+        "author": {
+          "gitId": "Rishi5154"
+        },
+        "content": "package seedu.address.logic.parser;"
+      },
+      {
+        "lineNumber": 2,
+        "author": {
+          "gitId": "Rishi5154"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 3,
+        "author": {
+          "gitId": "Rishi5154"
+        },
+        "content": "import static java.util.Objects.requireNonNull;"
+      },
+      {
+        "lineNumber": 4,
+        "author": {
+          "gitId": "Rishi5154"
+        },
+        "content": "import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;"
+      },
+      {
+        "lineNumber": 5,
+        "author": {
+          "gitId": "Rishi5154"
+        },
+        "content": "import static seedu.address.logic.parser.CliSyntax.PREFIX_DATE;"
+      },
+      {
+        "lineNumber": 6,
+        "author": {
+          "gitId": "Rishi5154"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 7,
+        "author": {
+          "gitId": "Rishi5154"
+        },
+        "content": "import seedu.address.commons.core.index.Index;"
+      },
+      {
+        "lineNumber": 8,
+        "author": {
+          "gitId": "Rishi5154"
+        },
+        "content": "import seedu.address.logic.commands.UnattendCommand;"
+      },
+      {
+        "lineNumber": 9,
+        "author": {
+          "gitId": "Rishi5154"
+        },
+        "content": "import seedu.address.logic.parser.exceptions.ParseException;"
+      },
+      {
+        "lineNumber": 10,
+        "author": {
+          "gitId": "Rishi5154"
+        },
+        "content": "import seedu.address.model.attendance.Attendance;"
+      },
+      {
+        "lineNumber": 11,
+        "author": {
+          "gitId": "Rishi5154"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 12,
+        "author": {
+          "gitId": "Rishi5154"
+        },
+        "content": "public class UnattendCommandParser implements Parser\u003cUnattendCommand\u003e {"
+      },
+      {
+        "lineNumber": 13,
+        "author": {
+          "gitId": "Rishi5154"
+        },
+        "content": "    /**"
+      },
+      {
+        "lineNumber": 14,
+        "author": {
+          "gitId": "Rishi5154"
+        },
+        "content": "     * Parses the given {@code String} of arguments in the context of the UnattendCommand"
+      },
+      {
+        "lineNumber": 15,
+        "author": {
+          "gitId": "Rishi5154"
+        },
+        "content": "     * and returns a UnattendCommand object for execution."
+      },
+      {
+        "lineNumber": 16,
+        "author": {
+          "gitId": "Rishi5154"
+        },
+        "content": "     * @throws ParseException if the user input does not conform the expected format"
+      },
+      {
+        "lineNumber": 17,
+        "author": {
+          "gitId": "Rishi5154"
+        },
+        "content": "     */"
+      },
+      {
+        "lineNumber": 18,
+        "author": {
+          "gitId": "Rishi5154"
+        },
+        "content": "    public UnattendCommand parse(String args) throws ParseException {"
+      },
+      {
+        "lineNumber": 19,
+        "author": {
+          "gitId": "Rishi5154"
+        },
+        "content": "        requireNonNull(args);"
+      },
+      {
+        "lineNumber": 20,
+        "author": {
+          "gitId": "Rishi5154"
+        },
+        "content": "        Index index;"
+      },
+      {
+        "lineNumber": 21,
+        "author": {
+          "gitId": "Rishi5154"
+        },
+        "content": "        ArgumentMultimap argMultimap \u003d ArgumentTokenizer.tokenize(args, PREFIX_DATE);"
+      },
+      {
+        "lineNumber": 22,
+        "author": {
+          "gitId": "Rishi5154"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 23,
+        "author": {
+          "gitId": "Rishi5154"
+        },
+        "content": "        if (argMultimap.getValue(PREFIX_DATE).isEmpty() || argMultimap.getPreamble().isEmpty()) {"
+      },
+      {
+        "lineNumber": 24,
+        "author": {
+          "gitId": "Rishi5154"
+        },
+        "content": "            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, UnattendCommand.MESSAGE_USAGE));"
+      },
+      {
+        "lineNumber": 25,
+        "author": {
+          "gitId": "Rishi5154"
+        },
+        "content": "        }"
+      },
+      {
+        "lineNumber": 26,
+        "author": {
+          "gitId": "Rishi5154"
+        },
+        "content": "        try {"
+      },
+      {
+        "lineNumber": 27,
+        "author": {
+          "gitId": "Rishi5154"
+        },
+        "content": "            index \u003d ParserUtil.parseIndex(argMultimap.getPreamble());"
+      },
+      {
+        "lineNumber": 28,
+        "author": {
+          "gitId": "Rishi5154"
+        },
+        "content": "        } catch (ParseException pe) {"
+      },
+      {
+        "lineNumber": 29,
+        "author": {
+          "gitId": "Rishi5154"
+        },
+        "content": "            throw new ParseException("
+      },
+      {
+        "lineNumber": 30,
+        "author": {
+          "gitId": "Rishi5154"
+        },
+        "content": "                    String.format(MESSAGE_INVALID_COMMAND_FORMAT, UnattendCommand.MESSAGE_USAGE), pe);"
+      },
+      {
+        "lineNumber": 31,
+        "author": {
+          "gitId": "Rishi5154"
+        },
+        "content": "        }"
+      },
+      {
+        "lineNumber": 32,
+        "author": {
+          "gitId": "Rishi5154"
+        },
+        "content": "        Attendance attendance \u003d ParserUtil.parseAttendance(argMultimap.getValue(PREFIX_DATE).get());"
+      },
+      {
+        "lineNumber": 33,
+        "author": {
+          "gitId": "Rishi5154"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 34,
+        "author": {
+          "gitId": "Rishi5154"
+        },
+        "content": "        return new UnattendCommand(index, attendance);"
+      },
+      {
+        "lineNumber": 35,
+        "author": {
+          "gitId": "Rishi5154"
+        },
+        "content": "    }"
+      },
+      {
+        "lineNumber": 36,
+        "author": {
+          "gitId": "Rishi5154"
+        },
+        "content": "}"
+      }
+    ],
+    "authorContributionMap": {
+      "Rishi5154": 36
     }
   },
   {
@@ -51208,6 +52150,967 @@
     }
   },
   {
+    "path": "src/test/java/seedu/address/logic/commands/UnattendCommandTest.java",
+    "fileType": "test-code",
+    "lines": [
+      {
+        "lineNumber": 1,
+        "author": {
+          "gitId": "Rishi5154"
+        },
+        "content": "package seedu.address.logic.commands;"
+      },
+      {
+        "lineNumber": 2,
+        "author": {
+          "gitId": "Rishi5154"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 3,
+        "author": {
+          "gitId": "Rishi5154"
+        },
+        "content": "import static org.junit.jupiter.api.Assertions.assertFalse;"
+      },
+      {
+        "lineNumber": 4,
+        "author": {
+          "gitId": "Rishi5154"
+        },
+        "content": "import static org.junit.jupiter.api.Assertions.assertTrue;"
+      },
+      {
+        "lineNumber": 5,
+        "author": {
+          "gitId": "Rishi5154"
+        },
+        "content": "import static seedu.address.logic.commands.CommandTestUtil.VALID_ATTENDANCE_AMY;"
+      },
+      {
+        "lineNumber": 6,
+        "author": {
+          "gitId": "Rishi5154"
+        },
+        "content": "import static seedu.address.logic.commands.CommandTestUtil.assertCommandFailure;"
+      },
+      {
+        "lineNumber": 7,
+        "author": {
+          "gitId": "Rishi5154"
+        },
+        "content": "import static seedu.address.logic.commands.CommandTestUtil.assertCommandSuccess;"
+      },
+      {
+        "lineNumber": 8,
+        "author": {
+          "gitId": "Rishi5154"
+        },
+        "content": "import static seedu.address.logic.commands.CommandTestUtil.showPersonAtIndex;"
+      },
+      {
+        "lineNumber": 9,
+        "author": {
+          "gitId": "Rishi5154"
+        },
+        "content": "import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_PERSON;"
+      },
+      {
+        "lineNumber": 10,
+        "author": {
+          "gitId": "Rishi5154"
+        },
+        "content": "import static seedu.address.testutil.TypicalIndexes.INDEX_SECOND_PERSON;"
+      },
+      {
+        "lineNumber": 11,
+        "author": {
+          "gitId": "Rishi5154"
+        },
+        "content": "import static seedu.address.testutil.TypicalPersons.getTypicalAddressBook;"
+      },
+      {
+        "lineNumber": 12,
+        "author": {
+          "gitId": "Rishi5154"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 13,
+        "author": {
+          "gitId": "Rishi5154"
+        },
+        "content": "import org.junit.jupiter.api.Test;"
+      },
+      {
+        "lineNumber": 14,
+        "author": {
+          "gitId": "Rishi5154"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 15,
+        "author": {
+          "gitId": "Rishi5154"
+        },
+        "content": "import seedu.address.commons.core.Messages;"
+      },
+      {
+        "lineNumber": 16,
+        "author": {
+          "gitId": "Rishi5154"
+        },
+        "content": "import seedu.address.commons.core.index.Index;"
+      },
+      {
+        "lineNumber": 17,
+        "author": {
+          "gitId": "Rishi5154"
+        },
+        "content": "import seedu.address.model.Model;"
+      },
+      {
+        "lineNumber": 18,
+        "author": {
+          "gitId": "Rishi5154"
+        },
+        "content": "import seedu.address.model.ModelManager;"
+      },
+      {
+        "lineNumber": 19,
+        "author": {
+          "gitId": "Rishi5154"
+        },
+        "content": "import seedu.address.model.Tasker;"
+      },
+      {
+        "lineNumber": 20,
+        "author": {
+          "gitId": "Rishi5154"
+        },
+        "content": "import seedu.address.model.UserPrefs;"
+      },
+      {
+        "lineNumber": 21,
+        "author": {
+          "gitId": "Rishi5154"
+        },
+        "content": "import seedu.address.model.attendance.Attendance;"
+      },
+      {
+        "lineNumber": 22,
+        "author": {
+          "gitId": "Rishi5154"
+        },
+        "content": "import seedu.address.model.person.Person;"
+      },
+      {
+        "lineNumber": 23,
+        "author": {
+          "gitId": "Rishi5154"
+        },
+        "content": "import seedu.address.testutil.PersonBuilder;"
+      },
+      {
+        "lineNumber": 24,
+        "author": {
+          "gitId": "Rishi5154"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 25,
+        "author": {
+          "gitId": "Rishi5154"
+        },
+        "content": "/**"
+      },
+      {
+        "lineNumber": 26,
+        "author": {
+          "gitId": "Rishi5154"
+        },
+        "content": " * Contains integration tests and unit tests for UnattendCommand."
+      },
+      {
+        "lineNumber": 27,
+        "author": {
+          "gitId": "Rishi5154"
+        },
+        "content": " */"
+      },
+      {
+        "lineNumber": 28,
+        "author": {
+          "gitId": "Rishi5154"
+        },
+        "content": "public class UnattendCommandTest {"
+      },
+      {
+        "lineNumber": 29,
+        "author": {
+          "gitId": "Rishi5154"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 30,
+        "author": {
+          "gitId": "Rishi5154"
+        },
+        "content": "    private static final String NEW_ATTENDANCE_STRING \u003d \"01/01/2020\";"
+      },
+      {
+        "lineNumber": 31,
+        "author": {
+          "gitId": "Rishi5154"
+        },
+        "content": "    private static final Attendance NEW_ATTENDANCE \u003d Attendance.fromDateString(NEW_ATTENDANCE_STRING);"
+      },
+      {
+        "lineNumber": 32,
+        "author": {
+          "gitId": "Rishi5154"
+        },
+        "content": "    private static final Attendance AMY_ATTENDANCE \u003d Attendance.fromDateString(VALID_ATTENDANCE_AMY);"
+      },
+      {
+        "lineNumber": 33,
+        "author": {
+          "gitId": "Rishi5154"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 34,
+        "author": {
+          "gitId": "Rishi5154"
+        },
+        "content": "    private Model model \u003d new ModelManager(getTypicalAddressBook(), new UserPrefs());"
+      },
+      {
+        "lineNumber": 35,
+        "author": {
+          "gitId": "Rishi5154"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 36,
+        "author": {
+          "gitId": "Rishi5154"
+        },
+        "content": "    @Test"
+      },
+      {
+        "lineNumber": 37,
+        "author": {
+          "gitId": "Rishi5154"
+        },
+        "content": "    public void execute_allFieldsSpecifiedUnfilteredList_success() {"
+      },
+      {
+        "lineNumber": 38,
+        "author": {
+          "gitId": "Rishi5154"
+        },
+        "content": "        Person attendedPerson \u003d model.getFilteredPersonList().get(0);"
+      },
+      {
+        "lineNumber": 39,
+        "author": {
+          "gitId": "Rishi5154"
+        },
+        "content": "        attendedPerson \u003d new PersonBuilder(attendedPerson)"
+      },
+      {
+        "lineNumber": 40,
+        "author": {
+          "gitId": "Rishi5154"
+        },
+        "content": "                .withAttendance(VALID_ATTENDANCE_AMY, NEW_ATTENDANCE_STRING).build();"
+      },
+      {
+        "lineNumber": 41,
+        "author": {
+          "gitId": "Rishi5154"
+        },
+        "content": "        UnattendCommand unattend \u003d new UnattendCommand(INDEX_FIRST_PERSON, NEW_ATTENDANCE);"
+      },
+      {
+        "lineNumber": 42,
+        "author": {
+          "gitId": "Rishi5154"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 43,
+        "author": {
+          "gitId": "Rishi5154"
+        },
+        "content": "        String expectedMessage \u003d String.format(UnattendCommand.MESSAGE_UNATTEND_SUCCESS, attendedPerson);"
+      },
+      {
+        "lineNumber": 44,
+        "author": {
+          "gitId": "Rishi5154"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 45,
+        "author": {
+          "gitId": "Rishi5154"
+        },
+        "content": "        Model expectedModel \u003d new ModelManager(new Tasker(model.getAddressBook()), new UserPrefs());"
+      },
+      {
+        "lineNumber": 46,
+        "author": {
+          "gitId": "Rishi5154"
+        },
+        "content": "        expectedModel.setPerson(model.getFilteredPersonList().get(0), attendedPerson);"
+      },
+      {
+        "lineNumber": 47,
+        "author": {
+          "gitId": "Rishi5154"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 48,
+        "author": {
+          "gitId": "Rishi5154"
+        },
+        "content": "        assertCommandSuccess(unattend, model, expectedMessage, expectedModel);"
+      },
+      {
+        "lineNumber": 49,
+        "author": {
+          "gitId": "Rishi5154"
+        },
+        "content": "    }"
+      },
+      {
+        "lineNumber": 50,
+        "author": {
+          "gitId": "Rishi5154"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 51,
+        "author": {
+          "gitId": "Rishi5154"
+        },
+        "content": "    @Test"
+      },
+      {
+        "lineNumber": 52,
+        "author": {
+          "gitId": "Rishi5154"
+        },
+        "content": "    public void execute_filteredList_success() {"
+      },
+      {
+        "lineNumber": 53,
+        "author": {
+          "gitId": "Rishi5154"
+        },
+        "content": "        showPersonAtIndex(model, INDEX_FIRST_PERSON);"
+      },
+      {
+        "lineNumber": 54,
+        "author": {
+          "gitId": "Rishi5154"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 55,
+        "author": {
+          "gitId": "Rishi5154"
+        },
+        "content": "        Person person \u003d model.getFilteredPersonList().get(INDEX_FIRST_PERSON.getZeroBased());"
+      },
+      {
+        "lineNumber": 56,
+        "author": {
+          "gitId": "Rishi5154"
+        },
+        "content": "        Person unattendedPerson \u003d new PersonBuilder(person)"
+      },
+      {
+        "lineNumber": 57,
+        "author": {
+          "gitId": "Rishi5154"
+        },
+        "content": "                .withAttendance(VALID_ATTENDANCE_AMY, NEW_ATTENDANCE_STRING).build();"
+      },
+      {
+        "lineNumber": 58,
+        "author": {
+          "gitId": "Rishi5154"
+        },
+        "content": "        UnattendCommand unattend \u003d new UnattendCommand(INDEX_FIRST_PERSON, NEW_ATTENDANCE);"
+      },
+      {
+        "lineNumber": 59,
+        "author": {
+          "gitId": "Rishi5154"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 60,
+        "author": {
+          "gitId": "Rishi5154"
+        },
+        "content": "        String expectedMessage \u003d String.format(UnattendCommand.MESSAGE_UNATTEND_SUCCESS, unattendedPerson);"
+      },
+      {
+        "lineNumber": 61,
+        "author": {
+          "gitId": "Rishi5154"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 62,
+        "author": {
+          "gitId": "Rishi5154"
+        },
+        "content": "        Model expectedModel \u003d new ModelManager(new Tasker(model.getAddressBook()), new UserPrefs());"
+      },
+      {
+        "lineNumber": 63,
+        "author": {
+          "gitId": "Rishi5154"
+        },
+        "content": "        expectedModel.setPerson(model.getFilteredPersonList().get(0), unattendedPerson);"
+      },
+      {
+        "lineNumber": 64,
+        "author": {
+          "gitId": "Rishi5154"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 65,
+        "author": {
+          "gitId": "Rishi5154"
+        },
+        "content": "        assertCommandSuccess(unattend, model, expectedMessage, expectedModel);"
+      },
+      {
+        "lineNumber": 66,
+        "author": {
+          "gitId": "Rishi5154"
+        },
+        "content": "    }"
+      },
+      {
+        "lineNumber": 67,
+        "author": {
+          "gitId": "Rishi5154"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 68,
+        "author": {
+          "gitId": "Rishi5154"
+        },
+        "content": "    @Test"
+      },
+      {
+        "lineNumber": 69,
+        "author": {
+          "gitId": "Rishi5154"
+        },
+        "content": "    public void execute_nullAttendanceUnfilteredList_failure() {"
+      },
+      {
+        "lineNumber": 70,
+        "author": {
+          "gitId": "Rishi5154"
+        },
+        "content": "        UnattendCommand unattend \u003d new UnattendCommand(INDEX_FIRST_PERSON, null);"
+      },
+      {
+        "lineNumber": 71,
+        "author": {
+          "gitId": "Rishi5154"
+        },
+        "content": "        System.out.println(String.format(Messages.MESSAGE_INVALID_COMMAND_FORMAT, UnattendCommand.MESSAGE_USAGE));"
+      },
+      {
+        "lineNumber": 72,
+        "author": {
+          "gitId": "Rishi5154"
+        },
+        "content": "        assertCommandFailure(unattend, model,"
+      },
+      {
+        "lineNumber": 73,
+        "author": {
+          "gitId": "Rishi5154"
+        },
+        "content": "                String.format(Messages.MESSAGE_INVALID_COMMAND_FORMAT, UnattendCommand.MESSAGE_USAGE));"
+      },
+      {
+        "lineNumber": 74,
+        "author": {
+          "gitId": "Rishi5154"
+        },
+        "content": "    }"
+      },
+      {
+        "lineNumber": 75,
+        "author": {
+          "gitId": "Rishi5154"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 76,
+        "author": {
+          "gitId": "Rishi5154"
+        },
+        "content": "    @Test"
+      },
+      {
+        "lineNumber": 77,
+        "author": {
+          "gitId": "Rishi5154"
+        },
+        "content": "    public void execute_duplicateAttendanceFilteredList_failure() {"
+      },
+      {
+        "lineNumber": 78,
+        "author": {
+          "gitId": "Rishi5154"
+        },
+        "content": "        showPersonAtIndex(model, INDEX_FIRST_PERSON);"
+      },
+      {
+        "lineNumber": 79,
+        "author": {
+          "gitId": "Rishi5154"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 80,
+        "author": {
+          "gitId": "Rishi5154"
+        },
+        "content": "        Person personToAttend \u003d model.getAddressBook().getPersonList().get(INDEX_FIRST_PERSON.getZeroBased());"
+      },
+      {
+        "lineNumber": 81,
+        "author": {
+          "gitId": "Rishi5154"
+        },
+        "content": "        UnattendCommand unattend \u003d new UnattendCommand(INDEX_FIRST_PERSON, AMY_ATTENDANCE);"
+      },
+      {
+        "lineNumber": 82,
+        "author": {
+          "gitId": "Rishi5154"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 83,
+        "author": {
+          "gitId": "Rishi5154"
+        },
+        "content": "        assertCommandFailure(unattend, model, String.format(UnattendCommand.MESSAGE_ALREADY_UNATTENDED,"
+      },
+      {
+        "lineNumber": 84,
+        "author": {
+          "gitId": "Rishi5154"
+        },
+        "content": "                personToAttend.getName(), AMY_ATTENDANCE));"
+      },
+      {
+        "lineNumber": 85,
+        "author": {
+          "gitId": "Rishi5154"
+        },
+        "content": "    }"
+      },
+      {
+        "lineNumber": 86,
+        "author": {
+          "gitId": "Rishi5154"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 87,
+        "author": {
+          "gitId": "Rishi5154"
+        },
+        "content": "    @Test"
+      },
+      {
+        "lineNumber": 88,
+        "author": {
+          "gitId": "Rishi5154"
+        },
+        "content": "    public void execute_invalidPersonIndexUnfilteredList_failure() {"
+      },
+      {
+        "lineNumber": 89,
+        "author": {
+          "gitId": "Rishi5154"
+        },
+        "content": "        Index outOfBoundIndex \u003d Index.fromOneBased(model.getFilteredPersonList().size() + 1);"
+      },
+      {
+        "lineNumber": 90,
+        "author": {
+          "gitId": "Rishi5154"
+        },
+        "content": "        UnattendCommand unattend \u003d new UnattendCommand(outOfBoundIndex, NEW_ATTENDANCE);"
+      },
+      {
+        "lineNumber": 91,
+        "author": {
+          "gitId": "Rishi5154"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 92,
+        "author": {
+          "gitId": "Rishi5154"
+        },
+        "content": "        assertCommandFailure(unattend, model, Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);"
+      },
+      {
+        "lineNumber": 93,
+        "author": {
+          "gitId": "Rishi5154"
+        },
+        "content": "    }"
+      },
+      {
+        "lineNumber": 94,
+        "author": {
+          "gitId": "Rishi5154"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 95,
+        "author": {
+          "gitId": "Rishi5154"
+        },
+        "content": "    /**"
+      },
+      {
+        "lineNumber": 96,
+        "author": {
+          "gitId": "Rishi5154"
+        },
+        "content": "     * Unattend filtered list where index is larger than size of filtered list,"
+      },
+      {
+        "lineNumber": 97,
+        "author": {
+          "gitId": "Rishi5154"
+        },
+        "content": "     * but smaller than size of address book"
+      },
+      {
+        "lineNumber": 98,
+        "author": {
+          "gitId": "Rishi5154"
+        },
+        "content": "     */"
+      },
+      {
+        "lineNumber": 99,
+        "author": {
+          "gitId": "Rishi5154"
+        },
+        "content": "    @Test"
+      },
+      {
+        "lineNumber": 100,
+        "author": {
+          "gitId": "Rishi5154"
+        },
+        "content": "    public void execute_invalidPersonIndexFilteredList_failure() {"
+      },
+      {
+        "lineNumber": 101,
+        "author": {
+          "gitId": "Rishi5154"
+        },
+        "content": "        showPersonAtIndex(model, INDEX_FIRST_PERSON);"
+      },
+      {
+        "lineNumber": 102,
+        "author": {
+          "gitId": "Rishi5154"
+        },
+        "content": "        Index outOfBoundIndex \u003d INDEX_SECOND_PERSON;"
+      },
+      {
+        "lineNumber": 103,
+        "author": {
+          "gitId": "Rishi5154"
+        },
+        "content": "        // ensures that outOfBoundIndex is still in bounds of address book list"
+      },
+      {
+        "lineNumber": 104,
+        "author": {
+          "gitId": "Rishi5154"
+        },
+        "content": "        assertTrue(outOfBoundIndex.getZeroBased() \u003c model.getAddressBook().getPersonList().size());"
+      },
+      {
+        "lineNumber": 105,
+        "author": {
+          "gitId": "Rishi5154"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 106,
+        "author": {
+          "gitId": "Rishi5154"
+        },
+        "content": "        UnattendCommand unattend \u003d new UnattendCommand(outOfBoundIndex, NEW_ATTENDANCE);"
+      },
+      {
+        "lineNumber": 107,
+        "author": {
+          "gitId": "Rishi5154"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 108,
+        "author": {
+          "gitId": "Rishi5154"
+        },
+        "content": "        assertCommandFailure(unattend, model, Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);"
+      },
+      {
+        "lineNumber": 109,
+        "author": {
+          "gitId": "Rishi5154"
+        },
+        "content": "    }"
+      },
+      {
+        "lineNumber": 110,
+        "author": {
+          "gitId": "Rishi5154"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 111,
+        "author": {
+          "gitId": "Rishi5154"
+        },
+        "content": "    @Test"
+      },
+      {
+        "lineNumber": 112,
+        "author": {
+          "gitId": "Rishi5154"
+        },
+        "content": "    public void equals() {"
+      },
+      {
+        "lineNumber": 113,
+        "author": {
+          "gitId": "Rishi5154"
+        },
+        "content": "        Index index1 \u003d Index.fromOneBased(1);"
+      },
+      {
+        "lineNumber": 114,
+        "author": {
+          "gitId": "Rishi5154"
+        },
+        "content": "        Index index2 \u003d Index.fromOneBased(2);"
+      },
+      {
+        "lineNumber": 115,
+        "author": {
+          "gitId": "Rishi5154"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 116,
+        "author": {
+          "gitId": "Rishi5154"
+        },
+        "content": "        UnattendCommand unattend1 \u003d new UnattendCommand(index1, NEW_ATTENDANCE);"
+      },
+      {
+        "lineNumber": 117,
+        "author": {
+          "gitId": "Rishi5154"
+        },
+        "content": "        UnattendCommand unattend2 \u003d new UnattendCommand(index2, NEW_ATTENDANCE);"
+      },
+      {
+        "lineNumber": 118,
+        "author": {
+          "gitId": "Rishi5154"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 119,
+        "author": {
+          "gitId": "Rishi5154"
+        },
+        "content": "        // same object -\u003e returns true"
+      },
+      {
+        "lineNumber": 120,
+        "author": {
+          "gitId": "Rishi5154"
+        },
+        "content": "        assertTrue(unattend1.equals(unattend1));"
+      },
+      {
+        "lineNumber": 121,
+        "author": {
+          "gitId": "Rishi5154"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 122,
+        "author": {
+          "gitId": "Rishi5154"
+        },
+        "content": "        // same values -\u003e returns true"
+      },
+      {
+        "lineNumber": 123,
+        "author": {
+          "gitId": "Rishi5154"
+        },
+        "content": "        UnattendCommand unattendCopy \u003d new UnattendCommand(index1, NEW_ATTENDANCE);"
+      },
+      {
+        "lineNumber": 124,
+        "author": {
+          "gitId": "Rishi5154"
+        },
+        "content": "        assertTrue(unattend1.equals(unattendCopy));"
+      },
+      {
+        "lineNumber": 125,
+        "author": {
+          "gitId": "Rishi5154"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 126,
+        "author": {
+          "gitId": "Rishi5154"
+        },
+        "content": "        // different types -\u003e returns false"
+      },
+      {
+        "lineNumber": 127,
+        "author": {
+          "gitId": "Rishi5154"
+        },
+        "content": "        assertFalse(unattend1.equals(1));"
+      },
+      {
+        "lineNumber": 128,
+        "author": {
+          "gitId": "Rishi5154"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 129,
+        "author": {
+          "gitId": "Rishi5154"
+        },
+        "content": "        // null -\u003e returns false"
+      },
+      {
+        "lineNumber": 130,
+        "author": {
+          "gitId": "Rishi5154"
+        },
+        "content": "        assertFalse(unattend1.equals(null));"
+      },
+      {
+        "lineNumber": 131,
+        "author": {
+          "gitId": "Rishi5154"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 132,
+        "author": {
+          "gitId": "Rishi5154"
+        },
+        "content": "        // different person -\u003e returns false"
+      },
+      {
+        "lineNumber": 133,
+        "author": {
+          "gitId": "Rishi5154"
+        },
+        "content": "        assertFalse(unattend1.equals(unattend2));"
+      },
+      {
+        "lineNumber": 134,
+        "author": {
+          "gitId": "Rishi5154"
+        },
+        "content": "    }"
+      },
+      {
+        "lineNumber": 135,
+        "author": {
+          "gitId": "Rishi5154"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 136,
+        "author": {
+          "gitId": "Rishi5154"
+        },
+        "content": "}"
+      }
+    ],
+    "authorContributionMap": {
+      "Rishi5154": 136
+    }
+  },
+  {
     "path": "src/test/java/seedu/address/logic/parser/AddCommandParserTest.java",
     "fileType": "test-code",
     "lines": [
@@ -54126,6 +56029,477 @@
     "authorContributionMap": {
       "Rishi5154": 9,
       "-": 188
+    }
+  },
+  {
+    "path": "src/test/java/seedu/address/logic/parser/UnattendCommandParserTest.java",
+    "fileType": "test-code",
+    "lines": [
+      {
+        "lineNumber": 1,
+        "author": {
+          "gitId": "Rishi5154"
+        },
+        "content": "package seedu.address.logic.parser;"
+      },
+      {
+        "lineNumber": 2,
+        "author": {
+          "gitId": "Rishi5154"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 3,
+        "author": {
+          "gitId": "Rishi5154"
+        },
+        "content": "import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;"
+      },
+      {
+        "lineNumber": 4,
+        "author": {
+          "gitId": "Rishi5154"
+        },
+        "content": "import static seedu.address.logic.commands.CommandTestUtil.ATTENDANCE_DESC_AMY;"
+      },
+      {
+        "lineNumber": 5,
+        "author": {
+          "gitId": "Rishi5154"
+        },
+        "content": "import static seedu.address.logic.commands.CommandTestUtil.INVALID_ATTENDANCE_DESC;"
+      },
+      {
+        "lineNumber": 6,
+        "author": {
+          "gitId": "Rishi5154"
+        },
+        "content": "import static seedu.address.logic.commands.CommandTestUtil.VALID_ATTENDANCE_AMY;"
+      },
+      {
+        "lineNumber": 7,
+        "author": {
+          "gitId": "Rishi5154"
+        },
+        "content": "import static seedu.address.logic.parser.CommandParserTestUtil.assertParseFailure;"
+      },
+      {
+        "lineNumber": 8,
+        "author": {
+          "gitId": "Rishi5154"
+        },
+        "content": "import static seedu.address.logic.parser.CommandParserTestUtil.assertParseSuccess;"
+      },
+      {
+        "lineNumber": 9,
+        "author": {
+          "gitId": "Rishi5154"
+        },
+        "content": "import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_PERSON;"
+      },
+      {
+        "lineNumber": 10,
+        "author": {
+          "gitId": "Rishi5154"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 11,
+        "author": {
+          "gitId": "Rishi5154"
+        },
+        "content": "import org.junit.jupiter.api.Test;"
+      },
+      {
+        "lineNumber": 12,
+        "author": {
+          "gitId": "Rishi5154"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 13,
+        "author": {
+          "gitId": "Rishi5154"
+        },
+        "content": "import seedu.address.commons.core.index.Index;"
+      },
+      {
+        "lineNumber": 14,
+        "author": {
+          "gitId": "Rishi5154"
+        },
+        "content": "import seedu.address.logic.commands.UnattendCommand;"
+      },
+      {
+        "lineNumber": 15,
+        "author": {
+          "gitId": "Rishi5154"
+        },
+        "content": "import seedu.address.model.attendance.Attendance;"
+      },
+      {
+        "lineNumber": 16,
+        "author": {
+          "gitId": "Rishi5154"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 17,
+        "author": {
+          "gitId": "Rishi5154"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 18,
+        "author": {
+          "gitId": "Rishi5154"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 19,
+        "author": {
+          "gitId": "Rishi5154"
+        },
+        "content": "public class UnattendCommandParserTest {"
+      },
+      {
+        "lineNumber": 20,
+        "author": {
+          "gitId": "Rishi5154"
+        },
+        "content": "    private static final String MESSAGE_INVALID_FORMAT \u003d"
+      },
+      {
+        "lineNumber": 21,
+        "author": {
+          "gitId": "Rishi5154"
+        },
+        "content": "            String.format(MESSAGE_INVALID_COMMAND_FORMAT, UnattendCommand.MESSAGE_USAGE);"
+      },
+      {
+        "lineNumber": 22,
+        "author": {
+          "gitId": "Rishi5154"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 23,
+        "author": {
+          "gitId": "Rishi5154"
+        },
+        "content": "    private UnattendCommandParser parser \u003d new UnattendCommandParser();"
+      },
+      {
+        "lineNumber": 24,
+        "author": {
+          "gitId": "Rishi5154"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 25,
+        "author": {
+          "gitId": "Rishi5154"
+        },
+        "content": "    @Test"
+      },
+      {
+        "lineNumber": 26,
+        "author": {
+          "gitId": "Rishi5154"
+        },
+        "content": "    public void parse_missingParts_failure() {"
+      },
+      {
+        "lineNumber": 27,
+        "author": {
+          "gitId": "Rishi5154"
+        },
+        "content": "        // no index specified"
+      },
+      {
+        "lineNumber": 28,
+        "author": {
+          "gitId": "Rishi5154"
+        },
+        "content": "        assertParseFailure(parser, ATTENDANCE_DESC_AMY, MESSAGE_INVALID_FORMAT);"
+      },
+      {
+        "lineNumber": 29,
+        "author": {
+          "gitId": "Rishi5154"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 30,
+        "author": {
+          "gitId": "Rishi5154"
+        },
+        "content": "        // no field specified"
+      },
+      {
+        "lineNumber": 31,
+        "author": {
+          "gitId": "Rishi5154"
+        },
+        "content": "        assertParseFailure(parser, \"1\", MESSAGE_INVALID_FORMAT);"
+      },
+      {
+        "lineNumber": 32,
+        "author": {
+          "gitId": "Rishi5154"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 33,
+        "author": {
+          "gitId": "Rishi5154"
+        },
+        "content": "        // no index and no field specified"
+      },
+      {
+        "lineNumber": 34,
+        "author": {
+          "gitId": "Rishi5154"
+        },
+        "content": "        assertParseFailure(parser, \"\", MESSAGE_INVALID_FORMAT);"
+      },
+      {
+        "lineNumber": 35,
+        "author": {
+          "gitId": "Rishi5154"
+        },
+        "content": "    }"
+      },
+      {
+        "lineNumber": 36,
+        "author": {
+          "gitId": "Rishi5154"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 37,
+        "author": {
+          "gitId": "Rishi5154"
+        },
+        "content": "    @Test"
+      },
+      {
+        "lineNumber": 38,
+        "author": {
+          "gitId": "Rishi5154"
+        },
+        "content": "    public void parse_invalidPreamble_failure() {"
+      },
+      {
+        "lineNumber": 39,
+        "author": {
+          "gitId": "Rishi5154"
+        },
+        "content": "        // negative index"
+      },
+      {
+        "lineNumber": 40,
+        "author": {
+          "gitId": "Rishi5154"
+        },
+        "content": "        assertParseFailure(parser, \"-5\" + ATTENDANCE_DESC_AMY, MESSAGE_INVALID_FORMAT);"
+      },
+      {
+        "lineNumber": 41,
+        "author": {
+          "gitId": "Rishi5154"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 42,
+        "author": {
+          "gitId": "Rishi5154"
+        },
+        "content": "        // zero index"
+      },
+      {
+        "lineNumber": 43,
+        "author": {
+          "gitId": "Rishi5154"
+        },
+        "content": "        assertParseFailure(parser, \"0\" + ATTENDANCE_DESC_AMY, MESSAGE_INVALID_FORMAT);"
+      },
+      {
+        "lineNumber": 44,
+        "author": {
+          "gitId": "Rishi5154"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 45,
+        "author": {
+          "gitId": "Rishi5154"
+        },
+        "content": "        // invalid arguments being parsed as preamble"
+      },
+      {
+        "lineNumber": 46,
+        "author": {
+          "gitId": "Rishi5154"
+        },
+        "content": "        assertParseFailure(parser, \"1 some random string\", MESSAGE_INVALID_FORMAT);"
+      },
+      {
+        "lineNumber": 47,
+        "author": {
+          "gitId": "Rishi5154"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 48,
+        "author": {
+          "gitId": "Rishi5154"
+        },
+        "content": "        // invalid prefix being parsed as preamble"
+      },
+      {
+        "lineNumber": 49,
+        "author": {
+          "gitId": "Rishi5154"
+        },
+        "content": "        assertParseFailure(parser, \"1 i/ string\", MESSAGE_INVALID_FORMAT);"
+      },
+      {
+        "lineNumber": 50,
+        "author": {
+          "gitId": "Rishi5154"
+        },
+        "content": "    }"
+      },
+      {
+        "lineNumber": 51,
+        "author": {
+          "gitId": "Rishi5154"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 52,
+        "author": {
+          "gitId": "Rishi5154"
+        },
+        "content": "    @Test"
+      },
+      {
+        "lineNumber": 53,
+        "author": {
+          "gitId": "Rishi5154"
+        },
+        "content": "    public void parse_invalidValue_failure() {"
+      },
+      {
+        "lineNumber": 54,
+        "author": {
+          "gitId": "Rishi5154"
+        },
+        "content": "        assertParseFailure(parser, \"1\" + INVALID_ATTENDANCE_DESC, Attendance.MESSAGE_CONSTRAINTS); // invalid attendance"
+      },
+      {
+        "lineNumber": 55,
+        "author": {
+          "gitId": "Rishi5154"
+        },
+        "content": "    }"
+      },
+      {
+        "lineNumber": 56,
+        "author": {
+          "gitId": "Rishi5154"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 57,
+        "author": {
+          "gitId": "Rishi5154"
+        },
+        "content": "    @Test"
+      },
+      {
+        "lineNumber": 58,
+        "author": {
+          "gitId": "Rishi5154"
+        },
+        "content": "    public void parse_oneFieldSpecified_success() {"
+      },
+      {
+        "lineNumber": 59,
+        "author": {
+          "gitId": "Rishi5154"
+        },
+        "content": "        // name"
+      },
+      {
+        "lineNumber": 60,
+        "author": {
+          "gitId": "Rishi5154"
+        },
+        "content": "        Index targetIndex \u003d INDEX_FIRST_PERSON;"
+      },
+      {
+        "lineNumber": 61,
+        "author": {
+          "gitId": "Rishi5154"
+        },
+        "content": "        String userInput \u003d targetIndex.getOneBased() + ATTENDANCE_DESC_AMY;"
+      },
+      {
+        "lineNumber": 62,
+        "author": {
+          "gitId": "Rishi5154"
+        },
+        "content": "        UnattendCommand expectedCommand \u003d new UnattendCommand(targetIndex,"
+      },
+      {
+        "lineNumber": 63,
+        "author": {
+          "gitId": "Rishi5154"
+        },
+        "content": "                Attendance.fromDateString(VALID_ATTENDANCE_AMY));"
+      },
+      {
+        "lineNumber": 64,
+        "author": {
+          "gitId": "Rishi5154"
+        },
+        "content": "        assertParseSuccess(parser, userInput, expectedCommand);"
+      },
+      {
+        "lineNumber": 65,
+        "author": {
+          "gitId": "Rishi5154"
+        },
+        "content": "    }"
+      },
+      {
+        "lineNumber": 66,
+        "author": {
+          "gitId": "Rishi5154"
+        },
+        "content": "}"
+      }
+    ],
+    "authorContributionMap": {
+      "Rishi5154": 66
     }
   },
   {
