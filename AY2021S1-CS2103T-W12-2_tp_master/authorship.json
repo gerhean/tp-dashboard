@@ -10122,6 +10122,128 @@
     }
   },
   {
+    "path": "src/main/java/seedu/address/commons/core/Messages.java",
+    "fileType": "functional-code",
+    "lines": [
+      {
+        "lineNumber": 1,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "package seedu.address.commons.core;"
+      },
+      {
+        "lineNumber": 2,
+        "author": {
+          "gitId": "-"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 3,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "/**"
+      },
+      {
+        "lineNumber": 4,
+        "author": {
+          "gitId": "-"
+        },
+        "content": " * Container for user visible messages."
+      },
+      {
+        "lineNumber": 5,
+        "author": {
+          "gitId": "-"
+        },
+        "content": " */"
+      },
+      {
+        "lineNumber": 6,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "public class Messages {"
+      },
+      {
+        "lineNumber": 7,
+        "author": {
+          "gitId": "-"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 8,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "    public static final String MESSAGE_UNKNOWN_COMMAND \u003d \"Unknown command\";"
+      },
+      {
+        "lineNumber": 9,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "    public static final String MESSAGE_INVALID_COMMAND_FORMAT \u003d \"Invalid command format! \\n%1$s\";"
+      },
+      {
+        "lineNumber": 10,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "    public static final String MESSAGE_INVALID_PERSON_DISPLAYED_INDEX \u003d \"The person index provided is invalid\";"
+      },
+      {
+        "lineNumber": 11,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "    public static final String MESSAGE_PERSONS_LISTED_OVERVIEW \u003d \"%1$d persons listed!\";"
+      },
+      {
+        "lineNumber": 12,
+        "author": {
+          "gitId": "-"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 13,
+        "author": {
+          "gitId": "juandavinlie"
+        },
+        "content": "    public static final String MESSAGE_INVALID_MODULE_DISPLAYED_INDEX \u003d \"The module index provided is invalid\";"
+      },
+      {
+        "lineNumber": 14,
+        "author": {
+          "gitId": "juandavinlie"
+        },
+        "content": "    public static final String MESSAGE_MODULES_LISTED_OVERVIEW \u003d \"%1$d modules listed!\";"
+      },
+      {
+        "lineNumber": 15,
+        "author": {
+          "gitId": "juandavinlie"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 16,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "}"
+      }
+    ],
+    "authorContributionMap": {
+      "juandavinlie": 3,
+      "-": 13
+    }
+  },
+  {
     "path": "src/main/java/seedu/address/logic/Logic.java",
     "fileType": "functional-code",
     "lines": [
@@ -14500,6 +14622,393 @@
     }
   },
   {
+    "path": "src/main/java/seedu/address/logic/commands/DeleteModuleCommand.java",
+    "fileType": "functional-code",
+    "lines": [
+      {
+        "lineNumber": 1,
+        "author": {
+          "gitId": "juandavinlie"
+        },
+        "content": "package seedu.address.logic.commands;"
+      },
+      {
+        "lineNumber": 2,
+        "author": {
+          "gitId": "juandavinlie"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 3,
+        "author": {
+          "gitId": "juandavinlie"
+        },
+        "content": "import static java.util.Objects.requireNonNull;"
+      },
+      {
+        "lineNumber": 4,
+        "author": {
+          "gitId": "juandavinlie"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 5,
+        "author": {
+          "gitId": "juandavinlie"
+        },
+        "content": "import java.util.List;"
+      },
+      {
+        "lineNumber": 6,
+        "author": {
+          "gitId": "juandavinlie"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 7,
+        "author": {
+          "gitId": "juandavinlie"
+        },
+        "content": "import seedu.address.commons.core.Messages;"
+      },
+      {
+        "lineNumber": 8,
+        "author": {
+          "gitId": "juandavinlie"
+        },
+        "content": "import seedu.address.commons.core.index.Index;"
+      },
+      {
+        "lineNumber": 9,
+        "author": {
+          "gitId": "juandavinlie"
+        },
+        "content": "import seedu.address.logic.commands.exceptions.CommandException;"
+      },
+      {
+        "lineNumber": 10,
+        "author": {
+          "gitId": "juandavinlie"
+        },
+        "content": "import seedu.address.model.Model;"
+      },
+      {
+        "lineNumber": 11,
+        "author": {
+          "gitId": "juandavinlie"
+        },
+        "content": "import seedu.address.model.module.Module;"
+      },
+      {
+        "lineNumber": 12,
+        "author": {
+          "gitId": "juandavinlie"
+        },
+        "content": "import seedu.address.model.person.Student;"
+      },
+      {
+        "lineNumber": 13,
+        "author": {
+          "gitId": "juandavinlie"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 14,
+        "author": {
+          "gitId": "juandavinlie"
+        },
+        "content": "/**"
+      },
+      {
+        "lineNumber": 15,
+        "author": {
+          "gitId": "juandavinlie"
+        },
+        "content": " * Deletes a person identified using it\u0027s displayed index from the address book."
+      },
+      {
+        "lineNumber": 16,
+        "author": {
+          "gitId": "juandavinlie"
+        },
+        "content": " */"
+      },
+      {
+        "lineNumber": 17,
+        "author": {
+          "gitId": "juandavinlie"
+        },
+        "content": "public class DeleteModuleCommand extends Command {"
+      },
+      {
+        "lineNumber": 18,
+        "author": {
+          "gitId": "juandavinlie"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 19,
+        "author": {
+          "gitId": "juandavinlie"
+        },
+        "content": "    public static final String COMMAND_WORD \u003d \"deleteMod\";"
+      },
+      {
+        "lineNumber": 20,
+        "author": {
+          "gitId": "juandavinlie"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 21,
+        "author": {
+          "gitId": "juandavinlie"
+        },
+        "content": "    public static final String MESSAGE_USAGE \u003d COMMAND_WORD"
+      },
+      {
+        "lineNumber": 22,
+        "author": {
+          "gitId": "juandavinlie"
+        },
+        "content": "            + \": Deletes the module identified by the index number used in the displayed module list.\\n\""
+      },
+      {
+        "lineNumber": 23,
+        "author": {
+          "gitId": "juandavinlie"
+        },
+        "content": "            + \"Parameters: INDEX (must be a positive integer)\\n\""
+      },
+      {
+        "lineNumber": 24,
+        "author": {
+          "gitId": "juandavinlie"
+        },
+        "content": "            + \"Example: \" + COMMAND_WORD + \" 1\";"
+      },
+      {
+        "lineNumber": 25,
+        "author": {
+          "gitId": "juandavinlie"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 26,
+        "author": {
+          "gitId": "juandavinlie"
+        },
+        "content": "    public static final String MESSAGE_DELETE_MODULE_SUCCESS \u003d \"Deleted Module: %1$s\";"
+      },
+      {
+        "lineNumber": 27,
+        "author": {
+          "gitId": "juandavinlie"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 28,
+        "author": {
+          "gitId": "juandavinlie"
+        },
+        "content": "    private final Index targetIndex;"
+      },
+      {
+        "lineNumber": 29,
+        "author": {
+          "gitId": "juandavinlie"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 30,
+        "author": {
+          "gitId": "juandavinlie"
+        },
+        "content": "    public DeleteModuleCommand(Index targetIndex) {"
+      },
+      {
+        "lineNumber": 31,
+        "author": {
+          "gitId": "juandavinlie"
+        },
+        "content": "        this.targetIndex \u003d targetIndex;"
+      },
+      {
+        "lineNumber": 32,
+        "author": {
+          "gitId": "juandavinlie"
+        },
+        "content": "    }"
+      },
+      {
+        "lineNumber": 33,
+        "author": {
+          "gitId": "juandavinlie"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 34,
+        "author": {
+          "gitId": "juandavinlie"
+        },
+        "content": "    @Override"
+      },
+      {
+        "lineNumber": 35,
+        "author": {
+          "gitId": "juandavinlie"
+        },
+        "content": "    public CommandResult execute(Model model) throws CommandException {"
+      },
+      {
+        "lineNumber": 36,
+        "author": {
+          "gitId": "juandavinlie"
+        },
+        "content": "        requireNonNull(model);"
+      },
+      {
+        "lineNumber": 37,
+        "author": {
+          "gitId": "juandavinlie"
+        },
+        "content": "        List\u003cModule\u003e lastShownList \u003d model.getFilteredModuleList();"
+      },
+      {
+        "lineNumber": 38,
+        "author": {
+          "gitId": "juandavinlie"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 39,
+        "author": {
+          "gitId": "juandavinlie"
+        },
+        "content": "        if (targetIndex.getZeroBased() \u003e\u003d lastShownList.size()) {"
+      },
+      {
+        "lineNumber": 40,
+        "author": {
+          "gitId": "juandavinlie"
+        },
+        "content": "            throw new CommandException(Messages.MESSAGE_INVALID_MODULE_DISPLAYED_INDEX);"
+      },
+      {
+        "lineNumber": 41,
+        "author": {
+          "gitId": "juandavinlie"
+        },
+        "content": "        }"
+      },
+      {
+        "lineNumber": 42,
+        "author": {
+          "gitId": "juandavinlie"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 43,
+        "author": {
+          "gitId": "juandavinlie"
+        },
+        "content": "        Module moduleToDelete \u003d lastShownList.get(targetIndex.getZeroBased());"
+      },
+      {
+        "lineNumber": 44,
+        "author": {
+          "gitId": "juandavinlie"
+        },
+        "content": "        model.deleteModule(moduleToDelete);"
+      },
+      {
+        "lineNumber": 45,
+        "author": {
+          "gitId": "juandavinlie"
+        },
+        "content": "        return new CommandResult(String.format(MESSAGE_DELETE_MODULE_SUCCESS, moduleToDelete));"
+      },
+      {
+        "lineNumber": 46,
+        "author": {
+          "gitId": "juandavinlie"
+        },
+        "content": "    }"
+      },
+      {
+        "lineNumber": 47,
+        "author": {
+          "gitId": "juandavinlie"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 48,
+        "author": {
+          "gitId": "juandavinlie"
+        },
+        "content": "    @Override"
+      },
+      {
+        "lineNumber": 49,
+        "author": {
+          "gitId": "juandavinlie"
+        },
+        "content": "    public boolean equals(Object other) {"
+      },
+      {
+        "lineNumber": 50,
+        "author": {
+          "gitId": "juandavinlie"
+        },
+        "content": "        return other \u003d\u003d this // short circuit if same object"
+      },
+      {
+        "lineNumber": 51,
+        "author": {
+          "gitId": "juandavinlie"
+        },
+        "content": "                || (other instanceof DeleteModuleCommand // instanceof handles nulls"
+      },
+      {
+        "lineNumber": 52,
+        "author": {
+          "gitId": "juandavinlie"
+        },
+        "content": "                \u0026\u0026 targetIndex.equals(((DeleteModuleCommand) other).targetIndex)); // state check"
+      },
+      {
+        "lineNumber": 53,
+        "author": {
+          "gitId": "juandavinlie"
+        },
+        "content": "    }"
+      },
+      {
+        "lineNumber": 54,
+        "author": {
+          "gitId": "juandavinlie"
+        },
+        "content": "}"
+      }
+    ],
+    "authorContributionMap": {
+      "juandavinlie": 54
+    }
+  },
+  {
     "path": "src/main/java/seedu/address/logic/commands/EditCommand.java",
     "fileType": "functional-code",
     "lines": [
@@ -16339,6 +16848,1100 @@
     }
   },
   {
+    "path": "src/main/java/seedu/address/logic/commands/EditModuleCommand.java",
+    "fileType": "functional-code",
+    "lines": [
+      {
+        "lineNumber": 1,
+        "author": {
+          "gitId": "juandavinlie"
+        },
+        "content": "package seedu.address.logic.commands;"
+      },
+      {
+        "lineNumber": 2,
+        "author": {
+          "gitId": "juandavinlie"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 3,
+        "author": {
+          "gitId": "juandavinlie"
+        },
+        "content": "import static java.util.Objects.requireNonNull;"
+      },
+      {
+        "lineNumber": 4,
+        "author": {
+          "gitId": "juandavinlie"
+        },
+        "content": "import static seedu.address.logic.parser.CliSyntax.PREFIX_EMAIL;"
+      },
+      {
+        "lineNumber": 5,
+        "author": {
+          "gitId": "juandavinlie"
+        },
+        "content": "import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;"
+      },
+      {
+        "lineNumber": 6,
+        "author": {
+          "gitId": "juandavinlie"
+        },
+        "content": "import static seedu.address.logic.parser.CliSyntax.PREFIX_PHONE;"
+      },
+      {
+        "lineNumber": 7,
+        "author": {
+          "gitId": "juandavinlie"
+        },
+        "content": "import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG;"
+      },
+      {
+        "lineNumber": 8,
+        "author": {
+          "gitId": "juandavinlie"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 9,
+        "author": {
+          "gitId": "juandavinlie"
+        },
+        "content": "import java.util.*;"
+      },
+      {
+        "lineNumber": 10,
+        "author": {
+          "gitId": "juandavinlie"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 11,
+        "author": {
+          "gitId": "juandavinlie"
+        },
+        "content": "import seedu.address.commons.core.Messages;"
+      },
+      {
+        "lineNumber": 12,
+        "author": {
+          "gitId": "juandavinlie"
+        },
+        "content": "import seedu.address.commons.core.index.Index;"
+      },
+      {
+        "lineNumber": 13,
+        "author": {
+          "gitId": "juandavinlie"
+        },
+        "content": "import seedu.address.commons.util.CollectionUtil;"
+      },
+      {
+        "lineNumber": 14,
+        "author": {
+          "gitId": "juandavinlie"
+        },
+        "content": "import seedu.address.logic.commands.exceptions.CommandException;"
+      },
+      {
+        "lineNumber": 15,
+        "author": {
+          "gitId": "juandavinlie"
+        },
+        "content": "import seedu.address.model.Model;"
+      },
+      {
+        "lineNumber": 16,
+        "author": {
+          "gitId": "juandavinlie"
+        },
+        "content": "import seedu.address.model.module.Module;"
+      },
+      {
+        "lineNumber": 17,
+        "author": {
+          "gitId": "juandavinlie"
+        },
+        "content": "import seedu.address.model.module.ModuleId;"
+      },
+      {
+        "lineNumber": 18,
+        "author": {
+          "gitId": "juandavinlie"
+        },
+        "content": "import static seedu.address.model.Model.PREDICATE_SHOW_ALL_MODULES;"
+      },
+      {
+        "lineNumber": 19,
+        "author": {
+          "gitId": "juandavinlie"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 20,
+        "author": {
+          "gitId": "juandavinlie"
+        },
+        "content": "/**"
+      },
+      {
+        "lineNumber": 21,
+        "author": {
+          "gitId": "juandavinlie"
+        },
+        "content": " * Edits the details of an existing person in the address book."
+      },
+      {
+        "lineNumber": 22,
+        "author": {
+          "gitId": "juandavinlie"
+        },
+        "content": " */"
+      },
+      {
+        "lineNumber": 23,
+        "author": {
+          "gitId": "juandavinlie"
+        },
+        "content": "public class EditModuleCommand extends Command {"
+      },
+      {
+        "lineNumber": 24,
+        "author": {
+          "gitId": "juandavinlie"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 25,
+        "author": {
+          "gitId": "juandavinlie"
+        },
+        "content": "    public static final String COMMAND_WORD \u003d \"editMod\";"
+      },
+      {
+        "lineNumber": 26,
+        "author": {
+          "gitId": "juandavinlie"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 27,
+        "author": {
+          "gitId": "juandavinlie"
+        },
+        "content": "    public static final String MESSAGE_USAGE \u003d COMMAND_WORD + \": Edits the module id of the module identified \""
+      },
+      {
+        "lineNumber": 28,
+        "author": {
+          "gitId": "juandavinlie"
+        },
+        "content": "            + \"by the index number used in the displayed module list. \""
+      },
+      {
+        "lineNumber": 29,
+        "author": {
+          "gitId": "juandavinlie"
+        },
+        "content": "            + \"Existing values will be overwritten by the input values.\\n\""
+      },
+      {
+        "lineNumber": 30,
+        "author": {
+          "gitId": "juandavinlie"
+        },
+        "content": "            + \"Parameters: INDEX (must be a positive integer) \""
+      },
+      {
+        "lineNumber": 31,
+        "author": {
+          "gitId": "juandavinlie"
+        },
+        "content": "            + \"[MODULE_ID] \""
+      },
+      {
+        "lineNumber": 32,
+        "author": {
+          "gitId": "juandavinlie"
+        },
+        "content": "            + \"Example: \" + COMMAND_WORD + \" 1 \""
+      },
+      {
+        "lineNumber": 33,
+        "author": {
+          "gitId": "juandavinlie"
+        },
+        "content": "            + \"CS2100\";"
+      },
+      {
+        "lineNumber": 34,
+        "author": {
+          "gitId": "juandavinlie"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 35,
+        "author": {
+          "gitId": "juandavinlie"
+        },
+        "content": "    public static final String MESSAGE_EDIT_MODULE_SUCCESS \u003d \"Edited Module: %1$s\";"
+      },
+      {
+        "lineNumber": 36,
+        "author": {
+          "gitId": "juandavinlie"
+        },
+        "content": "    public static final String MESSAGE_NOT_EDITED \u003d \"At least one field to edit must be provided.\";"
+      },
+      {
+        "lineNumber": 37,
+        "author": {
+          "gitId": "juandavinlie"
+        },
+        "content": "    public static final String MESSAGE_DUPLICATE_MODULE \u003d \"This module already exists in the address book.\";"
+      },
+      {
+        "lineNumber": 38,
+        "author": {
+          "gitId": "juandavinlie"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 39,
+        "author": {
+          "gitId": "juandavinlie"
+        },
+        "content": "    private final Index index;"
+      },
+      {
+        "lineNumber": 40,
+        "author": {
+          "gitId": "juandavinlie"
+        },
+        "content": "    private final String newModuleId;"
+      },
+      {
+        "lineNumber": 41,
+        "author": {
+          "gitId": "juandavinlie"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 42,
+        "author": {
+          "gitId": "juandavinlie"
+        },
+        "content": "    /**"
+      },
+      {
+        "lineNumber": 43,
+        "author": {
+          "gitId": "juandavinlie"
+        },
+        "content": "     * @param index of the person in the filtered person list to edit"
+      },
+      {
+        "lineNumber": 44,
+        "author": {
+          "gitId": "juandavinlie"
+        },
+        "content": "     * @param newModuleId details to edit the person with"
+      },
+      {
+        "lineNumber": 45,
+        "author": {
+          "gitId": "juandavinlie"
+        },
+        "content": "     */"
+      },
+      {
+        "lineNumber": 46,
+        "author": {
+          "gitId": "juandavinlie"
+        },
+        "content": "    public EditModuleCommand(Index index, String newModuleId) {"
+      },
+      {
+        "lineNumber": 47,
+        "author": {
+          "gitId": "juandavinlie"
+        },
+        "content": "        requireNonNull(index);"
+      },
+      {
+        "lineNumber": 48,
+        "author": {
+          "gitId": "juandavinlie"
+        },
+        "content": "        requireNonNull(newModuleId);"
+      },
+      {
+        "lineNumber": 49,
+        "author": {
+          "gitId": "juandavinlie"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 50,
+        "author": {
+          "gitId": "juandavinlie"
+        },
+        "content": "        this.index \u003d index;"
+      },
+      {
+        "lineNumber": 51,
+        "author": {
+          "gitId": "juandavinlie"
+        },
+        "content": "        this.newModuleId \u003d newModuleId;"
+      },
+      {
+        "lineNumber": 52,
+        "author": {
+          "gitId": "juandavinlie"
+        },
+        "content": "    }"
+      },
+      {
+        "lineNumber": 53,
+        "author": {
+          "gitId": "juandavinlie"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 54,
+        "author": {
+          "gitId": "juandavinlie"
+        },
+        "content": "    @Override"
+      },
+      {
+        "lineNumber": 55,
+        "author": {
+          "gitId": "juandavinlie"
+        },
+        "content": "    public CommandResult execute(Model model) throws CommandException {"
+      },
+      {
+        "lineNumber": 56,
+        "author": {
+          "gitId": "juandavinlie"
+        },
+        "content": "        requireNonNull(model);"
+      },
+      {
+        "lineNumber": 57,
+        "author": {
+          "gitId": "juandavinlie"
+        },
+        "content": "        List\u003cModule\u003e lastShownList \u003d model.getFilteredModuleList();"
+      },
+      {
+        "lineNumber": 58,
+        "author": {
+          "gitId": "juandavinlie"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 59,
+        "author": {
+          "gitId": "juandavinlie"
+        },
+        "content": "        if (index.getZeroBased() \u003e\u003d lastShownList.size()) {"
+      },
+      {
+        "lineNumber": 60,
+        "author": {
+          "gitId": "juandavinlie"
+        },
+        "content": "            throw new CommandException(Messages.MESSAGE_INVALID_MODULE_DISPLAYED_INDEX);"
+      },
+      {
+        "lineNumber": 61,
+        "author": {
+          "gitId": "juandavinlie"
+        },
+        "content": "        }"
+      },
+      {
+        "lineNumber": 62,
+        "author": {
+          "gitId": "juandavinlie"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 63,
+        "author": {
+          "gitId": "juandavinlie"
+        },
+        "content": "        Module moduleToEdit \u003d lastShownList.get(index.getZeroBased());"
+      },
+      {
+        "lineNumber": 64,
+        "author": {
+          "gitId": "juandavinlie"
+        },
+        "content": "        Module editedModule \u003d new Module(new ModuleId(newModuleId));"
+      },
+      {
+        "lineNumber": 65,
+        "author": {
+          "gitId": "juandavinlie"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 66,
+        "author": {
+          "gitId": "juandavinlie"
+        },
+        "content": "        if (!moduleToEdit.isSame(editedModule) \u0026\u0026 model.hasModule(editedModule)) {"
+      },
+      {
+        "lineNumber": 67,
+        "author": {
+          "gitId": "juandavinlie"
+        },
+        "content": "            throw new CommandException(MESSAGE_DUPLICATE_MODULE);"
+      },
+      {
+        "lineNumber": 68,
+        "author": {
+          "gitId": "juandavinlie"
+        },
+        "content": "        }"
+      },
+      {
+        "lineNumber": 69,
+        "author": {
+          "gitId": "juandavinlie"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 70,
+        "author": {
+          "gitId": "juandavinlie"
+        },
+        "content": "        model.setModule(moduleToEdit, newModuleId);"
+      },
+      {
+        "lineNumber": 71,
+        "author": {
+          "gitId": "juandavinlie"
+        },
+        "content": "        model.updateFilteredModuleList(PREDICATE_SHOW_ALL_MODULES);"
+      },
+      {
+        "lineNumber": 72,
+        "author": {
+          "gitId": "juandavinlie"
+        },
+        "content": "        return new CommandResult(String.format(MESSAGE_EDIT_MODULE_SUCCESS, editedModule), false, false, false, false, true);"
+      },
+      {
+        "lineNumber": 73,
+        "author": {
+          "gitId": "juandavinlie"
+        },
+        "content": "    }"
+      },
+      {
+        "lineNumber": 74,
+        "author": {
+          "gitId": "juandavinlie"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 75,
+        "author": {
+          "gitId": "juandavinlie"
+        },
+        "content": "//    /**"
+      },
+      {
+        "lineNumber": 76,
+        "author": {
+          "gitId": "juandavinlie"
+        },
+        "content": "//     * Creates and returns a {@code Person} with the details of {@code personToEdit}"
+      },
+      {
+        "lineNumber": 77,
+        "author": {
+          "gitId": "juandavinlie"
+        },
+        "content": "//     * edited with {@code editPersonDescriptor}."
+      },
+      {
+        "lineNumber": 78,
+        "author": {
+          "gitId": "juandavinlie"
+        },
+        "content": "//     */"
+      },
+      {
+        "lineNumber": 79,
+        "author": {
+          "gitId": "juandavinlie"
+        },
+        "content": "//    private static Module createEditedModule(Module moduleToEdit, EditModuleDescriptor editModuleDescriptor) {"
+      },
+      {
+        "lineNumber": 80,
+        "author": {
+          "gitId": "juandavinlie"
+        },
+        "content": "//        assert moduleToEdit !\u003d null;"
+      },
+      {
+        "lineNumber": 81,
+        "author": {
+          "gitId": "juandavinlie"
+        },
+        "content": "//"
+      },
+      {
+        "lineNumber": 82,
+        "author": {
+          "gitId": "juandavinlie"
+        },
+        "content": "//        String updatedModuleId \u003d editModuleDescriptor.getModuleId().orElse(moduleToEdit.getModuleId().toString());"
+      },
+      {
+        "lineNumber": 83,
+        "author": {
+          "gitId": "juandavinlie"
+        },
+        "content": "//"
+      },
+      {
+        "lineNumber": 84,
+        "author": {
+          "gitId": "juandavinlie"
+        },
+        "content": "//        return new Module(new ModuleId(updatedModuleId));"
+      },
+      {
+        "lineNumber": 85,
+        "author": {
+          "gitId": "juandavinlie"
+        },
+        "content": "//    }"
+      },
+      {
+        "lineNumber": 86,
+        "author": {
+          "gitId": "juandavinlie"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 87,
+        "author": {
+          "gitId": "juandavinlie"
+        },
+        "content": "    @Override"
+      },
+      {
+        "lineNumber": 88,
+        "author": {
+          "gitId": "juandavinlie"
+        },
+        "content": "    public boolean equals(Object other) {"
+      },
+      {
+        "lineNumber": 89,
+        "author": {
+          "gitId": "juandavinlie"
+        },
+        "content": "        // short circuit if same object"
+      },
+      {
+        "lineNumber": 90,
+        "author": {
+          "gitId": "juandavinlie"
+        },
+        "content": "        if (other \u003d\u003d this) {"
+      },
+      {
+        "lineNumber": 91,
+        "author": {
+          "gitId": "juandavinlie"
+        },
+        "content": "            return true;"
+      },
+      {
+        "lineNumber": 92,
+        "author": {
+          "gitId": "juandavinlie"
+        },
+        "content": "        }"
+      },
+      {
+        "lineNumber": 93,
+        "author": {
+          "gitId": "juandavinlie"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 94,
+        "author": {
+          "gitId": "juandavinlie"
+        },
+        "content": "        // instanceof handles nulls"
+      },
+      {
+        "lineNumber": 95,
+        "author": {
+          "gitId": "juandavinlie"
+        },
+        "content": "        if (!(other instanceof EditModuleCommand)) {"
+      },
+      {
+        "lineNumber": 96,
+        "author": {
+          "gitId": "juandavinlie"
+        },
+        "content": "            return false;"
+      },
+      {
+        "lineNumber": 97,
+        "author": {
+          "gitId": "juandavinlie"
+        },
+        "content": "        }"
+      },
+      {
+        "lineNumber": 98,
+        "author": {
+          "gitId": "juandavinlie"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 99,
+        "author": {
+          "gitId": "juandavinlie"
+        },
+        "content": "        // state check"
+      },
+      {
+        "lineNumber": 100,
+        "author": {
+          "gitId": "juandavinlie"
+        },
+        "content": "        EditModuleCommand e \u003d (EditModuleCommand) other;"
+      },
+      {
+        "lineNumber": 101,
+        "author": {
+          "gitId": "juandavinlie"
+        },
+        "content": "        return index.equals(e.index)"
+      },
+      {
+        "lineNumber": 102,
+        "author": {
+          "gitId": "juandavinlie"
+        },
+        "content": "                \u0026\u0026 newModuleId.equals(e.newModuleId);"
+      },
+      {
+        "lineNumber": 103,
+        "author": {
+          "gitId": "juandavinlie"
+        },
+        "content": "    }"
+      },
+      {
+        "lineNumber": 104,
+        "author": {
+          "gitId": "juandavinlie"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 105,
+        "author": {
+          "gitId": "juandavinlie"
+        },
+        "content": "    /**"
+      },
+      {
+        "lineNumber": 106,
+        "author": {
+          "gitId": "juandavinlie"
+        },
+        "content": "     * Stores the details to edit the person with. Each non-empty field value will replace the"
+      },
+      {
+        "lineNumber": 107,
+        "author": {
+          "gitId": "juandavinlie"
+        },
+        "content": "     * corresponding field value of the person."
+      },
+      {
+        "lineNumber": 108,
+        "author": {
+          "gitId": "juandavinlie"
+        },
+        "content": "     */"
+      },
+      {
+        "lineNumber": 109,
+        "author": {
+          "gitId": "juandavinlie"
+        },
+        "content": "    public static class EditModuleDescriptor {"
+      },
+      {
+        "lineNumber": 110,
+        "author": {
+          "gitId": "juandavinlie"
+        },
+        "content": "        private String moduleId;"
+      },
+      {
+        "lineNumber": 111,
+        "author": {
+          "gitId": "juandavinlie"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 112,
+        "author": {
+          "gitId": "juandavinlie"
+        },
+        "content": "        public EditModuleDescriptor() {}"
+      },
+      {
+        "lineNumber": 113,
+        "author": {
+          "gitId": "juandavinlie"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 114,
+        "author": {
+          "gitId": "juandavinlie"
+        },
+        "content": "        /**"
+      },
+      {
+        "lineNumber": 115,
+        "author": {
+          "gitId": "juandavinlie"
+        },
+        "content": "         * Copy constructor."
+      },
+      {
+        "lineNumber": 116,
+        "author": {
+          "gitId": "juandavinlie"
+        },
+        "content": "         * A defensive copy of {@code tags} is used internally."
+      },
+      {
+        "lineNumber": 117,
+        "author": {
+          "gitId": "juandavinlie"
+        },
+        "content": "         */"
+      },
+      {
+        "lineNumber": 118,
+        "author": {
+          "gitId": "juandavinlie"
+        },
+        "content": "        public EditModuleDescriptor(EditModuleDescriptor toCopy) {"
+      },
+      {
+        "lineNumber": 119,
+        "author": {
+          "gitId": "juandavinlie"
+        },
+        "content": "            setModuleId(toCopy.moduleId);"
+      },
+      {
+        "lineNumber": 120,
+        "author": {
+          "gitId": "juandavinlie"
+        },
+        "content": "        }"
+      },
+      {
+        "lineNumber": 121,
+        "author": {
+          "gitId": "juandavinlie"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 122,
+        "author": {
+          "gitId": "juandavinlie"
+        },
+        "content": "        /**"
+      },
+      {
+        "lineNumber": 123,
+        "author": {
+          "gitId": "juandavinlie"
+        },
+        "content": "         * Returns true if at least one field is edited."
+      },
+      {
+        "lineNumber": 124,
+        "author": {
+          "gitId": "juandavinlie"
+        },
+        "content": "         */"
+      },
+      {
+        "lineNumber": 125,
+        "author": {
+          "gitId": "juandavinlie"
+        },
+        "content": "        public boolean isAnyFieldEdited() {"
+      },
+      {
+        "lineNumber": 126,
+        "author": {
+          "gitId": "juandavinlie"
+        },
+        "content": "            return CollectionUtil.isAnyNonNull(moduleId);"
+      },
+      {
+        "lineNumber": 127,
+        "author": {
+          "gitId": "juandavinlie"
+        },
+        "content": "        }"
+      },
+      {
+        "lineNumber": 128,
+        "author": {
+          "gitId": "juandavinlie"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 129,
+        "author": {
+          "gitId": "juandavinlie"
+        },
+        "content": "        public void setModuleId(String moduleId) {"
+      },
+      {
+        "lineNumber": 130,
+        "author": {
+          "gitId": "juandavinlie"
+        },
+        "content": "            this.moduleId \u003d moduleId;"
+      },
+      {
+        "lineNumber": 131,
+        "author": {
+          "gitId": "juandavinlie"
+        },
+        "content": "        }"
+      },
+      {
+        "lineNumber": 132,
+        "author": {
+          "gitId": "juandavinlie"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 133,
+        "author": {
+          "gitId": "juandavinlie"
+        },
+        "content": "        public Optional\u003cString\u003e getModuleId() {"
+      },
+      {
+        "lineNumber": 134,
+        "author": {
+          "gitId": "juandavinlie"
+        },
+        "content": "            return Optional.ofNullable(moduleId);"
+      },
+      {
+        "lineNumber": 135,
+        "author": {
+          "gitId": "juandavinlie"
+        },
+        "content": "        }"
+      },
+      {
+        "lineNumber": 136,
+        "author": {
+          "gitId": "juandavinlie"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 137,
+        "author": {
+          "gitId": "juandavinlie"
+        },
+        "content": "        @Override"
+      },
+      {
+        "lineNumber": 138,
+        "author": {
+          "gitId": "juandavinlie"
+        },
+        "content": "        public boolean equals(Object other) {"
+      },
+      {
+        "lineNumber": 139,
+        "author": {
+          "gitId": "juandavinlie"
+        },
+        "content": "            // short circuit if same object"
+      },
+      {
+        "lineNumber": 140,
+        "author": {
+          "gitId": "juandavinlie"
+        },
+        "content": "            if (other \u003d\u003d this) {"
+      },
+      {
+        "lineNumber": 141,
+        "author": {
+          "gitId": "juandavinlie"
+        },
+        "content": "                return true;"
+      },
+      {
+        "lineNumber": 142,
+        "author": {
+          "gitId": "juandavinlie"
+        },
+        "content": "            }"
+      },
+      {
+        "lineNumber": 143,
+        "author": {
+          "gitId": "juandavinlie"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 144,
+        "author": {
+          "gitId": "juandavinlie"
+        },
+        "content": "            // instanceof handles nulls"
+      },
+      {
+        "lineNumber": 145,
+        "author": {
+          "gitId": "juandavinlie"
+        },
+        "content": "            if (!(other instanceof EditModuleDescriptor)) {"
+      },
+      {
+        "lineNumber": 146,
+        "author": {
+          "gitId": "juandavinlie"
+        },
+        "content": "                return false;"
+      },
+      {
+        "lineNumber": 147,
+        "author": {
+          "gitId": "juandavinlie"
+        },
+        "content": "            }"
+      },
+      {
+        "lineNumber": 148,
+        "author": {
+          "gitId": "juandavinlie"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 149,
+        "author": {
+          "gitId": "juandavinlie"
+        },
+        "content": "            // state check"
+      },
+      {
+        "lineNumber": 150,
+        "author": {
+          "gitId": "juandavinlie"
+        },
+        "content": "            EditModuleDescriptor e \u003d (EditModuleDescriptor) other;"
+      },
+      {
+        "lineNumber": 151,
+        "author": {
+          "gitId": "juandavinlie"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 152,
+        "author": {
+          "gitId": "juandavinlie"
+        },
+        "content": "            return getModuleId().equals(e.getModuleId());"
+      },
+      {
+        "lineNumber": 153,
+        "author": {
+          "gitId": "juandavinlie"
+        },
+        "content": "        }"
+      },
+      {
+        "lineNumber": 154,
+        "author": {
+          "gitId": "juandavinlie"
+        },
+        "content": "    }"
+      },
+      {
+        "lineNumber": 155,
+        "author": {
+          "gitId": "juandavinlie"
+        },
+        "content": "}"
+      }
+    ],
+    "authorContributionMap": {
+      "juandavinlie": 155
+    }
+  },
+  {
     "path": "src/main/java/seedu/address/logic/commands/ExitCommand.java",
     "fileType": "functional-code",
     "lines": [
@@ -16800,6 +18403,316 @@
     }
   },
   {
+    "path": "src/main/java/seedu/address/logic/commands/FindModuleCommand.java",
+    "fileType": "functional-code",
+    "lines": [
+      {
+        "lineNumber": 1,
+        "author": {
+          "gitId": "juandavinlie"
+        },
+        "content": "package seedu.address.logic.commands;"
+      },
+      {
+        "lineNumber": 2,
+        "author": {
+          "gitId": "juandavinlie"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 3,
+        "author": {
+          "gitId": "juandavinlie"
+        },
+        "content": "import static java.util.Objects.requireNonNull;"
+      },
+      {
+        "lineNumber": 4,
+        "author": {
+          "gitId": "juandavinlie"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 5,
+        "author": {
+          "gitId": "juandavinlie"
+        },
+        "content": "import seedu.address.commons.core.Messages;"
+      },
+      {
+        "lineNumber": 6,
+        "author": {
+          "gitId": "juandavinlie"
+        },
+        "content": "import seedu.address.model.Model;"
+      },
+      {
+        "lineNumber": 7,
+        "author": {
+          "gitId": "juandavinlie"
+        },
+        "content": "import seedu.address.model.module.ModuleContainsKeywordsPredicate;"
+      },
+      {
+        "lineNumber": 8,
+        "author": {
+          "gitId": "juandavinlie"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 9,
+        "author": {
+          "gitId": "juandavinlie"
+        },
+        "content": "/**"
+      },
+      {
+        "lineNumber": 10,
+        "author": {
+          "gitId": "juandavinlie"
+        },
+        "content": " * Finds and lists all persons in address book whose name contains any of the argument keywords."
+      },
+      {
+        "lineNumber": 11,
+        "author": {
+          "gitId": "juandavinlie"
+        },
+        "content": " * Keyword matching is case insensitive."
+      },
+      {
+        "lineNumber": 12,
+        "author": {
+          "gitId": "juandavinlie"
+        },
+        "content": " */"
+      },
+      {
+        "lineNumber": 13,
+        "author": {
+          "gitId": "juandavinlie"
+        },
+        "content": "public class FindModuleCommand extends Command {"
+      },
+      {
+        "lineNumber": 14,
+        "author": {
+          "gitId": "juandavinlie"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 15,
+        "author": {
+          "gitId": "juandavinlie"
+        },
+        "content": "    public static final String COMMAND_WORD \u003d \"findMod\";"
+      },
+      {
+        "lineNumber": 16,
+        "author": {
+          "gitId": "juandavinlie"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 17,
+        "author": {
+          "gitId": "juandavinlie"
+        },
+        "content": "    public static final String MESSAGE_USAGE \u003d COMMAND_WORD + \": Finds all modules whose module id contain any of \""
+      },
+      {
+        "lineNumber": 18,
+        "author": {
+          "gitId": "juandavinlie"
+        },
+        "content": "            + \"the specified keywords (case-insensitive) and displays them as a list with index numbers.\\n\""
+      },
+      {
+        "lineNumber": 19,
+        "author": {
+          "gitId": "juandavinlie"
+        },
+        "content": "            + \"Parameters: KEYWORD [MORE_KEYWORDS]...\\n\""
+      },
+      {
+        "lineNumber": 20,
+        "author": {
+          "gitId": "juandavinlie"
+        },
+        "content": "            + \"Example: \" + COMMAND_WORD + \" cs2100 cs3243 CS2030\";"
+      },
+      {
+        "lineNumber": 21,
+        "author": {
+          "gitId": "juandavinlie"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 22,
+        "author": {
+          "gitId": "juandavinlie"
+        },
+        "content": "    private final ModuleContainsKeywordsPredicate predicate;"
+      },
+      {
+        "lineNumber": 23,
+        "author": {
+          "gitId": "juandavinlie"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 24,
+        "author": {
+          "gitId": "juandavinlie"
+        },
+        "content": "    public FindModuleCommand(ModuleContainsKeywordsPredicate predicate) {"
+      },
+      {
+        "lineNumber": 25,
+        "author": {
+          "gitId": "juandavinlie"
+        },
+        "content": "        this.predicate \u003d predicate;"
+      },
+      {
+        "lineNumber": 26,
+        "author": {
+          "gitId": "juandavinlie"
+        },
+        "content": "    }"
+      },
+      {
+        "lineNumber": 27,
+        "author": {
+          "gitId": "juandavinlie"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 28,
+        "author": {
+          "gitId": "juandavinlie"
+        },
+        "content": "    @Override"
+      },
+      {
+        "lineNumber": 29,
+        "author": {
+          "gitId": "juandavinlie"
+        },
+        "content": "    public CommandResult execute(Model model) {"
+      },
+      {
+        "lineNumber": 30,
+        "author": {
+          "gitId": "juandavinlie"
+        },
+        "content": "        requireNonNull(model);"
+      },
+      {
+        "lineNumber": 31,
+        "author": {
+          "gitId": "juandavinlie"
+        },
+        "content": "        model.updateFilteredModuleList(predicate);"
+      },
+      {
+        "lineNumber": 32,
+        "author": {
+          "gitId": "juandavinlie"
+        },
+        "content": "        return new CommandResult("
+      },
+      {
+        "lineNumber": 33,
+        "author": {
+          "gitId": "juandavinlie"
+        },
+        "content": "                String.format(Messages.MESSAGE_MODULES_LISTED_OVERVIEW, model.getFilteredModuleList().size()), false, false, false, false, true);"
+      },
+      {
+        "lineNumber": 34,
+        "author": {
+          "gitId": "juandavinlie"
+        },
+        "content": "    }"
+      },
+      {
+        "lineNumber": 35,
+        "author": {
+          "gitId": "juandavinlie"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 36,
+        "author": {
+          "gitId": "juandavinlie"
+        },
+        "content": "    @Override"
+      },
+      {
+        "lineNumber": 37,
+        "author": {
+          "gitId": "juandavinlie"
+        },
+        "content": "    public boolean equals(Object other) {"
+      },
+      {
+        "lineNumber": 38,
+        "author": {
+          "gitId": "juandavinlie"
+        },
+        "content": "        return other \u003d\u003d this // short circuit if same object"
+      },
+      {
+        "lineNumber": 39,
+        "author": {
+          "gitId": "juandavinlie"
+        },
+        "content": "                || (other instanceof FindModuleCommand // instanceof handles nulls"
+      },
+      {
+        "lineNumber": 40,
+        "author": {
+          "gitId": "juandavinlie"
+        },
+        "content": "                \u0026\u0026 predicate.equals(((FindModuleCommand) other).predicate)); // state check"
+      },
+      {
+        "lineNumber": 41,
+        "author": {
+          "gitId": "juandavinlie"
+        },
+        "content": "    }"
+      },
+      {
+        "lineNumber": 42,
+        "author": {
+          "gitId": "juandavinlie"
+        },
+        "content": "}"
+      },
+      {
+        "lineNumber": 43,
+        "author": {
+          "gitId": "juandavinlie"
+        },
+        "content": ""
+      }
+    ],
+    "authorContributionMap": {
+      "juandavinlie": 43
+    }
+  },
+  {
     "path": "src/main/java/seedu/address/logic/commands/HelpCommand.java",
     "fileType": "functional-code",
     "lines": [
@@ -17148,7 +19061,240 @@
     }
   },
   {
-    "path": "src/main/java/seedu/address/logic/commands/ViewModuleCommand.java",
+    "path": "src/main/java/seedu/address/logic/commands/ListModuleCommand.java",
+    "fileType": "functional-code",
+    "lines": [
+      {
+        "lineNumber": 1,
+        "author": {
+          "gitId": "juandavinlie"
+        },
+        "content": "package seedu.address.logic.commands;"
+      },
+      {
+        "lineNumber": 2,
+        "author": {
+          "gitId": "juandavinlie"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 3,
+        "author": {
+          "gitId": "juandavinlie"
+        },
+        "content": "import seedu.address.logic.commands.exceptions.CommandException;"
+      },
+      {
+        "lineNumber": 4,
+        "author": {
+          "gitId": "juandavinlie"
+        },
+        "content": "import seedu.address.model.Model;"
+      },
+      {
+        "lineNumber": 5,
+        "author": {
+          "gitId": "juandavinlie"
+        },
+        "content": "import static seedu.address.model.Model.PREDICATE_SHOW_ALL_MODULES;"
+      },
+      {
+        "lineNumber": 6,
+        "author": {
+          "gitId": "juandavinlie"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 7,
+        "author": {
+          "gitId": "juandavinlie"
+        },
+        "content": "import static java.util.Objects.requireNonNull;"
+      },
+      {
+        "lineNumber": 8,
+        "author": {
+          "gitId": "juandavinlie"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 9,
+        "author": {
+          "gitId": "juandavinlie"
+        },
+        "content": "public class ListModuleCommand extends Command {"
+      },
+      {
+        "lineNumber": 10,
+        "author": {
+          "gitId": "juandavinlie"
+        },
+        "content": "    public static final String COMMAND_WORD \u003d \"listMod\";"
+      },
+      {
+        "lineNumber": 11,
+        "author": {
+          "gitId": "juandavinlie"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 12,
+        "author": {
+          "gitId": "juandavinlie"
+        },
+        "content": "    public static final String MESSAGE_USAGE \u003d COMMAND_WORD"
+      },
+      {
+        "lineNumber": 13,
+        "author": {
+          "gitId": "juandavinlie"
+        },
+        "content": "            + \": Views all the modules.\\n\""
+      },
+      {
+        "lineNumber": 14,
+        "author": {
+          "gitId": "juandavinlie"
+        },
+        "content": "            + \"Example: \" + COMMAND_WORD;"
+      },
+      {
+        "lineNumber": 15,
+        "author": {
+          "gitId": "juandavinlie"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 16,
+        "author": {
+          "gitId": "juandavinlie"
+        },
+        "content": "    public static final String MESSAGE_VIEWING_MODULES_SUCCESS \u003d \"Viewing All Modules\";"
+      },
+      {
+        "lineNumber": 17,
+        "author": {
+          "gitId": "juandavinlie"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 18,
+        "author": {
+          "gitId": "juandavinlie"
+        },
+        "content": "    public ListModuleCommand() { }"
+      },
+      {
+        "lineNumber": 19,
+        "author": {
+          "gitId": "juandavinlie"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 20,
+        "author": {
+          "gitId": "juandavinlie"
+        },
+        "content": "    @Override"
+      },
+      {
+        "lineNumber": 21,
+        "author": {
+          "gitId": "juandavinlie"
+        },
+        "content": "    public CommandResult execute(Model model) throws CommandException {"
+      },
+      {
+        "lineNumber": 22,
+        "author": {
+          "gitId": "juandavinlie"
+        },
+        "content": "        model.updateFilteredModuleList(PREDICATE_SHOW_ALL_MODULES);"
+      },
+      {
+        "lineNumber": 23,
+        "author": {
+          "gitId": "juandavinlie"
+        },
+        "content": "        return new CommandResult(String.format(MESSAGE_VIEWING_MODULES_SUCCESS), false, false, false, false, true);"
+      },
+      {
+        "lineNumber": 24,
+        "author": {
+          "gitId": "juandavinlie"
+        },
+        "content": "    }"
+      },
+      {
+        "lineNumber": 25,
+        "author": {
+          "gitId": "juandavinlie"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 26,
+        "author": {
+          "gitId": "juandavinlie"
+        },
+        "content": "    @Override"
+      },
+      {
+        "lineNumber": 27,
+        "author": {
+          "gitId": "juandavinlie"
+        },
+        "content": "    public boolean equals(Object other) {"
+      },
+      {
+        "lineNumber": 28,
+        "author": {
+          "gitId": "juandavinlie"
+        },
+        "content": "        return other \u003d\u003d this // short circuit if same object"
+      },
+      {
+        "lineNumber": 29,
+        "author": {
+          "gitId": "juandavinlie"
+        },
+        "content": "                || (other instanceof ListModuleCommand); // instanceof handles nulls"
+      },
+      {
+        "lineNumber": 30,
+        "author": {
+          "gitId": "juandavinlie"
+        },
+        "content": "    }"
+      },
+      {
+        "lineNumber": 31,
+        "author": {
+          "gitId": "juandavinlie"
+        },
+        "content": "}"
+      },
+      {
+        "lineNumber": 32,
+        "author": {
+          "gitId": "juandavinlie"
+        },
+        "content": ""
+      }
+    ],
+    "authorContributionMap": {
+      "juandavinlie": 32
+    }
+  },
+  {
+    "path": "src/main/java/seedu/address/logic/commands/ListStudentCommand.java",
     "fileType": "functional-code",
     "lines": [
       {
@@ -17191,7 +19337,7 @@
         "author": {
           "gitId": "juandavinlie"
         },
-        "content": "import static java.util.Objects.requireNonNull;"
+        "content": "import static seedu.address.model.Model.PREDICATE_SHOW_ALL_STUDENTS;"
       },
       {
         "lineNumber": 7,
@@ -17205,56 +19351,56 @@
         "author": {
           "gitId": "juandavinlie"
         },
-        "content": "public class ViewModuleCommand extends Command {"
+        "content": "import static java.util.Objects.requireNonNull;"
       },
       {
         "lineNumber": 9,
         "author": {
           "gitId": "juandavinlie"
         },
-        "content": "    public static final String COMMAND_WORD \u003d \"viewMod\";"
+        "content": ""
       },
       {
         "lineNumber": 10,
         "author": {
           "gitId": "juandavinlie"
         },
-        "content": ""
+        "content": "public class ListStudentCommand extends Command {"
       },
       {
         "lineNumber": 11,
         "author": {
           "gitId": "juandavinlie"
         },
-        "content": "    public static final String MESSAGE_USAGE \u003d COMMAND_WORD"
+        "content": "    public static final String COMMAND_WORD \u003d \"listStudent\";"
       },
       {
         "lineNumber": 12,
         "author": {
           "gitId": "juandavinlie"
         },
-        "content": "            + \": Views all the modules.\\n\""
+        "content": ""
       },
       {
         "lineNumber": 13,
         "author": {
           "gitId": "juandavinlie"
         },
-        "content": "            + \"Example: \" + COMMAND_WORD;"
+        "content": "    public static final String MESSAGE_USAGE \u003d COMMAND_WORD"
       },
       {
         "lineNumber": 14,
         "author": {
           "gitId": "juandavinlie"
         },
-        "content": ""
+        "content": "            + \": Views all the students.\\n\""
       },
       {
         "lineNumber": 15,
         "author": {
           "gitId": "juandavinlie"
         },
-        "content": "    public static final String MESSAGE_VIEWING_MODULES_SUCCESS \u003d \"Viewing All Modules\";"
+        "content": "            + \"Example: \" + COMMAND_WORD;"
       },
       {
         "lineNumber": 16,
@@ -17268,7 +19414,7 @@
         "author": {
           "gitId": "juandavinlie"
         },
-        "content": "    public ViewModuleCommand() { }"
+        "content": "    public static final String MESSAGE_VIEWING_TUTORIALGROUPS_SUCCESS \u003d \"Viewing All Students\";"
       },
       {
         "lineNumber": 18,
@@ -17282,73 +19428,327 @@
         "author": {
           "gitId": "juandavinlie"
         },
-        "content": "    @Override"
+        "content": "    public ListStudentCommand() { }"
       },
       {
         "lineNumber": 20,
         "author": {
           "gitId": "juandavinlie"
         },
-        "content": "    public CommandResult execute(Model model) throws CommandException {"
+        "content": ""
       },
       {
         "lineNumber": 21,
         "author": {
           "gitId": "juandavinlie"
         },
-        "content": "        return new CommandResult(String.format(MESSAGE_VIEWING_MODULES_SUCCESS), false, false, true, false, true);"
+        "content": "    @Override"
       },
       {
         "lineNumber": 22,
         "author": {
           "gitId": "juandavinlie"
         },
-        "content": "    }"
+        "content": "    public CommandResult execute(Model model) throws CommandException {"
       },
       {
         "lineNumber": 23,
         "author": {
           "gitId": "juandavinlie"
         },
-        "content": ""
+        "content": "        model.updateFilteredStudentList(PREDICATE_SHOW_ALL_STUDENTS);"
       },
       {
         "lineNumber": 24,
         "author": {
           "gitId": "juandavinlie"
         },
-        "content": "    @Override"
+        "content": "        return new CommandResult(String.format(MESSAGE_VIEWING_TUTORIALGROUPS_SUCCESS), false, false, false, true, false);"
       },
       {
         "lineNumber": 25,
         "author": {
           "gitId": "juandavinlie"
         },
-        "content": "    public boolean equals(Object other) {"
+        "content": "    }"
       },
       {
         "lineNumber": 26,
         "author": {
           "gitId": "juandavinlie"
         },
-        "content": "        return other \u003d\u003d this // short circuit if same object"
+        "content": ""
       },
       {
         "lineNumber": 27,
         "author": {
           "gitId": "juandavinlie"
         },
-        "content": "                || (other instanceof ViewModuleCommand); // instanceof handles nulls"
+        "content": "    @Override"
       },
       {
         "lineNumber": 28,
         "author": {
           "gitId": "juandavinlie"
         },
-        "content": "    }"
+        "content": "    public boolean equals(Object other) {"
       },
       {
         "lineNumber": 29,
+        "author": {
+          "gitId": "juandavinlie"
+        },
+        "content": "        return other \u003d\u003d this // short circuit if same object"
+      },
+      {
+        "lineNumber": 30,
+        "author": {
+          "gitId": "juandavinlie"
+        },
+        "content": "                || (other instanceof ListStudentCommand); // instanceof handles nulls"
+      },
+      {
+        "lineNumber": 31,
+        "author": {
+          "gitId": "juandavinlie"
+        },
+        "content": "    }"
+      },
+      {
+        "lineNumber": 32,
+        "author": {
+          "gitId": "juandavinlie"
+        },
+        "content": "}"
+      },
+      {
+        "lineNumber": 33,
+        "author": {
+          "gitId": "juandavinlie"
+        },
+        "content": ""
+      }
+    ],
+    "authorContributionMap": {
+      "juandavinlie": 33
+    }
+  },
+  {
+    "path": "src/main/java/seedu/address/logic/commands/ListTutorialGroupCommand.java",
+    "fileType": "functional-code",
+    "lines": [
+      {
+        "lineNumber": 1,
+        "author": {
+          "gitId": "juandavinlie"
+        },
+        "content": "package seedu.address.logic.commands;"
+      },
+      {
+        "lineNumber": 2,
+        "author": {
+          "gitId": "juandavinlie"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 3,
+        "author": {
+          "gitId": "juandavinlie"
+        },
+        "content": "import seedu.address.logic.commands.exceptions.CommandException;"
+      },
+      {
+        "lineNumber": 4,
+        "author": {
+          "gitId": "juandavinlie"
+        },
+        "content": "import seedu.address.model.Model;"
+      },
+      {
+        "lineNumber": 5,
+        "author": {
+          "gitId": "juandavinlie"
+        },
+        "content": "import static seedu.address.model.Model.PREDICATE_SHOW_ALL_TUTORIALGROUPS;"
+      },
+      {
+        "lineNumber": 6,
+        "author": {
+          "gitId": "juandavinlie"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 7,
+        "author": {
+          "gitId": "juandavinlie"
+        },
+        "content": "import static java.util.Objects.requireNonNull;"
+      },
+      {
+        "lineNumber": 8,
+        "author": {
+          "gitId": "juandavinlie"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 9,
+        "author": {
+          "gitId": "juandavinlie"
+        },
+        "content": "public class ListTutorialGroupCommand extends Command {"
+      },
+      {
+        "lineNumber": 10,
+        "author": {
+          "gitId": "juandavinlie"
+        },
+        "content": "    public static final String COMMAND_WORD \u003d \"listTG\";"
+      },
+      {
+        "lineNumber": 11,
+        "author": {
+          "gitId": "juandavinlie"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 12,
+        "author": {
+          "gitId": "juandavinlie"
+        },
+        "content": "    public static final String MESSAGE_USAGE \u003d COMMAND_WORD"
+      },
+      {
+        "lineNumber": 13,
+        "author": {
+          "gitId": "juandavinlie"
+        },
+        "content": "            + \": Views all the modules.\\n\""
+      },
+      {
+        "lineNumber": 14,
+        "author": {
+          "gitId": "juandavinlie"
+        },
+        "content": "            + \"Example: \" + COMMAND_WORD;"
+      },
+      {
+        "lineNumber": 15,
+        "author": {
+          "gitId": "juandavinlie"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 16,
+        "author": {
+          "gitId": "juandavinlie"
+        },
+        "content": "    public static final String MESSAGE_VIEWING_TUTORIALGROUPS_SUCCESS \u003d \"Viewing All Tutorial Groups\";"
+      },
+      {
+        "lineNumber": 17,
+        "author": {
+          "gitId": "juandavinlie"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 18,
+        "author": {
+          "gitId": "juandavinlie"
+        },
+        "content": "    public ListTutorialGroupCommand() { }"
+      },
+      {
+        "lineNumber": 19,
+        "author": {
+          "gitId": "juandavinlie"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 20,
+        "author": {
+          "gitId": "juandavinlie"
+        },
+        "content": "    @Override"
+      },
+      {
+        "lineNumber": 21,
+        "author": {
+          "gitId": "juandavinlie"
+        },
+        "content": "    public CommandResult execute(Model model) throws CommandException {"
+      },
+      {
+        "lineNumber": 22,
+        "author": {
+          "gitId": "juandavinlie"
+        },
+        "content": "        model.updateFilteredTutorialGroupList(PREDICATE_SHOW_ALL_TUTORIALGROUPS);"
+      },
+      {
+        "lineNumber": 23,
+        "author": {
+          "gitId": "juandavinlie"
+        },
+        "content": "        return new CommandResult(String.format(MESSAGE_VIEWING_TUTORIALGROUPS_SUCCESS), false, false, true, false, false);"
+      },
+      {
+        "lineNumber": 24,
+        "author": {
+          "gitId": "juandavinlie"
+        },
+        "content": "    }"
+      },
+      {
+        "lineNumber": 25,
+        "author": {
+          "gitId": "juandavinlie"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 26,
+        "author": {
+          "gitId": "juandavinlie"
+        },
+        "content": "    @Override"
+      },
+      {
+        "lineNumber": 27,
+        "author": {
+          "gitId": "juandavinlie"
+        },
+        "content": "    public boolean equals(Object other) {"
+      },
+      {
+        "lineNumber": 28,
+        "author": {
+          "gitId": "juandavinlie"
+        },
+        "content": "        return other \u003d\u003d this // short circuit if same object"
+      },
+      {
+        "lineNumber": 29,
+        "author": {
+          "gitId": "juandavinlie"
+        },
+        "content": "                || (other instanceof ListTutorialGroupCommand); // instanceof handles nulls"
+      },
+      {
+        "lineNumber": 30,
+        "author": {
+          "gitId": "juandavinlie"
+        },
+        "content": "    }"
+      },
+      {
+        "lineNumber": 31,
         "author": {
           "gitId": "juandavinlie"
         },
@@ -17356,7 +19756,7 @@
       }
     ],
     "authorContributionMap": {
-      "juandavinlie": 29
+      "juandavinlie": 31
     }
   },
   {
@@ -17998,9 +20398,9 @@
       {
         "lineNumber": 35,
         "author": {
-          "gitId": "fanminj"
+          "gitId": "juandavinlie"
         },
-        "content": "            throw new CommandException(Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);"
+        "content": "            throw new CommandException(Messages.MESSAGE_INVALID_MODULE_DISPLAYED_INDEX);"
       },
       {
         "lineNumber": 36,
@@ -18102,8 +20502,8 @@
       }
     ],
     "authorContributionMap": {
-      "fanminj": 41,
-      "juandavinlie": 8
+      "fanminj": 40,
+      "juandavinlie": 9
     }
   },
   {
@@ -19733,254 +22133,254 @@
       {
         "lineNumber": 9,
         "author": {
-          "gitId": "-"
+          "gitId": "juandavinlie"
         },
-        "content": "import seedu.address.logic.commands.AddCommand;"
+        "content": "import seedu.address.logic.commands.*;"
       },
       {
         "lineNumber": 10,
-        "author": {
-          "gitId": "fanminj"
-        },
-        "content": "import seedu.address.logic.commands.AddModuleCommand;"
-      },
-      {
-        "lineNumber": 11,
-        "author": {
-          "gitId": "fanminj"
-        },
-        "content": "import seedu.address.logic.commands.AddStudentCommand;"
-      },
-      {
-        "lineNumber": 12,
-        "author": {
-          "gitId": "fanminj"
-        },
-        "content": "import seedu.address.logic.commands.AddTaskCommand;"
-      },
-      {
-        "lineNumber": 13,
-        "author": {
-          "gitId": "fanminj"
-        },
-        "content": "import seedu.address.logic.commands.AddTutorialGroupCommand;"
-      },
-      {
-        "lineNumber": 14,
-        "author": {
-          "gitId": "-"
-        },
-        "content": "import seedu.address.logic.commands.Command;"
-      },
-      {
-        "lineNumber": 15,
-        "author": {
-          "gitId": "-"
-        },
-        "content": "import seedu.address.logic.commands.EditCommand;"
-      },
-      {
-        "lineNumber": 16,
-        "author": {
-          "gitId": "-"
-        },
-        "content": "import seedu.address.logic.commands.ExitCommand;"
-      },
-      {
-        "lineNumber": 17,
-        "author": {
-          "gitId": "-"
-        },
-        "content": "import seedu.address.logic.commands.HelpCommand;"
-      },
-      {
-        "lineNumber": 18,
-        "author": {
-          "gitId": "fanminj"
-        },
-        "content": "import seedu.address.logic.commands.ViewModuleCommand;"
-      },
-      {
-        "lineNumber": 19,
-        "author": {
-          "gitId": "fanminj"
-        },
-        "content": "import seedu.address.logic.commands.ViewStudentCommand;"
-      },
-      {
-        "lineNumber": 20,
-        "author": {
-          "gitId": "fanminj"
-        },
-        "content": "import seedu.address.logic.commands.ViewTutorialGroupCommand;"
-      },
-      {
-        "lineNumber": 21,
         "author": {
           "gitId": "-"
         },
         "content": "import seedu.address.logic.parser.exceptions.ParseException;"
       },
       {
-        "lineNumber": 22,
+        "lineNumber": 11,
         "author": {
           "gitId": "-"
         },
         "content": ""
       },
       {
-        "lineNumber": 23,
+        "lineNumber": 12,
         "author": {
           "gitId": "-"
         },
         "content": "/**"
       },
       {
-        "lineNumber": 24,
+        "lineNumber": 13,
         "author": {
           "gitId": "-"
         },
         "content": " * Parses user input."
       },
       {
-        "lineNumber": 25,
+        "lineNumber": 14,
         "author": {
           "gitId": "-"
         },
         "content": " */"
       },
       {
-        "lineNumber": 26,
+        "lineNumber": 15,
         "author": {
           "gitId": "-"
         },
         "content": "public class AddressBookParser {"
       },
       {
-        "lineNumber": 27,
+        "lineNumber": 16,
         "author": {
           "gitId": "-"
         },
         "content": ""
       },
       {
-        "lineNumber": 28,
+        "lineNumber": 17,
         "author": {
           "gitId": "-"
         },
         "content": "    /**"
       },
       {
-        "lineNumber": 29,
+        "lineNumber": 18,
         "author": {
           "gitId": "-"
         },
         "content": "     * Used for initial separation of command word and args."
       },
       {
-        "lineNumber": 30,
+        "lineNumber": 19,
         "author": {
           "gitId": "-"
         },
         "content": "     */"
       },
       {
-        "lineNumber": 31,
+        "lineNumber": 20,
         "author": {
           "gitId": "-"
         },
         "content": "    private static final Pattern BASIC_COMMAND_FORMAT \u003d Pattern.compile(\"(?\u003ccommandWord\u003e\\\\S+)(?\u003carguments\u003e.*)\");"
       },
       {
-        "lineNumber": 32,
+        "lineNumber": 21,
         "author": {
           "gitId": "-"
         },
         "content": ""
       },
       {
-        "lineNumber": 33,
+        "lineNumber": 22,
         "author": {
           "gitId": "-"
         },
         "content": "    /**"
       },
       {
-        "lineNumber": 34,
+        "lineNumber": 23,
         "author": {
           "gitId": "-"
         },
         "content": "     * Parses user input into command for execution."
       },
       {
-        "lineNumber": 35,
+        "lineNumber": 24,
         "author": {
           "gitId": "-"
         },
         "content": "     *"
       },
       {
-        "lineNumber": 36,
+        "lineNumber": 25,
         "author": {
           "gitId": "-"
         },
         "content": "     * @param userInput full user input string"
       },
       {
-        "lineNumber": 37,
+        "lineNumber": 26,
         "author": {
           "gitId": "-"
         },
         "content": "     * @return the command based on the user input"
       },
       {
-        "lineNumber": 38,
+        "lineNumber": 27,
         "author": {
           "gitId": "-"
         },
         "content": "     * @throws ParseException if the user input does not conform the expected format"
       },
       {
-        "lineNumber": 39,
+        "lineNumber": 28,
         "author": {
           "gitId": "-"
         },
         "content": "     */"
       },
       {
-        "lineNumber": 40,
+        "lineNumber": 29,
         "author": {
           "gitId": "-"
         },
         "content": "    public Command parseCommand(String userInput) throws ParseException {"
       },
       {
-        "lineNumber": 41,
+        "lineNumber": 30,
         "author": {
           "gitId": "-"
         },
         "content": "        final Matcher matcher \u003d BASIC_COMMAND_FORMAT.matcher(userInput.trim());"
       },
       {
-        "lineNumber": 42,
+        "lineNumber": 31,
         "author": {
           "gitId": "-"
         },
         "content": "        if (!matcher.matches()) {"
       },
       {
-        "lineNumber": 43,
+        "lineNumber": 32,
         "author": {
           "gitId": "-"
         },
         "content": "            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, HelpCommand.MESSAGE_USAGE));"
       },
       {
-        "lineNumber": 44,
+        "lineNumber": 33,
         "author": {
           "gitId": "-"
         },
         "content": "        }"
+      },
+      {
+        "lineNumber": 34,
+        "author": {
+          "gitId": "-"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 35,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "        final String commandWord \u003d matcher.group(\"commandWord\");"
+      },
+      {
+        "lineNumber": 36,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "        final String arguments \u003d matcher.group(\"arguments\");"
+      },
+      {
+        "lineNumber": 37,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "        switch (commandWord) {"
+      },
+      {
+        "lineNumber": 38,
+        "author": {
+          "gitId": "juandavinlie"
+        },
+        "content": "        case AddModuleCommand.COMMAND_WORD:"
+      },
+      {
+        "lineNumber": 39,
+        "author": {
+          "gitId": "juandavinlie"
+        },
+        "content": "            return new AddModuleCommandParser().parse(arguments);"
+      },
+      {
+        "lineNumber": 40,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "        case AddCommand.COMMAND_WORD:"
+      },
+      {
+        "lineNumber": 41,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "            return new AddCommandParser().parse(arguments);"
+      },
+      {
+        "lineNumber": 42,
+        "author": {
+          "gitId": "-"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 43,
+        "author": {
+          "gitId": "juandavinlie"
+        },
+        "content": "        case EditModuleCommand.COMMAND_WORD:"
+      },
+      {
+        "lineNumber": 44,
+        "author": {
+          "gitId": "juandavinlie"
+        },
+        "content": "            return new EditModuleCommandParser().parse(arguments);"
       },
       {
         "lineNumber": 45,
@@ -19992,100 +22392,100 @@
       {
         "lineNumber": 46,
         "author": {
-          "gitId": "-"
+          "gitId": "juandavinlie"
         },
-        "content": "        final String commandWord \u003d matcher.group(\"commandWord\");"
+        "content": "        case DeleteModuleCommand.COMMAND_WORD:"
       },
       {
         "lineNumber": 47,
         "author": {
-          "gitId": "-"
+          "gitId": "juandavinlie"
         },
-        "content": "        final String arguments \u003d matcher.group(\"arguments\");"
+        "content": "            return new DeleteModuleCommandParser().parse(arguments);"
       },
       {
         "lineNumber": 48,
         "author": {
-          "gitId": "-"
+          "gitId": "juandavinlie"
         },
-        "content": "        switch (commandWord) {"
+        "content": "        /*"
       },
       {
         "lineNumber": 49,
         "author": {
-          "gitId": "juandavinlie"
+          "gitId": "-"
         },
-        "content": "        case AddModuleCommand.COMMAND_WORD:"
+        "content": "        case ClearCommand.COMMAND_WORD:"
       },
       {
         "lineNumber": 50,
         "author": {
           "gitId": "juandavinlie"
         },
-        "content": "            return new AddModuleCommandParser().parse(arguments);"
+        "content": "            return new ClearCommand();*/"
       },
       {
         "lineNumber": 51,
         "author": {
-          "gitId": "-"
+          "gitId": "juandavinlie"
         },
-        "content": "        case AddCommand.COMMAND_WORD:"
+        "content": ""
       },
       {
         "lineNumber": 52,
         "author": {
-          "gitId": "-"
+          "gitId": "juandavinlie"
         },
-        "content": "            return new AddCommandParser().parse(arguments);"
+        "content": "        case ListTutorialGroupCommand.COMMAND_WORD:"
       },
       {
         "lineNumber": 53,
         "author": {
-          "gitId": "-"
+          "gitId": "juandavinlie"
         },
-        "content": ""
+        "content": "            return new ListTutorialGroupCommand();"
       },
       {
         "lineNumber": 54,
         "author": {
           "gitId": "-"
         },
-        "content": "        case EditCommand.COMMAND_WORD:"
+        "content": ""
       },
       {
         "lineNumber": 55,
         "author": {
-          "gitId": "-"
+          "gitId": "juandavinlie"
         },
-        "content": "            return new EditCommandParser().parse(arguments);"
+        "content": "        case ListStudentCommand.COMMAND_WORD:"
       },
       {
         "lineNumber": 56,
+        "author": {
+          "gitId": "juandavinlie"
+        },
+        "content": "            return new ListStudentCommand();"
+      },
+      {
+        "lineNumber": 57,
         "author": {
           "gitId": "-"
         },
         "content": ""
       },
       {
-        "lineNumber": 57,
-        "author": {
-          "gitId": "fanminj"
-        },
-        "content": "            /* todo:"
-      },
-      {
         "lineNumber": 58,
         "author": {
-          "gitId": "-"
+          "gitId": "juandavinlie"
         },
-        "content": "        case DeleteCommand.COMMAND_WORD:"
+        "content": "        case FindModuleCommand.COMMAND_WORD:"
       },
       {
         "lineNumber": 59,
         "author": {
-          "gitId": "-"
+          "gitId": "juandavinlie"
         },
-        "content": "            return new DeleteCommandParser().parse(arguments);"
+        "content": "            return new FindModuleCommandParser().parse(arguments);"
       },
       {
         "lineNumber": 60,
@@ -20099,14 +22499,14 @@
         "author": {
           "gitId": "-"
         },
-        "content": "        case ClearCommand.COMMAND_WORD:"
+        "content": "        case ExitCommand.COMMAND_WORD:"
       },
       {
         "lineNumber": 62,
         "author": {
           "gitId": "-"
         },
-        "content": "            return new ClearCommand();"
+        "content": "            return new ExitCommand();"
       },
       {
         "lineNumber": 63,
@@ -20120,14 +22520,14 @@
         "author": {
           "gitId": "-"
         },
-        "content": "        case FindCommand.COMMAND_WORD:"
+        "content": "        case HelpCommand.COMMAND_WORD:"
       },
       {
         "lineNumber": 65,
         "author": {
           "gitId": "-"
         },
-        "content": "            return new FindCommandParser().parse(arguments);"
+        "content": "            return new HelpCommand();"
       },
       {
         "lineNumber": 66,
@@ -20139,236 +22539,166 @@
       {
         "lineNumber": 67,
         "author": {
-          "gitId": "-"
-        },
-        "content": "        case ListCommand.COMMAND_WORD:"
-      },
-      {
-        "lineNumber": 68,
-        "author": {
-          "gitId": "-"
-        },
-        "content": "            return new ListCommand();"
-      },
-      {
-        "lineNumber": 69,
-        "author": {
-          "gitId": "fanminj"
-        },
-        "content": "            */"
-      },
-      {
-        "lineNumber": 70,
-        "author": {
-          "gitId": "-"
-        },
-        "content": ""
-      },
-      {
-        "lineNumber": 71,
-        "author": {
-          "gitId": "-"
-        },
-        "content": "        case ExitCommand.COMMAND_WORD:"
-      },
-      {
-        "lineNumber": 72,
-        "author": {
-          "gitId": "-"
-        },
-        "content": "            return new ExitCommand();"
-      },
-      {
-        "lineNumber": 73,
-        "author": {
-          "gitId": "-"
-        },
-        "content": ""
-      },
-      {
-        "lineNumber": 74,
-        "author": {
-          "gitId": "-"
-        },
-        "content": "        case HelpCommand.COMMAND_WORD:"
-      },
-      {
-        "lineNumber": 75,
-        "author": {
-          "gitId": "-"
-        },
-        "content": "            return new HelpCommand();"
-      },
-      {
-        "lineNumber": 76,
-        "author": {
-          "gitId": "-"
-        },
-        "content": ""
-      },
-      {
-        "lineNumber": 77,
-        "author": {
           "gitId": "euzintan"
         },
         "content": "        case AddTutorialGroupCommand.COMMAND_WORD:"
       },
       {
-        "lineNumber": 78,
+        "lineNumber": 68,
         "author": {
           "gitId": "euzintan"
         },
         "content": "            return new AddTutorialGroupCommandParser().parse(arguments);"
       },
       {
-        "lineNumber": 79,
+        "lineNumber": 69,
         "author": {
           "gitId": "euzintan"
         },
         "content": ""
       },
       {
-        "lineNumber": 80,
+        "lineNumber": 70,
         "author": {
           "gitId": "juandavinlie"
         },
         "content": "        case AddTaskCommand.COMMAND_WORD:"
       },
       {
-        "lineNumber": 81,
+        "lineNumber": 71,
         "author": {
           "gitId": "juandavinlie"
         },
         "content": "            return new AddTaskCommandParser().parse(arguments);"
       },
       {
-        "lineNumber": 82,
+        "lineNumber": 72,
         "author": {
           "gitId": "juandavinlie"
         },
         "content": ""
       },
       {
-        "lineNumber": 83,
+        "lineNumber": 73,
         "author": {
           "gitId": "juandavinlie"
         },
         "content": "        case ViewTutorialGroupCommand.COMMAND_WORD:"
       },
       {
-        "lineNumber": 84,
+        "lineNumber": 74,
         "author": {
           "gitId": "juandavinlie"
         },
         "content": "            return new ViewTutorialGroupCommandParser().parse(arguments);"
       },
       {
-        "lineNumber": 85,
+        "lineNumber": 75,
         "author": {
           "gitId": "juandavinlie"
         },
         "content": ""
       },
       {
-        "lineNumber": 86,
+        "lineNumber": 76,
         "author": {
           "gitId": "juandavinlie"
         },
-        "content": "        case ViewModuleCommand.COMMAND_WORD:"
+        "content": "        case ListModuleCommand.COMMAND_WORD:"
       },
       {
-        "lineNumber": 87,
+        "lineNumber": 77,
         "author": {
           "gitId": "juandavinlie"
         },
-        "content": "            return new ViewModuleCommandParser().parse(arguments);"
+        "content": "            return new ListModuleCommand();"
       },
       {
-        "lineNumber": 88,
+        "lineNumber": 78,
         "author": {
           "gitId": "juandavinlie"
         },
         "content": ""
       },
       {
-        "lineNumber": 89,
+        "lineNumber": 79,
         "author": {
           "gitId": "fanminj"
         },
         "content": "        case ViewStudentCommand.COMMAND_WORD:"
       },
       {
-        "lineNumber": 90,
+        "lineNumber": 80,
         "author": {
           "gitId": "fanminj"
         },
         "content": "            return new ViewStudentCommandParser().parse(arguments);"
       },
       {
-        "lineNumber": 91,
+        "lineNumber": 81,
         "author": {
           "gitId": "fanminj"
         },
         "content": ""
       },
       {
-        "lineNumber": 92,
+        "lineNumber": 82,
         "author": {
           "gitId": "fanminj"
         },
         "content": "        case AddStudentCommand.COMMAND_WORD:"
       },
       {
-        "lineNumber": 93,
+        "lineNumber": 83,
         "author": {
           "gitId": "fanminj"
         },
         "content": "            return new AddStudentCommandParser().parse(arguments);"
       },
       {
-        "lineNumber": 94,
+        "lineNumber": 84,
         "author": {
           "gitId": "fanminj"
         },
         "content": ""
       },
       {
-        "lineNumber": 95,
+        "lineNumber": 85,
         "author": {
           "gitId": "-"
         },
         "content": "        default:"
       },
       {
-        "lineNumber": 96,
+        "lineNumber": 86,
         "author": {
           "gitId": "-"
         },
         "content": "            throw new ParseException(MESSAGE_UNKNOWN_COMMAND);"
       },
       {
-        "lineNumber": 97,
+        "lineNumber": 87,
         "author": {
           "gitId": "-"
         },
         "content": "        }"
       },
       {
-        "lineNumber": 98,
+        "lineNumber": 88,
         "author": {
           "gitId": "-"
         },
         "content": "    }"
       },
       {
-        "lineNumber": 99,
+        "lineNumber": 89,
         "author": {
           "gitId": "-"
         },
         "content": ""
       },
       {
-        "lineNumber": 100,
+        "lineNumber": 90,
         "author": {
           "gitId": "-"
         },
@@ -20377,9 +22707,9 @@
     ],
     "authorContributionMap": {
       "euzintan": 3,
-      "fanminj": 15,
-      "juandavinlie": 11,
-      "-": 71
+      "fanminj": 6,
+      "juandavinlie": 25,
+      "-": 56
     }
   },
   {
@@ -20738,6 +23068,218 @@
     ],
     "authorContributionMap": {
       "fanminj": 30
+    }
+  },
+  {
+    "path": "src/main/java/seedu/address/logic/parser/DeleteModuleCommandParser.java",
+    "fileType": "functional-code",
+    "lines": [
+      {
+        "lineNumber": 1,
+        "author": {
+          "gitId": "juandavinlie"
+        },
+        "content": "package seedu.address.logic.parser;"
+      },
+      {
+        "lineNumber": 2,
+        "author": {
+          "gitId": "juandavinlie"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 3,
+        "author": {
+          "gitId": "juandavinlie"
+        },
+        "content": "import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;"
+      },
+      {
+        "lineNumber": 4,
+        "author": {
+          "gitId": "juandavinlie"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 5,
+        "author": {
+          "gitId": "juandavinlie"
+        },
+        "content": "import seedu.address.commons.core.index.Index;"
+      },
+      {
+        "lineNumber": 6,
+        "author": {
+          "gitId": "juandavinlie"
+        },
+        "content": "import seedu.address.logic.commands.DeleteModuleCommand;"
+      },
+      {
+        "lineNumber": 7,
+        "author": {
+          "gitId": "juandavinlie"
+        },
+        "content": "import seedu.address.logic.parser.exceptions.ParseException;"
+      },
+      {
+        "lineNumber": 8,
+        "author": {
+          "gitId": "juandavinlie"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 9,
+        "author": {
+          "gitId": "juandavinlie"
+        },
+        "content": "/**"
+      },
+      {
+        "lineNumber": 10,
+        "author": {
+          "gitId": "juandavinlie"
+        },
+        "content": " * Parses input arguments and creates a new DeleteCommand object"
+      },
+      {
+        "lineNumber": 11,
+        "author": {
+          "gitId": "juandavinlie"
+        },
+        "content": " */"
+      },
+      {
+        "lineNumber": 12,
+        "author": {
+          "gitId": "juandavinlie"
+        },
+        "content": "public class DeleteModuleCommandParser implements Parser\u003cDeleteModuleCommand\u003e {"
+      },
+      {
+        "lineNumber": 13,
+        "author": {
+          "gitId": "juandavinlie"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 14,
+        "author": {
+          "gitId": "juandavinlie"
+        },
+        "content": "    /**"
+      },
+      {
+        "lineNumber": 15,
+        "author": {
+          "gitId": "juandavinlie"
+        },
+        "content": "     * Parses the given {@code String} of arguments in the context of the DeleteModuleCommand"
+      },
+      {
+        "lineNumber": 16,
+        "author": {
+          "gitId": "juandavinlie"
+        },
+        "content": "     * and returns a DeleteCommand object for execution."
+      },
+      {
+        "lineNumber": 17,
+        "author": {
+          "gitId": "juandavinlie"
+        },
+        "content": "     * @throws ParseException if the user input does not conform the expected format"
+      },
+      {
+        "lineNumber": 18,
+        "author": {
+          "gitId": "juandavinlie"
+        },
+        "content": "     */"
+      },
+      {
+        "lineNumber": 19,
+        "author": {
+          "gitId": "juandavinlie"
+        },
+        "content": "    public DeleteModuleCommand parse(String args) throws ParseException {"
+      },
+      {
+        "lineNumber": 20,
+        "author": {
+          "gitId": "juandavinlie"
+        },
+        "content": "        try {"
+      },
+      {
+        "lineNumber": 21,
+        "author": {
+          "gitId": "juandavinlie"
+        },
+        "content": "            Index index \u003d ParserUtil.parseIndex(args);"
+      },
+      {
+        "lineNumber": 22,
+        "author": {
+          "gitId": "juandavinlie"
+        },
+        "content": "            return new DeleteModuleCommand(index);"
+      },
+      {
+        "lineNumber": 23,
+        "author": {
+          "gitId": "juandavinlie"
+        },
+        "content": "        } catch (ParseException pe) {"
+      },
+      {
+        "lineNumber": 24,
+        "author": {
+          "gitId": "juandavinlie"
+        },
+        "content": "            throw new ParseException("
+      },
+      {
+        "lineNumber": 25,
+        "author": {
+          "gitId": "juandavinlie"
+        },
+        "content": "                    String.format(MESSAGE_INVALID_COMMAND_FORMAT, DeleteModuleCommand.MESSAGE_USAGE), pe);"
+      },
+      {
+        "lineNumber": 26,
+        "author": {
+          "gitId": "juandavinlie"
+        },
+        "content": "        }"
+      },
+      {
+        "lineNumber": 27,
+        "author": {
+          "gitId": "juandavinlie"
+        },
+        "content": "    }"
+      },
+      {
+        "lineNumber": 28,
+        "author": {
+          "gitId": "juandavinlie"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 29,
+        "author": {
+          "gitId": "juandavinlie"
+        },
+        "content": "}"
+      }
+    ],
+    "authorContributionMap": {
+      "juandavinlie": 29
     }
   },
   {
@@ -21297,6 +23839,449 @@
     }
   },
   {
+    "path": "src/main/java/seedu/address/logic/parser/EditModuleCommandParser.java",
+    "fileType": "functional-code",
+    "lines": [
+      {
+        "lineNumber": 1,
+        "author": {
+          "gitId": "juandavinlie"
+        },
+        "content": "package seedu.address.logic.parser;"
+      },
+      {
+        "lineNumber": 2,
+        "author": {
+          "gitId": "juandavinlie"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 3,
+        "author": {
+          "gitId": "juandavinlie"
+        },
+        "content": "import static java.util.Objects.requireNonNull;"
+      },
+      {
+        "lineNumber": 4,
+        "author": {
+          "gitId": "juandavinlie"
+        },
+        "content": "import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;"
+      },
+      {
+        "lineNumber": 5,
+        "author": {
+          "gitId": "juandavinlie"
+        },
+        "content": "import static seedu.address.logic.parser.CliSyntax.PREFIX_EMAIL;"
+      },
+      {
+        "lineNumber": 6,
+        "author": {
+          "gitId": "juandavinlie"
+        },
+        "content": "import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;"
+      },
+      {
+        "lineNumber": 7,
+        "author": {
+          "gitId": "juandavinlie"
+        },
+        "content": "import static seedu.address.logic.parser.CliSyntax.PREFIX_PHONE;"
+      },
+      {
+        "lineNumber": 8,
+        "author": {
+          "gitId": "juandavinlie"
+        },
+        "content": "import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG;"
+      },
+      {
+        "lineNumber": 9,
+        "author": {
+          "gitId": "juandavinlie"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 10,
+        "author": {
+          "gitId": "juandavinlie"
+        },
+        "content": "import java.util.Collection;"
+      },
+      {
+        "lineNumber": 11,
+        "author": {
+          "gitId": "juandavinlie"
+        },
+        "content": "import java.util.Collections;"
+      },
+      {
+        "lineNumber": 12,
+        "author": {
+          "gitId": "juandavinlie"
+        },
+        "content": "import java.util.Optional;"
+      },
+      {
+        "lineNumber": 13,
+        "author": {
+          "gitId": "juandavinlie"
+        },
+        "content": "import java.util.Set;"
+      },
+      {
+        "lineNumber": 14,
+        "author": {
+          "gitId": "juandavinlie"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 15,
+        "author": {
+          "gitId": "juandavinlie"
+        },
+        "content": "import seedu.address.commons.core.index.Index;"
+      },
+      {
+        "lineNumber": 16,
+        "author": {
+          "gitId": "juandavinlie"
+        },
+        "content": "import seedu.address.logic.commands.EditModuleCommand;"
+      },
+      {
+        "lineNumber": 17,
+        "author": {
+          "gitId": "juandavinlie"
+        },
+        "content": "import seedu.address.logic.commands.EditModuleCommand.EditModuleDescriptor;"
+      },
+      {
+        "lineNumber": 18,
+        "author": {
+          "gitId": "juandavinlie"
+        },
+        "content": "import seedu.address.logic.parser.exceptions.ParseException;"
+      },
+      {
+        "lineNumber": 19,
+        "author": {
+          "gitId": "juandavinlie"
+        },
+        "content": "import seedu.address.model.tag.Tag;"
+      },
+      {
+        "lineNumber": 20,
+        "author": {
+          "gitId": "juandavinlie"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 21,
+        "author": {
+          "gitId": "juandavinlie"
+        },
+        "content": "/**"
+      },
+      {
+        "lineNumber": 22,
+        "author": {
+          "gitId": "juandavinlie"
+        },
+        "content": " * Parses input arguments and creates a new EditCommand object"
+      },
+      {
+        "lineNumber": 23,
+        "author": {
+          "gitId": "juandavinlie"
+        },
+        "content": " */"
+      },
+      {
+        "lineNumber": 24,
+        "author": {
+          "gitId": "juandavinlie"
+        },
+        "content": "public class EditModuleCommandParser implements Parser\u003cEditModuleCommand\u003e {"
+      },
+      {
+        "lineNumber": 25,
+        "author": {
+          "gitId": "juandavinlie"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 26,
+        "author": {
+          "gitId": "juandavinlie"
+        },
+        "content": "    /**"
+      },
+      {
+        "lineNumber": 27,
+        "author": {
+          "gitId": "juandavinlie"
+        },
+        "content": "     * Parses the given {@code String} of arguments in the context of the EditCommand"
+      },
+      {
+        "lineNumber": 28,
+        "author": {
+          "gitId": "juandavinlie"
+        },
+        "content": "     * and returns an EditCommand object for execution."
+      },
+      {
+        "lineNumber": 29,
+        "author": {
+          "gitId": "juandavinlie"
+        },
+        "content": "     * @throws ParseException if the user input does not conform the expected format"
+      },
+      {
+        "lineNumber": 30,
+        "author": {
+          "gitId": "juandavinlie"
+        },
+        "content": "     */"
+      },
+      {
+        "lineNumber": 31,
+        "author": {
+          "gitId": "juandavinlie"
+        },
+        "content": "    public EditModuleCommand parse(String args) throws ParseException {"
+      },
+      {
+        "lineNumber": 32,
+        "author": {
+          "gitId": "juandavinlie"
+        },
+        "content": "        requireNonNull(args);"
+      },
+      {
+        "lineNumber": 33,
+        "author": {
+          "gitId": "juandavinlie"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 34,
+        "author": {
+          "gitId": "juandavinlie"
+        },
+        "content": "        Index index;"
+      },
+      {
+        "lineNumber": 35,
+        "author": {
+          "gitId": "juandavinlie"
+        },
+        "content": "        String newModuleId;"
+      },
+      {
+        "lineNumber": 36,
+        "author": {
+          "gitId": "juandavinlie"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 37,
+        "author": {
+          "gitId": "juandavinlie"
+        },
+        "content": "        try {"
+      },
+      {
+        "lineNumber": 38,
+        "author": {
+          "gitId": "juandavinlie"
+        },
+        "content": "            index \u003d ParserUtil.parseIndex(args.substring(1, 2));"
+      },
+      {
+        "lineNumber": 39,
+        "author": {
+          "gitId": "juandavinlie"
+        },
+        "content": "            newModuleId \u003d args.substring(3);"
+      },
+      {
+        "lineNumber": 40,
+        "author": {
+          "gitId": "juandavinlie"
+        },
+        "content": "        } catch (ParseException pe) {"
+      },
+      {
+        "lineNumber": 41,
+        "author": {
+          "gitId": "juandavinlie"
+        },
+        "content": "            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, EditModuleCommand.MESSAGE_USAGE), pe);"
+      },
+      {
+        "lineNumber": 42,
+        "author": {
+          "gitId": "juandavinlie"
+        },
+        "content": "        }"
+      },
+      {
+        "lineNumber": 43,
+        "author": {
+          "gitId": "juandavinlie"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 44,
+        "author": {
+          "gitId": "juandavinlie"
+        },
+        "content": "        return new EditModuleCommand(index, newModuleId);"
+      },
+      {
+        "lineNumber": 45,
+        "author": {
+          "gitId": "juandavinlie"
+        },
+        "content": "    }"
+      },
+      {
+        "lineNumber": 46,
+        "author": {
+          "gitId": "juandavinlie"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 47,
+        "author": {
+          "gitId": "juandavinlie"
+        },
+        "content": "    /**"
+      },
+      {
+        "lineNumber": 48,
+        "author": {
+          "gitId": "juandavinlie"
+        },
+        "content": "     * Parses {@code Collection\u003cString\u003e tags} into a {@code Set\u003cTag\u003e} if {@code tags} is non-empty."
+      },
+      {
+        "lineNumber": 49,
+        "author": {
+          "gitId": "juandavinlie"
+        },
+        "content": "     * If {@code tags} contain only one element which is an empty string, it will be parsed into a"
+      },
+      {
+        "lineNumber": 50,
+        "author": {
+          "gitId": "juandavinlie"
+        },
+        "content": "     * {@code Set\u003cTag\u003e} containing zero tags."
+      },
+      {
+        "lineNumber": 51,
+        "author": {
+          "gitId": "juandavinlie"
+        },
+        "content": "     */"
+      },
+      {
+        "lineNumber": 52,
+        "author": {
+          "gitId": "juandavinlie"
+        },
+        "content": "    private Optional\u003cSet\u003cTag\u003e\u003e parseTagsForEdit(Collection\u003cString\u003e tags) throws ParseException {"
+      },
+      {
+        "lineNumber": 53,
+        "author": {
+          "gitId": "juandavinlie"
+        },
+        "content": "        assert tags !\u003d null;"
+      },
+      {
+        "lineNumber": 54,
+        "author": {
+          "gitId": "juandavinlie"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 55,
+        "author": {
+          "gitId": "juandavinlie"
+        },
+        "content": "        if (tags.isEmpty()) {"
+      },
+      {
+        "lineNumber": 56,
+        "author": {
+          "gitId": "juandavinlie"
+        },
+        "content": "            return Optional.empty();"
+      },
+      {
+        "lineNumber": 57,
+        "author": {
+          "gitId": "juandavinlie"
+        },
+        "content": "        }"
+      },
+      {
+        "lineNumber": 58,
+        "author": {
+          "gitId": "juandavinlie"
+        },
+        "content": "        Collection\u003cString\u003e tagSet \u003d tags.size() \u003d\u003d 1 \u0026\u0026 tags.contains(\"\") ? Collections.emptySet() : tags;"
+      },
+      {
+        "lineNumber": 59,
+        "author": {
+          "gitId": "juandavinlie"
+        },
+        "content": "        return Optional.of(ParserUtil.parseTags(tagSet));"
+      },
+      {
+        "lineNumber": 60,
+        "author": {
+          "gitId": "juandavinlie"
+        },
+        "content": "    }"
+      },
+      {
+        "lineNumber": 61,
+        "author": {
+          "gitId": "juandavinlie"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 62,
+        "author": {
+          "gitId": "juandavinlie"
+        },
+        "content": "}"
+      }
+    ],
+    "authorContributionMap": {
+      "juandavinlie": 62
+    }
+  },
+  {
     "path": "src/main/java/seedu/address/logic/parser/FindCommandParser.java",
     "fileType": "functional-code",
     "lines": [
@@ -21541,6 +24526,246 @@
     ],
     "authorContributionMap": {
       "fanminj": 34
+    }
+  },
+  {
+    "path": "src/main/java/seedu/address/logic/parser/FindModuleCommandParser.java",
+    "fileType": "functional-code",
+    "lines": [
+      {
+        "lineNumber": 1,
+        "author": {
+          "gitId": "juandavinlie"
+        },
+        "content": "package seedu.address.logic.parser;"
+      },
+      {
+        "lineNumber": 2,
+        "author": {
+          "gitId": "juandavinlie"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 3,
+        "author": {
+          "gitId": "juandavinlie"
+        },
+        "content": "import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;"
+      },
+      {
+        "lineNumber": 4,
+        "author": {
+          "gitId": "juandavinlie"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 5,
+        "author": {
+          "gitId": "juandavinlie"
+        },
+        "content": "import java.util.Arrays;"
+      },
+      {
+        "lineNumber": 6,
+        "author": {
+          "gitId": "juandavinlie"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 7,
+        "author": {
+          "gitId": "juandavinlie"
+        },
+        "content": "import seedu.address.logic.commands.FindModuleCommand;"
+      },
+      {
+        "lineNumber": 8,
+        "author": {
+          "gitId": "juandavinlie"
+        },
+        "content": "import seedu.address.logic.parser.exceptions.ParseException;"
+      },
+      {
+        "lineNumber": 9,
+        "author": {
+          "gitId": "juandavinlie"
+        },
+        "content": "import seedu.address.model.module.ModuleContainsKeywordsPredicate;"
+      },
+      {
+        "lineNumber": 10,
+        "author": {
+          "gitId": "juandavinlie"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 11,
+        "author": {
+          "gitId": "juandavinlie"
+        },
+        "content": "/**"
+      },
+      {
+        "lineNumber": 12,
+        "author": {
+          "gitId": "juandavinlie"
+        },
+        "content": " * Parses input arguments and creates a new FindCommand object"
+      },
+      {
+        "lineNumber": 13,
+        "author": {
+          "gitId": "juandavinlie"
+        },
+        "content": " */"
+      },
+      {
+        "lineNumber": 14,
+        "author": {
+          "gitId": "juandavinlie"
+        },
+        "content": "public class FindModuleCommandParser implements Parser\u003cFindModuleCommand\u003e {"
+      },
+      {
+        "lineNumber": 15,
+        "author": {
+          "gitId": "juandavinlie"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 16,
+        "author": {
+          "gitId": "juandavinlie"
+        },
+        "content": "    /**"
+      },
+      {
+        "lineNumber": 17,
+        "author": {
+          "gitId": "juandavinlie"
+        },
+        "content": "     * Parses the given {@code String} of arguments in the context of the FindCommand"
+      },
+      {
+        "lineNumber": 18,
+        "author": {
+          "gitId": "juandavinlie"
+        },
+        "content": "     * and returns a FindCommand object for execution."
+      },
+      {
+        "lineNumber": 19,
+        "author": {
+          "gitId": "juandavinlie"
+        },
+        "content": "     * @throws ParseException if the user input does not conform the expected format"
+      },
+      {
+        "lineNumber": 20,
+        "author": {
+          "gitId": "juandavinlie"
+        },
+        "content": "     */"
+      },
+      {
+        "lineNumber": 21,
+        "author": {
+          "gitId": "juandavinlie"
+        },
+        "content": "    public FindModuleCommand parse(String args) throws ParseException {"
+      },
+      {
+        "lineNumber": 22,
+        "author": {
+          "gitId": "juandavinlie"
+        },
+        "content": "        String trimmedArgs \u003d args.trim();"
+      },
+      {
+        "lineNumber": 23,
+        "author": {
+          "gitId": "juandavinlie"
+        },
+        "content": "        if (trimmedArgs.isEmpty()) {"
+      },
+      {
+        "lineNumber": 24,
+        "author": {
+          "gitId": "juandavinlie"
+        },
+        "content": "            throw new ParseException("
+      },
+      {
+        "lineNumber": 25,
+        "author": {
+          "gitId": "juandavinlie"
+        },
+        "content": "                    String.format(MESSAGE_INVALID_COMMAND_FORMAT, FindModuleCommand.MESSAGE_USAGE));"
+      },
+      {
+        "lineNumber": 26,
+        "author": {
+          "gitId": "juandavinlie"
+        },
+        "content": "        }"
+      },
+      {
+        "lineNumber": 27,
+        "author": {
+          "gitId": "juandavinlie"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 28,
+        "author": {
+          "gitId": "juandavinlie"
+        },
+        "content": "        String[] nameKeywords \u003d trimmedArgs.split(\"\\\\s+\");"
+      },
+      {
+        "lineNumber": 29,
+        "author": {
+          "gitId": "juandavinlie"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 30,
+        "author": {
+          "gitId": "juandavinlie"
+        },
+        "content": "        return new FindModuleCommand(new ModuleContainsKeywordsPredicate(Arrays.asList(nameKeywords)));"
+      },
+      {
+        "lineNumber": 31,
+        "author": {
+          "gitId": "juandavinlie"
+        },
+        "content": "    }"
+      },
+      {
+        "lineNumber": 32,
+        "author": {
+          "gitId": "juandavinlie"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 33,
+        "author": {
+          "gitId": "juandavinlie"
+        },
+        "content": "}"
+      }
+    ],
+    "authorContributionMap": {
+      "juandavinlie": 33
     }
   },
   {
@@ -22540,204 +25765,6 @@
       "EthanTheGoondu": 5,
       "fanminj": 16,
       "-": 108
-    }
-  },
-  {
-    "path": "src/main/java/seedu/address/logic/parser/ViewModuleCommandParser.java",
-    "fileType": "functional-code",
-    "lines": [
-      {
-        "lineNumber": 1,
-        "author": {
-          "gitId": "juandavinlie"
-        },
-        "content": "package seedu.address.logic.parser;"
-      },
-      {
-        "lineNumber": 2,
-        "author": {
-          "gitId": "juandavinlie"
-        },
-        "content": ""
-      },
-      {
-        "lineNumber": 3,
-        "author": {
-          "gitId": "juandavinlie"
-        },
-        "content": "import seedu.address.commons.core.index.Index;"
-      },
-      {
-        "lineNumber": 4,
-        "author": {
-          "gitId": "juandavinlie"
-        },
-        "content": "import seedu.address.logic.commands.ViewModuleCommand;"
-      },
-      {
-        "lineNumber": 5,
-        "author": {
-          "gitId": "juandavinlie"
-        },
-        "content": "import seedu.address.logic.commands.ViewTutorialGroupCommand;"
-      },
-      {
-        "lineNumber": 6,
-        "author": {
-          "gitId": "juandavinlie"
-        },
-        "content": "import seedu.address.logic.parser.exceptions.ParseException;"
-      },
-      {
-        "lineNumber": 7,
-        "author": {
-          "gitId": "juandavinlie"
-        },
-        "content": ""
-      },
-      {
-        "lineNumber": 8,
-        "author": {
-          "gitId": "juandavinlie"
-        },
-        "content": "import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;"
-      },
-      {
-        "lineNumber": 9,
-        "author": {
-          "gitId": "juandavinlie"
-        },
-        "content": ""
-      },
-      {
-        "lineNumber": 10,
-        "author": {
-          "gitId": "juandavinlie"
-        },
-        "content": "public class ViewModuleCommandParser implements Parser\u003cViewModuleCommand\u003e {"
-      },
-      {
-        "lineNumber": 11,
-        "author": {
-          "gitId": "juandavinlie"
-        },
-        "content": "    /**"
-      },
-      {
-        "lineNumber": 12,
-        "author": {
-          "gitId": "juandavinlie"
-        },
-        "content": "     //     * Parses the given {@code String} of arguments in the context of the ViewModuleCommand"
-      },
-      {
-        "lineNumber": 13,
-        "author": {
-          "gitId": "juandavinlie"
-        },
-        "content": "     //     * and returns a ViewModuleCommand object for execution."
-      },
-      {
-        "lineNumber": 14,
-        "author": {
-          "gitId": "juandavinlie"
-        },
-        "content": "     //     * @throws ParseException if the user input does not conform the expected format"
-      },
-      {
-        "lineNumber": 15,
-        "author": {
-          "gitId": "juandavinlie"
-        },
-        "content": "     //     */"
-      },
-      {
-        "lineNumber": 16,
-        "author": {
-          "gitId": "juandavinlie"
-        },
-        "content": "    public ViewModuleCommand parse(String args) throws ParseException {"
-      },
-      {
-        "lineNumber": 17,
-        "author": {
-          "gitId": "juandavinlie"
-        },
-        "content": "        try {"
-      },
-      {
-        "lineNumber": 18,
-        "author": {
-          "gitId": "juandavinlie"
-        },
-        "content": "            if (args.length() \u003e 0) {"
-      },
-      {
-        "lineNumber": 19,
-        "author": {
-          "gitId": "juandavinlie"
-        },
-        "content": "                throw new ParseException(MESSAGE_INVALID_COMMAND_FORMAT);"
-      },
-      {
-        "lineNumber": 20,
-        "author": {
-          "gitId": "juandavinlie"
-        },
-        "content": "            }"
-      },
-      {
-        "lineNumber": 21,
-        "author": {
-          "gitId": "juandavinlie"
-        },
-        "content": "            return new ViewModuleCommand();"
-      },
-      {
-        "lineNumber": 22,
-        "author": {
-          "gitId": "juandavinlie"
-        },
-        "content": "        } catch (ParseException pe) {"
-      },
-      {
-        "lineNumber": 23,
-        "author": {
-          "gitId": "juandavinlie"
-        },
-        "content": "            throw new ParseException("
-      },
-      {
-        "lineNumber": 24,
-        "author": {
-          "gitId": "juandavinlie"
-        },
-        "content": "                    String.format(MESSAGE_INVALID_COMMAND_FORMAT, ViewModuleCommand.MESSAGE_USAGE), pe);"
-      },
-      {
-        "lineNumber": 25,
-        "author": {
-          "gitId": "juandavinlie"
-        },
-        "content": "        }"
-      },
-      {
-        "lineNumber": 26,
-        "author": {
-          "gitId": "juandavinlie"
-        },
-        "content": "    }"
-      },
-      {
-        "lineNumber": 27,
-        "author": {
-          "gitId": "juandavinlie"
-        },
-        "content": "}"
-      }
-    ],
-    "authorContributionMap": {
-      "juandavinlie": 27
     }
   },
   {
@@ -24078,884 +27105,884 @@
       {
         "lineNumber": 19,
         "author": {
-          "gitId": "fanminj"
+          "gitId": "juandavinlie"
         },
         "content": "    /** {@code Predicate} that always evaluate to true */"
       },
       {
         "lineNumber": 20,
         "author": {
-          "gitId": "fanminj"
+          "gitId": "juandavinlie"
         },
-        "content": "    Predicate\u003cStudent\u003e PREDICATE_SHOW_ALL_STUDENTS \u003d unused -\u003e true;"
+        "content": "    Predicate\u003cTutorialGroup\u003e PREDICATE_SHOW_ALL_TUTORIALGROUPS \u003d unused -\u003e true;"
       },
       {
         "lineNumber": 21,
         "author": {
-          "gitId": "-"
+          "gitId": "juandavinlie"
         },
         "content": ""
       },
       {
         "lineNumber": 22,
         "author": {
-          "gitId": "-"
+          "gitId": "fanminj"
         },
-        "content": "    /**"
+        "content": "    /** {@code Predicate} that always evaluate to true */"
       },
       {
         "lineNumber": 23,
         "author": {
-          "gitId": "-"
+          "gitId": "fanminj"
         },
-        "content": "     * Replaces user prefs data with the data in {@code userPrefs}."
+        "content": "    Predicate\u003cStudent\u003e PREDICATE_SHOW_ALL_STUDENTS \u003d unused -\u003e true;"
       },
       {
         "lineNumber": 24,
         "author": {
           "gitId": "-"
         },
-        "content": "     */"
+        "content": ""
       },
       {
         "lineNumber": 25,
         "author": {
           "gitId": "-"
         },
-        "content": "    void setUserPrefs(ReadOnlyUserPrefs userPrefs);"
+        "content": "    /**"
       },
       {
         "lineNumber": 26,
         "author": {
           "gitId": "-"
         },
-        "content": ""
+        "content": "     * Replaces user prefs data with the data in {@code userPrefs}."
       },
       {
         "lineNumber": 27,
         "author": {
           "gitId": "-"
         },
-        "content": "    /**"
+        "content": "     */"
       },
       {
         "lineNumber": 28,
         "author": {
           "gitId": "-"
         },
-        "content": "     * Returns the user prefs."
+        "content": "    void setUserPrefs(ReadOnlyUserPrefs userPrefs);"
       },
       {
         "lineNumber": 29,
         "author": {
           "gitId": "-"
         },
-        "content": "     */"
+        "content": ""
       },
       {
         "lineNumber": 30,
         "author": {
           "gitId": "-"
         },
-        "content": "    ReadOnlyUserPrefs getUserPrefs();"
+        "content": "    /**"
       },
       {
         "lineNumber": 31,
         "author": {
           "gitId": "-"
         },
-        "content": ""
+        "content": "     * Returns the user prefs."
       },
       {
         "lineNumber": 32,
         "author": {
           "gitId": "-"
         },
-        "content": "    /**"
+        "content": "     */"
       },
       {
         "lineNumber": 33,
         "author": {
           "gitId": "-"
         },
-        "content": "     * Returns the user prefs\u0027 GUI settings."
+        "content": "    ReadOnlyUserPrefs getUserPrefs();"
       },
       {
         "lineNumber": 34,
         "author": {
           "gitId": "-"
         },
-        "content": "     */"
+        "content": ""
       },
       {
         "lineNumber": 35,
         "author": {
           "gitId": "-"
         },
-        "content": "    GuiSettings getGuiSettings();"
+        "content": "    /**"
       },
       {
         "lineNumber": 36,
         "author": {
           "gitId": "-"
         },
-        "content": ""
+        "content": "     * Returns the user prefs\u0027 GUI settings."
       },
       {
         "lineNumber": 37,
         "author": {
           "gitId": "-"
         },
-        "content": "    /**"
+        "content": "     */"
       },
       {
         "lineNumber": 38,
         "author": {
           "gitId": "-"
         },
-        "content": "     * Sets the user prefs\u0027 GUI settings."
+        "content": "    GuiSettings getGuiSettings();"
       },
       {
         "lineNumber": 39,
         "author": {
           "gitId": "-"
         },
-        "content": "     */"
+        "content": ""
       },
       {
         "lineNumber": 40,
         "author": {
           "gitId": "-"
         },
-        "content": "    void setGuiSettings(GuiSettings guiSettings);"
+        "content": "    /**"
       },
       {
         "lineNumber": 41,
         "author": {
           "gitId": "-"
         },
-        "content": ""
+        "content": "     * Sets the user prefs\u0027 GUI settings."
       },
       {
         "lineNumber": 42,
         "author": {
           "gitId": "-"
         },
-        "content": "    /**"
+        "content": "     */"
       },
       {
         "lineNumber": 43,
         "author": {
-          "gitId": "fanminj"
+          "gitId": "-"
         },
-        "content": "     * Returns the user prefs\u0027 Trackr file path."
+        "content": "    void setGuiSettings(GuiSettings guiSettings);"
       },
       {
         "lineNumber": 44,
         "author": {
-          "gitId": "fanminj"
+          "gitId": "-"
         },
-        "content": "     */"
+        "content": ""
       },
       {
         "lineNumber": 45,
         "author": {
-          "gitId": "fanminj"
+          "gitId": "-"
         },
-        "content": "    Path getTrackrFilePath();"
+        "content": "    /**"
       },
       {
         "lineNumber": 46,
         "author": {
           "gitId": "fanminj"
         },
-        "content": ""
+        "content": "     * Returns the user prefs\u0027 Trackr file path."
       },
       {
         "lineNumber": 47,
         "author": {
           "gitId": "fanminj"
         },
-        "content": "    /**"
+        "content": "     */"
       },
       {
         "lineNumber": 48,
         "author": {
           "gitId": "fanminj"
         },
-        "content": "     * Sets the user prefs\u0027 Trackr file path."
+        "content": "    Path getTrackrFilePath();"
       },
       {
         "lineNumber": 49,
         "author": {
-          "gitId": "-"
+          "gitId": "fanminj"
         },
-        "content": "     */"
+        "content": ""
       },
       {
         "lineNumber": 50,
         "author": {
           "gitId": "fanminj"
         },
-        "content": "    void setTrackrFilePath(Path trackrFilePath);"
+        "content": "    /**"
       },
       {
         "lineNumber": 51,
         "author": {
           "gitId": "fanminj"
         },
-        "content": ""
+        "content": "     * Sets the user prefs\u0027 Trackr file path."
       },
       {
         "lineNumber": 52,
+        "author": {
+          "gitId": "fanminj"
+        },
+        "content": "     */"
+      },
+      {
+        "lineNumber": 53,
+        "author": {
+          "gitId": "fanminj"
+        },
+        "content": "    void setTrackrFilePath(Path trackrFilePath);"
+      },
+      {
+        "lineNumber": 54,
+        "author": {
+          "gitId": "fanminj"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 55,
         "author": {
           "gitId": "juandavinlie"
         },
         "content": "    // Module Operations"
       },
       {
-        "lineNumber": 53,
-        "author": {
-          "gitId": "-"
-        },
-        "content": ""
-      },
-      {
-        "lineNumber": 54,
-        "author": {
-          "gitId": "-"
-        },
-        "content": "    /**"
-      },
-      {
-        "lineNumber": 55,
+        "lineNumber": 56,
         "author": {
           "gitId": "fanminj"
         },
-        "content": "     * Replaces Trackr data with the data in {@code moduleList}."
-      },
-      {
-        "lineNumber": 56,
-        "author": {
-          "gitId": "-"
-        },
-        "content": "     */"
+        "content": ""
       },
       {
         "lineNumber": 57,
         "author": {
           "gitId": "fanminj"
         },
-        "content": "    void setModuleList(ReadOnlyTrackr\u003cModule\u003e moduleList);"
+        "content": "    /**"
       },
       {
         "lineNumber": 58,
         "author": {
           "gitId": "fanminj"
         },
-        "content": ""
+        "content": "     * Replaces Trackr data with the data in {@code moduleList}."
       },
       {
         "lineNumber": 59,
         "author": {
           "gitId": "fanminj"
         },
-        "content": "    /** Returns the module Trackr */"
+        "content": "     */"
       },
       {
         "lineNumber": 60,
         "author": {
           "gitId": "fanminj"
         },
-        "content": "    ReadOnlyTrackr\u003cModule\u003e getModuleList();"
+        "content": "    void setModuleList(ReadOnlyTrackr\u003cModule\u003e moduleList);"
       },
       {
         "lineNumber": 61,
         "author": {
-          "gitId": "-"
+          "gitId": "fanminj"
         },
         "content": ""
       },
       {
         "lineNumber": 62,
         "author": {
-          "gitId": "-"
+          "gitId": "fanminj"
         },
-        "content": "    /**"
+        "content": "    /** Returns the module Trackr */"
       },
       {
         "lineNumber": 63,
         "author": {
           "gitId": "fanminj"
         },
-        "content": "     * Returns true if a module with the same identity as {@code module} exists in trackr."
+        "content": "    ReadOnlyTrackr\u003cModule\u003e getModuleList();"
       },
       {
         "lineNumber": 64,
         "author": {
-          "gitId": "-"
+          "gitId": "fanminj"
         },
-        "content": "     */"
+        "content": ""
       },
       {
         "lineNumber": 65,
         "author": {
-          "gitId": "juandavinlie"
+          "gitId": "fanminj"
         },
-        "content": "    boolean hasModule(Module module);"
+        "content": "    /**"
       },
       {
         "lineNumber": 66,
         "author": {
-          "gitId": "-"
+          "gitId": "fanminj"
         },
-        "content": ""
+        "content": "     * Returns true if a module with the same identity as {@code module} exists in trackr."
       },
       {
         "lineNumber": 67,
         "author": {
           "gitId": "-"
         },
-        "content": "    /**"
+        "content": "     */"
       },
       {
         "lineNumber": 68,
         "author": {
-          "gitId": "fanminj"
+          "gitId": "juandavinlie"
         },
-        "content": "     * Deletes the given module."
+        "content": "    boolean hasModule(Module module);"
       },
       {
         "lineNumber": 69,
         "author": {
-          "gitId": "fanminj"
+          "gitId": "-"
         },
-        "content": "     * The module must exist in trackr."
+        "content": ""
       },
       {
         "lineNumber": 70,
         "author": {
           "gitId": "-"
         },
-        "content": "     */"
+        "content": "    /**"
       },
       {
         "lineNumber": 71,
         "author": {
-          "gitId": "juandavinlie"
+          "gitId": "fanminj"
         },
-        "content": "    void deleteModule(Module target);"
+        "content": "     * Deletes the given module."
       },
       {
         "lineNumber": 72,
         "author": {
-          "gitId": "-"
+          "gitId": "fanminj"
         },
-        "content": ""
+        "content": "     * The module must exist in trackr."
       },
       {
         "lineNumber": 73,
         "author": {
           "gitId": "-"
         },
-        "content": "    /**"
+        "content": "     */"
       },
       {
         "lineNumber": 74,
         "author": {
-          "gitId": "fanminj"
+          "gitId": "juandavinlie"
         },
-        "content": "     * Adds the given module."
+        "content": "    void deleteModule(Module target);"
       },
       {
         "lineNumber": 75,
         "author": {
-          "gitId": "fanminj"
+          "gitId": "-"
         },
-        "content": "     * {@code module} must not already exist in trackr."
+        "content": ""
       },
       {
         "lineNumber": 76,
         "author": {
           "gitId": "-"
         },
-        "content": "     */"
+        "content": "    /**"
       },
       {
         "lineNumber": 77,
         "author": {
-          "gitId": "juandavinlie"
+          "gitId": "fanminj"
         },
-        "content": "    void addModule(Module module);"
+        "content": "     * Adds the given module."
       },
       {
         "lineNumber": 78,
         "author": {
-          "gitId": "-"
+          "gitId": "fanminj"
         },
-        "content": ""
+        "content": "     * {@code module} must not already exist in trackr."
       },
       {
         "lineNumber": 79,
         "author": {
           "gitId": "-"
         },
-        "content": "    /**"
+        "content": "     */"
       },
       {
         "lineNumber": 80,
+        "author": {
+          "gitId": "juandavinlie"
+        },
+        "content": "    void addModule(Module module);"
+      },
+      {
+        "lineNumber": 81,
+        "author": {
+          "gitId": "-"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 82,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "    /**"
+      },
+      {
+        "lineNumber": 83,
         "author": {
           "gitId": "fanminj"
         },
         "content": "     * Replaces the given module {@code target} with {@code editedModule}."
       },
       {
-        "lineNumber": 81,
+        "lineNumber": 84,
         "author": {
           "gitId": "fanminj"
         },
         "content": "     * {@code target} must exist in trackr."
       },
       {
-        "lineNumber": 82,
+        "lineNumber": 85,
         "author": {
           "gitId": "fanminj"
         },
         "content": "     * The module identity of {@code editedModule} must not be the same as another existing module in trackr."
       },
       {
-        "lineNumber": 83,
+        "lineNumber": 86,
         "author": {
           "gitId": "-"
         },
         "content": "     */"
       },
       {
-        "lineNumber": 84,
-        "author": {
-          "gitId": "juandavinlie"
-        },
-        "content": "    void setModule(Module target, Module editedModule);"
-      },
-      {
-        "lineNumber": 85,
-        "author": {
-          "gitId": "-"
-        },
-        "content": ""
-      },
-      {
-        "lineNumber": 86,
-        "author": {
-          "gitId": "juandavinlie"
-        },
-        "content": "    //TutorialGroup Operations"
-      },
-      {
         "lineNumber": 87,
         "author": {
-          "gitId": "-"
+          "gitId": "juandavinlie"
         },
-        "content": ""
+        "content": "    void setModule(Module target, String newModuleId);"
       },
       {
         "lineNumber": 88,
         "author": {
           "gitId": "-"
         },
-        "content": "    /**"
+        "content": ""
       },
       {
         "lineNumber": 89,
         "author": {
           "gitId": "juandavinlie"
         },
-        "content": "     * Sets the view to the tutorial group list of the given module"
+        "content": "    //TutorialGroup Operations"
       },
       {
         "lineNumber": 90,
         "author": {
-          "gitId": "juandavinlie"
+          "gitId": "-"
         },
-        "content": "     * @param target"
+        "content": ""
       },
       {
         "lineNumber": 91,
         "author": {
           "gitId": "-"
         },
-        "content": "     */"
+        "content": "    /**"
       },
       {
         "lineNumber": 92,
         "author": {
           "gitId": "juandavinlie"
         },
-        "content": "    void setViewToTutorialGroup(Module target);"
+        "content": "     * Sets the view to the tutorial group list of the given module"
       },
       {
         "lineNumber": 93,
         "author": {
-          "gitId": "-"
+          "gitId": "juandavinlie"
         },
-        "content": ""
+        "content": "     * @param target"
       },
       {
         "lineNumber": 94,
         "author": {
           "gitId": "-"
         },
-        "content": "    /**"
+        "content": "     */"
       },
       {
         "lineNumber": 95,
         "author": {
           "gitId": "juandavinlie"
         },
-        "content": "     * Adds the given module."
+        "content": "    void setViewToTutorialGroup(Module target);"
       },
       {
         "lineNumber": 96,
         "author": {
-          "gitId": "juandavinlie"
+          "gitId": "-"
         },
-        "content": "     * {@code module} must not already exist in trackr."
+        "content": ""
       },
       {
         "lineNumber": 97,
         "author": {
-          "gitId": "juandavinlie"
+          "gitId": "-"
         },
-        "content": "     */"
+        "content": "    /**"
       },
       {
         "lineNumber": 98,
         "author": {
           "gitId": "juandavinlie"
         },
-        "content": "    void addTutorialGroup(TutorialGroup tutorialGroup);"
+        "content": "     * Adds the given module."
       },
       {
         "lineNumber": 99,
         "author": {
           "gitId": "juandavinlie"
         },
-        "content": ""
+        "content": "     * {@code module} must not already exist in trackr."
       },
       {
         "lineNumber": 100,
         "author": {
-          "gitId": "fanminj"
+          "gitId": "-"
         },
-        "content": "    // Student Operations"
+        "content": "     */"
       },
       {
         "lineNumber": 101,
         "author": {
-          "gitId": "fanminj"
+          "gitId": "juandavinlie"
         },
-        "content": ""
+        "content": "    void addTutorialGroup(TutorialGroup tutorialGroup);"
       },
       {
         "lineNumber": 102,
         "author": {
-          "gitId": "fanminj"
+          "gitId": "juandavinlie"
         },
-        "content": "    /**"
+        "content": ""
       },
       {
         "lineNumber": 103,
         "author": {
           "gitId": "fanminj"
         },
-        "content": "     * Sets the view to the tutorial group list of the given module"
+        "content": "    // Student Operations"
       },
       {
         "lineNumber": 104,
         "author": {
-          "gitId": "fanminj"
+          "gitId": "-"
         },
-        "content": "     * @param target"
+        "content": ""
       },
       {
         "lineNumber": 105,
         "author": {
-          "gitId": "fanminj"
+          "gitId": "-"
         },
-        "content": "     */"
+        "content": "    /**"
       },
       {
         "lineNumber": 106,
         "author": {
           "gitId": "fanminj"
         },
-        "content": "    void setViewToStudent(TutorialGroup target);"
+        "content": "     * Sets the view to the tutorial group list of the given module"
       },
       {
         "lineNumber": 107,
         "author": {
           "gitId": "fanminj"
         },
-        "content": ""
+        "content": "     * @param target"
       },
       {
         "lineNumber": 108,
         "author": {
-          "gitId": "fanminj"
+          "gitId": "-"
         },
-        "content": "    /**"
+        "content": "     */"
       },
       {
         "lineNumber": 109,
         "author": {
           "gitId": "fanminj"
         },
-        "content": "     * Returns true if a student with the same identity as {@code student} exists in trackr."
+        "content": "    void setViewToStudent(TutorialGroup target);"
       },
       {
         "lineNumber": 110,
         "author": {
-          "gitId": "fanminj"
+          "gitId": "-"
         },
-        "content": "     */"
+        "content": ""
       },
       {
         "lineNumber": 111,
         "author": {
-          "gitId": "fanminj"
+          "gitId": "-"
         },
-        "content": "    boolean hasStudent(Student student);"
+        "content": "    /**"
       },
       {
         "lineNumber": 112,
         "author": {
           "gitId": "fanminj"
         },
-        "content": ""
+        "content": "     * Returns true if a student with the same identity as {@code student} exists in trackr."
       },
       {
         "lineNumber": 113,
         "author": {
           "gitId": "fanminj"
         },
-        "content": "    /**"
+        "content": "     */"
       },
       {
         "lineNumber": 114,
         "author": {
           "gitId": "fanminj"
         },
-        "content": "     * Deletes the given student."
+        "content": "    boolean hasStudent(Student student);"
       },
       {
         "lineNumber": 115,
         "author": {
           "gitId": "fanminj"
         },
-        "content": "     * The student must exist in trackr."
+        "content": ""
       },
       {
         "lineNumber": 116,
         "author": {
           "gitId": "fanminj"
         },
-        "content": "     */"
+        "content": "    /**"
       },
       {
         "lineNumber": 117,
         "author": {
           "gitId": "fanminj"
         },
-        "content": "    void deleteStudent(Student target);"
+        "content": "     * Deletes the given student."
       },
       {
         "lineNumber": 118,
         "author": {
           "gitId": "fanminj"
         },
-        "content": ""
+        "content": "     * The student must exist in trackr."
       },
       {
         "lineNumber": 119,
         "author": {
           "gitId": "fanminj"
         },
-        "content": "    /**"
+        "content": "     */"
       },
       {
         "lineNumber": 120,
         "author": {
           "gitId": "fanminj"
         },
-        "content": "     * Adds the given student."
+        "content": "    void deleteStudent(Student target);"
       },
       {
         "lineNumber": 121,
         "author": {
           "gitId": "fanminj"
         },
-        "content": "     * {@code student} must not already exist in trackr."
+        "content": ""
       },
       {
         "lineNumber": 122,
         "author": {
           "gitId": "fanminj"
         },
-        "content": "     */"
+        "content": "    /**"
       },
       {
         "lineNumber": 123,
         "author": {
           "gitId": "fanminj"
         },
-        "content": "    void addStudent(Student student);"
+        "content": "     * Adds the given student."
       },
       {
         "lineNumber": 124,
         "author": {
           "gitId": "fanminj"
         },
-        "content": ""
+        "content": "     * {@code student} must not already exist in trackr."
       },
       {
         "lineNumber": 125,
         "author": {
           "gitId": "fanminj"
         },
-        "content": "    /**"
+        "content": "     */"
       },
       {
         "lineNumber": 126,
         "author": {
           "gitId": "fanminj"
         },
-        "content": "     * Replaces the given student {@code target} with {@code editedStudent}."
+        "content": "    void addStudent(Student student);"
       },
       {
         "lineNumber": 127,
         "author": {
           "gitId": "fanminj"
         },
-        "content": "     * {@code target} must exist in trackr."
+        "content": ""
       },
       {
         "lineNumber": 128,
         "author": {
           "gitId": "fanminj"
         },
-        "content": "     * The student identity of {@code editedStudent} must not be the same as another existing student in trackr."
+        "content": "    /**"
       },
       {
         "lineNumber": 129,
         "author": {
           "gitId": "fanminj"
         },
-        "content": "     */"
+        "content": "     * Replaces the given student {@code target} with {@code editedStudent}."
       },
       {
         "lineNumber": 130,
         "author": {
           "gitId": "fanminj"
         },
-        "content": "    void setStudent(Student target, Student editedStudent);"
+        "content": "     * {@code target} must exist in trackr."
       },
       {
         "lineNumber": 131,
         "author": {
           "gitId": "fanminj"
         },
-        "content": ""
+        "content": "     * The student identity of {@code editedStudent} must not be the same as another existing student in trackr."
       },
       {
         "lineNumber": 132,
         "author": {
-          "gitId": "juandavinlie"
+          "gitId": "fanminj"
         },
-        "content": "    // FilteredList Operations"
+        "content": "     */"
       },
       {
         "lineNumber": 133,
         "author": {
-          "gitId": "juandavinlie"
+          "gitId": "fanminj"
         },
-        "content": ""
+        "content": "    void setStudent(Student target, Student editedStudent);"
       },
       {
         "lineNumber": 134,
         "author": {
           "gitId": "fanminj"
         },
-        "content": "    /** Returns an unmodifiable view of the filtered module list */"
+        "content": ""
       },
       {
         "lineNumber": 135,
         "author": {
           "gitId": "juandavinlie"
         },
-        "content": "    ObservableList\u003cModule\u003e getFilteredModuleList();"
+        "content": "    // FilteredList Operations"
       },
       {
         "lineNumber": 136,
         "author": {
-          "gitId": "-"
+          "gitId": "juandavinlie"
         },
         "content": ""
       },
       {
         "lineNumber": 137,
         "author": {
-          "gitId": "-"
+          "gitId": "fanminj"
         },
-        "content": "    /**"
+        "content": "    /** Returns an unmodifiable view of the filtered module list */"
       },
       {
         "lineNumber": 138,
         "author": {
-          "gitId": "fanminj"
+          "gitId": "juandavinlie"
         },
-        "content": "     * Updates the filter of the filtered module list to filter by the given {@code predicate}."
+        "content": "    ObservableList\u003cModule\u003e getFilteredModuleList();"
       },
       {
         "lineNumber": 139,
         "author": {
           "gitId": "-"
         },
-        "content": "     * @throws NullPointerException if {@code predicate} is null."
+        "content": ""
       },
       {
         "lineNumber": 140,
         "author": {
           "gitId": "-"
         },
-        "content": "     */"
+        "content": "    /**"
       },
       {
         "lineNumber": 141,
         "author": {
-          "gitId": "juandavinlie"
+          "gitId": "fanminj"
         },
-        "content": "    void updateFilteredModuleList(Predicate\u003cModule\u003e predicate);"
+        "content": "     * Updates the filter of the filtered module list to filter by the given {@code predicate}."
       },
       {
         "lineNumber": 142,
         "author": {
-          "gitId": "juandavinlie"
+          "gitId": "-"
         },
-        "content": ""
+        "content": "     * @throws NullPointerException if {@code predicate} is null."
       },
       {
         "lineNumber": 143,
         "author": {
-          "gitId": "juandavinlie"
+          "gitId": "-"
         },
-        "content": "    /** Returns an unmodifiable view of the filtered tutorial group list */"
+        "content": "     */"
       },
       {
         "lineNumber": 144,
         "author": {
           "gitId": "juandavinlie"
         },
-        "content": "    ObservableList\u003cTutorialGroup\u003e getFilteredTutorialGroupList();"
+        "content": "    void updateFilteredModuleList(Predicate\u003cModule\u003e predicate);"
       },
       {
         "lineNumber": 145,
@@ -24969,56 +27996,56 @@
         "author": {
           "gitId": "juandavinlie"
         },
-        "content": "    /**"
+        "content": "    /** Returns an unmodifiable view of the filtered tutorial group list */"
       },
       {
         "lineNumber": 147,
         "author": {
           "gitId": "juandavinlie"
         },
-        "content": "     * Updates the filter of the filtered tutorial group list to filter by the given {@code predicate}."
+        "content": "    ObservableList\u003cTutorialGroup\u003e getFilteredTutorialGroupList();"
       },
       {
         "lineNumber": 148,
         "author": {
           "gitId": "juandavinlie"
         },
-        "content": "     * @throws NullPointerException if {@code predicate} is null."
+        "content": ""
       },
       {
         "lineNumber": 149,
         "author": {
-          "gitId": "-"
+          "gitId": "juandavinlie"
         },
-        "content": "     */"
+        "content": "    /**"
       },
       {
         "lineNumber": 150,
         "author": {
           "gitId": "juandavinlie"
         },
-        "content": "    void updateFilteredTutorialGroupList(Predicate\u003cTutorialGroup\u003e predicate);"
+        "content": "     * Updates the filter of the filtered tutorial group list to filter by the given {@code predicate}."
       },
       {
         "lineNumber": 151,
         "author": {
-          "gitId": "-"
+          "gitId": "juandavinlie"
         },
-        "content": ""
+        "content": "     * @throws NullPointerException if {@code predicate} is null."
       },
       {
         "lineNumber": 152,
         "author": {
-          "gitId": "juandavinlie"
+          "gitId": "-"
         },
-        "content": "    /** Returns an unmodifiable view of the filtered student list */"
+        "content": "     */"
       },
       {
         "lineNumber": 153,
         "author": {
           "gitId": "juandavinlie"
         },
-        "content": "    ObservableList\u003cStudent\u003e getFilteredStudentList();"
+        "content": "    void updateFilteredTutorialGroupList(Predicate\u003cTutorialGroup\u003e predicate);"
       },
       {
         "lineNumber": 154,
@@ -25030,40 +28057,61 @@
       {
         "lineNumber": 155,
         "author": {
-          "gitId": "-"
+          "gitId": "juandavinlie"
         },
-        "content": "    /**"
+        "content": "    /** Returns an unmodifiable view of the filtered student list */"
       },
       {
         "lineNumber": 156,
         "author": {
           "gitId": "juandavinlie"
         },
-        "content": "     * Updates the filter of the filtered student list to filter by the given {@code predicate}."
+        "content": "    ObservableList\u003cStudent\u003e getFilteredStudentList();"
       },
       {
         "lineNumber": 157,
         "author": {
           "gitId": "-"
         },
-        "content": "     * @throws NullPointerException if {@code predicate} is null."
+        "content": ""
       },
       {
         "lineNumber": 158,
         "author": {
           "gitId": "-"
         },
-        "content": "     */"
+        "content": "    /**"
       },
       {
         "lineNumber": 159,
         "author": {
           "gitId": "juandavinlie"
         },
-        "content": "    void updateFilteredStudentList(Predicate\u003cStudent\u003e predicate);"
+        "content": "     * Updates the filter of the filtered student list to filter by the given {@code predicate}."
       },
       {
         "lineNumber": 160,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "     * @throws NullPointerException if {@code predicate} is null."
+      },
+      {
+        "lineNumber": 161,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "     */"
+      },
+      {
+        "lineNumber": 162,
+        "author": {
+          "gitId": "juandavinlie"
+        },
+        "content": "    void updateFilteredStudentList(Predicate\u003cStudent\u003e predicate);"
+      },
+      {
+        "lineNumber": 163,
         "author": {
           "gitId": "-"
         },
@@ -25072,8 +28120,8 @@
     ],
     "authorContributionMap": {
       "EthanTheGoondu": 1,
-      "fanminj": 58,
-      "juandavinlie": 32,
+      "fanminj": 59,
+      "juandavinlie": 34,
       "-": 69
     }
   },
@@ -25947,21 +28995,21 @@
         "author": {
           "gitId": "juandavinlie"
         },
-        "content": "    public void setModule(Module target, Module editedModule) {"
+        "content": "    public void setModule(Module target, String newModuleId) {"
       },
       {
         "lineNumber": 125,
         "author": {
           "gitId": "juandavinlie"
         },
-        "content": "        requireAllNonNull(target, editedModule);"
+        "content": "        requireAllNonNull(target, newModuleId);"
       },
       {
         "lineNumber": 126,
         "author": {
           "gitId": "juandavinlie"
         },
-        "content": "        moduleList.setModule(target, editedModule);"
+        "content": "        moduleList.setModule(target, newModuleId);"
       },
       {
         "lineNumber": 127,
@@ -28294,21 +31342,21 @@
         "author": {
           "gitId": "juandavinlie"
         },
-        "content": "    public void setModule(Module target, Module editedObject) {"
+        "content": "    public void setModule(Module target, String newModuleId) {"
       },
       {
         "lineNumber": 76,
         "author": {
-          "gitId": "fanminj"
+          "gitId": "juandavinlie"
         },
-        "content": "        requireAllNonNull(target, editedObject);"
+        "content": "        requireAllNonNull(target, newModuleId);"
       },
       {
         "lineNumber": 77,
         "author": {
           "gitId": "juandavinlie"
         },
-        "content": "        moduleList.setModule(target, editedObject);"
+        "content": "        moduleList.setModule(target, newModuleId);"
       },
       {
         "lineNumber": 78,
@@ -28775,8 +31823,8 @@
     ],
     "authorContributionMap": {
       "seantaysl": 3,
-      "fanminj": 101,
-      "juandavinlie": 39
+      "fanminj": 100,
+      "juandavinlie": 40
     }
   },
   {
@@ -29719,9 +32767,9 @@
       {
         "lineNumber": 14,
         "author": {
-          "gitId": "EthanTheGoondu"
+          "gitId": "juandavinlie"
         },
-        "content": "    private final ModuleId moduleId;"
+        "content": "    private ModuleId moduleId;"
       },
       {
         "lineNumber": 15,
@@ -30050,28 +33098,28 @@
         "author": {
           "gitId": "EthanTheGoondu"
         },
-        "content": "        public int getTotalStudents() {"
+        "content": "    public int getTotalStudents() {"
       },
       {
         "lineNumber": 62,
         "author": {
           "gitId": "EthanTheGoondu"
         },
-        "content": "            return this.tutorialGroups.stream().map(TutorialGroup::getStudents)"
+        "content": "        return this.tutorialGroups.stream().map(TutorialGroup::getStudents)"
       },
       {
         "lineNumber": 63,
         "author": {
           "gitId": "EthanTheGoondu"
         },
-        "content": "                    .map(List::size).reduce(Integer::sum).orElse(0);"
+        "content": "                .map(List::size).reduce(Integer::sum).orElse(0);"
       },
       {
         "lineNumber": 64,
         "author": {
           "gitId": "EthanTheGoondu"
         },
-        "content": "        }"
+        "content": "    }"
       },
       {
         "lineNumber": 65,
@@ -30083,21 +33131,21 @@
       {
         "lineNumber": 66,
         "author": {
-          "gitId": "EthanTheGoondu"
+          "gitId": "juandavinlie"
         },
-        "content": "    public int getTotalGroups() {"
+        "content": "    public void setId(String newId) {"
       },
       {
         "lineNumber": 67,
         "author": {
-          "gitId": "EthanTheGoondu"
+          "gitId": "juandavinlie"
         },
-        "content": "        return this.tutorialGroups.size();"
+        "content": "            this.moduleId.setId(newId);"
       },
       {
         "lineNumber": 68,
         "author": {
-          "gitId": "EthanTheGoondu"
+          "gitId": "juandavinlie"
         },
         "content": "    }"
       },
@@ -30111,16 +33159,16 @@
       {
         "lineNumber": 70,
         "author": {
-          "gitId": "juandavinlie"
+          "gitId": "EthanTheGoondu"
         },
-        "content": "    public ObservableList\u003cTutorialGroup\u003e getTutorialGroups() {"
+        "content": "    public int getTotalGroups() {"
       },
       {
         "lineNumber": 71,
         "author": {
-          "gitId": "juandavinlie"
+          "gitId": "EthanTheGoondu"
         },
-        "content": "        return tutorialGroups.asUnmodifiableObservableList();"
+        "content": "        return this.tutorialGroups.size();"
       },
       {
         "lineNumber": 72,
@@ -30132,91 +33180,91 @@
       {
         "lineNumber": 73,
         "author": {
-          "gitId": "EthanTheGoondu"
+          "gitId": "juandavinlie"
         },
         "content": ""
       },
       {
         "lineNumber": 74,
         "author": {
-          "gitId": "fanminj"
+          "gitId": "juandavinlie"
         },
-        "content": "    public UniqueTutorialGroupList getUniqueTutorialGroupList() {"
+        "content": "    public ObservableList\u003cTutorialGroup\u003e getTutorialGroups() {"
       },
       {
         "lineNumber": 75,
         "author": {
-          "gitId": "fanminj"
+          "gitId": "juandavinlie"
         },
-        "content": "        return tutorialGroups;"
+        "content": "        return tutorialGroups.asUnmodifiableObservableList();"
       },
       {
         "lineNumber": 76,
         "author": {
-          "gitId": "fanminj"
+          "gitId": "EthanTheGoondu"
         },
         "content": "    }"
       },
       {
         "lineNumber": 77,
         "author": {
-          "gitId": "fanminj"
+          "gitId": "EthanTheGoondu"
         },
         "content": ""
       },
       {
         "lineNumber": 78,
         "author": {
-          "gitId": "juandavinlie"
+          "gitId": "fanminj"
         },
-        "content": "    //    public List\u003cTask\u003e getTaskList() {"
+        "content": "    public UniqueTutorialGroupList getUniqueTutorialGroupList() {"
       },
       {
         "lineNumber": 79,
         "author": {
-          "gitId": "juandavinlie"
+          "gitId": "fanminj"
         },
-        "content": "    //        return Collections.unmodifiableList(taskList.getTaskList());"
+        "content": "        return tutorialGroups;"
       },
       {
         "lineNumber": 80,
         "author": {
-          "gitId": "juandavinlie"
+          "gitId": "fanminj"
         },
-        "content": "    //    }"
+        "content": "    }"
       },
       {
         "lineNumber": 81,
         "author": {
-          "gitId": "EthanTheGoondu"
+          "gitId": "fanminj"
         },
         "content": ""
       },
       {
         "lineNumber": 82,
         "author": {
-          "gitId": "seantaysl"
+          "gitId": "juandavinlie"
         },
-        "content": "    public void addTutorialGroup(TutorialGroup tutorialGroup) {"
+        "content": "    //    public List\u003cTask\u003e getTaskList() {"
       },
       {
         "lineNumber": 83,
         "author": {
           "gitId": "juandavinlie"
         },
-        "content": "        tutorialGroups.addTutorialGroup(tutorialGroup);"
+        "content": "    //        return Collections.unmodifiableList(taskList.getTaskList());"
       },
       {
         "lineNumber": 84,
         "author": {
-          "gitId": "seantaysl"
+          "gitId": "juandavinlie"
         },
-        "content": "    }"
+        "content": "    //    }"
       },
       {
         "lineNumber": 85,
         "author": {
-          "gitId": "seantaysl"
+          "gitId": "EthanTheGoondu"
         },
         "content": ""
       },
@@ -30225,14 +33273,14 @@
         "author": {
           "gitId": "seantaysl"
         },
-        "content": "    public void removeTutorialGroup(TutorialGroup tutorialGroup) {"
+        "content": "    public void addTutorialGroup(TutorialGroup tutorialGroup) {"
       },
       {
         "lineNumber": 87,
         "author": {
           "gitId": "juandavinlie"
         },
-        "content": "        tutorialGroups.removeTutorialGroup(tutorialGroup);"
+        "content": "        tutorialGroups.addTutorialGroup(tutorialGroup);"
       },
       {
         "lineNumber": 88,
@@ -30253,42 +33301,42 @@
         "author": {
           "gitId": "seantaysl"
         },
-        "content": "    //    public void addTask(Task task) {"
+        "content": "    public void removeTutorialGroup(TutorialGroup tutorialGroup) {"
       },
       {
         "lineNumber": 91,
         "author": {
-          "gitId": "seantaysl"
+          "gitId": "juandavinlie"
         },
-        "content": "    //        tasks.add(task);"
+        "content": "        tutorialGroups.removeTutorialGroup(tutorialGroup);"
       },
       {
         "lineNumber": 92,
         "author": {
           "gitId": "seantaysl"
         },
-        "content": "    //    }"
+        "content": "    }"
       },
       {
         "lineNumber": 93,
         "author": {
           "gitId": "seantaysl"
         },
-        "content": "    //"
+        "content": ""
       },
       {
         "lineNumber": 94,
         "author": {
           "gitId": "seantaysl"
         },
-        "content": "    //    public void removeTask(Task task) {"
+        "content": "    //    public void addTask(Task task) {"
       },
       {
         "lineNumber": 95,
         "author": {
           "gitId": "seantaysl"
         },
-        "content": "    //        tasks.remove(task);"
+        "content": "    //        tasks.add(task);"
       },
       {
         "lineNumber": 96,
@@ -30302,140 +33350,140 @@
         "author": {
           "gitId": "seantaysl"
         },
-        "content": ""
+        "content": "    //"
       },
       {
         "lineNumber": 98,
         "author": {
           "gitId": "seantaysl"
         },
-        "content": "    @Override"
+        "content": "    //    public void removeTask(Task task) {"
       },
       {
         "lineNumber": 99,
         "author": {
           "gitId": "seantaysl"
         },
-        "content": "    public boolean equals(Object other) {"
+        "content": "    //        tasks.remove(task);"
       },
       {
         "lineNumber": 100,
         "author": {
           "gitId": "seantaysl"
         },
-        "content": "        return other \u003d\u003d this // short circuit if same object"
+        "content": "    //    }"
       },
       {
         "lineNumber": 101,
         "author": {
           "gitId": "seantaysl"
         },
-        "content": "                || (other instanceof Module // instanceof handles nulls"
+        "content": ""
       },
       {
         "lineNumber": 102,
         "author": {
           "gitId": "seantaysl"
         },
-        "content": "                \u0026\u0026 getModuleId().equals(((Module) other).getModuleId())); // state check"
+        "content": "    @Override"
       },
       {
         "lineNumber": 103,
         "author": {
           "gitId": "seantaysl"
         },
-        "content": "    }"
+        "content": "    public boolean equals(Object other) {"
       },
       {
         "lineNumber": 104,
         "author": {
           "gitId": "seantaysl"
         },
-        "content": ""
+        "content": "        return other \u003d\u003d this // short circuit if same object"
       },
       {
         "lineNumber": 105,
         "author": {
           "gitId": "seantaysl"
         },
-        "content": "    /**"
+        "content": "                || (other instanceof Module // instanceof handles nulls"
       },
       {
         "lineNumber": 106,
         "author": {
           "gitId": "seantaysl"
         },
-        "content": "     * Returns true if both modules of the same name have at least one other identity field that is the same."
+        "content": "                \u0026\u0026 getModuleId().equals(((Module) other).getModuleId())); // state check"
       },
       {
         "lineNumber": 107,
         "author": {
           "gitId": "seantaysl"
         },
-        "content": "     * This defines a weaker notion of equality between two modules."
+        "content": "    }"
       },
       {
         "lineNumber": 108,
         "author": {
           "gitId": "seantaysl"
         },
-        "content": "     */"
+        "content": ""
       },
       {
         "lineNumber": 109,
         "author": {
-          "gitId": "fanminj"
+          "gitId": "seantaysl"
         },
-        "content": "    public boolean isSame(Module otherModule) {"
+        "content": "    /**"
       },
       {
         "lineNumber": 110,
         "author": {
           "gitId": "seantaysl"
         },
-        "content": "        if (otherModule \u003d\u003d this) {"
+        "content": "     * Returns true if both modules of the same name have at least one other identity field that is the same."
       },
       {
         "lineNumber": 111,
         "author": {
           "gitId": "seantaysl"
         },
-        "content": "            return true;"
+        "content": "     * This defines a weaker notion of equality between two modules."
       },
       {
         "lineNumber": 112,
         "author": {
           "gitId": "seantaysl"
         },
-        "content": "        }"
+        "content": "     */"
       },
       {
         "lineNumber": 113,
         "author": {
-          "gitId": "seantaysl"
+          "gitId": "fanminj"
         },
-        "content": ""
+        "content": "    public boolean isSame(Module otherModule) {"
       },
       {
         "lineNumber": 114,
         "author": {
           "gitId": "seantaysl"
         },
-        "content": "        return otherModule !\u003d null"
+        "content": "        if (otherModule \u003d\u003d this) {"
       },
       {
         "lineNumber": 115,
         "author": {
           "gitId": "seantaysl"
         },
-        "content": "                \u0026\u0026 otherModule.getModuleId().equals(getModuleId());"
+        "content": "            return true;"
       },
       {
         "lineNumber": 116,
         "author": {
           "gitId": "seantaysl"
         },
-        "content": "    }"
+        "content": "        }"
       },
       {
         "lineNumber": 117,
@@ -30449,31 +33497,59 @@
         "author": {
           "gitId": "seantaysl"
         },
-        "content": "    @Override"
+        "content": "        return otherModule !\u003d null"
       },
       {
         "lineNumber": 119,
         "author": {
           "gitId": "seantaysl"
         },
-        "content": "    public String toString() {"
+        "content": "                \u0026\u0026 otherModule.getModuleId().equals(getModuleId());"
       },
       {
         "lineNumber": 120,
-        "author": {
-          "gitId": "EthanTheGoondu"
-        },
-        "content": "        return getModuleId().toString();"
-      },
-      {
-        "lineNumber": 121,
         "author": {
           "gitId": "seantaysl"
         },
         "content": "    }"
       },
       {
+        "lineNumber": 121,
+        "author": {
+          "gitId": "seantaysl"
+        },
+        "content": ""
+      },
+      {
         "lineNumber": 122,
+        "author": {
+          "gitId": "seantaysl"
+        },
+        "content": "    @Override"
+      },
+      {
+        "lineNumber": 123,
+        "author": {
+          "gitId": "seantaysl"
+        },
+        "content": "    public String toString() {"
+      },
+      {
+        "lineNumber": 124,
+        "author": {
+          "gitId": "EthanTheGoondu"
+        },
+        "content": "        return getModuleId().toString();"
+      },
+      {
+        "lineNumber": 125,
+        "author": {
+          "gitId": "seantaysl"
+        },
+        "content": "    }"
+      },
+      {
+        "lineNumber": 126,
         "author": {
           "gitId": "seantaysl"
         },
@@ -30482,8 +33558,206 @@
     ],
     "authorContributionMap": {
       "seantaysl": 55,
-      "EthanTheGoondu": 35,
+      "EthanTheGoondu": 34,
       "fanminj": 5,
+      "juandavinlie": 32
+    }
+  },
+  {
+    "path": "src/main/java/seedu/address/model/module/ModuleContainsKeywordsPredicate.java",
+    "fileType": "functional-code",
+    "lines": [
+      {
+        "lineNumber": 1,
+        "author": {
+          "gitId": "juandavinlie"
+        },
+        "content": "package seedu.address.model.module;"
+      },
+      {
+        "lineNumber": 2,
+        "author": {
+          "gitId": "juandavinlie"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 3,
+        "author": {
+          "gitId": "juandavinlie"
+        },
+        "content": "import java.util.List;"
+      },
+      {
+        "lineNumber": 4,
+        "author": {
+          "gitId": "juandavinlie"
+        },
+        "content": "import java.util.function.Predicate;"
+      },
+      {
+        "lineNumber": 5,
+        "author": {
+          "gitId": "juandavinlie"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 6,
+        "author": {
+          "gitId": "juandavinlie"
+        },
+        "content": "import seedu.address.commons.util.StringUtil;"
+      },
+      {
+        "lineNumber": 7,
+        "author": {
+          "gitId": "juandavinlie"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 8,
+        "author": {
+          "gitId": "juandavinlie"
+        },
+        "content": "public class ModuleContainsKeywordsPredicate implements Predicate\u003cModule\u003e {"
+      },
+      {
+        "lineNumber": 9,
+        "author": {
+          "gitId": "juandavinlie"
+        },
+        "content": "    private final List\u003cString\u003e keywords;"
+      },
+      {
+        "lineNumber": 10,
+        "author": {
+          "gitId": "juandavinlie"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 11,
+        "author": {
+          "gitId": "juandavinlie"
+        },
+        "content": "    public ModuleContainsKeywordsPredicate(List\u003cString\u003e keywords) {"
+      },
+      {
+        "lineNumber": 12,
+        "author": {
+          "gitId": "juandavinlie"
+        },
+        "content": "        this.keywords \u003d keywords;"
+      },
+      {
+        "lineNumber": 13,
+        "author": {
+          "gitId": "juandavinlie"
+        },
+        "content": "    }"
+      },
+      {
+        "lineNumber": 14,
+        "author": {
+          "gitId": "juandavinlie"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 15,
+        "author": {
+          "gitId": "juandavinlie"
+        },
+        "content": "    @Override"
+      },
+      {
+        "lineNumber": 16,
+        "author": {
+          "gitId": "juandavinlie"
+        },
+        "content": "    public boolean test(Module module) {"
+      },
+      {
+        "lineNumber": 17,
+        "author": {
+          "gitId": "juandavinlie"
+        },
+        "content": "        return keywords.stream()"
+      },
+      {
+        "lineNumber": 18,
+        "author": {
+          "gitId": "juandavinlie"
+        },
+        "content": "                .anyMatch(keyword -\u003e StringUtil.containsWordIgnoreCase(module.getModuleId().toString(), keyword));"
+      },
+      {
+        "lineNumber": 19,
+        "author": {
+          "gitId": "juandavinlie"
+        },
+        "content": "    }"
+      },
+      {
+        "lineNumber": 20,
+        "author": {
+          "gitId": "juandavinlie"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 21,
+        "author": {
+          "gitId": "juandavinlie"
+        },
+        "content": "    @Override"
+      },
+      {
+        "lineNumber": 22,
+        "author": {
+          "gitId": "juandavinlie"
+        },
+        "content": "    public boolean equals(Object other) {"
+      },
+      {
+        "lineNumber": 23,
+        "author": {
+          "gitId": "juandavinlie"
+        },
+        "content": "        return other \u003d\u003d this // short circuit if same object"
+      },
+      {
+        "lineNumber": 24,
+        "author": {
+          "gitId": "juandavinlie"
+        },
+        "content": "                || (other instanceof ModuleContainsKeywordsPredicate // instanceof handles nulls"
+      },
+      {
+        "lineNumber": 25,
+        "author": {
+          "gitId": "juandavinlie"
+        },
+        "content": "                \u0026\u0026 keywords.equals(((ModuleContainsKeywordsPredicate) other).keywords)); // state check"
+      },
+      {
+        "lineNumber": 26,
+        "author": {
+          "gitId": "juandavinlie"
+        },
+        "content": "    }"
+      },
+      {
+        "lineNumber": 27,
+        "author": {
+          "gitId": "juandavinlie"
+        },
+        "content": "}"
+      }
+    ],
+    "authorContributionMap": {
       "juandavinlie": 27
     }
   },
@@ -30634,9 +33908,9 @@
       {
         "lineNumber": 21,
         "author": {
-          "gitId": "EthanTheGoondu"
+          "gitId": "juandavinlie"
         },
-        "content": "    public final String id;"
+        "content": "    public String id;"
       },
       {
         "lineNumber": 22,
@@ -30774,131 +34048,152 @@
       {
         "lineNumber": 41,
         "author": {
-          "gitId": "EthanTheGoondu"
+          "gitId": "juandavinlie"
         },
-        "content": ""
+        "content": "    public void setId(String newId) {"
       },
       {
         "lineNumber": 42,
         "author": {
-          "gitId": "EthanTheGoondu"
+          "gitId": "juandavinlie"
         },
-        "content": "    @Override"
+        "content": "        this.id \u003d newId;"
       },
       {
         "lineNumber": 43,
         "author": {
-          "gitId": "EthanTheGoondu"
+          "gitId": "juandavinlie"
         },
-        "content": "    public String toString() {"
+        "content": "    }"
       },
       {
         "lineNumber": 44,
         "author": {
           "gitId": "EthanTheGoondu"
         },
-        "content": "        return id;"
+        "content": ""
       },
       {
         "lineNumber": 45,
         "author": {
           "gitId": "EthanTheGoondu"
         },
-        "content": "    }"
+        "content": "    @Override"
       },
       {
         "lineNumber": 46,
         "author": {
           "gitId": "EthanTheGoondu"
         },
-        "content": ""
+        "content": "    public String toString() {"
       },
       {
         "lineNumber": 47,
         "author": {
           "gitId": "EthanTheGoondu"
         },
-        "content": "    @Override"
+        "content": "        return id;"
       },
       {
         "lineNumber": 48,
         "author": {
           "gitId": "EthanTheGoondu"
         },
-        "content": "    public boolean equals(Object other) {"
+        "content": "    }"
       },
       {
         "lineNumber": 49,
         "author": {
           "gitId": "EthanTheGoondu"
         },
-        "content": "        return other \u003d\u003d this // short circuit if same object"
+        "content": ""
       },
       {
         "lineNumber": 50,
         "author": {
           "gitId": "EthanTheGoondu"
         },
-        "content": "                || (other instanceof ModuleId // instanceof handles nulls"
+        "content": "    @Override"
       },
       {
         "lineNumber": 51,
         "author": {
           "gitId": "EthanTheGoondu"
         },
-        "content": "                \u0026\u0026 id.equals(((ModuleId) other).id)); // state check"
+        "content": "    public boolean equals(Object other) {"
       },
       {
         "lineNumber": 52,
         "author": {
           "gitId": "EthanTheGoondu"
         },
-        "content": "    }"
+        "content": "        return other \u003d\u003d this // short circuit if same object"
       },
       {
         "lineNumber": 53,
         "author": {
           "gitId": "EthanTheGoondu"
         },
-        "content": ""
+        "content": "                || (other instanceof ModuleId // instanceof handles nulls"
       },
       {
         "lineNumber": 54,
         "author": {
           "gitId": "EthanTheGoondu"
         },
-        "content": "    @Override"
+        "content": "                \u0026\u0026 id.equals(((ModuleId) other).id)); // state check"
       },
       {
         "lineNumber": 55,
         "author": {
           "gitId": "EthanTheGoondu"
         },
-        "content": "    public int hashCode() {"
+        "content": "    }"
       },
       {
         "lineNumber": 56,
         "author": {
           "gitId": "EthanTheGoondu"
         },
-        "content": "        return id.hashCode();"
+        "content": ""
       },
       {
         "lineNumber": 57,
         "author": {
           "gitId": "EthanTheGoondu"
         },
-        "content": "    }"
+        "content": "    @Override"
       },
       {
         "lineNumber": 58,
         "author": {
           "gitId": "EthanTheGoondu"
         },
-        "content": ""
+        "content": "    public int hashCode() {"
       },
       {
         "lineNumber": 59,
+        "author": {
+          "gitId": "EthanTheGoondu"
+        },
+        "content": "        return id.hashCode();"
+      },
+      {
+        "lineNumber": 60,
+        "author": {
+          "gitId": "EthanTheGoondu"
+        },
+        "content": "    }"
+      },
+      {
+        "lineNumber": 61,
+        "author": {
+          "gitId": "EthanTheGoondu"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 62,
         "author": {
           "gitId": "EthanTheGoondu"
         },
@@ -30906,7 +34201,8 @@
       }
     ],
     "authorContributionMap": {
-      "EthanTheGoondu": 59
+      "EthanTheGoondu": 58,
+      "juandavinlie": 4
     }
   },
   {
@@ -31240,14 +34536,14 @@
         "author": {
           "gitId": "juandavinlie"
         },
-        "content": "    public void setModule(Module target, Module editedObject) {"
+        "content": "    public void setModule(Module target, String newModuleId) {"
       },
       {
         "lineNumber": 48,
         "author": {
           "gitId": "juandavinlie"
         },
-        "content": "        requireAllNonNull(target, editedObject);"
+        "content": "        requireAllNonNull(target, newModuleId);"
       },
       {
         "lineNumber": 49,
@@ -31296,689 +34592,703 @@
         "author": {
           "gitId": "juandavinlie"
         },
-        "content": "        if (!target.isSame(editedObject) \u0026\u0026 contains(editedObject)) {"
+        "content": "        Module moduleWithNewModuleId \u003d new Module(new ModuleId(newModuleId));"
       },
       {
         "lineNumber": 56,
         "author": {
           "gitId": "juandavinlie"
         },
-        "content": "            throw new DuplicateShowableException();"
+        "content": ""
       },
       {
         "lineNumber": 57,
         "author": {
           "gitId": "juandavinlie"
         },
-        "content": "        }"
+        "content": "        if (!target.isSame(moduleWithNewModuleId) \u0026\u0026 contains(moduleWithNewModuleId)) {"
       },
       {
         "lineNumber": 58,
         "author": {
           "gitId": "juandavinlie"
         },
-        "content": ""
+        "content": "            throw new DuplicateShowableException();"
       },
       {
         "lineNumber": 59,
         "author": {
           "gitId": "juandavinlie"
         },
-        "content": "        internalList.set(index, editedObject);"
+        "content": "        }"
       },
       {
         "lineNumber": 60,
         "author": {
           "gitId": "juandavinlie"
         },
-        "content": "    }"
+        "content": ""
       },
       {
         "lineNumber": 61,
         "author": {
           "gitId": "juandavinlie"
         },
-        "content": ""
+        "content": "        internalList.get(index).setId(newModuleId);"
       },
       {
         "lineNumber": 62,
         "author": {
           "gitId": "juandavinlie"
         },
-        "content": "    /**"
+        "content": "    }"
       },
       {
         "lineNumber": 63,
         "author": {
           "gitId": "juandavinlie"
         },
-        "content": "     * Removes the equivalent object from the list."
+        "content": ""
       },
       {
         "lineNumber": 64,
         "author": {
           "gitId": "juandavinlie"
         },
-        "content": "     * The object must exist in the list."
+        "content": "    /**"
       },
       {
         "lineNumber": 65,
         "author": {
           "gitId": "juandavinlie"
         },
-        "content": "     */"
+        "content": "     * Removes the equivalent object from the list."
       },
       {
         "lineNumber": 66,
         "author": {
           "gitId": "juandavinlie"
         },
-        "content": "    public void removeModule(Module toRemove) {"
+        "content": "     * The object must exist in the list."
       },
       {
         "lineNumber": 67,
         "author": {
           "gitId": "juandavinlie"
         },
-        "content": "        requireNonNull(toRemove);"
+        "content": "     */"
       },
       {
         "lineNumber": 68,
         "author": {
           "gitId": "juandavinlie"
         },
-        "content": "        if (!internalList.remove(toRemove)) {"
+        "content": "    public void removeModule(Module toRemove) {"
       },
       {
         "lineNumber": 69,
         "author": {
           "gitId": "juandavinlie"
         },
-        "content": "            throw new ShowableNotFoundException();"
+        "content": "        requireNonNull(toRemove);"
       },
       {
         "lineNumber": 70,
         "author": {
           "gitId": "juandavinlie"
         },
-        "content": "        }"
+        "content": "        if (!internalList.remove(toRemove)) {"
       },
       {
         "lineNumber": 71,
         "author": {
           "gitId": "juandavinlie"
         },
-        "content": "    }"
+        "content": "            throw new ShowableNotFoundException();"
       },
       {
         "lineNumber": 72,
         "author": {
           "gitId": "juandavinlie"
         },
-        "content": ""
+        "content": "        }"
       },
       {
         "lineNumber": 73,
         "author": {
           "gitId": "juandavinlie"
         },
-        "content": "    public void setModuleList(UniqueModuleList replacement) {"
+        "content": "    }"
       },
       {
         "lineNumber": 74,
         "author": {
           "gitId": "juandavinlie"
         },
-        "content": "        requireNonNull(replacement);"
+        "content": ""
       },
       {
         "lineNumber": 75,
         "author": {
           "gitId": "juandavinlie"
         },
-        "content": "        internalList.setAll(replacement.internalList);"
+        "content": "    public void setModuleList(UniqueModuleList replacement) {"
       },
       {
         "lineNumber": 76,
         "author": {
           "gitId": "juandavinlie"
         },
-        "content": "    }"
+        "content": "        requireNonNull(replacement);"
       },
       {
         "lineNumber": 77,
         "author": {
           "gitId": "juandavinlie"
         },
-        "content": ""
+        "content": "        internalList.setAll(replacement.internalList);"
       },
       {
         "lineNumber": 78,
         "author": {
           "gitId": "juandavinlie"
         },
-        "content": "    /**"
+        "content": "    }"
       },
       {
         "lineNumber": 79,
         "author": {
           "gitId": "juandavinlie"
         },
-        "content": "     * Replaces the contents of this list with {@code objects}."
+        "content": ""
       },
       {
         "lineNumber": 80,
         "author": {
           "gitId": "juandavinlie"
         },
-        "content": "     * {@code objects} must not contain duplicate objects."
+        "content": "    /**"
       },
       {
         "lineNumber": 81,
         "author": {
           "gitId": "juandavinlie"
         },
-        "content": "     */"
+        "content": "     * Replaces the contents of this list with {@code objects}."
       },
       {
         "lineNumber": 82,
         "author": {
           "gitId": "juandavinlie"
         },
-        "content": "    public void setModuleList(List\u003cModule\u003e objects) {"
+        "content": "     * {@code objects} must not contain duplicate objects."
       },
       {
         "lineNumber": 83,
         "author": {
           "gitId": "juandavinlie"
         },
-        "content": "        requireAllNonNull(objects);"
+        "content": "     */"
       },
       {
         "lineNumber": 84,
         "author": {
           "gitId": "juandavinlie"
         },
-        "content": "        if (!modulesAreUnique(objects)) {"
+        "content": "    public void setModuleList(List\u003cModule\u003e objects) {"
       },
       {
         "lineNumber": 85,
         "author": {
           "gitId": "juandavinlie"
         },
-        "content": "            throw new DuplicateShowableException();"
+        "content": "        requireAllNonNull(objects);"
       },
       {
         "lineNumber": 86,
         "author": {
           "gitId": "juandavinlie"
         },
-        "content": "        }"
+        "content": "        if (!modulesAreUnique(objects)) {"
       },
       {
         "lineNumber": 87,
         "author": {
           "gitId": "juandavinlie"
         },
-        "content": ""
+        "content": "            throw new DuplicateShowableException();"
       },
       {
         "lineNumber": 88,
         "author": {
           "gitId": "juandavinlie"
         },
-        "content": "        internalList.setAll(objects);"
+        "content": "        }"
       },
       {
         "lineNumber": 89,
         "author": {
           "gitId": "juandavinlie"
         },
-        "content": "    }"
+        "content": ""
       },
       {
         "lineNumber": 90,
         "author": {
           "gitId": "juandavinlie"
         },
-        "content": ""
+        "content": "        internalList.setAll(objects);"
       },
       {
         "lineNumber": 91,
         "author": {
           "gitId": "juandavinlie"
         },
-        "content": "    /**"
+        "content": "    }"
       },
       {
         "lineNumber": 92,
         "author": {
           "gitId": "juandavinlie"
         },
-        "content": "     * Returns the backing list as an unmodifiable {@code ObservableList}."
+        "content": ""
       },
       {
         "lineNumber": 93,
         "author": {
           "gitId": "juandavinlie"
         },
-        "content": "     */"
+        "content": "    /**"
       },
       {
         "lineNumber": 94,
         "author": {
           "gitId": "juandavinlie"
         },
-        "content": "    public ObservableList\u003cModule\u003e asUnmodifiableObservableList() {"
+        "content": "     * Returns the backing list as an unmodifiable {@code ObservableList}."
       },
       {
         "lineNumber": 95,
         "author": {
           "gitId": "juandavinlie"
         },
-        "content": "        return internalUnmodifiableList;"
+        "content": "     */"
       },
       {
         "lineNumber": 96,
         "author": {
           "gitId": "juandavinlie"
         },
-        "content": "    }"
+        "content": "    public ObservableList\u003cModule\u003e asUnmodifiableObservableList() {"
       },
       {
         "lineNumber": 97,
         "author": {
           "gitId": "juandavinlie"
         },
-        "content": ""
+        "content": "        return internalUnmodifiableList;"
       },
       {
         "lineNumber": 98,
         "author": {
           "gitId": "juandavinlie"
         },
-        "content": "    // Tutorial Group Operations"
+        "content": "    }"
       },
       {
         "lineNumber": 99,
         "author": {
           "gitId": "juandavinlie"
         },
-        "content": "    /**"
+        "content": ""
       },
       {
         "lineNumber": 100,
         "author": {
           "gitId": "juandavinlie"
         },
-        "content": "     * Returns the tutorial group list of the given module as an unmodifiable {@code ObservableList}."
+        "content": "    // Tutorial Group Operations"
       },
       {
         "lineNumber": 101,
         "author": {
           "gitId": "juandavinlie"
         },
-        "content": "     */"
+        "content": "    /**"
       },
       {
         "lineNumber": 102,
         "author": {
           "gitId": "juandavinlie"
         },
-        "content": "    public ObservableList\u003cTutorialGroup\u003e getTutorialGroupListOfModule(Module target) {"
+        "content": "     * Returns the tutorial group list of the given module as an unmodifiable {@code ObservableList}."
       },
       {
         "lineNumber": 103,
         "author": {
           "gitId": "juandavinlie"
         },
-        "content": "        int index \u003d internalList.indexOf(target);"
+        "content": "     */"
       },
       {
         "lineNumber": 104,
         "author": {
           "gitId": "juandavinlie"
         },
-        "content": "        return internalList.get(index).getTutorialGroups();"
+        "content": "    public ObservableList\u003cTutorialGroup\u003e getTutorialGroupListOfModule(Module target) {"
       },
       {
         "lineNumber": 105,
         "author": {
           "gitId": "juandavinlie"
         },
-        "content": "    }"
+        "content": "        int index \u003d internalList.indexOf(target);"
       },
       {
         "lineNumber": 106,
         "author": {
           "gitId": "juandavinlie"
         },
-        "content": ""
+        "content": "        return internalList.get(index).getTutorialGroups();"
       },
       {
         "lineNumber": 107,
         "author": {
-          "gitId": "fanminj"
+          "gitId": "juandavinlie"
         },
-        "content": "    public UniqueTutorialGroupList getUniqueTutorialGroupList(Module target) {"
+        "content": "    }"
       },
       {
         "lineNumber": 108,
         "author": {
-          "gitId": "fanminj"
+          "gitId": "juandavinlie"
         },
-        "content": "        int index \u003d internalList.indexOf(target);"
+        "content": ""
       },
       {
         "lineNumber": 109,
         "author": {
           "gitId": "fanminj"
         },
-        "content": "        return internalList.get(index).getUniqueTutorialGroupList();"
+        "content": "    public UniqueTutorialGroupList getUniqueTutorialGroupList(Module target) {"
       },
       {
         "lineNumber": 110,
         "author": {
           "gitId": "fanminj"
         },
-        "content": "    }"
+        "content": "        int index \u003d internalList.indexOf(target);"
       },
       {
         "lineNumber": 111,
         "author": {
           "gitId": "fanminj"
         },
-        "content": ""
+        "content": "        return internalList.get(index).getUniqueTutorialGroupList();"
       },
       {
         "lineNumber": 112,
         "author": {
-          "gitId": "juandavinlie"
+          "gitId": "fanminj"
         },
-        "content": "    /**"
+        "content": "    }"
       },
       {
         "lineNumber": 113,
         "author": {
-          "gitId": "juandavinlie"
+          "gitId": "fanminj"
         },
-        "content": "     * Adds an {@code Showable} object to the list."
+        "content": ""
       },
       {
         "lineNumber": 114,
         "author": {
           "gitId": "juandavinlie"
         },
-        "content": "     * The object must not already exist in the list."
+        "content": "    /**"
       },
       {
         "lineNumber": 115,
         "author": {
           "gitId": "juandavinlie"
         },
-        "content": "     */"
+        "content": "     * Adds an {@code Showable} object to the list."
       },
       {
         "lineNumber": 116,
         "author": {
           "gitId": "juandavinlie"
         },
-        "content": "    public void addTutorialGroup(TutorialGroup tutorialGroup, Module currentModuleInView) {"
+        "content": "     * The object must not already exist in the list."
       },
       {
         "lineNumber": 117,
         "author": {
           "gitId": "juandavinlie"
         },
-        "content": "        int index \u003d internalList.indexOf(currentModuleInView);"
+        "content": "     */"
       },
       {
         "lineNumber": 118,
         "author": {
           "gitId": "juandavinlie"
         },
-        "content": "        if (index \u003e\u003d 0) {"
+        "content": "    public void addTutorialGroup(TutorialGroup tutorialGroup, Module currentModuleInView) {"
       },
       {
         "lineNumber": 119,
         "author": {
           "gitId": "juandavinlie"
         },
-        "content": "            internalList.get(index).addTutorialGroup(tutorialGroup);"
+        "content": "        int index \u003d internalList.indexOf(currentModuleInView);"
       },
       {
         "lineNumber": 120,
         "author": {
           "gitId": "juandavinlie"
         },
-        "content": "        }"
+        "content": "        if (index \u003e\u003d 0) {"
       },
       {
         "lineNumber": 121,
         "author": {
           "gitId": "juandavinlie"
         },
-        "content": "    }"
+        "content": "            internalList.get(index).addTutorialGroup(tutorialGroup);"
       },
       {
         "lineNumber": 122,
         "author": {
           "gitId": "juandavinlie"
         },
-        "content": ""
+        "content": "        }"
       },
       {
         "lineNumber": 123,
         "author": {
           "gitId": "juandavinlie"
         },
-        "content": "    @Override"
+        "content": "    }"
       },
       {
         "lineNumber": 124,
         "author": {
           "gitId": "juandavinlie"
         },
-        "content": "    public Iterator\u003cModule\u003e iterator() {"
+        "content": ""
       },
       {
         "lineNumber": 125,
         "author": {
           "gitId": "juandavinlie"
         },
-        "content": "        return internalList.iterator();"
+        "content": "    @Override"
       },
       {
         "lineNumber": 126,
         "author": {
           "gitId": "juandavinlie"
         },
-        "content": "    }"
+        "content": "    public Iterator\u003cModule\u003e iterator() {"
       },
       {
         "lineNumber": 127,
         "author": {
           "gitId": "juandavinlie"
         },
-        "content": ""
+        "content": "        return internalList.iterator();"
       },
       {
         "lineNumber": 128,
         "author": {
           "gitId": "juandavinlie"
         },
-        "content": "    @Override"
+        "content": "    }"
       },
       {
         "lineNumber": 129,
         "author": {
           "gitId": "juandavinlie"
         },
-        "content": "    public boolean equals(Object other) {"
+        "content": ""
       },
       {
         "lineNumber": 130,
         "author": {
           "gitId": "juandavinlie"
         },
-        "content": "        return other \u003d\u003d this // short circuit if same object"
+        "content": "    @Override"
       },
       {
         "lineNumber": 131,
         "author": {
           "gitId": "juandavinlie"
         },
-        "content": "                || (other instanceof UniqueModuleList // instanceof handles nulls"
+        "content": "    public boolean equals(Object other) {"
       },
       {
         "lineNumber": 132,
         "author": {
           "gitId": "juandavinlie"
         },
-        "content": "                \u0026\u0026 internalList.equals(((UniqueModuleList) other).internalList));"
+        "content": "        return other \u003d\u003d this // short circuit if same object"
       },
       {
         "lineNumber": 133,
         "author": {
           "gitId": "juandavinlie"
         },
-        "content": "    }"
+        "content": "                || (other instanceof UniqueModuleList // instanceof handles nulls"
       },
       {
         "lineNumber": 134,
         "author": {
           "gitId": "juandavinlie"
         },
-        "content": ""
+        "content": "                \u0026\u0026 internalList.equals(((UniqueModuleList) other).internalList));"
       },
       {
         "lineNumber": 135,
         "author": {
           "gitId": "juandavinlie"
         },
-        "content": "    @Override"
+        "content": "    }"
       },
       {
         "lineNumber": 136,
         "author": {
           "gitId": "juandavinlie"
         },
-        "content": "    public int hashCode() {"
+        "content": ""
       },
       {
         "lineNumber": 137,
         "author": {
           "gitId": "juandavinlie"
         },
-        "content": "        return internalList.hashCode();"
+        "content": "    @Override"
       },
       {
         "lineNumber": 138,
         "author": {
           "gitId": "juandavinlie"
         },
-        "content": "    }"
+        "content": "    public int hashCode() {"
       },
       {
         "lineNumber": 139,
         "author": {
           "gitId": "juandavinlie"
         },
-        "content": ""
+        "content": "        return internalList.hashCode();"
       },
       {
         "lineNumber": 140,
         "author": {
           "gitId": "juandavinlie"
         },
-        "content": "    /**"
+        "content": "    }"
       },
       {
         "lineNumber": 141,
         "author": {
           "gitId": "juandavinlie"
         },
-        "content": "     * Returns true if {@code objects} contains only unique objects."
+        "content": ""
       },
       {
         "lineNumber": 142,
         "author": {
           "gitId": "juandavinlie"
         },
-        "content": "     */"
+        "content": "    /**"
       },
       {
         "lineNumber": 143,
         "author": {
           "gitId": "juandavinlie"
         },
-        "content": "    private boolean modulesAreUnique(List\u003cModule\u003e objects) {"
+        "content": "     * Returns true if {@code objects} contains only unique objects."
       },
       {
         "lineNumber": 144,
         "author": {
           "gitId": "juandavinlie"
         },
-        "content": "        for (int i \u003d 0; i \u003c objects.size() - 1; i++) {"
+        "content": "     */"
       },
       {
         "lineNumber": 145,
         "author": {
           "gitId": "juandavinlie"
         },
-        "content": "            for (int j \u003d i + 1; j \u003c objects.size(); j++) {"
+        "content": "    private boolean modulesAreUnique(List\u003cModule\u003e objects) {"
       },
       {
         "lineNumber": 146,
         "author": {
           "gitId": "juandavinlie"
         },
-        "content": "                if (objects.get(i).isSame(objects.get(j))) {"
+        "content": "        for (int i \u003d 0; i \u003c objects.size() - 1; i++) {"
       },
       {
         "lineNumber": 147,
         "author": {
           "gitId": "juandavinlie"
         },
-        "content": "                    return false;"
+        "content": "            for (int j \u003d i + 1; j \u003c objects.size(); j++) {"
       },
       {
         "lineNumber": 148,
         "author": {
           "gitId": "juandavinlie"
         },
-        "content": "                }"
+        "content": "                if (objects.get(i).isSame(objects.get(j))) {"
       },
       {
         "lineNumber": 149,
         "author": {
           "gitId": "juandavinlie"
         },
-        "content": "            }"
+        "content": "                    return false;"
       },
       {
         "lineNumber": 150,
         "author": {
           "gitId": "juandavinlie"
         },
-        "content": "        }"
+        "content": "                }"
       },
       {
         "lineNumber": 151,
         "author": {
           "gitId": "juandavinlie"
         },
-        "content": "        return true;"
+        "content": "            }"
       },
       {
         "lineNumber": 152,
         "author": {
           "gitId": "juandavinlie"
         },
-        "content": "    }"
+        "content": "        }"
       },
       {
         "lineNumber": 153,
+        "author": {
+          "gitId": "juandavinlie"
+        },
+        "content": "        return true;"
+      },
+      {
+        "lineNumber": 154,
+        "author": {
+          "gitId": "juandavinlie"
+        },
+        "content": "    }"
+      },
+      {
+        "lineNumber": 155,
         "author": {
           "gitId": "juandavinlie"
         },
@@ -31987,7 +35297,7 @@
     ],
     "authorContributionMap": {
       "fanminj": 11,
-      "juandavinlie": 142
+      "juandavinlie": 144
     }
   },
   {
@@ -32076,7 +35386,7 @@
         "author": {
           "gitId": "juandavinlie"
         },
-        "content": "public class NameContainsKeywordsPredicate implements Predicate\u003cModule\u003e {"
+        "content": "public class NameContainsKeywordsPredicate implements Predicate\u003cStudent\u003e {"
       },
       {
         "lineNumber": 13,
@@ -32132,7 +35442,7 @@
         "author": {
           "gitId": "juandavinlie"
         },
-        "content": "    public boolean test(Module module) {"
+        "content": "    public boolean test(Student student) {"
       },
       {
         "lineNumber": 21,
@@ -32144,9 +35454,9 @@
       {
         "lineNumber": 22,
         "author": {
-          "gitId": "EthanTheGoondu"
+          "gitId": "juandavinlie"
         },
-        "content": "                .anyMatch(keyword -\u003e StringUtil.containsWordIgnoreCase(module.getModuleId().toString(), keyword));"
+        "content": "                .anyMatch(keyword -\u003e StringUtil.containsWordIgnoreCase(student.getName().toString(), keyword));"
       },
       {
         "lineNumber": 23,
@@ -32220,8 +35530,8 @@
       }
     ],
     "authorContributionMap": {
-      "EthanTheGoondu": 2,
-      "juandavinlie": 2,
+      "EthanTheGoondu": 1,
+      "juandavinlie": 3,
       "-": 28
     }
   },
