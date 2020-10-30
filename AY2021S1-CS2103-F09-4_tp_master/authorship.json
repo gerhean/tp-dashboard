@@ -14179,6 +14179,1290 @@
     }
   },
   {
+    "path": "src/main/java/seedu/address/MainApp.java",
+    "fileType": "functional-code",
+    "lines": [
+      {
+        "lineNumber": 1,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "package seedu.address;"
+      },
+      {
+        "lineNumber": 2,
+        "author": {
+          "gitId": "-"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 3,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "import java.io.IOException;"
+      },
+      {
+        "lineNumber": 4,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "import java.nio.file.Path;"
+      },
+      {
+        "lineNumber": 5,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "import java.util.Optional;"
+      },
+      {
+        "lineNumber": 6,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "import java.util.logging.Logger;"
+      },
+      {
+        "lineNumber": 7,
+        "author": {
+          "gitId": "-"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 8,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "import javafx.application.Application;"
+      },
+      {
+        "lineNumber": 9,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "import javafx.stage.Stage;"
+      },
+      {
+        "lineNumber": 10,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "import seedu.address.commons.core.Config;"
+      },
+      {
+        "lineNumber": 11,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "import seedu.address.commons.core.LogsCenter;"
+      },
+      {
+        "lineNumber": 12,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "import seedu.address.commons.core.Version;"
+      },
+      {
+        "lineNumber": 13,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "import seedu.address.commons.exceptions.DataConversionException;"
+      },
+      {
+        "lineNumber": 14,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "import seedu.address.commons.util.ConfigUtil;"
+      },
+      {
+        "lineNumber": 15,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "import seedu.address.commons.util.StringUtil;"
+      },
+      {
+        "lineNumber": 16,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "import seedu.address.logic.Logic;"
+      },
+      {
+        "lineNumber": 17,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "import seedu.address.logic.LogicManager;"
+      },
+      {
+        "lineNumber": 18,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "import seedu.address.model.AddressBook;"
+      },
+      {
+        "lineNumber": 19,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "import seedu.address.model.Model;"
+      },
+      {
+        "lineNumber": 20,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "import seedu.address.model.ModelManager;"
+      },
+      {
+        "lineNumber": 21,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "import seedu.address.model.ReadOnlyAddressBook;"
+      },
+      {
+        "lineNumber": 22,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "import seedu.address.model.ReadOnlyUserPrefs;"
+      },
+      {
+        "lineNumber": 23,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "import seedu.address.model.UserPrefs;"
+      },
+      {
+        "lineNumber": 24,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "import seedu.address.storage.AddressBookStorage;"
+      },
+      {
+        "lineNumber": 25,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "import seedu.address.storage.JsonAddressBookStorage;"
+      },
+      {
+        "lineNumber": 26,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "import seedu.address.storage.JsonUserPrefsStorage;"
+      },
+      {
+        "lineNumber": 27,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "import seedu.address.storage.Storage;"
+      },
+      {
+        "lineNumber": 28,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "import seedu.address.storage.StorageManager;"
+      },
+      {
+        "lineNumber": 29,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "import seedu.address.storage.UserPrefsStorage;"
+      },
+      {
+        "lineNumber": 30,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "import seedu.address.ui.Ui;"
+      },
+      {
+        "lineNumber": 31,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "import seedu.address.ui.UiManager;"
+      },
+      {
+        "lineNumber": 32,
+        "author": {
+          "gitId": "-"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 33,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "/**"
+      },
+      {
+        "lineNumber": 34,
+        "author": {
+          "gitId": "-"
+        },
+        "content": " * Runs the application."
+      },
+      {
+        "lineNumber": 35,
+        "author": {
+          "gitId": "-"
+        },
+        "content": " */"
+      },
+      {
+        "lineNumber": 36,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "public class MainApp extends Application {"
+      },
+      {
+        "lineNumber": 37,
+        "author": {
+          "gitId": "-"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 38,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "    public static final Version VERSION \u003d new Version(0, 6, 0, true);"
+      },
+      {
+        "lineNumber": 39,
+        "author": {
+          "gitId": "-"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 40,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "    private static final Logger logger \u003d LogsCenter.getLogger(MainApp.class);"
+      },
+      {
+        "lineNumber": 41,
+        "author": {
+          "gitId": "-"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 42,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "    protected Ui ui;"
+      },
+      {
+        "lineNumber": 43,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "    protected Logic logic;"
+      },
+      {
+        "lineNumber": 44,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "    protected Storage storage;"
+      },
+      {
+        "lineNumber": 45,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "    protected Model model;"
+      },
+      {
+        "lineNumber": 46,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "    protected Config config;"
+      },
+      {
+        "lineNumber": 47,
+        "author": {
+          "gitId": "-"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 48,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "    @Override"
+      },
+      {
+        "lineNumber": 49,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "    public void init() throws Exception {"
+      },
+      {
+        "lineNumber": 50,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "        logger.info(\"\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d[ Initializing AddressBook ]\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\");"
+      },
+      {
+        "lineNumber": 51,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "        super.init();"
+      },
+      {
+        "lineNumber": 52,
+        "author": {
+          "gitId": "-"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 53,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "        AppParameters appParameters \u003d AppParameters.parse(getParameters());"
+      },
+      {
+        "lineNumber": 54,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "        config \u003d initConfig(appParameters.getConfigPath());"
+      },
+      {
+        "lineNumber": 55,
+        "author": {
+          "gitId": "-"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 56,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "        UserPrefsStorage userPrefsStorage \u003d new JsonUserPrefsStorage(config.getUserPrefsFilePath());"
+      },
+      {
+        "lineNumber": 57,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "        UserPrefs userPrefs \u003d initPrefs(userPrefsStorage);"
+      },
+      {
+        "lineNumber": 58,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "        AddressBookStorage addressBookStorage \u003d new JsonAddressBookStorage(userPrefs.getAddressBookFilePath());"
+      },
+      {
+        "lineNumber": 59,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "        storage \u003d new StorageManager(addressBookStorage, userPrefsStorage);"
+      },
+      {
+        "lineNumber": 60,
+        "author": {
+          "gitId": "-"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 61,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "        initLogging(config);"
+      },
+      {
+        "lineNumber": 62,
+        "author": {
+          "gitId": "-"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 63,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "        model \u003d initModelManager(storage, userPrefs);"
+      },
+      {
+        "lineNumber": 64,
+        "author": {
+          "gitId": "-"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 65,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "        logic \u003d new LogicManager(model, storage);"
+      },
+      {
+        "lineNumber": 66,
+        "author": {
+          "gitId": "-"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 67,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "        ui \u003d new UiManager(logic);"
+      },
+      {
+        "lineNumber": 68,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "    }"
+      },
+      {
+        "lineNumber": 69,
+        "author": {
+          "gitId": "-"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 70,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "    /**"
+      },
+      {
+        "lineNumber": 71,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "     * Returns a {@code ModelManager} with the data from {@code storage}\u0027s address book and {@code userPrefs}. \u003cbr\u003e"
+      },
+      {
+        "lineNumber": 72,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "     * The data from the sample address book will be used instead if {@code storage}\u0027s address book is not found,"
+      },
+      {
+        "lineNumber": 73,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "     * or an empty address book will be used instead if errors occur when reading {@code storage}\u0027s address book."
+      },
+      {
+        "lineNumber": 74,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "     */"
+      },
+      {
+        "lineNumber": 75,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "    private Model initModelManager(Storage storage, ReadOnlyUserPrefs userPrefs) {"
+      },
+      {
+        "lineNumber": 76,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "        Optional\u003cReadOnlyAddressBook\u003e addressBookOptional;"
+      },
+      {
+        "lineNumber": 77,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "        ReadOnlyAddressBook initialData;"
+      },
+      {
+        "lineNumber": 78,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "        try {"
+      },
+      {
+        "lineNumber": 79,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "            addressBookOptional \u003d storage.readAddressBook();"
+      },
+      {
+        "lineNumber": 80,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "            if (!addressBookOptional.isPresent()) {"
+      },
+      {
+        "lineNumber": 81,
+        "author": {
+          "gitId": "tigerting98"
+        },
+        "content": "                logger.info(\"Data file not found. Will be starting with a empty AddressBook\");"
+      },
+      {
+        "lineNumber": 82,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "            }"
+      },
+      {
+        "lineNumber": 83,
+        "author": {
+          "gitId": "tigerting98"
+        },
+        "content": "            initialData \u003d new AddressBook();"
+      },
+      {
+        "lineNumber": 84,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "        } catch (DataConversionException e) {"
+      },
+      {
+        "lineNumber": 85,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "            logger.warning(\"Data file not in the correct format. Will be starting with an empty AddressBook\");"
+      },
+      {
+        "lineNumber": 86,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "            initialData \u003d new AddressBook();"
+      },
+      {
+        "lineNumber": 87,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "        } catch (IOException e) {"
+      },
+      {
+        "lineNumber": 88,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "            logger.warning(\"Problem while reading from the file. Will be starting with an empty AddressBook\");"
+      },
+      {
+        "lineNumber": 89,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "            initialData \u003d new AddressBook();"
+      },
+      {
+        "lineNumber": 90,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "        }"
+      },
+      {
+        "lineNumber": 91,
+        "author": {
+          "gitId": "-"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 92,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "        return new ModelManager(initialData, userPrefs);"
+      },
+      {
+        "lineNumber": 93,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "    }"
+      },
+      {
+        "lineNumber": 94,
+        "author": {
+          "gitId": "-"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 95,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "    private void initLogging(Config config) {"
+      },
+      {
+        "lineNumber": 96,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "        LogsCenter.init(config);"
+      },
+      {
+        "lineNumber": 97,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "    }"
+      },
+      {
+        "lineNumber": 98,
+        "author": {
+          "gitId": "-"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 99,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "    /**"
+      },
+      {
+        "lineNumber": 100,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "     * Returns a {@code Config} using the file at {@code configFilePath}. \u003cbr\u003e"
+      },
+      {
+        "lineNumber": 101,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "     * The default file path {@code Config#DEFAULT_CONFIG_FILE} will be used instead"
+      },
+      {
+        "lineNumber": 102,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "     * if {@code configFilePath} is null."
+      },
+      {
+        "lineNumber": 103,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "     */"
+      },
+      {
+        "lineNumber": 104,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "    protected Config initConfig(Path configFilePath) {"
+      },
+      {
+        "lineNumber": 105,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "        Config initializedConfig;"
+      },
+      {
+        "lineNumber": 106,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "        Path configFilePathUsed;"
+      },
+      {
+        "lineNumber": 107,
+        "author": {
+          "gitId": "-"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 108,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "        configFilePathUsed \u003d Config.DEFAULT_CONFIG_FILE;"
+      },
+      {
+        "lineNumber": 109,
+        "author": {
+          "gitId": "-"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 110,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "        if (configFilePath !\u003d null) {"
+      },
+      {
+        "lineNumber": 111,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "            logger.info(\"Custom Config file specified \" + configFilePath);"
+      },
+      {
+        "lineNumber": 112,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "            configFilePathUsed \u003d configFilePath;"
+      },
+      {
+        "lineNumber": 113,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "        }"
+      },
+      {
+        "lineNumber": 114,
+        "author": {
+          "gitId": "-"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 115,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "        logger.info(\"Using config file : \" + configFilePathUsed);"
+      },
+      {
+        "lineNumber": 116,
+        "author": {
+          "gitId": "-"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 117,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "        try {"
+      },
+      {
+        "lineNumber": 118,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "            Optional\u003cConfig\u003e configOptional \u003d ConfigUtil.readConfig(configFilePathUsed);"
+      },
+      {
+        "lineNumber": 119,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "            initializedConfig \u003d configOptional.orElse(new Config());"
+      },
+      {
+        "lineNumber": 120,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "        } catch (DataConversionException e) {"
+      },
+      {
+        "lineNumber": 121,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "            logger.warning(\"Config file at \" + configFilePathUsed + \" is not in the correct format. \""
+      },
+      {
+        "lineNumber": 122,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "                    + \"Using default config properties\");"
+      },
+      {
+        "lineNumber": 123,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "            initializedConfig \u003d new Config();"
+      },
+      {
+        "lineNumber": 124,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "        }"
+      },
+      {
+        "lineNumber": 125,
+        "author": {
+          "gitId": "-"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 126,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "        //Update config file in case it was missing to begin with or there are new/unused fields"
+      },
+      {
+        "lineNumber": 127,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "        try {"
+      },
+      {
+        "lineNumber": 128,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "            ConfigUtil.saveConfig(initializedConfig, configFilePathUsed);"
+      },
+      {
+        "lineNumber": 129,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "        } catch (IOException e) {"
+      },
+      {
+        "lineNumber": 130,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "            logger.warning(\"Failed to save config file : \" + StringUtil.getDetails(e));"
+      },
+      {
+        "lineNumber": 131,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "        }"
+      },
+      {
+        "lineNumber": 132,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "        return initializedConfig;"
+      },
+      {
+        "lineNumber": 133,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "    }"
+      },
+      {
+        "lineNumber": 134,
+        "author": {
+          "gitId": "-"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 135,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "    /**"
+      },
+      {
+        "lineNumber": 136,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "     * Returns a {@code UserPrefs} using the file at {@code storage}\u0027s user prefs file path,"
+      },
+      {
+        "lineNumber": 137,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "     * or a new {@code UserPrefs} with default configuration if errors occur when"
+      },
+      {
+        "lineNumber": 138,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "     * reading from the file."
+      },
+      {
+        "lineNumber": 139,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "     */"
+      },
+      {
+        "lineNumber": 140,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "    protected UserPrefs initPrefs(UserPrefsStorage storage) {"
+      },
+      {
+        "lineNumber": 141,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "        Path prefsFilePath \u003d storage.getUserPrefsFilePath();"
+      },
+      {
+        "lineNumber": 142,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "        logger.info(\"Using prefs file : \" + prefsFilePath);"
+      },
+      {
+        "lineNumber": 143,
+        "author": {
+          "gitId": "-"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 144,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "        UserPrefs initializedPrefs;"
+      },
+      {
+        "lineNumber": 145,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "        try {"
+      },
+      {
+        "lineNumber": 146,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "            Optional\u003cUserPrefs\u003e prefsOptional \u003d storage.readUserPrefs();"
+      },
+      {
+        "lineNumber": 147,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "            initializedPrefs \u003d prefsOptional.orElse(new UserPrefs());"
+      },
+      {
+        "lineNumber": 148,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "        } catch (DataConversionException e) {"
+      },
+      {
+        "lineNumber": 149,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "            logger.warning(\"UserPrefs file at \" + prefsFilePath + \" is not in the correct format. \""
+      },
+      {
+        "lineNumber": 150,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "                    + \"Using default user prefs\");"
+      },
+      {
+        "lineNumber": 151,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "            initializedPrefs \u003d new UserPrefs();"
+      },
+      {
+        "lineNumber": 152,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "        } catch (IOException e) {"
+      },
+      {
+        "lineNumber": 153,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "            logger.warning(\"Problem while reading from the file. Will be starting with an empty AddressBook\");"
+      },
+      {
+        "lineNumber": 154,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "            initializedPrefs \u003d new UserPrefs();"
+      },
+      {
+        "lineNumber": 155,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "        }"
+      },
+      {
+        "lineNumber": 156,
+        "author": {
+          "gitId": "-"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 157,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "        //Update prefs file in case it was missing to begin with or there are new/unused fields"
+      },
+      {
+        "lineNumber": 158,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "        try {"
+      },
+      {
+        "lineNumber": 159,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "            storage.saveUserPrefs(initializedPrefs);"
+      },
+      {
+        "lineNumber": 160,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "        } catch (IOException e) {"
+      },
+      {
+        "lineNumber": 161,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "            logger.warning(\"Failed to save config file : \" + StringUtil.getDetails(e));"
+      },
+      {
+        "lineNumber": 162,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "        }"
+      },
+      {
+        "lineNumber": 163,
+        "author": {
+          "gitId": "-"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 164,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "        return initializedPrefs;"
+      },
+      {
+        "lineNumber": 165,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "    }"
+      },
+      {
+        "lineNumber": 166,
+        "author": {
+          "gitId": "-"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 167,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "    @Override"
+      },
+      {
+        "lineNumber": 168,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "    public void start(Stage primaryStage) {"
+      },
+      {
+        "lineNumber": 169,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "        logger.info(\"Starting AddressBook \" + MainApp.VERSION);"
+      },
+      {
+        "lineNumber": 170,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "        ui.start(primaryStage);"
+      },
+      {
+        "lineNumber": 171,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "    }"
+      },
+      {
+        "lineNumber": 172,
+        "author": {
+          "gitId": "-"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 173,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "    @Override"
+      },
+      {
+        "lineNumber": 174,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "    public void stop() {"
+      },
+      {
+        "lineNumber": 175,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "        logger.info(\"\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d [ Stopping Address Book ] \u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\");"
+      },
+      {
+        "lineNumber": 176,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "        try {"
+      },
+      {
+        "lineNumber": 177,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "            storage.saveUserPrefs(model.getUserPrefs());"
+      },
+      {
+        "lineNumber": 178,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "        } catch (IOException e) {"
+      },
+      {
+        "lineNumber": 179,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "            logger.severe(\"Failed to save preferences \" + StringUtil.getDetails(e));"
+      },
+      {
+        "lineNumber": 180,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "        }"
+      },
+      {
+        "lineNumber": 181,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "    }"
+      },
+      {
+        "lineNumber": 182,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "}"
+      }
+    ],
+    "authorContributionMap": {
+      "-": 180,
+      "tigerting98": 2
+    }
+  },
+  {
     "path": "src/main/java/seedu/address/commons/core/Messages.java",
     "fileType": "functional-code",
     "lines": [
@@ -20575,16 +21859,16 @@
       {
         "lineNumber": 29,
         "author": {
-          "gitId": "youyingfeng"
+          "gitId": "xnmng"
         },
-        "content": "    public static final String MESSAGE_SUCCESS \u003d \"New client added: %1$s\";"
+        "content": "    public static final String MESSAGE_SUCCESS \u003d \"New Order added: %1$s\";"
       },
       {
         "lineNumber": 30,
         "author": {
-          "gitId": "youyingfeng"
+          "gitId": "xnmng"
         },
-        "content": "    public static final String MESSAGE_DUPLICATE_ORDER \u003d \"This client already exists in LogOnce\";"
+        "content": "    public static final String MESSAGE_DUPLICATE_ORDER \u003d \"This Order already exists in LogOnce\";"
       },
       {
         "lineNumber": 31,
@@ -20812,9 +22096,1203 @@
       }
     ],
     "authorContributionMap": {
-      "youyingfeng": 16,
-      "xnmng": 40,
+      "youyingfeng": 14,
+      "xnmng": 42,
       "tigerting98": 6
+    }
+  },
+  {
+    "path": "src/main/java/seedu/address/logic/commands/UpdateClientCommand.java",
+    "fileType": "functional-code",
+    "lines": [
+      {
+        "lineNumber": 1,
+        "author": {
+          "gitId": "xnmng"
+        },
+        "content": "package seedu.address.logic.commands;"
+      },
+      {
+        "lineNumber": 2,
+        "author": {
+          "gitId": "xnmng"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 3,
+        "author": {
+          "gitId": "xnmng"
+        },
+        "content": "import static java.util.Objects.requireNonNull;"
+      },
+      {
+        "lineNumber": 4,
+        "author": {
+          "gitId": "xnmng"
+        },
+        "content": "import static seedu.address.logic.parser.CliSyntax.CLIENT_PREFIX_NAME;"
+      },
+      {
+        "lineNumber": 5,
+        "author": {
+          "gitId": "xnmng"
+        },
+        "content": "import static seedu.address.logic.parser.CliSyntax.UPDATE_CLIENT_PREFIX_ADDRESS;"
+      },
+      {
+        "lineNumber": 6,
+        "author": {
+          "gitId": "xnmng"
+        },
+        "content": "import static seedu.address.logic.parser.CliSyntax.UPDATE_CLIENT_PREFIX_EMAIL;"
+      },
+      {
+        "lineNumber": 7,
+        "author": {
+          "gitId": "xnmng"
+        },
+        "content": "import static seedu.address.logic.parser.CliSyntax.UPDATE_CLIENT_PREFIX_NAME;"
+      },
+      {
+        "lineNumber": 8,
+        "author": {
+          "gitId": "xnmng"
+        },
+        "content": "import static seedu.address.logic.parser.CliSyntax.UPDATE_CLIENT_PREFIX_PHONE;"
+      },
+      {
+        "lineNumber": 9,
+        "author": {
+          "gitId": "xnmng"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 10,
+        "author": {
+          "gitId": "xnmng"
+        },
+        "content": "import java.util.List;"
+      },
+      {
+        "lineNumber": 11,
+        "author": {
+          "gitId": "xnmng"
+        },
+        "content": "import java.util.Objects;"
+      },
+      {
+        "lineNumber": 12,
+        "author": {
+          "gitId": "xnmng"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 13,
+        "author": {
+          "gitId": "xnmng"
+        },
+        "content": "import seedu.address.commons.core.Messages;"
+      },
+      {
+        "lineNumber": 14,
+        "author": {
+          "gitId": "xnmng"
+        },
+        "content": "import seedu.address.commons.core.index.Index;"
+      },
+      {
+        "lineNumber": 15,
+        "author": {
+          "gitId": "xnmng"
+        },
+        "content": "import seedu.address.logic.commands.exceptions.CommandException;"
+      },
+      {
+        "lineNumber": 16,
+        "author": {
+          "gitId": "xnmng"
+        },
+        "content": "import seedu.address.model.Model;"
+      },
+      {
+        "lineNumber": 17,
+        "author": {
+          "gitId": "xnmng"
+        },
+        "content": "import seedu.address.model.person.Address;"
+      },
+      {
+        "lineNumber": 18,
+        "author": {
+          "gitId": "xnmng"
+        },
+        "content": "import seedu.address.model.person.Client;"
+      },
+      {
+        "lineNumber": 19,
+        "author": {
+          "gitId": "xnmng"
+        },
+        "content": "import seedu.address.model.person.Email;"
+      },
+      {
+        "lineNumber": 20,
+        "author": {
+          "gitId": "xnmng"
+        },
+        "content": "import seedu.address.model.person.Name;"
+      },
+      {
+        "lineNumber": 21,
+        "author": {
+          "gitId": "xnmng"
+        },
+        "content": "import seedu.address.model.person.Phone;"
+      },
+      {
+        "lineNumber": 22,
+        "author": {
+          "gitId": "xnmng"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 23,
+        "author": {
+          "gitId": "xnmng"
+        },
+        "content": "/**"
+      },
+      {
+        "lineNumber": 24,
+        "author": {
+          "gitId": "xnmng"
+        },
+        "content": " * Updates the fields of an existing person in the address book."
+      },
+      {
+        "lineNumber": 25,
+        "author": {
+          "gitId": "xnmng"
+        },
+        "content": " */"
+      },
+      {
+        "lineNumber": 26,
+        "author": {
+          "gitId": "xnmng"
+        },
+        "content": "public class UpdateClientCommand extends Command {"
+      },
+      {
+        "lineNumber": 27,
+        "author": {
+          "gitId": "xnmng"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 28,
+        "author": {
+          "gitId": "xnmng"
+        },
+        "content": "    public static final String COMMAND_WORD \u003d \"update client\";"
+      },
+      {
+        "lineNumber": 29,
+        "author": {
+          "gitId": "xnmng"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 30,
+        "author": {
+          "gitId": "xnmng"
+        },
+        "content": "    public static final String MESSAGE_USAGE \u003d COMMAND_WORD + \": Updates the person identified \""
+      },
+      {
+        "lineNumber": 31,
+        "author": {
+          "gitId": "xnmng"
+        },
+        "content": "            + \"by the index number provided.\\n\""
+      },
+      {
+        "lineNumber": 32,
+        "author": {
+          "gitId": "xnmng"
+        },
+        "content": "            + \"Parameters: INDEX (must be a positive integer representing a client in LogOnce; must not be empty) \""
+      },
+      {
+        "lineNumber": 33,
+        "author": {
+          "gitId": "xnmng"
+        },
+        "content": "            + UPDATE_CLIENT_PREFIX_NAME + \"NAME \""
+      },
+      {
+        "lineNumber": 34,
+        "author": {
+          "gitId": "xnmng"
+        },
+        "content": "            + UPDATE_CLIENT_PREFIX_ADDRESS + \"ADDRESS \""
+      },
+      {
+        "lineNumber": 35,
+        "author": {
+          "gitId": "xnmng"
+        },
+        "content": "            + UPDATE_CLIENT_PREFIX_EMAIL + \"EMAIL \""
+      },
+      {
+        "lineNumber": 36,
+        "author": {
+          "gitId": "xnmng"
+        },
+        "content": "            + UPDATE_CLIENT_PREFIX_PHONE + \"PHONE\""
+      },
+      {
+        "lineNumber": 37,
+        "author": {
+          "gitId": "xnmng"
+        },
+        "content": "            + \"Example: \" + COMMAND_WORD + \" 1 \" + CLIENT_PREFIX_NAME + \"Peter\";"
+      },
+      {
+        "lineNumber": 38,
+        "author": {
+          "gitId": "xnmng"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 39,
+        "author": {
+          "gitId": "xnmng"
+        },
+        "content": "    public static final String MESSAGE_UPDATE_CLIENT_SUCCESS \u003d \"Updated Client: %1$s\";"
+      },
+      {
+        "lineNumber": 40,
+        "author": {
+          "gitId": "xnmng"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 41,
+        "author": {
+          "gitId": "xnmng"
+        },
+        "content": "    private final Index targetIndex;"
+      },
+      {
+        "lineNumber": 42,
+        "author": {
+          "gitId": "xnmng"
+        },
+        "content": "    private Name name;"
+      },
+      {
+        "lineNumber": 43,
+        "author": {
+          "gitId": "xnmng"
+        },
+        "content": "    private Address address;"
+      },
+      {
+        "lineNumber": 44,
+        "author": {
+          "gitId": "xnmng"
+        },
+        "content": "    private Email email;"
+      },
+      {
+        "lineNumber": 45,
+        "author": {
+          "gitId": "xnmng"
+        },
+        "content": "    private Phone phone;"
+      },
+      {
+        "lineNumber": 46,
+        "author": {
+          "gitId": "xnmng"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 47,
+        "author": {
+          "gitId": "xnmng"
+        },
+        "content": "    /**"
+      },
+      {
+        "lineNumber": 48,
+        "author": {
+          "gitId": "xnmng"
+        },
+        "content": "     * @param targetIndex index of the client the user would like to modify"
+      },
+      {
+        "lineNumber": 49,
+        "author": {
+          "gitId": "xnmng"
+        },
+        "content": "     * @param name (if applicable) modified name of the client"
+      },
+      {
+        "lineNumber": 50,
+        "author": {
+          "gitId": "xnmng"
+        },
+        "content": "     * @param address (if applicable) modified address of the client"
+      },
+      {
+        "lineNumber": 51,
+        "author": {
+          "gitId": "xnmng"
+        },
+        "content": "     * @param email (if applicable) modified email of the client"
+      },
+      {
+        "lineNumber": 52,
+        "author": {
+          "gitId": "xnmng"
+        },
+        "content": "     * @param phone (if applicable) modified phone of the client"
+      },
+      {
+        "lineNumber": 53,
+        "author": {
+          "gitId": "xnmng"
+        },
+        "content": "     */"
+      },
+      {
+        "lineNumber": 54,
+        "author": {
+          "gitId": "xnmng"
+        },
+        "content": "    public UpdateClientCommand(Index targetIndex, Name name, Address address, Email email, Phone phone) {"
+      },
+      {
+        "lineNumber": 55,
+        "author": {
+          "gitId": "xnmng"
+        },
+        "content": "        this.targetIndex \u003d targetIndex;"
+      },
+      {
+        "lineNumber": 56,
+        "author": {
+          "gitId": "xnmng"
+        },
+        "content": "        this.name \u003d name;"
+      },
+      {
+        "lineNumber": 57,
+        "author": {
+          "gitId": "xnmng"
+        },
+        "content": "        this.address \u003d address;"
+      },
+      {
+        "lineNumber": 58,
+        "author": {
+          "gitId": "xnmng"
+        },
+        "content": "        this.email \u003d email;"
+      },
+      {
+        "lineNumber": 59,
+        "author": {
+          "gitId": "xnmng"
+        },
+        "content": "        this.phone \u003d phone;"
+      },
+      {
+        "lineNumber": 60,
+        "author": {
+          "gitId": "xnmng"
+        },
+        "content": "    }"
+      },
+      {
+        "lineNumber": 61,
+        "author": {
+          "gitId": "xnmng"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 62,
+        "author": {
+          "gitId": "xnmng"
+        },
+        "content": "    @Override"
+      },
+      {
+        "lineNumber": 63,
+        "author": {
+          "gitId": "xnmng"
+        },
+        "content": "    public CommandResult execute(Model model) throws CommandException {"
+      },
+      {
+        "lineNumber": 64,
+        "author": {
+          "gitId": "xnmng"
+        },
+        "content": "        requireNonNull(model);"
+      },
+      {
+        "lineNumber": 65,
+        "author": {
+          "gitId": "xnmng"
+        },
+        "content": "        List\u003cClient\u003e lastShownList \u003d model.getFilteredPersonList();"
+      },
+      {
+        "lineNumber": 66,
+        "author": {
+          "gitId": "xnmng"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 67,
+        "author": {
+          "gitId": "xnmng"
+        },
+        "content": "        if (targetIndex.getZeroBased() \u003e\u003d lastShownList.size()) {"
+      },
+      {
+        "lineNumber": 68,
+        "author": {
+          "gitId": "xnmng"
+        },
+        "content": "            throw new CommandException(Messages.MESSAGE_INVALID_CLIENT_DISPLAYED_INDEX);"
+      },
+      {
+        "lineNumber": 69,
+        "author": {
+          "gitId": "xnmng"
+        },
+        "content": "        }"
+      },
+      {
+        "lineNumber": 70,
+        "author": {
+          "gitId": "xnmng"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 71,
+        "author": {
+          "gitId": "xnmng"
+        },
+        "content": "        Client clientToUpdate \u003d lastShownList.get(targetIndex.getZeroBased());"
+      },
+      {
+        "lineNumber": 72,
+        "author": {
+          "gitId": "xnmng"
+        },
+        "content": "        if (Objects.isNull(name)) {"
+      },
+      {
+        "lineNumber": 73,
+        "author": {
+          "gitId": "xnmng"
+        },
+        "content": "            name \u003d clientToUpdate.getName();"
+      },
+      {
+        "lineNumber": 74,
+        "author": {
+          "gitId": "xnmng"
+        },
+        "content": "        }"
+      },
+      {
+        "lineNumber": 75,
+        "author": {
+          "gitId": "xnmng"
+        },
+        "content": "        if (Objects.isNull(address)) {"
+      },
+      {
+        "lineNumber": 76,
+        "author": {
+          "gitId": "xnmng"
+        },
+        "content": "            address \u003d clientToUpdate.getAddress();"
+      },
+      {
+        "lineNumber": 77,
+        "author": {
+          "gitId": "xnmng"
+        },
+        "content": "        }"
+      },
+      {
+        "lineNumber": 78,
+        "author": {
+          "gitId": "xnmng"
+        },
+        "content": "        if (Objects.isNull(email)) {"
+      },
+      {
+        "lineNumber": 79,
+        "author": {
+          "gitId": "xnmng"
+        },
+        "content": "            email \u003d clientToUpdate.getEmail();"
+      },
+      {
+        "lineNumber": 80,
+        "author": {
+          "gitId": "xnmng"
+        },
+        "content": "        }"
+      },
+      {
+        "lineNumber": 81,
+        "author": {
+          "gitId": "xnmng"
+        },
+        "content": "        if (Objects.isNull(phone)) {"
+      },
+      {
+        "lineNumber": 82,
+        "author": {
+          "gitId": "xnmng"
+        },
+        "content": "            phone \u003d clientToUpdate.getPhone();"
+      },
+      {
+        "lineNumber": 83,
+        "author": {
+          "gitId": "xnmng"
+        },
+        "content": "        }"
+      },
+      {
+        "lineNumber": 84,
+        "author": {
+          "gitId": "xnmng"
+        },
+        "content": "        List\u003cIndex\u003e orderList \u003d clientToUpdate.getOrders();"
+      },
+      {
+        "lineNumber": 85,
+        "author": {
+          "gitId": "xnmng"
+        },
+        "content": "        Client newClient \u003d new Client(name, phone, email, address, targetIndex, orderList);"
+      },
+      {
+        "lineNumber": 86,
+        "author": {
+          "gitId": "xnmng"
+        },
+        "content": "        model.setPerson(clientToUpdate, newClient);"
+      },
+      {
+        "lineNumber": 87,
+        "author": {
+          "gitId": "xnmng"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 88,
+        "author": {
+          "gitId": "xnmng"
+        },
+        "content": "        return new CommandResult(String.format(MESSAGE_UPDATE_CLIENT_SUCCESS, clientToUpdate));"
+      },
+      {
+        "lineNumber": 89,
+        "author": {
+          "gitId": "xnmng"
+        },
+        "content": "    }"
+      },
+      {
+        "lineNumber": 90,
+        "author": {
+          "gitId": "xnmng"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 91,
+        "author": {
+          "gitId": "xnmng"
+        },
+        "content": "    @Override"
+      },
+      {
+        "lineNumber": 92,
+        "author": {
+          "gitId": "xnmng"
+        },
+        "content": "    public boolean equals(Object other) {"
+      },
+      {
+        "lineNumber": 93,
+        "author": {
+          "gitId": "xnmng"
+        },
+        "content": "        return other \u003d\u003d this // short circuit if same object"
+      },
+      {
+        "lineNumber": 94,
+        "author": {
+          "gitId": "xnmng"
+        },
+        "content": "                || (other instanceof UpdateClientCommand // instanceof handles nulls"
+      },
+      {
+        "lineNumber": 95,
+        "author": {
+          "gitId": "xnmng"
+        },
+        "content": "                \u0026\u0026 targetIndex.equals(((UpdateClientCommand) other).targetIndex)); // state check"
+      },
+      {
+        "lineNumber": 96,
+        "author": {
+          "gitId": "xnmng"
+        },
+        "content": "    }"
+      },
+      {
+        "lineNumber": 97,
+        "author": {
+          "gitId": "xnmng"
+        },
+        "content": "}"
+      }
+    ],
+    "authorContributionMap": {
+      "xnmng": 97
+    }
+  },
+  {
+    "path": "src/main/java/seedu/address/logic/commands/UpdateOrderCommand.java",
+    "fileType": "functional-code",
+    "lines": [
+      {
+        "lineNumber": 1,
+        "author": {
+          "gitId": "xnmng"
+        },
+        "content": "package seedu.address.logic.commands;"
+      },
+      {
+        "lineNumber": 2,
+        "author": {
+          "gitId": "xnmng"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 3,
+        "author": {
+          "gitId": "xnmng"
+        },
+        "content": "import static java.util.Objects.requireNonNull;"
+      },
+      {
+        "lineNumber": 4,
+        "author": {
+          "gitId": "xnmng"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 5,
+        "author": {
+          "gitId": "xnmng"
+        },
+        "content": "import java.time.LocalDateTime;"
+      },
+      {
+        "lineNumber": 6,
+        "author": {
+          "gitId": "xnmng"
+        },
+        "content": "import java.util.List;"
+      },
+      {
+        "lineNumber": 7,
+        "author": {
+          "gitId": "xnmng"
+        },
+        "content": "import java.util.Objects;"
+      },
+      {
+        "lineNumber": 8,
+        "author": {
+          "gitId": "xnmng"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 9,
+        "author": {
+          "gitId": "xnmng"
+        },
+        "content": "import seedu.address.commons.core.Messages;"
+      },
+      {
+        "lineNumber": 10,
+        "author": {
+          "gitId": "xnmng"
+        },
+        "content": "import seedu.address.commons.core.index.Index;"
+      },
+      {
+        "lineNumber": 11,
+        "author": {
+          "gitId": "xnmng"
+        },
+        "content": "import seedu.address.logic.commands.exceptions.CommandException;"
+      },
+      {
+        "lineNumber": 12,
+        "author": {
+          "gitId": "xnmng"
+        },
+        "content": "import seedu.address.model.Model;"
+      },
+      {
+        "lineNumber": 13,
+        "author": {
+          "gitId": "xnmng"
+        },
+        "content": "import seedu.address.model.person.Address;"
+      },
+      {
+        "lineNumber": 14,
+        "author": {
+          "gitId": "xnmng"
+        },
+        "content": "import seedu.address.model.person.Order;"
+      },
+      {
+        "lineNumber": 15,
+        "author": {
+          "gitId": "xnmng"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 16,
+        "author": {
+          "gitId": "xnmng"
+        },
+        "content": "public class UpdateOrderCommand extends Command {"
+      },
+      {
+        "lineNumber": 17,
+        "author": {
+          "gitId": "xnmng"
+        },
+        "content": "    public static final String COMMAND_WORD \u003d \"update order\";"
+      },
+      {
+        "lineNumber": 18,
+        "author": {
+          "gitId": "xnmng"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 19,
+        "author": {
+          "gitId": "xnmng"
+        },
+        "content": "    public static final String MESSAGE_USAGE \u003d COMMAND_WORD + \": Updates the order identified \";"
+      },
+      {
+        "lineNumber": 20,
+        "author": {
+          "gitId": "xnmng"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 21,
+        "author": {
+          "gitId": "xnmng"
+        },
+        "content": "    public static final String MESSAGE_UPDATE_CLIENT_SUCCESS \u003d \"Updated Order: %1$s\";"
+      },
+      {
+        "lineNumber": 22,
+        "author": {
+          "gitId": "xnmng"
+        },
+        "content": "    private final Index orderId;"
+      },
+      {
+        "lineNumber": 23,
+        "author": {
+          "gitId": "xnmng"
+        },
+        "content": "    private Index clientId;"
+      },
+      {
+        "lineNumber": 24,
+        "author": {
+          "gitId": "xnmng"
+        },
+        "content": "    private String description;"
+      },
+      {
+        "lineNumber": 25,
+        "author": {
+          "gitId": "xnmng"
+        },
+        "content": "    private Address address;"
+      },
+      {
+        "lineNumber": 26,
+        "author": {
+          "gitId": "xnmng"
+        },
+        "content": "    private LocalDateTime dateTime;"
+      },
+      {
+        "lineNumber": 27,
+        "author": {
+          "gitId": "xnmng"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 28,
+        "author": {
+          "gitId": "xnmng"
+        },
+        "content": "    /**"
+      },
+      {
+        "lineNumber": 29,
+        "author": {
+          "gitId": "xnmng"
+        },
+        "content": "     * @param orderId order to update"
+      },
+      {
+        "lineNumber": 30,
+        "author": {
+          "gitId": "xnmng"
+        },
+        "content": "     * @param clientId (if applicable) modified client this order is tied to"
+      },
+      {
+        "lineNumber": 31,
+        "author": {
+          "gitId": "xnmng"
+        },
+        "content": "     * @param description (if applicable) modified description of this order"
+      },
+      {
+        "lineNumber": 32,
+        "author": {
+          "gitId": "xnmng"
+        },
+        "content": "     * @param address (if applicable) modified address of this order"
+      },
+      {
+        "lineNumber": 33,
+        "author": {
+          "gitId": "xnmng"
+        },
+        "content": "     * @param dateTime (if applicable) modified LocalDateTime of this order"
+      },
+      {
+        "lineNumber": 34,
+        "author": {
+          "gitId": "xnmng"
+        },
+        "content": "     */"
+      },
+      {
+        "lineNumber": 35,
+        "author": {
+          "gitId": "xnmng"
+        },
+        "content": "    public UpdateOrderCommand(Index orderId, Index clientId, String description, Address address,"
+      },
+      {
+        "lineNumber": 36,
+        "author": {
+          "gitId": "xnmng"
+        },
+        "content": "                              LocalDateTime dateTime) {"
+      },
+      {
+        "lineNumber": 37,
+        "author": {
+          "gitId": "xnmng"
+        },
+        "content": "        this.orderId \u003d orderId;"
+      },
+      {
+        "lineNumber": 38,
+        "author": {
+          "gitId": "xnmng"
+        },
+        "content": "        this.clientId \u003d clientId;"
+      },
+      {
+        "lineNumber": 39,
+        "author": {
+          "gitId": "xnmng"
+        },
+        "content": "        this.description \u003d description;"
+      },
+      {
+        "lineNumber": 40,
+        "author": {
+          "gitId": "xnmng"
+        },
+        "content": "        this.address \u003d address;"
+      },
+      {
+        "lineNumber": 41,
+        "author": {
+          "gitId": "xnmng"
+        },
+        "content": "        this.dateTime \u003d dateTime;"
+      },
+      {
+        "lineNumber": 42,
+        "author": {
+          "gitId": "xnmng"
+        },
+        "content": "    }"
+      },
+      {
+        "lineNumber": 43,
+        "author": {
+          "gitId": "xnmng"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 44,
+        "author": {
+          "gitId": "xnmng"
+        },
+        "content": "    @Override"
+      },
+      {
+        "lineNumber": 45,
+        "author": {
+          "gitId": "xnmng"
+        },
+        "content": "    public CommandResult execute(Model model) throws CommandException {"
+      },
+      {
+        "lineNumber": 46,
+        "author": {
+          "gitId": "xnmng"
+        },
+        "content": "        requireNonNull(model);"
+      },
+      {
+        "lineNumber": 47,
+        "author": {
+          "gitId": "xnmng"
+        },
+        "content": "        List\u003cOrder\u003e lastShownList \u003d model.getFilteredOrderList();"
+      },
+      {
+        "lineNumber": 48,
+        "author": {
+          "gitId": "xnmng"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 49,
+        "author": {
+          "gitId": "xnmng"
+        },
+        "content": "        if (orderId.getZeroBased() \u003e\u003d lastShownList.size()) {"
+      },
+      {
+        "lineNumber": 50,
+        "author": {
+          "gitId": "xnmng"
+        },
+        "content": "            throw new CommandException(Messages.MESSAGE_INVALID_ORDER_DISPLAYED_INDEX);"
+      },
+      {
+        "lineNumber": 51,
+        "author": {
+          "gitId": "xnmng"
+        },
+        "content": "        }"
+      },
+      {
+        "lineNumber": 52,
+        "author": {
+          "gitId": "xnmng"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 53,
+        "author": {
+          "gitId": "xnmng"
+        },
+        "content": "        Order orderToUpdate \u003d lastShownList.get(orderId.getZeroBased());"
+      },
+      {
+        "lineNumber": 54,
+        "author": {
+          "gitId": "xnmng"
+        },
+        "content": "        if (Objects.isNull(clientId)) {"
+      },
+      {
+        "lineNumber": 55,
+        "author": {
+          "gitId": "xnmng"
+        },
+        "content": "            clientId \u003d orderToUpdate.getClientId();"
+      },
+      {
+        "lineNumber": 56,
+        "author": {
+          "gitId": "xnmng"
+        },
+        "content": "        }"
+      },
+      {
+        "lineNumber": 57,
+        "author": {
+          "gitId": "xnmng"
+        },
+        "content": "        if (Objects.isNull(description)) {"
+      },
+      {
+        "lineNumber": 58,
+        "author": {
+          "gitId": "xnmng"
+        },
+        "content": "            description \u003d orderToUpdate.getDescription();"
+      },
+      {
+        "lineNumber": 59,
+        "author": {
+          "gitId": "xnmng"
+        },
+        "content": "        }"
+      },
+      {
+        "lineNumber": 60,
+        "author": {
+          "gitId": "xnmng"
+        },
+        "content": "        if (Objects.isNull(dateTime)) {"
+      },
+      {
+        "lineNumber": 61,
+        "author": {
+          "gitId": "xnmng"
+        },
+        "content": "            dateTime \u003d orderToUpdate.getDeliveryDateTime();"
+      },
+      {
+        "lineNumber": 62,
+        "author": {
+          "gitId": "xnmng"
+        },
+        "content": "        }"
+      },
+      {
+        "lineNumber": 63,
+        "author": {
+          "gitId": "xnmng"
+        },
+        "content": "        LocalDateTime creationDateTime \u003d orderToUpdate.getCreationDateTime();"
+      },
+      {
+        "lineNumber": 64,
+        "author": {
+          "gitId": "xnmng"
+        },
+        "content": "        LocalDateTime lastModifiedDateTime \u003d LocalDateTime.now();"
+      },
+      {
+        "lineNumber": 65,
+        "author": {
+          "gitId": "xnmng"
+        },
+        "content": "        boolean isDone \u003d orderToUpdate.getIsDone();"
+      },
+      {
+        "lineNumber": 66,
+        "author": {
+          "gitId": "xnmng"
+        },
+        "content": "        Order newOrder \u003d new Order(orderId, clientId, description, address, dateTime, creationDateTime,"
+      },
+      {
+        "lineNumber": 67,
+        "author": {
+          "gitId": "xnmng"
+        },
+        "content": "                lastModifiedDateTime, isDone);"
+      },
+      {
+        "lineNumber": 68,
+        "author": {
+          "gitId": "xnmng"
+        },
+        "content": "        model.setOrder(orderToUpdate, newOrder);"
+      },
+      {
+        "lineNumber": 69,
+        "author": {
+          "gitId": "xnmng"
+        },
+        "content": "        return new CommandResult(String.format(MESSAGE_UPDATE_CLIENT_SUCCESS, orderToUpdate));"
+      },
+      {
+        "lineNumber": 70,
+        "author": {
+          "gitId": "xnmng"
+        },
+        "content": "    }"
+      },
+      {
+        "lineNumber": 71,
+        "author": {
+          "gitId": "xnmng"
+        },
+        "content": "}"
+      }
+    ],
+    "authorContributionMap": {
+      "xnmng": 71
     }
   },
   {
@@ -21912,40 +24390,68 @@
       {
         "lineNumber": 95,
         "author": {
-          "gitId": "-"
+          "gitId": "xnmng"
         },
-        "content": "        default:"
+        "content": "        case UpdateClientCommandParser.COMMAND_WORD:"
       },
       {
         "lineNumber": 96,
         "author": {
-          "gitId": "-"
+          "gitId": "xnmng"
         },
-        "content": "            throw new ParseException(MESSAGE_UNKNOWN_COMMAND);"
+        "content": "            return new UpdateClientCommandParser().parse(arguments);"
       },
       {
         "lineNumber": 97,
         "author": {
-          "gitId": "-"
+          "gitId": "xnmng"
         },
-        "content": "        }"
+        "content": "        case UpdateOrderCommandParser.COMMAND_WORD:"
       },
       {
         "lineNumber": 98,
         "author": {
-          "gitId": "-"
+          "gitId": "xnmng"
         },
-        "content": "    }"
+        "content": "            return new UpdateOrderCommandParser().parse(arguments);"
       },
       {
         "lineNumber": 99,
         "author": {
           "gitId": "-"
         },
-        "content": ""
+        "content": "        default:"
       },
       {
         "lineNumber": 100,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "            throw new ParseException(MESSAGE_UNKNOWN_COMMAND);"
+      },
+      {
+        "lineNumber": 101,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "        }"
+      },
+      {
+        "lineNumber": 102,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "    }"
+      },
+      {
+        "lineNumber": 103,
+        "author": {
+          "gitId": "-"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 104,
         "author": {
           "gitId": "-"
         },
@@ -21956,7 +24462,7 @@
       "youyingfeng": 3,
       "-": 74,
       "cx0810": 8,
-      "xnmng": 4,
+      "xnmng": 8,
       "tigerting98": 7,
       "Syasyazman": 4
     }
@@ -22213,19 +24719,117 @@
       {
         "lineNumber": 36,
         "author": {
+          "gitId": "xnmng"
+        },
+        "content": "    /* Prefix definitions for UPDATE CLIENT */"
+      },
+      {
+        "lineNumber": 37,
+        "author": {
+          "gitId": "xnmng"
+        },
+        "content": "    public static final Prefix UPDATE_CLIENT_PREFIX_CLIENTID \u003d new Prefix(\"--clientid\");"
+      },
+      {
+        "lineNumber": 38,
+        "author": {
+          "gitId": "xnmng"
+        },
+        "content": "    public static final Prefix UPDATE_CLIENT_PREFIX_NAME \u003d new Prefix(\"--name\");"
+      },
+      {
+        "lineNumber": 39,
+        "author": {
+          "gitId": "xnmng"
+        },
+        "content": "    public static final Prefix UPDATE_CLIENT_PREFIX_ADDRESS \u003d new Prefix(\"--address\");"
+      },
+      {
+        "lineNumber": 40,
+        "author": {
+          "gitId": "xnmng"
+        },
+        "content": "    public static final Prefix UPDATE_CLIENT_PREFIX_EMAIL \u003d new Prefix(\"--email\");"
+      },
+      {
+        "lineNumber": 41,
+        "author": {
+          "gitId": "xnmng"
+        },
+        "content": "    public static final Prefix UPDATE_CLIENT_PREFIX_PHONE \u003d new Prefix(\"--phone\");"
+      },
+      {
+        "lineNumber": 42,
+        "author": {
+          "gitId": "xnmng"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 43,
+        "author": {
+          "gitId": "xnmng"
+        },
+        "content": "    /* Prefix definitions for UPDATE ORDER */"
+      },
+      {
+        "lineNumber": 44,
+        "author": {
+          "gitId": "xnmng"
+        },
+        "content": "    public static final Prefix UPDATE_ORDER_PREFIX_ORDERID \u003d new Prefix(\"--orderid\");"
+      },
+      {
+        "lineNumber": 45,
+        "author": {
+          "gitId": "xnmng"
+        },
+        "content": "    public static final Prefix UPDATE_ORDER_PREFIX_CLIENTID \u003d new Prefix(\"--clientid\");"
+      },
+      {
+        "lineNumber": 46,
+        "author": {
+          "gitId": "xnmng"
+        },
+        "content": "    public static final Prefix UPDATE_ORDER_PREFIX_DESCRIPTION \u003d new Prefix(\"--description\");"
+      },
+      {
+        "lineNumber": 47,
+        "author": {
+          "gitId": "xnmng"
+        },
+        "content": "    public static final Prefix UPDATE_ORDER_PREFIX_ADDRESS \u003d new Prefix(\"--address\");"
+      },
+      {
+        "lineNumber": 48,
+        "author": {
+          "gitId": "xnmng"
+        },
+        "content": "    public static final Prefix UPDATE_ORDER_PREFIX_DATE \u003d new Prefix(\"--date\");"
+      },
+      {
+        "lineNumber": 49,
+        "author": {
+          "gitId": "xnmng"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 50,
+        "author": {
           "gitId": "youyingfeng"
         },
         "content": "    /* Formatter for all date/time inputs */"
       },
       {
-        "lineNumber": 37,
+        "lineNumber": 51,
         "author": {
           "gitId": "youyingfeng"
         },
         "content": "    public static final DateTimeFormatter DEFAULT_DATE_TIME_FORMATTER \u003d DateTimeFormatter.ofPattern(\"yyyy-MM-dd HHmm\");"
       },
       {
-        "lineNumber": 38,
+        "lineNumber": 52,
         "author": {
           "gitId": "-"
         },
@@ -22235,7 +24839,7 @@
     "authorContributionMap": {
       "youyingfeng": 19,
       "-": 14,
-      "xnmng": 2,
+      "xnmng": 16,
       "Syasyazman": 2,
       "tigerting98": 1
     }
@@ -25232,96 +27836,103 @@
       {
         "lineNumber": 56,
         "author": {
-          "gitId": "youyingfeng"
+          "gitId": "xnmng"
         },
-        "content": "        Order order \u003d new Order(orderId, clientId, description, address, deliveryDateTime, creationDateTime, isDone);"
+        "content": "        Order order \u003d new Order(orderId, clientId, description, address, deliveryDateTime, creationDateTime,"
       },
       {
         "lineNumber": 57,
         "author": {
-          "gitId": "youyingfeng"
+          "gitId": "xnmng"
         },
-        "content": ""
+        "content": "                creationDateTime, false);"
       },
       {
         "lineNumber": 58,
         "author": {
           "gitId": "youyingfeng"
         },
-        "content": "        return new OrderCommand(order);"
+        "content": ""
       },
       {
         "lineNumber": 59,
         "author": {
           "gitId": "youyingfeng"
         },
-        "content": "    }"
+        "content": "        return new OrderCommand(order);"
       },
       {
         "lineNumber": 60,
         "author": {
           "gitId": "youyingfeng"
         },
-        "content": ""
+        "content": "    }"
       },
       {
         "lineNumber": 61,
         "author": {
           "gitId": "youyingfeng"
         },
-        "content": "    /**"
+        "content": ""
       },
       {
         "lineNumber": 62,
         "author": {
           "gitId": "youyingfeng"
         },
-        "content": "     * Returns true if none of the prefixes contains empty {@code Optional} values in the given"
+        "content": "    /**"
       },
       {
         "lineNumber": 63,
         "author": {
           "gitId": "youyingfeng"
         },
-        "content": "     * {@code ArgumentMultimap}."
+        "content": "     * Returns true if none of the prefixes contains empty {@code Optional} values in the given"
       },
       {
         "lineNumber": 64,
         "author": {
           "gitId": "youyingfeng"
         },
-        "content": "     */"
+        "content": "     * {@code ArgumentMultimap}."
       },
       {
         "lineNumber": 65,
         "author": {
           "gitId": "youyingfeng"
         },
-        "content": "    private static boolean arePrefixesPresent(ArgumentMultimap argumentMultimap, Prefix... prefixes) {"
+        "content": "     */"
       },
       {
         "lineNumber": 66,
         "author": {
           "gitId": "youyingfeng"
         },
-        "content": "        return Stream.of(prefixes).allMatch(prefix -\u003e argumentMultimap.getValue(prefix).isPresent());"
+        "content": "    private static boolean arePrefixesPresent(ArgumentMultimap argumentMultimap, Prefix... prefixes) {"
       },
       {
         "lineNumber": 67,
         "author": {
-          "gitId": "xnmng"
+          "gitId": "youyingfeng"
         },
-        "content": "    }"
+        "content": "        return Stream.of(prefixes).allMatch(prefix -\u003e argumentMultimap.getValue(prefix).isPresent());"
       },
       {
         "lineNumber": 68,
         "author": {
           "gitId": "xnmng"
         },
-        "content": ""
+        "content": "    }"
       },
       {
         "lineNumber": 69,
+        "author": {
+          "gitId": "xnmng"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 70,
         "author": {
           "gitId": "xnmng"
         },
@@ -25329,9 +27940,9 @@
       }
     ],
     "authorContributionMap": {
-      "youyingfeng": 44,
+      "youyingfeng": 43,
       "cx0810": 3,
-      "xnmng": 22
+      "xnmng": 24
     }
   },
   {
@@ -26512,6 +29123,738 @@
       "youyingfeng": 15,
       "-": 126,
       "Syasyazman": 26
+    }
+  },
+  {
+    "path": "src/main/java/seedu/address/logic/parser/UpdateClientCommandParser.java",
+    "fileType": "functional-code",
+    "lines": [
+      {
+        "lineNumber": 1,
+        "author": {
+          "gitId": "xnmng"
+        },
+        "content": "package seedu.address.logic.parser;"
+      },
+      {
+        "lineNumber": 2,
+        "author": {
+          "gitId": "xnmng"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 3,
+        "author": {
+          "gitId": "xnmng"
+        },
+        "content": "import static java.util.Objects.requireNonNull;"
+      },
+      {
+        "lineNumber": 4,
+        "author": {
+          "gitId": "xnmng"
+        },
+        "content": "import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;"
+      },
+      {
+        "lineNumber": 5,
+        "author": {
+          "gitId": "xnmng"
+        },
+        "content": "import static seedu.address.logic.parser.CliSyntax.UPDATE_CLIENT_PREFIX_ADDRESS;"
+      },
+      {
+        "lineNumber": 6,
+        "author": {
+          "gitId": "xnmng"
+        },
+        "content": "import static seedu.address.logic.parser.CliSyntax.UPDATE_CLIENT_PREFIX_CLIENTID;"
+      },
+      {
+        "lineNumber": 7,
+        "author": {
+          "gitId": "xnmng"
+        },
+        "content": "import static seedu.address.logic.parser.CliSyntax.UPDATE_CLIENT_PREFIX_EMAIL;"
+      },
+      {
+        "lineNumber": 8,
+        "author": {
+          "gitId": "xnmng"
+        },
+        "content": "import static seedu.address.logic.parser.CliSyntax.UPDATE_CLIENT_PREFIX_NAME;"
+      },
+      {
+        "lineNumber": 9,
+        "author": {
+          "gitId": "xnmng"
+        },
+        "content": "import static seedu.address.logic.parser.CliSyntax.UPDATE_CLIENT_PREFIX_PHONE;"
+      },
+      {
+        "lineNumber": 10,
+        "author": {
+          "gitId": "xnmng"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 11,
+        "author": {
+          "gitId": "xnmng"
+        },
+        "content": "import seedu.address.commons.core.index.Index;"
+      },
+      {
+        "lineNumber": 12,
+        "author": {
+          "gitId": "xnmng"
+        },
+        "content": "import seedu.address.logic.commands.OrderCommand;"
+      },
+      {
+        "lineNumber": 13,
+        "author": {
+          "gitId": "xnmng"
+        },
+        "content": "import seedu.address.logic.commands.UpdateClientCommand;"
+      },
+      {
+        "lineNumber": 14,
+        "author": {
+          "gitId": "xnmng"
+        },
+        "content": "import seedu.address.logic.parser.exceptions.ParseException;"
+      },
+      {
+        "lineNumber": 15,
+        "author": {
+          "gitId": "xnmng"
+        },
+        "content": "import seedu.address.model.person.Address;"
+      },
+      {
+        "lineNumber": 16,
+        "author": {
+          "gitId": "xnmng"
+        },
+        "content": "import seedu.address.model.person.Email;"
+      },
+      {
+        "lineNumber": 17,
+        "author": {
+          "gitId": "xnmng"
+        },
+        "content": "import seedu.address.model.person.Name;"
+      },
+      {
+        "lineNumber": 18,
+        "author": {
+          "gitId": "xnmng"
+        },
+        "content": "import seedu.address.model.person.Phone;"
+      },
+      {
+        "lineNumber": 19,
+        "author": {
+          "gitId": "xnmng"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 20,
+        "author": {
+          "gitId": "xnmng"
+        },
+        "content": "public class UpdateClientCommandParser implements Parser\u003cUpdateClientCommand\u003e {"
+      },
+      {
+        "lineNumber": 21,
+        "author": {
+          "gitId": "xnmng"
+        },
+        "content": "    public static final String COMMAND_WORD \u003d \"update client\";"
+      },
+      {
+        "lineNumber": 22,
+        "author": {
+          "gitId": "xnmng"
+        },
+        "content": "    /**"
+      },
+      {
+        "lineNumber": 23,
+        "author": {
+          "gitId": "xnmng"
+        },
+        "content": "     * Parses the given {@code String} of arguments in the context of the UpdateClientCommand"
+      },
+      {
+        "lineNumber": 24,
+        "author": {
+          "gitId": "xnmng"
+        },
+        "content": "     * and returns an UpdateClientCommand object for execution."
+      },
+      {
+        "lineNumber": 25,
+        "author": {
+          "gitId": "xnmng"
+        },
+        "content": "     * @throws ParseException if the user input does not conform the expected format"
+      },
+      {
+        "lineNumber": 26,
+        "author": {
+          "gitId": "xnmng"
+        },
+        "content": "     */"
+      },
+      {
+        "lineNumber": 27,
+        "author": {
+          "gitId": "xnmng"
+        },
+        "content": "    public UpdateClientCommand parse(String args) throws ParseException {"
+      },
+      {
+        "lineNumber": 28,
+        "author": {
+          "gitId": "xnmng"
+        },
+        "content": "        requireNonNull(args);"
+      },
+      {
+        "lineNumber": 29,
+        "author": {
+          "gitId": "xnmng"
+        },
+        "content": "        ArgumentMultimap argMultimap \u003d"
+      },
+      {
+        "lineNumber": 30,
+        "author": {
+          "gitId": "xnmng"
+        },
+        "content": "                ArgumentTokenizer.tokenize(args,"
+      },
+      {
+        "lineNumber": 31,
+        "author": {
+          "gitId": "xnmng"
+        },
+        "content": "                        UPDATE_CLIENT_PREFIX_CLIENTID,"
+      },
+      {
+        "lineNumber": 32,
+        "author": {
+          "gitId": "xnmng"
+        },
+        "content": "                        UPDATE_CLIENT_PREFIX_NAME,"
+      },
+      {
+        "lineNumber": 33,
+        "author": {
+          "gitId": "xnmng"
+        },
+        "content": "                        UPDATE_CLIENT_PREFIX_ADDRESS,"
+      },
+      {
+        "lineNumber": 34,
+        "author": {
+          "gitId": "xnmng"
+        },
+        "content": "                        UPDATE_CLIENT_PREFIX_EMAIL,"
+      },
+      {
+        "lineNumber": 35,
+        "author": {
+          "gitId": "xnmng"
+        },
+        "content": "                        UPDATE_CLIENT_PREFIX_PHONE);"
+      },
+      {
+        "lineNumber": 36,
+        "author": {
+          "gitId": "xnmng"
+        },
+        "content": "        if (argMultimap.getValue(UPDATE_CLIENT_PREFIX_CLIENTID).isEmpty()) {"
+      },
+      {
+        "lineNumber": 37,
+        "author": {
+          "gitId": "xnmng"
+        },
+        "content": "            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, OrderCommand.MESSAGE_USAGE));"
+      },
+      {
+        "lineNumber": 38,
+        "author": {
+          "gitId": "xnmng"
+        },
+        "content": "        } else if (argMultimap.getValue(UPDATE_CLIENT_PREFIX_NAME).isEmpty()"
+      },
+      {
+        "lineNumber": 39,
+        "author": {
+          "gitId": "xnmng"
+        },
+        "content": "                \u0026\u0026 argMultimap.getValue(UPDATE_CLIENT_PREFIX_ADDRESS).isEmpty()"
+      },
+      {
+        "lineNumber": 40,
+        "author": {
+          "gitId": "xnmng"
+        },
+        "content": "                \u0026\u0026 argMultimap.getValue(UPDATE_CLIENT_PREFIX_EMAIL).isEmpty()"
+      },
+      {
+        "lineNumber": 41,
+        "author": {
+          "gitId": "xnmng"
+        },
+        "content": "                \u0026\u0026 argMultimap.getValue(UPDATE_CLIENT_PREFIX_PHONE).isEmpty()) {"
+      },
+      {
+        "lineNumber": 42,
+        "author": {
+          "gitId": "xnmng"
+        },
+        "content": "            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, OrderCommand.MESSAGE_USAGE));"
+      },
+      {
+        "lineNumber": 43,
+        "author": {
+          "gitId": "xnmng"
+        },
+        "content": "        }"
+      },
+      {
+        "lineNumber": 44,
+        "author": {
+          "gitId": "xnmng"
+        },
+        "content": "        Index clientId \u003d ParserUtil.parseOrderIndex(argMultimap.getValue(UPDATE_CLIENT_PREFIX_CLIENTID).orElse(null));"
+      },
+      {
+        "lineNumber": 45,
+        "author": {
+          "gitId": "xnmng"
+        },
+        "content": "        Name name \u003d ParserUtil.parseName(argMultimap.getValue(UPDATE_CLIENT_PREFIX_NAME).orElse(null));"
+      },
+      {
+        "lineNumber": 46,
+        "author": {
+          "gitId": "xnmng"
+        },
+        "content": "        Address address \u003d ParserUtil.parseAddress(argMultimap.getValue(UPDATE_CLIENT_PREFIX_ADDRESS).orElse(null));"
+      },
+      {
+        "lineNumber": 47,
+        "author": {
+          "gitId": "xnmng"
+        },
+        "content": "        Email email \u003d ParserUtil.parseEmail(argMultimap.getValue(UPDATE_CLIENT_PREFIX_EMAIL).orElse(null));"
+      },
+      {
+        "lineNumber": 48,
+        "author": {
+          "gitId": "xnmng"
+        },
+        "content": "        Phone phone \u003d ParserUtil.parsePhone(argMultimap.getValue(UPDATE_CLIENT_PREFIX_PHONE).orElse(null));"
+      },
+      {
+        "lineNumber": 49,
+        "author": {
+          "gitId": "xnmng"
+        },
+        "content": "        return new UpdateClientCommand(clientId, name, address, email, phone);"
+      },
+      {
+        "lineNumber": 50,
+        "author": {
+          "gitId": "xnmng"
+        },
+        "content": "    }"
+      },
+      {
+        "lineNumber": 51,
+        "author": {
+          "gitId": "xnmng"
+        },
+        "content": "}"
+      }
+    ],
+    "authorContributionMap": {
+      "xnmng": 51
+    }
+  },
+  {
+    "path": "src/main/java/seedu/address/logic/parser/UpdateOrderCommandParser.java",
+    "fileType": "functional-code",
+    "lines": [
+      {
+        "lineNumber": 1,
+        "author": {
+          "gitId": "xnmng"
+        },
+        "content": "package seedu.address.logic.parser;"
+      },
+      {
+        "lineNumber": 2,
+        "author": {
+          "gitId": "xnmng"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 3,
+        "author": {
+          "gitId": "xnmng"
+        },
+        "content": "import static java.util.Objects.requireNonNull;"
+      },
+      {
+        "lineNumber": 4,
+        "author": {
+          "gitId": "xnmng"
+        },
+        "content": "import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;"
+      },
+      {
+        "lineNumber": 5,
+        "author": {
+          "gitId": "xnmng"
+        },
+        "content": "import static seedu.address.logic.parser.CliSyntax.UPDATE_CLIENT_PREFIX_CLIENTID;"
+      },
+      {
+        "lineNumber": 6,
+        "author": {
+          "gitId": "xnmng"
+        },
+        "content": "import static seedu.address.logic.parser.CliSyntax.UPDATE_ORDER_PREFIX_ADDRESS;"
+      },
+      {
+        "lineNumber": 7,
+        "author": {
+          "gitId": "xnmng"
+        },
+        "content": "import static seedu.address.logic.parser.CliSyntax.UPDATE_ORDER_PREFIX_CLIENTID;"
+      },
+      {
+        "lineNumber": 8,
+        "author": {
+          "gitId": "xnmng"
+        },
+        "content": "import static seedu.address.logic.parser.CliSyntax.UPDATE_ORDER_PREFIX_DATE;"
+      },
+      {
+        "lineNumber": 9,
+        "author": {
+          "gitId": "xnmng"
+        },
+        "content": "import static seedu.address.logic.parser.CliSyntax.UPDATE_ORDER_PREFIX_DESCRIPTION;"
+      },
+      {
+        "lineNumber": 10,
+        "author": {
+          "gitId": "xnmng"
+        },
+        "content": "import static seedu.address.logic.parser.CliSyntax.UPDATE_ORDER_PREFIX_ORDERID;"
+      },
+      {
+        "lineNumber": 11,
+        "author": {
+          "gitId": "xnmng"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 12,
+        "author": {
+          "gitId": "xnmng"
+        },
+        "content": "import java.time.LocalDateTime;"
+      },
+      {
+        "lineNumber": 13,
+        "author": {
+          "gitId": "xnmng"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 14,
+        "author": {
+          "gitId": "xnmng"
+        },
+        "content": "import seedu.address.commons.core.index.Index;"
+      },
+      {
+        "lineNumber": 15,
+        "author": {
+          "gitId": "xnmng"
+        },
+        "content": "import seedu.address.logic.commands.OrderCommand;"
+      },
+      {
+        "lineNumber": 16,
+        "author": {
+          "gitId": "xnmng"
+        },
+        "content": "import seedu.address.logic.commands.UpdateOrderCommand;"
+      },
+      {
+        "lineNumber": 17,
+        "author": {
+          "gitId": "xnmng"
+        },
+        "content": "import seedu.address.logic.parser.exceptions.ParseException;"
+      },
+      {
+        "lineNumber": 18,
+        "author": {
+          "gitId": "xnmng"
+        },
+        "content": "import seedu.address.model.person.Address;"
+      },
+      {
+        "lineNumber": 19,
+        "author": {
+          "gitId": "xnmng"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 20,
+        "author": {
+          "gitId": "xnmng"
+        },
+        "content": "public class UpdateOrderCommandParser implements Parser\u003cUpdateOrderCommand\u003e {"
+      },
+      {
+        "lineNumber": 21,
+        "author": {
+          "gitId": "xnmng"
+        },
+        "content": "    public static final String COMMAND_WORD \u003d \"update order\";"
+      },
+      {
+        "lineNumber": 22,
+        "author": {
+          "gitId": "xnmng"
+        },
+        "content": "    /**"
+      },
+      {
+        "lineNumber": 23,
+        "author": {
+          "gitId": "xnmng"
+        },
+        "content": "     * @param args full user input string"
+      },
+      {
+        "lineNumber": 24,
+        "author": {
+          "gitId": "xnmng"
+        },
+        "content": "     * @return an UpdateOrderCommand object for execution"
+      },
+      {
+        "lineNumber": 25,
+        "author": {
+          "gitId": "xnmng"
+        },
+        "content": "     * @throws ParseException if the user input does not conform the expected format"
+      },
+      {
+        "lineNumber": 26,
+        "author": {
+          "gitId": "xnmng"
+        },
+        "content": "     */"
+      },
+      {
+        "lineNumber": 27,
+        "author": {
+          "gitId": "xnmng"
+        },
+        "content": "    public UpdateOrderCommand parse(String args) throws ParseException {"
+      },
+      {
+        "lineNumber": 28,
+        "author": {
+          "gitId": "xnmng"
+        },
+        "content": "        requireNonNull(args);"
+      },
+      {
+        "lineNumber": 29,
+        "author": {
+          "gitId": "xnmng"
+        },
+        "content": "        ArgumentMultimap argMultimap \u003d"
+      },
+      {
+        "lineNumber": 30,
+        "author": {
+          "gitId": "xnmng"
+        },
+        "content": "                ArgumentTokenizer.tokenize(args,"
+      },
+      {
+        "lineNumber": 31,
+        "author": {
+          "gitId": "xnmng"
+        },
+        "content": "                        UPDATE_ORDER_PREFIX_ORDERID,"
+      },
+      {
+        "lineNumber": 32,
+        "author": {
+          "gitId": "xnmng"
+        },
+        "content": "                        UPDATE_ORDER_PREFIX_CLIENTID,"
+      },
+      {
+        "lineNumber": 33,
+        "author": {
+          "gitId": "xnmng"
+        },
+        "content": "                        UPDATE_ORDER_PREFIX_DESCRIPTION,"
+      },
+      {
+        "lineNumber": 34,
+        "author": {
+          "gitId": "xnmng"
+        },
+        "content": "                        UPDATE_ORDER_PREFIX_ADDRESS,"
+      },
+      {
+        "lineNumber": 35,
+        "author": {
+          "gitId": "xnmng"
+        },
+        "content": "                        UPDATE_ORDER_PREFIX_DATE);"
+      },
+      {
+        "lineNumber": 36,
+        "author": {
+          "gitId": "xnmng"
+        },
+        "content": "        if (argMultimap.getValue(UPDATE_ORDER_PREFIX_ORDERID).isEmpty()) {"
+      },
+      {
+        "lineNumber": 37,
+        "author": {
+          "gitId": "xnmng"
+        },
+        "content": "            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, OrderCommand.MESSAGE_USAGE));"
+      },
+      {
+        "lineNumber": 38,
+        "author": {
+          "gitId": "xnmng"
+        },
+        "content": "        } else if (argMultimap.getValue(UPDATE_ORDER_PREFIX_CLIENTID).isEmpty()"
+      },
+      {
+        "lineNumber": 39,
+        "author": {
+          "gitId": "xnmng"
+        },
+        "content": "                \u0026\u0026 argMultimap.getValue(UPDATE_ORDER_PREFIX_DESCRIPTION).isEmpty()"
+      },
+      {
+        "lineNumber": 40,
+        "author": {
+          "gitId": "xnmng"
+        },
+        "content": "                \u0026\u0026 argMultimap.getValue(UPDATE_ORDER_PREFIX_ADDRESS).isEmpty()"
+      },
+      {
+        "lineNumber": 41,
+        "author": {
+          "gitId": "xnmng"
+        },
+        "content": "                \u0026\u0026 argMultimap.getValue(UPDATE_ORDER_PREFIX_DATE).isEmpty()) {"
+      },
+      {
+        "lineNumber": 42,
+        "author": {
+          "gitId": "xnmng"
+        },
+        "content": "            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, OrderCommand.MESSAGE_USAGE));"
+      },
+      {
+        "lineNumber": 43,
+        "author": {
+          "gitId": "xnmng"
+        },
+        "content": "        }"
+      },
+      {
+        "lineNumber": 44,
+        "author": {
+          "gitId": "xnmng"
+        },
+        "content": "        Index orderId \u003d ParserUtil.parseOrderIndex(argMultimap.getValue(UPDATE_ORDER_PREFIX_ORDERID).orElse(null));"
+      },
+      {
+        "lineNumber": 45,
+        "author": {
+          "gitId": "xnmng"
+        },
+        "content": "        Index clientId \u003d ParserUtil.parseOrderIndex(argMultimap.getValue(UPDATE_CLIENT_PREFIX_CLIENTID).orElse(null));"
+      },
+      {
+        "lineNumber": 46,
+        "author": {
+          "gitId": "xnmng"
+        },
+        "content": "        String description \u003d argMultimap.getValue(UPDATE_ORDER_PREFIX_DESCRIPTION).orElse(null);"
+      },
+      {
+        "lineNumber": 47,
+        "author": {
+          "gitId": "xnmng"
+        },
+        "content": "        Address address \u003d ParserUtil.parseAddress(argMultimap.getValue(UPDATE_ORDER_PREFIX_ADDRESS).orElse(null));"
+      },
+      {
+        "lineNumber": 48,
+        "author": {
+          "gitId": "xnmng"
+        },
+        "content": "        LocalDateTime dateTime \u003d ParserUtil.parseDate(argMultimap.getValue(UPDATE_ORDER_PREFIX_DATE).orElse(null));"
+      },
+      {
+        "lineNumber": 49,
+        "author": {
+          "gitId": "xnmng"
+        },
+        "content": "        return new UpdateOrderCommand(orderId, clientId, description, address, dateTime);"
+      },
+      {
+        "lineNumber": 50,
+        "author": {
+          "gitId": "xnmng"
+        },
+        "content": "    }"
+      },
+      {
+        "lineNumber": 51,
+        "author": {
+          "gitId": "xnmng"
+        },
+        "content": "}"
+      }
+    ],
+    "authorContributionMap": {
+      "xnmng": 51
     }
   },
   {
@@ -32890,635 +36233,845 @@
       {
         "lineNumber": 18,
         "author": {
-          "gitId": "cx0810"
+          "gitId": "xnmng"
         },
-        "content": "    private boolean isDone \u003d false;"
+        "content": "    private LocalDateTime lastModifiedDateTime;"
       },
       {
         "lineNumber": 19,
+        "author": {
+          "gitId": "xnmng"
+        },
+        "content": "    private boolean isDone;"
+      },
+      {
+        "lineNumber": 20,
         "author": {
           "gitId": "tigerting98"
         },
         "content": ""
       },
       {
-        "lineNumber": 20,
+        "lineNumber": 21,
         "author": {
           "gitId": "xnmng"
         },
         "content": "    /**"
       },
       {
-        "lineNumber": 21,
+        "lineNumber": 22,
         "author": {
           "gitId": "youyingfeng"
         },
         "content": "     * Constructor which returns an order object with additional fields"
-      },
-      {
-        "lineNumber": 22,
-        "author": {
-          "gitId": "xnmng"
-        },
-        "content": "     * @param description of the order"
       },
       {
         "lineNumber": 23,
         "author": {
           "gitId": "xnmng"
         },
-        "content": "     * @param clientId id of the client this order is attached to"
+        "content": "     * @param description of the order"
       },
       {
         "lineNumber": 24,
         "author": {
           "gitId": "xnmng"
         },
-        "content": "     */"
+        "content": "     * @param clientId id of the client this order is attached to"
       },
       {
         "lineNumber": 25,
         "author": {
-          "gitId": "youyingfeng"
+          "gitId": "xnmng"
         },
-        "content": "    public Order(Index clientId,"
+        "content": "     */"
       },
       {
         "lineNumber": 26,
         "author": {
           "gitId": "youyingfeng"
         },
-        "content": "                 String description,"
+        "content": "    public Order(Index clientId,"
       },
       {
         "lineNumber": 27,
         "author": {
           "gitId": "youyingfeng"
         },
-        "content": "                 Address address,"
+        "content": "                 String description,"
       },
       {
         "lineNumber": 28,
         "author": {
           "gitId": "youyingfeng"
         },
-        "content": "                 LocalDateTime deliveryDateTime,"
+        "content": "                 Address address,"
       },
       {
         "lineNumber": 29,
         "author": {
           "gitId": "youyingfeng"
         },
-        "content": "                 LocalDateTime creationDateTime,"
+        "content": "                 LocalDateTime deliveryDateTime,"
       },
       {
         "lineNumber": 30,
         "author": {
           "gitId": "youyingfeng"
         },
-        "content": "                 boolean isDone) {"
+        "content": "                 LocalDateTime creationDateTime,"
       },
       {
         "lineNumber": 31,
+        "author": {
+          "gitId": "xnmng"
+        },
+        "content": "                 LocalDateTime lastModifiedDateTime,"
+      },
+      {
+        "lineNumber": 32,
+        "author": {
+          "gitId": "youyingfeng"
+        },
+        "content": "                 boolean isDone) {"
+      },
+      {
+        "lineNumber": 33,
         "author": {
           "gitId": "Syasyazman"
         },
         "content": "        this.orderId \u003d Index.fromZeroBased(0);"
       },
       {
-        "lineNumber": 32,
+        "lineNumber": 34,
         "author": {
           "gitId": "Syasyazman"
         },
         "content": "        this.clientId \u003d Index.fromZeroBased(clientId.getOneBased());"
       },
       {
-        "lineNumber": 33,
+        "lineNumber": 35,
         "author": {
           "gitId": "xnmng"
         },
         "content": "        this.description \u003d description;"
-      },
-      {
-        "lineNumber": 34,
-        "author": {
-          "gitId": "youyingfeng"
-        },
-        "content": "        this.address \u003d address;"
-      },
-      {
-        "lineNumber": 35,
-        "author": {
-          "gitId": "youyingfeng"
-        },
-        "content": "        this.deliveryDateTime \u003d deliveryDateTime;"
       },
       {
         "lineNumber": 36,
         "author": {
           "gitId": "youyingfeng"
         },
-        "content": "        this.creationDateTime \u003d creationDateTime;"
+        "content": "        this.address \u003d address;"
       },
       {
         "lineNumber": 37,
         "author": {
           "gitId": "youyingfeng"
         },
-        "content": "        this.isDone \u003d isDone;"
+        "content": "        this.deliveryDateTime \u003d deliveryDateTime;"
       },
       {
         "lineNumber": 38,
         "author": {
           "gitId": "youyingfeng"
         },
-        "content": "    }"
+        "content": "        this.creationDateTime \u003d creationDateTime;"
       },
       {
         "lineNumber": 39,
         "author": {
-          "gitId": "youyingfeng"
+          "gitId": "xnmng"
         },
-        "content": ""
+        "content": "        this.lastModifiedDateTime \u003d lastModifiedDateTime;"
       },
       {
         "lineNumber": 40,
         "author": {
           "gitId": "youyingfeng"
         },
-        "content": "    /**"
+        "content": "        this.isDone \u003d isDone;"
       },
       {
         "lineNumber": 41,
         "author": {
           "gitId": "youyingfeng"
         },
-        "content": "     * Constructor which returns an order object with additional fields"
+        "content": "    }"
       },
       {
         "lineNumber": 42,
         "author": {
           "gitId": "youyingfeng"
         },
-        "content": "     */"
+        "content": ""
       },
       {
         "lineNumber": 43,
         "author": {
           "gitId": "youyingfeng"
         },
-        "content": "    public Order(Index orderId,"
+        "content": "    /**"
       },
       {
         "lineNumber": 44,
         "author": {
           "gitId": "youyingfeng"
         },
-        "content": "                 Index clientId,"
+        "content": "     * Constructor which returns an order object with additional fields"
       },
       {
         "lineNumber": 45,
         "author": {
           "gitId": "youyingfeng"
         },
-        "content": "                 String description,"
+        "content": "     */"
       },
       {
         "lineNumber": 46,
         "author": {
           "gitId": "youyingfeng"
         },
-        "content": "                 Address address,"
+        "content": "    public Order(Index orderId,"
       },
       {
         "lineNumber": 47,
         "author": {
           "gitId": "youyingfeng"
         },
-        "content": "                 LocalDateTime deliveryDateTime,"
+        "content": "                 Index clientId,"
       },
       {
         "lineNumber": 48,
         "author": {
           "gitId": "youyingfeng"
         },
-        "content": "                 LocalDateTime creationDateTime,"
+        "content": "                 String description,"
       },
       {
         "lineNumber": 49,
         "author": {
           "gitId": "youyingfeng"
         },
-        "content": "                 boolean isDone) {"
+        "content": "                 Address address,"
       },
       {
         "lineNumber": 50,
         "author": {
-          "gitId": "Syasyazman"
+          "gitId": "youyingfeng"
         },
-        "content": "        this.orderId \u003d orderId;"
+        "content": "                 LocalDateTime deliveryDateTime,"
       },
       {
         "lineNumber": 51,
         "author": {
-          "gitId": "Syasyazman"
+          "gitId": "youyingfeng"
         },
-        "content": "        this.clientId \u003d Index.fromZeroBased(clientId.getOneBased());"
+        "content": "                 LocalDateTime creationDateTime,"
       },
       {
         "lineNumber": 52,
         "author": {
           "gitId": "youyingfeng"
         },
-        "content": "        this.description \u003d description;"
+        "content": "                 boolean isDone) {"
       },
       {
         "lineNumber": 53,
         "author": {
-          "gitId": "youyingfeng"
+          "gitId": "Syasyazman"
         },
-        "content": "        this.address \u003d address;"
+        "content": "        this.orderId \u003d orderId;"
       },
       {
         "lineNumber": 54,
         "author": {
-          "gitId": "youyingfeng"
+          "gitId": "Syasyazman"
         },
-        "content": "        this.deliveryDateTime \u003d deliveryDateTime;"
+        "content": "        this.clientId \u003d Index.fromZeroBased(clientId.getOneBased());"
       },
       {
         "lineNumber": 55,
         "author": {
           "gitId": "youyingfeng"
         },
-        "content": "        this.creationDateTime \u003d creationDateTime;"
+        "content": "        this.description \u003d description;"
       },
       {
         "lineNumber": 56,
         "author": {
           "gitId": "youyingfeng"
         },
-        "content": "        this.isDone \u003d isDone;"
+        "content": "        this.address \u003d address;"
       },
       {
         "lineNumber": 57,
         "author": {
-          "gitId": "xnmng"
+          "gitId": "youyingfeng"
         },
-        "content": "    }"
+        "content": "        this.deliveryDateTime \u003d deliveryDateTime;"
       },
       {
         "lineNumber": 58,
         "author": {
-          "gitId": "xnmng"
+          "gitId": "youyingfeng"
         },
-        "content": ""
+        "content": "        this.creationDateTime \u003d creationDateTime;"
       },
       {
         "lineNumber": 59,
         "author": {
-          "gitId": "youyingfeng"
+          "gitId": "xnmng"
         },
-        "content": "    public Index getOrderId() {"
+        "content": "        this.lastModifiedDateTime \u003d creationDateTime;"
       },
       {
         "lineNumber": 60,
         "author": {
-          "gitId": "youyingfeng"
+          "gitId": "xnmng"
         },
-        "content": "        return orderId;"
+        "content": "        this.isDone \u003d isDone;"
       },
       {
         "lineNumber": 61,
         "author": {
-          "gitId": "Syasyazman"
+          "gitId": "xnmng"
         },
         "content": "    }"
       },
       {
         "lineNumber": 62,
         "author": {
-          "gitId": "tigerting98"
+          "gitId": "xnmng"
         },
         "content": ""
       },
       {
         "lineNumber": 63,
         "author": {
-          "gitId": "youyingfeng"
+          "gitId": "xnmng"
         },
-        "content": "    public Index getClientId() {"
+        "content": "    /**"
       },
       {
         "lineNumber": 64,
         "author": {
-          "gitId": "youyingfeng"
+          "gitId": "xnmng"
         },
-        "content": "        return this.clientId;"
+        "content": "     * Constructor which returns an order object with additional fields"
       },
       {
         "lineNumber": 65,
         "author": {
-          "gitId": "youyingfeng"
+          "gitId": "xnmng"
         },
-        "content": "    }"
+        "content": "     * This constructor takes in an additional field (orderId)"
       },
       {
         "lineNumber": 66,
         "author": {
-          "gitId": "cx0810"
+          "gitId": "xnmng"
         },
-        "content": ""
+        "content": "     */"
       },
       {
         "lineNumber": 67,
         "author": {
-          "gitId": "youyingfeng"
+          "gitId": "xnmng"
         },
-        "content": "    public String getDescription() {"
+        "content": "    public Order(Index orderId,"
       },
       {
         "lineNumber": 68,
         "author": {
-          "gitId": "youyingfeng"
+          "gitId": "xnmng"
         },
-        "content": "        return this.description;"
+        "content": "                 Index clientId,"
       },
       {
         "lineNumber": 69,
         "author": {
-          "gitId": "youyingfeng"
+          "gitId": "xnmng"
         },
-        "content": "    }"
+        "content": "                 String description,"
       },
       {
         "lineNumber": 70,
         "author": {
-          "gitId": "youyingfeng"
+          "gitId": "xnmng"
         },
-        "content": ""
+        "content": "                 Address address,"
       },
       {
         "lineNumber": 71,
         "author": {
-          "gitId": "youyingfeng"
+          "gitId": "xnmng"
         },
-        "content": "    public Address getAddress() {"
+        "content": "                 LocalDateTime deliveryDateTime,"
       },
       {
         "lineNumber": 72,
         "author": {
-          "gitId": "youyingfeng"
+          "gitId": "xnmng"
         },
-        "content": "        return address;"
+        "content": "                 LocalDateTime creationDateTime,"
       },
       {
         "lineNumber": 73,
         "author": {
-          "gitId": "youyingfeng"
+          "gitId": "xnmng"
         },
-        "content": "    }"
+        "content": "                 LocalDateTime lastModifiedDateTime,"
       },
       {
         "lineNumber": 74,
         "author": {
-          "gitId": "youyingfeng"
+          "gitId": "xnmng"
         },
-        "content": ""
+        "content": "                 boolean isDone) {"
       },
       {
         "lineNumber": 75,
         "author": {
-          "gitId": "youyingfeng"
+          "gitId": "xnmng"
         },
-        "content": "    public LocalDateTime getDeliveryDateTime() {"
+        "content": "        this.orderId \u003d orderId;"
       },
       {
         "lineNumber": 76,
         "author": {
-          "gitId": "youyingfeng"
+          "gitId": "xnmng"
         },
-        "content": "        return deliveryDateTime;"
+        "content": "        this.clientId \u003d Index.fromZeroBased(clientId.getOneBased());"
       },
       {
         "lineNumber": 77,
         "author": {
-          "gitId": "youyingfeng"
+          "gitId": "xnmng"
         },
-        "content": "    }"
+        "content": "        this.description \u003d description;"
       },
       {
         "lineNumber": 78,
         "author": {
-          "gitId": "youyingfeng"
+          "gitId": "xnmng"
         },
-        "content": ""
+        "content": "        this.address \u003d address;"
       },
       {
         "lineNumber": 79,
         "author": {
-          "gitId": "youyingfeng"
+          "gitId": "xnmng"
         },
-        "content": "    public LocalDateTime getCreationDateTime() {"
+        "content": "        this.deliveryDateTime \u003d deliveryDateTime;"
       },
       {
         "lineNumber": 80,
         "author": {
-          "gitId": "youyingfeng"
+          "gitId": "xnmng"
         },
-        "content": "        return creationDateTime;"
+        "content": "        this.creationDateTime \u003d creationDateTime;"
       },
       {
         "lineNumber": 81,
         "author": {
-          "gitId": "youyingfeng"
+          "gitId": "xnmng"
         },
-        "content": "    }"
+        "content": "        this.lastModifiedDateTime \u003d lastModifiedDateTime;"
       },
       {
         "lineNumber": 82,
         "author": {
           "gitId": "youyingfeng"
         },
-        "content": ""
+        "content": "        this.isDone \u003d isDone;"
       },
       {
         "lineNumber": 83,
         "author": {
-          "gitId": "Syasyazman"
+          "gitId": "xnmng"
         },
-        "content": "    /**"
+        "content": "    }"
       },
       {
         "lineNumber": 84,
         "author": {
-          "gitId": "Syasyazman"
+          "gitId": "xnmng"
         },
-        "content": "     * Returns true if both orders of the same id have at least one other identity field that is the same."
+        "content": ""
       },
       {
         "lineNumber": 85,
         "author": {
-          "gitId": "Syasyazman"
+          "gitId": "youyingfeng"
         },
-        "content": "     * This defines a weaker notion of equality between two orders."
+        "content": "    public Index getOrderId() {"
       },
       {
         "lineNumber": 86,
         "author": {
-          "gitId": "Syasyazman"
+          "gitId": "youyingfeng"
         },
-        "content": "     */"
+        "content": "        return orderId;"
       },
       {
         "lineNumber": 87,
         "author": {
-          "gitId": "youyingfeng"
+          "gitId": "Syasyazman"
         },
-        "content": "    public boolean isSameOrder(Order otherOrder) {"
+        "content": "    }"
       },
       {
         "lineNumber": 88,
         "author": {
-          "gitId": "youyingfeng"
+          "gitId": "tigerting98"
         },
-        "content": "        return otherOrder \u003d\u003d this;"
+        "content": ""
       },
       {
         "lineNumber": 89,
         "author": {
           "gitId": "youyingfeng"
         },
-        "content": "    }"
+        "content": "    public Index getClientId() {"
       },
       {
         "lineNumber": 90,
         "author": {
-          "gitId": "Syasyazman"
+          "gitId": "youyingfeng"
         },
-        "content": ""
+        "content": "        return this.clientId;"
       },
       {
         "lineNumber": 91,
         "author": {
           "gitId": "youyingfeng"
         },
-        "content": "    public void setOrderId(int orderId) {"
+        "content": "    }"
       },
       {
         "lineNumber": 92,
-        "author": {
-          "gitId": "youyingfeng"
-        },
-        "content": "        this.orderId \u003d Index.fromZeroBased(orderId);"
-      },
-      {
-        "lineNumber": 93,
-        "author": {
-          "gitId": "youyingfeng"
-        },
-        "content": "    }"
-      },
-      {
-        "lineNumber": 94,
-        "author": {
-          "gitId": "youyingfeng"
-        },
-        "content": ""
-      },
-      {
-        "lineNumber": 95,
-        "author": {
-          "gitId": "tigerting98"
-        },
-        "content": "    /**"
-      },
-      {
-        "lineNumber": 96,
-        "author": {
-          "gitId": "tigerting98"
-        },
-        "content": "     * Marks this {@code Order} as done"
-      },
-      {
-        "lineNumber": 97,
-        "author": {
-          "gitId": "tigerting98"
-        },
-        "content": "     */"
-      },
-      {
-        "lineNumber": 98,
-        "author": {
-          "gitId": "tigerting98"
-        },
-        "content": "    public void markAsDone() {"
-      },
-      {
-        "lineNumber": 99,
-        "author": {
-          "gitId": "tigerting98"
-        },
-        "content": "        // feel free to change - tx"
-      },
-      {
-        "lineNumber": 100,
-        "author": {
-          "gitId": "tigerting98"
-        },
-        "content": "        isDone \u003d true;"
-      },
-      {
-        "lineNumber": 101,
-        "author": {
-          "gitId": "youyingfeng"
-        },
-        "content": "        // TODO: Refactor to use copy constructor?"
-      },
-      {
-        "lineNumber": 102,
-        "author": {
-          "gitId": "tigerting98"
-        },
-        "content": "    }"
-      },
-      {
-        "lineNumber": 103,
-        "author": {
-          "gitId": "tigerting98"
-        },
-        "content": ""
-      },
-      {
-        "lineNumber": 104,
-        "author": {
-          "gitId": "tigerting98"
-        },
-        "content": "    public boolean isDone() {"
-      },
-      {
-        "lineNumber": 105,
-        "author": {
-          "gitId": "tigerting98"
-        },
-        "content": "        return isDone;"
-      },
-      {
-        "lineNumber": 106,
-        "author": {
-          "gitId": "tigerting98"
-        },
-        "content": "    }"
-      },
-      {
-        "lineNumber": 107,
         "author": {
           "gitId": "cx0810"
         },
         "content": ""
       },
       {
+        "lineNumber": 93,
+        "author": {
+          "gitId": "youyingfeng"
+        },
+        "content": "    public String getDescription() {"
+      },
+      {
+        "lineNumber": 94,
+        "author": {
+          "gitId": "youyingfeng"
+        },
+        "content": "        return this.description;"
+      },
+      {
+        "lineNumber": 95,
+        "author": {
+          "gitId": "youyingfeng"
+        },
+        "content": "    }"
+      },
+      {
+        "lineNumber": 96,
+        "author": {
+          "gitId": "youyingfeng"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 97,
+        "author": {
+          "gitId": "youyingfeng"
+        },
+        "content": "    public Address getAddress() {"
+      },
+      {
+        "lineNumber": 98,
+        "author": {
+          "gitId": "youyingfeng"
+        },
+        "content": "        return address;"
+      },
+      {
+        "lineNumber": 99,
+        "author": {
+          "gitId": "youyingfeng"
+        },
+        "content": "    }"
+      },
+      {
+        "lineNumber": 100,
+        "author": {
+          "gitId": "youyingfeng"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 101,
+        "author": {
+          "gitId": "youyingfeng"
+        },
+        "content": "    public LocalDateTime getDeliveryDateTime() {"
+      },
+      {
+        "lineNumber": 102,
+        "author": {
+          "gitId": "youyingfeng"
+        },
+        "content": "        return deliveryDateTime;"
+      },
+      {
+        "lineNumber": 103,
+        "author": {
+          "gitId": "youyingfeng"
+        },
+        "content": "    }"
+      },
+      {
+        "lineNumber": 104,
+        "author": {
+          "gitId": "youyingfeng"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 105,
+        "author": {
+          "gitId": "youyingfeng"
+        },
+        "content": "    public LocalDateTime getCreationDateTime() {"
+      },
+      {
+        "lineNumber": 106,
+        "author": {
+          "gitId": "youyingfeng"
+        },
+        "content": "        return creationDateTime;"
+      },
+      {
+        "lineNumber": 107,
+        "author": {
+          "gitId": "youyingfeng"
+        },
+        "content": "    }"
+      },
+      {
         "lineNumber": 108,
+        "author": {
+          "gitId": "youyingfeng"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 109,
+        "author": {
+          "gitId": "xnmng"
+        },
+        "content": "    public boolean getIsDone() {"
+      },
+      {
+        "lineNumber": 110,
+        "author": {
+          "gitId": "xnmng"
+        },
+        "content": "        return isDone;"
+      },
+      {
+        "lineNumber": 111,
+        "author": {
+          "gitId": "xnmng"
+        },
+        "content": "    }"
+      },
+      {
+        "lineNumber": 112,
+        "author": {
+          "gitId": "xnmng"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 113,
+        "author": {
+          "gitId": "Syasyazman"
+        },
+        "content": "    /**"
+      },
+      {
+        "lineNumber": 114,
+        "author": {
+          "gitId": "Syasyazman"
+        },
+        "content": "     * Returns true if both orders of the same id have at least one other identity field that is the same."
+      },
+      {
+        "lineNumber": 115,
+        "author": {
+          "gitId": "Syasyazman"
+        },
+        "content": "     * This defines a weaker notion of equality between two orders."
+      },
+      {
+        "lineNumber": 116,
+        "author": {
+          "gitId": "Syasyazman"
+        },
+        "content": "     */"
+      },
+      {
+        "lineNumber": 117,
+        "author": {
+          "gitId": "youyingfeng"
+        },
+        "content": "    public boolean isSameOrder(Order otherOrder) {"
+      },
+      {
+        "lineNumber": 118,
+        "author": {
+          "gitId": "youyingfeng"
+        },
+        "content": "        return otherOrder \u003d\u003d this;"
+      },
+      {
+        "lineNumber": 119,
+        "author": {
+          "gitId": "youyingfeng"
+        },
+        "content": "    }"
+      },
+      {
+        "lineNumber": 120,
+        "author": {
+          "gitId": "Syasyazman"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 121,
+        "author": {
+          "gitId": "youyingfeng"
+        },
+        "content": "    public void setOrderId(int orderId) {"
+      },
+      {
+        "lineNumber": 122,
+        "author": {
+          "gitId": "youyingfeng"
+        },
+        "content": "        this.orderId \u003d Index.fromZeroBased(orderId);"
+      },
+      {
+        "lineNumber": 123,
+        "author": {
+          "gitId": "youyingfeng"
+        },
+        "content": "    }"
+      },
+      {
+        "lineNumber": 124,
+        "author": {
+          "gitId": "youyingfeng"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 125,
+        "author": {
+          "gitId": "tigerting98"
+        },
+        "content": "    /**"
+      },
+      {
+        "lineNumber": 126,
+        "author": {
+          "gitId": "tigerting98"
+        },
+        "content": "     * Marks this {@code Order} as done"
+      },
+      {
+        "lineNumber": 127,
+        "author": {
+          "gitId": "tigerting98"
+        },
+        "content": "     */"
+      },
+      {
+        "lineNumber": 128,
+        "author": {
+          "gitId": "tigerting98"
+        },
+        "content": "    public void markAsDone() {"
+      },
+      {
+        "lineNumber": 129,
+        "author": {
+          "gitId": "tigerting98"
+        },
+        "content": "        // feel free to change - tx"
+      },
+      {
+        "lineNumber": 130,
+        "author": {
+          "gitId": "tigerting98"
+        },
+        "content": "        isDone \u003d true;"
+      },
+      {
+        "lineNumber": 131,
+        "author": {
+          "gitId": "youyingfeng"
+        },
+        "content": "        // TODO: Refactor to use copy constructor?"
+      },
+      {
+        "lineNumber": 132,
+        "author": {
+          "gitId": "tigerting98"
+        },
+        "content": "    }"
+      },
+      {
+        "lineNumber": 133,
+        "author": {
+          "gitId": "tigerting98"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 134,
+        "author": {
+          "gitId": "tigerting98"
+        },
+        "content": "    public boolean isDone() {"
+      },
+      {
+        "lineNumber": 135,
+        "author": {
+          "gitId": "tigerting98"
+        },
+        "content": "        return isDone;"
+      },
+      {
+        "lineNumber": 136,
+        "author": {
+          "gitId": "tigerting98"
+        },
+        "content": "    }"
+      },
+      {
+        "lineNumber": 137,
+        "author": {
+          "gitId": "cx0810"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 138,
         "author": {
           "gitId": "Syasyazman"
         },
@@ -33527,8 +37080,8 @@
     ],
     "authorContributionMap": {
       "youyingfeng": 66,
-      "cx0810": 3,
-      "xnmng": 10,
+      "cx0810": 2,
+      "xnmng": 41,
       "Syasyazman": 16,
       "tigerting98": 13
     }
@@ -75277,9 +78830,9 @@
       {
         "lineNumber": 108,
         "author": {
-          "gitId": "Syasyazman"
+          "gitId": "xnmng"
         },
-        "content": "        return new Order(clientId, description, address, date, creationDateTime, false);"
+        "content": "        return new Order(clientId, description, address, date, creationDateTime, creationDateTime, false);"
       },
       {
         "lineNumber": 109,
@@ -75304,7 +78857,8 @@
       }
     ],
     "authorContributionMap": {
-      "Syasyazman": 111
+      "xnmng": 1,
+      "Syasyazman": 110
     }
   },
   {

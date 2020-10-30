@@ -16638,7 +16638,7 @@
         "author": {
           "gitId": "Trav1sT"
         },
-        "content": ":bulb: **Tip:** If you are omit both `[/before DATE]` and `[/after DATE]`, ChopChop will show you a list of recipes that were made today from 00:00 hours to tomorrow 00:00 hours."
+        "content": ":bulb: **Tip:** If you omit both `[/before DATE]` and `[/after DATE]`, ChopChop will show you a list of recipes that were made today from 00:00 hours to tomorrow 00:00 hours."
       },
       {
         "lineNumber": 901,
@@ -16792,7 +16792,7 @@
         "author": {
           "gitId": "Trav1sT"
         },
-        "content": "After you execute this command, the records of recipes that were made are deleted from ChopChop. If you run other stats commands such as `stats recipe recent`, you will see \"No results found\" as all records are deleted.\u0027"
+        "content": "After you execute this command, the records of recipes that were made are deleted from ChopChop."
       },
       {
         "lineNumber": 923,
@@ -16946,7 +16946,7 @@
         "author": {
           "gitId": "Trav1sT"
         },
-        "content": "**Usage**: Similar to the previous command [above](#StatsRecipeMadeCommand), the only difference is the keyword is now `stats ingredient` instead of `stats recipe`."
+        "content": "**Usage**: Similar to the previous command [above](#StatsRecipeMadeCommand), the only difference is the keyword is now `stats ingredient used` instead of `stats recipe made`."
       },
       {
         "lineNumber": 945,
@@ -16988,7 +16988,7 @@
         "author": {
           "gitId": "Trav1sT"
         },
-        "content": "After you execute this command, the records of ingredients that were used are deleted from ChopChop. If you run other stats commands such as `stats ingredient recent`, you will see \"No results found\" as all records are deleted.\u0027"
+        "content": "After you execute this command, the records of ingredients that were used are deleted from ChopChop."
       },
       {
         "lineNumber": 951,
@@ -58795,7 +58795,7 @@
         "author": {
           "gitId": "Trav1sT"
         },
-        "content": "    public StatsIngredientUsedCommand(LocalDateTime before, LocalDateTime after) {"
+        "content": "    public StatsIngredientUsedCommand(LocalDateTime after, LocalDateTime before) {"
       },
       {
         "lineNumber": 20,
@@ -58814,16 +58814,16 @@
       {
         "lineNumber": 22,
         "author": {
-          "gitId": "zhiayang"
+          "gitId": "Trav1sT"
         },
-        "content": "            this.before \u003d LocalDateTime.of(now.getYear(), now.getMonth(), now.getDayOfMonth(), 0, 0);"
+        "content": "            this.after \u003d LocalDateTime.of(now.getYear(), now.getMonth(), now.getDayOfMonth(), 0, 0);"
       },
       {
         "lineNumber": 23,
         "author": {
           "gitId": "Trav1sT"
         },
-        "content": "            this.after \u003d this.before.plusDays(1);"
+        "content": "            this.before \u003d this.after.plusDays(1);"
       },
       {
         "lineNumber": 24,
@@ -58907,35 +58907,35 @@
         "author": {
           "gitId": "Trav1sT"
         },
-        "content": "            var onBefore \u003d this.before.format(onFormatter);"
+        "content": "            var before \u003d this.before.format(formatter);"
       },
       {
         "lineNumber": 36,
         "author": {
           "gitId": "Trav1sT"
         },
-        "content": "            var before \u003d this.before.format(formatter);"
+        "content": "            var after \u003d this.after.format(formatter);"
       },
       {
         "lineNumber": 37,
         "author": {
           "gitId": "Trav1sT"
         },
-        "content": "            var after \u003d this.after.format(formatter);"
+        "content": "            var onAfter \u003d this.after.format(onFormatter);"
       },
       {
         "lineNumber": 38,
         "author": {
           "gitId": "Trav1sT"
         },
-        "content": "            if (this.before.plusDays(1).equals(this.after)) {"
+        "content": "            if (this.after.plusDays(1).equals(this.before)) {"
       },
       {
         "lineNumber": 39,
         "author": {
           "gitId": "Trav1sT"
         },
-        "content": "                msg \u003d String.format(\"Here is a list of ingredients made on %s\", onBefore);"
+        "content": "                msg \u003d String.format(\"Here is a list of ingredients used on %s\", onAfter);"
       },
       {
         "lineNumber": 40,
@@ -58949,7 +58949,7 @@
         "author": {
           "gitId": "Trav1sT"
         },
-        "content": "                msg \u003d String.format(\"Here is a list of ingredients made from the period %s to %s\", after, before);"
+        "content": "                msg \u003d String.format(\"Here is a list of ingredients used from the period %s to %s\", after, before);"
       },
       {
         "lineNumber": 42,
@@ -58977,7 +58977,7 @@
         "author": {
           "gitId": "Trav1sT"
         },
-        "content": "            msg \u003d String.format(\"Here is a list of ingredients made before %s\", before);"
+        "content": "            msg \u003d String.format(\"Here is a list of ingredients used before %s\", before);"
       },
       {
         "lineNumber": 46,
@@ -58998,7 +58998,7 @@
         "author": {
           "gitId": "Trav1sT"
         },
-        "content": "            msg \u003d String.format(\"Here is a list of ingredients made after %s\", before);"
+        "content": "            msg \u003d String.format(\"Here is a list of ingredients used after %s\", before);"
       },
       {
         "lineNumber": 49,
@@ -59047,7 +59047,7 @@
         "author": {
           "gitId": "Trav1sT"
         },
-        "content": "        var output \u003d model.getRecipeUsageList().getUsagesBetween(before, after);"
+        "content": "        var output \u003d model.getIngredientUsageList().getUsagesBetween(after, before);"
       },
       {
         "lineNumber": 56,
@@ -59219,8 +59219,8 @@
       }
     ],
     "authorContributionMap": {
-      "zhiayang": 7,
-      "Trav1sT": 72
+      "zhiayang": 6,
+      "Trav1sT": 73
     }
   },
   {
@@ -59892,14 +59892,14 @@
         "author": {
           "gitId": "Trav1sT"
         },
-        "content": "    public StatsRecipeMadeCommand(LocalDateTime before, LocalDateTime after) {"
+        "content": "    public StatsRecipeMadeCommand(LocalDateTime after, LocalDateTime before) {"
       },
       {
         "lineNumber": 20,
         "author": {
           "gitId": "Trav1sT"
         },
-        "content": "        if (before \u003d\u003d null \u0026\u0026 after \u003d\u003d null) {"
+        "content": "        if (after \u003d\u003d null \u0026\u0026 before \u003d\u003d null) {"
       },
       {
         "lineNumber": 21,
@@ -59913,14 +59913,14 @@
         "author": {
           "gitId": "Trav1sT"
         },
-        "content": "            this.before \u003d LocalDateTime.of(now.getYear(), now.getMonth(), now.getDayOfMonth(), 0, 0);"
+        "content": "            this.after \u003d LocalDateTime.of(now.getYear(), now.getMonth(), now.getDayOfMonth(), 0, 0);"
       },
       {
         "lineNumber": 23,
         "author": {
           "gitId": "Trav1sT"
         },
-        "content": "            this.after \u003d this.before.plusDays(1);"
+        "content": "            this.before \u003d this.after.plusDays(1);"
       },
       {
         "lineNumber": 24,
@@ -59934,14 +59934,14 @@
         "author": {
           "gitId": "Trav1sT"
         },
-        "content": "            this.before \u003d before;"
+        "content": "            this.after \u003d after;"
       },
       {
         "lineNumber": 26,
         "author": {
           "gitId": "Trav1sT"
         },
-        "content": "            this.after \u003d after;"
+        "content": "            this.before \u003d before;"
       },
       {
         "lineNumber": 27,
@@ -59969,7 +59969,7 @@
         "author": {
           "gitId": "Trav1sT"
         },
-        "content": "    private String getMessage() {"
+        "content": "    private String getMessage(boolean isEmpty) {"
       },
       {
         "lineNumber": 31,
@@ -60004,278 +60004,278 @@
         "author": {
           "gitId": "Trav1sT"
         },
-        "content": "            var onBefore \u003d this.before.format(onFormatter);"
+        "content": "            var before \u003d this.before.format(formatter);"
       },
       {
         "lineNumber": 36,
         "author": {
           "gitId": "Trav1sT"
         },
-        "content": "            var before \u003d this.before.format(formatter);"
+        "content": "            var after \u003d this.after.format(formatter);"
       },
       {
         "lineNumber": 37,
         "author": {
           "gitId": "Trav1sT"
         },
-        "content": "            var after \u003d this.after.format(formatter);"
+        "content": "            var onAfter \u003d this.after.format(onFormatter);"
       },
       {
         "lineNumber": 38,
         "author": {
           "gitId": "Trav1sT"
         },
-        "content": "            if (this.before.plusDays(1).equals(this.after)) {"
+        "content": "            if (this.after.plusDays(1).equals(this.before)) {"
       },
       {
         "lineNumber": 39,
         "author": {
           "gitId": "Trav1sT"
         },
-        "content": "                msg \u003d String.format(\"Here is a list of ingredients used on %s\", onBefore);"
+        "content": "                msg \u003d String.format(isEmpty ? \"No recipes were made on %s\""
       },
       {
         "lineNumber": 40,
         "author": {
           "gitId": "Trav1sT"
         },
-        "content": "            } else {"
+        "content": "                                            : \"Here is a list of recipes made on %s\", onAfter);"
       },
       {
         "lineNumber": 41,
         "author": {
           "gitId": "Trav1sT"
         },
-        "content": "                msg \u003d String.format(\"Here is a list of ingredients used from the period %s to %s\", after, before);"
+        "content": "            } else {"
       },
       {
         "lineNumber": 42,
         "author": {
           "gitId": "Trav1sT"
         },
-        "content": "            }"
+        "content": "                msg \u003d String.format(isEmpty ? \"No recipes were made from the period %s to %s\""
       },
       {
         "lineNumber": 43,
         "author": {
           "gitId": "Trav1sT"
         },
-        "content": "        } else if (this.before !\u003d null) {"
+        "content": "                                            : \"Here is a list of recipes made from the period %s to %s\", after, before);"
       },
       {
         "lineNumber": 44,
         "author": {
           "gitId": "Trav1sT"
         },
-        "content": "            var before \u003d this.before.format(formatter);"
+        "content": "            }"
       },
       {
         "lineNumber": 45,
         "author": {
           "gitId": "Trav1sT"
         },
-        "content": "            msg \u003d String.format(\"Here is a list of ingredients used before %s\", before);"
+        "content": "        } else if (this.before !\u003d null) {"
       },
       {
         "lineNumber": 46,
         "author": {
           "gitId": "Trav1sT"
         },
-        "content": "        } else {"
+        "content": "            var before \u003d this.before.format(formatter);"
       },
       {
         "lineNumber": 47,
         "author": {
           "gitId": "Trav1sT"
         },
-        "content": "            var before \u003d this.after.format(formatter);"
+        "content": "            msg \u003d String.format(isEmpty ? \"No recipes were made before %s\""
       },
       {
         "lineNumber": 48,
         "author": {
           "gitId": "Trav1sT"
         },
-        "content": "            msg \u003d String.format(\"Here is a list of ingredients used after %s\", before);"
+        "content": "                                        : \"Here is a list of recipes made before %s\", before);"
       },
       {
         "lineNumber": 49,
         "author": {
           "gitId": "Trav1sT"
         },
-        "content": "        }"
+        "content": "        } else {"
       },
       {
         "lineNumber": 50,
         "author": {
           "gitId": "Trav1sT"
         },
-        "content": "        return msg;"
+        "content": "            var before \u003d this.after.format(formatter);"
       },
       {
         "lineNumber": 51,
         "author": {
           "gitId": "Trav1sT"
         },
-        "content": "    }"
+        "content": "            msg \u003d String.format(isEmpty ? \"No recipes were made after %s\""
       },
       {
         "lineNumber": 52,
         "author": {
           "gitId": "Trav1sT"
         },
-        "content": ""
+        "content": "                                        : \"Here is a list of recipes made after %s\", before);"
       },
       {
         "lineNumber": 53,
         "author": {
           "gitId": "Trav1sT"
         },
-        "content": "    @Override"
+        "content": "        }"
       },
       {
         "lineNumber": 54,
         "author": {
           "gitId": "Trav1sT"
         },
-        "content": "    public CommandResult execute(Model model, HistoryManager historyManager) throws CommandException {"
+        "content": "        return msg;"
       },
       {
         "lineNumber": 55,
         "author": {
           "gitId": "Trav1sT"
         },
-        "content": "        var output \u003d model.getRecipeUsageList().getUsagesBetween(before, after);"
+        "content": "    }"
       },
       {
         "lineNumber": 56,
         "author": {
           "gitId": "Trav1sT"
         },
-        "content": "        return CommandResult.statsMessage(output, getMessage());"
+        "content": ""
       },
       {
         "lineNumber": 57,
         "author": {
           "gitId": "Trav1sT"
         },
-        "content": "    }"
+        "content": "    @Override"
       },
       {
         "lineNumber": 58,
         "author": {
           "gitId": "Trav1sT"
         },
-        "content": ""
+        "content": "    public CommandResult execute(Model model, HistoryManager historyManager) throws CommandException {"
       },
       {
         "lineNumber": 59,
         "author": {
           "gitId": "Trav1sT"
         },
-        "content": "    @Override"
+        "content": "        var output \u003d model.getRecipeUsageList().getUsagesBetween(after, before);"
       },
       {
         "lineNumber": 60,
         "author": {
           "gitId": "Trav1sT"
         },
-        "content": "    public boolean equals(Object other) {"
+        "content": "        return CommandResult.statsMessage(output, getMessage(output.isEmpty()));"
       },
       {
         "lineNumber": 61,
         "author": {
           "gitId": "Trav1sT"
         },
-        "content": "        return other \u003d\u003d this"
+        "content": "    }"
       },
       {
         "lineNumber": 62,
         "author": {
           "gitId": "Trav1sT"
         },
-        "content": "            || (other instanceof StatsRecipeMadeCommand"
+        "content": ""
       },
       {
         "lineNumber": 63,
         "author": {
           "gitId": "Trav1sT"
         },
-        "content": "            \u0026\u0026 this.before.equals(((StatsRecipeMadeCommand) other).before)"
+        "content": "    @Override"
       },
       {
         "lineNumber": 64,
         "author": {
           "gitId": "Trav1sT"
         },
-        "content": "            \u0026\u0026 this.after.equals(((StatsRecipeMadeCommand) other).after));"
+        "content": "    public boolean equals(Object other) {"
       },
       {
         "lineNumber": 65,
         "author": {
           "gitId": "Trav1sT"
         },
-        "content": "    }"
+        "content": "        return other \u003d\u003d this"
       },
       {
         "lineNumber": 66,
         "author": {
           "gitId": "Trav1sT"
         },
-        "content": ""
+        "content": "            || (other instanceof StatsRecipeMadeCommand"
       },
       {
         "lineNumber": 67,
         "author": {
           "gitId": "Trav1sT"
         },
-        "content": "    @Override"
+        "content": "            \u0026\u0026 this.before.equals(((StatsRecipeMadeCommand) other).before)"
       },
       {
         "lineNumber": 68,
         "author": {
           "gitId": "Trav1sT"
         },
-        "content": "    public String toString() {"
+        "content": "            \u0026\u0026 this.after.equals(((StatsRecipeMadeCommand) other).after));"
       },
       {
         "lineNumber": 69,
         "author": {
           "gitId": "Trav1sT"
         },
-        "content": "        return String.format(\"StatsRecipeMadeCommand\");"
+        "content": "    }"
       },
       {
         "lineNumber": 70,
         "author": {
           "gitId": "Trav1sT"
         },
-        "content": "    }"
+        "content": ""
       },
       {
         "lineNumber": 71,
         "author": {
-          "gitId": "zhiayang"
+          "gitId": "Trav1sT"
         },
-        "content": ""
+        "content": "    @Override"
       },
       {
         "lineNumber": 72,
         "author": {
-          "gitId": "zhiayang"
+          "gitId": "Trav1sT"
         },
-        "content": "    public static String getCommandString() {"
+        "content": "    public String toString() {"
       },
       {
         "lineNumber": 73,
         "author": {
           "gitId": "Trav1sT"
         },
-        "content": "        return \"stats recipe made\";"
+        "content": "        return String.format(\"StatsRecipeMadeCommand\");"
       },
       {
         "lineNumber": 74,
         "author": {
-          "gitId": "zhiayang"
+          "gitId": "Trav1sT"
         },
         "content": "    }"
       },
@@ -60291,14 +60291,14 @@
         "author": {
           "gitId": "zhiayang"
         },
-        "content": "    public static String getCommandHelp() {"
+        "content": "    public static String getCommandString() {"
       },
       {
         "lineNumber": 77,
         "author": {
           "gitId": "Trav1sT"
         },
-        "content": "        return \"Shows recipes that were made in a given time frame\";"
+        "content": "        return \"stats recipe made\";"
       },
       {
         "lineNumber": 78,
@@ -60310,6 +60310,34 @@
       {
         "lineNumber": 79,
         "author": {
+          "gitId": "zhiayang"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 80,
+        "author": {
+          "gitId": "zhiayang"
+        },
+        "content": "    public static String getCommandHelp() {"
+      },
+      {
+        "lineNumber": 81,
+        "author": {
+          "gitId": "Trav1sT"
+        },
+        "content": "        return \"Shows recipes that were made in a given time frame\";"
+      },
+      {
+        "lineNumber": 82,
+        "author": {
+          "gitId": "zhiayang"
+        },
+        "content": "    }"
+      },
+      {
+        "lineNumber": 83,
+        "author": {
           "gitId": "Trav1sT"
         },
         "content": "}"
@@ -60317,7 +60345,7 @@
     ],
     "authorContributionMap": {
       "zhiayang": 6,
-      "Trav1sT": 73
+      "Trav1sT": 77
     }
   },
   {
@@ -76470,14 +76498,14 @@
         "author": {
           "gitId": "Trav1sT"
         },
-        "content": "            var arg1 \u003d processDate(before).orElse(null);"
+        "content": "            var arg1 \u003d processDate(after).orElse(null);"
       },
       {
         "lineNumber": 129,
         "author": {
           "gitId": "Trav1sT"
         },
-        "content": "            var arg2 \u003d processDate(after).orElse(null);"
+        "content": "            var arg2 \u003d processDate(before).orElse(null);"
       },
       {
         "lineNumber": 130,
@@ -76659,14 +76687,14 @@
         "author": {
           "gitId": "Trav1sT"
         },
-        "content": "            var arg1 \u003d processDate(before).orElse(null);"
+        "content": "            var arg1 \u003d processDate(after).orElse(null);"
       },
       {
         "lineNumber": 156,
         "author": {
           "gitId": "Trav1sT"
         },
-        "content": "            var arg2 \u003d processDate(after).orElse(null);"
+        "content": "            var arg2 \u003d processDate(before).orElse(null);"
       },
       {
         "lineNumber": 157,
@@ -84555,7 +84583,7 @@
         "author": {
           "gitId": "Trav1sT"
         },
-        "content": "            .filter(x-\u003e x.isAfter(upperBound))"
+        "content": "            .filter(x-\u003e x.isBefore(upperBound))"
       },
       {
         "lineNumber": 86,
@@ -84604,14 +84632,14 @@
         "author": {
           "gitId": "Trav1sT"
         },
-        "content": "    public List\u003cPair\u003cString, String\u003e\u003e getUsagesBetween(LocalDateTime start, LocalDateTime end) {"
+        "content": "    public List\u003cPair\u003cString, String\u003e\u003e getUsagesBetween(LocalDateTime after, LocalDateTime before) {"
       },
       {
         "lineNumber": 93,
         "author": {
           "gitId": "Trav1sT"
         },
-        "content": "        if (start \u003d\u003d null \u0026\u0026 end \u003d\u003d null) {"
+        "content": "        if (after \u003d\u003d null \u0026\u0026 before \u003d\u003d null) {"
       },
       {
         "lineNumber": 94,
@@ -84625,14 +84653,14 @@
         "author": {
           "gitId": "Trav1sT"
         },
-        "content": "        } else if (start !\u003d null \u0026\u0026 end \u003d\u003d null) {"
+        "content": "        } else if (after !\u003d null \u0026\u0026 before \u003d\u003d null) {"
       },
       {
         "lineNumber": 96,
         "author": {
           "gitId": "Trav1sT"
         },
-        "content": "            return getUsagesAfter(start).stream()"
+        "content": "            return getUsagesAfter(after).stream()"
       },
       {
         "lineNumber": 97,
@@ -84653,14 +84681,14 @@
         "author": {
           "gitId": "Trav1sT"
         },
-        "content": "        } else if (start \u003d\u003d null) {"
+        "content": "        } else if (after \u003d\u003d null) {"
       },
       {
         "lineNumber": 100,
         "author": {
           "gitId": "Trav1sT"
         },
-        "content": "            return getUsagesBefore(end).stream()"
+        "content": "            return getUsagesBefore(before).stream()"
       },
       {
         "lineNumber": 101,
@@ -84695,14 +84723,14 @@
         "author": {
           "gitId": "Trav1sT"
         },
-        "content": "                .filter(x -\u003e x.isAfter(start))"
+        "content": "                .filter(x -\u003e x.isAfter(after))"
       },
       {
         "lineNumber": 106,
         "author": {
           "gitId": "Trav1sT"
         },
-        "content": "                .filter(x -\u003e x.isBefore(end))"
+        "content": "                .filter(x -\u003e x.isBefore(before))"
       },
       {
         "lineNumber": 107,
@@ -116790,563 +116818,542 @@
         "author": {
           "gitId": "Trav1sT"
         },
-        "content": "    private static final String SUBTITLE_DEFAULT \u003d \"Showing recently made recipes\";"
+        "content": "    private static final String SUBTITLE_NO_INGREDIENTS \u003d \"No ingredients were made recently\";"
       },
       {
         "lineNumber": 32,
         "author": {
           "gitId": "Trav1sT"
         },
-        "content": ""
+        "content": "    private static final String SUBTITLE_DEFAULT \u003d \"Showing recently made recipes\";"
       },
       {
         "lineNumber": 33,
         "author": {
           "gitId": "Trav1sT"
         },
-        "content": "    private static final ArrayList\u003cPair\u003cString, String\u003e\u003e EMPTY_RESULT \u003d"
+        "content": ""
       },
       {
         "lineNumber": 34,
         "author": {
           "gitId": "Trav1sT"
         },
-        "content": "        new ArrayList\u003c\u003e(Collections.singletonList(new Pair\u003c\u003e(\"No results found\", \"\")));"
+        "content": "    private static final ArrayList\u003cPair\u003cString, String\u003e\u003e EMPTY_RESULT \u003d"
       },
       {
         "lineNumber": 35,
         "author": {
           "gitId": "Trav1sT"
         },
-        "content": ""
+        "content": "        new ArrayList\u003c\u003e(Collections.singletonList(new Pair\u003c\u003e(\"No results found\", \"\")));"
       },
       {
         "lineNumber": 36,
         "author": {
           "gitId": "Trav1sT"
         },
-        "content": "    private static final String FXML \u003d \"StatsBox.fxml\";"
+        "content": ""
       },
       {
         "lineNumber": 37,
         "author": {
           "gitId": "Trav1sT"
         },
-        "content": ""
+        "content": "    private static final String FXML \u003d \"StatsBox.fxml\";"
       },
       {
         "lineNumber": 38,
         "author": {
           "gitId": "Trav1sT"
         },
-        "content": "    // MVC? what is that?"
+        "content": ""
       },
       {
         "lineNumber": 39,
         "author": {
           "gitId": "Trav1sT"
         },
-        "content": "    private final Model model;"
+        "content": "    // MVC? what is that?"
       },
       {
         "lineNumber": 40,
         "author": {
           "gitId": "Trav1sT"
         },
-        "content": ""
+        "content": "    private final Model model;"
       },
       {
         "lineNumber": 41,
         "author": {
           "gitId": "Trav1sT"
         },
-        "content": "    @FXML"
+        "content": ""
       },
       {
         "lineNumber": 42,
         "author": {
           "gitId": "Trav1sT"
         },
-        "content": "    private Label subtitle;"
+        "content": "    @FXML"
       },
       {
         "lineNumber": 43,
         "author": {
           "gitId": "Trav1sT"
         },
-        "content": ""
+        "content": "    private Label subtitle;"
       },
       {
         "lineNumber": 44,
         "author": {
           "gitId": "Trav1sT"
         },
-        "content": "    @FXML"
+        "content": ""
       },
       {
         "lineNumber": 45,
         "author": {
           "gitId": "Trav1sT"
         },
-        "content": "    private VBox recipeList;"
+        "content": "    @FXML"
       },
       {
         "lineNumber": 46,
         "author": {
           "gitId": "Trav1sT"
         },
-        "content": ""
+        "content": "    private VBox recipeList;"
       },
       {
         "lineNumber": 47,
         "author": {
           "gitId": "Trav1sT"
         },
-        "content": "    /**"
+        "content": ""
       },
       {
         "lineNumber": 48,
         "author": {
           "gitId": "Trav1sT"
         },
-        "content": "     * Creates a {@code StatsBox}."
+        "content": "    /**"
       },
       {
         "lineNumber": 49,
         "author": {
           "gitId": "Trav1sT"
         },
-        "content": "     */"
+        "content": "     * Creates a {@code StatsBox}."
       },
       {
         "lineNumber": 50,
         "author": {
           "gitId": "Trav1sT"
         },
-        "content": "    public StatsBox(Model model) {"
+        "content": "     */"
       },
       {
         "lineNumber": 51,
         "author": {
           "gitId": "Trav1sT"
         },
-        "content": "        super(FXML);"
+        "content": "    public StatsBox(Model model) {"
       },
       {
         "lineNumber": 52,
         "author": {
           "gitId": "Trav1sT"
         },
-        "content": ""
+        "content": "        super(FXML);"
       },
       {
         "lineNumber": 53,
         "author": {
           "gitId": "Trav1sT"
         },
-        "content": "        this.model \u003d model;"
+        "content": ""
       },
       {
         "lineNumber": 54,
         "author": {
           "gitId": "Trav1sT"
         },
-        "content": "        this.model.getObservableRecipeUsages().addListener((ListChangeListener\u003cRecipeUsage\u003e) e -\u003e {"
+        "content": "        this.model \u003d model;"
       },
       {
         "lineNumber": 55,
         "author": {
           "gitId": "Trav1sT"
         },
-        "content": ""
+        "content": "        this.model.getObservableRecipeUsages().addListener((ListChangeListener\u003cRecipeUsage\u003e) e -\u003e {"
       },
       {
         "lineNumber": 56,
         "author": {
           "gitId": "Trav1sT"
         },
-        "content": "            // consume all"
+        "content": ""
       },
       {
         "lineNumber": 57,
         "author": {
           "gitId": "Trav1sT"
         },
-        "content": "            while (e.next()) {"
+        "content": "            // consume all"
       },
       {
         "lineNumber": 58,
         "author": {
           "gitId": "Trav1sT"
         },
-        "content": "            }"
+        "content": "            while (e.next()) {"
       },
       {
         "lineNumber": 59,
         "author": {
           "gitId": "Trav1sT"
         },
-        "content": ""
+        "content": "            }"
       },
       {
         "lineNumber": 60,
         "author": {
           "gitId": "Trav1sT"
         },
-        "content": "            this.clearMessage();"
+        "content": ""
       },
       {
         "lineNumber": 61,
         "author": {
           "gitId": "Trav1sT"
         },
-        "content": "        });"
+        "content": "            this.clearMessage();"
       },
       {
         "lineNumber": 62,
         "author": {
           "gitId": "Trav1sT"
         },
-        "content": "    }"
+        "content": "        });"
       },
       {
         "lineNumber": 63,
         "author": {
           "gitId": "Trav1sT"
         },
-        "content": ""
+        "content": "    }"
       },
       {
         "lineNumber": 64,
         "author": {
           "gitId": "Trav1sT"
         },
-        "content": "    private String formatRecords(ObservableList\u003cPair\u003cString, LocalDateTime\u003e\u003e records) {"
+        "content": ""
       },
       {
         "lineNumber": 65,
         "author": {
           "gitId": "Trav1sT"
         },
-        "content": "        List\u003cPair\u003cString, LocalDateTime\u003e\u003e outputList \u003d new ArrayList\u003c\u003e();"
+        "content": "    private String formatRecords(ObservableList\u003cPair\u003cString, LocalDateTime\u003e\u003e records) {"
       },
       {
         "lineNumber": 66,
         "author": {
           "gitId": "Trav1sT"
         },
-        "content": "        int i \u003d 0;"
+        "content": "        List\u003cPair\u003cString, LocalDateTime\u003e\u003e outputList \u003d new ArrayList\u003c\u003e();"
       },
       {
         "lineNumber": 67,
         "author": {
           "gitId": "Trav1sT"
         },
-        "content": "        while (i \u003c 3 \u0026\u0026 records.size() !\u003d 0) {"
+        "content": "        int i \u003d 0;"
       },
       {
         "lineNumber": 68,
         "author": {
           "gitId": "Trav1sT"
         },
-        "content": "            outputList.add(records.remove(records.size() - 1));"
+        "content": "        while (i \u003c 3 \u0026\u0026 records.size() !\u003d 0) {"
       },
       {
         "lineNumber": 69,
         "author": {
           "gitId": "Trav1sT"
         },
-        "content": "            i++;"
+        "content": "            outputList.add(records.remove(records.size() - 1));"
       },
       {
         "lineNumber": 70,
         "author": {
           "gitId": "Trav1sT"
         },
-        "content": "        }"
+        "content": "            i++;"
       },
       {
         "lineNumber": 71,
         "author": {
           "gitId": "Trav1sT"
         },
-        "content": "        String output \u003d outputList.stream()"
+        "content": "        }"
       },
       {
         "lineNumber": 72,
         "author": {
           "gitId": "Trav1sT"
         },
-        "content": "            .map(x -\u003e String.format(\"%s, %s\", x.fst(),"
+        "content": "        String output \u003d outputList.stream()"
       },
       {
         "lineNumber": 73,
         "author": {
           "gitId": "Trav1sT"
         },
-        "content": "                x.snd().format(DateTimeFormatter.ofPattern(\"dd-MMM-yy hh:mm a\"))))"
+        "content": "            .map(x -\u003e String.format(\"%s, %s\", x.fst(),"
       },
       {
         "lineNumber": 74,
         "author": {
           "gitId": "Trav1sT"
         },
-        "content": "            .collect(Collectors.joining(\"\\n\"));"
+        "content": "                x.snd().format(DateTimeFormatter.ofPattern(\"dd-MMM-yy hh:mm a\"))))"
       },
       {
         "lineNumber": 75,
         "author": {
           "gitId": "Trav1sT"
         },
-        "content": "        return output.toString();"
+        "content": "            .collect(Collectors.joining(\"\\n\"));"
       },
       {
         "lineNumber": 76,
         "author": {
           "gitId": "Trav1sT"
         },
-        "content": "    }"
+        "content": "        return output.toString();"
       },
       {
         "lineNumber": 77,
         "author": {
           "gitId": "Trav1sT"
         },
-        "content": ""
+        "content": "    }"
       },
       {
         "lineNumber": 78,
         "author": {
           "gitId": "Trav1sT"
         },
-        "content": "    /**"
+        "content": ""
       },
       {
         "lineNumber": 79,
         "author": {
           "gitId": "Trav1sT"
         },
-        "content": "     * Sets the content based on the command result"
+        "content": "    /**"
       },
       {
         "lineNumber": 80,
         "author": {
           "gitId": "Trav1sT"
         },
-        "content": "     */"
+        "content": "     * Sets the content based on the command result"
       },
       {
         "lineNumber": 81,
         "author": {
           "gitId": "Trav1sT"
         },
-        "content": "    public void setMessage(CommandResult result) {"
+        "content": "     */"
       },
       {
         "lineNumber": 82,
         "author": {
           "gitId": "Trav1sT"
         },
-        "content": "        this.subtitle.setText(result.toString());"
+        "content": "    public void setMessage(CommandResult result) {"
       },
       {
         "lineNumber": 83,
         "author": {
           "gitId": "Trav1sT"
         },
-        "content": "        this.showRecentRecipes(result.toString(), result.getStatsMessage());"
+        "content": "        this.subtitle.setText(result.toString());"
       },
       {
         "lineNumber": 84,
         "author": {
           "gitId": "Trav1sT"
         },
-        "content": "    }"
+        "content": "        this.showRecentRecipes(result.toString(), result.getStatsMessage());"
       },
       {
         "lineNumber": 85,
         "author": {
           "gitId": "Trav1sT"
         },
-        "content": ""
+        "content": "    }"
       },
       {
         "lineNumber": 86,
         "author": {
           "gitId": "Trav1sT"
         },
-        "content": "    /**"
+        "content": ""
       },
       {
         "lineNumber": 87,
         "author": {
           "gitId": "Trav1sT"
         },
-        "content": "     * Clears the message and goes back to the recent recipes view"
+        "content": "    /**"
       },
       {
         "lineNumber": 88,
         "author": {
           "gitId": "Trav1sT"
         },
-        "content": "     */"
+        "content": "     * Clears the message and goes back to the recent recipes view"
       },
       {
         "lineNumber": 89,
         "author": {
           "gitId": "Trav1sT"
         },
-        "content": "    public void clearMessage() {"
+        "content": "     */"
       },
       {
         "lineNumber": 90,
         "author": {
           "gitId": "Trav1sT"
         },
-        "content": "        var list \u003d this.model.getRecentlyUsedRecipes(10)"
+        "content": "    public void clearMessage() {"
       },
       {
         "lineNumber": 91,
         "author": {
           "gitId": "Trav1sT"
         },
-        "content": "            .stream()"
+        "content": "        var list \u003d this.model.getRecentlyUsedRecipes(10)"
       },
       {
         "lineNumber": 92,
         "author": {
           "gitId": "Trav1sT"
         },
-        "content": "            .map(u -\u003e Pair.of(u.getName(), u.getPrintableDate()))"
+        "content": "            .stream()"
       },
       {
         "lineNumber": 93,
         "author": {
           "gitId": "Trav1sT"
         },
-        "content": "            .collect(Collectors.toList());"
+        "content": "            .map(u -\u003e Pair.of(u.getName(), u.getPrintableDate()))"
       },
       {
         "lineNumber": 94,
         "author": {
           "gitId": "Trav1sT"
         },
-        "content": ""
+        "content": "            .collect(Collectors.toList());"
       },
       {
         "lineNumber": 95,
         "author": {
           "gitId": "Trav1sT"
         },
-        "content": "        this.showRecentRecipes(SUBTITLE_DEFAULT, list);"
+        "content": ""
       },
       {
         "lineNumber": 96,
         "author": {
           "gitId": "Trav1sT"
         },
-        "content": "    }"
+        "content": "        this.showRecentRecipes(SUBTITLE_DEFAULT, list);"
       },
       {
         "lineNumber": 97,
         "author": {
           "gitId": "Trav1sT"
         },
-        "content": ""
+        "content": "    }"
       },
       {
         "lineNumber": 98,
         "author": {
           "gitId": "Trav1sT"
         },
-        "content": "    private void showRecentRecipes(String subtitle, List\u003cPair\u003cString, String\u003e\u003e list) {"
+        "content": ""
       },
       {
         "lineNumber": 99,
         "author": {
           "gitId": "Trav1sT"
         },
-        "content": ""
+        "content": "    private void showRecentRecipes(String subtitle, List\u003cPair\u003cString, String\u003e\u003e list) {"
       },
       {
         "lineNumber": 100,
         "author": {
           "gitId": "Trav1sT"
         },
-        "content": "        this.recipeList.getChildren().clear();"
+        "content": ""
       },
       {
         "lineNumber": 101,
         "author": {
           "gitId": "Trav1sT"
         },
-        "content": ""
+        "content": "        this.recipeList.getChildren().clear();"
       },
       {
         "lineNumber": 102,
         "author": {
           "gitId": "Trav1sT"
         },
-        "content": "        if (list.isEmpty()) {"
+        "content": ""
       },
       {
         "lineNumber": 103,
         "author": {
           "gitId": "Trav1sT"
         },
-        "content": "            this.subtitle.setText(SUBTITLE_NO_RECIPES);"
+        "content": "        this.subtitle.setText(subtitle);"
       },
       {
         "lineNumber": 104,
         "author": {
           "gitId": "Trav1sT"
         },
-        "content": "        } else {"
+        "content": "        for (var usage : list) {"
       },
       {
         "lineNumber": 105,
         "author": {
           "gitId": "Trav1sT"
         },
-        "content": "            this.subtitle.setText(subtitle);"
+        "content": "            this.recipeList.getChildren().add(new StatsItemView(usage.fst(), usage.snd()).getRoot());"
       },
       {
         "lineNumber": 106,
         "author": {
           "gitId": "Trav1sT"
         },
-        "content": "            for (var usage : list) {"
+        "content": "        }"
       },
       {
         "lineNumber": 107,
         "author": {
           "gitId": "Trav1sT"
         },
-        "content": "                this.recipeList.getChildren().add(new StatsItemView(usage.fst(), usage.snd()).getRoot());"
-      },
-      {
-        "lineNumber": 108,
-        "author": {
-          "gitId": "Trav1sT"
-        },
-        "content": "            }"
-      },
-      {
-        "lineNumber": 109,
-        "author": {
-          "gitId": "Trav1sT"
-        },
-        "content": "        }"
-      },
-      {
-        "lineNumber": 110,
-        "author": {
-          "gitId": "Trav1sT"
-        },
         "content": "    }"
       },
       {
-        "lineNumber": 111,
+        "lineNumber": 108,
         "author": {
           "gitId": "Trav1sT"
         },
@@ -117355,7 +117362,7 @@
     ],
     "authorContributionMap": {
       "zhiayang": 1,
-      "Trav1sT": 110
+      "Trav1sT": 107
     }
   },
   {
@@ -121405,9 +121412,9 @@
       {
         "lineNumber": 271,
         "author": {
-          "gitId": "zhiayang"
+          "gitId": "Trav1sT"
         },
-        "content": "    -fx-padding: 0 0 8px 0;"
+        "content": "    -fx-padding: 0 8px 8px 8px;"
       },
       {
         "lineNumber": 272,
@@ -122062,7 +122069,8 @@
       }
     ],
     "authorContributionMap": {
-      "zhiayang": 42,
+      "zhiayang": 41,
+      "Trav1sT": 1,
       "seowalex": 317,
       "fall9x": 5
     }
@@ -122168,9 +122176,9 @@
       {
         "lineNumber": 6,
         "author": {
-          "gitId": "seowalex"
+          "gitId": "Trav1sT"
         },
-        "content": "\u003cScrollPane styleClass\u003d\"edge-to-edge\" xmlns\u003d\"http://javafx.com/javafx/10.0.2-internal\""
+        "content": "\u003cScrollPane minHeight\u003d\"120\" styleClass\u003d\"edge-to-edge\" xmlns\u003d\"http://javafx.com/javafx/10.0.2-internal\""
       },
       {
         "lineNumber": 7,
@@ -122195,7 +122203,8 @@
       }
     ],
     "authorContributionMap": {
-      "seowalex": 6,
+      "Trav1sT": 1,
+      "seowalex": 5,
       "fall9x": 3
     }
   },
@@ -123894,9 +123903,9 @@
       {
         "lineNumber": 12,
         "author": {
-          "gitId": "zhiayang"
+          "gitId": "Trav1sT"
         },
-        "content": "        \u003cLabel fx:id\u003d\"subtitle\" styleClass\u003d\"stats-subtitle\"/\u003e"
+        "content": "        \u003cLabel fx:id\u003d\"subtitle\" styleClass\u003d\"stats-subtitle\" wrapText\u003d\"true\"/\u003e"
       },
       {
         "lineNumber": 13,
@@ -123942,8 +123951,8 @@
       }
     ],
     "authorContributionMap": {
-      "zhiayang": 6,
-      "Trav1sT": 3,
+      "zhiayang": 5,
+      "Trav1sT": 4,
       "fall9x": 9
     }
   },
