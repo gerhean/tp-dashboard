@@ -2927,9 +2927,9 @@
       {
         "lineNumber": 156,
         "author": {
-          "gitId": "josuaaah"
+          "gitId": "sc-arecrow"
         },
-        "content": "Given below is the planned Sequence Diagram for interactions within the `Session` component for the `Taskmaster#markStudentAttendance(nusnetId, attendanceType)` API call."
+        "content": "Given below is the planned Sequence Diagram for interactions within the `Session` component for the `Taskmaster#markStudentWithNusnetId(nusnetId, attendanceType)` API call."
       },
       {
         "lineNumber": 157,
@@ -5076,8 +5076,8 @@
     ],
     "authorContributionMap": {
       "theodoreleebrant": 15,
-      "sc-arecrow": 73,
-      "josuaaah": 14,
+      "sc-arecrow": 74,
+      "josuaaah": 13,
       "jflim98": 16,
       "jayarengam": 73,
       "-": 271
@@ -7951,7 +7951,7 @@
         "author": {
           "gitId": "sc-arecrow"
         },
-        "content": "[-\u003e tm : markStudentAttendance(\\n nusnetId, attendanceType)"
+        "content": "[-\u003e tm : markStudentWithNusnetId(\\n nusnetId, attendanceType)"
       },
       {
         "lineNumber": 9,
@@ -30259,16 +30259,16 @@
       {
         "lineNumber": 13,
         "author": {
-          "gitId": "josuaaah"
+          "gitId": "sc-arecrow"
         },
-        "content": "import seedu.taskmaster.model.session.exceptions.SessionException;"
+        "content": "import seedu.taskmaster.model.record.StudentRecord;"
       },
       {
         "lineNumber": 14,
         "author": {
-          "gitId": "theodoreleebrant"
+          "gitId": "josuaaah"
         },
-        "content": "import seedu.taskmaster.model.student.Student;"
+        "content": "import seedu.taskmaster.model.session.exceptions.SessionException;"
       },
       {
         "lineNumber": 15,
@@ -30483,243 +30483,257 @@
       {
         "lineNumber": 45,
         "author": {
-          "gitId": "josuaaah"
+          "gitId": "sc-arecrow"
         },
-        "content": "        int index \u003d targetIndex.getZeroBased();"
+        "content": "        StudentRecord studentRecordToMark \u003d null;"
       },
       {
         "lineNumber": 46,
         "author": {
           "gitId": "sc-arecrow"
         },
-        "content": "        List\u003cStudent\u003e lastShownList \u003d model.getFilteredStudentList();"
+        "content": ""
       },
       {
         "lineNumber": 47,
         "author": {
           "gitId": "sc-arecrow"
         },
-        "content": ""
+        "content": "        try {"
       },
       {
         "lineNumber": 48,
         "author": {
           "gitId": "josuaaah"
         },
-        "content": "        if (index \u003e\u003d lastShownList.size()) {"
+        "content": "            int index \u003d targetIndex.getZeroBased();"
       },
       {
         "lineNumber": 49,
         "author": {
           "gitId": "sc-arecrow"
         },
-        "content": "            throw new CommandException(Messages.MESSAGE_INVALID_STUDENT_DISPLAYED_INDEX);"
+        "content": "            List\u003cStudentRecord\u003e lastShownList \u003d model.getFilteredStudentRecordList();"
       },
       {
         "lineNumber": 50,
         "author": {
           "gitId": "sc-arecrow"
         },
-        "content": "        }"
+        "content": ""
       },
       {
         "lineNumber": 51,
         "author": {
-          "gitId": "sc-arecrow"
+          "gitId": "josuaaah"
         },
-        "content": ""
+        "content": "            if (index \u003e\u003d lastShownList.size()) {"
       },
       {
         "lineNumber": 52,
         "author": {
-          "gitId": "josuaaah"
+          "gitId": "sc-arecrow"
         },
-        "content": "        Student studentToMark \u003d lastShownList.get(index);"
+        "content": "                throw new CommandException(Messages.MESSAGE_INVALID_STUDENT_DISPLAYED_INDEX);"
       },
       {
         "lineNumber": 53,
         "author": {
-          "gitId": "josuaaah"
+          "gitId": "sc-arecrow"
         },
-        "content": "        try {"
+        "content": "            }"
       },
       {
         "lineNumber": 54,
         "author": {
           "gitId": "sc-arecrow"
         },
-        "content": "            model.markStudent(studentToMark, attendanceType);"
+        "content": ""
       },
       {
         "lineNumber": 55,
         "author": {
-          "gitId": "josuaaah"
+          "gitId": "sc-arecrow"
         },
-        "content": "        } catch (SessionException sessionException) {"
+        "content": "            studentRecordToMark \u003d lastShownList.get(index);"
       },
       {
         "lineNumber": 56,
         "author": {
-          "gitId": "josuaaah"
+          "gitId": "sc-arecrow"
         },
-        "content": "            throw new CommandException(sessionException.getMessage());"
+        "content": "            model.markStudentRecord(studentRecordToMark, attendanceType);"
       },
       {
         "lineNumber": 57,
         "author": {
           "gitId": "josuaaah"
         },
-        "content": "        }"
+        "content": "        } catch (SessionException sessionException) {"
       },
       {
         "lineNumber": 58,
         "author": {
-          "gitId": "sc-arecrow"
+          "gitId": "josuaaah"
         },
-        "content": "        return new CommandResult(String.format(MESSAGE_MARK_STUDENT_SUCCESS, studentToMark, attendanceType));"
+        "content": "            throw new CommandException(sessionException.getMessage());"
       },
       {
         "lineNumber": 59,
         "author": {
-          "gitId": "sc-arecrow"
+          "gitId": "josuaaah"
         },
-        "content": "    }"
+        "content": "        }"
       },
       {
         "lineNumber": 60,
         "author": {
           "gitId": "sc-arecrow"
         },
-        "content": ""
+        "content": "        return new CommandResult(String.format(MESSAGE_MARK_STUDENT_SUCCESS, studentRecordToMark, attendanceType));"
       },
       {
         "lineNumber": 61,
         "author": {
           "gitId": "sc-arecrow"
         },
-        "content": "    @Override"
+        "content": "    }"
       },
       {
         "lineNumber": 62,
         "author": {
           "gitId": "sc-arecrow"
         },
-        "content": "    public boolean equals(Object other) {"
+        "content": ""
       },
       {
         "lineNumber": 63,
         "author": {
           "gitId": "sc-arecrow"
         },
-        "content": "        // short circuit if same object"
+        "content": "    @Override"
       },
       {
         "lineNumber": 64,
         "author": {
           "gitId": "sc-arecrow"
         },
-        "content": "        if (other \u003d\u003d this) {"
+        "content": "    public boolean equals(Object other) {"
       },
       {
         "lineNumber": 65,
         "author": {
           "gitId": "sc-arecrow"
         },
-        "content": "            return true;"
+        "content": "        // short circuit if same object"
       },
       {
         "lineNumber": 66,
         "author": {
           "gitId": "sc-arecrow"
         },
-        "content": "        }"
+        "content": "        if (other \u003d\u003d this) {"
       },
       {
         "lineNumber": 67,
         "author": {
           "gitId": "sc-arecrow"
         },
-        "content": ""
+        "content": "            return true;"
       },
       {
         "lineNumber": 68,
         "author": {
           "gitId": "sc-arecrow"
         },
-        "content": "        // instanceof handles nulls"
+        "content": "        }"
       },
       {
         "lineNumber": 69,
         "author": {
           "gitId": "sc-arecrow"
         },
-        "content": "        if (!(other instanceof MarkCommand)) {"
+        "content": ""
       },
       {
         "lineNumber": 70,
         "author": {
           "gitId": "sc-arecrow"
         },
-        "content": "            return false;"
+        "content": "        // instanceof handles nulls"
       },
       {
         "lineNumber": 71,
         "author": {
           "gitId": "sc-arecrow"
         },
-        "content": "        }"
+        "content": "        if (!(other instanceof MarkCommand)) {"
       },
       {
         "lineNumber": 72,
         "author": {
           "gitId": "sc-arecrow"
         },
-        "content": ""
+        "content": "            return false;"
       },
       {
         "lineNumber": 73,
         "author": {
           "gitId": "sc-arecrow"
         },
-        "content": "        // state check"
+        "content": "        }"
       },
       {
         "lineNumber": 74,
         "author": {
           "gitId": "sc-arecrow"
         },
-        "content": "        MarkCommand m \u003d (MarkCommand) other;"
+        "content": ""
       },
       {
         "lineNumber": 75,
         "author": {
           "gitId": "sc-arecrow"
         },
-        "content": ""
+        "content": "        // state check"
       },
       {
         "lineNumber": 76,
         "author": {
           "gitId": "sc-arecrow"
         },
-        "content": "        return targetIndex.equals(m.targetIndex)"
+        "content": "        MarkCommand m \u003d (MarkCommand) other;"
       },
       {
         "lineNumber": 77,
         "author": {
           "gitId": "sc-arecrow"
         },
-        "content": "                \u0026\u0026 attendanceType.equals(m.attendanceType);"
+        "content": ""
       },
       {
         "lineNumber": 78,
         "author": {
           "gitId": "sc-arecrow"
         },
-        "content": "    }"
+        "content": "        return targetIndex.equals(m.targetIndex)"
       },
       {
         "lineNumber": 79,
+        "author": {
+          "gitId": "sc-arecrow"
+        },
+        "content": "                \u0026\u0026 attendanceType.equals(m.attendanceType);"
+      },
+      {
+        "lineNumber": 80,
+        "author": {
+          "gitId": "sc-arecrow"
+        },
+        "content": "    }"
+      },
+      {
+        "lineNumber": 81,
         "author": {
           "gitId": "sc-arecrow"
         },
@@ -30727,9 +30741,9 @@
       }
     ],
     "authorContributionMap": {
-      "theodoreleebrant": 7,
-      "sc-arecrow": 60,
-      "josuaaah": 12
+      "theodoreleebrant": 6,
+      "sc-arecrow": 65,
+      "josuaaah": 10
     }
   },
   {
@@ -40521,7 +40535,7 @@
         "author": {
           "gitId": "sc-arecrow"
         },
-        "content": "     * Marks the attendance of the given student {@code target} with the given {@code attendanceType}."
+        "content": "     * Marks the attendance of the given student record {@code target} with the given {@code attendanceType}."
       },
       {
         "lineNumber": 133,
@@ -40542,7 +40556,7 @@
         "author": {
           "gitId": "sc-arecrow"
         },
-        "content": "    void markStudent(Student target, AttendanceType attendanceType);"
+        "content": "    void markStudentRecord(StudentRecord target, AttendanceType attendanceType);"
       },
       {
         "lineNumber": 136,
@@ -41900,7 +41914,7 @@
         "author": {
           "gitId": "sc-arecrow"
         },
-        "content": "    public void markStudent(Student target, AttendanceType attendanceType) {"
+        "content": "    public void markStudentRecord(StudentRecord target, AttendanceType attendanceType) {"
       },
       {
         "lineNumber": 160,
@@ -41914,7 +41928,7 @@
         "author": {
           "gitId": "sc-arecrow"
         },
-        "content": "        taskmaster.markStudent(target, attendanceType);"
+        "content": "        taskmaster.markStudentRecord(target, attendanceType);"
       },
       {
         "lineNumber": 162,
@@ -44218,9 +44232,9 @@
       {
         "lineNumber": 167,
         "author": {
-          "gitId": "josuaaah"
+          "gitId": "sc-arecrow"
         },
-        "content": "    public void markStudent(Student target, AttendanceType attendanceType)"
+        "content": "    public void markStudentRecord(StudentRecord target, AttendanceType attendanceType)"
       },
       {
         "lineNumber": 168,
@@ -45695,8 +45709,8 @@
     ],
     "authorContributionMap": {
       "theodoreleebrant": 61,
-      "sc-arecrow": 121,
-      "josuaaah": 144,
+      "sc-arecrow": 122,
+      "josuaaah": 143,
       "jflim98": 26,
       "jayarengam": 25
     }
@@ -90074,7 +90088,7 @@
         "author": {
           "gitId": "sc-arecrow"
         },
-        "content": "        public void markStudent(Student student, AttendanceType attendanceType) {"
+        "content": "        public void markStudentRecord(StudentRecord studentRecord, AttendanceType attendanceType) {"
       },
       {
         "lineNumber": 201,
@@ -96468,16 +96482,16 @@
       {
         "lineNumber": 19,
         "author": {
-          "gitId": "josuaaah"
+          "gitId": "sc-arecrow"
         },
-        "content": "import seedu.taskmaster.model.session.SessionName;"
+        "content": "import seedu.taskmaster.model.record.StudentRecord;"
       },
       {
         "lineNumber": 20,
         "author": {
-          "gitId": "theodoreleebrant"
+          "gitId": "josuaaah"
         },
-        "content": "import seedu.taskmaster.model.student.Student;"
+        "content": "import seedu.taskmaster.model.session.SessionName;"
       },
       {
         "lineNumber": 21,
@@ -96545,268 +96559,268 @@
       {
         "lineNumber": 30,
         "author": {
-          "gitId": "josuaaah"
+          "gitId": "sc-arecrow"
         },
-        "content": "        Model expectedModel \u003d new ModelManager(getTypicalTaskmaster(), new UserPrefs());"
+        "content": "        StudentRecord firstStudentRecord \u003d model"
       },
       {
         "lineNumber": 31,
         "author": {
-          "gitId": "josuaaah"
+          "gitId": "sc-arecrow"
         },
-        "content": "        expectedModel.changeSession(new SessionName(\"Typical session\"));"
+        "content": "                .getFilteredStudentRecordList()"
       },
       {
         "lineNumber": 32,
         "author": {
-          "gitId": "josuaaah"
+          "gitId": "sc-arecrow"
         },
-        "content": "        Student firstStudent \u003d model.getFilteredStudentList().get(INDEX_FIRST_STUDENT.getZeroBased());"
+        "content": "                .get(INDEX_FIRST_STUDENT.getZeroBased());"
       },
       {
         "lineNumber": 33,
         "author": {
-          "gitId": "josuaaah"
+          "gitId": "sc-arecrow"
         },
-        "content": "        MarkCommand markCommand \u003d new MarkCommand(INDEX_FIRST_STUDENT, AttendanceType.PRESENT);"
+        "content": ""
       },
       {
         "lineNumber": 34,
         "author": {
           "gitId": "josuaaah"
         },
-        "content": "        expectedModel.markStudent(firstStudent, AttendanceType.PRESENT);"
+        "content": "        Model expectedModel \u003d new ModelManager(getTypicalTaskmaster(), new UserPrefs());"
       },
       {
         "lineNumber": 35,
         "author": {
           "gitId": "josuaaah"
         },
-        "content": "        String expectedMessage \u003d String.format(MarkCommand.MESSAGE_MARK_STUDENT_SUCCESS,"
+        "content": "        expectedModel.changeSession(new SessionName(\"Typical session\"));"
       },
       {
         "lineNumber": 36,
         "author": {
           "gitId": "josuaaah"
         },
-        "content": "                firstStudent, AttendanceType.PRESENT);"
+        "content": "        MarkCommand markCommand \u003d new MarkCommand(INDEX_FIRST_STUDENT, AttendanceType.PRESENT);"
       },
       {
         "lineNumber": 37,
         "author": {
-          "gitId": "josuaaah"
+          "gitId": "sc-arecrow"
         },
-        "content": "        assertCommandSuccess(markCommand, model, expectedMessage, expectedModel);"
+        "content": "        expectedModel.markStudentRecord(firstStudentRecord, AttendanceType.PRESENT);"
       },
       {
         "lineNumber": 38,
         "author": {
-          "gitId": "josuaaah"
+          "gitId": "sc-arecrow"
         },
-        "content": "    }"
+        "content": ""
       },
       {
         "lineNumber": 39,
         "author": {
           "gitId": "josuaaah"
         },
-        "content": ""
+        "content": "        String expectedMessage \u003d String.format(MarkCommand.MESSAGE_MARK_STUDENT_SUCCESS,"
       },
       {
         "lineNumber": 40,
         "author": {
           "gitId": "sc-arecrow"
         },
-        "content": "    @Test"
+        "content": "                firstStudentRecord, AttendanceType.PRESENT);"
       },
       {
         "lineNumber": 41,
         "author": {
-          "gitId": "sc-arecrow"
+          "gitId": "josuaaah"
         },
-        "content": "    public void execute_markAbsentWithValidIndex_success() {"
+        "content": "        assertCommandSuccess(markCommand, model, expectedMessage, expectedModel);"
       },
       {
         "lineNumber": 42,
         "author": {
-          "gitId": "sc-arecrow"
+          "gitId": "josuaaah"
         },
-        "content": "        Student secondStudent \u003d model.getFilteredStudentList().get(INDEX_SECOND_STUDENT.getZeroBased());"
+        "content": "    }"
       },
       {
         "lineNumber": 43,
         "author": {
-          "gitId": "sc-arecrow"
+          "gitId": "josuaaah"
         },
-        "content": "        MarkCommand markCommand \u003d new MarkCommand(INDEX_SECOND_STUDENT, AttendanceType.ABSENT);"
+        "content": ""
       },
       {
         "lineNumber": 44,
         "author": {
-          "gitId": "josuaaah"
+          "gitId": "sc-arecrow"
         },
-        "content": "        model.changeSession(new SessionName(\"Typical session\"));"
+        "content": "    @Test"
       },
       {
         "lineNumber": 45,
         "author": {
           "gitId": "sc-arecrow"
         },
-        "content": "        Model expectedModel \u003d new ModelManager(getTypicalTaskmaster(), new UserPrefs());"
+        "content": "    public void execute_markAbsentWithValidIndex_success() {"
       },
       {
         "lineNumber": 46,
         "author": {
           "gitId": "josuaaah"
         },
-        "content": "        expectedModel.changeSession(new SessionName(\"Typical session\"));"
+        "content": "        model.changeSession(new SessionName(\"Typical session\"));"
       },
       {
         "lineNumber": 47,
         "author": {
           "gitId": "sc-arecrow"
         },
-        "content": "        expectedModel.markStudent(secondStudent, AttendanceType.ABSENT);"
+        "content": "        StudentRecord secondStudentRecord \u003d model"
       },
       {
         "lineNumber": 48,
         "author": {
           "gitId": "sc-arecrow"
         },
-        "content": "        String expectedMessage \u003d String.format(MarkCommand.MESSAGE_MARK_STUDENT_SUCCESS,"
+        "content": "                .getFilteredStudentRecordList()"
       },
       {
         "lineNumber": 49,
         "author": {
           "gitId": "sc-arecrow"
         },
-        "content": "                secondStudent, AttendanceType.ABSENT);"
+        "content": "                .get(INDEX_SECOND_STUDENT.getZeroBased());"
       },
       {
         "lineNumber": 50,
         "author": {
           "gitId": "sc-arecrow"
         },
-        "content": "        assertCommandSuccess(markCommand, model, expectedMessage, expectedModel);"
+        "content": ""
       },
       {
         "lineNumber": 51,
         "author": {
           "gitId": "sc-arecrow"
         },
-        "content": "    }"
+        "content": "        Model expectedModel \u003d new ModelManager(getTypicalTaskmaster(), new UserPrefs());"
       },
       {
         "lineNumber": 52,
+        "author": {
+          "gitId": "josuaaah"
+        },
+        "content": "        expectedModel.changeSession(new SessionName(\"Typical session\"));"
+      },
+      {
+        "lineNumber": 53,
+        "author": {
+          "gitId": "sc-arecrow"
+        },
+        "content": "        MarkCommand markCommand \u003d new MarkCommand(INDEX_SECOND_STUDENT, AttendanceType.ABSENT);"
+      },
+      {
+        "lineNumber": 54,
+        "author": {
+          "gitId": "sc-arecrow"
+        },
+        "content": "        expectedModel.markStudentRecord(secondStudentRecord, AttendanceType.ABSENT);"
+      },
+      {
+        "lineNumber": 55,
         "author": {
           "gitId": "sc-arecrow"
         },
         "content": ""
       },
       {
-        "lineNumber": 53,
-        "author": {
-          "gitId": "josuaaah"
-        },
-        "content": "    @Test"
-      },
-      {
-        "lineNumber": 54,
-        "author": {
-          "gitId": "josuaaah"
-        },
-        "content": "    public void execute_indexTooLarge_failure() {"
-      },
-      {
-        "lineNumber": 55,
-        "author": {
-          "gitId": "josuaaah"
-        },
-        "content": "        model.changeSession(new SessionName(\"Typical session\"));"
-      },
-      {
         "lineNumber": 56,
         "author": {
-          "gitId": "josuaaah"
+          "gitId": "sc-arecrow"
         },
-        "content": "        int numOfStudents \u003d model.getFilteredStudentList().size();"
+        "content": "        String expectedMessage \u003d String.format(MarkCommand.MESSAGE_MARK_STUDENT_SUCCESS,"
       },
       {
         "lineNumber": 57,
         "author": {
-          "gitId": "josuaaah"
+          "gitId": "sc-arecrow"
         },
-        "content": "        Index indexTooBig \u003d Index.fromZeroBased(numOfStudents);"
+        "content": "                secondStudentRecord, AttendanceType.ABSENT);"
       },
       {
         "lineNumber": 58,
         "author": {
-          "gitId": "josuaaah"
+          "gitId": "sc-arecrow"
         },
-        "content": "        MarkCommand markCommand \u003d new MarkCommand(indexTooBig, AttendanceType.PRESENT);"
+        "content": "        assertCommandSuccess(markCommand, model, expectedMessage, expectedModel);"
       },
       {
         "lineNumber": 59,
         "author": {
-          "gitId": "josuaaah"
+          "gitId": "sc-arecrow"
         },
-        "content": "        assertCommandFailure(markCommand, model, Messages.MESSAGE_INVALID_STUDENT_DISPLAYED_INDEX);"
+        "content": "    }"
       },
       {
         "lineNumber": 60,
         "author": {
-          "gitId": "josuaaah"
+          "gitId": "sc-arecrow"
         },
-        "content": "    }"
+        "content": ""
       },
       {
         "lineNumber": 61,
         "author": {
           "gitId": "josuaaah"
         },
-        "content": ""
+        "content": "    @Test"
       },
       {
         "lineNumber": 62,
         "author": {
           "gitId": "josuaaah"
         },
-        "content": "    @Test"
+        "content": "    public void execute_indexTooLarge_failure() {"
       },
       {
         "lineNumber": 63,
         "author": {
           "gitId": "josuaaah"
         },
-        "content": "    public void execute_emptySessionList_exceptionThrown() {"
+        "content": "        model.changeSession(new SessionName(\"Typical session\"));"
       },
       {
         "lineNumber": 64,
         "author": {
           "gitId": "josuaaah"
         },
-        "content": "        model.setSessions(new ArrayList\u003c\u003e());"
+        "content": "        int numOfStudents \u003d model.getFilteredStudentList().size();"
       },
       {
         "lineNumber": 65,
         "author": {
           "gitId": "josuaaah"
         },
-        "content": "        MarkCommand markCommand \u003d new MarkCommand(INDEX_FIRST_STUDENT, AttendanceType.PRESENT);"
+        "content": "        Index indexTooBig \u003d Index.fromZeroBased(numOfStudents);"
       },
       {
         "lineNumber": 66,
         "author": {
           "gitId": "josuaaah"
         },
-        "content": "        String expectedMessage \u003d \"There are no sessions yet!\";"
+        "content": "        MarkCommand markCommand \u003d new MarkCommand(indexTooBig, AttendanceType.PRESENT);"
       },
       {
         "lineNumber": 67,
         "author": {
           "gitId": "josuaaah"
         },
-        "content": "        assertCommandFailure(markCommand, model, expectedMessage);"
+        "content": "        assertCommandFailure(markCommand, model, Messages.MESSAGE_INVALID_STUDENT_DISPLAYED_INDEX);"
       },
       {
         "lineNumber": 68,
@@ -96834,45 +96848,101 @@
         "author": {
           "gitId": "josuaaah"
         },
-        "content": "    public void execute_nullCurrentSession_exceptionThrown() {"
+        "content": "    public void execute_emptySessionList_exceptionThrown() {"
       },
       {
         "lineNumber": 72,
         "author": {
           "gitId": "josuaaah"
         },
-        "content": "        MarkCommand markCommand \u003d new MarkCommand(INDEX_FIRST_STUDENT, AttendanceType.PRESENT);"
+        "content": "        model.setSessions(new ArrayList\u003c\u003e());"
       },
       {
         "lineNumber": 73,
         "author": {
           "gitId": "josuaaah"
         },
-        "content": "        String expectedMessage \u003d \"Please select a session first!\";"
+        "content": "        MarkCommand markCommand \u003d new MarkCommand(INDEX_FIRST_STUDENT, AttendanceType.PRESENT);"
       },
       {
         "lineNumber": 74,
         "author": {
           "gitId": "josuaaah"
         },
-        "content": "        assertCommandFailure(markCommand, model, expectedMessage);"
+        "content": "        String expectedMessage \u003d \"There are no sessions yet!\";"
       },
       {
         "lineNumber": 75,
         "author": {
           "gitId": "josuaaah"
         },
-        "content": "    }"
+        "content": "        assertCommandFailure(markCommand, model, expectedMessage);"
       },
       {
         "lineNumber": 76,
         "author": {
           "gitId": "josuaaah"
         },
-        "content": ""
+        "content": "    }"
       },
       {
         "lineNumber": 77,
+        "author": {
+          "gitId": "josuaaah"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 78,
+        "author": {
+          "gitId": "josuaaah"
+        },
+        "content": "    @Test"
+      },
+      {
+        "lineNumber": 79,
+        "author": {
+          "gitId": "josuaaah"
+        },
+        "content": "    public void execute_nullCurrentSession_exceptionThrown() {"
+      },
+      {
+        "lineNumber": 80,
+        "author": {
+          "gitId": "josuaaah"
+        },
+        "content": "        MarkCommand markCommand \u003d new MarkCommand(INDEX_FIRST_STUDENT, AttendanceType.PRESENT);"
+      },
+      {
+        "lineNumber": 81,
+        "author": {
+          "gitId": "josuaaah"
+        },
+        "content": "        String expectedMessage \u003d \"Please select a session first!\";"
+      },
+      {
+        "lineNumber": 82,
+        "author": {
+          "gitId": "josuaaah"
+        },
+        "content": "        assertCommandFailure(markCommand, model, expectedMessage);"
+      },
+      {
+        "lineNumber": 83,
+        "author": {
+          "gitId": "josuaaah"
+        },
+        "content": "    }"
+      },
+      {
+        "lineNumber": 84,
+        "author": {
+          "gitId": "josuaaah"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 85,
         "author": {
           "gitId": "josuaaah"
         },
@@ -96880,9 +96950,9 @@
       }
     ],
     "authorContributionMap": {
-      "theodoreleebrant": 11,
-      "sc-arecrow": 13,
-      "josuaaah": 53
+      "theodoreleebrant": 10,
+      "sc-arecrow": 25,
+      "josuaaah": 50
     }
   },
   {
@@ -105686,2109 +105756,2109 @@
       {
         "lineNumber": 9,
         "author": {
-          "gitId": "theodoreleebrant"
+          "gitId": "sc-arecrow"
         },
-        "content": "import static seedu.taskmaster.testutil.TypicalStudents.ALICE;"
+        "content": "import static seedu.taskmaster.testutil.TypicalStudentRecords.ALICE_STUDENT_RECORD;"
       },
       {
         "lineNumber": 10,
         "author": {
           "gitId": "theodoreleebrant"
         },
-        "content": "import static seedu.taskmaster.testutil.TypicalStudents.BENSON;"
+        "content": "import static seedu.taskmaster.testutil.TypicalStudents.ALICE;"
       },
       {
         "lineNumber": 11,
         "author": {
           "gitId": "theodoreleebrant"
         },
-        "content": "import static seedu.taskmaster.testutil.TypicalStudents.BOB;"
+        "content": "import static seedu.taskmaster.testutil.TypicalStudents.BENSON;"
       },
       {
         "lineNumber": 12,
         "author": {
-          "gitId": "-"
+          "gitId": "theodoreleebrant"
         },
-        "content": ""
+        "content": "import static seedu.taskmaster.testutil.TypicalStudents.BOB;"
       },
       {
         "lineNumber": 13,
         "author": {
           "gitId": "-"
         },
-        "content": "import java.nio.file.Path;"
+        "content": ""
       },
       {
         "lineNumber": 14,
         "author": {
           "gitId": "-"
         },
-        "content": "import java.nio.file.Paths;"
+        "content": "import java.nio.file.Path;"
       },
       {
         "lineNumber": 15,
         "author": {
-          "gitId": "theodoreleebrant"
+          "gitId": "-"
         },
-        "content": "import java.time.LocalDateTime;"
+        "content": "import java.nio.file.Paths;"
       },
       {
         "lineNumber": 16,
         "author": {
           "gitId": "theodoreleebrant"
         },
-        "content": "import java.util.ArrayList;"
+        "content": "import java.time.LocalDateTime;"
       },
       {
         "lineNumber": 17,
         "author": {
-          "gitId": "-"
+          "gitId": "theodoreleebrant"
         },
-        "content": "import java.util.Arrays;"
+        "content": "import java.util.ArrayList;"
       },
       {
         "lineNumber": 18,
         "author": {
           "gitId": "-"
         },
-        "content": ""
+        "content": "import java.util.Arrays;"
       },
       {
         "lineNumber": 19,
         "author": {
           "gitId": "-"
         },
-        "content": "import org.junit.jupiter.api.Test;"
+        "content": ""
       },
       {
         "lineNumber": 20,
         "author": {
           "gitId": "-"
         },
-        "content": ""
+        "content": "import org.junit.jupiter.api.Test;"
       },
       {
         "lineNumber": 21,
         "author": {
-          "gitId": "theodoreleebrant"
+          "gitId": "-"
         },
-        "content": "import seedu.taskmaster.commons.core.GuiSettings;"
+        "content": ""
       },
       {
         "lineNumber": 22,
         "author": {
           "gitId": "theodoreleebrant"
         },
-        "content": "import seedu.taskmaster.model.record.AttendanceType;"
+        "content": "import seedu.taskmaster.commons.core.GuiSettings;"
       },
       {
         "lineNumber": 23,
         "author": {
           "gitId": "theodoreleebrant"
         },
-        "content": "import seedu.taskmaster.model.session.Session;"
+        "content": "import seedu.taskmaster.model.record.AttendanceType;"
       },
       {
         "lineNumber": 24,
         "author": {
           "gitId": "theodoreleebrant"
         },
-        "content": "import seedu.taskmaster.model.session.SessionDateTime;"
+        "content": "import seedu.taskmaster.model.session.Session;"
       },
       {
         "lineNumber": 25,
         "author": {
           "gitId": "theodoreleebrant"
         },
-        "content": "import seedu.taskmaster.model.session.SessionName;"
+        "content": "import seedu.taskmaster.model.session.SessionDateTime;"
       },
       {
         "lineNumber": 26,
         "author": {
           "gitId": "theodoreleebrant"
         },
-        "content": "import seedu.taskmaster.model.session.exceptions.NoSessionException;"
+        "content": "import seedu.taskmaster.model.session.SessionName;"
       },
       {
         "lineNumber": 27,
         "author": {
           "gitId": "theodoreleebrant"
         },
-        "content": "import seedu.taskmaster.model.session.exceptions.NoSessionSelectedException;"
+        "content": "import seedu.taskmaster.model.session.exceptions.NoSessionException;"
       },
       {
         "lineNumber": 28,
         "author": {
           "gitId": "theodoreleebrant"
         },
-        "content": "import seedu.taskmaster.model.student.NameContainsKeywordsPredicate;"
+        "content": "import seedu.taskmaster.model.session.exceptions.NoSessionSelectedException;"
       },
       {
         "lineNumber": 29,
         "author": {
           "gitId": "theodoreleebrant"
         },
-        "content": "import seedu.taskmaster.model.student.Student;"
+        "content": "import seedu.taskmaster.model.student.NameContainsKeywordsPredicate;"
       },
       {
         "lineNumber": 30,
         "author": {
           "gitId": "theodoreleebrant"
         },
-        "content": "import seedu.taskmaster.testutil.TaskmasterBuilder;"
+        "content": "import seedu.taskmaster.model.student.Student;"
       },
       {
         "lineNumber": 31,
         "author": {
-          "gitId": "-"
+          "gitId": "theodoreleebrant"
         },
-        "content": ""
+        "content": "import seedu.taskmaster.testutil.TaskmasterBuilder;"
       },
       {
         "lineNumber": 32,
         "author": {
           "gitId": "-"
         },
-        "content": "public class ModelManagerTest {"
+        "content": ""
       },
       {
         "lineNumber": 33,
         "author": {
           "gitId": "-"
         },
-        "content": ""
+        "content": "public class ModelManagerTest {"
       },
       {
         "lineNumber": 34,
         "author": {
           "gitId": "-"
         },
-        "content": "    private ModelManager modelManager \u003d new ModelManager();"
+        "content": ""
       },
       {
         "lineNumber": 35,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "    private ModelManager modelManager \u003d new ModelManager();"
+      },
+      {
+        "lineNumber": 36,
         "author": {
           "gitId": "theodoreleebrant"
         },
         "content": "    private ModelManager modelManager2 \u003d new ModelManager(new Taskmaster(), new UserPrefs());"
       },
       {
-        "lineNumber": 36,
-        "author": {
-          "gitId": "-"
-        },
-        "content": ""
-      },
-      {
         "lineNumber": 37,
         "author": {
           "gitId": "-"
         },
-        "content": "    @Test"
+        "content": ""
       },
       {
         "lineNumber": 38,
         "author": {
           "gitId": "-"
         },
-        "content": "    public void constructor() {"
+        "content": "    @Test"
       },
       {
         "lineNumber": 39,
         "author": {
           "gitId": "-"
         },
-        "content": "        assertEquals(new UserPrefs(), modelManager.getUserPrefs());"
+        "content": "    public void constructor() {"
       },
       {
         "lineNumber": 40,
         "author": {
           "gitId": "-"
         },
-        "content": "        assertEquals(new GuiSettings(), modelManager.getGuiSettings());"
+        "content": "        assertEquals(new UserPrefs(), modelManager.getUserPrefs());"
       },
       {
         "lineNumber": 41,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "        assertEquals(new GuiSettings(), modelManager.getGuiSettings());"
+      },
+      {
+        "lineNumber": 42,
         "author": {
           "gitId": "sc-arecrow"
         },
         "content": "        assertEquals(new Taskmaster(), new Taskmaster(modelManager.getTaskmaster()));"
       },
       {
-        "lineNumber": 42,
+        "lineNumber": 43,
         "author": {
           "gitId": "theodoreleebrant"
         },
         "content": "        assertEquals(new UserPrefs(), modelManager2.getUserPrefs());"
       },
       {
-        "lineNumber": 43,
+        "lineNumber": 44,
         "author": {
           "gitId": "theodoreleebrant"
         },
         "content": "        assertEquals(new Taskmaster(), new Taskmaster(modelManager2.getTaskmaster()));"
       },
       {
-        "lineNumber": 44,
-        "author": {
-          "gitId": "-"
-        },
-        "content": "    }"
-      },
-      {
         "lineNumber": 45,
         "author": {
           "gitId": "-"
         },
-        "content": ""
+        "content": "    }"
       },
       {
         "lineNumber": 46,
         "author": {
           "gitId": "-"
         },
-        "content": "    @Test"
+        "content": ""
       },
       {
         "lineNumber": 47,
         "author": {
           "gitId": "-"
         },
-        "content": "    public void setUserPrefs_nullUserPrefs_throwsNullPointerException() {"
+        "content": "    @Test"
       },
       {
         "lineNumber": 48,
         "author": {
           "gitId": "-"
         },
-        "content": "        assertThrows(NullPointerException.class, () -\u003e modelManager.setUserPrefs(null));"
+        "content": "    public void setUserPrefs_nullUserPrefs_throwsNullPointerException() {"
       },
       {
         "lineNumber": 49,
         "author": {
           "gitId": "-"
         },
-        "content": "    }"
+        "content": "        assertThrows(NullPointerException.class, () -\u003e modelManager.setUserPrefs(null));"
       },
       {
         "lineNumber": 50,
         "author": {
           "gitId": "-"
         },
-        "content": ""
+        "content": "    }"
       },
       {
         "lineNumber": 51,
         "author": {
           "gitId": "-"
         },
-        "content": "    @Test"
+        "content": ""
       },
       {
         "lineNumber": 52,
         "author": {
           "gitId": "-"
         },
-        "content": "    public void setUserPrefs_validUserPrefs_copiesUserPrefs() {"
+        "content": "    @Test"
       },
       {
         "lineNumber": 53,
         "author": {
           "gitId": "-"
         },
-        "content": "        UserPrefs userPrefs \u003d new UserPrefs();"
+        "content": "    public void setUserPrefs_validUserPrefs_copiesUserPrefs() {"
       },
       {
         "lineNumber": 54,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "        UserPrefs userPrefs \u003d new UserPrefs();"
+      },
+      {
+        "lineNumber": 55,
         "author": {
           "gitId": "sc-arecrow"
         },
         "content": "        userPrefs.setTaskmasterFilePath(Paths.get(\"address/book/file/path\"));"
       },
       {
-        "lineNumber": 55,
+        "lineNumber": 56,
         "author": {
           "gitId": "-"
         },
         "content": "        userPrefs.setGuiSettings(new GuiSettings(1, 2, 3, 4));"
       },
       {
-        "lineNumber": 56,
+        "lineNumber": 57,
         "author": {
           "gitId": "-"
         },
         "content": "        modelManager.setUserPrefs(userPrefs);"
       },
       {
-        "lineNumber": 57,
+        "lineNumber": 58,
         "author": {
           "gitId": "-"
         },
         "content": "        assertEquals(userPrefs, modelManager.getUserPrefs());"
       },
       {
-        "lineNumber": 58,
-        "author": {
-          "gitId": "-"
-        },
-        "content": ""
-      },
-      {
         "lineNumber": 59,
         "author": {
           "gitId": "-"
         },
-        "content": "        // Modifying userPrefs should not modify modelManager\u0027s userPrefs"
+        "content": ""
       },
       {
         "lineNumber": 60,
         "author": {
           "gitId": "-"
         },
-        "content": "        UserPrefs oldUserPrefs \u003d new UserPrefs(userPrefs);"
+        "content": "        // Modifying userPrefs should not modify modelManager\u0027s userPrefs"
       },
       {
         "lineNumber": 61,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "        UserPrefs oldUserPrefs \u003d new UserPrefs(userPrefs);"
+      },
+      {
+        "lineNumber": 62,
         "author": {
           "gitId": "sc-arecrow"
         },
         "content": "        userPrefs.setTaskmasterFilePath(Paths.get(\"new/address/book/file/path\"));"
       },
       {
-        "lineNumber": 62,
+        "lineNumber": 63,
         "author": {
           "gitId": "-"
         },
         "content": "        assertEquals(oldUserPrefs, modelManager.getUserPrefs());"
       },
       {
-        "lineNumber": 63,
-        "author": {
-          "gitId": "-"
-        },
-        "content": "    }"
-      },
-      {
         "lineNumber": 64,
         "author": {
           "gitId": "-"
         },
-        "content": ""
+        "content": "    }"
       },
       {
         "lineNumber": 65,
         "author": {
           "gitId": "-"
         },
-        "content": "    @Test"
+        "content": ""
       },
       {
         "lineNumber": 66,
         "author": {
           "gitId": "-"
         },
-        "content": "    public void setGuiSettings_nullGuiSettings_throwsNullPointerException() {"
+        "content": "    @Test"
       },
       {
         "lineNumber": 67,
         "author": {
           "gitId": "-"
         },
-        "content": "        assertThrows(NullPointerException.class, () -\u003e modelManager.setGuiSettings(null));"
+        "content": "    public void setGuiSettings_nullGuiSettings_throwsNullPointerException() {"
       },
       {
         "lineNumber": 68,
         "author": {
           "gitId": "-"
         },
-        "content": "    }"
+        "content": "        assertThrows(NullPointerException.class, () -\u003e modelManager.setGuiSettings(null));"
       },
       {
         "lineNumber": 69,
         "author": {
           "gitId": "-"
         },
-        "content": ""
+        "content": "    }"
       },
       {
         "lineNumber": 70,
         "author": {
           "gitId": "-"
         },
-        "content": "    @Test"
+        "content": ""
       },
       {
         "lineNumber": 71,
         "author": {
           "gitId": "-"
         },
-        "content": "    public void setGuiSettings_validGuiSettings_setsGuiSettings() {"
+        "content": "    @Test"
       },
       {
         "lineNumber": 72,
         "author": {
           "gitId": "-"
         },
-        "content": "        GuiSettings guiSettings \u003d new GuiSettings(1, 2, 3, 4);"
+        "content": "    public void setGuiSettings_validGuiSettings_setsGuiSettings() {"
       },
       {
         "lineNumber": 73,
         "author": {
           "gitId": "-"
         },
-        "content": "        modelManager.setGuiSettings(guiSettings);"
+        "content": "        GuiSettings guiSettings \u003d new GuiSettings(1, 2, 3, 4);"
       },
       {
         "lineNumber": 74,
         "author": {
           "gitId": "-"
         },
-        "content": "        assertEquals(guiSettings, modelManager.getGuiSettings());"
+        "content": "        modelManager.setGuiSettings(guiSettings);"
       },
       {
         "lineNumber": 75,
         "author": {
           "gitId": "-"
         },
-        "content": "    }"
+        "content": "        assertEquals(guiSettings, modelManager.getGuiSettings());"
       },
       {
         "lineNumber": 76,
         "author": {
           "gitId": "-"
         },
-        "content": ""
+        "content": "    }"
       },
       {
         "lineNumber": 77,
         "author": {
           "gitId": "-"
         },
-        "content": "    @Test"
+        "content": ""
       },
       {
         "lineNumber": 78,
         "author": {
-          "gitId": "sc-arecrow"
+          "gitId": "-"
         },
-        "content": "    public void setTaskmasterFilePath_nullPath_throwsNullPointerException() {"
+        "content": "    @Test"
       },
       {
         "lineNumber": 79,
         "author": {
           "gitId": "sc-arecrow"
         },
-        "content": "        assertThrows(NullPointerException.class, () -\u003e modelManager.setTaskmasterFilePath(null));"
+        "content": "    public void setTaskmasterFilePath_nullPath_throwsNullPointerException() {"
       },
       {
         "lineNumber": 80,
         "author": {
-          "gitId": "-"
+          "gitId": "sc-arecrow"
         },
-        "content": "    }"
+        "content": "        assertThrows(NullPointerException.class, () -\u003e modelManager.setTaskmasterFilePath(null));"
       },
       {
         "lineNumber": 81,
         "author": {
           "gitId": "-"
         },
-        "content": ""
+        "content": "    }"
       },
       {
         "lineNumber": 82,
         "author": {
           "gitId": "-"
         },
-        "content": "    @Test"
+        "content": ""
       },
       {
         "lineNumber": 83,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "    @Test"
+      },
+      {
+        "lineNumber": 84,
         "author": {
           "gitId": "sc-arecrow"
         },
         "content": "    public void setTaskmasterFilePath_validPath_setsTaskmasterFilePath() {"
       },
       {
-        "lineNumber": 84,
+        "lineNumber": 85,
         "author": {
           "gitId": "-"
         },
         "content": "        Path path \u003d Paths.get(\"address/book/file/path\");"
       },
       {
-        "lineNumber": 85,
+        "lineNumber": 86,
         "author": {
           "gitId": "sc-arecrow"
         },
         "content": "        modelManager.setTaskmasterFilePath(path);"
       },
       {
-        "lineNumber": 86,
+        "lineNumber": 87,
         "author": {
           "gitId": "sc-arecrow"
         },
         "content": "        assertEquals(path, modelManager.getTaskmasterFilePath());"
       },
       {
-        "lineNumber": 87,
-        "author": {
-          "gitId": "-"
-        },
-        "content": "    }"
-      },
-      {
         "lineNumber": 88,
         "author": {
           "gitId": "-"
         },
-        "content": ""
+        "content": "    }"
       },
       {
         "lineNumber": 89,
         "author": {
           "gitId": "-"
         },
-        "content": "    @Test"
+        "content": ""
       },
       {
         "lineNumber": 90,
         "author": {
-          "gitId": "sc-arecrow"
+          "gitId": "-"
         },
-        "content": "    public void hasStudent_nullStudent_throwsNullPointerException() {"
+        "content": "    @Test"
       },
       {
         "lineNumber": 91,
         "author": {
           "gitId": "sc-arecrow"
         },
-        "content": "        assertThrows(NullPointerException.class, () -\u003e modelManager.hasStudent(null));"
+        "content": "    public void hasStudent_nullStudent_throwsNullPointerException() {"
       },
       {
         "lineNumber": 92,
         "author": {
-          "gitId": "-"
+          "gitId": "sc-arecrow"
         },
-        "content": "    }"
+        "content": "        assertThrows(NullPointerException.class, () -\u003e modelManager.hasStudent(null));"
       },
       {
         "lineNumber": 93,
         "author": {
           "gitId": "-"
         },
-        "content": ""
+        "content": "    }"
       },
       {
         "lineNumber": 94,
         "author": {
           "gitId": "-"
         },
-        "content": "    @Test"
+        "content": ""
       },
       {
         "lineNumber": 95,
         "author": {
-          "gitId": "sc-arecrow"
+          "gitId": "-"
         },
-        "content": "    public void hasStudent_studentNotInStudentList_returnsFalse() {"
+        "content": "    @Test"
       },
       {
         "lineNumber": 96,
         "author": {
           "gitId": "sc-arecrow"
         },
-        "content": "        assertFalse(modelManager.hasStudent(ALICE));"
+        "content": "    public void hasStudent_studentNotInStudentList_returnsFalse() {"
       },
       {
         "lineNumber": 97,
         "author": {
-          "gitId": "-"
+          "gitId": "sc-arecrow"
         },
-        "content": "    }"
+        "content": "        assertFalse(modelManager.hasStudent(ALICE));"
       },
       {
         "lineNumber": 98,
         "author": {
           "gitId": "-"
         },
-        "content": ""
+        "content": "    }"
       },
       {
         "lineNumber": 99,
         "author": {
           "gitId": "-"
         },
-        "content": "    @Test"
+        "content": ""
       },
       {
         "lineNumber": 100,
         "author": {
-          "gitId": "sc-arecrow"
+          "gitId": "-"
         },
-        "content": "    public void hasStudent_studentInStudentList_returnsTrue() {"
+        "content": "    @Test"
       },
       {
         "lineNumber": 101,
         "author": {
           "gitId": "sc-arecrow"
         },
-        "content": "        modelManager.addStudent(ALICE);"
+        "content": "    public void hasStudent_studentInStudentList_returnsTrue() {"
       },
       {
         "lineNumber": 102,
         "author": {
           "gitId": "sc-arecrow"
         },
-        "content": "        assertTrue(modelManager.hasStudent(ALICE));"
+        "content": "        modelManager.addStudent(ALICE);"
       },
       {
         "lineNumber": 103,
         "author": {
-          "gitId": "-"
+          "gitId": "sc-arecrow"
         },
-        "content": "    }"
+        "content": "        assertTrue(modelManager.hasStudent(ALICE));"
       },
       {
         "lineNumber": 104,
         "author": {
           "gitId": "-"
         },
-        "content": ""
+        "content": "    }"
       },
       {
         "lineNumber": 105,
         "author": {
           "gitId": "-"
         },
-        "content": "    @Test"
+        "content": ""
       },
       {
         "lineNumber": 106,
         "author": {
-          "gitId": "sc-arecrow"
+          "gitId": "-"
         },
-        "content": "    public void getFilteredStudentList_modifyList_throwsUnsupportedOperationException() {"
+        "content": "    @Test"
       },
       {
         "lineNumber": 107,
         "author": {
           "gitId": "sc-arecrow"
         },
-        "content": "        assertThrows(UnsupportedOperationException.class, () -\u003e modelManager.getFilteredStudentList().remove(0));"
+        "content": "    public void getFilteredStudentList_modifyList_throwsUnsupportedOperationException() {"
       },
       {
         "lineNumber": 108,
         "author": {
-          "gitId": "-"
+          "gitId": "sc-arecrow"
         },
-        "content": "    }"
+        "content": "        assertThrows(UnsupportedOperationException.class, () -\u003e modelManager.getFilteredStudentList().remove(0));"
       },
       {
         "lineNumber": 109,
         "author": {
           "gitId": "-"
         },
-        "content": ""
+        "content": "    }"
       },
       {
         "lineNumber": 110,
         "author": {
           "gitId": "-"
         },
-        "content": "    @Test"
+        "content": ""
       },
       {
         "lineNumber": 111,
         "author": {
           "gitId": "-"
         },
-        "content": "    public void equals() {"
+        "content": "    @Test"
       },
       {
         "lineNumber": 112,
         "author": {
-          "gitId": "sc-arecrow"
+          "gitId": "-"
         },
-        "content": "        Taskmaster taskmaster \u003d new TaskmasterBuilder().withStudent(ALICE).withStudent(BENSON).build();"
+        "content": "    public void equals() {"
       },
       {
         "lineNumber": 113,
         "author": {
           "gitId": "sc-arecrow"
         },
-        "content": "        Taskmaster differentTaskmaster \u003d new Taskmaster();"
+        "content": "        Taskmaster taskmaster \u003d new TaskmasterBuilder().withStudent(ALICE).withStudent(BENSON).build();"
       },
       {
         "lineNumber": 114,
         "author": {
-          "gitId": "-"
+          "gitId": "sc-arecrow"
         },
-        "content": "        UserPrefs userPrefs \u003d new UserPrefs();"
+        "content": "        Taskmaster differentTaskmaster \u003d new Taskmaster();"
       },
       {
         "lineNumber": 115,
         "author": {
           "gitId": "-"
         },
-        "content": ""
+        "content": "        UserPrefs userPrefs \u003d new UserPrefs();"
       },
       {
         "lineNumber": 116,
         "author": {
           "gitId": "-"
         },
-        "content": "        // same values -\u003e returns true"
+        "content": ""
       },
       {
         "lineNumber": 117,
         "author": {
-          "gitId": "sc-arecrow"
+          "gitId": "-"
         },
-        "content": "        modelManager \u003d new ModelManager(taskmaster, userPrefs);"
+        "content": "        // same values -\u003e returns true"
       },
       {
         "lineNumber": 118,
         "author": {
           "gitId": "sc-arecrow"
         },
-        "content": "        ModelManager modelManagerCopy \u003d new ModelManager(taskmaster, userPrefs);"
+        "content": "        modelManager \u003d new ModelManager(taskmaster, userPrefs);"
       },
       {
         "lineNumber": 119,
         "author": {
-          "gitId": "-"
+          "gitId": "sc-arecrow"
         },
-        "content": "        assertTrue(modelManager.equals(modelManagerCopy));"
+        "content": "        ModelManager modelManagerCopy \u003d new ModelManager(taskmaster, userPrefs);"
       },
       {
         "lineNumber": 120,
         "author": {
           "gitId": "-"
         },
-        "content": ""
+        "content": "        assertTrue(modelManager.equals(modelManagerCopy));"
       },
       {
         "lineNumber": 121,
         "author": {
           "gitId": "-"
         },
-        "content": "        // same object -\u003e returns true"
+        "content": ""
       },
       {
         "lineNumber": 122,
         "author": {
           "gitId": "-"
         },
-        "content": "        assertTrue(modelManager.equals(modelManager));"
+        "content": "        // same object -\u003e returns true"
       },
       {
         "lineNumber": 123,
         "author": {
           "gitId": "-"
         },
-        "content": ""
+        "content": "        assertTrue(modelManager.equals(modelManager));"
       },
       {
         "lineNumber": 124,
         "author": {
           "gitId": "-"
         },
-        "content": "        // null -\u003e returns false"
+        "content": ""
       },
       {
         "lineNumber": 125,
         "author": {
           "gitId": "-"
         },
-        "content": "        assertFalse(modelManager.equals(null));"
+        "content": "        // null -\u003e returns false"
       },
       {
         "lineNumber": 126,
         "author": {
           "gitId": "-"
         },
-        "content": ""
+        "content": "        assertFalse(modelManager.equals(null));"
       },
       {
         "lineNumber": 127,
         "author": {
           "gitId": "-"
         },
-        "content": "        // different types -\u003e returns false"
+        "content": ""
       },
       {
         "lineNumber": 128,
         "author": {
           "gitId": "-"
         },
-        "content": "        assertFalse(modelManager.equals(5));"
+        "content": "        // different types -\u003e returns false"
       },
       {
         "lineNumber": 129,
         "author": {
           "gitId": "-"
         },
-        "content": ""
+        "content": "        assertFalse(modelManager.equals(5));"
       },
       {
         "lineNumber": 130,
         "author": {
-          "gitId": "sc-arecrow"
+          "gitId": "-"
         },
-        "content": "        // different taskmaster -\u003e returns false"
+        "content": ""
       },
       {
         "lineNumber": 131,
         "author": {
           "gitId": "sc-arecrow"
         },
-        "content": "        assertFalse(modelManager.equals(new ModelManager(differentTaskmaster, userPrefs)));"
+        "content": "        // different taskmaster -\u003e returns false"
       },
       {
         "lineNumber": 132,
         "author": {
-          "gitId": "-"
+          "gitId": "sc-arecrow"
         },
-        "content": ""
+        "content": "        assertFalse(modelManager.equals(new ModelManager(differentTaskmaster, userPrefs)));"
       },
       {
         "lineNumber": 133,
         "author": {
           "gitId": "-"
         },
-        "content": "        // different filteredList -\u003e returns false"
+        "content": ""
       },
       {
         "lineNumber": 134,
         "author": {
           "gitId": "-"
         },
-        "content": "        String[] keywords \u003d ALICE.getName().fullName.split(\"\\\\s+\");"
+        "content": "        // different filteredList -\u003e returns false"
       },
       {
         "lineNumber": 135,
         "author": {
-          "gitId": "sc-arecrow"
+          "gitId": "-"
         },
-        "content": "        modelManager.updateFilteredStudentList(new NameContainsKeywordsPredicate(Arrays.asList(keywords)));"
+        "content": "        String[] keywords \u003d ALICE.getName().fullName.split(\"\\\\s+\");"
       },
       {
         "lineNumber": 136,
         "author": {
           "gitId": "sc-arecrow"
         },
-        "content": "        assertFalse(modelManager.equals(new ModelManager(taskmaster, userPrefs)));"
+        "content": "        modelManager.updateFilteredStudentList(new NameContainsKeywordsPredicate(Arrays.asList(keywords)));"
       },
       {
         "lineNumber": 137,
         "author": {
-          "gitId": "-"
+          "gitId": "sc-arecrow"
         },
-        "content": ""
+        "content": "        assertFalse(modelManager.equals(new ModelManager(taskmaster, userPrefs)));"
       },
       {
         "lineNumber": 138,
         "author": {
           "gitId": "-"
         },
-        "content": "        // resets modelManager to initial state for upcoming tests"
+        "content": ""
       },
       {
         "lineNumber": 139,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "        // resets modelManager to initial state for upcoming tests"
+      },
+      {
+        "lineNumber": 140,
         "author": {
           "gitId": "sc-arecrow"
         },
         "content": "        modelManager.updateFilteredStudentList(PREDICATE_SHOW_ALL_STUDENTS);"
       },
       {
-        "lineNumber": 140,
-        "author": {
-          "gitId": "-"
-        },
-        "content": ""
-      },
-      {
         "lineNumber": 141,
         "author": {
           "gitId": "-"
         },
-        "content": "        // different userPrefs -\u003e returns false"
+        "content": ""
       },
       {
         "lineNumber": 142,
         "author": {
           "gitId": "-"
         },
-        "content": "        UserPrefs differentUserPrefs \u003d new UserPrefs();"
+        "content": "        // different userPrefs -\u003e returns false"
       },
       {
         "lineNumber": 143,
         "author": {
-          "gitId": "sc-arecrow"
+          "gitId": "-"
         },
-        "content": "        differentUserPrefs.setTaskmasterFilePath(Paths.get(\"differentFilePath\"));"
+        "content": "        UserPrefs differentUserPrefs \u003d new UserPrefs();"
       },
       {
         "lineNumber": 144,
         "author": {
           "gitId": "sc-arecrow"
         },
-        "content": "        assertFalse(modelManager.equals(new ModelManager(taskmaster, differentUserPrefs)));"
+        "content": "        differentUserPrefs.setTaskmasterFilePath(Paths.get(\"differentFilePath\"));"
       },
       {
         "lineNumber": 145,
+        "author": {
+          "gitId": "sc-arecrow"
+        },
+        "content": "        assertFalse(modelManager.equals(new ModelManager(taskmaster, differentUserPrefs)));"
+      },
+      {
+        "lineNumber": 146,
         "author": {
           "gitId": "-"
         },
         "content": "    }"
       },
       {
-        "lineNumber": 146,
-        "author": {
-          "gitId": "theodoreleebrant"
-        },
-        "content": ""
-      },
-      {
         "lineNumber": 147,
         "author": {
           "gitId": "theodoreleebrant"
         },
-        "content": "    @Test"
+        "content": ""
       },
       {
         "lineNumber": 148,
         "author": {
           "gitId": "theodoreleebrant"
         },
-        "content": "    void markStudent_success() {"
+        "content": "    @Test"
       },
       {
         "lineNumber": 149,
         "author": {
-          "gitId": "theodoreleebrant"
+          "gitId": "sc-arecrow"
         },
-        "content": "        SessionName sName \u003d new SessionName(\"Test Session\");"
+        "content": "    void markStudentRecord_success() {"
       },
       {
         "lineNumber": 150,
         "author": {
           "gitId": "theodoreleebrant"
         },
-        "content": "        ArrayList\u003cStudent\u003e stds \u003d new ArrayList\u003cStudent\u003e();"
+        "content": "        SessionName sName \u003d new SessionName(\"Test Session\");"
       },
       {
         "lineNumber": 151,
         "author": {
           "gitId": "theodoreleebrant"
         },
-        "content": "        stds.add(ALICE);"
+        "content": "        ArrayList\u003cStudent\u003e stds \u003d new ArrayList\u003cStudent\u003e();"
       },
       {
         "lineNumber": 152,
         "author": {
           "gitId": "theodoreleebrant"
         },
-        "content": "        Session s \u003d new Session(sName,"
+        "content": "        stds.add(ALICE);"
       },
       {
         "lineNumber": 153,
         "author": {
           "gitId": "theodoreleebrant"
         },
-        "content": "                new SessionDateTime(LocalDateTime.now()),"
+        "content": "        Session s \u003d new Session(sName,"
       },
       {
         "lineNumber": 154,
         "author": {
           "gitId": "theodoreleebrant"
         },
-        "content": "                stds);"
+        "content": "                new SessionDateTime(LocalDateTime.now()),"
       },
       {
         "lineNumber": 155,
         "author": {
           "gitId": "theodoreleebrant"
         },
-        "content": "        modelManager.addSession(s);"
+        "content": "                stds);"
       },
       {
         "lineNumber": 156,
         "author": {
           "gitId": "theodoreleebrant"
         },
-        "content": "        modelManager.changeSession(sName);"
+        "content": "        modelManager.addSession(s);"
       },
       {
         "lineNumber": 157,
         "author": {
           "gitId": "theodoreleebrant"
         },
-        "content": "        modelManager.markStudent(ALICE, AttendanceType.PRESENT);"
+        "content": "        modelManager.changeSession(sName);"
       },
       {
         "lineNumber": 158,
         "author": {
-          "gitId": "theodoreleebrant"
+          "gitId": "sc-arecrow"
         },
-        "content": "        assertTrue(s.getStudentRecords().toString().equals(\"[e0123456|PRESENT|Class Participation Score: 0]\"));"
+        "content": "        modelManager.markStudentRecord(ALICE_STUDENT_RECORD, AttendanceType.PRESENT);"
       },
       {
         "lineNumber": 159,
         "author": {
           "gitId": "theodoreleebrant"
         },
-        "content": "        modelManager.markStudent(ALICE, AttendanceType.ABSENT);"
+        "content": "        assertTrue(s.getStudentRecords().toString().equals(\"[e0123456|PRESENT|Class Participation Score: 0]\"));"
       },
       {
         "lineNumber": 160,
         "author": {
-          "gitId": "theodoreleebrant"
+          "gitId": "sc-arecrow"
         },
-        "content": "        assertTrue(s.getStudentRecords().toString().equals(\"[e0123456|ABSENT|Class Participation Score: 0]\"));"
+        "content": ""
       },
       {
         "lineNumber": 161,
         "author": {
-          "gitId": "theodoreleebrant"
+          "gitId": "sc-arecrow"
         },
-        "content": "    }"
+        "content": "        modelManager.markStudentRecord(ALICE_STUDENT_RECORD, AttendanceType.ABSENT);"
       },
       {
         "lineNumber": 162,
         "author": {
           "gitId": "theodoreleebrant"
         },
-        "content": ""
+        "content": "        assertTrue(s.getStudentRecords().toString().equals(\"[e0123456|ABSENT|Class Participation Score: 0]\"));"
       },
       {
         "lineNumber": 163,
         "author": {
           "gitId": "theodoreleebrant"
         },
-        "content": "    @Test"
+        "content": "    }"
       },
       {
         "lineNumber": 164,
         "author": {
           "gitId": "theodoreleebrant"
         },
-        "content": "    void markStudent_noSession_failure() {"
+        "content": ""
       },
       {
         "lineNumber": 165,
         "author": {
           "gitId": "theodoreleebrant"
         },
-        "content": "        SessionName sName \u003d new SessionName(\"Test Session\");"
+        "content": "    @Test"
       },
       {
         "lineNumber": 166,
         "author": {
           "gitId": "theodoreleebrant"
         },
-        "content": "        ArrayList\u003cStudent\u003e stds \u003d new ArrayList\u003cStudent\u003e();"
+        "content": "    void markStudent_noSession_failure() {"
       },
       {
         "lineNumber": 167,
         "author": {
           "gitId": "theodoreleebrant"
         },
-        "content": "        stds.add(ALICE);"
+        "content": "        SessionName sName \u003d new SessionName(\"Test Session\");"
       },
       {
         "lineNumber": 168,
         "author": {
           "gitId": "theodoreleebrant"
         },
-        "content": "        assertThrows(NoSessionException.class, () -\u003e modelManager.markStudent(ALICE, AttendanceType.PRESENT));"
+        "content": "        ArrayList\u003cStudent\u003e stds \u003d new ArrayList\u003cStudent\u003e();"
       },
       {
         "lineNumber": 169,
         "author": {
           "gitId": "theodoreleebrant"
         },
-        "content": "    }"
+        "content": "        stds.add(ALICE);"
       },
       {
         "lineNumber": 170,
         "author": {
-          "gitId": "theodoreleebrant"
+          "gitId": "sc-arecrow"
         },
-        "content": ""
+        "content": "        assertThrows(NoSessionException.class, () -\u003e"
       },
       {
         "lineNumber": 171,
         "author": {
-          "gitId": "theodoreleebrant"
+          "gitId": "sc-arecrow"
         },
-        "content": "    @Test"
+        "content": "                modelManager.markStudentRecord(ALICE_STUDENT_RECORD, AttendanceType.PRESENT));"
       },
       {
         "lineNumber": 172,
         "author": {
           "gitId": "theodoreleebrant"
         },
-        "content": "    void markStudent_sessionNotSelected_failure() {"
+        "content": "    }"
       },
       {
         "lineNumber": 173,
         "author": {
           "gitId": "theodoreleebrant"
         },
-        "content": "        SessionName sName \u003d new SessionName(\"Test Session\");"
+        "content": ""
       },
       {
         "lineNumber": 174,
         "author": {
           "gitId": "theodoreleebrant"
         },
-        "content": "        ArrayList\u003cStudent\u003e stds \u003d new ArrayList\u003cStudent\u003e();"
+        "content": "    @Test"
       },
       {
         "lineNumber": 175,
         "author": {
           "gitId": "theodoreleebrant"
         },
-        "content": "        stds.add(ALICE);"
+        "content": "    void markStudent_sessionNotSelected_failure() {"
       },
       {
         "lineNumber": 176,
         "author": {
           "gitId": "theodoreleebrant"
         },
-        "content": "        Session s \u003d new Session(sName,"
+        "content": "        SessionName sName \u003d new SessionName(\"Test Session\");"
       },
       {
         "lineNumber": 177,
         "author": {
           "gitId": "theodoreleebrant"
         },
-        "content": "                new SessionDateTime(LocalDateTime.now()),"
+        "content": "        ArrayList\u003cStudent\u003e stds \u003d new ArrayList\u003cStudent\u003e();"
       },
       {
         "lineNumber": 178,
         "author": {
           "gitId": "theodoreleebrant"
         },
-        "content": "                stds);"
+        "content": "        stds.add(ALICE);"
       },
       {
         "lineNumber": 179,
         "author": {
           "gitId": "theodoreleebrant"
         },
-        "content": "        modelManager.addSession(s);"
+        "content": "        Session s \u003d new Session(sName,"
       },
       {
         "lineNumber": 180,
         "author": {
           "gitId": "theodoreleebrant"
         },
-        "content": "        assertThrows(NoSessionSelectedException.class, () -\u003e modelManager.markStudent(ALICE, AttendanceType.PRESENT));"
+        "content": "                new SessionDateTime(LocalDateTime.now()),"
       },
       {
         "lineNumber": 181,
         "author": {
           "gitId": "theodoreleebrant"
         },
-        "content": "    }"
+        "content": "                stds);"
       },
       {
         "lineNumber": 182,
         "author": {
           "gitId": "theodoreleebrant"
         },
-        "content": ""
+        "content": "        modelManager.addSession(s);"
       },
       {
         "lineNumber": 183,
         "author": {
-          "gitId": "theodoreleebrant"
+          "gitId": "sc-arecrow"
         },
-        "content": "    @Test"
+        "content": "        assertThrows(NoSessionSelectedException.class, () -\u003e"
       },
       {
         "lineNumber": 184,
         "author": {
-          "gitId": "theodoreleebrant"
+          "gitId": "sc-arecrow"
         },
-        "content": "    void markStudentWithNusnetId() {"
+        "content": "                modelManager.markStudentRecord(ALICE_STUDENT_RECORD, AttendanceType.PRESENT));"
       },
       {
         "lineNumber": 185,
         "author": {
           "gitId": "theodoreleebrant"
         },
-        "content": "        SessionName sName \u003d new SessionName(\"Test Session\");"
+        "content": "    }"
       },
       {
         "lineNumber": 186,
         "author": {
           "gitId": "theodoreleebrant"
         },
-        "content": "        ArrayList\u003cStudent\u003e stds \u003d new ArrayList\u003cStudent\u003e();"
+        "content": ""
       },
       {
         "lineNumber": 187,
         "author": {
           "gitId": "theodoreleebrant"
         },
-        "content": "        stds.add(ALICE);"
+        "content": "    @Test"
       },
       {
         "lineNumber": 188,
         "author": {
           "gitId": "theodoreleebrant"
         },
-        "content": "        Session s \u003d new Session(sName,"
+        "content": "    void markStudentWithNusnetId() {"
       },
       {
         "lineNumber": 189,
         "author": {
           "gitId": "theodoreleebrant"
         },
-        "content": "                new SessionDateTime(LocalDateTime.now()),"
+        "content": "        SessionName sName \u003d new SessionName(\"Test Session\");"
       },
       {
         "lineNumber": 190,
         "author": {
           "gitId": "theodoreleebrant"
         },
-        "content": "                stds);"
+        "content": "        ArrayList\u003cStudent\u003e stds \u003d new ArrayList\u003cStudent\u003e();"
       },
       {
         "lineNumber": 191,
         "author": {
           "gitId": "theodoreleebrant"
         },
-        "content": "        modelManager.addSession(s);"
+        "content": "        stds.add(ALICE);"
       },
       {
         "lineNumber": 192,
         "author": {
           "gitId": "theodoreleebrant"
         },
-        "content": "        modelManager.changeSession(sName);"
+        "content": "        Session s \u003d new Session(sName,"
       },
       {
         "lineNumber": 193,
         "author": {
           "gitId": "theodoreleebrant"
         },
-        "content": "        modelManager.markStudentWithNusnetId(ALICE.getNusnetId(), AttendanceType.PRESENT);"
+        "content": "                new SessionDateTime(LocalDateTime.now()),"
       },
       {
         "lineNumber": 194,
         "author": {
           "gitId": "theodoreleebrant"
         },
-        "content": "        assertTrue(s.getStudentRecords().toString().equals(\"[e0123456|PRESENT|Class Participation Score: 0]\"));"
+        "content": "                stds);"
       },
       {
         "lineNumber": 195,
         "author": {
           "gitId": "theodoreleebrant"
         },
-        "content": "        modelManager.markStudentWithNusnetId(ALICE.getNusnetId(), AttendanceType.ABSENT);"
+        "content": "        modelManager.addSession(s);"
       },
       {
         "lineNumber": 196,
         "author": {
           "gitId": "theodoreleebrant"
         },
-        "content": "        assertTrue(s.getStudentRecords().toString().equals(\"[e0123456|ABSENT|Class Participation Score: 0]\"));"
+        "content": "        modelManager.changeSession(sName);"
       },
       {
         "lineNumber": 197,
         "author": {
           "gitId": "theodoreleebrant"
         },
-        "content": "    }"
+        "content": "        modelManager.markStudentWithNusnetId(ALICE.getNusnetId(), AttendanceType.PRESENT);"
       },
       {
         "lineNumber": 198,
         "author": {
           "gitId": "theodoreleebrant"
         },
-        "content": ""
+        "content": "        assertTrue(s.getStudentRecords().toString().equals(\"[e0123456|PRESENT|Class Participation Score: 0]\"));"
       },
       {
         "lineNumber": 199,
         "author": {
           "gitId": "theodoreleebrant"
         },
-        "content": "    @Test"
+        "content": "        modelManager.markStudentWithNusnetId(ALICE.getNusnetId(), AttendanceType.ABSENT);"
       },
       {
         "lineNumber": 200,
         "author": {
           "gitId": "theodoreleebrant"
         },
-        "content": "    void markStudentWithNusnetId_noSession_failure() {"
+        "content": "        assertTrue(s.getStudentRecords().toString().equals(\"[e0123456|ABSENT|Class Participation Score: 0]\"));"
       },
       {
         "lineNumber": 201,
         "author": {
           "gitId": "theodoreleebrant"
         },
-        "content": "        SessionName sName \u003d new SessionName(\"Test Session\");"
+        "content": "    }"
       },
       {
         "lineNumber": 202,
         "author": {
           "gitId": "theodoreleebrant"
         },
-        "content": "        ArrayList\u003cStudent\u003e stds \u003d new ArrayList\u003cStudent\u003e();"
+        "content": ""
       },
       {
         "lineNumber": 203,
         "author": {
           "gitId": "theodoreleebrant"
         },
-        "content": "        stds.add(ALICE);"
+        "content": "    @Test"
       },
       {
         "lineNumber": 204,
         "author": {
           "gitId": "theodoreleebrant"
         },
-        "content": "        assertThrows(NoSessionException.class, () -\u003e modelManager"
+        "content": "    void markStudentWithNusnetId_noSession_failure() {"
       },
       {
         "lineNumber": 205,
         "author": {
           "gitId": "theodoreleebrant"
         },
-        "content": "                .markStudentWithNusnetId(ALICE.getNusnetId(), AttendanceType.PRESENT));"
+        "content": "        SessionName sName \u003d new SessionName(\"Test Session\");"
       },
       {
         "lineNumber": 206,
         "author": {
           "gitId": "theodoreleebrant"
         },
-        "content": "    }"
+        "content": "        ArrayList\u003cStudent\u003e stds \u003d new ArrayList\u003cStudent\u003e();"
       },
       {
         "lineNumber": 207,
         "author": {
           "gitId": "theodoreleebrant"
         },
-        "content": ""
+        "content": "        stds.add(ALICE);"
       },
       {
         "lineNumber": 208,
         "author": {
           "gitId": "theodoreleebrant"
         },
-        "content": "    @Test"
+        "content": "        assertThrows(NoSessionException.class, () -\u003e modelManager"
       },
       {
         "lineNumber": 209,
         "author": {
           "gitId": "theodoreleebrant"
         },
-        "content": "    void markStudentWithNusnetId_sessionNotSelected_failure() {"
+        "content": "                .markStudentWithNusnetId(ALICE.getNusnetId(), AttendanceType.PRESENT));"
       },
       {
         "lineNumber": 210,
         "author": {
           "gitId": "theodoreleebrant"
         },
-        "content": "        SessionName sName \u003d new SessionName(\"Test Session\");"
+        "content": "    }"
       },
       {
         "lineNumber": 211,
         "author": {
           "gitId": "theodoreleebrant"
         },
-        "content": "        ArrayList\u003cStudent\u003e stds \u003d new ArrayList\u003cStudent\u003e();"
+        "content": ""
       },
       {
         "lineNumber": 212,
         "author": {
           "gitId": "theodoreleebrant"
         },
-        "content": "        stds.add(ALICE);"
+        "content": "    @Test"
       },
       {
         "lineNumber": 213,
         "author": {
           "gitId": "theodoreleebrant"
         },
-        "content": "        Session s \u003d new Session(sName,"
+        "content": "    void markStudentWithNusnetId_sessionNotSelected_failure() {"
       },
       {
         "lineNumber": 214,
         "author": {
           "gitId": "theodoreleebrant"
         },
-        "content": "                new SessionDateTime(LocalDateTime.now()),"
+        "content": "        SessionName sName \u003d new SessionName(\"Test Session\");"
       },
       {
         "lineNumber": 215,
         "author": {
           "gitId": "theodoreleebrant"
         },
-        "content": "                stds);"
+        "content": "        ArrayList\u003cStudent\u003e stds \u003d new ArrayList\u003cStudent\u003e();"
       },
       {
         "lineNumber": 216,
         "author": {
           "gitId": "theodoreleebrant"
         },
-        "content": "        modelManager.addSession(s);"
+        "content": "        stds.add(ALICE);"
       },
       {
         "lineNumber": 217,
         "author": {
           "gitId": "theodoreleebrant"
         },
-        "content": "        assertThrows(NoSessionSelectedException.class, () -\u003e modelManager"
+        "content": "        Session s \u003d new Session(sName,"
       },
       {
         "lineNumber": 218,
         "author": {
           "gitId": "theodoreleebrant"
         },
-        "content": "                .markStudentWithNusnetId(ALICE.getNusnetId(), AttendanceType.PRESENT));"
+        "content": "                new SessionDateTime(LocalDateTime.now()),"
       },
       {
         "lineNumber": 219,
         "author": {
           "gitId": "theodoreleebrant"
         },
-        "content": "    }"
+        "content": "                stds);"
       },
       {
         "lineNumber": 220,
         "author": {
           "gitId": "theodoreleebrant"
         },
-        "content": ""
+        "content": "        modelManager.addSession(s);"
       },
       {
         "lineNumber": 221,
         "author": {
           "gitId": "theodoreleebrant"
         },
-        "content": "    @Test"
+        "content": "        assertThrows(NoSessionSelectedException.class, () -\u003e modelManager"
       },
       {
         "lineNumber": 222,
         "author": {
           "gitId": "theodoreleebrant"
         },
-        "content": "    void scoreStudent() {"
+        "content": "                .markStudentWithNusnetId(ALICE.getNusnetId(), AttendanceType.PRESENT));"
       },
       {
         "lineNumber": 223,
         "author": {
           "gitId": "theodoreleebrant"
         },
-        "content": "        SessionName sName \u003d new SessionName(\"Test Session\");"
+        "content": "    }"
       },
       {
         "lineNumber": 224,
         "author": {
           "gitId": "theodoreleebrant"
         },
-        "content": "        ArrayList\u003cStudent\u003e stds \u003d new ArrayList\u003cStudent\u003e();"
+        "content": ""
       },
       {
         "lineNumber": 225,
         "author": {
           "gitId": "theodoreleebrant"
         },
-        "content": "        stds.add(ALICE);"
+        "content": "    @Test"
       },
       {
         "lineNumber": 226,
         "author": {
           "gitId": "theodoreleebrant"
         },
-        "content": "        Session s \u003d new Session(sName,"
+        "content": "    void scoreStudent() {"
       },
       {
         "lineNumber": 227,
         "author": {
           "gitId": "theodoreleebrant"
         },
-        "content": "                new SessionDateTime(LocalDateTime.now()),"
+        "content": "        SessionName sName \u003d new SessionName(\"Test Session\");"
       },
       {
         "lineNumber": 228,
         "author": {
           "gitId": "theodoreleebrant"
         },
-        "content": "                stds);"
+        "content": "        ArrayList\u003cStudent\u003e stds \u003d new ArrayList\u003cStudent\u003e();"
       },
       {
         "lineNumber": 229,
         "author": {
           "gitId": "theodoreleebrant"
         },
-        "content": "        modelManager.addSession(s);"
+        "content": "        stds.add(ALICE);"
       },
       {
         "lineNumber": 230,
         "author": {
           "gitId": "theodoreleebrant"
         },
-        "content": "        modelManager.changeSession(sName);"
+        "content": "        Session s \u003d new Session(sName,"
       },
       {
         "lineNumber": 231,
         "author": {
           "gitId": "theodoreleebrant"
         },
-        "content": "        modelManager.scoreStudent(ALICE, VALID_SCORE_INT);"
+        "content": "                new SessionDateTime(LocalDateTime.now()),"
       },
       {
         "lineNumber": 232,
         "author": {
           "gitId": "theodoreleebrant"
         },
-        "content": "        assertTrue(s.getStudentRecords().toString().equals(\"[e0123456|NO_RECORD|Class Participation Score: 0]\"));"
+        "content": "                stds);"
       },
       {
         "lineNumber": 233,
         "author": {
           "gitId": "theodoreleebrant"
         },
-        "content": "        modelManager.scoreStudent(ALICE, (VALID_SCORE_INT + 2));"
+        "content": "        modelManager.addSession(s);"
       },
       {
         "lineNumber": 234,
         "author": {
           "gitId": "theodoreleebrant"
         },
-        "content": "        assertTrue(s.getStudentRecords().toString().equals(\"[e0123456|NO_RECORD|Class Participation Score: 2]\"));"
+        "content": "        modelManager.changeSession(sName);"
       },
       {
         "lineNumber": 235,
         "author": {
           "gitId": "theodoreleebrant"
         },
-        "content": "    }"
+        "content": "        modelManager.scoreStudent(ALICE, VALID_SCORE_INT);"
       },
       {
         "lineNumber": 236,
         "author": {
           "gitId": "theodoreleebrant"
         },
-        "content": ""
+        "content": "        assertTrue(s.getStudentRecords().toString().equals(\"[e0123456|NO_RECORD|Class Participation Score: 0]\"));"
       },
       {
         "lineNumber": 237,
         "author": {
           "gitId": "theodoreleebrant"
         },
-        "content": "    @Test"
+        "content": "        modelManager.scoreStudent(ALICE, (VALID_SCORE_INT + 2));"
       },
       {
         "lineNumber": 238,
         "author": {
           "gitId": "theodoreleebrant"
         },
-        "content": "    void scoreStudent_noSession_failure() {"
+        "content": "        assertTrue(s.getStudentRecords().toString().equals(\"[e0123456|NO_RECORD|Class Participation Score: 2]\"));"
       },
       {
         "lineNumber": 239,
         "author": {
           "gitId": "theodoreleebrant"
         },
-        "content": "        ArrayList\u003cStudent\u003e stds \u003d new ArrayList\u003cStudent\u003e();"
+        "content": "    }"
       },
       {
         "lineNumber": 240,
         "author": {
           "gitId": "theodoreleebrant"
         },
-        "content": "        stds.add(ALICE);"
+        "content": ""
       },
       {
         "lineNumber": 241,
         "author": {
           "gitId": "theodoreleebrant"
         },
-        "content": "        assertThrows(NoSessionException.class, () -\u003e modelManager.scoreStudent(ALICE, VALID_SCORE_INT));"
+        "content": "    @Test"
       },
       {
         "lineNumber": 242,
         "author": {
           "gitId": "theodoreleebrant"
         },
-        "content": "    }"
+        "content": "    void scoreStudent_noSession_failure() {"
       },
       {
         "lineNumber": 243,
         "author": {
           "gitId": "theodoreleebrant"
         },
-        "content": ""
+        "content": "        ArrayList\u003cStudent\u003e stds \u003d new ArrayList\u003cStudent\u003e();"
       },
       {
         "lineNumber": 244,
         "author": {
           "gitId": "theodoreleebrant"
         },
-        "content": "    @Test"
+        "content": "        stds.add(ALICE);"
       },
       {
         "lineNumber": 245,
         "author": {
           "gitId": "theodoreleebrant"
         },
-        "content": "    void scoreStudent_sessionNotSelected_failure() {"
+        "content": "        assertThrows(NoSessionException.class, () -\u003e modelManager.scoreStudent(ALICE, VALID_SCORE_INT));"
       },
       {
         "lineNumber": 246,
         "author": {
           "gitId": "theodoreleebrant"
         },
-        "content": "        SessionName sName \u003d new SessionName(\"Test Session\");"
+        "content": "    }"
       },
       {
         "lineNumber": 247,
         "author": {
           "gitId": "theodoreleebrant"
         },
-        "content": "        ArrayList\u003cStudent\u003e stds \u003d new ArrayList\u003cStudent\u003e();"
+        "content": ""
       },
       {
         "lineNumber": 248,
         "author": {
           "gitId": "theodoreleebrant"
         },
-        "content": "        stds.add(ALICE);"
+        "content": "    @Test"
       },
       {
         "lineNumber": 249,
         "author": {
           "gitId": "theodoreleebrant"
         },
-        "content": "        Session s \u003d new Session(sName,"
+        "content": "    void scoreStudent_sessionNotSelected_failure() {"
       },
       {
         "lineNumber": 250,
         "author": {
           "gitId": "theodoreleebrant"
         },
-        "content": "                new SessionDateTime(LocalDateTime.now()),"
+        "content": "        SessionName sName \u003d new SessionName(\"Test Session\");"
       },
       {
         "lineNumber": 251,
         "author": {
           "gitId": "theodoreleebrant"
         },
-        "content": "                stds);"
+        "content": "        ArrayList\u003cStudent\u003e stds \u003d new ArrayList\u003cStudent\u003e();"
       },
       {
         "lineNumber": 252,
         "author": {
           "gitId": "theodoreleebrant"
         },
-        "content": "        modelManager.addSession(s);"
+        "content": "        stds.add(ALICE);"
       },
       {
         "lineNumber": 253,
         "author": {
           "gitId": "theodoreleebrant"
         },
-        "content": "        assertThrows(NoSessionSelectedException.class, () -\u003e modelManager.scoreStudent(ALICE, VALID_SCORE_INT));"
+        "content": "        Session s \u003d new Session(sName,"
       },
       {
         "lineNumber": 254,
         "author": {
           "gitId": "theodoreleebrant"
         },
-        "content": "    }"
+        "content": "                new SessionDateTime(LocalDateTime.now()),"
       },
       {
         "lineNumber": 255,
         "author": {
           "gitId": "theodoreleebrant"
         },
-        "content": ""
+        "content": "                stds);"
       },
       {
         "lineNumber": 256,
         "author": {
           "gitId": "theodoreleebrant"
         },
-        "content": "    @Test"
+        "content": "        modelManager.addSession(s);"
       },
       {
         "lineNumber": 257,
         "author": {
           "gitId": "theodoreleebrant"
         },
-        "content": "    void scoreStudentWithNusnetId() {"
+        "content": "        assertThrows(NoSessionSelectedException.class, () -\u003e modelManager.scoreStudent(ALICE, VALID_SCORE_INT));"
       },
       {
         "lineNumber": 258,
         "author": {
           "gitId": "theodoreleebrant"
         },
-        "content": "        SessionName sName \u003d new SessionName(\"Test Session\");"
+        "content": "    }"
       },
       {
         "lineNumber": 259,
         "author": {
           "gitId": "theodoreleebrant"
         },
-        "content": "        ArrayList\u003cStudent\u003e stds \u003d new ArrayList\u003cStudent\u003e();"
+        "content": ""
       },
       {
         "lineNumber": 260,
         "author": {
           "gitId": "theodoreleebrant"
         },
-        "content": "        stds.add(ALICE);"
+        "content": "    @Test"
       },
       {
         "lineNumber": 261,
         "author": {
           "gitId": "theodoreleebrant"
         },
-        "content": "        Session s \u003d new Session(sName,"
+        "content": "    void scoreStudentWithNusnetId() {"
       },
       {
         "lineNumber": 262,
         "author": {
           "gitId": "theodoreleebrant"
         },
-        "content": "                new SessionDateTime(LocalDateTime.now()),"
+        "content": "        SessionName sName \u003d new SessionName(\"Test Session\");"
       },
       {
         "lineNumber": 263,
         "author": {
           "gitId": "theodoreleebrant"
         },
-        "content": "                stds);"
+        "content": "        ArrayList\u003cStudent\u003e stds \u003d new ArrayList\u003cStudent\u003e();"
       },
       {
         "lineNumber": 264,
         "author": {
           "gitId": "theodoreleebrant"
         },
-        "content": "        modelManager.addSession(s);"
+        "content": "        stds.add(ALICE);"
       },
       {
         "lineNumber": 265,
         "author": {
           "gitId": "theodoreleebrant"
         },
-        "content": "        modelManager.changeSession(sName);"
+        "content": "        Session s \u003d new Session(sName,"
       },
       {
         "lineNumber": 266,
         "author": {
           "gitId": "theodoreleebrant"
         },
-        "content": "        modelManager.scoreStudentWithNusnetId(ALICE.getNusnetId(), VALID_SCORE_INT);"
+        "content": "                new SessionDateTime(LocalDateTime.now()),"
       },
       {
         "lineNumber": 267,
         "author": {
           "gitId": "theodoreleebrant"
         },
-        "content": "        assertTrue(s.getStudentRecords().toString().equals(\"[e0123456|NO_RECORD|Class Participation Score: 0]\"));"
+        "content": "                stds);"
       },
       {
         "lineNumber": 268,
         "author": {
           "gitId": "theodoreleebrant"
         },
-        "content": "        modelManager.scoreStudentWithNusnetId(ALICE.getNusnetId(), (VALID_SCORE_INT + 1));"
+        "content": "        modelManager.addSession(s);"
       },
       {
         "lineNumber": 269,
         "author": {
           "gitId": "theodoreleebrant"
         },
-        "content": "        assertTrue(s.getStudentRecords().toString().equals(\"[e0123456|NO_RECORD|Class Participation Score: 1]\"));"
+        "content": "        modelManager.changeSession(sName);"
       },
       {
         "lineNumber": 270,
         "author": {
           "gitId": "theodoreleebrant"
         },
-        "content": "    }"
+        "content": "        modelManager.scoreStudentWithNusnetId(ALICE.getNusnetId(), VALID_SCORE_INT);"
       },
       {
         "lineNumber": 271,
         "author": {
           "gitId": "theodoreleebrant"
         },
-        "content": ""
+        "content": "        assertTrue(s.getStudentRecords().toString().equals(\"[e0123456|NO_RECORD|Class Participation Score: 0]\"));"
       },
       {
         "lineNumber": 272,
         "author": {
           "gitId": "theodoreleebrant"
         },
-        "content": "    @Test"
+        "content": "        modelManager.scoreStudentWithNusnetId(ALICE.getNusnetId(), (VALID_SCORE_INT + 1));"
       },
       {
         "lineNumber": 273,
         "author": {
           "gitId": "theodoreleebrant"
         },
-        "content": "    void scoreStudentWithNusnetId_noSession_failure() {"
+        "content": "        assertTrue(s.getStudentRecords().toString().equals(\"[e0123456|NO_RECORD|Class Participation Score: 1]\"));"
       },
       {
         "lineNumber": 274,
         "author": {
           "gitId": "theodoreleebrant"
         },
-        "content": "        ArrayList\u003cStudent\u003e stds \u003d new ArrayList\u003cStudent\u003e();"
+        "content": "    }"
       },
       {
         "lineNumber": 275,
         "author": {
           "gitId": "theodoreleebrant"
         },
-        "content": "        stds.add(ALICE);"
+        "content": ""
       },
       {
         "lineNumber": 276,
         "author": {
           "gitId": "theodoreleebrant"
         },
-        "content": "        assertThrows(NoSessionException.class, () -\u003e modelManager"
+        "content": "    @Test"
       },
       {
         "lineNumber": 277,
         "author": {
           "gitId": "theodoreleebrant"
         },
-        "content": "                .scoreStudentWithNusnetId(ALICE.getNusnetId(), VALID_SCORE_INT));"
+        "content": "    void scoreStudentWithNusnetId_noSession_failure() {"
       },
       {
         "lineNumber": 278,
         "author": {
           "gitId": "theodoreleebrant"
         },
-        "content": "    }"
+        "content": "        ArrayList\u003cStudent\u003e stds \u003d new ArrayList\u003cStudent\u003e();"
       },
       {
         "lineNumber": 279,
         "author": {
           "gitId": "theodoreleebrant"
         },
-        "content": ""
+        "content": "        stds.add(ALICE);"
       },
       {
         "lineNumber": 280,
         "author": {
           "gitId": "theodoreleebrant"
         },
-        "content": "    @Test"
+        "content": "        assertThrows(NoSessionException.class, () -\u003e modelManager"
       },
       {
         "lineNumber": 281,
         "author": {
           "gitId": "theodoreleebrant"
         },
-        "content": "    void scoreStudentWithNusnetId_sessionNotSelected_failure() {"
+        "content": "                .scoreStudentWithNusnetId(ALICE.getNusnetId(), VALID_SCORE_INT));"
       },
       {
         "lineNumber": 282,
         "author": {
           "gitId": "theodoreleebrant"
         },
-        "content": "        SessionName sName \u003d new SessionName(\"Test Session\");"
+        "content": "    }"
       },
       {
         "lineNumber": 283,
         "author": {
           "gitId": "theodoreleebrant"
         },
-        "content": "        ArrayList\u003cStudent\u003e stds \u003d new ArrayList\u003cStudent\u003e();"
+        "content": ""
       },
       {
         "lineNumber": 284,
         "author": {
           "gitId": "theodoreleebrant"
         },
-        "content": "        stds.add(ALICE);"
+        "content": "    @Test"
       },
       {
         "lineNumber": 285,
         "author": {
           "gitId": "theodoreleebrant"
         },
-        "content": "        Session s \u003d new Session(sName,"
+        "content": "    void scoreStudentWithNusnetId_sessionNotSelected_failure() {"
       },
       {
         "lineNumber": 286,
         "author": {
           "gitId": "theodoreleebrant"
         },
-        "content": "                new SessionDateTime(LocalDateTime.now()),"
+        "content": "        SessionName sName \u003d new SessionName(\"Test Session\");"
       },
       {
         "lineNumber": 287,
         "author": {
           "gitId": "theodoreleebrant"
         },
-        "content": "                stds);"
+        "content": "        ArrayList\u003cStudent\u003e stds \u003d new ArrayList\u003cStudent\u003e();"
       },
       {
         "lineNumber": 288,
         "author": {
           "gitId": "theodoreleebrant"
         },
-        "content": "        modelManager.addSession(s);"
+        "content": "        stds.add(ALICE);"
       },
       {
         "lineNumber": 289,
         "author": {
           "gitId": "theodoreleebrant"
         },
-        "content": "        assertThrows(NoSessionSelectedException.class, () -\u003e modelManager"
+        "content": "        Session s \u003d new Session(sName,"
       },
       {
         "lineNumber": 290,
         "author": {
           "gitId": "theodoreleebrant"
         },
-        "content": "                .scoreStudentWithNusnetId(ALICE.getNusnetId(), VALID_SCORE_INT));"
+        "content": "                new SessionDateTime(LocalDateTime.now()),"
       },
       {
         "lineNumber": 291,
         "author": {
           "gitId": "theodoreleebrant"
         },
-        "content": "    }"
+        "content": "                stds);"
       },
       {
         "lineNumber": 292,
         "author": {
           "gitId": "theodoreleebrant"
         },
-        "content": ""
+        "content": "        modelManager.addSession(s);"
       },
       {
         "lineNumber": 293,
         "author": {
           "gitId": "theodoreleebrant"
         },
-        "content": "    @Test"
+        "content": "        assertThrows(NoSessionSelectedException.class, () -\u003e modelManager"
       },
       {
         "lineNumber": 294,
         "author": {
           "gitId": "theodoreleebrant"
         },
-        "content": "    void scoreAllStudents() {"
+        "content": "                .scoreStudentWithNusnetId(ALICE.getNusnetId(), VALID_SCORE_INT));"
       },
       {
         "lineNumber": 295,
         "author": {
           "gitId": "theodoreleebrant"
         },
-        "content": "        SessionName sName \u003d new SessionName(\"Test Session\");"
+        "content": "    }"
       },
       {
         "lineNumber": 296,
         "author": {
           "gitId": "theodoreleebrant"
         },
-        "content": "        ArrayList\u003cStudent\u003e stds \u003d new ArrayList\u003cStudent\u003e();"
+        "content": ""
       },
       {
         "lineNumber": 297,
         "author": {
           "gitId": "theodoreleebrant"
         },
-        "content": "        stds.add(ALICE);"
+        "content": "    @Test"
       },
       {
         "lineNumber": 298,
         "author": {
           "gitId": "theodoreleebrant"
         },
-        "content": "        stds.add(BOB);"
+        "content": "    void scoreAllStudents() {"
       },
       {
         "lineNumber": 299,
         "author": {
           "gitId": "theodoreleebrant"
         },
-        "content": "        Session s \u003d new Session(sName,"
+        "content": "        SessionName sName \u003d new SessionName(\"Test Session\");"
       },
       {
         "lineNumber": 300,
         "author": {
           "gitId": "theodoreleebrant"
         },
-        "content": "                new SessionDateTime(LocalDateTime.now()),"
+        "content": "        ArrayList\u003cStudent\u003e stds \u003d new ArrayList\u003cStudent\u003e();"
       },
       {
         "lineNumber": 301,
         "author": {
           "gitId": "theodoreleebrant"
         },
-        "content": "                stds);"
+        "content": "        stds.add(ALICE);"
       },
       {
         "lineNumber": 302,
         "author": {
           "gitId": "theodoreleebrant"
         },
-        "content": "        modelManager.addSession(s);"
+        "content": "        stds.add(BOB);"
       },
       {
         "lineNumber": 303,
         "author": {
           "gitId": "theodoreleebrant"
         },
-        "content": "        modelManager.changeSession(sName);"
+        "content": "        Session s \u003d new Session(sName,"
       },
       {
         "lineNumber": 304,
         "author": {
           "gitId": "theodoreleebrant"
         },
-        "content": "        modelManager.scoreAllStudents(stds, VALID_SCORE_INT);"
+        "content": "                new SessionDateTime(LocalDateTime.now()),"
       },
       {
         "lineNumber": 305,
         "author": {
           "gitId": "theodoreleebrant"
         },
-        "content": ""
+        "content": "                stds);"
       },
       {
         "lineNumber": 306,
         "author": {
           "gitId": "theodoreleebrant"
         },
-        "content": "        assertTrue(s.getStudentRecords().toString()"
+        "content": "        modelManager.addSession(s);"
       },
       {
         "lineNumber": 307,
         "author": {
           "gitId": "theodoreleebrant"
         },
-        "content": "                .equals(\"[e0123456|NO_RECORD|Class Participation Score: 0,\""
+        "content": "        modelManager.changeSession(sName);"
       },
       {
         "lineNumber": 308,
         "author": {
           "gitId": "theodoreleebrant"
         },
-        "content": "                        + \" e0456789|NO_RECORD|Class Participation Score: 0]\"));"
+        "content": "        modelManager.scoreAllStudents(stds, VALID_SCORE_INT);"
       },
       {
         "lineNumber": 309,
         "author": {
           "gitId": "theodoreleebrant"
         },
-        "content": "        modelManager.scoreAllStudents(stds, (VALID_SCORE_INT + 2));"
+        "content": ""
       },
       {
         "lineNumber": 310,
@@ -107802,294 +107872,294 @@
         "author": {
           "gitId": "theodoreleebrant"
         },
-        "content": "                .equals(\"[e0123456|NO_RECORD|Class Participation Score: 2,\""
+        "content": "                .equals(\"[e0123456|NO_RECORD|Class Participation Score: 0,\""
       },
       {
         "lineNumber": 312,
         "author": {
           "gitId": "theodoreleebrant"
         },
-        "content": "                + \" e0456789|NO_RECORD|Class Participation Score: 2]\"));"
+        "content": "                        + \" e0456789|NO_RECORD|Class Participation Score: 0]\"));"
       },
       {
         "lineNumber": 313,
         "author": {
           "gitId": "theodoreleebrant"
         },
-        "content": "    }"
+        "content": "        modelManager.scoreAllStudents(stds, (VALID_SCORE_INT + 2));"
       },
       {
         "lineNumber": 314,
         "author": {
           "gitId": "theodoreleebrant"
         },
-        "content": ""
+        "content": "        assertTrue(s.getStudentRecords().toString()"
       },
       {
         "lineNumber": 315,
         "author": {
           "gitId": "theodoreleebrant"
         },
-        "content": "    @Test"
+        "content": "                .equals(\"[e0123456|NO_RECORD|Class Participation Score: 2,\""
       },
       {
         "lineNumber": 316,
         "author": {
           "gitId": "theodoreleebrant"
         },
-        "content": "    void scoreAllStudents_noSession_failure() {"
+        "content": "                + \" e0456789|NO_RECORD|Class Participation Score: 2]\"));"
       },
       {
         "lineNumber": 317,
         "author": {
           "gitId": "theodoreleebrant"
         },
-        "content": "        ArrayList\u003cStudent\u003e stds \u003d new ArrayList\u003cStudent\u003e();"
+        "content": "    }"
       },
       {
         "lineNumber": 318,
         "author": {
           "gitId": "theodoreleebrant"
         },
-        "content": "        stds.add(ALICE);"
+        "content": ""
       },
       {
         "lineNumber": 319,
         "author": {
           "gitId": "theodoreleebrant"
         },
-        "content": "        stds.add(BOB);"
+        "content": "    @Test"
       },
       {
         "lineNumber": 320,
         "author": {
           "gitId": "theodoreleebrant"
         },
-        "content": "        assertThrows(NoSessionException.class, () -\u003e modelManager.scoreAllStudents(stds, VALID_SCORE_INT));"
+        "content": "    void scoreAllStudents_noSession_failure() {"
       },
       {
         "lineNumber": 321,
         "author": {
           "gitId": "theodoreleebrant"
         },
-        "content": "    }"
+        "content": "        ArrayList\u003cStudent\u003e stds \u003d new ArrayList\u003cStudent\u003e();"
       },
       {
         "lineNumber": 322,
         "author": {
           "gitId": "theodoreleebrant"
         },
-        "content": ""
+        "content": "        stds.add(ALICE);"
       },
       {
         "lineNumber": 323,
         "author": {
           "gitId": "theodoreleebrant"
         },
-        "content": "    @Test"
+        "content": "        stds.add(BOB);"
       },
       {
         "lineNumber": 324,
         "author": {
           "gitId": "theodoreleebrant"
         },
-        "content": "    void scoreAllStudents_sessionNotSelected_failure() {"
+        "content": "        assertThrows(NoSessionException.class, () -\u003e modelManager.scoreAllStudents(stds, VALID_SCORE_INT));"
       },
       {
         "lineNumber": 325,
         "author": {
           "gitId": "theodoreleebrant"
         },
-        "content": "        SessionName sName \u003d new SessionName(\"Test Session\");"
+        "content": "    }"
       },
       {
         "lineNumber": 326,
         "author": {
           "gitId": "theodoreleebrant"
         },
-        "content": "        ArrayList\u003cStudent\u003e stds \u003d new ArrayList\u003cStudent\u003e();"
+        "content": ""
       },
       {
         "lineNumber": 327,
         "author": {
           "gitId": "theodoreleebrant"
         },
-        "content": "        stds.add(ALICE);"
+        "content": "    @Test"
       },
       {
         "lineNumber": 328,
         "author": {
           "gitId": "theodoreleebrant"
         },
-        "content": "        stds.add(BOB);"
+        "content": "    void scoreAllStudents_sessionNotSelected_failure() {"
       },
       {
         "lineNumber": 329,
         "author": {
           "gitId": "theodoreleebrant"
         },
-        "content": "        Session s \u003d new Session(sName,"
+        "content": "        SessionName sName \u003d new SessionName(\"Test Session\");"
       },
       {
         "lineNumber": 330,
         "author": {
           "gitId": "theodoreleebrant"
         },
-        "content": "                new SessionDateTime(LocalDateTime.now()),"
+        "content": "        ArrayList\u003cStudent\u003e stds \u003d new ArrayList\u003cStudent\u003e();"
       },
       {
         "lineNumber": 331,
         "author": {
           "gitId": "theodoreleebrant"
         },
-        "content": "                stds);"
+        "content": "        stds.add(ALICE);"
       },
       {
         "lineNumber": 332,
         "author": {
           "gitId": "theodoreleebrant"
         },
-        "content": "        modelManager.addSession(s);"
+        "content": "        stds.add(BOB);"
       },
       {
         "lineNumber": 333,
         "author": {
           "gitId": "theodoreleebrant"
         },
-        "content": "        assertThrows(NoSessionSelectedException.class, () -\u003e modelManager.scoreAllStudents(stds, VALID_SCORE_INT));"
+        "content": "        Session s \u003d new Session(sName,"
       },
       {
         "lineNumber": 334,
         "author": {
           "gitId": "theodoreleebrant"
         },
-        "content": "    }"
+        "content": "                new SessionDateTime(LocalDateTime.now()),"
       },
       {
         "lineNumber": 335,
         "author": {
           "gitId": "theodoreleebrant"
         },
-        "content": ""
+        "content": "                stds);"
       },
       {
         "lineNumber": 336,
         "author": {
           "gitId": "theodoreleebrant"
         },
-        "content": "    @Test"
+        "content": "        modelManager.addSession(s);"
       },
       {
         "lineNumber": 337,
         "author": {
           "gitId": "theodoreleebrant"
         },
-        "content": "    void markAllStudents() {"
+        "content": "        assertThrows(NoSessionSelectedException.class, () -\u003e modelManager.scoreAllStudents(stds, VALID_SCORE_INT));"
       },
       {
         "lineNumber": 338,
         "author": {
           "gitId": "theodoreleebrant"
         },
-        "content": "        SessionName sName \u003d new SessionName(\"Test Session\");"
+        "content": "    }"
       },
       {
         "lineNumber": 339,
         "author": {
           "gitId": "theodoreleebrant"
         },
-        "content": "        ArrayList\u003cStudent\u003e stds \u003d new ArrayList\u003cStudent\u003e();"
+        "content": ""
       },
       {
         "lineNumber": 340,
         "author": {
           "gitId": "theodoreleebrant"
         },
-        "content": "        stds.add(ALICE);"
+        "content": "    @Test"
       },
       {
         "lineNumber": 341,
         "author": {
           "gitId": "theodoreleebrant"
         },
-        "content": "        stds.add(BOB);"
+        "content": "    void markAllStudents() {"
       },
       {
         "lineNumber": 342,
         "author": {
           "gitId": "theodoreleebrant"
         },
-        "content": "        Session s \u003d new Session(sName,"
+        "content": "        SessionName sName \u003d new SessionName(\"Test Session\");"
       },
       {
         "lineNumber": 343,
         "author": {
           "gitId": "theodoreleebrant"
         },
-        "content": "                new SessionDateTime(LocalDateTime.now()),"
+        "content": "        ArrayList\u003cStudent\u003e stds \u003d new ArrayList\u003cStudent\u003e();"
       },
       {
         "lineNumber": 344,
         "author": {
           "gitId": "theodoreleebrant"
         },
-        "content": "                stds);"
+        "content": "        stds.add(ALICE);"
       },
       {
         "lineNumber": 345,
         "author": {
           "gitId": "theodoreleebrant"
         },
-        "content": "        modelManager.addSession(s);"
+        "content": "        stds.add(BOB);"
       },
       {
         "lineNumber": 346,
         "author": {
           "gitId": "theodoreleebrant"
         },
-        "content": "        modelManager.changeSession(sName);"
+        "content": "        Session s \u003d new Session(sName,"
       },
       {
         "lineNumber": 347,
         "author": {
           "gitId": "theodoreleebrant"
         },
-        "content": "        modelManager.markAllStudents(stds, AttendanceType.PRESENT);"
+        "content": "                new SessionDateTime(LocalDateTime.now()),"
       },
       {
         "lineNumber": 348,
         "author": {
           "gitId": "theodoreleebrant"
         },
-        "content": ""
+        "content": "                stds);"
       },
       {
         "lineNumber": 349,
         "author": {
           "gitId": "theodoreleebrant"
         },
-        "content": "        assertTrue(s.getStudentRecords().toString()"
+        "content": "        modelManager.addSession(s);"
       },
       {
         "lineNumber": 350,
         "author": {
           "gitId": "theodoreleebrant"
         },
-        "content": "                .equals(\"[e0123456|PRESENT|Class Participation Score: 0,\""
+        "content": "        modelManager.changeSession(sName);"
       },
       {
         "lineNumber": 351,
         "author": {
           "gitId": "theodoreleebrant"
         },
-        "content": "                        + \" e0456789|PRESENT|Class Participation Score: 0]\"));"
+        "content": "        modelManager.markAllStudents(stds, AttendanceType.PRESENT);"
       },
       {
         "lineNumber": 352,
         "author": {
           "gitId": "theodoreleebrant"
         },
-        "content": "        modelManager.markAllStudents(stds, AttendanceType.ABSENT);"
+        "content": ""
       },
       {
         "lineNumber": 353,
@@ -108103,178 +108173,206 @@
         "author": {
           "gitId": "theodoreleebrant"
         },
-        "content": "                .equals(\"[e0123456|ABSENT|Class Participation Score: 0,\""
+        "content": "                .equals(\"[e0123456|PRESENT|Class Participation Score: 0,\""
       },
       {
         "lineNumber": 355,
         "author": {
           "gitId": "theodoreleebrant"
         },
-        "content": "                        + \" e0456789|ABSENT|Class Participation Score: 0]\"));"
+        "content": "                        + \" e0456789|PRESENT|Class Participation Score: 0]\"));"
       },
       {
         "lineNumber": 356,
         "author": {
           "gitId": "theodoreleebrant"
         },
-        "content": "    }"
+        "content": "        modelManager.markAllStudents(stds, AttendanceType.ABSENT);"
       },
       {
         "lineNumber": 357,
         "author": {
           "gitId": "theodoreleebrant"
         },
-        "content": ""
+        "content": "        assertTrue(s.getStudentRecords().toString()"
       },
       {
         "lineNumber": 358,
         "author": {
           "gitId": "theodoreleebrant"
         },
-        "content": "    @Test"
+        "content": "                .equals(\"[e0123456|ABSENT|Class Participation Score: 0,\""
       },
       {
         "lineNumber": 359,
         "author": {
           "gitId": "theodoreleebrant"
         },
-        "content": "    void markAllStudents_noSession_failure() {"
+        "content": "                        + \" e0456789|ABSENT|Class Participation Score: 0]\"));"
       },
       {
         "lineNumber": 360,
         "author": {
           "gitId": "theodoreleebrant"
         },
-        "content": "        ArrayList\u003cStudent\u003e stds \u003d new ArrayList\u003cStudent\u003e();"
+        "content": "    }"
       },
       {
         "lineNumber": 361,
         "author": {
           "gitId": "theodoreleebrant"
         },
-        "content": "        stds.add(ALICE);"
+        "content": ""
       },
       {
         "lineNumber": 362,
         "author": {
           "gitId": "theodoreleebrant"
         },
-        "content": "        stds.add(BOB);"
+        "content": "    @Test"
       },
       {
         "lineNumber": 363,
         "author": {
           "gitId": "theodoreleebrant"
         },
-        "content": "        assertThrows(NoSessionException.class, () -\u003e modelManager.markAllStudents(stds, AttendanceType.PRESENT));"
+        "content": "    void markAllStudents_noSession_failure() {"
       },
       {
         "lineNumber": 364,
         "author": {
           "gitId": "theodoreleebrant"
         },
-        "content": "    }"
+        "content": "        ArrayList\u003cStudent\u003e stds \u003d new ArrayList\u003cStudent\u003e();"
       },
       {
         "lineNumber": 365,
         "author": {
           "gitId": "theodoreleebrant"
         },
-        "content": ""
+        "content": "        stds.add(ALICE);"
       },
       {
         "lineNumber": 366,
         "author": {
           "gitId": "theodoreleebrant"
         },
-        "content": "    @Test"
+        "content": "        stds.add(BOB);"
       },
       {
         "lineNumber": 367,
         "author": {
           "gitId": "theodoreleebrant"
         },
-        "content": "    void markAllStudents_sessionNotSelected_failure() {"
+        "content": "        assertThrows(NoSessionException.class, () -\u003e modelManager.markAllStudents(stds, AttendanceType.PRESENT));"
       },
       {
         "lineNumber": 368,
         "author": {
           "gitId": "theodoreleebrant"
         },
-        "content": "        SessionName sName \u003d new SessionName(\"Test Session\");"
+        "content": "    }"
       },
       {
         "lineNumber": 369,
         "author": {
           "gitId": "theodoreleebrant"
         },
-        "content": "        ArrayList\u003cStudent\u003e stds \u003d new ArrayList\u003cStudent\u003e();"
+        "content": ""
       },
       {
         "lineNumber": 370,
         "author": {
           "gitId": "theodoreleebrant"
         },
-        "content": "        stds.add(ALICE);"
+        "content": "    @Test"
       },
       {
         "lineNumber": 371,
         "author": {
           "gitId": "theodoreleebrant"
         },
-        "content": "        stds.add(BOB);"
+        "content": "    void markAllStudents_sessionNotSelected_failure() {"
       },
       {
         "lineNumber": 372,
         "author": {
           "gitId": "theodoreleebrant"
         },
-        "content": "        Session s \u003d new Session(sName,"
+        "content": "        SessionName sName \u003d new SessionName(\"Test Session\");"
       },
       {
         "lineNumber": 373,
         "author": {
           "gitId": "theodoreleebrant"
         },
-        "content": "                new SessionDateTime(LocalDateTime.now()),"
+        "content": "        ArrayList\u003cStudent\u003e stds \u003d new ArrayList\u003cStudent\u003e();"
       },
       {
         "lineNumber": 374,
         "author": {
           "gitId": "theodoreleebrant"
         },
-        "content": "                stds);"
+        "content": "        stds.add(ALICE);"
       },
       {
         "lineNumber": 375,
         "author": {
           "gitId": "theodoreleebrant"
         },
-        "content": "        modelManager.addSession(s);"
+        "content": "        stds.add(BOB);"
       },
       {
         "lineNumber": 376,
         "author": {
           "gitId": "theodoreleebrant"
         },
-        "content": "        assertThrows(NoSessionSelectedException.class, () -\u003e modelManager"
+        "content": "        Session s \u003d new Session(sName,"
       },
       {
         "lineNumber": 377,
         "author": {
           "gitId": "theodoreleebrant"
         },
-        "content": "                .markAllStudents(stds, AttendanceType.PRESENT));"
+        "content": "                new SessionDateTime(LocalDateTime.now()),"
       },
       {
         "lineNumber": 378,
         "author": {
           "gitId": "theodoreleebrant"
         },
-        "content": "    }"
+        "content": "                stds);"
       },
       {
         "lineNumber": 379,
+        "author": {
+          "gitId": "theodoreleebrant"
+        },
+        "content": "        modelManager.addSession(s);"
+      },
+      {
+        "lineNumber": 380,
+        "author": {
+          "gitId": "theodoreleebrant"
+        },
+        "content": "        assertThrows(NoSessionSelectedException.class, () -\u003e modelManager"
+      },
+      {
+        "lineNumber": 381,
+        "author": {
+          "gitId": "theodoreleebrant"
+        },
+        "content": "                .markAllStudents(stds, AttendanceType.PRESENT));"
+      },
+      {
+        "lineNumber": 382,
+        "author": {
+          "gitId": "theodoreleebrant"
+        },
+        "content": "    }"
+      },
+      {
+        "lineNumber": 383,
         "author": {
           "gitId": "-"
         },
@@ -108282,8 +108380,8 @@
       }
     ],
     "authorContributionMap": {
-      "theodoreleebrant": 255,
-      "sc-arecrow": 28,
+      "theodoreleebrant": 250,
+      "sc-arecrow": 37,
       "-": 96
     }
   },
@@ -122271,6 +122369,113 @@
       "theodoreleebrant": 2,
       "sc-arecrow": 3,
       "-": 7
+    }
+  },
+  {
+    "path": "src/test/java/seedu/taskmaster/testutil/TypicalStudentRecords.java",
+    "fileType": "test-code",
+    "lines": [
+      {
+        "lineNumber": 1,
+        "author": {
+          "gitId": "sc-arecrow"
+        },
+        "content": "package seedu.taskmaster.testutil;"
+      },
+      {
+        "lineNumber": 2,
+        "author": {
+          "gitId": "sc-arecrow"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 3,
+        "author": {
+          "gitId": "sc-arecrow"
+        },
+        "content": "import static seedu.taskmaster.testutil.TypicalStudents.ALICE;"
+      },
+      {
+        "lineNumber": 4,
+        "author": {
+          "gitId": "sc-arecrow"
+        },
+        "content": "import static seedu.taskmaster.testutil.TypicalStudents.BENSON;"
+      },
+      {
+        "lineNumber": 5,
+        "author": {
+          "gitId": "sc-arecrow"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 6,
+        "author": {
+          "gitId": "sc-arecrow"
+        },
+        "content": "import seedu.taskmaster.model.record.StudentRecord;"
+      },
+      {
+        "lineNumber": 7,
+        "author": {
+          "gitId": "sc-arecrow"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 8,
+        "author": {
+          "gitId": "sc-arecrow"
+        },
+        "content": "public class TypicalStudentRecords {"
+      },
+      {
+        "lineNumber": 9,
+        "author": {
+          "gitId": "sc-arecrow"
+        },
+        "content": "    public static final StudentRecord ALICE_STUDENT_RECORD \u003d"
+      },
+      {
+        "lineNumber": 10,
+        "author": {
+          "gitId": "sc-arecrow"
+        },
+        "content": "            new StudentRecord(ALICE.getName(), ALICE.getNusnetId());"
+      },
+      {
+        "lineNumber": 11,
+        "author": {
+          "gitId": "sc-arecrow"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 12,
+        "author": {
+          "gitId": "sc-arecrow"
+        },
+        "content": "    public static final StudentRecord BENSON_STUDENT_RECORD \u003d"
+      },
+      {
+        "lineNumber": 13,
+        "author": {
+          "gitId": "sc-arecrow"
+        },
+        "content": "            new StudentRecord(BENSON.getName(), BENSON.getNusnetId());"
+      },
+      {
+        "lineNumber": 14,
+        "author": {
+          "gitId": "sc-arecrow"
+        },
+        "content": "}"
+      }
+    ],
+    "authorContributionMap": {
+      "sc-arecrow": 14
     }
   },
   {

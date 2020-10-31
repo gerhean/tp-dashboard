@@ -26758,7 +26758,7 @@
         "author": {
           "gitId": "Rishi5154"
         },
-        "content": "            + \": Marks absence for the person identified by the index number used in the displayed person list.\\n\""
+        "content": "            + \": Removes attendance for the person identified by the index number used in the displayed person list.\\n\""
       },
       {
         "lineNumber": 25,
@@ -26807,7 +26807,7 @@
         "author": {
           "gitId": "Rishi5154"
         },
-        "content": "    public static final String MESSAGE_UNATTEND_SUCCESS \u003d \"Marked absence for person: %1$s\";"
+        "content": "    public static final String MESSAGE_UNATTEND_SUCCESS \u003d \"Removed attendance for person: %1$s\";"
       },
       {
         "lineNumber": 32,
@@ -27080,7 +27080,7 @@
         "author": {
           "gitId": "Rishi5154"
         },
-        "content": "        if (updatedAttendances.contains(attendance)) {"
+        "content": "        if (!updatedAttendances.contains(attendance)) {"
       },
       {
         "lineNumber": 71,
@@ -27101,7 +27101,7 @@
         "author": {
           "gitId": "Rishi5154"
         },
-        "content": "        updatedAttendances.add(attendance);"
+        "content": "        updatedAttendances.remove(attendance);"
       },
       {
         "lineNumber": 74,
@@ -57712,14 +57712,14 @@
         "author": {
           "gitId": "Rishi5154"
         },
-        "content": "        Person attendedPerson \u003d model.getFilteredPersonList().get(0);"
+        "content": "        Person personToUnattend \u003d model.getFilteredPersonList().get(0);"
       },
       {
         "lineNumber": 39,
         "author": {
           "gitId": "Rishi5154"
         },
-        "content": "        attendedPerson \u003d new PersonBuilder(attendedPerson)"
+        "content": "        personToUnattend \u003d new PersonBuilder(personToUnattend)"
       },
       {
         "lineNumber": 40,
@@ -57740,35 +57740,35 @@
         "author": {
           "gitId": "Rishi5154"
         },
-        "content": ""
+        "content": "        String expectedMessage \u003d String.format(UnattendCommand.MESSAGE_UNATTEND_SUCCESS, personToUnattend);"
       },
       {
         "lineNumber": 43,
         "author": {
           "gitId": "Rishi5154"
         },
-        "content": "        String expectedMessage \u003d String.format(UnattendCommand.MESSAGE_UNATTEND_SUCCESS, attendedPerson);"
+        "content": ""
       },
       {
         "lineNumber": 44,
         "author": {
           "gitId": "Rishi5154"
         },
-        "content": ""
+        "content": "        Model expectedModel \u003d new ModelManager(new Tasker(model.getAddressBook()), new UserPrefs());"
       },
       {
         "lineNumber": 45,
         "author": {
           "gitId": "Rishi5154"
         },
-        "content": "        Model expectedModel \u003d new ModelManager(new Tasker(model.getAddressBook()), new UserPrefs());"
+        "content": "        // remove attendance"
       },
       {
         "lineNumber": 46,
         "author": {
           "gitId": "Rishi5154"
         },
-        "content": "        expectedModel.setPerson(model.getFilteredPersonList().get(0), attendedPerson);"
+        "content": "        model.setPerson(model.getFilteredPersonList().get(0), personToUnattend);"
       },
       {
         "lineNumber": 47,
@@ -57887,133 +57887,133 @@
         "author": {
           "gitId": "Rishi5154"
         },
-        "content": "        expectedModel.setPerson(model.getFilteredPersonList().get(0), unattendedPerson);"
+        "content": "        // remove attendance"
       },
       {
         "lineNumber": 64,
         "author": {
           "gitId": "Rishi5154"
         },
-        "content": ""
+        "content": "        model.setPerson(model.getFilteredPersonList().get(0), unattendedPerson);"
       },
       {
         "lineNumber": 65,
         "author": {
           "gitId": "Rishi5154"
         },
-        "content": "        assertCommandSuccess(unattend, model, expectedMessage, expectedModel);"
+        "content": ""
       },
       {
         "lineNumber": 66,
         "author": {
           "gitId": "Rishi5154"
         },
-        "content": "    }"
+        "content": "        assertCommandSuccess(unattend, model, expectedMessage, expectedModel);"
       },
       {
         "lineNumber": 67,
         "author": {
           "gitId": "Rishi5154"
         },
-        "content": ""
+        "content": "    }"
       },
       {
         "lineNumber": 68,
         "author": {
           "gitId": "Rishi5154"
         },
-        "content": "    @Test"
+        "content": ""
       },
       {
         "lineNumber": 69,
         "author": {
           "gitId": "Rishi5154"
         },
-        "content": "    public void execute_nullAttendanceUnfilteredList_failure() {"
+        "content": "    @Test"
       },
       {
         "lineNumber": 70,
         "author": {
           "gitId": "Rishi5154"
         },
-        "content": "        UnattendCommand unattend \u003d new UnattendCommand(INDEX_FIRST_PERSON, null);"
+        "content": "    public void execute_nullAttendanceUnfilteredList_failure() {"
       },
       {
         "lineNumber": 71,
         "author": {
           "gitId": "Rishi5154"
         },
-        "content": "        System.out.println(String.format(Messages.MESSAGE_INVALID_COMMAND_FORMAT, UnattendCommand.MESSAGE_USAGE));"
+        "content": "        UnattendCommand unattend \u003d new UnattendCommand(INDEX_FIRST_PERSON, null);"
       },
       {
         "lineNumber": 72,
         "author": {
           "gitId": "Rishi5154"
         },
-        "content": "        assertCommandFailure(unattend, model,"
+        "content": "        System.out.println(String.format(Messages.MESSAGE_INVALID_COMMAND_FORMAT, UnattendCommand.MESSAGE_USAGE));"
       },
       {
         "lineNumber": 73,
         "author": {
           "gitId": "Rishi5154"
         },
-        "content": "                String.format(Messages.MESSAGE_INVALID_COMMAND_FORMAT, UnattendCommand.MESSAGE_USAGE));"
+        "content": "        assertCommandFailure(unattend, model,"
       },
       {
         "lineNumber": 74,
         "author": {
           "gitId": "Rishi5154"
         },
-        "content": "    }"
+        "content": "                String.format(Messages.MESSAGE_INVALID_COMMAND_FORMAT, UnattendCommand.MESSAGE_USAGE));"
       },
       {
         "lineNumber": 75,
         "author": {
           "gitId": "Rishi5154"
         },
-        "content": ""
+        "content": "    }"
       },
       {
         "lineNumber": 76,
         "author": {
           "gitId": "Rishi5154"
         },
-        "content": "    @Test"
+        "content": ""
       },
       {
         "lineNumber": 77,
         "author": {
           "gitId": "Rishi5154"
         },
-        "content": "    public void execute_duplicateAttendanceFilteredList_failure() {"
+        "content": "    @Test"
       },
       {
         "lineNumber": 78,
         "author": {
           "gitId": "Rishi5154"
         },
-        "content": "        showPersonAtIndex(model, INDEX_FIRST_PERSON);"
+        "content": "    public void execute_duplicateAttendanceFilteredList_failure() {"
       },
       {
         "lineNumber": 79,
         "author": {
           "gitId": "Rishi5154"
         },
-        "content": ""
+        "content": "        showPersonAtIndex(model, INDEX_FIRST_PERSON);"
       },
       {
         "lineNumber": 80,
         "author": {
           "gitId": "Rishi5154"
         },
-        "content": "        Person personToAttend \u003d model.getAddressBook().getPersonList().get(INDEX_FIRST_PERSON.getZeroBased());"
+        "content": "        int personIndex \u003d INDEX_FIRST_PERSON.getZeroBased();"
       },
       {
         "lineNumber": 81,
         "author": {
           "gitId": "Rishi5154"
         },
-        "content": "        UnattendCommand unattend \u003d new UnattendCommand(INDEX_FIRST_PERSON, AMY_ATTENDANCE);"
+        "content": "        Person personToUnattend \u003d model.getAddressBook().getPersonList().get(personIndex);"
       },
       {
         "lineNumber": 82,
@@ -58027,21 +58027,21 @@
         "author": {
           "gitId": "Rishi5154"
         },
-        "content": "        assertCommandFailure(unattend, model, String.format(UnattendCommand.MESSAGE_ALREADY_UNATTENDED,"
+        "content": "        personToUnattend \u003d new PersonBuilder(personToUnattend)"
       },
       {
         "lineNumber": 84,
         "author": {
           "gitId": "Rishi5154"
         },
-        "content": "                personToAttend.getName(), AMY_ATTENDANCE));"
+        "content": "                .withAttendance().build();"
       },
       {
         "lineNumber": 85,
         "author": {
           "gitId": "Rishi5154"
         },
-        "content": "    }"
+        "content": "        model.setPerson(model.getFilteredPersonList().get(personIndex), personToUnattend);"
       },
       {
         "lineNumber": 86,
@@ -58055,238 +58055,238 @@
         "author": {
           "gitId": "Rishi5154"
         },
-        "content": "    @Test"
+        "content": "        UnattendCommand unattend \u003d new UnattendCommand(INDEX_FIRST_PERSON, AMY_ATTENDANCE);"
       },
       {
         "lineNumber": 88,
         "author": {
           "gitId": "Rishi5154"
         },
-        "content": "    public void execute_invalidPersonIndexUnfilteredList_failure() {"
+        "content": ""
       },
       {
         "lineNumber": 89,
         "author": {
           "gitId": "Rishi5154"
         },
-        "content": "        Index outOfBoundIndex \u003d Index.fromOneBased(model.getFilteredPersonList().size() + 1);"
+        "content": "        assertCommandFailure(unattend, model, String.format(UnattendCommand.MESSAGE_ALREADY_UNATTENDED,"
       },
       {
         "lineNumber": 90,
         "author": {
           "gitId": "Rishi5154"
         },
-        "content": "        UnattendCommand unattend \u003d new UnattendCommand(outOfBoundIndex, NEW_ATTENDANCE);"
+        "content": "                personToUnattend.getName(), AMY_ATTENDANCE));"
       },
       {
         "lineNumber": 91,
         "author": {
           "gitId": "Rishi5154"
         },
-        "content": ""
+        "content": "    }"
       },
       {
         "lineNumber": 92,
         "author": {
           "gitId": "Rishi5154"
         },
-        "content": "        assertCommandFailure(unattend, model, Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);"
+        "content": ""
       },
       {
         "lineNumber": 93,
         "author": {
           "gitId": "Rishi5154"
         },
-        "content": "    }"
+        "content": "    @Test"
       },
       {
         "lineNumber": 94,
         "author": {
           "gitId": "Rishi5154"
         },
-        "content": ""
+        "content": "    public void execute_invalidPersonIndexUnfilteredList_failure() {"
       },
       {
         "lineNumber": 95,
         "author": {
           "gitId": "Rishi5154"
         },
-        "content": "    /**"
+        "content": "        Index outOfBoundIndex \u003d Index.fromOneBased(model.getFilteredPersonList().size() + 1);"
       },
       {
         "lineNumber": 96,
         "author": {
           "gitId": "Rishi5154"
         },
-        "content": "     * Unattend filtered list where index is larger than size of filtered list,"
+        "content": "        UnattendCommand unattend \u003d new UnattendCommand(outOfBoundIndex, NEW_ATTENDANCE);"
       },
       {
         "lineNumber": 97,
         "author": {
           "gitId": "Rishi5154"
         },
-        "content": "     * but smaller than size of address book"
+        "content": ""
       },
       {
         "lineNumber": 98,
         "author": {
           "gitId": "Rishi5154"
         },
-        "content": "     */"
+        "content": "        assertCommandFailure(unattend, model, Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);"
       },
       {
         "lineNumber": 99,
         "author": {
           "gitId": "Rishi5154"
         },
-        "content": "    @Test"
+        "content": "    }"
       },
       {
         "lineNumber": 100,
         "author": {
           "gitId": "Rishi5154"
         },
-        "content": "    public void execute_invalidPersonIndexFilteredList_failure() {"
+        "content": ""
       },
       {
         "lineNumber": 101,
         "author": {
           "gitId": "Rishi5154"
         },
-        "content": "        showPersonAtIndex(model, INDEX_FIRST_PERSON);"
+        "content": "    /**"
       },
       {
         "lineNumber": 102,
         "author": {
           "gitId": "Rishi5154"
         },
-        "content": "        Index outOfBoundIndex \u003d INDEX_SECOND_PERSON;"
+        "content": "     * Unattend filtered list where index is larger than size of filtered list,"
       },
       {
         "lineNumber": 103,
         "author": {
           "gitId": "Rishi5154"
         },
-        "content": "        // ensures that outOfBoundIndex is still in bounds of address book list"
+        "content": "     * but smaller than size of address book"
       },
       {
         "lineNumber": 104,
         "author": {
           "gitId": "Rishi5154"
         },
-        "content": "        assertTrue(outOfBoundIndex.getZeroBased() \u003c model.getAddressBook().getPersonList().size());"
+        "content": "     */"
       },
       {
         "lineNumber": 105,
         "author": {
           "gitId": "Rishi5154"
         },
-        "content": ""
+        "content": "    @Test"
       },
       {
         "lineNumber": 106,
         "author": {
           "gitId": "Rishi5154"
         },
-        "content": "        UnattendCommand unattend \u003d new UnattendCommand(outOfBoundIndex, NEW_ATTENDANCE);"
+        "content": "    public void execute_invalidPersonIndexFilteredList_failure() {"
       },
       {
         "lineNumber": 107,
         "author": {
           "gitId": "Rishi5154"
         },
-        "content": ""
+        "content": "        showPersonAtIndex(model, INDEX_FIRST_PERSON);"
       },
       {
         "lineNumber": 108,
         "author": {
           "gitId": "Rishi5154"
         },
-        "content": "        assertCommandFailure(unattend, model, Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);"
+        "content": "        Index outOfBoundIndex \u003d INDEX_SECOND_PERSON;"
       },
       {
         "lineNumber": 109,
         "author": {
           "gitId": "Rishi5154"
         },
-        "content": "    }"
+        "content": "        // ensures that outOfBoundIndex is still in bounds of address book list"
       },
       {
         "lineNumber": 110,
         "author": {
           "gitId": "Rishi5154"
         },
-        "content": ""
+        "content": "        assertTrue(outOfBoundIndex.getZeroBased() \u003c model.getAddressBook().getPersonList().size());"
       },
       {
         "lineNumber": 111,
         "author": {
           "gitId": "Rishi5154"
         },
-        "content": "    @Test"
+        "content": ""
       },
       {
         "lineNumber": 112,
         "author": {
           "gitId": "Rishi5154"
         },
-        "content": "    public void equals() {"
+        "content": "        UnattendCommand unattend \u003d new UnattendCommand(outOfBoundIndex, NEW_ATTENDANCE);"
       },
       {
         "lineNumber": 113,
         "author": {
           "gitId": "Rishi5154"
         },
-        "content": "        Index index1 \u003d Index.fromOneBased(1);"
+        "content": ""
       },
       {
         "lineNumber": 114,
         "author": {
           "gitId": "Rishi5154"
         },
-        "content": "        Index index2 \u003d Index.fromOneBased(2);"
+        "content": "        assertCommandFailure(unattend, model, Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);"
       },
       {
         "lineNumber": 115,
         "author": {
           "gitId": "Rishi5154"
         },
-        "content": ""
+        "content": "    }"
       },
       {
         "lineNumber": 116,
         "author": {
           "gitId": "Rishi5154"
         },
-        "content": "        UnattendCommand unattend1 \u003d new UnattendCommand(index1, NEW_ATTENDANCE);"
+        "content": ""
       },
       {
         "lineNumber": 117,
         "author": {
           "gitId": "Rishi5154"
         },
-        "content": "        UnattendCommand unattend2 \u003d new UnattendCommand(index2, NEW_ATTENDANCE);"
+        "content": "    @Test"
       },
       {
         "lineNumber": 118,
         "author": {
           "gitId": "Rishi5154"
         },
-        "content": ""
+        "content": "    public void equals() {"
       },
       {
         "lineNumber": 119,
         "author": {
           "gitId": "Rishi5154"
         },
-        "content": "        // same object -\u003e returns true"
+        "content": "        Index index1 \u003d Index.fromOneBased(1);"
       },
       {
         "lineNumber": 120,
         "author": {
           "gitId": "Rishi5154"
         },
-        "content": "        assertTrue(unattend1.equals(unattend1));"
+        "content": "        Index index2 \u003d Index.fromOneBased(2);"
       },
       {
         "lineNumber": 121,
@@ -58300,63 +58300,63 @@
         "author": {
           "gitId": "Rishi5154"
         },
-        "content": "        // same values -\u003e returns true"
+        "content": "        UnattendCommand unattend1 \u003d new UnattendCommand(index1, NEW_ATTENDANCE);"
       },
       {
         "lineNumber": 123,
         "author": {
           "gitId": "Rishi5154"
         },
-        "content": "        UnattendCommand unattendCopy \u003d new UnattendCommand(index1, NEW_ATTENDANCE);"
+        "content": "        UnattendCommand unattend2 \u003d new UnattendCommand(index2, NEW_ATTENDANCE);"
       },
       {
         "lineNumber": 124,
         "author": {
           "gitId": "Rishi5154"
         },
-        "content": "        assertTrue(unattend1.equals(unattendCopy));"
+        "content": ""
       },
       {
         "lineNumber": 125,
         "author": {
           "gitId": "Rishi5154"
         },
-        "content": ""
+        "content": "        // same object -\u003e returns true"
       },
       {
         "lineNumber": 126,
         "author": {
           "gitId": "Rishi5154"
         },
-        "content": "        // different types -\u003e returns false"
+        "content": "        assertTrue(unattend1.equals(unattend1));"
       },
       {
         "lineNumber": 127,
         "author": {
           "gitId": "Rishi5154"
         },
-        "content": "        assertFalse(unattend1.equals(1));"
+        "content": ""
       },
       {
         "lineNumber": 128,
         "author": {
           "gitId": "Rishi5154"
         },
-        "content": ""
+        "content": "        // same values -\u003e returns true"
       },
       {
         "lineNumber": 129,
         "author": {
           "gitId": "Rishi5154"
         },
-        "content": "        // null -\u003e returns false"
+        "content": "        UnattendCommand unattendCopy \u003d new UnattendCommand(index1, NEW_ATTENDANCE);"
       },
       {
         "lineNumber": 130,
         "author": {
           "gitId": "Rishi5154"
         },
-        "content": "        assertFalse(unattend1.equals(null));"
+        "content": "        assertTrue(unattend1.equals(unattendCopy));"
       },
       {
         "lineNumber": 131,
@@ -58370,31 +58370,73 @@
         "author": {
           "gitId": "Rishi5154"
         },
-        "content": "        // different person -\u003e returns false"
+        "content": "        // different types -\u003e returns false"
       },
       {
         "lineNumber": 133,
         "author": {
           "gitId": "Rishi5154"
         },
-        "content": "        assertFalse(unattend1.equals(unattend2));"
+        "content": "        assertFalse(unattend1.equals(1));"
       },
       {
         "lineNumber": 134,
         "author": {
           "gitId": "Rishi5154"
         },
-        "content": "    }"
+        "content": ""
       },
       {
         "lineNumber": 135,
         "author": {
           "gitId": "Rishi5154"
         },
-        "content": ""
+        "content": "        // null -\u003e returns false"
       },
       {
         "lineNumber": 136,
+        "author": {
+          "gitId": "Rishi5154"
+        },
+        "content": "        assertFalse(unattend1.equals(null));"
+      },
+      {
+        "lineNumber": 137,
+        "author": {
+          "gitId": "Rishi5154"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 138,
+        "author": {
+          "gitId": "Rishi5154"
+        },
+        "content": "        // different person -\u003e returns false"
+      },
+      {
+        "lineNumber": 139,
+        "author": {
+          "gitId": "Rishi5154"
+        },
+        "content": "        assertFalse(unattend1.equals(unattend2));"
+      },
+      {
+        "lineNumber": 140,
+        "author": {
+          "gitId": "Rishi5154"
+        },
+        "content": "    }"
+      },
+      {
+        "lineNumber": 141,
+        "author": {
+          "gitId": "Rishi5154"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 142,
         "author": {
           "gitId": "Rishi5154"
         },
@@ -58402,7 +58444,7 @@
       }
     ],
     "authorContributionMap": {
-      "Rishi5154": 136
+      "Rishi5154": 142
     }
   },
   {
