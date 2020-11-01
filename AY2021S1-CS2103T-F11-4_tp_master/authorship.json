@@ -68983,6 +68983,1861 @@
     }
   },
   {
+    "path": "src/main/java/seedu/address/ui/CommandBox.java",
+    "fileType": "functional-code",
+    "lines": [
+      {
+        "lineNumber": 1,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "package seedu.address.ui;"
+      },
+      {
+        "lineNumber": 2,
+        "author": {
+          "gitId": "-"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 3,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "import javafx.collections.ObservableList;"
+      },
+      {
+        "lineNumber": 4,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "import javafx.fxml.FXML;"
+      },
+      {
+        "lineNumber": 5,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "import javafx.scene.control.TextField;"
+      },
+      {
+        "lineNumber": 6,
+        "author": {
+          "gitId": "LeeEnHao"
+        },
+        "content": "import javafx.scene.input.KeyCode;"
+      },
+      {
+        "lineNumber": 7,
+        "author": {
+          "gitId": "LeeEnHao"
+        },
+        "content": "import javafx.scene.input.KeyEvent;"
+      },
+      {
+        "lineNumber": 8,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "import javafx.scene.layout.Region;"
+      },
+      {
+        "lineNumber": 9,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "import seedu.address.logic.commands.CommandResult;"
+      },
+      {
+        "lineNumber": 10,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "import seedu.address.logic.commands.exceptions.CommandException;"
+      },
+      {
+        "lineNumber": 11,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "import seedu.address.logic.parser.exceptions.ParseException;"
+      },
+      {
+        "lineNumber": 12,
+        "author": {
+          "gitId": "-"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 13,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "/**"
+      },
+      {
+        "lineNumber": 14,
+        "author": {
+          "gitId": "-"
+        },
+        "content": " * The UI component that is responsible for receiving user command inputs."
+      },
+      {
+        "lineNumber": 15,
+        "author": {
+          "gitId": "-"
+        },
+        "content": " */"
+      },
+      {
+        "lineNumber": 16,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "public class CommandBox extends UiPart\u003cRegion\u003e {"
+      },
+      {
+        "lineNumber": 17,
+        "author": {
+          "gitId": "-"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 18,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "    public static final String ERROR_STYLE_CLASS \u003d \"error\";"
+      },
+      {
+        "lineNumber": 19,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "    private static final String FXML \u003d \"CommandBox.fxml\";"
+      },
+      {
+        "lineNumber": 20,
+        "author": {
+          "gitId": "LeeEnHao"
+        },
+        "content": "    private final CommandHistory history;"
+      },
+      {
+        "lineNumber": 21,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "    private final CommandExecutor commandExecutor;"
+      },
+      {
+        "lineNumber": 22,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "    @FXML"
+      },
+      {
+        "lineNumber": 23,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "    private TextField commandTextField;"
+      },
+      {
+        "lineNumber": 24,
+        "author": {
+          "gitId": "-"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 25,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "    /**"
+      },
+      {
+        "lineNumber": 26,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "     * Creates a {@code CommandBox} with the given {@code CommandExecutor}."
+      },
+      {
+        "lineNumber": 27,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "     */"
+      },
+      {
+        "lineNumber": 28,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "    public CommandBox(CommandExecutor commandExecutor) {"
+      },
+      {
+        "lineNumber": 29,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "        super(FXML);"
+      },
+      {
+        "lineNumber": 30,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "        this.commandExecutor \u003d commandExecutor;"
+      },
+      {
+        "lineNumber": 31,
+        "author": {
+          "gitId": "LeeEnHao"
+        },
+        "content": "        this.history \u003d new CommandHistory();"
+      },
+      {
+        "lineNumber": 32,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "        // calls #setStyleToDefault() whenever there is a change to the text of the command box."
+      },
+      {
+        "lineNumber": 33,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "        commandTextField.textProperty().addListener((unused1, unused2, unused3) -\u003e setStyleToDefault());"
+      },
+      {
+        "lineNumber": 34,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "    }"
+      },
+      {
+        "lineNumber": 35,
+        "author": {
+          "gitId": "-"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 36,
+        "author": {
+          "gitId": "LeeEnHao"
+        },
+        "content": "    @FXML"
+      },
+      {
+        "lineNumber": 37,
+        "author": {
+          "gitId": "LeeEnHao"
+        },
+        "content": "    private void handleKeyPressed(KeyEvent keyEvent) {"
+      },
+      {
+        "lineNumber": 38,
+        "author": {
+          "gitId": "LeeEnHao"
+        },
+        "content": "        if (keyEvent.getCode() \u003d\u003d KeyCode.UP) {"
+      },
+      {
+        "lineNumber": 39,
+        "author": {
+          "gitId": "LeeEnHao"
+        },
+        "content": "            getPreviousCommand();"
+      },
+      {
+        "lineNumber": 40,
+        "author": {
+          "gitId": "LeeEnHao"
+        },
+        "content": "        } else if (keyEvent.getCode() \u003d\u003d KeyCode.DOWN) {"
+      },
+      {
+        "lineNumber": 41,
+        "author": {
+          "gitId": "LeeEnHao"
+        },
+        "content": "            getNextCommand();"
+      },
+      {
+        "lineNumber": 42,
+        "author": {
+          "gitId": "LeeEnHao"
+        },
+        "content": "        }"
+      },
+      {
+        "lineNumber": 43,
+        "author": {
+          "gitId": "LeeEnHao"
+        },
+        "content": "    }"
+      },
+      {
+        "lineNumber": 44,
+        "author": {
+          "gitId": "LeeEnHao"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 45,
+        "author": {
+          "gitId": "LeeEnHao"
+        },
+        "content": "    /**"
+      },
+      {
+        "lineNumber": 46,
+        "author": {
+          "gitId": "LeeEnHao"
+        },
+        "content": "     * UP key event."
+      },
+      {
+        "lineNumber": 47,
+        "author": {
+          "gitId": "LeeEnHao"
+        },
+        "content": "     */"
+      },
+      {
+        "lineNumber": 48,
+        "author": {
+          "gitId": "LeeEnHao"
+        },
+        "content": "    private void getPreviousCommand() {"
+      },
+      {
+        "lineNumber": 49,
+        "author": {
+          "gitId": "LeeEnHao"
+        },
+        "content": "        if (history.hasPrevious()) {"
+      },
+      {
+        "lineNumber": 50,
+        "author": {
+          "gitId": "LeeEnHao"
+        },
+        "content": "            String currentCommand \u003d commandTextField.getText();"
+      },
+      {
+        "lineNumber": 51,
+        "author": {
+          "gitId": "LeeEnHao"
+        },
+        "content": "            String prevCommand \u003d history.getPrevious(currentCommand);"
+      },
+      {
+        "lineNumber": 52,
+        "author": {
+          "gitId": "LeeEnHao"
+        },
+        "content": "            commandTextField.setText(prevCommand);"
+      },
+      {
+        "lineNumber": 53,
+        "author": {
+          "gitId": "LeeEnHao"
+        },
+        "content": "        }"
+      },
+      {
+        "lineNumber": 54,
+        "author": {
+          "gitId": "qwoprocks"
+        },
+        "content": "        commandTextField.end();"
+      },
+      {
+        "lineNumber": 55,
+        "author": {
+          "gitId": "LeeEnHao"
+        },
+        "content": "    }"
+      },
+      {
+        "lineNumber": 56,
+        "author": {
+          "gitId": "LeeEnHao"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 57,
+        "author": {
+          "gitId": "LeeEnHao"
+        },
+        "content": "    /**"
+      },
+      {
+        "lineNumber": 58,
+        "author": {
+          "gitId": "LeeEnHao"
+        },
+        "content": "     * DOWN key event."
+      },
+      {
+        "lineNumber": 59,
+        "author": {
+          "gitId": "LeeEnHao"
+        },
+        "content": "     */"
+      },
+      {
+        "lineNumber": 60,
+        "author": {
+          "gitId": "LeeEnHao"
+        },
+        "content": "    private void getNextCommand() {"
+      },
+      {
+        "lineNumber": 61,
+        "author": {
+          "gitId": "qwoprocks"
+        },
+        "content": "        if (history.hasNext() || history.hasIncompletelyTypedCommand()) {"
+      },
+      {
+        "lineNumber": 62,
+        "author": {
+          "gitId": "LeeEnHao"
+        },
+        "content": "            String nextCommand \u003d history.getNext();"
+      },
+      {
+        "lineNumber": 63,
+        "author": {
+          "gitId": "LeeEnHao"
+        },
+        "content": "            commandTextField.setText(nextCommand);"
+      },
+      {
+        "lineNumber": 64,
+        "author": {
+          "gitId": "LeeEnHao"
+        },
+        "content": "            commandTextField.end();"
+      },
+      {
+        "lineNumber": 65,
+        "author": {
+          "gitId": "LeeEnHao"
+        },
+        "content": "        }"
+      },
+      {
+        "lineNumber": 66,
+        "author": {
+          "gitId": "LeeEnHao"
+        },
+        "content": "    }"
+      },
+      {
+        "lineNumber": 67,
+        "author": {
+          "gitId": "LeeEnHao"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 68,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "    /**"
+      },
+      {
+        "lineNumber": 69,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "     * Handles the Enter button pressed event."
+      },
+      {
+        "lineNumber": 70,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "     */"
+      },
+      {
+        "lineNumber": 71,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "    @FXML"
+      },
+      {
+        "lineNumber": 72,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "    private void handleCommandEntered() {"
+      },
+      {
+        "lineNumber": 73,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "        try {"
+      },
+      {
+        "lineNumber": 74,
+        "author": {
+          "gitId": "LeeEnHao"
+        },
+        "content": "            String command \u003d commandTextField.getText();"
+      },
+      {
+        "lineNumber": 75,
+        "author": {
+          "gitId": "LeeEnHao"
+        },
+        "content": "            commandExecutor.execute(command);"
+      },
+      {
+        "lineNumber": 76,
+        "author": {
+          "gitId": "LeeEnHao"
+        },
+        "content": "            history.add(command);"
+      },
+      {
+        "lineNumber": 77,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "            commandTextField.setText(\"\");"
+      },
+      {
+        "lineNumber": 78,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "        } catch (CommandException | ParseException e) {"
+      },
+      {
+        "lineNumber": 79,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "            setStyleToIndicateCommandFailure();"
+      },
+      {
+        "lineNumber": 80,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "        }"
+      },
+      {
+        "lineNumber": 81,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "    }"
+      },
+      {
+        "lineNumber": 82,
+        "author": {
+          "gitId": "-"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 83,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "    /**"
+      },
+      {
+        "lineNumber": 84,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "     * Sets the command box style to use the default style."
+      },
+      {
+        "lineNumber": 85,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "     */"
+      },
+      {
+        "lineNumber": 86,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "    private void setStyleToDefault() {"
+      },
+      {
+        "lineNumber": 87,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "        commandTextField.getStyleClass().remove(ERROR_STYLE_CLASS);"
+      },
+      {
+        "lineNumber": 88,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "    }"
+      },
+      {
+        "lineNumber": 89,
+        "author": {
+          "gitId": "-"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 90,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "    /**"
+      },
+      {
+        "lineNumber": 91,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "     * Sets the command box style to indicate a failed command."
+      },
+      {
+        "lineNumber": 92,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "     */"
+      },
+      {
+        "lineNumber": 93,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "    private void setStyleToIndicateCommandFailure() {"
+      },
+      {
+        "lineNumber": 94,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "        ObservableList\u003cString\u003e styleClass \u003d commandTextField.getStyleClass();"
+      },
+      {
+        "lineNumber": 95,
+        "author": {
+          "gitId": "-"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 96,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "        if (styleClass.contains(ERROR_STYLE_CLASS)) {"
+      },
+      {
+        "lineNumber": 97,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "            return;"
+      },
+      {
+        "lineNumber": 98,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "        }"
+      },
+      {
+        "lineNumber": 99,
+        "author": {
+          "gitId": "-"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 100,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "        styleClass.add(ERROR_STYLE_CLASS);"
+      },
+      {
+        "lineNumber": 101,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "    }"
+      },
+      {
+        "lineNumber": 102,
+        "author": {
+          "gitId": "-"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 103,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "    /**"
+      },
+      {
+        "lineNumber": 104,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "     * Represents a function that can execute commands."
+      },
+      {
+        "lineNumber": 105,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "     */"
+      },
+      {
+        "lineNumber": 106,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "    @FunctionalInterface"
+      },
+      {
+        "lineNumber": 107,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "    public interface CommandExecutor {"
+      },
+      {
+        "lineNumber": 108,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "        /**"
+      },
+      {
+        "lineNumber": 109,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "         * Executes the command and returns the result."
+      },
+      {
+        "lineNumber": 110,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "         *"
+      },
+      {
+        "lineNumber": 111,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "         * @see seedu.address.logic.Logic#execute(String)"
+      },
+      {
+        "lineNumber": 112,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "         */"
+      },
+      {
+        "lineNumber": 113,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "        CommandResult execute(String commandText) throws CommandException, ParseException;"
+      },
+      {
+        "lineNumber": 114,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "    }"
+      },
+      {
+        "lineNumber": 115,
+        "author": {
+          "gitId": "-"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 116,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "}"
+      }
+    ],
+    "authorContributionMap": {
+      "LeeEnHao": 37,
+      "qwoprocks": 2,
+      "-": 77
+    }
+  },
+  {
+    "path": "src/main/java/seedu/address/ui/CommandHistory.java",
+    "fileType": "functional-code",
+    "lines": [
+      {
+        "lineNumber": 1,
+        "author": {
+          "gitId": "LeeEnHao"
+        },
+        "content": "package seedu.address.ui;"
+      },
+      {
+        "lineNumber": 2,
+        "author": {
+          "gitId": "LeeEnHao"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 3,
+        "author": {
+          "gitId": "LeeEnHao"
+        },
+        "content": "import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;"
+      },
+      {
+        "lineNumber": 4,
+        "author": {
+          "gitId": "LeeEnHao"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 5,
+        "author": {
+          "gitId": "LeeEnHao"
+        },
+        "content": "import java.util.ArrayList;"
+      },
+      {
+        "lineNumber": 6,
+        "author": {
+          "gitId": "LeeEnHao"
+        },
+        "content": "import java.util.List;"
+      },
+      {
+        "lineNumber": 7,
+        "author": {
+          "gitId": "LeeEnHao"
+        },
+        "content": "import java.util.NoSuchElementException;"
+      },
+      {
+        "lineNumber": 8,
+        "author": {
+          "gitId": "LeeEnHao"
+        },
+        "content": "import java.util.logging.Logger;"
+      },
+      {
+        "lineNumber": 9,
+        "author": {
+          "gitId": "LeeEnHao"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 10,
+        "author": {
+          "gitId": "LeeEnHao"
+        },
+        "content": "import seedu.address.commons.core.LogsCenter;"
+      },
+      {
+        "lineNumber": 11,
+        "author": {
+          "gitId": "LeeEnHao"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 12,
+        "author": {
+          "gitId": "LeeEnHao"
+        },
+        "content": "/**"
+      },
+      {
+        "lineNumber": 13,
+        "author": {
+          "gitId": "LeeEnHao"
+        },
+        "content": " * A class to encapsulate the history of commands entered by the user."
+      },
+      {
+        "lineNumber": 14,
+        "author": {
+          "gitId": "LeeEnHao"
+        },
+        "content": " */"
+      },
+      {
+        "lineNumber": 15,
+        "author": {
+          "gitId": "LeeEnHao"
+        },
+        "content": "public class CommandHistory {"
+      },
+      {
+        "lineNumber": 16,
+        "author": {
+          "gitId": "qwoprocks"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 17,
+        "author": {
+          "gitId": "LeeEnHao"
+        },
+        "content": "    private static final Logger logger \u003d LogsCenter.getLogger(CommandHistory.class);"
+      },
+      {
+        "lineNumber": 18,
+        "author": {
+          "gitId": "LeeEnHao"
+        },
+        "content": "    private final List\u003cString\u003e history;"
+      },
+      {
+        "lineNumber": 19,
+        "author": {
+          "gitId": "LeeEnHao"
+        },
+        "content": "    private int pointer;"
+      },
+      {
+        "lineNumber": 20,
+        "author": {
+          "gitId": "LeeEnHao"
+        },
+        "content": "    private String temp;"
+      },
+      {
+        "lineNumber": 21,
+        "author": {
+          "gitId": "LeeEnHao"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 22,
+        "author": {
+          "gitId": "LeeEnHao"
+        },
+        "content": "    /**"
+      },
+      {
+        "lineNumber": 23,
+        "author": {
+          "gitId": "LeeEnHao"
+        },
+        "content": "     * Constructor for the history of commands entered."
+      },
+      {
+        "lineNumber": 24,
+        "author": {
+          "gitId": "LeeEnHao"
+        },
+        "content": "     */"
+      },
+      {
+        "lineNumber": 25,
+        "author": {
+          "gitId": "LeeEnHao"
+        },
+        "content": "    public CommandHistory() {"
+      },
+      {
+        "lineNumber": 26,
+        "author": {
+          "gitId": "LeeEnHao"
+        },
+        "content": "        this.history \u003d new ArrayList\u003c\u003e();"
+      },
+      {
+        "lineNumber": 27,
+        "author": {
+          "gitId": "LeeEnHao"
+        },
+        "content": "        pointer \u003d 0;"
+      },
+      {
+        "lineNumber": 28,
+        "author": {
+          "gitId": "LeeEnHao"
+        },
+        "content": "    }"
+      },
+      {
+        "lineNumber": 29,
+        "author": {
+          "gitId": "LeeEnHao"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 30,
+        "author": {
+          "gitId": "LeeEnHao"
+        },
+        "content": "    /**"
+      },
+      {
+        "lineNumber": 31,
+        "author": {
+          "gitId": "LeeEnHao"
+        },
+        "content": "     * Adds the given command to the history of commands."
+      },
+      {
+        "lineNumber": 32,
+        "author": {
+          "gitId": "LeeEnHao"
+        },
+        "content": "     *"
+      },
+      {
+        "lineNumber": 33,
+        "author": {
+          "gitId": "LeeEnHao"
+        },
+        "content": "     * @param command A command to be added to the history."
+      },
+      {
+        "lineNumber": 34,
+        "author": {
+          "gitId": "LeeEnHao"
+        },
+        "content": "     */"
+      },
+      {
+        "lineNumber": 35,
+        "author": {
+          "gitId": "LeeEnHao"
+        },
+        "content": "    public void add(String command) {"
+      },
+      {
+        "lineNumber": 36,
+        "author": {
+          "gitId": "LeeEnHao"
+        },
+        "content": "        requireAllNonNull(command);"
+      },
+      {
+        "lineNumber": 37,
+        "author": {
+          "gitId": "LeeEnHao"
+        },
+        "content": "        logger.info(history.toString());"
+      },
+      {
+        "lineNumber": 38,
+        "author": {
+          "gitId": "LeeEnHao"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 39,
+        "author": {
+          "gitId": "LeeEnHao"
+        },
+        "content": "        history.add(command);"
+      },
+      {
+        "lineNumber": 40,
+        "author": {
+          "gitId": "LeeEnHao"
+        },
+        "content": "        pointer \u003d history.size();"
+      },
+      {
+        "lineNumber": 41,
+        "author": {
+          "gitId": "LeeEnHao"
+        },
+        "content": "        clearTemp();"
+      },
+      {
+        "lineNumber": 42,
+        "author": {
+          "gitId": "LeeEnHao"
+        },
+        "content": "    }"
+      },
+      {
+        "lineNumber": 43,
+        "author": {
+          "gitId": "LeeEnHao"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 44,
+        "author": {
+          "gitId": "LeeEnHao"
+        },
+        "content": "    /**"
+      },
+      {
+        "lineNumber": 45,
+        "author": {
+          "gitId": "LeeEnHao"
+        },
+        "content": "     * Gets the next command in history."
+      },
+      {
+        "lineNumber": 46,
+        "author": {
+          "gitId": "LeeEnHao"
+        },
+        "content": "     *"
+      },
+      {
+        "lineNumber": 47,
+        "author": {
+          "gitId": "LeeEnHao"
+        },
+        "content": "     * @return The next command."
+      },
+      {
+        "lineNumber": 48,
+        "author": {
+          "gitId": "qwoprocks"
+        },
+        "content": "     * @throws NoSuchElementException if there is no next command."
+      },
+      {
+        "lineNumber": 49,
+        "author": {
+          "gitId": "LeeEnHao"
+        },
+        "content": "     */"
+      },
+      {
+        "lineNumber": 50,
+        "author": {
+          "gitId": "LeeEnHao"
+        },
+        "content": "    public String getNext() {"
+      },
+      {
+        "lineNumber": 51,
+        "author": {
+          "gitId": "LeeEnHao"
+        },
+        "content": "        if (hasNext()) {"
+      },
+      {
+        "lineNumber": 52,
+        "author": {
+          "gitId": "LeeEnHao"
+        },
+        "content": "            return history.get(moveForward());"
+      },
+      {
+        "lineNumber": 53,
+        "author": {
+          "gitId": "qwoprocks"
+        },
+        "content": "        } else if (hasIncompletelyTypedCommand()) {"
+      },
+      {
+        "lineNumber": 54,
+        "author": {
+          "gitId": "qwoprocks"
+        },
+        "content": "            return getIncompletelyTypedCommand();"
+      },
+      {
+        "lineNumber": 55,
+        "author": {
+          "gitId": "LeeEnHao"
+        },
+        "content": "        }"
+      },
+      {
+        "lineNumber": 56,
+        "author": {
+          "gitId": "LeeEnHao"
+        },
+        "content": "        throw new NoSuchElementException();"
+      },
+      {
+        "lineNumber": 57,
+        "author": {
+          "gitId": "LeeEnHao"
+        },
+        "content": "    }"
+      },
+      {
+        "lineNumber": 58,
+        "author": {
+          "gitId": "LeeEnHao"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 59,
+        "author": {
+          "gitId": "LeeEnHao"
+        },
+        "content": "    /**"
+      },
+      {
+        "lineNumber": 60,
+        "author": {
+          "gitId": "LeeEnHao"
+        },
+        "content": "     * Gets the previous command in history."
+      },
+      {
+        "lineNumber": 61,
+        "author": {
+          "gitId": "LeeEnHao"
+        },
+        "content": "     *"
+      },
+      {
+        "lineNumber": 62,
+        "author": {
+          "gitId": "LeeEnHao"
+        },
+        "content": "     * @return The previous command."
+      },
+      {
+        "lineNumber": 63,
+        "author": {
+          "gitId": "qwoprocks"
+        },
+        "content": "     * @throws NoSuchElementException if there is no previous command."
+      },
+      {
+        "lineNumber": 64,
+        "author": {
+          "gitId": "LeeEnHao"
+        },
+        "content": "     */"
+      },
+      {
+        "lineNumber": 65,
+        "author": {
+          "gitId": "LeeEnHao"
+        },
+        "content": "    public String getPrevious(String command) {"
+      },
+      {
+        "lineNumber": 66,
+        "author": {
+          "gitId": "qwoprocks"
+        },
+        "content": "        addIncompletelyTypedCommandToTempHistory(command);"
+      },
+      {
+        "lineNumber": 67,
+        "author": {
+          "gitId": "LeeEnHao"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 68,
+        "author": {
+          "gitId": "LeeEnHao"
+        },
+        "content": "        if (hasPrevious()) {"
+      },
+      {
+        "lineNumber": 69,
+        "author": {
+          "gitId": "LeeEnHao"
+        },
+        "content": "            return history.get(moveBack());"
+      },
+      {
+        "lineNumber": 70,
+        "author": {
+          "gitId": "LeeEnHao"
+        },
+        "content": "        } else {"
+      },
+      {
+        "lineNumber": 71,
+        "author": {
+          "gitId": "LeeEnHao"
+        },
+        "content": "            throw new NoSuchElementException();"
+      },
+      {
+        "lineNumber": 72,
+        "author": {
+          "gitId": "LeeEnHao"
+        },
+        "content": "        }"
+      },
+      {
+        "lineNumber": 73,
+        "author": {
+          "gitId": "LeeEnHao"
+        },
+        "content": "    }"
+      },
+      {
+        "lineNumber": 74,
+        "author": {
+          "gitId": "LeeEnHao"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 75,
+        "author": {
+          "gitId": "LeeEnHao"
+        },
+        "content": "    /**"
+      },
+      {
+        "lineNumber": 76,
+        "author": {
+          "gitId": "LeeEnHao"
+        },
+        "content": "     * Checks if there is any command next."
+      },
+      {
+        "lineNumber": 77,
+        "author": {
+          "gitId": "LeeEnHao"
+        },
+        "content": "     *"
+      },
+      {
+        "lineNumber": 78,
+        "author": {
+          "gitId": "LeeEnHao"
+        },
+        "content": "     * @return True if there is another command after the current one."
+      },
+      {
+        "lineNumber": 79,
+        "author": {
+          "gitId": "LeeEnHao"
+        },
+        "content": "     */"
+      },
+      {
+        "lineNumber": 80,
+        "author": {
+          "gitId": "LeeEnHao"
+        },
+        "content": "    public boolean hasNext() {"
+      },
+      {
+        "lineNumber": 81,
+        "author": {
+          "gitId": "LeeEnHao"
+        },
+        "content": "        return pointer + 1 \u003c history.size();"
+      },
+      {
+        "lineNumber": 82,
+        "author": {
+          "gitId": "LeeEnHao"
+        },
+        "content": "    }"
+      },
+      {
+        "lineNumber": 83,
+        "author": {
+          "gitId": "LeeEnHao"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 84,
+        "author": {
+          "gitId": "LeeEnHao"
+        },
+        "content": "    /**"
+      },
+      {
+        "lineNumber": 85,
+        "author": {
+          "gitId": "qwoprocks"
+        },
+        "content": "     * Checks if there is a incompletely typed command that is currently in the temporary history."
+      },
+      {
+        "lineNumber": 86,
+        "author": {
+          "gitId": "LeeEnHao"
+        },
+        "content": "     *"
+      },
+      {
+        "lineNumber": 87,
+        "author": {
+          "gitId": "qwoprocks"
+        },
+        "content": "     * @return True if there is a incompletely typed command, false otherwise."
+      },
+      {
+        "lineNumber": 88,
+        "author": {
+          "gitId": "LeeEnHao"
+        },
+        "content": "     */"
+      },
+      {
+        "lineNumber": 89,
+        "author": {
+          "gitId": "qwoprocks"
+        },
+        "content": "    public boolean hasIncompletelyTypedCommand() {"
+      },
+      {
+        "lineNumber": 90,
+        "author": {
+          "gitId": "LeeEnHao"
+        },
+        "content": "        return temp !\u003d null;"
+      },
+      {
+        "lineNumber": 91,
+        "author": {
+          "gitId": "LeeEnHao"
+        },
+        "content": "    }"
+      },
+      {
+        "lineNumber": 92,
+        "author": {
+          "gitId": "LeeEnHao"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 93,
+        "author": {
+          "gitId": "LeeEnHao"
+        },
+        "content": "    /**"
+      },
+      {
+        "lineNumber": 94,
+        "author": {
+          "gitId": "LeeEnHao"
+        },
+        "content": "     * Checks if there is any command previously."
+      },
+      {
+        "lineNumber": 95,
+        "author": {
+          "gitId": "LeeEnHao"
+        },
+        "content": "     *"
+      },
+      {
+        "lineNumber": 96,
+        "author": {
+          "gitId": "LeeEnHao"
+        },
+        "content": "     * @return True if there is another command previous to the current one."
+      },
+      {
+        "lineNumber": 97,
+        "author": {
+          "gitId": "LeeEnHao"
+        },
+        "content": "     */"
+      },
+      {
+        "lineNumber": 98,
+        "author": {
+          "gitId": "LeeEnHao"
+        },
+        "content": "    public boolean hasPrevious() {"
+      },
+      {
+        "lineNumber": 99,
+        "author": {
+          "gitId": "LeeEnHao"
+        },
+        "content": "        return pointer - 1 \u003e\u003d 0;"
+      },
+      {
+        "lineNumber": 100,
+        "author": {
+          "gitId": "LeeEnHao"
+        },
+        "content": "    }"
+      },
+      {
+        "lineNumber": 101,
+        "author": {
+          "gitId": "LeeEnHao"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 102,
+        "author": {
+          "gitId": "LeeEnHao"
+        },
+        "content": "    /**"
+      },
+      {
+        "lineNumber": 103,
+        "author": {
+          "gitId": "LeeEnHao"
+        },
+        "content": "     * Moves the pointer backwards."
+      },
+      {
+        "lineNumber": 104,
+        "author": {
+          "gitId": "LeeEnHao"
+        },
+        "content": "     *"
+      },
+      {
+        "lineNumber": 105,
+        "author": {
+          "gitId": "LeeEnHao"
+        },
+        "content": "     * @return Decremented pointer,"
+      },
+      {
+        "lineNumber": 106,
+        "author": {
+          "gitId": "LeeEnHao"
+        },
+        "content": "     */"
+      },
+      {
+        "lineNumber": 107,
+        "author": {
+          "gitId": "LeeEnHao"
+        },
+        "content": "    private int moveBack() {"
+      },
+      {
+        "lineNumber": 108,
+        "author": {
+          "gitId": "LeeEnHao"
+        },
+        "content": "        assert pointer \u003e 0;"
+      },
+      {
+        "lineNumber": 109,
+        "author": {
+          "gitId": "LeeEnHao"
+        },
+        "content": "        return --pointer;"
+      },
+      {
+        "lineNumber": 110,
+        "author": {
+          "gitId": "LeeEnHao"
+        },
+        "content": "    }"
+      },
+      {
+        "lineNumber": 111,
+        "author": {
+          "gitId": "LeeEnHao"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 112,
+        "author": {
+          "gitId": "LeeEnHao"
+        },
+        "content": "    /**"
+      },
+      {
+        "lineNumber": 113,
+        "author": {
+          "gitId": "LeeEnHao"
+        },
+        "content": "     * Moves the pointer forward."
+      },
+      {
+        "lineNumber": 114,
+        "author": {
+          "gitId": "LeeEnHao"
+        },
+        "content": "     *"
+      },
+      {
+        "lineNumber": 115,
+        "author": {
+          "gitId": "LeeEnHao"
+        },
+        "content": "     * @return Incremented pointer."
+      },
+      {
+        "lineNumber": 116,
+        "author": {
+          "gitId": "LeeEnHao"
+        },
+        "content": "     */"
+      },
+      {
+        "lineNumber": 117,
+        "author": {
+          "gitId": "LeeEnHao"
+        },
+        "content": "    private int moveForward() {"
+      },
+      {
+        "lineNumber": 118,
+        "author": {
+          "gitId": "LeeEnHao"
+        },
+        "content": "        assert pointer \u003c history.size() - 1;"
+      },
+      {
+        "lineNumber": 119,
+        "author": {
+          "gitId": "LeeEnHao"
+        },
+        "content": "        return ++pointer;"
+      },
+      {
+        "lineNumber": 120,
+        "author": {
+          "gitId": "LeeEnHao"
+        },
+        "content": "    }"
+      },
+      {
+        "lineNumber": 121,
+        "author": {
+          "gitId": "LeeEnHao"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 122,
+        "author": {
+          "gitId": "LeeEnHao"
+        },
+        "content": "    /**"
+      },
+      {
+        "lineNumber": 123,
+        "author": {
+          "gitId": "qwoprocks"
+        },
+        "content": "     * Adds the current incompletely typed command to a temporary history."
+      },
+      {
+        "lineNumber": 124,
+        "author": {
+          "gitId": "LeeEnHao"
+        },
+        "content": "     */"
+      },
+      {
+        "lineNumber": 125,
+        "author": {
+          "gitId": "qwoprocks"
+        },
+        "content": "    private void addIncompletelyTypedCommandToTempHistory(String command) {"
+      },
+      {
+        "lineNumber": 126,
+        "author": {
+          "gitId": "LeeEnHao"
+        },
+        "content": "        if (pointer \u003d\u003d history.size()) {"
+      },
+      {
+        "lineNumber": 127,
+        "author": {
+          "gitId": "LeeEnHao"
+        },
+        "content": "            temp \u003d command;"
+      },
+      {
+        "lineNumber": 128,
+        "author": {
+          "gitId": "LeeEnHao"
+        },
+        "content": "        }"
+      },
+      {
+        "lineNumber": 129,
+        "author": {
+          "gitId": "LeeEnHao"
+        },
+        "content": "    }"
+      },
+      {
+        "lineNumber": 130,
+        "author": {
+          "gitId": "LeeEnHao"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 131,
+        "author": {
+          "gitId": "LeeEnHao"
+        },
+        "content": "    /**"
+      },
+      {
+        "lineNumber": 132,
+        "author": {
+          "gitId": "qwoprocks"
+        },
+        "content": "     * Gets the incompletely typed command."
+      },
+      {
+        "lineNumber": 133,
+        "author": {
+          "gitId": "LeeEnHao"
+        },
+        "content": "     */"
+      },
+      {
+        "lineNumber": 134,
+        "author": {
+          "gitId": "qwoprocks"
+        },
+        "content": "    private String getIncompletelyTypedCommand() {"
+      },
+      {
+        "lineNumber": 135,
+        "author": {
+          "gitId": "LeeEnHao"
+        },
+        "content": "        pointer \u003d history.size();"
+      },
+      {
+        "lineNumber": 136,
+        "author": {
+          "gitId": "LeeEnHao"
+        },
+        "content": "        return temp;"
+      },
+      {
+        "lineNumber": 137,
+        "author": {
+          "gitId": "LeeEnHao"
+        },
+        "content": "    }"
+      },
+      {
+        "lineNumber": 138,
+        "author": {
+          "gitId": "LeeEnHao"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 139,
+        "author": {
+          "gitId": "LeeEnHao"
+        },
+        "content": "    /**"
+      },
+      {
+        "lineNumber": 140,
+        "author": {
+          "gitId": "LeeEnHao"
+        },
+        "content": "     * Clears the temp history."
+      },
+      {
+        "lineNumber": 141,
+        "author": {
+          "gitId": "LeeEnHao"
+        },
+        "content": "     */"
+      },
+      {
+        "lineNumber": 142,
+        "author": {
+          "gitId": "LeeEnHao"
+        },
+        "content": "    private void clearTemp() {"
+      },
+      {
+        "lineNumber": 143,
+        "author": {
+          "gitId": "LeeEnHao"
+        },
+        "content": "        temp \u003d null;"
+      },
+      {
+        "lineNumber": 144,
+        "author": {
+          "gitId": "LeeEnHao"
+        },
+        "content": "    }"
+      },
+      {
+        "lineNumber": 145,
+        "author": {
+          "gitId": "LeeEnHao"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 146,
+        "author": {
+          "gitId": "LeeEnHao"
+        },
+        "content": "}"
+      }
+    ],
+    "authorContributionMap": {
+      "LeeEnHao": 133,
+      "qwoprocks": 13
+    }
+  },
+  {
     "path": "src/main/java/seedu/address/ui/CountryNoteListPanel.java",
     "fileType": "functional-code",
     "lines": [
@@ -76687,9 +78542,9 @@
       {
         "lineNumber": 7,
         "author": {
-          "gitId": "-"
+          "gitId": "LeeEnHao"
         },
-        "content": "  \u003cTextField fx:id\u003d\"commandTextField\" onAction\u003d\"#handleCommandEntered\" promptText\u003d\"Enter command here...\"/\u003e"
+        "content": "  \u003cTextField fx:id\u003d\"commandTextField\" onAction\u003d\"#handleCommandEntered\" onKeyPressed\u003d\"#handleKeyPressed\" promptText\u003d\"Enter command here...\"/\u003e"
       },
       {
         "lineNumber": 8,
@@ -76707,8 +78562,8 @@
       }
     ],
     "authorContributionMap": {
-      "LeeEnHao": 1,
-      "-": 8
+      "LeeEnHao": 2,
+      "-": 7
     }
   },
   {
@@ -85425,7 +87280,7 @@
         "author": {
           "gitId": "LeeEnHao"
         },
-        "content": "     * Returns the list of style classes present in the command box."
+        "content": "     * Presses the UP button."
       },
       {
         "lineNumber": 44,
@@ -85439,24 +87294,136 @@
         "author": {
           "gitId": "LeeEnHao"
         },
-        "content": "    public ObservableList\u003cString\u003e getStyleClass() {"
+        "content": "    public void pressUp() {"
       },
       {
         "lineNumber": 46,
         "author": {
           "gitId": "LeeEnHao"
         },
-        "content": "        return getRootNode().getStyleClass();"
+        "content": "        click();"
       },
       {
         "lineNumber": 47,
+        "author": {
+          "gitId": "qwoprocks"
+        },
+        "content": "        guiRobot.type(KeyCode.UP);"
+      },
+      {
+        "lineNumber": 48,
         "author": {
           "gitId": "LeeEnHao"
         },
         "content": "    }"
       },
       {
-        "lineNumber": 48,
+        "lineNumber": 49,
+        "author": {
+          "gitId": "LeeEnHao"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 50,
+        "author": {
+          "gitId": "LeeEnHao"
+        },
+        "content": "    /**"
+      },
+      {
+        "lineNumber": 51,
+        "author": {
+          "gitId": "LeeEnHao"
+        },
+        "content": "     * Presses the DOWN button."
+      },
+      {
+        "lineNumber": 52,
+        "author": {
+          "gitId": "LeeEnHao"
+        },
+        "content": "     */"
+      },
+      {
+        "lineNumber": 53,
+        "author": {
+          "gitId": "LeeEnHao"
+        },
+        "content": "    public void pressDown() {"
+      },
+      {
+        "lineNumber": 54,
+        "author": {
+          "gitId": "LeeEnHao"
+        },
+        "content": "        click();"
+      },
+      {
+        "lineNumber": 55,
+        "author": {
+          "gitId": "qwoprocks"
+        },
+        "content": "        guiRobot.type(KeyCode.DOWN);"
+      },
+      {
+        "lineNumber": 56,
+        "author": {
+          "gitId": "LeeEnHao"
+        },
+        "content": "    }"
+      },
+      {
+        "lineNumber": 57,
+        "author": {
+          "gitId": "LeeEnHao"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 58,
+        "author": {
+          "gitId": "LeeEnHao"
+        },
+        "content": "    /**"
+      },
+      {
+        "lineNumber": 59,
+        "author": {
+          "gitId": "LeeEnHao"
+        },
+        "content": "     * Returns the list of style classes present in the command box."
+      },
+      {
+        "lineNumber": 60,
+        "author": {
+          "gitId": "LeeEnHao"
+        },
+        "content": "     */"
+      },
+      {
+        "lineNumber": 61,
+        "author": {
+          "gitId": "LeeEnHao"
+        },
+        "content": "    public ObservableList\u003cString\u003e getStyleClass() {"
+      },
+      {
+        "lineNumber": 62,
+        "author": {
+          "gitId": "LeeEnHao"
+        },
+        "content": "        return getRootNode().getStyleClass();"
+      },
+      {
+        "lineNumber": 63,
+        "author": {
+          "gitId": "LeeEnHao"
+        },
+        "content": "    }"
+      },
+      {
+        "lineNumber": 64,
         "author": {
           "gitId": "LeeEnHao"
         },
@@ -85464,7 +87431,8 @@
       }
     ],
     "authorContributionMap": {
-      "LeeEnHao": 48
+      "LeeEnHao": 62,
+      "qwoprocks": 2
     }
   },
   {
@@ -152738,58 +154706,58 @@
       {
         "lineNumber": 6,
         "author": {
-          "gitId": "LeeEnHao"
+          "gitId": "qwoprocks"
         },
-        "content": ""
+        "content": "import java.util.Arrays;"
       },
       {
         "lineNumber": 7,
         "author": {
           "gitId": "LeeEnHao"
         },
-        "content": "import org.junit.jupiter.api.BeforeEach;"
+        "content": ""
       },
       {
         "lineNumber": 8,
         "author": {
           "gitId": "LeeEnHao"
         },
-        "content": "import org.junit.jupiter.api.Test;"
+        "content": "import org.junit.jupiter.api.BeforeEach;"
       },
       {
         "lineNumber": 9,
         "author": {
           "gitId": "LeeEnHao"
         },
-        "content": ""
+        "content": "import org.junit.jupiter.api.Test;"
       },
       {
         "lineNumber": 10,
         "author": {
           "gitId": "LeeEnHao"
         },
-        "content": "import guitests.guihandles.CommandBoxHandle;"
+        "content": ""
       },
       {
         "lineNumber": 11,
         "author": {
           "gitId": "LeeEnHao"
         },
-        "content": "import javafx.scene.input.KeyCode;"
+        "content": "import guitests.guihandles.CommandBoxHandle;"
       },
       {
         "lineNumber": 12,
         "author": {
           "gitId": "LeeEnHao"
         },
-        "content": "import seedu.address.logic.commands.CommandResult;"
+        "content": "import javafx.scene.input.KeyCode;"
       },
       {
         "lineNumber": 13,
         "author": {
           "gitId": "LeeEnHao"
         },
-        "content": "import seedu.address.logic.commands.ListCommand;"
+        "content": "import seedu.address.logic.commands.CommandResult;"
       },
       {
         "lineNumber": 14,
@@ -152815,282 +154783,282 @@
       {
         "lineNumber": 17,
         "author": {
-          "gitId": "LeeEnHao"
+          "gitId": "qwoprocks"
         },
-        "content": "    private static final String COMMAND_THAT_SUCCEEDS \u003d ListCommand.COMMAND_WORD;"
+        "content": ""
       },
       {
         "lineNumber": 18,
         "author": {
-          "gitId": "LeeEnHao"
+          "gitId": "qwoprocks"
         },
-        "content": "    private static final String COMMAND_THAT_FAILS \u003d \"invalid command\";"
+        "content": "    private static final String[] COMMANDS_THAT_SUCCEED \u003d { \"list\", \"client view 1\", \"client view 2\" };"
       },
       {
         "lineNumber": 19,
         "author": {
           "gitId": "LeeEnHao"
         },
-        "content": ""
+        "content": "    private static final String COMMAND_THAT_FAILS \u003d \"invalid command\";"
       },
       {
         "lineNumber": 20,
         "author": {
           "gitId": "LeeEnHao"
         },
-        "content": "    private ArrayList\u003cString\u003e defaultStyleOfCommandBox;"
+        "content": ""
       },
       {
         "lineNumber": 21,
         "author": {
           "gitId": "LeeEnHao"
         },
-        "content": "    private ArrayList\u003cString\u003e errorStyleOfCommandBox;"
+        "content": "    private ArrayList\u003cString\u003e defaultStyleOfCommandBox;"
       },
       {
         "lineNumber": 22,
         "author": {
           "gitId": "LeeEnHao"
         },
-        "content": ""
+        "content": "    private ArrayList\u003cString\u003e errorStyleOfCommandBox;"
       },
       {
         "lineNumber": 23,
         "author": {
           "gitId": "LeeEnHao"
         },
-        "content": "    private CommandBoxHandle commandBoxHandle;"
+        "content": ""
       },
       {
         "lineNumber": 24,
         "author": {
           "gitId": "LeeEnHao"
         },
-        "content": ""
+        "content": "    private CommandBoxHandle commandBoxHandle;"
       },
       {
         "lineNumber": 25,
         "author": {
           "gitId": "LeeEnHao"
         },
-        "content": "    @BeforeEach"
+        "content": ""
       },
       {
         "lineNumber": 26,
         "author": {
           "gitId": "LeeEnHao"
         },
-        "content": "    public void setUp() {"
+        "content": "    @BeforeEach"
       },
       {
         "lineNumber": 27,
         "author": {
           "gitId": "LeeEnHao"
         },
-        "content": "        CommandBox commandBox \u003d new CommandBox(commandText -\u003e {"
+        "content": "    public void setUp() {"
       },
       {
         "lineNumber": 28,
         "author": {
           "gitId": "LeeEnHao"
         },
-        "content": "            if (commandText.equals(COMMAND_THAT_SUCCEEDS)) {"
+        "content": "        CommandBox commandBox \u003d new CommandBox(commandText -\u003e {"
       },
       {
         "lineNumber": 29,
         "author": {
-          "gitId": "LeeEnHao"
+          "gitId": "qwoprocks"
         },
-        "content": "                return new CommandResult(\"Command successful\");"
+        "content": "            if (Arrays.asList(COMMANDS_THAT_SUCCEED).contains(commandText)) {"
       },
       {
         "lineNumber": 30,
         "author": {
           "gitId": "LeeEnHao"
         },
-        "content": "            }"
+        "content": "                return new CommandResult(\"Command successful\");"
       },
       {
         "lineNumber": 31,
         "author": {
           "gitId": "LeeEnHao"
         },
-        "content": "            throw new CommandException(\"Command failed\");"
+        "content": "            }"
       },
       {
         "lineNumber": 32,
         "author": {
           "gitId": "LeeEnHao"
         },
-        "content": "        });"
+        "content": "            throw new CommandException(\"Command failed\");"
       },
       {
         "lineNumber": 33,
         "author": {
           "gitId": "LeeEnHao"
         },
-        "content": "        commandBoxHandle \u003d new CommandBoxHandle(getChildNode(commandBox.getRoot(),"
+        "content": "        });"
       },
       {
         "lineNumber": 34,
         "author": {
           "gitId": "LeeEnHao"
         },
-        "content": "                CommandBoxHandle.COMMAND_INPUT_FIELD_ID));"
+        "content": "        commandBoxHandle \u003d new CommandBoxHandle(getChildNode(commandBox.getRoot(),"
       },
       {
         "lineNumber": 35,
         "author": {
           "gitId": "LeeEnHao"
         },
-        "content": "        uiPartExtension.setUiPart(commandBox);"
+        "content": "                CommandBoxHandle.COMMAND_INPUT_FIELD_ID));"
       },
       {
         "lineNumber": 36,
         "author": {
           "gitId": "LeeEnHao"
         },
-        "content": ""
+        "content": "        uiPartExtension.setUiPart(commandBox);"
       },
       {
         "lineNumber": 37,
         "author": {
           "gitId": "LeeEnHao"
         },
-        "content": "        defaultStyleOfCommandBox \u003d new ArrayList\u003c\u003e(commandBoxHandle.getStyleClass());"
+        "content": ""
       },
       {
         "lineNumber": 38,
         "author": {
           "gitId": "LeeEnHao"
         },
-        "content": ""
+        "content": "        defaultStyleOfCommandBox \u003d new ArrayList\u003c\u003e(commandBoxHandle.getStyleClass());"
       },
       {
         "lineNumber": 39,
         "author": {
           "gitId": "LeeEnHao"
         },
-        "content": "        errorStyleOfCommandBox \u003d new ArrayList\u003c\u003e(defaultStyleOfCommandBox);"
+        "content": ""
       },
       {
         "lineNumber": 40,
         "author": {
           "gitId": "LeeEnHao"
         },
-        "content": "        errorStyleOfCommandBox.add(CommandBox.ERROR_STYLE_CLASS);"
+        "content": "        errorStyleOfCommandBox \u003d new ArrayList\u003c\u003e(defaultStyleOfCommandBox);"
       },
       {
         "lineNumber": 41,
         "author": {
           "gitId": "LeeEnHao"
         },
-        "content": "    }"
+        "content": "        errorStyleOfCommandBox.add(CommandBox.ERROR_STYLE_CLASS);"
       },
       {
         "lineNumber": 42,
         "author": {
           "gitId": "LeeEnHao"
         },
-        "content": ""
+        "content": "    }"
       },
       {
         "lineNumber": 43,
         "author": {
           "gitId": "LeeEnHao"
         },
-        "content": "    @Test"
+        "content": ""
       },
       {
         "lineNumber": 44,
         "author": {
           "gitId": "LeeEnHao"
         },
-        "content": "    public void commandBox_startingWithSuccessfulCommand() {"
+        "content": "    @Test"
       },
       {
         "lineNumber": 45,
         "author": {
           "gitId": "LeeEnHao"
         },
-        "content": "        assertBehaviorForSuccessfulCommand();"
+        "content": "    public void commandBox_startingWithSuccessfulCommand() {"
       },
       {
         "lineNumber": 46,
         "author": {
           "gitId": "LeeEnHao"
         },
-        "content": "        assertBehaviorForFailedCommand();"
+        "content": "        assertBehaviorForSuccessfulCommand();"
       },
       {
         "lineNumber": 47,
         "author": {
           "gitId": "LeeEnHao"
         },
-        "content": "    }"
+        "content": "        assertBehaviorForFailedCommand();"
       },
       {
         "lineNumber": 48,
         "author": {
           "gitId": "LeeEnHao"
         },
-        "content": ""
+        "content": "    }"
       },
       {
         "lineNumber": 49,
         "author": {
           "gitId": "LeeEnHao"
         },
-        "content": "    @Test"
+        "content": ""
       },
       {
         "lineNumber": 50,
         "author": {
           "gitId": "LeeEnHao"
         },
-        "content": "    public void commandBox_startingWithFailedCommand() {"
+        "content": "    @Test"
       },
       {
         "lineNumber": 51,
         "author": {
           "gitId": "LeeEnHao"
         },
-        "content": "        assertBehaviorForFailedCommand();"
+        "content": "    public void commandBox_startingWithFailedCommand() {"
       },
       {
         "lineNumber": 52,
         "author": {
           "gitId": "LeeEnHao"
         },
-        "content": "        assertBehaviorForSuccessfulCommand();"
+        "content": "        assertBehaviorForFailedCommand();"
       },
       {
         "lineNumber": 53,
         "author": {
           "gitId": "LeeEnHao"
         },
-        "content": ""
+        "content": "        assertBehaviorForSuccessfulCommand();"
       },
       {
         "lineNumber": 54,
         "author": {
           "gitId": "LeeEnHao"
         },
-        "content": "        // verify that style is changed correctly even after multiple consecutive failed commands"
+        "content": ""
       },
       {
         "lineNumber": 55,
         "author": {
           "gitId": "LeeEnHao"
         },
-        "content": "        assertBehaviorForSuccessfulCommand();"
+        "content": "        // verify that style is changed correctly even after multiple consecutive failed commands"
       },
       {
         "lineNumber": 56,
         "author": {
           "gitId": "LeeEnHao"
         },
-        "content": "        assertBehaviorForFailedCommand();"
+        "content": "        assertBehaviorForSuccessfulCommand();"
       },
       {
         "lineNumber": 57,
@@ -153104,248 +155072,423 @@
         "author": {
           "gitId": "LeeEnHao"
         },
-        "content": "    }"
+        "content": "        assertBehaviorForFailedCommand();"
       },
       {
         "lineNumber": 59,
         "author": {
           "gitId": "LeeEnHao"
         },
-        "content": ""
+        "content": "    }"
       },
       {
         "lineNumber": 60,
         "author": {
           "gitId": "LeeEnHao"
         },
-        "content": "    @Test"
+        "content": ""
       },
       {
         "lineNumber": 61,
+        "author": {
+          "gitId": "LeeEnHao"
+        },
+        "content": "    @Test"
+      },
+      {
+        "lineNumber": 62,
         "author": {
           "gitId": "qwoprocks"
         },
         "content": "    public void commandBox_handleKeyPush() {"
       },
       {
-        "lineNumber": 62,
+        "lineNumber": 63,
         "author": {
           "gitId": "LeeEnHao"
         },
         "content": "        commandBoxHandle.run(COMMAND_THAT_FAILS);"
       },
       {
-        "lineNumber": 63,
+        "lineNumber": 64,
         "author": {
           "gitId": "LeeEnHao"
         },
         "content": "        assertEquals(errorStyleOfCommandBox, commandBoxHandle.getStyleClass());"
       },
       {
-        "lineNumber": 64,
+        "lineNumber": 65,
         "author": {
           "gitId": "qwoprocks"
         },
         "content": "        guiRobot.push(KeyCode.ESCAPE);"
       },
       {
-        "lineNumber": 65,
+        "lineNumber": 66,
         "author": {
           "gitId": "LeeEnHao"
         },
         "content": "        assertEquals(errorStyleOfCommandBox, commandBoxHandle.getStyleClass());"
       },
       {
-        "lineNumber": 66,
+        "lineNumber": 67,
         "author": {
           "gitId": "LeeEnHao"
         },
         "content": ""
       },
       {
-        "lineNumber": 67,
+        "lineNumber": 68,
         "author": {
           "gitId": "qwoprocks"
         },
         "content": "        guiRobot.push(KeyCode.A);"
       },
       {
-        "lineNumber": 68,
-        "author": {
-          "gitId": "LeeEnHao"
-        },
-        "content": "        assertEquals(defaultStyleOfCommandBox, commandBoxHandle.getStyleClass());"
-      },
-      {
         "lineNumber": 69,
         "author": {
           "gitId": "LeeEnHao"
         },
-        "content": "    }"
+        "content": "        assertEquals(defaultStyleOfCommandBox, commandBoxHandle.getStyleClass());"
       },
       {
         "lineNumber": 70,
         "author": {
           "gitId": "LeeEnHao"
         },
-        "content": ""
+        "content": "    }"
       },
       {
         "lineNumber": 71,
         "author": {
           "gitId": "LeeEnHao"
         },
-        "content": "    /**"
+        "content": ""
       },
       {
         "lineNumber": 72,
         "author": {
           "gitId": "LeeEnHao"
         },
-        "content": "     * Runs a command that fails, then verifies that \u003cbr\u003e"
+        "content": "    @Test"
       },
       {
         "lineNumber": 73,
         "author": {
           "gitId": "LeeEnHao"
         },
-        "content": "     *      - the text remains \u003cbr\u003e"
+        "content": "    public void commandBox_correctHistory() {"
       },
       {
         "lineNumber": 74,
         "author": {
           "gitId": "LeeEnHao"
         },
-        "content": "     *      - the command box\u0027s style is the same as {@code errorStyleOfCommandBox}."
+        "content": "        String viewCommand1 \u003d \"client view 1\";"
       },
       {
         "lineNumber": 75,
         "author": {
           "gitId": "LeeEnHao"
         },
-        "content": "     */"
+        "content": "        String viewCommand2 \u003d \"client view 2\";"
       },
       {
         "lineNumber": 76,
         "author": {
           "gitId": "LeeEnHao"
         },
-        "content": "    private void assertBehaviorForFailedCommand() {"
+        "content": "        commandBoxHandle.run(viewCommand1);"
       },
       {
         "lineNumber": 77,
         "author": {
           "gitId": "LeeEnHao"
         },
-        "content": "        commandBoxHandle.run(COMMAND_THAT_FAILS);"
+        "content": "        commandBoxHandle.run(viewCommand2);"
       },
       {
         "lineNumber": 78,
         "author": {
           "gitId": "LeeEnHao"
         },
-        "content": "        assertEquals(COMMAND_THAT_FAILS, commandBoxHandle.getInput());"
+        "content": "        guiRobot.pauseForHuman();"
       },
       {
         "lineNumber": 79,
         "author": {
-          "gitId": "LeeEnHao"
+          "gitId": "qwoprocks"
         },
-        "content": "        assertEquals(errorStyleOfCommandBox, commandBoxHandle.getStyleClass());"
+        "content": ""
       },
       {
         "lineNumber": 80,
         "author": {
           "gitId": "LeeEnHao"
         },
-        "content": "    }"
+        "content": "        commandBoxHandle.pressUp();"
       },
       {
         "lineNumber": 81,
         "author": {
-          "gitId": "LeeEnHao"
+          "gitId": "qwoprocks"
         },
-        "content": ""
+        "content": "        assertEquals(commandBoxHandle.getInput(), viewCommand2);"
       },
       {
         "lineNumber": 82,
         "author": {
-          "gitId": "LeeEnHao"
+          "gitId": "qwoprocks"
         },
-        "content": "    /**"
+        "content": ""
       },
       {
         "lineNumber": 83,
         "author": {
           "gitId": "LeeEnHao"
         },
-        "content": "     * Runs a command that succeeds, then verifies that \u003cbr\u003e"
+        "content": "        commandBoxHandle.pressUp();"
       },
       {
         "lineNumber": 84,
         "author": {
-          "gitId": "LeeEnHao"
+          "gitId": "qwoprocks"
         },
-        "content": "     *      - the text is cleared \u003cbr\u003e"
+        "content": "        assertEquals(commandBoxHandle.getInput(), viewCommand1);"
       },
       {
         "lineNumber": 85,
         "author": {
-          "gitId": "LeeEnHao"
+          "gitId": "qwoprocks"
         },
-        "content": "     *      - the command box\u0027s style is the same as {@code defaultStyleOfCommandBox}."
+        "content": ""
       },
       {
         "lineNumber": 86,
         "author": {
-          "gitId": "LeeEnHao"
+          "gitId": "qwoprocks"
         },
-        "content": "     */"
+        "content": "        commandBoxHandle.pressUp();"
       },
       {
         "lineNumber": 87,
         "author": {
-          "gitId": "LeeEnHao"
+          "gitId": "qwoprocks"
         },
-        "content": "    private void assertBehaviorForSuccessfulCommand() {"
+        "content": "        assertEquals(commandBoxHandle.getInput(), viewCommand1);"
       },
       {
         "lineNumber": 88,
         "author": {
-          "gitId": "LeeEnHao"
+          "gitId": "qwoprocks"
         },
-        "content": "        commandBoxHandle.run(COMMAND_THAT_SUCCEEDS);"
+        "content": ""
       },
       {
         "lineNumber": 89,
         "author": {
-          "gitId": "LeeEnHao"
+          "gitId": "qwoprocks"
         },
-        "content": "        assertEquals(\"\", commandBoxHandle.getInput());"
+        "content": "        commandBoxHandle.pressDown();"
       },
       {
         "lineNumber": 90,
         "author": {
-          "gitId": "LeeEnHao"
+          "gitId": "qwoprocks"
         },
-        "content": "        assertEquals(defaultStyleOfCommandBox, commandBoxHandle.getStyleClass());"
+        "content": "        assertEquals(commandBoxHandle.getInput(), viewCommand2);"
       },
       {
         "lineNumber": 91,
+        "author": {
+          "gitId": "qwoprocks"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 92,
+        "author": {
+          "gitId": "qwoprocks"
+        },
+        "content": "        commandBoxHandle.pressDown();"
+      },
+      {
+        "lineNumber": 93,
+        "author": {
+          "gitId": "qwoprocks"
+        },
+        "content": "        assertEquals(commandBoxHandle.getInput(), \"\");"
+      },
+      {
+        "lineNumber": 94,
         "author": {
           "gitId": "LeeEnHao"
         },
         "content": "    }"
       },
       {
-        "lineNumber": 92,
+        "lineNumber": 95,
         "author": {
           "gitId": "LeeEnHao"
         },
         "content": ""
       },
       {
-        "lineNumber": 93,
+        "lineNumber": 96,
+        "author": {
+          "gitId": "LeeEnHao"
+        },
+        "content": "    /**"
+      },
+      {
+        "lineNumber": 97,
+        "author": {
+          "gitId": "LeeEnHao"
+        },
+        "content": "     * Runs a command that fails, then verifies that \u003cbr\u003e"
+      },
+      {
+        "lineNumber": 98,
+        "author": {
+          "gitId": "LeeEnHao"
+        },
+        "content": "     *      - the text remains \u003cbr\u003e"
+      },
+      {
+        "lineNumber": 99,
+        "author": {
+          "gitId": "LeeEnHao"
+        },
+        "content": "     *      - the command box\u0027s style is the same as {@code errorStyleOfCommandBox}."
+      },
+      {
+        "lineNumber": 100,
+        "author": {
+          "gitId": "LeeEnHao"
+        },
+        "content": "     */"
+      },
+      {
+        "lineNumber": 101,
+        "author": {
+          "gitId": "LeeEnHao"
+        },
+        "content": "    private void assertBehaviorForFailedCommand() {"
+      },
+      {
+        "lineNumber": 102,
+        "author": {
+          "gitId": "LeeEnHao"
+        },
+        "content": "        commandBoxHandle.run(COMMAND_THAT_FAILS);"
+      },
+      {
+        "lineNumber": 103,
+        "author": {
+          "gitId": "LeeEnHao"
+        },
+        "content": "        assertEquals(COMMAND_THAT_FAILS, commandBoxHandle.getInput());"
+      },
+      {
+        "lineNumber": 104,
+        "author": {
+          "gitId": "LeeEnHao"
+        },
+        "content": "        assertEquals(errorStyleOfCommandBox, commandBoxHandle.getStyleClass());"
+      },
+      {
+        "lineNumber": 105,
+        "author": {
+          "gitId": "LeeEnHao"
+        },
+        "content": "    }"
+      },
+      {
+        "lineNumber": 106,
+        "author": {
+          "gitId": "LeeEnHao"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 107,
+        "author": {
+          "gitId": "LeeEnHao"
+        },
+        "content": "    /**"
+      },
+      {
+        "lineNumber": 108,
+        "author": {
+          "gitId": "LeeEnHao"
+        },
+        "content": "     * Runs a command that succeeds, then verifies that \u003cbr\u003e"
+      },
+      {
+        "lineNumber": 109,
+        "author": {
+          "gitId": "LeeEnHao"
+        },
+        "content": "     *      - the text is cleared \u003cbr\u003e"
+      },
+      {
+        "lineNumber": 110,
+        "author": {
+          "gitId": "LeeEnHao"
+        },
+        "content": "     *      - the command box\u0027s style is the same as {@code defaultStyleOfCommandBox}."
+      },
+      {
+        "lineNumber": 111,
+        "author": {
+          "gitId": "LeeEnHao"
+        },
+        "content": "     */"
+      },
+      {
+        "lineNumber": 112,
+        "author": {
+          "gitId": "LeeEnHao"
+        },
+        "content": "    private void assertBehaviorForSuccessfulCommand() {"
+      },
+      {
+        "lineNumber": 113,
+        "author": {
+          "gitId": "qwoprocks"
+        },
+        "content": "        commandBoxHandle.run(COMMANDS_THAT_SUCCEED[0]);"
+      },
+      {
+        "lineNumber": 114,
+        "author": {
+          "gitId": "LeeEnHao"
+        },
+        "content": "        assertEquals(\"\", commandBoxHandle.getInput());"
+      },
+      {
+        "lineNumber": 115,
+        "author": {
+          "gitId": "LeeEnHao"
+        },
+        "content": "        assertEquals(defaultStyleOfCommandBox, commandBoxHandle.getStyleClass());"
+      },
+      {
+        "lineNumber": 116,
+        "author": {
+          "gitId": "LeeEnHao"
+        },
+        "content": "    }"
+      },
+      {
+        "lineNumber": 117,
+        "author": {
+          "gitId": "LeeEnHao"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 118,
         "author": {
           "gitId": "LeeEnHao"
         },
@@ -153353,8 +155496,290 @@
       }
     ],
     "authorContributionMap": {
-      "LeeEnHao": 90,
-      "qwoprocks": 3
+      "LeeEnHao": 97,
+      "qwoprocks": 21
+    }
+  },
+  {
+    "path": "src/test/java/seedu/address/ui/CommandHistoryTest.java",
+    "fileType": "test-code",
+    "lines": [
+      {
+        "lineNumber": 1,
+        "author": {
+          "gitId": "LeeEnHao"
+        },
+        "content": "package seedu.address.ui;"
+      },
+      {
+        "lineNumber": 2,
+        "author": {
+          "gitId": "LeeEnHao"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 3,
+        "author": {
+          "gitId": "LeeEnHao"
+        },
+        "content": "import static org.junit.jupiter.api.Assertions.assertAll;"
+      },
+      {
+        "lineNumber": 4,
+        "author": {
+          "gitId": "LeeEnHao"
+        },
+        "content": "import static org.junit.jupiter.api.Assertions.assertEquals;"
+      },
+      {
+        "lineNumber": 5,
+        "author": {
+          "gitId": "LeeEnHao"
+        },
+        "content": "import static org.junit.jupiter.api.Assertions.assertThrows;"
+      },
+      {
+        "lineNumber": 6,
+        "author": {
+          "gitId": "LeeEnHao"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 7,
+        "author": {
+          "gitId": "LeeEnHao"
+        },
+        "content": "import java.util.NoSuchElementException;"
+      },
+      {
+        "lineNumber": 8,
+        "author": {
+          "gitId": "LeeEnHao"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 9,
+        "author": {
+          "gitId": "LeeEnHao"
+        },
+        "content": "import org.junit.jupiter.api.Test;"
+      },
+      {
+        "lineNumber": 10,
+        "author": {
+          "gitId": "LeeEnHao"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 11,
+        "author": {
+          "gitId": "LeeEnHao"
+        },
+        "content": "public class CommandHistoryTest {"
+      },
+      {
+        "lineNumber": 12,
+        "author": {
+          "gitId": "LeeEnHao"
+        },
+        "content": "    @Test"
+      },
+      {
+        "lineNumber": 13,
+        "author": {
+          "gitId": "LeeEnHao"
+        },
+        "content": "    public void getNext_reachHistoryEnd_throwsNoSuchElementException() {"
+      },
+      {
+        "lineNumber": 14,
+        "author": {
+          "gitId": "LeeEnHao"
+        },
+        "content": "        CommandHistory commandHistory \u003d new CommandHistory();"
+      },
+      {
+        "lineNumber": 15,
+        "author": {
+          "gitId": "LeeEnHao"
+        },
+        "content": "        commandHistory.add(\"1\");"
+      },
+      {
+        "lineNumber": 16,
+        "author": {
+          "gitId": "LeeEnHao"
+        },
+        "content": "        assertThrows(NoSuchElementException.class, () -\u003e commandHistory.getNext());"
+      },
+      {
+        "lineNumber": 17,
+        "author": {
+          "gitId": "LeeEnHao"
+        },
+        "content": "    }"
+      },
+      {
+        "lineNumber": 18,
+        "author": {
+          "gitId": "LeeEnHao"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 19,
+        "author": {
+          "gitId": "LeeEnHao"
+        },
+        "content": "    @Test"
+      },
+      {
+        "lineNumber": 20,
+        "author": {
+          "gitId": "LeeEnHao"
+        },
+        "content": "    public void getPrevious_reachHistoryBeginning_throwsNoSuchElementException() {"
+      },
+      {
+        "lineNumber": 21,
+        "author": {
+          "gitId": "LeeEnHao"
+        },
+        "content": "        CommandHistory commandHistory \u003d new CommandHistory();"
+      },
+      {
+        "lineNumber": 22,
+        "author": {
+          "gitId": "LeeEnHao"
+        },
+        "content": "        commandHistory.add(\"1\");"
+      },
+      {
+        "lineNumber": 23,
+        "author": {
+          "gitId": "LeeEnHao"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 24,
+        "author": {
+          "gitId": "LeeEnHao"
+        },
+        "content": "        commandHistory.getPrevious(\"\");"
+      },
+      {
+        "lineNumber": 25,
+        "author": {
+          "gitId": "LeeEnHao"
+        },
+        "content": "        assertThrows(NoSuchElementException.class, () -\u003e commandHistory.getPrevious(\"\"));"
+      },
+      {
+        "lineNumber": 26,
+        "author": {
+          "gitId": "LeeEnHao"
+        },
+        "content": "    }"
+      },
+      {
+        "lineNumber": 27,
+        "author": {
+          "gitId": "LeeEnHao"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 28,
+        "author": {
+          "gitId": "LeeEnHao"
+        },
+        "content": "    @Test"
+      },
+      {
+        "lineNumber": 29,
+        "author": {
+          "gitId": "LeeEnHao"
+        },
+        "content": "    public void getPrevious_completeHistory_isMatching() {"
+      },
+      {
+        "lineNumber": 30,
+        "author": {
+          "gitId": "LeeEnHao"
+        },
+        "content": "        CommandHistory commandHistory \u003d new CommandHistory();"
+      },
+      {
+        "lineNumber": 31,
+        "author": {
+          "gitId": "LeeEnHao"
+        },
+        "content": "        commandHistory.add(\"1\");"
+      },
+      {
+        "lineNumber": 32,
+        "author": {
+          "gitId": "LeeEnHao"
+        },
+        "content": "        commandHistory.add(\"2\");"
+      },
+      {
+        "lineNumber": 33,
+        "author": {
+          "gitId": "LeeEnHao"
+        },
+        "content": "        commandHistory.add(\"3\");"
+      },
+      {
+        "lineNumber": 34,
+        "author": {
+          "gitId": "LeeEnHao"
+        },
+        "content": "        assertAll(() -\u003e assertEquals(\"3\", commandHistory.getPrevious(\"\")), () -\u003e"
+      },
+      {
+        "lineNumber": 35,
+        "author": {
+          "gitId": "LeeEnHao"
+        },
+        "content": "                        assertEquals(\"2\", commandHistory.getPrevious(\"\")), () -\u003e"
+      },
+      {
+        "lineNumber": 36,
+        "author": {
+          "gitId": "LeeEnHao"
+        },
+        "content": "                        assertEquals(\"1\", commandHistory.getPrevious(\"\")));"
+      },
+      {
+        "lineNumber": 37,
+        "author": {
+          "gitId": "LeeEnHao"
+        },
+        "content": "    }"
+      },
+      {
+        "lineNumber": 38,
+        "author": {
+          "gitId": "LeeEnHao"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 39,
+        "author": {
+          "gitId": "LeeEnHao"
+        },
+        "content": "}"
+      }
+    ],
+    "authorContributionMap": {
+      "LeeEnHao": 39
     }
   },
   {
