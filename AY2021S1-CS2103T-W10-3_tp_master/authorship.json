@@ -40109,14 +40109,14 @@
         "author": {
           "gitId": "GeNiaaz"
         },
-        "content": "            || (other instanceof DeleteTeammateCommand // instanceof handles nulls"
+        "content": "            || (other instanceof DeleteTeammateCommand) // instanceof handles nulls"
       },
       {
         "lineNumber": 68,
         "author": {
           "gitId": "GeNiaaz"
         },
-        "content": "            \u0026\u0026 gitUserIndex.equals(((DeleteTeammateCommand) other).gitUserIndex)); // state check"
+        "content": "            \u0026\u0026 gitUserIndex.equals(((DeleteTeammateCommand) other).gitUserIndex); // state check"
       },
       {
         "lineNumber": 69,
@@ -118823,6 +118823,449 @@
     }
   },
   {
+    "path": "src/test/java/seedu/address/logic/commands/project/DeleteTeammateCommandTest.java",
+    "fileType": "test-code",
+    "lines": [
+      {
+        "lineNumber": 1,
+        "author": {
+          "gitId": "GeNiaaz"
+        },
+        "content": "package seedu.address.logic.commands.project;"
+      },
+      {
+        "lineNumber": 2,
+        "author": {
+          "gitId": "GeNiaaz"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 3,
+        "author": {
+          "gitId": "GeNiaaz"
+        },
+        "content": "import static seedu.address.logic.commands.CommandTestUtil.assertCommandSuccess;"
+      },
+      {
+        "lineNumber": 4,
+        "author": {
+          "gitId": "GeNiaaz"
+        },
+        "content": "import static seedu.address.testutil.Assert.assertThrows;"
+      },
+      {
+        "lineNumber": 5,
+        "author": {
+          "gitId": "GeNiaaz"
+        },
+        "content": "import static seedu.address.testutil.TypicalGitIndexes.GIT_USERINDEX_FIRST_TEAMMATE;"
+      },
+      {
+        "lineNumber": 6,
+        "author": {
+          "gitId": "GeNiaaz"
+        },
+        "content": "import static seedu.address.testutil.TypicalGitIndexes.GIT_USERINDEX_SECOND_TEAMMATE;"
+      },
+      {
+        "lineNumber": 7,
+        "author": {
+          "gitId": "GeNiaaz"
+        },
+        "content": "import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_PROJECT;"
+      },
+      {
+        "lineNumber": 8,
+        "author": {
+          "gitId": "GeNiaaz"
+        },
+        "content": "import static seedu.address.testutil.TypicalPersons.DESC_A;"
+      },
+      {
+        "lineNumber": 9,
+        "author": {
+          "gitId": "GeNiaaz"
+        },
+        "content": "import static seedu.address.testutil.TypicalProjects.getTypicalMainCatalogue;"
+      },
+      {
+        "lineNumber": 10,
+        "author": {
+          "gitId": "GeNiaaz"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 11,
+        "author": {
+          "gitId": "GeNiaaz"
+        },
+        "content": "import org.junit.jupiter.api.Test;"
+      },
+      {
+        "lineNumber": 12,
+        "author": {
+          "gitId": "GeNiaaz"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 13,
+        "author": {
+          "gitId": "GeNiaaz"
+        },
+        "content": "import seedu.address.model.Model;"
+      },
+      {
+        "lineNumber": 14,
+        "author": {
+          "gitId": "GeNiaaz"
+        },
+        "content": "import seedu.address.model.ModelManager;"
+      },
+      {
+        "lineNumber": 15,
+        "author": {
+          "gitId": "GeNiaaz"
+        },
+        "content": "import seedu.address.model.UserPrefs;"
+      },
+      {
+        "lineNumber": 16,
+        "author": {
+          "gitId": "GeNiaaz"
+        },
+        "content": "import seedu.address.model.person.Person;"
+      },
+      {
+        "lineNumber": 17,
+        "author": {
+          "gitId": "GeNiaaz"
+        },
+        "content": "import seedu.address.model.project.Participation;"
+      },
+      {
+        "lineNumber": 18,
+        "author": {
+          "gitId": "GeNiaaz"
+        },
+        "content": "import seedu.address.model.project.Project;"
+      },
+      {
+        "lineNumber": 19,
+        "author": {
+          "gitId": "GeNiaaz"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 20,
+        "author": {
+          "gitId": "GeNiaaz"
+        },
+        "content": "/**"
+      },
+      {
+        "lineNumber": 21,
+        "author": {
+          "gitId": "GeNiaaz"
+        },
+        "content": " * The tests do not cover invalid Person valid index because invalid person is covered by other test,"
+      },
+      {
+        "lineNumber": 22,
+        "author": {
+          "gitId": "GeNiaaz"
+        },
+        "content": " * and would be unnecessary to add here to overlap in testing."
+      },
+      {
+        "lineNumber": 23,
+        "author": {
+          "gitId": "GeNiaaz"
+        },
+        "content": " */"
+      },
+      {
+        "lineNumber": 24,
+        "author": {
+          "gitId": "GeNiaaz"
+        },
+        "content": "public class DeleteTeammateCommandTest {"
+      },
+      {
+        "lineNumber": 25,
+        "author": {
+          "gitId": "GeNiaaz"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 26,
+        "author": {
+          "gitId": "GeNiaaz"
+        },
+        "content": "    @Test"
+      },
+      {
+        "lineNumber": 27,
+        "author": {
+          "gitId": "GeNiaaz"
+        },
+        "content": "    public void execute_validIndexValidPerson_throwsCommandException() {"
+      },
+      {
+        "lineNumber": 28,
+        "author": {
+          "gitId": "GeNiaaz"
+        },
+        "content": "        Model model \u003d new ModelManager(getTypicalMainCatalogue(), new UserPrefs());"
+      },
+      {
+        "lineNumber": 29,
+        "author": {
+          "gitId": "GeNiaaz"
+        },
+        "content": "        Project project \u003d model.getFilteredProjectList().get(INDEX_FIRST_PROJECT.getZeroBased());"
+      },
+      {
+        "lineNumber": 30,
+        "author": {
+          "gitId": "GeNiaaz"
+        },
+        "content": "        model.enter(project);"
+      },
+      {
+        "lineNumber": 31,
+        "author": {
+          "gitId": "GeNiaaz"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 32,
+        "author": {
+          "gitId": "GeNiaaz"
+        },
+        "content": "        Person person \u003d DESC_A;"
+      },
+      {
+        "lineNumber": 33,
+        "author": {
+          "gitId": "GeNiaaz"
+        },
+        "content": "        Model expectedModel \u003d model;"
+      },
+      {
+        "lineNumber": 34,
+        "author": {
+          "gitId": "GeNiaaz"
+        },
+        "content": "        project.addParticipation(person);"
+      },
+      {
+        "lineNumber": 35,
+        "author": {
+          "gitId": "GeNiaaz"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 36,
+        "author": {
+          "gitId": "GeNiaaz"
+        },
+        "content": "        Participation participation \u003d project.getParticipation(GIT_USERINDEX_FIRST_TEAMMATE"
+      },
+      {
+        "lineNumber": 37,
+        "author": {
+          "gitId": "GeNiaaz"
+        },
+        "content": "            .getGitUserName());"
+      },
+      {
+        "lineNumber": 38,
+        "author": {
+          "gitId": "GeNiaaz"
+        },
+        "content": "        model.addPerson(person);"
+      },
+      {
+        "lineNumber": 39,
+        "author": {
+          "gitId": "GeNiaaz"
+        },
+        "content": "        model.addParticipation(participation);"
+      },
+      {
+        "lineNumber": 40,
+        "author": {
+          "gitId": "GeNiaaz"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 41,
+        "author": {
+          "gitId": "GeNiaaz"
+        },
+        "content": "        DeleteTeammateCommand deleteTeammateCommand \u003d new DeleteTeammateCommand(GIT_USERINDEX_FIRST_TEAMMATE);"
+      },
+      {
+        "lineNumber": 42,
+        "author": {
+          "gitId": "GeNiaaz"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 43,
+        "author": {
+          "gitId": "GeNiaaz"
+        },
+        "content": "        String expectedMessage \u003d String.format(DeleteTeammateCommand.MESSAGE_DELETE_TEAMMATE_SUCCESS,"
+      },
+      {
+        "lineNumber": 44,
+        "author": {
+          "gitId": "GeNiaaz"
+        },
+        "content": "            person);"
+      },
+      {
+        "lineNumber": 45,
+        "author": {
+          "gitId": "GeNiaaz"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 46,
+        "author": {
+          "gitId": "GeNiaaz"
+        },
+        "content": "        assertCommandSuccess(deleteTeammateCommand, model, expectedMessage, expectedModel);"
+      },
+      {
+        "lineNumber": 47,
+        "author": {
+          "gitId": "GeNiaaz"
+        },
+        "content": "    }"
+      },
+      {
+        "lineNumber": 48,
+        "author": {
+          "gitId": "GeNiaaz"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 49,
+        "author": {
+          "gitId": "GeNiaaz"
+        },
+        "content": "    @Test"
+      },
+      {
+        "lineNumber": 50,
+        "author": {
+          "gitId": "GeNiaaz"
+        },
+        "content": "    public void execute_invalidIndexValidPerson_throwsCommandException() {"
+      },
+      {
+        "lineNumber": 51,
+        "author": {
+          "gitId": "GeNiaaz"
+        },
+        "content": "        Model model \u003d new ModelManager(getTypicalMainCatalogue(), new UserPrefs());"
+      },
+      {
+        "lineNumber": 52,
+        "author": {
+          "gitId": "GeNiaaz"
+        },
+        "content": "        Project project \u003d model.getFilteredProjectList().get(INDEX_FIRST_PROJECT.getZeroBased());"
+      },
+      {
+        "lineNumber": 53,
+        "author": {
+          "gitId": "GeNiaaz"
+        },
+        "content": "        model.enter(project);"
+      },
+      {
+        "lineNumber": 54,
+        "author": {
+          "gitId": "GeNiaaz"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 55,
+        "author": {
+          "gitId": "GeNiaaz"
+        },
+        "content": "        Person person \u003d DESC_A;"
+      },
+      {
+        "lineNumber": 56,
+        "author": {
+          "gitId": "GeNiaaz"
+        },
+        "content": "        project.addParticipation(person);"
+      },
+      {
+        "lineNumber": 57,
+        "author": {
+          "gitId": "GeNiaaz"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 58,
+        "author": {
+          "gitId": "GeNiaaz"
+        },
+        "content": "        Participation participation \u003d project.getParticipation(GIT_USERINDEX_SECOND_TEAMMATE.getGitUserName());"
+      },
+      {
+        "lineNumber": 59,
+        "author": {
+          "gitId": "GeNiaaz"
+        },
+        "content": "        model.addPerson(person);"
+      },
+      {
+        "lineNumber": 60,
+        "author": {
+          "gitId": "GeNiaaz"
+        },
+        "content": "        assertThrows(NullPointerException.class, () -\u003e model.addParticipation(participation));"
+      },
+      {
+        "lineNumber": 61,
+        "author": {
+          "gitId": "GeNiaaz"
+        },
+        "content": "    }"
+      },
+      {
+        "lineNumber": 62,
+        "author": {
+          "gitId": "GeNiaaz"
+        },
+        "content": "}"
+      }
+    ],
+    "authorContributionMap": {
+      "GeNiaaz": 62
+    }
+  },
+  {
     "path": "src/test/java/seedu/address/logic/commands/project/LeaveCommandTest.java",
     "fileType": "test-code",
     "lines": [
@@ -153153,6 +153596,127 @@
     "authorContributionMap": {
       "-": 47,
       "lll-jy": 8
+    }
+  },
+  {
+    "path": "src/test/java/seedu/address/testutil/TypicalGitIndexes.java",
+    "fileType": "test-code",
+    "lines": [
+      {
+        "lineNumber": 1,
+        "author": {
+          "gitId": "GeNiaaz"
+        },
+        "content": "package seedu.address.testutil;"
+      },
+      {
+        "lineNumber": 2,
+        "author": {
+          "gitId": "GeNiaaz"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 3,
+        "author": {
+          "gitId": "GeNiaaz"
+        },
+        "content": "import static seedu.address.logic.commands.TeammateTestUtil.VALID_TEAMMATE_GIT_USERNAME_A;"
+      },
+      {
+        "lineNumber": 4,
+        "author": {
+          "gitId": "GeNiaaz"
+        },
+        "content": "import static seedu.address.logic.commands.TeammateTestUtil.VALID_TEAMMATE_GIT_USERNAME_B;"
+      },
+      {
+        "lineNumber": 5,
+        "author": {
+          "gitId": "GeNiaaz"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 6,
+        "author": {
+          "gitId": "GeNiaaz"
+        },
+        "content": "import seedu.address.commons.core.index.GitUserIndex;"
+      },
+      {
+        "lineNumber": 7,
+        "author": {
+          "gitId": "GeNiaaz"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 8,
+        "author": {
+          "gitId": "GeNiaaz"
+        },
+        "content": "/**"
+      },
+      {
+        "lineNumber": 9,
+        "author": {
+          "gitId": "GeNiaaz"
+        },
+        "content": " * A utility class containing a list of {@code GitUserIndex} objects to be used in tests."
+      },
+      {
+        "lineNumber": 10,
+        "author": {
+          "gitId": "GeNiaaz"
+        },
+        "content": " */"
+      },
+      {
+        "lineNumber": 11,
+        "author": {
+          "gitId": "GeNiaaz"
+        },
+        "content": "public class TypicalGitIndexes {"
+      },
+      {
+        "lineNumber": 12,
+        "author": {
+          "gitId": "GeNiaaz"
+        },
+        "content": "    public static final GitUserIndex GIT_USERINDEX_FIRST_TEAMMATE \u003d new GitUserIndex("
+      },
+      {
+        "lineNumber": 13,
+        "author": {
+          "gitId": "GeNiaaz"
+        },
+        "content": "        VALID_TEAMMATE_GIT_USERNAME_A);"
+      },
+      {
+        "lineNumber": 14,
+        "author": {
+          "gitId": "GeNiaaz"
+        },
+        "content": "    public static final GitUserIndex GIT_USERINDEX_SECOND_TEAMMATE \u003d new GitUserIndex("
+      },
+      {
+        "lineNumber": 15,
+        "author": {
+          "gitId": "GeNiaaz"
+        },
+        "content": "        VALID_TEAMMATE_GIT_USERNAME_B);"
+      },
+      {
+        "lineNumber": 16,
+        "author": {
+          "gitId": "GeNiaaz"
+        },
+        "content": "}"
+      }
+    ],
+    "authorContributionMap": {
+      "GeNiaaz": 16
     }
   },
   {
