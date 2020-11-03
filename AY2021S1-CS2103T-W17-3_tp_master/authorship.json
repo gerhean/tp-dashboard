@@ -3953,1036 +3953,1036 @@
         "author": {
           "gitId": "aidoxe-123"
         },
-        "content": "Whenever there is a change to either `ModelManager`\u0027s data or filter predicate, `ModelManager` will pass itself into `History` to be checked and saved in the stack."
+        "content": "Whenever there is a change to either `ModelManager`\u0027s data, filter predicate, or macro list, `ModelManager` will pass itself into `History` to be saved into the stack."
       },
       {
         "lineNumber": 313,
         "author": {
           "gitId": "aidoxe-123"
         },
-        "content": "If `History` recognizes there is no change between the current state and the previous state, it will not save the current state to its stack."
-      },
-      {
-        "lineNumber": 314,
-        "author": {
-          "gitId": "aidoxe-123"
-        },
         "content": "Additionally, `ModelManager` implements the following operations:"
       },
       {
-        "lineNumber": 315,
+        "lineNumber": 314,
         "author": {
           "gitId": "-"
         },
         "content": ""
       },
       {
-        "lineNumber": 316,
+        "lineNumber": 315,
         "author": {
           "gitId": "aidoxe-123"
         },
         "content": "* `ModelManager#canUndo()` - Checks if there is any older state stored in history."
       },
       {
-        "lineNumber": 317,
+        "lineNumber": 316,
         "author": {
           "gitId": "aidoxe-123"
         },
         "content": "* `ModelManager#undo()` - Restores the previous McGymmy state from its history."
       },
       {
-        "lineNumber": 318,
+        "lineNumber": 317,
         "author": {
           "gitId": "aidoxe-123"
         },
         "content": "* `ModelManager#saveCurrentStateToHistory()` - Saves the current McGymmy state in its history."
       },
       {
-        "lineNumber": 319,
+        "lineNumber": 318,
         "author": {
           "gitId": "-"
         },
         "content": ""
       },
       {
-        "lineNumber": 320,
+        "lineNumber": 319,
         "author": {
           "gitId": "aidoxe-123"
         },
         "content": "The first 2 operations are exposed in the `Model` interface as `Model#canUndo()` and `Model#undo()` respectively."
       },
       {
-        "lineNumber": 321,
+        "lineNumber": 320,
         "author": {
           "gitId": "-"
         },
         "content": ""
       },
       {
-        "lineNumber": 322,
+        "lineNumber": 321,
         "author": {
           "gitId": "aidoxe-123"
         },
         "content": "Given below is an example usage scenario and how the undo mechanism behaves at each step."
       },
       {
-        "lineNumber": 323,
+        "lineNumber": 322,
         "author": {
           "gitId": "-"
         },
         "content": ""
       },
       {
-        "lineNumber": 324,
+        "lineNumber": 323,
         "author": {
           "gitId": "aidoxe-123"
         },
         "content": "Step 1. The user launches the application for the first time. The `ModelManager` will be initialized with the empty `mcGymmyStack`."
       },
       {
-        "lineNumber": 325,
+        "lineNumber": 324,
         "author": {
           "gitId": "-"
         },
         "content": ""
       },
       {
-        "lineNumber": 326,
+        "lineNumber": 325,
         "author": {
           "gitId": "aidoxe-123"
         },
         "content": "![UndoState0](images/UndoState0.png)"
       },
       {
-        "lineNumber": 327,
+        "lineNumber": 326,
         "author": {
           "gitId": "-"
         },
         "content": ""
       },
       {
-        "lineNumber": 328,
+        "lineNumber": 327,
         "author": {
           "gitId": "aidoxe-123"
         },
         "content": "Step 2. The user executes `delete 5` command to delete the 5th food item in the McGymmy."
       },
       {
-        "lineNumber": 329,
+        "lineNumber": 328,
         "author": {
           "gitId": "aidoxe-123"
         },
         "content": "The `delete` command calls `ModelManager#deleteFood(Index)`, which calls `ModelManager#addCurrentStateToHistory()`,"
       },
       {
-        "lineNumber": 330,
+        "lineNumber": 329,
         "author": {
           "gitId": "aidoxe-123"
         },
         "content": "causing the stack to store a copied version of the McGymmy before any data changes happen."
       },
       {
-        "lineNumber": 331,
+        "lineNumber": 330,
         "author": {
           "gitId": "aidoxe-123"
         },
         "content": "Then McGymmy changes accordingly to delete the food at index 5."
       },
       {
-        "lineNumber": 332,
+        "lineNumber": 331,
         "author": {
           "gitId": "-"
         },
         "content": ""
       },
       {
-        "lineNumber": 333,
+        "lineNumber": 332,
         "author": {
           "gitId": "aidoxe-123"
         },
         "content": "![UndoState1a](images/UndoState1a.png)"
       },
       {
-        "lineNumber": 334,
+        "lineNumber": 333,
         "author": {
           "gitId": "-"
         },
         "content": ""
       },
       {
-        "lineNumber": 335,
+        "lineNumber": 334,
         "author": {
           "gitId": "aidoxe-123"
         },
         "content": "![UndoState1b](images/UndoState1b.png)"
       },
       {
-        "lineNumber": 336,
+        "lineNumber": 335,
         "author": {
           "gitId": "-"
         },
         "content": ""
       },
       {
-        "lineNumber": 337,
+        "lineNumber": 336,
         "author": {
           "gitId": "aidoxe-123"
         },
         "content": "Step 3. The user executes `add -n Rice …​` to add a new food item. The `add` command calls `ModelManager#addFood(Food)`, which also calls `ModelManager#addCurrentStateToHistory()`,"
       },
       {
-        "lineNumber": 338,
+        "lineNumber": 337,
         "author": {
           "gitId": "aidoxe-123"
         },
         "content": "storing a copied version of the McGymmy into the stack before changing the McGymmy."
       },
       {
-        "lineNumber": 339,
+        "lineNumber": 338,
         "author": {
           "gitId": "-"
         },
         "content": ""
       },
       {
-        "lineNumber": 340,
+        "lineNumber": 339,
         "author": {
           "gitId": "aidoxe-123"
         },
         "content": "![UndoState2a](images/UndoState2a.png)"
       },
       {
-        "lineNumber": 341,
+        "lineNumber": 340,
         "author": {
           "gitId": "-"
         },
         "content": ""
       },
       {
-        "lineNumber": 342,
+        "lineNumber": 341,
         "author": {
           "gitId": "aidoxe-123"
         },
         "content": "![UndoState2a](images/UndoState2b.png)"
       },
       {
-        "lineNumber": 343,
+        "lineNumber": 342,
         "author": {
           "gitId": "-"
         },
         "content": ""
       },
       {
-        "lineNumber": 344,
+        "lineNumber": 343,
         "author": {
           "gitId": "aidoxe-123"
         },
         "content": "\u003cdiv markdown\u003d\"span\" class\u003d\"alert alert-info\"\u003e:information_source: **Note:** If a command fails its execution, it will not call `ModelManager#addCurrentStateToHistory()`, so the McGymmy state will not be saved into the `mcGymmyStack`."
       },
       {
-        "lineNumber": 345,
+        "lineNumber": 344,
         "author": {
           "gitId": "-"
         },
         "content": ""
+      },
+      {
+        "lineNumber": 345,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "\u003c/div\u003e"
       },
       {
         "lineNumber": 346,
         "author": {
           "gitId": "-"
         },
-        "content": "\u003c/div\u003e"
-      },
-      {
-        "lineNumber": 347,
-        "author": {
-          "gitId": "-"
-        },
         "content": ""
       },
       {
-        "lineNumber": 348,
+        "lineNumber": 347,
         "author": {
           "gitId": "aidoxe-123"
         },
         "content": "Step 4. The user now decides that adding the food item was a mistake, and decides to undo that action by executing the `undo` command. The `undo` command will call `ModelManager#undo()`,"
       },
       {
-        "lineNumber": 349,
+        "lineNumber": 348,
         "author": {
           "gitId": "aidoxe-123"
         },
         "content": "which will pop the top most state from `mcGymmyStack`, and restores the McGymmy to that state."
       },
       {
-        "lineNumber": 350,
+        "lineNumber": 349,
         "author": {
           "gitId": "-"
         },
         "content": ""
       },
       {
-        "lineNumber": 351,
+        "lineNumber": 350,
         "author": {
           "gitId": "aidoxe-123"
         },
         "content": "![UndoState3](images/UndoState3.png)"
       },
       {
-        "lineNumber": 352,
+        "lineNumber": 351,
         "author": {
           "gitId": "-"
         },
         "content": ""
       },
       {
-        "lineNumber": 353,
+        "lineNumber": 352,
         "author": {
           "gitId": "jh123x"
         },
         "content": "\u003cdiv markdown\u003d\"span\" class\u003d\"alert alert-info\"\u003e:information_source: **Note:** If the `currentStatePointer` is at index 0, pointing to the initial McGymmy state, then there are no previous McGymmy states to restore. The `undo` command uses `Model#canUndoMcGymmy()` to check if this is the case. If so, it will return an error to the user rather"
       },
       {
-        "lineNumber": 354,
+        "lineNumber": 353,
         "author": {
           "gitId": "-"
         },
         "content": "than attempting to perform the undo."
       },
       {
-        "lineNumber": 355,
+        "lineNumber": 354,
         "author": {
           "gitId": "-"
         },
         "content": ""
+      },
+      {
+        "lineNumber": 355,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "\u003c/div\u003e"
       },
       {
         "lineNumber": 356,
         "author": {
           "gitId": "-"
         },
-        "content": "\u003c/div\u003e"
+        "content": ""
       },
       {
         "lineNumber": 357,
         "author": {
           "gitId": "-"
         },
-        "content": ""
+        "content": "The following sequence diagram shows how the undo operation works:"
       },
       {
         "lineNumber": 358,
         "author": {
           "gitId": "-"
         },
-        "content": "The following sequence diagram shows how the undo operation works:"
+        "content": ""
       },
       {
         "lineNumber": 359,
         "author": {
           "gitId": "-"
         },
-        "content": ""
+        "content": "![UndoSequenceDiagram](images/UndoSequenceDiagram.png)"
       },
       {
         "lineNumber": 360,
         "author": {
           "gitId": "-"
         },
-        "content": "![UndoSequenceDiagram](images/UndoSequenceDiagram.png)"
+        "content": ""
       },
       {
         "lineNumber": 361,
         "author": {
           "gitId": "-"
         },
-        "content": ""
-      },
-      {
-        "lineNumber": 362,
-        "author": {
-          "gitId": "-"
-        },
         "content": "\u003cdiv markdown\u003d\"span\" class\u003d\"alert alert-info\"\u003e:information_source: **Note:** The lifeline for `UndoCommand` should end at the destroy marker (X) but due to a limitation of PlantUML, the lifeline reaches the end of diagram."
       },
       {
-        "lineNumber": 363,
+        "lineNumber": 362,
         "author": {
           "gitId": "aidoxe-123"
         },
         "content": "\u003c/div\u003e"
       },
       {
-        "lineNumber": 364,
+        "lineNumber": 363,
         "author": {
           "gitId": "-"
         },
         "content": ""
       },
       {
-        "lineNumber": 365,
+        "lineNumber": 364,
         "author": {
           "gitId": "aidoxe-123"
         },
         "content": "\u003cdiv markdown\u003d\"span\" class\u003d\"alert alert-info\"\u003e:information_source: **Note:** The method Parser::parse is a simplification of the overall parsing sequence which was already covered in showcasing the execution of the delete method. As such, redundant parsing details are not covered here."
       },
       {
-        "lineNumber": 366,
+        "lineNumber": 365,
         "author": {
           "gitId": "-"
         },
         "content": "\u003c/div\u003e"
       },
       {
-        "lineNumber": 367,
+        "lineNumber": 366,
         "author": {
           "gitId": "-"
         },
         "content": ""
       },
       {
-        "lineNumber": 368,
+        "lineNumber": 367,
         "author": {
           "gitId": "aidoxe-123"
         },
         "content": "\u003cdiv markdown\u003d\"span\" class\u003d\"alert alert-info\"\u003e:information_source: **Note:** The method ModelManager::updateModelManager is a simplification of updating the McGymmy, updating the filterPredicate and updating the filteredFoodList separately."
       },
       {
-        "lineNumber": 369,
+        "lineNumber": 368,
         "author": {
           "gitId": "aidoxe-123"
         },
         "content": "\u003c/div\u003e"
       },
       {
-        "lineNumber": 370,
+        "lineNumber": 369,
         "author": {
           "gitId": "-"
         },
         "content": ""
       },
       {
-        "lineNumber": 371,
+        "lineNumber": 370,
         "author": {
           "gitId": "-"
         },
         "content": "The following activity diagram summarizes what happens when a user executes a new command:"
       },
       {
-        "lineNumber": 372,
+        "lineNumber": 371,
         "author": {
           "gitId": "-"
         },
         "content": ""
       },
       {
-        "lineNumber": 373,
+        "lineNumber": 372,
         "author": {
           "gitId": "aidoxe-123"
         },
         "content": "![AddToHistoryActivityDiagram](images/AddToHistoryActivityDiagram.png)"
       },
       {
-        "lineNumber": 374,
+        "lineNumber": 373,
         "author": {
           "gitId": "-"
         },
         "content": ""
       },
       {
-        "lineNumber": 375,
+        "lineNumber": 374,
         "author": {
           "gitId": "jh123x"
         },
         "content": "#### 7.4.2 Design consideration:"
       },
       {
-        "lineNumber": 376,
+        "lineNumber": 375,
         "author": {
           "gitId": "-"
         },
         "content": ""
       },
       {
-        "lineNumber": 377,
+        "lineNumber": 376,
         "author": {
           "gitId": "jh123x"
         },
         "content": "##### 7.4.2.1 Aspect: How undo executes"
       },
       {
-        "lineNumber": 378,
+        "lineNumber": 377,
         "author": {
           "gitId": "-"
         },
         "content": ""
       },
       {
-        "lineNumber": 379,
+        "lineNumber": 378,
         "author": {
           "gitId": "aidoxe-123"
         },
         "content": "* **Alternative 1 (current choice):** Saves the entire ModelManger database."
       },
       {
-        "lineNumber": 380,
+        "lineNumber": 379,
         "author": {
           "gitId": "-"
         },
         "content": "  * Pros: Easy to implement."
       },
       {
-        "lineNumber": 381,
+        "lineNumber": 380,
         "author": {
           "gitId": "-"
         },
         "content": "  * Cons: May have performance issues in terms of memory usage."
       },
       {
-        "lineNumber": 382,
+        "lineNumber": 381,
         "author": {
           "gitId": "-"
         },
         "content": ""
       },
       {
-        "lineNumber": 383,
+        "lineNumber": 382,
         "author": {
           "gitId": "aidoxe-123"
         },
         "content": "* **Alternative 2:** Individual command knows how to undo by"
       },
       {
-        "lineNumber": 384,
+        "lineNumber": 383,
         "author": {
           "gitId": "-"
         },
         "content": "  itself."
       },
       {
-        "lineNumber": 385,
+        "lineNumber": 384,
         "author": {
           "gitId": "jh123x"
         },
         "content": "  * Pros: Will use less memory (e.g. for `delete`, just save the food item being deleted)."
       },
       {
-        "lineNumber": 386,
+        "lineNumber": 385,
         "author": {
           "gitId": "-"
         },
         "content": "  * Cons: We must ensure that the implementation of each individual command are correct."
       },
       {
-        "lineNumber": 387,
+        "lineNumber": 386,
         "author": {
           "gitId": "-"
         },
         "content": ""
       },
       {
-        "lineNumber": 388,
+        "lineNumber": 387,
         "author": {
           "gitId": "-"
         },
         "content": "_{more aspects and alternatives to be added}_"
       },
       {
-        "lineNumber": 389,
+        "lineNumber": 388,
         "author": {
           "gitId": "-"
         },
         "content": ""
       },
       {
-        "lineNumber": 390,
+        "lineNumber": 389,
         "author": {
           "gitId": "jh123x"
         },
         "content": "### 7.5 Macro Command"
       },
       {
-        "lineNumber": 391,
+        "lineNumber": 390,
         "author": {
           "gitId": "joeychensmart"
         },
         "content": ""
       },
       {
-        "lineNumber": 392,
+        "lineNumber": 391,
         "author": {
           "gitId": "joeychensmart"
         },
         "content": "![Structure of the Macro Component](images/MacroClassDiagram.png)"
       },
       {
-        "lineNumber": 393,
+        "lineNumber": 392,
         "author": {
           "gitId": "-"
         },
         "content": ""
       },
       {
-        "lineNumber": 394,
+        "lineNumber": 393,
         "author": {
           "gitId": "joeychensmart"
         },
         "content": "As with the other class diagram for the *Logic* component above, we omit some details in the above diagram for clarity."
       },
       {
-        "lineNumber": 395,
+        "lineNumber": 394,
         "author": {
           "gitId": "joeychensmart"
         },
         "content": ""
       },
       {
-        "lineNumber": 396,
+        "lineNumber": 395,
         "author": {
           "gitId": "joeychensmart"
         },
         "content": "There are two \u0027parts\u0027 to the macro component:"
       },
       {
-        "lineNumber": 397,
+        "lineNumber": 396,
         "author": {
           "gitId": "joeychensmart"
         },
         "content": ""
       },
       {
-        "lineNumber": 398,
+        "lineNumber": 397,
         "author": {
           "gitId": "joeychensmart"
         },
         "content": "1. The creation of the macro object itself (e.g. running `macro test a; add -n \\a breakfast -c 100`)."
       },
       {
-        "lineNumber": 399,
+        "lineNumber": 398,
         "author": {
           "gitId": "joeychensmart"
         },
         "content": "2. The execution of the macro object (e.g. running `test -a tau sar pau`)."
       },
       {
-        "lineNumber": 400,
+        "lineNumber": 399,
         "author": {
           "gitId": "joeychensmart"
         },
         "content": ""
       },
       {
-        "lineNumber": 401,
+        "lineNumber": 400,
         "author": {
           "gitId": "joeychensmart"
         },
         "content": "The creation of the macro object is straightforward as we defer most of the heavy lifting to during the execution of the macro."
       },
       {
-        "lineNumber": 402,
+        "lineNumber": 401,
         "author": {
           "gitId": "-"
         },
         "content": ""
       },
       {
-        "lineNumber": 403,
+        "lineNumber": 402,
         "author": {
           "gitId": "jh123x"
         },
         "content": "#### 7.5.1 A more complete picture of the parsing process"
       },
       {
-        "lineNumber": 404,
+        "lineNumber": 403,
         "author": {
           "gitId": "-"
         },
         "content": ""
       },
       {
-        "lineNumber": 405,
+        "lineNumber": 404,
         "author": {
           "gitId": "joeychensmart"
         },
         "content": "We only described parsing and execution of primitive commands in the section above."
       },
       {
-        "lineNumber": 406,
+        "lineNumber": 405,
         "author": {
           "gitId": "joeychensmart"
         },
         "content": "A short description of the process including the parsing of macros is as follows:"
       },
       {
-        "lineNumber": 407,
+        "lineNumber": 406,
         "author": {
           "gitId": "joeychensmart"
         },
         "content": ""
       },
       {
-        "lineNumber": 408,
+        "lineNumber": 407,
         "author": {
           "gitId": "joeychensmart"
         },
         "content": "1. If command word is `macro`, return a `NewMacroCommand` (which will create a new `macro` when executed)."
       },
       {
-        "lineNumber": 409,
+        "lineNumber": 408,
         "author": {
           "gitId": "joeychensmart"
         },
         "content": "2. Else if command word is an existing macro, call that macro object\u0027s `toCommandExecutable` method and return that."
       },
       {
-        "lineNumber": 410,
+        "lineNumber": 409,
         "author": {
           "gitId": "joeychensmart"
         },
         "content": "3. Else hand over to primitive command parser."
       },
       {
-        "lineNumber": 411,
+        "lineNumber": 410,
         "author": {
           "gitId": "joeychensmart"
         },
         "content": ""
       },
       {
-        "lineNumber": 412,
+        "lineNumber": 411,
         "author": {
           "gitId": "jh123x"
         },
         "content": "#### 7.5.2 Execution of macros"
       },
       {
-        "lineNumber": 413,
+        "lineNumber": 412,
         "author": {
           "gitId": "joeychensmart"
         },
         "content": ""
       },
       {
-        "lineNumber": 414,
+        "lineNumber": 413,
         "author": {
           "gitId": "joeychensmart"
         },
         "content": "Here we detail what exactly happens in each macro\u0027s `toCommandExecutable` object."
       },
       {
-        "lineNumber": 415,
+        "lineNumber": 414,
         "author": {
           "gitId": "joeychensmart"
         },
         "content": "Throughout this section, we will use the following macro as an example: `macro test a;add -n \\a breakfast 200`."
       },
       {
-        "lineNumber": 416,
+        "lineNumber": 415,
         "author": {
           "gitId": "joeychensmart"
         },
         "content": ""
       },
       {
-        "lineNumber": 417,
+        "lineNumber": 416,
         "author": {
           "gitId": "joeychensmart"
         },
         "content": "1. Parameters supplied by the user are substituted into the macro\u0027s lines. For the example if the user enters `test -a rice`, `rice` will be substituted into the `\\a` part of `add -n \\a breakfast 200` to obtain `add -n rice breakfast 200`;"
       },
       {
-        "lineNumber": 418,
+        "lineNumber": 417,
         "author": {
           "gitId": "joeychensmart"
         },
         "content": "2. Pass the list of strings to a new instance of `PrimitiveCommandParser` to get a list of `Command`s. If a `ParseException` occurs, we recast it as a `CommandException` and re-throw it."
       },
       {
-        "lineNumber": 419,
+        "lineNumber": 418,
         "author": {
           "gitId": "joeychensmart"
         },
         "content": "3. Execute all these `Command`s in sequence, and return a new `CommandResult` created from concatenating the respective `CommandResults` returned by the `Command`s. If a `CommandException` occurs in this sequence, that exception is thrown with the added message listing the commands that have executed successfully, and commands that have yet to be executed."
       },
       {
-        "lineNumber": 420,
+        "lineNumber": 419,
         "author": {
           "gitId": "joeychensmart"
         },
         "content": ""
       },
       {
-        "lineNumber": 421,
+        "lineNumber": 420,
         "author": {
           "gitId": "joeychensmart"
         },
         "content": "![Sequence diagram for macro](images/MacroSequenceDiagram.png)"
       },
       {
-        "lineNumber": 422,
+        "lineNumber": 421,
         "author": {
           "gitId": "joeychensmart"
         },
         "content": ""
       },
       {
-        "lineNumber": 423,
+        "lineNumber": 422,
         "author": {
           "gitId": "jh123x"
         },
         "content": "#### 7.5.3 Additional considerations for this implementation"
       },
       {
-        "lineNumber": 424,
+        "lineNumber": 423,
         "author": {
           "gitId": "joeychensmart"
         },
         "content": "Alternatively could have done the parsing/compiling on creation of the macro so we don\u0027t need to use another parser during execution."
       },
       {
-        "lineNumber": 425,
+        "lineNumber": 424,
         "author": {
           "gitId": "joeychensmart"
         },
         "content": "That is, each macro instance could contain its own `ParameterSet` which could then be used by its callee functions."
       },
       {
-        "lineNumber": 426,
+        "lineNumber": 425,
         "author": {
           "gitId": "joeychensmart"
         },
         "content": "This implementation is considerably more involved hence we proceeded with the current implementation."
       },
       {
-        "lineNumber": 427,
+        "lineNumber": 426,
         "author": {
           "gitId": "-"
         },
         "content": ""
+      },
+      {
+        "lineNumber": 427,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "--------------------------------------------------------------------------------------------------------------------"
       },
       {
         "lineNumber": 428,
         "author": {
           "gitId": "-"
         },
-        "content": "--------------------------------------------------------------------------------------------------------------------"
-      },
-      {
-        "lineNumber": 429,
-        "author": {
-          "gitId": "-"
-        },
         "content": ""
       },
       {
-        "lineNumber": 430,
+        "lineNumber": 429,
         "author": {
           "gitId": "jh123x"
         },
         "content": "## 8. **Documentation, logging, testing, configuration, dev-ops**"
       },
       {
-        "lineNumber": 431,
+        "lineNumber": 430,
         "author": {
           "gitId": "-"
         },
         "content": ""
       },
       {
-        "lineNumber": 432,
+        "lineNumber": 431,
         "author": {
           "gitId": "-"
         },
         "content": "* [Documentation guide](Documentation.md)"
       },
       {
-        "lineNumber": 433,
+        "lineNumber": 432,
         "author": {
           "gitId": "-"
         },
         "content": "* [Testing guide](Testing.md)"
       },
       {
-        "lineNumber": 434,
+        "lineNumber": 433,
         "author": {
           "gitId": "-"
         },
         "content": "* [Logging guide](Logging.md)"
       },
       {
-        "lineNumber": 435,
+        "lineNumber": 434,
         "author": {
           "gitId": "-"
         },
         "content": "* [Configuration guide](Configuration.md)"
       },
       {
-        "lineNumber": 436,
+        "lineNumber": 435,
         "author": {
           "gitId": "-"
         },
         "content": "* [DevOps guide](DevOps.md)"
       },
       {
-        "lineNumber": 437,
+        "lineNumber": 436,
         "author": {
           "gitId": "-"
         },
         "content": ""
       },
       {
-        "lineNumber": 438,
+        "lineNumber": 437,
         "author": {
           "gitId": "-"
         },
         "content": "--------------------------------------------------------------------------------------------------------------------"
       },
       {
-        "lineNumber": 439,
+        "lineNumber": 438,
         "author": {
           "gitId": "-"
         },
         "content": ""
       },
       {
-        "lineNumber": 440,
+        "lineNumber": 439,
         "author": {
           "gitId": "jh123x"
         },
         "content": "## 9. **Appendix: Requirements**"
       },
       {
-        "lineNumber": 441,
+        "lineNumber": 440,
         "author": {
           "gitId": "-"
         },
         "content": ""
       },
       {
-        "lineNumber": 442,
+        "lineNumber": 441,
         "author": {
           "gitId": "jh123x"
         },
         "content": "### 9.1 Product scope"
       },
       {
-        "lineNumber": 443,
+        "lineNumber": 442,
         "author": {
           "gitId": "-"
         },
         "content": ""
       },
       {
-        "lineNumber": 444,
+        "lineNumber": 443,
         "author": {
           "gitId": "-"
         },
         "content": "**Target user profile**:"
       },
       {
-        "lineNumber": 445,
+        "lineNumber": 444,
         "author": {
           "gitId": "-"
         },
         "content": ""
       },
       {
-        "lineNumber": 446,
+        "lineNumber": 445,
         "author": {
           "gitId": "aidoxe-123"
         },
         "content": "* has a need to manage food intake"
       },
       {
-        "lineNumber": 447,
+        "lineNumber": 446,
         "author": {
           "gitId": "-"
         },
         "content": "* prefer desktop apps over other types"
       },
       {
-        "lineNumber": 448,
+        "lineNumber": 447,
         "author": {
           "gitId": "-"
         },
         "content": "* can type fast"
       },
       {
-        "lineNumber": 449,
+        "lineNumber": 448,
         "author": {
           "gitId": "-"
         },
         "content": "* prefers typing to mouse interactions"
       },
       {
-        "lineNumber": 450,
+        "lineNumber": 449,
         "author": {
           "gitId": "-"
         },
         "content": "* is reasonably comfortable using CLI apps"
       },
       {
-        "lineNumber": 451,
+        "lineNumber": 450,
         "author": {
           "gitId": "aidoxe-123"
         },
         "content": "* is sedentary people who sit in front of their computers"
       },
       {
-        "lineNumber": 452,
+        "lineNumber": 451,
         "author": {
           "gitId": "-"
         },
         "content": ""
       },
       {
-        "lineNumber": 453,
+        "lineNumber": 452,
         "author": {
           "gitId": "aidoxe-123"
         },
         "content": "**Value proposition**:"
       },
       {
-        "lineNumber": 454,
+        "lineNumber": 453,
         "author": {
           "gitId": "aidoxe-123"
         },
         "content": "* manage food intake faster than a typical mouse/GUI driven app"
       },
       {
-        "lineNumber": 455,
+        "lineNumber": 454,
         "author": {
           "gitId": "aidoxe-123"
         },
         "content": "* reduce the risk of health issues for people with an unhealthy lifestyle"
       },
       {
-        "lineNumber": 456,
+        "lineNumber": 455,
         "author": {
           "gitId": "aidoxe-123"
         },
         "content": "* help them develop a healthy lifestyle through diet"
       },
       {
-        "lineNumber": 457,
+        "lineNumber": 456,
         "author": {
           "gitId": "aidoxe-123"
         },
         "content": "* help them track their calorie intake"
       },
       {
-        "lineNumber": 458,
+        "lineNumber": 457,
         "author": {
           "gitId": "aidoxe-123"
         },
         "content": "* find trends in their eating habits"
       },
       {
-        "lineNumber": 459,
+        "lineNumber": 458,
         "author": {
           "gitId": "aidoxe-123"
         },
         "content": "* profile setting for them to store different settings"
+      },
+      {
+        "lineNumber": 459,
+        "author": {
+          "gitId": "-"
+        },
+        "content": ""
       },
       {
         "lineNumber": 460,
@@ -4994,100 +4994,100 @@
       {
         "lineNumber": 461,
         "author": {
-          "gitId": "-"
+          "gitId": "jh123x"
         },
-        "content": ""
+        "content": "### 9.2 User stories"
       },
       {
         "lineNumber": 462,
         "author": {
-          "gitId": "jh123x"
+          "gitId": "-"
         },
-        "content": "### 9.2 User stories"
+        "content": ""
       },
       {
         "lineNumber": 463,
         "author": {
           "gitId": "-"
         },
-        "content": ""
+        "content": "Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unlikely to have) - `*`"
       },
       {
         "lineNumber": 464,
         "author": {
           "gitId": "-"
         },
-        "content": "Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unlikely to have) - `*`"
-      },
-      {
-        "lineNumber": 465,
-        "author": {
-          "gitId": "-"
-        },
         "content": ""
       },
       {
-        "lineNumber": 466,
+        "lineNumber": 465,
         "author": {
           "gitId": "aidoxe-123"
         },
         "content": "| Priority | As a/an …​                                  | I want to …​                            | So that I can…​                                                         |"
       },
       {
-        "lineNumber": 467,
+        "lineNumber": 466,
         "author": {
           "gitId": "aidoxe-123"
         },
         "content": "| -------- | ------------------------------------------ | -------------------------------------- | ---------------------------------------------------------------------- |"
       },
       {
-        "lineNumber": 468,
+        "lineNumber": 467,
         "author": {
           "gitId": "-"
         },
         "content": "| `* * *`  | new user                                   | see usage instructions                 | refer to instructions when I forget how to use the App                 |"
       },
       {
-        "lineNumber": 469,
+        "lineNumber": 468,
         "author": {
           "gitId": "aidoxe-123"
         },
         "content": "| `* * *`  | user                                       | track what I am eating                 |                                                                        |"
       },
       {
-        "lineNumber": 470,
+        "lineNumber": 469,
         "author": {
           "gitId": "aidoxe-123"
         },
         "content": "| `* * *`  | user                                       | delete a food item                     | remove food items that I no longer care of                             |"
       },
       {
-        "lineNumber": 471,
+        "lineNumber": 470,
         "author": {
           "gitId": "aidoxe-123"
         },
         "content": "| `* * *`  | user                                       | easily add food items/details          | keep track of my diet                                                  |"
       },
       {
-        "lineNumber": 472,
+        "lineNumber": 471,
         "author": {
           "gitId": "aidoxe-123"
         },
         "content": "| `* *`    | frequent user                              | perform tasks on a group of food items |                                                                        |"
       },
       {
-        "lineNumber": 473,
+        "lineNumber": 472,
         "author": {
           "gitId": "aidoxe-123"
         },
         "content": "| `* *`    | expert user                                | create shortcuts for tasks             | frequently performed tasks                                             |"
       },
       {
-        "lineNumber": 474,
+        "lineNumber": 473,
         "author": {
           "gitId": "aidoxe-123"
         },
         "content": "| `*`      | programmer                                 | make use of the CLI like design        | get used to CLI in the future                                          |"
+      },
+      {
+        "lineNumber": 474,
+        "author": {
+          "gitId": "-"
+        },
+        "content": ""
       },
       {
         "lineNumber": 475,
@@ -5099,30 +5099,30 @@
       {
         "lineNumber": 476,
         "author": {
-          "gitId": "-"
-        },
-        "content": ""
-      },
-      {
-        "lineNumber": 477,
-        "author": {
           "gitId": "jh123x"
         },
         "content": "### 9.3 Use cases"
       },
       {
-        "lineNumber": 478,
+        "lineNumber": 477,
         "author": {
           "gitId": "-"
         },
         "content": ""
       },
       {
-        "lineNumber": 479,
+        "lineNumber": 478,
         "author": {
           "gitId": "jh123x"
         },
         "content": "(For all use cases below, the **System** is `McGymmy` and the **Actor** is the `user`, unless specified otherwise)"
+      },
+      {
+        "lineNumber": 479,
+        "author": {
+          "gitId": "-"
+        },
+        "content": ""
       },
       {
         "lineNumber": 480,
@@ -5134,1129 +5134,1129 @@
       {
         "lineNumber": 481,
         "author": {
-          "gitId": "-"
+          "gitId": "dcchan98"
         },
-        "content": ""
+        "content": "**Use case: UC01 List food**"
       },
       {
         "lineNumber": 482,
         "author": {
-          "gitId": "dcchan98"
+          "gitId": "-"
         },
-        "content": "**Use case: UC01 List food**"
+        "content": ""
       },
       {
         "lineNumber": 483,
         "author": {
           "gitId": "-"
         },
-        "content": ""
+        "content": "**MSS**"
       },
       {
         "lineNumber": 484,
         "author": {
-          "gitId": "-"
+          "gitId": "dcchan98"
         },
-        "content": "**MSS**"
+        "content": "1. User requests to list food (UC01)"
       },
       {
         "lineNumber": 485,
         "author": {
           "gitId": "dcchan98"
         },
-        "content": "1. User requests to list food (UC01)"
+        "content": "2. McGymmy shows a list of food that user has added (UC02)"
       },
       {
         "lineNumber": 486,
         "author": {
           "gitId": "dcchan98"
         },
-        "content": "2. McGymmy shows a list of food that user has added (UC02)"
-      },
-      {
-        "lineNumber": 487,
-        "author": {
-          "gitId": "dcchan98"
-        },
         "content": "Use case ends"
       },
       {
-        "lineNumber": 488,
+        "lineNumber": 487,
         "author": {
           "gitId": "-"
         },
         "content": ""
       },
       {
-        "lineNumber": 489,
+        "lineNumber": 488,
         "author": {
           "gitId": "dcchan98"
         },
         "content": "**Use case: UC02 Add food**"
       },
       {
-        "lineNumber": 490,
+        "lineNumber": 489,
         "author": {
           "gitId": "-"
         },
         "content": ""
       },
       {
-        "lineNumber": 491,
+        "lineNumber": 490,
         "author": {
           "gitId": "joeychensmart"
         },
         "content": "**MSS**"
       },
       {
-        "lineNumber": 492,
+        "lineNumber": 491,
         "author": {
           "gitId": "chewypiano"
         },
         "content": "1. User requests to add food into the list"
       },
       {
-        "lineNumber": 493,
+        "lineNumber": 492,
         "author": {
           "gitId": "chewypiano"
         },
         "content": "2. McGymmy adds the food item into the list"
       },
       {
-        "lineNumber": 494,
+        "lineNumber": 493,
         "author": {
           "gitId": "chewypiano"
         },
         "content": ""
       },
       {
-        "lineNumber": 495,
+        "lineNumber": 494,
         "author": {
           "gitId": "jh123x"
         },
         "content": "Use case ends."
+      },
+      {
+        "lineNumber": 495,
+        "author": {
+          "gitId": "-"
+        },
+        "content": ""
       },
       {
         "lineNumber": 496,
         "author": {
           "gitId": "-"
         },
-        "content": ""
-      },
-      {
-        "lineNumber": 497,
-        "author": {
-          "gitId": "-"
-        },
         "content": "**Extensions**"
       },
       {
-        "lineNumber": 498,
+        "lineNumber": 497,
         "author": {
           "gitId": "jh123x"
         },
         "content": "- 1a. The format of add method is invalid"
       },
       {
-        "lineNumber": 499,
+        "lineNumber": 498,
         "author": {
           "gitId": "chewypiano"
         },
         "content": "    1a1. McGymmy shows an error message"
       },
       {
-        "lineNumber": 500,
+        "lineNumber": 499,
         "author": {
           "gitId": "-"
         },
         "content": "    Use case ends."
       },
       {
-        "lineNumber": 501,
+        "lineNumber": 500,
         "author": {
           "gitId": "-"
         },
         "content": ""
       },
       {
-        "lineNumber": 502,
+        "lineNumber": 501,
         "author": {
           "gitId": "jh123x"
         },
         "content": "**Use case: UC03 Delete food**"
       },
       {
-        "lineNumber": 503,
+        "lineNumber": 502,
         "author": {
           "gitId": "joeychensmart"
         },
         "content": ""
       },
       {
-        "lineNumber": 504,
+        "lineNumber": 503,
         "author": {
           "gitId": "joeychensmart"
         },
         "content": "**MSS**"
+      },
+      {
+        "lineNumber": 504,
+        "author": {
+          "gitId": "jh123x"
+        },
+        "content": "1. User requests to list food (UC01)"
       },
       {
         "lineNumber": 505,
         "author": {
           "gitId": "jh123x"
         },
-        "content": "1. User requests to list food (UC01)"
+        "content": "2. McGymmy shows a list of food"
       },
       {
         "lineNumber": 506,
         "author": {
           "gitId": "jh123x"
         },
-        "content": "2. McGymmy shows a list of food"
+        "content": "3. User request to delete a specific food on the list"
       },
       {
         "lineNumber": 507,
         "author": {
           "gitId": "jh123x"
         },
-        "content": "3. User request to delete a specific food on the list"
-      },
-      {
-        "lineNumber": 508,
-        "author": {
-          "gitId": "jh123x"
-        },
         "content": "4. McGymmy deletes the food"
       },
       {
-        "lineNumber": 509,
+        "lineNumber": 508,
         "author": {
           "gitId": "joeychensmart"
         },
         "content": ""
       },
       {
-        "lineNumber": 510,
+        "lineNumber": 509,
         "author": {
           "gitId": "jh123x"
         },
         "content": "Use case ends"
+      },
+      {
+        "lineNumber": 510,
+        "author": {
+          "gitId": "-"
+        },
+        "content": ""
       },
       {
         "lineNumber": 511,
         "author": {
           "gitId": "-"
         },
-        "content": ""
-      },
-      {
-        "lineNumber": 512,
-        "author": {
-          "gitId": "-"
-        },
         "content": "**Extensions**"
       },
       {
-        "lineNumber": 513,
+        "lineNumber": 512,
         "author": {
           "gitId": "jh123x"
         },
         "content": "- 2a. The list is empty\u003cbr\u003e"
       },
       {
-        "lineNumber": 514,
+        "lineNumber": 513,
         "author": {
           "gitId": "-"
         },
         "content": ""
       },
       {
-        "lineNumber": 515,
+        "lineNumber": 514,
         "author": {
           "gitId": "jh123x"
         },
         "content": "    Use case ends."
       },
       {
-        "lineNumber": 516,
+        "lineNumber": 515,
         "author": {
           "gitId": "-"
         },
         "content": ""
+      },
+      {
+        "lineNumber": 516,
+        "author": {
+          "gitId": "jh123x"
+        },
+        "content": "- 3a. The given index is invalid.\u003cbr\u003e"
       },
       {
         "lineNumber": 517,
         "author": {
           "gitId": "jh123x"
         },
-        "content": "- 3a. The given index is invalid.\u003cbr\u003e"
-      },
-      {
-        "lineNumber": 518,
-        "author": {
-          "gitId": "jh123x"
-        },
         "content": "   - 3a1. McGymmy shows an error message."
       },
       {
-        "lineNumber": 519,
+        "lineNumber": 518,
         "author": {
           "gitId": "-"
         },
         "content": ""
       },
       {
-        "lineNumber": 520,
+        "lineNumber": 519,
         "author": {
           "gitId": "jh123x"
         },
         "content": "    Use case resumes at step 2."
       },
       {
-        "lineNumber": 521,
+        "lineNumber": 520,
         "author": {
           "gitId": "-"
         },
         "content": ""
       },
       {
-        "lineNumber": 522,
+        "lineNumber": 521,
         "author": {
           "gitId": "dcchan98"
         },
         "content": "**Use case: UC04 Help**"
       },
       {
-        "lineNumber": 523,
+        "lineNumber": 522,
         "author": {
           "gitId": "-"
         },
         "content": ""
       },
       {
-        "lineNumber": 524,
+        "lineNumber": 523,
         "author": {
           "gitId": "joeychensmart"
         },
         "content": "**MSS**"
       },
       {
-        "lineNumber": 525,
+        "lineNumber": 524,
         "author": {
           "gitId": "dcchan98"
         },
         "content": "1. User requests help"
       },
       {
-        "lineNumber": 526,
+        "lineNumber": 525,
         "author": {
           "gitId": "dcchan98"
         },
         "content": "2. McGymmy shows all commands and examples of command usages"
       },
       {
-        "lineNumber": 527,
+        "lineNumber": 526,
         "author": {
           "gitId": "joeychensmart"
         },
         "content": ""
       },
       {
-        "lineNumber": 528,
+        "lineNumber": 527,
         "author": {
           "gitId": "dcchan98"
         },
         "content": "Use case ends"
       },
       {
-        "lineNumber": 529,
+        "lineNumber": 528,
         "author": {
           "gitId": "-"
         },
         "content": ""
       },
       {
-        "lineNumber": 530,
+        "lineNumber": 529,
         "author": {
           "gitId": "joeychensmart"
         },
         "content": "**Extensions**"
       },
       {
-        "lineNumber": 531,
+        "lineNumber": 530,
         "author": {
           "gitId": "dcchan98"
         },
         "content": "No extensions"
       },
       {
-        "lineNumber": 532,
+        "lineNumber": 531,
         "author": {
           "gitId": "dcchan98"
         },
         "content": ""
       },
       {
-        "lineNumber": 533,
+        "lineNumber": 532,
         "author": {
           "gitId": "dcchan98"
         },
         "content": "**Use case: UC05 Update food**"
       },
       {
-        "lineNumber": 534,
+        "lineNumber": 533,
         "author": {
           "gitId": "dcchan98"
         },
         "content": ""
+      },
+      {
+        "lineNumber": 534,
+        "author": {
+          "gitId": "dcchan98"
+        },
+        "content": "**MSS**"
       },
       {
         "lineNumber": 535,
         "author": {
           "gitId": "dcchan98"
         },
-        "content": "**MSS**"
+        "content": "1. User requests to list food (UC01)"
       },
       {
         "lineNumber": 536,
         "author": {
           "gitId": "dcchan98"
         },
-        "content": "1. User requests to list food (UC01)"
+        "content": "2. McGymmy shows a list of food"
       },
       {
         "lineNumber": 537,
         "author": {
           "gitId": "dcchan98"
         },
-        "content": "2. McGymmy shows a list of food"
+        "content": "3. User request to update a specific food on the list"
       },
       {
         "lineNumber": 538,
         "author": {
           "gitId": "dcchan98"
         },
-        "content": "3. User request to update a specific food on the list"
+        "content": "4. McGymmy updates the food"
       },
       {
         "lineNumber": 539,
         "author": {
-          "gitId": "dcchan98"
+          "gitId": "-"
         },
-        "content": "4. McGymmy updates the food"
+        "content": ""
       },
       {
         "lineNumber": 540,
         "author": {
-          "gitId": "-"
+          "gitId": "dcchan98"
         },
-        "content": ""
+        "content": "Use case ends"
       },
       {
         "lineNumber": 541,
         "author": {
           "gitId": "dcchan98"
         },
-        "content": "Use case ends"
-      },
-      {
-        "lineNumber": 542,
-        "author": {
-          "gitId": "dcchan98"
-        },
         "content": ""
       },
       {
-        "lineNumber": 543,
+        "lineNumber": 542,
         "author": {
           "gitId": "joeychensmart"
         },
         "content": "**Extensions**"
       },
       {
-        "lineNumber": 544,
+        "lineNumber": 543,
         "author": {
           "gitId": "jh123x"
         },
         "content": "- 2a. The list is empty\u003cbr\u003e"
       },
       {
-        "lineNumber": 545,
+        "lineNumber": 544,
         "author": {
           "gitId": "jh123x"
         },
         "content": "    Use case ends."
       },
       {
-        "lineNumber": 546,
+        "lineNumber": 545,
         "author": {
           "gitId": "jh123x"
         },
         "content": "- 3a. The given index is invalid.\u003cbr\u003e"
       },
       {
-        "lineNumber": 547,
+        "lineNumber": 546,
         "author": {
           "gitId": "joeychensmart"
         },
         "content": "   - 3a1. McGymmy shows an error message"
       },
       {
-        "lineNumber": 548,
+        "lineNumber": 547,
         "author": {
           "gitId": "jh123x"
         },
         "content": "    Use case resumes at step 2."
       },
       {
-        "lineNumber": 549,
+        "lineNumber": 548,
         "author": {
           "gitId": "-"
         },
         "content": ""
       },
       {
-        "lineNumber": 550,
+        "lineNumber": 549,
         "author": {
           "gitId": "joeychensmart"
         },
         "content": "**Use case: UC06 Add a macro command**"
       },
       {
-        "lineNumber": 551,
+        "lineNumber": 550,
         "author": {
           "gitId": "-"
         },
         "content": ""
       },
       {
-        "lineNumber": 552,
+        "lineNumber": 551,
         "author": {
           "gitId": "joeychensmart"
         },
         "content": "**MSS**"
       },
       {
-        "lineNumber": 553,
+        "lineNumber": 552,
         "author": {
           "gitId": "-"
         },
         "content": ""
       },
       {
-        "lineNumber": 554,
+        "lineNumber": 553,
         "author": {
           "gitId": "joeychensmart"
         },
         "content": "1. User creates a macro to execute two \u0027add\u0027 commands in sequence"
       },
       {
-        "lineNumber": 555,
+        "lineNumber": 554,
         "author": {
           "gitId": "joeychensmart"
         },
         "content": "2. McGymmy adds the macro to the list of available commands"
       },
       {
-        "lineNumber": 556,
+        "lineNumber": 555,
         "author": {
           "gitId": "joeychensmart"
         },
         "content": "3. User uses the newly added macro command"
       },
       {
-        "lineNumber": 557,
+        "lineNumber": 556,
         "author": {
           "gitId": "joeychensmart"
         },
         "content": "4. McGymmy executes the two commands consecutively"
       },
       {
-        "lineNumber": 558,
+        "lineNumber": 557,
         "author": {
           "gitId": "joeychensmart"
         },
         "content": ""
       },
       {
-        "lineNumber": 559,
+        "lineNumber": 558,
         "author": {
           "gitId": "joeychensmart"
         },
         "content": "Use case ends"
       },
       {
-        "lineNumber": 560,
+        "lineNumber": 559,
         "author": {
           "gitId": "joeychensmart"
         },
         "content": ""
       },
       {
-        "lineNumber": 561,
+        "lineNumber": 560,
         "author": {
           "gitId": "joeychensmart"
         },
         "content": "**Extensions**"
       },
       {
-        "lineNumber": 562,
+        "lineNumber": 561,
         "author": {
           "gitId": "-"
         },
         "content": ""
       },
       {
-        "lineNumber": 563,
+        "lineNumber": 562,
         "author": {
           "gitId": "jh123x"
         },
         "content": " - 1a. The format of the macro is invalid."
       },
       {
-        "lineNumber": 564,
+        "lineNumber": 563,
         "author": {
           "gitId": "jh123x"
         },
         "content": "    - 1a1. McGymmy shows an error message."
       },
       {
-        "lineNumber": 565,
+        "lineNumber": 564,
         "author": {
           "gitId": "joeychensmart"
         },
         "content": ""
+      },
+      {
+        "lineNumber": 565,
+        "author": {
+          "gitId": "joeychensmart"
+        },
+        "content": "Use case ends."
       },
       {
         "lineNumber": 566,
         "author": {
           "gitId": "joeychensmart"
         },
-        "content": "Use case ends."
+        "content": ""
       },
       {
         "lineNumber": 567,
         "author": {
           "gitId": "joeychensmart"
         },
-        "content": ""
+        "content": " - 4a. One of the executed commands encounter an error."
       },
       {
         "lineNumber": 568,
         "author": {
           "gitId": "joeychensmart"
         },
-        "content": " - 4a. One of the executed commands encounter an error."
+        "content": "    - 4a1. McGymmy shows the error message from that command, and displays the commands that successfully executed, and the commands that have yet to execute."
       },
       {
         "lineNumber": 569,
         "author": {
           "gitId": "joeychensmart"
         },
-        "content": "    - 4a1. McGymmy shows the error message from that command, and displays the commands that successfully executed, and the commands that have yet to execute."
+        "content": ""
       },
       {
         "lineNumber": 570,
         "author": {
           "gitId": "joeychensmart"
         },
-        "content": ""
+        "content": "Use case ends."
       },
       {
         "lineNumber": 571,
         "author": {
-          "gitId": "joeychensmart"
+          "gitId": "-"
         },
-        "content": "Use case ends."
+        "content": ""
       },
       {
         "lineNumber": 572,
         "author": {
           "gitId": "-"
         },
-        "content": ""
+        "content": "*{More to be added}*"
       },
       {
         "lineNumber": 573,
         "author": {
           "gitId": "-"
         },
-        "content": "*{More to be added}*"
-      },
-      {
-        "lineNumber": 574,
-        "author": {
-          "gitId": "-"
-        },
         "content": ""
       },
       {
-        "lineNumber": 575,
+        "lineNumber": 574,
         "author": {
           "gitId": "jh123x"
         },
         "content": "### 9.4 Non-Functional Requirements"
       },
       {
-        "lineNumber": 576,
+        "lineNumber": 575,
         "author": {
           "gitId": "-"
         },
         "content": ""
       },
       {
-        "lineNumber": 577,
+        "lineNumber": 576,
         "author": {
           "gitId": "-"
         },
         "content": "1.  Should work on any _mainstream OS_ as long as it has Java `11` or above installed."
       },
       {
-        "lineNumber": 578,
+        "lineNumber": 577,
         "author": {
           "gitId": "jh123x"
         },
         "content": "2.  Should be able to hold up to 1000 food items without a noticeable sluggishness in performance for typical usage."
       },
       {
-        "lineNumber": 579,
+        "lineNumber": 578,
         "author": {
           "gitId": "-"
         },
         "content": "3.  A user with above average typing speed for regular English text (i.e. not code, not system admin commands) should be able to accomplish most of the tasks faster using commands than using the mouse."
       },
       {
-        "lineNumber": 580,
+        "lineNumber": 579,
         "author": {
           "gitId": "joeychensmart"
         },
         "content": "4. The product should be for a single user i.e. (not a multi-user product)."
       },
       {
-        "lineNumber": 581,
+        "lineNumber": 580,
         "author": {
           "gitId": "joeychensmart"
         },
         "content": "5. The data should be stored locally and should be in a human editable text file."
       },
       {
-        "lineNumber": 582,
+        "lineNumber": 581,
         "author": {
           "gitId": "joeychensmart"
         },
         "content": "6. The software should not depend on a private remote server."
       },
       {
-        "lineNumber": 583,
+        "lineNumber": 582,
         "author": {
           "gitId": "joeychensmart"
         },
         "content": "7. The size of the final compiled JAR file should be less than 100Mb."
       },
       {
-        "lineNumber": 584,
+        "lineNumber": 583,
         "author": {
           "gitId": "joeychensmart"
         },
         "content": "8. There should be CLI alternatives to every GUI input. (E.g. instead of clicking on a button I can type an equivalent command to achieve the same result.)"
       },
       {
-        "lineNumber": 585,
+        "lineNumber": 584,
         "author": {
           "gitId": "-"
         },
         "content": ""
       },
       {
-        "lineNumber": 586,
+        "lineNumber": 585,
         "author": {
           "gitId": "-"
         },
         "content": "*{More to be added}*"
       },
       {
-        "lineNumber": 587,
+        "lineNumber": 586,
         "author": {
           "gitId": "-"
         },
         "content": ""
       },
       {
-        "lineNumber": 588,
+        "lineNumber": 587,
         "author": {
           "gitId": "jh123x"
         },
         "content": "### 9.5 Glossary"
       },
       {
-        "lineNumber": 589,
+        "lineNumber": 588,
         "author": {
           "gitId": "-"
         },
         "content": ""
       },
       {
-        "lineNumber": 590,
+        "lineNumber": 589,
         "author": {
           "gitId": "aidoxe-123"
         },
         "content": "* **Built-in commands**: Any other commands except Macro Command."
       },
       {
-        "lineNumber": 591,
+        "lineNumber": 590,
         "author": {
           "gitId": "aidoxe-123"
         },
         "content": "* **Command Line Interface (CLI)**: A command-line interface (CLI) processes commands to a computer program in the form of lines of text."
       },
       {
-        "lineNumber": 592,
+        "lineNumber": 591,
         "author": {
           "gitId": "aidoxe-123"
         },
         "content": "* **Flag**: A dash followed by a letter to denote the start of a parameter. For example, in `-n Chicken Rice`, `-n` is a flag for name and `Chicken Rice` is the input that will be processed by the application."
       },
       {
-        "lineNumber": 593,
+        "lineNumber": 592,
         "author": {
           "gitId": "aidoxe-123"
         },
         "content": "* **Graphical User Interface (GUI)**: A visual way of interacting with a computer using items such as windows, icons, and menus, used by most modern operating systems."
       },
       {
-        "lineNumber": 594,
+        "lineNumber": 593,
         "author": {
           "gitId": "aidoxe-123"
         },
         "content": "* **Macro command**: A command that allows you to execute multiple built-in commands sequentially with just one line of input"
       },
       {
-        "lineNumber": 595,
+        "lineNumber": 594,
         "author": {
           "gitId": "aidoxe-123"
         },
         "content": "* **Mainstream OS**: Windows, Linux, Unix, OS-X."
       },
       {
-        "lineNumber": 596,
+        "lineNumber": 595,
         "author": {
           "gitId": "aidoxe-123"
         },
         "content": "* **McGymmy/MG**: The name of this application, can be used interchangeably in this guide."
       },
       {
-        "lineNumber": 597,
+        "lineNumber": 596,
         "author": {
           "gitId": "jh123x"
         },
         "content": "* **Parameter**: Inputs given to the flag. For example, in `-n Chicken Rice`, `Chicken Rice` is the parameter passed to the flag `-n`."
       },
       {
-        "lineNumber": 598,
+        "lineNumber": 597,
         "author": {
           "gitId": "-"
         },
         "content": ""
       },
       {
-        "lineNumber": 599,
+        "lineNumber": 598,
         "author": {
           "gitId": "-"
         },
         "content": "--------------------------------------------------------------------------------------------------------------------"
       },
       {
-        "lineNumber": 600,
+        "lineNumber": 599,
         "author": {
           "gitId": "-"
         },
         "content": ""
       },
       {
-        "lineNumber": 601,
+        "lineNumber": 600,
         "author": {
           "gitId": "jh123x"
         },
         "content": "## 10. **Appendix: Instructions for manual testing**"
       },
       {
-        "lineNumber": 602,
+        "lineNumber": 601,
         "author": {
           "gitId": "-"
         },
         "content": ""
       },
       {
-        "lineNumber": 603,
+        "lineNumber": 602,
         "author": {
           "gitId": "-"
         },
         "content": "Given below are instructions to test the app manually."
       },
       {
-        "lineNumber": 604,
+        "lineNumber": 603,
         "author": {
           "gitId": "-"
         },
         "content": ""
       },
       {
-        "lineNumber": 605,
+        "lineNumber": 604,
         "author": {
           "gitId": "-"
         },
         "content": "\u003cdiv markdown\u003d\"span\" class\u003d\"alert alert-info\"\u003e:information_source: **Note:** These instructions only provide a starting point for testers to work on;"
       },
       {
-        "lineNumber": 606,
+        "lineNumber": 605,
         "author": {
           "gitId": "-"
         },
         "content": "testers are expected to do more *exploratory* testing."
       },
       {
-        "lineNumber": 607,
+        "lineNumber": 606,
         "author": {
           "gitId": "-"
         },
         "content": ""
       },
       {
-        "lineNumber": 608,
+        "lineNumber": 607,
         "author": {
           "gitId": "-"
         },
         "content": "\u003c/div\u003e"
       },
       {
-        "lineNumber": 609,
+        "lineNumber": 608,
         "author": {
           "gitId": "-"
         },
         "content": ""
       },
       {
-        "lineNumber": 610,
+        "lineNumber": 609,
         "author": {
           "gitId": "jh123x"
         },
         "content": "### 10.1 Launch and shutdown"
       },
       {
-        "lineNumber": 611,
+        "lineNumber": 610,
         "author": {
           "gitId": "-"
         },
         "content": ""
       },
       {
-        "lineNumber": 612,
+        "lineNumber": 611,
         "author": {
           "gitId": "-"
         },
         "content": "1. Initial launch"
       },
       {
-        "lineNumber": 613,
+        "lineNumber": 612,
         "author": {
           "gitId": "-"
         },
         "content": ""
       },
       {
-        "lineNumber": 614,
+        "lineNumber": 613,
         "author": {
           "gitId": "aidoxe-123"
         },
         "content": "   1. Download the JAR file and copy into any folder"
       },
       {
-        "lineNumber": 615,
+        "lineNumber": 614,
         "author": {
           "gitId": "-"
         },
         "content": ""
       },
       {
-        "lineNumber": 616,
+        "lineNumber": 615,
         "author": {
           "gitId": "aidoxe-123"
         },
         "content": "   1. Double-click the JAR file"
       },
       {
-        "lineNumber": 617,
+        "lineNumber": 616,
         "author": {
           "gitId": "jh123x"
         },
         "content": "      \u003cbr\u003e"
       },
       {
-        "lineNumber": 618,
+        "lineNumber": 617,
         "author": {
           "gitId": "jh123x"
         },
         "content": "      Expected: Shows the GUI with a set of sample food items. The window size may not be optimum."
       },
       {
-        "lineNumber": 619,
+        "lineNumber": 618,
         "author": {
           "gitId": "-"
         },
         "content": ""
       },
       {
-        "lineNumber": 620,
+        "lineNumber": 619,
         "author": {
           "gitId": "-"
         },
         "content": "1. Saving window preferences"
       },
       {
-        "lineNumber": 621,
+        "lineNumber": 620,
         "author": {
           "gitId": "-"
         },
         "content": ""
       },
       {
-        "lineNumber": 622,
+        "lineNumber": 621,
         "author": {
           "gitId": "-"
         },
         "content": "   1. Resize the window to an optimum size. Move the window to a different location. Close the window."
       },
       {
-        "lineNumber": 623,
+        "lineNumber": 622,
         "author": {
           "gitId": "-"
         },
         "content": ""
       },
       {
-        "lineNumber": 624,
+        "lineNumber": 623,
         "author": {
           "gitId": "aidoxe-123"
         },
         "content": "   1. Re-launch the app by double-clicking the JAR file."
       },
       {
-        "lineNumber": 625,
+        "lineNumber": 624,
         "author": {
           "gitId": "jh123x"
         },
         "content": "      \u003cbr\u003e"
       },
       {
-        "lineNumber": 626,
+        "lineNumber": 625,
         "author": {
           "gitId": "-"
         },
         "content": "      Expected: The most recent window size and location is retained."
       },
       {
-        "lineNumber": 627,
+        "lineNumber": 626,
         "author": {
           "gitId": "-"
         },
         "content": ""
       },
       {
-        "lineNumber": 628,
+        "lineNumber": 627,
         "author": {
           "gitId": "jh123x"
         },
         "content": "### 10.2 Deleting food items"
       },
       {
-        "lineNumber": 629,
+        "lineNumber": 628,
         "author": {
           "gitId": "-"
         },
         "content": ""
       },
       {
-        "lineNumber": 630,
+        "lineNumber": 629,
         "author": {
           "gitId": "jh123x"
         },
         "content": "1. Deleting a food item while all food items are shown."
       },
       {
-        "lineNumber": 631,
+        "lineNumber": 630,
         "author": {
           "gitId": "-"
         },
         "content": ""
       },
       {
-        "lineNumber": 632,
+        "lineNumber": 631,
         "author": {
           "gitId": "jh123x"
         },
         "content": "   1. Prerequisites: List all food items using the `list` command. Multiple food items in the list."
       },
       {
-        "lineNumber": 633,
+        "lineNumber": 632,
         "author": {
           "gitId": "-"
         },
         "content": ""
       },
       {
-        "lineNumber": 634,
+        "lineNumber": 633,
         "author": {
           "gitId": "-"
         },
         "content": "   1. Test case: `delete 1`\u003cbr\u003e"
       },
       {
-        "lineNumber": 635,
+        "lineNumber": 634,
         "author": {
           "gitId": "jh123x"
         },
         "content": "      Expected: First food item is deleted from the list. Details of the deleted food item shown in the status message. Timestamp in the status bar is updated."
       },
       {
-        "lineNumber": 636,
+        "lineNumber": 635,
         "author": {
           "gitId": "-"
         },
         "content": ""
       },
       {
-        "lineNumber": 637,
+        "lineNumber": 636,
         "author": {
           "gitId": "-"
         },
         "content": "   1. Test case: `delete 0`\u003cbr\u003e"
       },
       {
-        "lineNumber": 638,
+        "lineNumber": 637,
         "author": {
           "gitId": "jh123x"
         },
         "content": "      Expected: No food item is deleted. Error details shown in the status message. Status bar remains the same."
       },
       {
-        "lineNumber": 639,
+        "lineNumber": 638,
         "author": {
           "gitId": "-"
         },
         "content": ""
       },
       {
-        "lineNumber": 640,
+        "lineNumber": 639,
         "author": {
           "gitId": "-"
         },
         "content": "   1. Other incorrect delete commands to try: `delete`, `delete x`, `...` (where x is larger than the list size)\u003cbr\u003e"
       },
       {
-        "lineNumber": 641,
+        "lineNumber": 640,
         "author": {
           "gitId": "-"
         },
         "content": "      Expected: Similar to previous."
+      },
+      {
+        "lineNumber": 641,
+        "author": {
+          "gitId": "-"
+        },
+        "content": ""
       },
       {
         "lineNumber": 642,
@@ -6268,89 +6268,82 @@
       {
         "lineNumber": 643,
         "author": {
-          "gitId": "-"
+          "gitId": "jh123x"
         },
-        "content": ""
+        "content": "### 10.3 Saving data"
       },
       {
         "lineNumber": 644,
         "author": {
-          "gitId": "jh123x"
+          "gitId": "-"
         },
-        "content": "### 10.3 Saving data"
+        "content": ""
       },
       {
         "lineNumber": 645,
         "author": {
           "gitId": "-"
         },
-        "content": ""
+        "content": "1. Dealing with missing/corrupted data files"
       },
       {
         "lineNumber": 646,
         "author": {
           "gitId": "-"
         },
-        "content": "1. Dealing with missing/corrupted data files"
-      },
-      {
-        "lineNumber": 647,
-        "author": {
-          "gitId": "-"
-        },
         "content": ""
       },
       {
-        "lineNumber": 648,
+        "lineNumber": 647,
         "author": {
           "gitId": "aidoxe-123"
         },
         "content": "   1. Delete the \u0027data\u0027 file if any. Relaunch the app by double-clicking the JAR file."
       },
       {
-        "lineNumber": 649,
+        "lineNumber": 648,
         "author": {
           "gitId": "jh123x"
         },
         "content": "   \u003cbr\u003e"
       },
       {
-        "lineNumber": 650,
+        "lineNumber": 649,
         "author": {
           "gitId": "jh123x"
         },
         "content": "   Expected: A new data file is generated"
       },
       {
-        "lineNumber": 651,
+        "lineNumber": 650,
         "author": {
           "gitId": "jh123x"
         },
         "content": ""
       },
       {
-        "lineNumber": 652,
+        "lineNumber": 651,
         "author": {
           "gitId": "jh123x"
         },
         "content": "   1. Open the data file inside the `data` folder using any text editor and edit the file."
       },
       {
-        "lineNumber": 653,
+        "lineNumber": 652,
         "author": {
           "gitId": "jh123x"
         },
         "content": "   \u003cbr\u003e"
       },
       {
-        "lineNumber": 654,
+        "lineNumber": 653,
         "author": {
           "gitId": "jh123x"
         },
         "content": "   Expected: A new empty data file is generated which overwrites the old one."
       },
       {
-        "lineNumber": 655,
+        "lineNumber": 654,
         "author": {
           "gitId": "-"
         },
@@ -6363,7 +6356,7 @@
       "jh123x": 133,
       "joeychensmart": 74,
       "-": 296,
-      "aidoxe-123": 65
+      "aidoxe-123": 64
     }
   },
   {
@@ -9811,26 +9804,26 @@
         "author": {
           "gitId": "joeychensmart"
         },
-        "content": "* Calling `undo` after 2 or more consecutive `list` calls only undoes the listing operation once."
+        "content": "* All additional input after the *command word* `undo` will be ignored. E.g. `undo` and `undo 123` will have the same effect."
       },
       {
         "lineNumber": 399,
         "author": {
-          "gitId": "joeychensmart"
+          "gitId": "jh123x"
         },
-        "content": "* Calling `undo` after 2 or more consecutive `find` calls with the same sequence of keyword only undoes the find operation once."
+        "content": ""
       },
       {
         "lineNumber": 400,
         "author": {
           "gitId": "joeychensmart"
         },
-        "content": "* All additional input after the *command word* `undo` will be ignored. E.g. `undo` and `undo 123` will have the same effect."
+        "content": "![Undo command example](images/CommandImagesForUG/Undo.png)"
       },
       {
         "lineNumber": 401,
         "author": {
-          "gitId": "jh123x"
+          "gitId": "-"
         },
         "content": ""
       },
@@ -9839,21 +9832,21 @@
         "author": {
           "gitId": "joeychensmart"
         },
-        "content": "![Undo command example](images/CommandImagesForUG/Undo.png)"
+        "content": "\u003c/div\u003e"
       },
       {
         "lineNumber": 403,
         "author": {
-          "gitId": "-"
+          "gitId": "joeychensmart"
         },
         "content": ""
       },
       {
         "lineNumber": 404,
         "author": {
-          "gitId": "joeychensmart"
+          "gitId": "jh123x"
         },
-        "content": "\u003c/div\u003e"
+        "content": "### 5.13 Creating a macro command : `macro`"
       },
       {
         "lineNumber": 405,
@@ -9865,9 +9858,9 @@
       {
         "lineNumber": 406,
         "author": {
-          "gitId": "jh123x"
+          "gitId": "joeychensmart"
         },
-        "content": "### 5.13 Creating a macro command : `macro`"
+        "content": "Adds a macro to run several commands in succession."
       },
       {
         "lineNumber": 407,
@@ -9881,7 +9874,7 @@
         "author": {
           "gitId": "joeychensmart"
         },
-        "content": "Adds a macro to run several commands in succession."
+        "content": "*__WARNING:__* this is an advanced feature!"
       },
       {
         "lineNumber": 409,
@@ -9895,7 +9888,7 @@
         "author": {
           "gitId": "joeychensmart"
         },
-        "content": "*__WARNING:__* this is an advanced feature!"
+        "content": "Format: `macro MACRONAME FLAG_1 FLAG_2 ... ; COMMAND_1 PARAMETERS_TO_COMMAND_1; [COMMAND_2 PARAMETERS_TO_COMMAND_2; ...]` \u003cbr\u003e"
       },
       {
         "lineNumber": 411,
@@ -9909,7 +9902,7 @@
         "author": {
           "gitId": "joeychensmart"
         },
-        "content": "Format: `macro MACRONAME FLAG_1 FLAG_2 ... ; COMMAND_1 PARAMETERS_TO_COMMAND_1; [COMMAND_2 PARAMETERS_TO_COMMAND_2; ...]` \u003cbr\u003e"
+        "content": "\u003cdiv markdown\u003d\"block\" class\u003d\"alert alert-info\"\u003e"
       },
       {
         "lineNumber": 413,
@@ -9923,7 +9916,7 @@
         "author": {
           "gitId": "joeychensmart"
         },
-        "content": "\u003cdiv markdown\u003d\"block\" class\u003d\"alert alert-info\"\u003e"
+        "content": ":information_source:"
       },
       {
         "lineNumber": 415,
@@ -9937,7 +9930,7 @@
         "author": {
           "gitId": "joeychensmart"
         },
-        "content": ":information_source:"
+        "content": "* Create a macro with name `MACRONAME` which takes in parameters `FLAG_1 FLAG_2...` which executes `COMMAND_1; COMMAND_2; ...`."
       },
       {
         "lineNumber": 417,
@@ -9951,7 +9944,7 @@
         "author": {
           "gitId": "joeychensmart"
         },
-        "content": "* Create a macro with name `MACRONAME` which takes in parameters `FLAG_1 FLAG_2...` which executes `COMMAND_1; COMMAND_2; ...`."
+        "content": "* Parameters to the macro can be substituted in the `PARAMETERS_TO_COMMAND` using the syntax: `\\FLAG_NAME`."
       },
       {
         "lineNumber": 419,
@@ -9965,7 +9958,7 @@
         "author": {
           "gitId": "joeychensmart"
         },
-        "content": "* Parameters to the macro can be substituted in the `PARAMETERS_TO_COMMAND` using the syntax: `\\FLAG_NAME`."
+        "content": "* Flag-less parameters can be substituted using the syntax: `\\$`."
       },
       {
         "lineNumber": 421,
@@ -9979,7 +9972,7 @@
         "author": {
           "gitId": "joeychensmart"
         },
-        "content": "* Flag-less parameters can be substituted using the syntax: `\\$`."
+        "content": "* Using `undo` after creating a macro using this command will remove it."
       },
       {
         "lineNumber": 423,
@@ -9993,7 +9986,7 @@
         "author": {
           "gitId": "joeychensmart"
         },
-        "content": "* Using `undo` after creating a macro using this command will remove it."
+        "content": "* Read the examples below for more information."
       },
       {
         "lineNumber": 425,
@@ -10007,7 +10000,7 @@
         "author": {
           "gitId": "joeychensmart"
         },
-        "content": "* Read the examples below for more information."
+        "content": "\u003c/div\u003e"
       },
       {
         "lineNumber": 427,
@@ -10021,77 +10014,77 @@
         "author": {
           "gitId": "joeychensmart"
         },
-        "content": "\u003c/div\u003e"
+        "content": "Examples:"
       },
       {
         "lineNumber": 429,
         "author": {
           "gitId": "joeychensmart"
         },
-        "content": ""
+        "content": "* `macro addWith100cal p ; add -n \\$ -c 100 -p \\p`"
       },
       {
         "lineNumber": 430,
         "author": {
           "gitId": "joeychensmart"
         },
-        "content": "Examples:"
+        "content": "    * Example usage of this macro: `addWith100cal Banana -p 2000`"
       },
       {
         "lineNumber": 431,
         "author": {
           "gitId": "joeychensmart"
         },
-        "content": "* `macro addWith100cal p ; add -n \\$ -c 100 -p \\p`"
+        "content": "    * The following command will be executed by the macro: `add -n Banana -c 100 -p 2000`"
       },
       {
         "lineNumber": 432,
         "author": {
           "gitId": "joeychensmart"
         },
-        "content": "    * Example usage of this macro: `addWith100cal Banana -p 2000`"
+        "content": "    * i.e. in `add -n \\$ -c 100 -p \\p`, `\\$` and `\\p` will be substituted with Banana and 2000 respectively."
       },
       {
         "lineNumber": 433,
         "author": {
           "gitId": "joeychensmart"
         },
-        "content": "    * The following command will be executed by the macro: `add -n Banana -c 100 -p 2000`"
+        "content": ""
       },
       {
         "lineNumber": 434,
         "author": {
           "gitId": "joeychensmart"
         },
-        "content": "    * i.e. in `add -n \\$ -c 100 -p \\p`, `\\$` and `\\p` will be substituted with Banana and 2000 respectively."
+        "content": "* `macro addFoodWithFries; add -n \\$ ; add -n \\$ With Fries`"
       },
       {
         "lineNumber": 435,
         "author": {
           "gitId": "joeychensmart"
         },
-        "content": ""
+        "content": "    * Example usage of this macro: `addFoodWithFries Ice Cream`"
       },
       {
         "lineNumber": 436,
         "author": {
-          "gitId": "joeychensmart"
+          "gitId": "chewypiano"
         },
-        "content": "* `macro addFoodWithFries; add -n \\$ ; add -n \\$ With Fries`"
+        "content": "    * The following commands will be executed by the macro: `add -n Ice Cream` and `add -n Ice Cream With Fries`."
       },
       {
         "lineNumber": 437,
         "author": {
           "gitId": "joeychensmart"
         },
-        "content": "    * Example usage of this macro: `addFoodWithFries Ice Cream`"
+        "content": ""
       },
       {
         "lineNumber": 438,
         "author": {
-          "gitId": "chewypiano"
+          "gitId": "joeychensmart"
         },
-        "content": "    * The following commands will be executed by the macro: `add -n Ice Cream` and `add -n Ice Cream With Fries`."
+        "content": "![Macro command example](images/CommandImagesForUG/Macro.png)"
       },
       {
         "lineNumber": 439,
@@ -10103,14 +10096,14 @@
       {
         "lineNumber": 440,
         "author": {
-          "gitId": "joeychensmart"
+          "gitId": "jh123x"
         },
-        "content": "![Macro command example](images/CommandImagesForUG/Macro.png)"
+        "content": "\u003cdiv markdown\u003d\"block\" class\u003d\"alert alert-info\"\u003e"
       },
       {
         "lineNumber": 441,
         "author": {
-          "gitId": "joeychensmart"
+          "gitId": "jh123x"
         },
         "content": ""
       },
@@ -10119,7 +10112,7 @@
         "author": {
           "gitId": "jh123x"
         },
-        "content": "\u003cdiv markdown\u003d\"block\" class\u003d\"alert alert-info\"\u003e"
+        "content": ":information_source: When using it with conjunction with the undo command, macro will only undo the commands one at a time within the chain of macro commands\u003cbr\u003e"
       },
       {
         "lineNumber": 443,
@@ -10133,7 +10126,7 @@
         "author": {
           "gitId": "jh123x"
         },
-        "content": ":information_source: When using it with conjunction with the undo command, macro will only undo the commands one at a time within the chain of macro commands\u003cbr\u003e"
+        "content": "\u003c/div\u003e"
       },
       {
         "lineNumber": 445,
@@ -10147,7 +10140,7 @@
         "author": {
           "gitId": "jh123x"
         },
-        "content": "\u003c/div\u003e"
+        "content": "### 5.14 List all macros : `listmacro`"
       },
       {
         "lineNumber": 447,
@@ -10159,9 +10152,9 @@
       {
         "lineNumber": 448,
         "author": {
-          "gitId": "jh123x"
+          "gitId": "joeychensmart"
         },
-        "content": "### 5.14 List all macros : `listmacro`"
+        "content": "Displays information on the available macros in the terminal."
       },
       {
         "lineNumber": 449,
@@ -10175,12 +10168,12 @@
         "author": {
           "gitId": "joeychensmart"
         },
-        "content": "Displays information on the available macros in the terminal."
+        "content": "Format: `listmacro [macro]`"
       },
       {
         "lineNumber": 451,
         "author": {
-          "gitId": "jh123x"
+          "gitId": "aidoxe-123"
         },
         "content": ""
       },
@@ -10189,49 +10182,49 @@
         "author": {
           "gitId": "joeychensmart"
         },
-        "content": "Format: `listmacro [macro]`"
-      },
-      {
-        "lineNumber": 453,
-        "author": {
-          "gitId": "aidoxe-123"
-        },
-        "content": ""
-      },
-      {
-        "lineNumber": 454,
-        "author": {
-          "gitId": "joeychensmart"
-        },
         "content": "Examples:"
       },
       {
-        "lineNumber": 455,
+        "lineNumber": 453,
         "author": {
           "gitId": "joeychensmart"
         },
         "content": "* `listmacro` - this will display all available macros."
       },
       {
-        "lineNumber": 456,
+        "lineNumber": 454,
         "author": {
           "gitId": "joeychensmart"
         },
         "content": "* `listmacro kfc` - this will display information on the `kfc` macro."
       },
       {
-        "lineNumber": 457,
+        "lineNumber": 455,
         "author": {
           "gitId": "aidoxe-123"
         },
         "content": ""
       },
       {
-        "lineNumber": 458,
+        "lineNumber": 456,
         "author": {
           "gitId": "chewypiano"
         },
         "content": "![List Macro command example](images/CommandImagesForUG/Listmacro.png)"
+      },
+      {
+        "lineNumber": 457,
+        "author": {
+          "gitId": "joeychensmart"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 458,
+        "author": {
+          "gitId": "jh123x"
+        },
+        "content": "### 5.15 Deleting a macro: `remmacro`"
       },
       {
         "lineNumber": 459,
@@ -10243,9 +10236,9 @@
       {
         "lineNumber": 460,
         "author": {
-          "gitId": "jh123x"
+          "gitId": "joeychensmart"
         },
-        "content": "### 5.15 Deleting a macro: `remmacro`"
+        "content": "Deletes the given macro."
       },
       {
         "lineNumber": 461,
@@ -10257,23 +10250,23 @@
       {
         "lineNumber": 462,
         "author": {
-          "gitId": "joeychensmart"
+          "gitId": "chewypiano"
         },
-        "content": "Deletes the given macro."
+        "content": "Format: `remmacro MACRONAME`"
       },
       {
         "lineNumber": 463,
         "author": {
-          "gitId": "joeychensmart"
+          "gitId": "aidoxe-123"
         },
         "content": ""
       },
       {
         "lineNumber": 464,
         "author": {
-          "gitId": "chewypiano"
+          "gitId": "aidoxe-123"
         },
-        "content": "Format: `remmacro MACRONAME`"
+        "content": "\u003cdiv markdown\u003d\"block\" class\u003d\"alert alert-info\"\u003e"
       },
       {
         "lineNumber": 465,
@@ -10287,7 +10280,7 @@
         "author": {
           "gitId": "aidoxe-123"
         },
-        "content": "\u003cdiv markdown\u003d\"block\" class\u003d\"alert alert-info\"\u003e"
+        "content": ":information_source:"
       },
       {
         "lineNumber": 467,
@@ -10299,44 +10292,44 @@
       {
         "lineNumber": 468,
         "author": {
-          "gitId": "aidoxe-123"
-        },
-        "content": ":information_source:"
-      },
-      {
-        "lineNumber": 469,
-        "author": {
-          "gitId": "aidoxe-123"
-        },
-        "content": ""
-      },
-      {
-        "lineNumber": 470,
-        "author": {
           "gitId": "joeychensmart"
         },
         "content": "* Deletes the macro with the name `MACRONAME`."
       },
       {
-        "lineNumber": 471,
+        "lineNumber": 469,
         "author": {
           "gitId": "joeychensmart"
         },
         "content": "* If you accidentally delete a macro you need, `undo` can revert it."
       },
       {
-        "lineNumber": 472,
+        "lineNumber": 470,
         "author": {
           "gitId": "aidoxe-123"
         },
         "content": ""
       },
       {
-        "lineNumber": 473,
+        "lineNumber": 471,
         "author": {
           "gitId": "joeychensmart"
         },
         "content": "\u003c/div\u003e"
+      },
+      {
+        "lineNumber": 472,
+        "author": {
+          "gitId": "joeychensmart"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 473,
+        "author": {
+          "gitId": "chewypiano"
+        },
+        "content": "![delete macro example](images/CommandImagesForUG/Deletemacro.png)"
       },
       {
         "lineNumber": 474,
@@ -10348,23 +10341,23 @@
       {
         "lineNumber": 475,
         "author": {
-          "gitId": "chewypiano"
+          "gitId": "jh123x"
         },
-        "content": "![delete macro example](images/CommandImagesForUG/Deletemacro.png)"
+        "content": "### 5.16 Exiting the program : `exit`"
       },
       {
         "lineNumber": 476,
         "author": {
-          "gitId": "joeychensmart"
+          "gitId": "-"
         },
         "content": ""
       },
       {
         "lineNumber": 477,
         "author": {
-          "gitId": "jh123x"
+          "gitId": "-"
         },
-        "content": "### 5.16 Exiting the program : `exit`"
+        "content": "Exits the program."
       },
       {
         "lineNumber": 478,
@@ -10378,7 +10371,7 @@
         "author": {
           "gitId": "-"
         },
-        "content": "Exits the program."
+        "content": "Format: `exit`"
       },
       {
         "lineNumber": 480,
@@ -10390,14 +10383,14 @@
       {
         "lineNumber": 481,
         "author": {
-          "gitId": "-"
+          "gitId": "aidoxe-123"
         },
-        "content": "Format: `exit`"
+        "content": "\u003cdiv markdown\u003d\"block\" class\u003d\"alert alert-info\"\u003e"
       },
       {
         "lineNumber": 482,
         "author": {
-          "gitId": "-"
+          "gitId": "aidoxe-123"
         },
         "content": ""
       },
@@ -10406,49 +10399,49 @@
         "author": {
           "gitId": "aidoxe-123"
         },
-        "content": "\u003cdiv markdown\u003d\"block\" class\u003d\"alert alert-info\"\u003e"
-      },
-      {
-        "lineNumber": 484,
-        "author": {
-          "gitId": "aidoxe-123"
-        },
-        "content": ""
-      },
-      {
-        "lineNumber": 485,
-        "author": {
-          "gitId": "aidoxe-123"
-        },
         "content": ":information_source:"
       },
       {
-        "lineNumber": 486,
+        "lineNumber": 484,
         "author": {
           "gitId": "-"
         },
         "content": ""
       },
       {
-        "lineNumber": 487,
+        "lineNumber": 485,
         "author": {
           "gitId": "joeychensmart"
         },
         "content": "* Exits McGymmy and closes the McGymmy window."
       },
       {
-        "lineNumber": 488,
+        "lineNumber": 486,
         "author": {
           "gitId": "joeychensmart"
         },
         "content": "* Data will be automatically saved (see also section on *Saving the data* below)."
       },
       {
-        "lineNumber": 489,
+        "lineNumber": 487,
         "author": {
           "gitId": "joeychensmart"
         },
         "content": "* All additional input after the *command word* `exit` will be ignored. E.g. `exit` and `exit 123` will have the same effect."
+      },
+      {
+        "lineNumber": 488,
+        "author": {
+          "gitId": "-"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 489,
+        "author": {
+          "gitId": "aidoxe-123"
+        },
+        "content": "\u003c/div\u003e"
       },
       {
         "lineNumber": 490,
@@ -10460,9 +10453,9 @@
       {
         "lineNumber": 491,
         "author": {
-          "gitId": "aidoxe-123"
+          "gitId": "jh123x"
         },
-        "content": "\u003c/div\u003e"
+        "content": "### 5.17 Saving the data"
       },
       {
         "lineNumber": 492,
@@ -10474,9 +10467,9 @@
       {
         "lineNumber": 493,
         "author": {
-          "gitId": "jh123x"
+          "gitId": "joeychensmart"
         },
-        "content": "### 5.17 Saving the data"
+        "content": "McGymmy\u0027s data is saved in the hard disk automatically after any command that changes the data. There is no need to save manually."
       },
       {
         "lineNumber": 494,
@@ -10488,9 +10481,9 @@
       {
         "lineNumber": 495,
         "author": {
-          "gitId": "joeychensmart"
+          "gitId": "-"
         },
-        "content": "McGymmy\u0027s data is saved in the hard disk automatically after any command that changes the data. There is no need to save manually."
+        "content": "--------------------------------------------------------------------------------------------------------------------"
       },
       {
         "lineNumber": 496,
@@ -10502,9 +10495,9 @@
       {
         "lineNumber": 497,
         "author": {
-          "gitId": "-"
+          "gitId": "jh123x"
         },
-        "content": "--------------------------------------------------------------------------------------------------------------------"
+        "content": "## 6. FAQ"
       },
       {
         "lineNumber": 498,
@@ -10518,189 +10511,189 @@
         "author": {
           "gitId": "jh123x"
         },
-        "content": "## 6. FAQ"
-      },
-      {
-        "lineNumber": 500,
-        "author": {
-          "gitId": "-"
-        },
-        "content": ""
-      },
-      {
-        "lineNumber": 501,
-        "author": {
-          "gitId": "jh123x"
-        },
         "content": "**Q1**: How do I transfer my data to another Computer?\u003cbr\u003e"
       },
       {
-        "lineNumber": 502,
+        "lineNumber": 500,
         "author": {
           "gitId": "jh123x"
         },
         "content": "**A1**:  "
       },
       {
-        "lineNumber": 503,
+        "lineNumber": 501,
         "author": {
           "gitId": "jh123x"
         },
         "content": "1. Install the app in the other computer."
       },
       {
-        "lineNumber": 504,
+        "lineNumber": 502,
         "author": {
           "gitId": "jh123x"
         },
         "content": "1. Export your save file from your previous McGymmy using the `export` function in section `5.11`."
       },
       {
-        "lineNumber": 505,
+        "lineNumber": 503,
         "author": {
           "gitId": "jh123x"
         },
         "content": "1. Use the `import` function in section `5.10` to import the save file to your McGymmy."
       },
       {
-        "lineNumber": 506,
+        "lineNumber": 504,
         "author": {
           "gitId": "jh123x"
         },
         "content": "\u003cbr\u003e\u003cbr\u003e"
       },
       {
-        "lineNumber": 507,
+        "lineNumber": 505,
         "author": {
           "gitId": "jh123x"
         },
         "content": ""
       },
       {
-        "lineNumber": 508,
+        "lineNumber": 506,
         "author": {
           "gitId": "jh123x"
         },
         "content": "**Q2**: How do I backup my current version of McGymmy?\u003cbr\u003e"
       },
       {
-        "lineNumber": 509,
+        "lineNumber": 507,
         "author": {
           "gitId": "jh123x"
         },
         "content": "**A2**: "
       },
       {
-        "lineNumber": 510,
+        "lineNumber": 508,
         "author": {
           "gitId": "jh123x"
         },
         "content": "1. Use the `export` function in section `5.11` to export the save file to a directory of your choice."
       },
       {
-        "lineNumber": 511,
+        "lineNumber": 509,
         "author": {
           "gitId": "jh123x"
         },
         "content": "1. A Copy of your save file will be created at the location."
       },
       {
-        "lineNumber": 512,
+        "lineNumber": 510,
         "author": {
           "gitId": "jh123x"
         },
         "content": ""
       },
       {
-        "lineNumber": 513,
+        "lineNumber": 511,
         "author": {
           "gitId": "jh123x"
         },
         "content": "**Q3**: How do I find out what I ate on a particular day?\u003cbr\u003e"
       },
       {
-        "lineNumber": 514,
+        "lineNumber": 512,
         "author": {
           "gitId": "jh123x"
         },
         "content": "**A3**: "
       },
       {
-        "lineNumber": 515,
+        "lineNumber": 513,
         "author": {
           "gitId": "jh123x"
         },
         "content": "For those who prefer typing:"
       },
       {
-        "lineNumber": 516,
+        "lineNumber": 514,
         "author": {
           "gitId": "jh123x"
         },
         "content": "1. Use the find command in section `5.5` and add the `-d` tag before specifying a date"
       },
       {
-        "lineNumber": 517,
+        "lineNumber": 515,
         "author": {
           "gitId": "jh123x"
         },
         "content": "1. You will see the food you ate on that day"
       },
       {
-        "lineNumber": 518,
+        "lineNumber": 516,
         "author": {
           "gitId": "aidoxe-123"
         },
         "content": "\u003cbr\u003e"
       },
       {
-        "lineNumber": 519,
+        "lineNumber": 517,
         "author": {
           "gitId": "jh123x"
         },
         "content": "For those who prefer clicking:"
       },
       {
-        "lineNumber": 520,
+        "lineNumber": 518,
         "author": {
           "gitId": "jh123x"
         },
         "content": "1. Click on `date` button at the file menu"
       },
       {
-        "lineNumber": 521,
+        "lineNumber": 519,
         "author": {
           "gitId": "jh123x"
         },
         "content": "1. Click on the calendar icon"
       },
       {
-        "lineNumber": 522,
+        "lineNumber": 520,
         "author": {
           "gitId": "jh123x"
         },
         "content": "1. Select the date you want to filter (You will see a calendar similar to the one below)"
       },
       {
-        "lineNumber": 523,
+        "lineNumber": 521,
         "author": {
           "gitId": "jh123x"
         },
         "content": "1. You will see the food you ate on that day"
       },
       {
-        "lineNumber": 524,
+        "lineNumber": 522,
         "author": {
           "gitId": "jh123x"
         },
         "content": ""
       },
       {
-        "lineNumber": 525,
+        "lineNumber": 523,
         "author": {
           "gitId": "jh123x"
         },
         "content": "![datepicker](images/CommandImagesForUG/DateSelector.png)"
+      },
+      {
+        "lineNumber": 524,
+        "author": {
+          "gitId": "-"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 525,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "--------------------------------------------------------------------------------------------------------------------"
       },
       {
         "lineNumber": 526,
@@ -10712,9 +10705,9 @@
       {
         "lineNumber": 527,
         "author": {
-          "gitId": "-"
+          "gitId": "jh123x"
         },
-        "content": "--------------------------------------------------------------------------------------------------------------------"
+        "content": "## 7. Command summary"
       },
       {
         "lineNumber": 528,
@@ -10726,250 +10719,236 @@
       {
         "lineNumber": 529,
         "author": {
-          "gitId": "jh123x"
-        },
-        "content": "## 7. Command summary"
-      },
-      {
-        "lineNumber": 530,
-        "author": {
-          "gitId": "-"
-        },
-        "content": ""
-      },
-      {
-        "lineNumber": 531,
-        "author": {
           "gitId": "-"
         },
         "content": "Action       | Format, Examples"
       },
       {
-        "lineNumber": 532,
+        "lineNumber": 530,
         "author": {
           "gitId": "jh123x"
         },
         "content": "-------------|------------------"
       },
       {
-        "lineNumber": 533,
+        "lineNumber": 531,
         "author": {
           "gitId": "aidoxe-123"
         },
         "content": "**Add**      | `add -n NAME [-p PROTEIN] [-f FATS] [-c CARBS] [-d DATE] [-t TAG]` \u003cbr\u003e e.g., `add Chicken Rice -p 10 -f 5 -c 23 -d 02/09/2020 -t Lunch`"
       },
       {
-        "lineNumber": 534,
+        "lineNumber": 532,
         "author": {
           "gitId": "jh123x"
         },
         "content": "**Clear**    | `clear`"
       },
       {
-        "lineNumber": 535,
+        "lineNumber": 533,
         "author": {
           "gitId": "-"
         },
         "content": "**Delete**   | `delete INDEX`\u003cbr\u003e e.g., `delete 3`"
       },
       {
-        "lineNumber": 536,
+        "lineNumber": 534,
         "author": {
           "gitId": "aidoxe-123"
         },
         "content": "**Edit**     | `edit INDEX [-n NAME] [-p PROTEIN] [-f FATS] [-c CARBS] [-d DATE]`\u003cbr\u003e e.g.,`edit 2 -n Chicken Rice -p 30 -f 50 -c 60 -d 02/09/2020`"
       },
       {
-        "lineNumber": 537,
+        "lineNumber": 535,
         "author": {
           "gitId": "jh123x"
         },
         "content": "**Exit**     | `exit`"
       },
       {
-        "lineNumber": 538,
+        "lineNumber": 536,
         "author": {
           "gitId": "aidoxe-123"
         },
         "content": "**Export**   | `export DIRPATH [-o FILENAME]` \u003cbr\u003e e.g., `export c:/mcgymmy -o save_file`"
       },
       {
-        "lineNumber": 539,
+        "lineNumber": 537,
         "author": {
           "gitId": "chewypiano"
         },
         "content": "**Find**     | `find [KEYWORDS] [-n WORDS_IN_NAME] [-t WORDS_IN_TAG] [-d DATE]` \u003cbr\u003e e.g., `find chicken -t Dinner -d 28-10-2020`"
       },
       {
-        "lineNumber": 540,
+        "lineNumber": 538,
         "author": {
           "gitId": "jh123x"
         },
         "content": "**Help**     | `help [COMMAND]` \u003cbr\u003e e.g., `help add`"
       },
       {
-        "lineNumber": 541,
+        "lineNumber": 539,
         "author": {
           "gitId": "aidoxe-123"
         },
         "content": "**Import**   | `import [FILEPATH]​` \u003cbr\u003e e.g., `import c:/mcgymmy/save_file.json`"
       },
       {
-        "lineNumber": 542,
+        "lineNumber": 540,
         "author": {
           "gitId": "jh123x"
         },
         "content": "**List**     | `list`"
       },
       {
-        "lineNumber": 543,
+        "lineNumber": 541,
         "author": {
           "gitId": "jh123x"
         },
         "content": "**Macro**    | `macro SHORTCUT; COMMAND_1; [COMMAND_2;] …​` \u003cbr\u003e e.g., `macro lunch; add Chicken`"
       },
       {
-        "lineNumber": 544,
+        "lineNumber": 542,
         "author": {
           "gitId": "jh123x"
         },
         "content": "**RemMacro** | `remmacro MACRONAME` \u003cbr\u003e e.g., `remmacro lunch`"
       },
       {
-        "lineNumber": 545,
+        "lineNumber": 543,
         "author": {
           "gitId": "jh123x"
         },
         "content": "**ListMacro**| `listmacro [macro]` \u003cbr\u003e e.g., `listmacro kfc`"
       },
       {
-        "lineNumber": 546,
+        "lineNumber": 544,
         "author": {
           "gitId": "jh123x"
         },
         "content": "**Tag**      | `tag INDEX -t TAG_NAME` \u003cbr\u003e e.g., `tag 1 -t Lunch`"
       },
       {
-        "lineNumber": 547,
+        "lineNumber": 545,
         "author": {
           "gitId": "jh123x"
         },
         "content": "**UnTag**    | `untag INDEX -t TAG_NAME` \u003cbr\u003e e.g., `untag 1 -t Lunch`"
       },
       {
-        "lineNumber": 548,
+        "lineNumber": 546,
         "author": {
           "gitId": "aidoxe-123"
         },
         "content": ""
       },
       {
-        "lineNumber": 549,
+        "lineNumber": 547,
         "author": {
           "gitId": "jh123x"
         },
         "content": "## 8. Appendix A"
       },
       {
-        "lineNumber": 550,
+        "lineNumber": 548,
         "author": {
           "gitId": "aidoxe-123"
         },
         "content": "List of supported input date formats, sorted from highest parsing priority to lowest parsing priority"
       },
       {
-        "lineNumber": 551,
+        "lineNumber": 549,
         "author": {
           "gitId": "aidoxe-123"
         },
         "content": ""
       },
       {
-        "lineNumber": 552,
+        "lineNumber": 550,
         "author": {
           "gitId": "aidoxe-123"
         },
         "content": "Format       | Example"
       },
       {
-        "lineNumber": 553,
+        "lineNumber": 551,
         "author": {
           "gitId": "aidoxe-123"
         },
         "content": "------------ | --------"
       },
       {
-        "lineNumber": 554,
+        "lineNumber": 552,
         "author": {
           "gitId": "aidoxe-123"
         },
         "content": "*yyyy-MM-dd* | 2020-09-02"
       },
       {
-        "lineNumber": 555,
+        "lineNumber": 553,
         "author": {
           "gitId": "aidoxe-123"
         },
         "content": "*yyyy-M-dd*  | 2020-9-02"
       },
       {
-        "lineNumber": 556,
+        "lineNumber": 554,
         "author": {
           "gitId": "aidoxe-123"
         },
         "content": "*yyyy-M-d*   | 2020-9-2"
       },
       {
-        "lineNumber": 557,
+        "lineNumber": 555,
         "author": {
           "gitId": "aidoxe-123"
         },
         "content": "*dd-MM-yyyy* | 02-09-2020"
       },
       {
-        "lineNumber": 558,
+        "lineNumber": 556,
         "author": {
           "gitId": "aidoxe-123"
         },
         "content": "*dd-M-yyyy*  | 02-9-2020"
       },
       {
-        "lineNumber": 559,
+        "lineNumber": 557,
         "author": {
           "gitId": "aidoxe-123"
         },
         "content": "*d-M-yyyy*   | 2-9-2020"
       },
       {
-        "lineNumber": 560,
+        "lineNumber": 558,
         "author": {
           "gitId": "aidoxe-123"
         },
         "content": "*yyyy/MM/dd* | 2020/09/02"
       },
       {
-        "lineNumber": 561,
+        "lineNumber": 559,
         "author": {
           "gitId": "aidoxe-123"
         },
         "content": "*dd/MM/yyyy* | 02/09/2020"
       },
       {
-        "lineNumber": 562,
+        "lineNumber": 560,
         "author": {
           "gitId": "aidoxe-123"
         },
         "content": "*dd/M/yyyy*  | 02/9/2020"
       },
       {
-        "lineNumber": 563,
+        "lineNumber": 561,
         "author": {
           "gitId": "aidoxe-123"
         },
         "content": "*d/M/yyyy*   | 2/9/2020"
       },
       {
-        "lineNumber": 564,
+        "lineNumber": 562,
         "author": {
           "gitId": "aidoxe-123"
         },
@@ -10980,7 +10959,7 @@
       "chewypiano": 31,
       "dcchan98": 43,
       "jh123x": 154,
-      "joeychensmart": 160,
+      "joeychensmart": 158,
       "-": 128,
       "aidoxe-123": 48
     }
@@ -18685,6 +18664,997 @@
     "authorContributionMap": {
       "jh123x": 7,
       "-": 12
+    }
+  },
+  {
+    "path": "docs/team/duong.md",
+    "fileType": "docs",
+    "lines": [
+      {
+        "lineNumber": 1,
+        "author": {
+          "gitId": "aidoxe-123"
+        },
+        "content": "---"
+      },
+      {
+        "lineNumber": 2,
+        "author": {
+          "gitId": "aidoxe-123"
+        },
+        "content": "layout: page"
+      },
+      {
+        "lineNumber": 3,
+        "author": {
+          "gitId": "aidoxe-123"
+        },
+        "content": "title: Huynh Thai Duong\u0027s Project Portfolio Page"
+      },
+      {
+        "lineNumber": 4,
+        "author": {
+          "gitId": "aidoxe-123"
+        },
+        "content": "---"
+      },
+      {
+        "lineNumber": 5,
+        "author": {
+          "gitId": "aidoxe-123"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 6,
+        "author": {
+          "gitId": "aidoxe-123"
+        },
+        "content": "## Project: McGymmy"
+      },
+      {
+        "lineNumber": 7,
+        "author": {
+          "gitId": "aidoxe-123"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 8,
+        "author": {
+          "gitId": "aidoxe-123"
+        },
+        "content": "McGymmy is a **desktop app for Software Engineers who need help managing their diet, optimized for use via a Command Line Interface** (CLI) while still having the benefits of a Graphical User Interface (GUI). "
+      },
+      {
+        "lineNumber": 9,
+        "author": {
+          "gitId": "aidoxe-123"
+        },
+        "content": "This project has about 10 kLoC."
+      },
+      {
+        "lineNumber": 10,
+        "author": {
+          "gitId": "aidoxe-123"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 11,
+        "author": {
+          "gitId": "aidoxe-123"
+        },
+        "content": "Given below are my contributions to the project:"
+      },
+      {
+        "lineNumber": 12,
+        "author": {
+          "gitId": "aidoxe-123"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 13,
+        "author": {
+          "gitId": "aidoxe-123"
+        },
+        "content": "* **Code contributed**:"
+      },
+      {
+        "lineNumber": 14,
+        "author": {
+          "gitId": "aidoxe-123"
+        },
+        "content": "[RepoSense link](https://nus-cs2103-ay2021s1.github.io/tp-dashboard/#breakdown\u003dtrue\u0026search\u003daidoxe-123\u0026sort\u003dgroupTitle\u0026sortWithin\u003dtitle\u0026since\u003d2020-08-14\u0026timeframe\u003dcommit\u0026mergegroup\u003d\u0026groupSelect\u003dgroupByRepos\u0026checkedFileTypes\u003ddocs~functional-code~test-code~other)"
+      },
+      {
+        "lineNumber": 15,
+        "author": {
+          "gitId": "aidoxe-123"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 16,
+        "author": {
+          "gitId": "aidoxe-123"
+        },
+        "content": "* **New Feature**: Create the food model."
+      },
+      {
+        "lineNumber": 17,
+        "author": {
+          "gitId": "aidoxe-123"
+        },
+        "content": "  * What it does: this is the food item that McGymmy keeps track of"
+      },
+      {
+        "lineNumber": 18,
+        "author": {
+          "gitId": "aidoxe-123"
+        },
+        "content": "  * Justification: "
+      },
+      {
+        "lineNumber": 19,
+        "author": {
+          "gitId": "aidoxe-123"
+        },
+        "content": "  * Highlights: It is important that this feature must be bug-free, otherwise it could cause subtle bugs in other parts of the code base, such as the one mentioned in"
+      },
+      {
+        "lineNumber": 20,
+        "author": {
+          "gitId": "aidoxe-123"
+        },
+        "content": " this [pull request](https://github.com/AY2021S1-CS2103T-W17-3/tp/pull/120)"
+      },
+      {
+        "lineNumber": 21,
+        "author": {
+          "gitId": "aidoxe-123"
+        },
+        "content": "  "
+      },
+      {
+        "lineNumber": 22,
+        "author": {
+          "gitId": "aidoxe-123"
+        },
+        "content": "* **New Feature**: Added the date property for food."
+      },
+      {
+        "lineNumber": 23,
+        "author": {
+          "gitId": "aidoxe-123"
+        },
+        "content": "  * What it does: allows user to add date for the food item"
+      },
+      {
+        "lineNumber": 24,
+        "author": {
+          "gitId": "aidoxe-123"
+        },
+        "content": "  * Justification: This enhancement includes updating the UI so that it shows date property, and updating the storage to store date"
+      },
+      {
+        "lineNumber": 25,
+        "author": {
+          "gitId": "aidoxe-123"
+        },
+        "content": "  * Highlights: This date property can accept inputs in various formats"
+      },
+      {
+        "lineNumber": 26,
+        "author": {
+          "gitId": "aidoxe-123"
+        },
+        "content": "  * Credits: The idea of implementing this is taken from this StackOverflow\u0027s [post](https://stackoverflow.com/questions/4024544/how-to-parse-dates-in-multiple-formats-using-simpledateformat)"
+      },
+      {
+        "lineNumber": 27,
+        "author": {
+          "gitId": "aidoxe-123"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 28,
+        "author": {
+          "gitId": "aidoxe-123"
+        },
+        "content": "* **New Feature**: Added the ability to undo previous commands."
+      },
+      {
+        "lineNumber": 29,
+        "author": {
+          "gitId": "aidoxe-123"
+        },
+        "content": "  * What it does: allows the user to undo all previous commands one at a time."
+      },
+      {
+        "lineNumber": 30,
+        "author": {
+          "gitId": "aidoxe-123"
+        },
+        "content": "  * Justification: This feature improves the product significantly because a user can make mistakes in commands and the app should provide a convenient way to rectify them."
+      },
+      {
+        "lineNumber": 31,
+        "author": {
+          "gitId": "aidoxe-123"
+        },
+        "content": "  The process of implementing this feature is difficult and time-consuming, as it includes testing if it interacts correctly with all existing components."
+      },
+      {
+        "lineNumber": 32,
+        "author": {
+          "gitId": "aidoxe-123"
+        },
+        "content": "  This process help me found a bug relating to mutable `Tag` set in `Food` and fix it"
+      },
+      {
+        "lineNumber": 33,
+        "author": {
+          "gitId": "aidoxe-123"
+        },
+        "content": "  * Highlights: This enhancement affects existing commands and commands to be added in future. "
+      },
+      {
+        "lineNumber": 34,
+        "author": {
+          "gitId": "aidoxe-123"
+        },
+        "content": "  It required an in-depth analysis of design alternatives. The implementation too was challenging as it required changes to existing commands."
+      },
+      {
+        "lineNumber": 35,
+        "author": {
+          "gitId": "aidoxe-123"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 36,
+        "author": {
+          "gitId": "aidoxe-123"
+        },
+        "content": " * **New Feature**: Allowed finding food by tag. [\\#82](https://github.com/AY2021S1-CS2103T-W17-3/tp/pull/82)"
+      },
+      {
+        "lineNumber": 37,
+        "author": {
+          "gitId": "aidoxe-123"
+        },
+        "content": "  * What it does: allows user to categorize food by tag"
+      },
+      {
+        "lineNumber": 38,
+        "author": {
+          "gitId": "aidoxe-123"
+        },
+        "content": "  * Justification: I found that user can add tag to food item, but there is no meaningful usage of them beside viewing. "
+      },
+      {
+        "lineNumber": 39,
+        "author": {
+          "gitId": "aidoxe-123"
+        },
+        "content": "  Therefore I decided to make find command to work with tag, so that users can use tag as a way to categorize their food."
+      },
+      {
+        "lineNumber": 40,
+        "author": {
+          "gitId": "aidoxe-123"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 41,
+        "author": {
+          "gitId": "aidoxe-123"
+        },
+        "content": "* **Enhancement**: "
+      },
+      {
+        "lineNumber": 42,
+        "author": {
+          "gitId": "aidoxe-123"
+        },
+        "content": "  * Tweaked [AB3\u0027s UniquePersonList](https://github.com/nus-cs2103-AY2021S1/tp/blob/master/src/main/java/seedu/address/model/person/UniquePersonList.java) to become a `Fridge` class that allows duplicate foods.  "
+      },
+      {
+        "lineNumber": 43,
+        "author": {
+          "gitId": "aidoxe-123"
+        },
+        "content": "  * Added tests for codes written by my teammates to minimize the possibility of getting bugs: [\\#70](https://github.com/AY2021S1-CS2103T-W17-3/tp/pull/70),"
+      },
+      {
+        "lineNumber": 44,
+        "author": {
+          "gitId": "aidoxe-123"
+        },
+        "content": "[\\#69](https://github.com/AY2021S1-CS2103T-W17-3/tp/pull/69)"
+      },
+      {
+        "lineNumber": 45,
+        "author": {
+          "gitId": "aidoxe-123"
+        },
+        "content": "  "
+      },
+      {
+        "lineNumber": 46,
+        "author": {
+          "gitId": "aidoxe-123"
+        },
+        "content": "* **Project management**:"
+      },
+      {
+        "lineNumber": 47,
+        "author": {
+          "gitId": "aidoxe-123"
+        },
+        "content": "  * Enabled assertion on Java CI [\\#109](https://github.com/AY2021S1-CS2103T-W17-3/tp/pull/109) "
+      },
+      {
+        "lineNumber": 48,
+        "author": {
+          "gitId": "aidoxe-123"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 49,
+        "author": {
+          "gitId": "aidoxe-123"
+        },
+        "content": "* **Documentation**:"
+      },
+      {
+        "lineNumber": 50,
+        "author": {
+          "gitId": "aidoxe-123"
+        },
+        "content": "  * User Guide:"
+      },
+      {
+        "lineNumber": 51,
+        "author": {
+          "gitId": "aidoxe-123"
+        },
+        "content": "    * Added documentation for the `undo` feature [\\#131](https://github.com/AY2021S1-CS2103T-W17-3/tp/pull/131)"
+      },
+      {
+        "lineNumber": 52,
+        "author": {
+          "gitId": "aidoxe-123"
+        },
+        "content": "    * Updated the existing commands to include date, and add an appendix to show supported date formats [\\#91](https://github.com/AY2021S1-CS2103T-W17-3/tp/pull/91)"
+      },
+      {
+        "lineNumber": 53,
+        "author": {
+          "gitId": "aidoxe-123"
+        },
+        "content": "  * Developer Guide:"
+      },
+      {
+        "lineNumber": 54,
+        "author": {
+          "gitId": "aidoxe-123"
+        },
+        "content": "    * Document the undo feature in the DG, including updated all the diagrams inside that section"
+      },
+      {
+        "lineNumber": 55,
+        "author": {
+          "gitId": "aidoxe-123"
+        },
+        "content": "    * Updated the user profile, value proposition, and user stories [\\#17](https://github.com/AY2021S1-CS2103T-W17-3/tp/pull/17)"
+      },
+      {
+        "lineNumber": 56,
+        "author": {
+          "gitId": "aidoxe-123"
+        },
+        "content": "    * Updated the glossary [\\#150](https://github.com/AY2021S1-CS2103T-W17-3/tp/pull/150), [\\#41](https://github.com/AY2021S1-CS2103T-W17-3/tp/pull/41)"
+      },
+      {
+        "lineNumber": 57,
+        "author": {
+          "gitId": "aidoxe-123"
+        },
+        "content": "    * Update storage class diagram [\\#100](https://github.com/AY2021S1-CS2103T-W17-3/tp/pull/100)"
+      },
+      {
+        "lineNumber": 58,
+        "author": {
+          "gitId": "aidoxe-123"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 59,
+        "author": {
+          "gitId": "aidoxe-123"
+        },
+        "content": "* **Community**:"
+      },
+      {
+        "lineNumber": 60,
+        "author": {
+          "gitId": "aidoxe-123"
+        },
+        "content": " * PRs reviewed (with non-trivial review comments): [\\#39](https://github.com/AY2021S1-CS2103T-W17-3/tp/pull/39),"
+      },
+      {
+        "lineNumber": 61,
+        "author": {
+          "gitId": "aidoxe-123"
+        },
+        "content": " [\\#57](https://github.com/AY2021S1-CS2103T-W17-3/tp/pull/57), [\\#76](https://github.com/AY2021S1-CS2103T-W17-3/tp/pull/76),"
+      },
+      {
+        "lineNumber": 62,
+        "author": {
+          "gitId": "aidoxe-123"
+        },
+        "content": " [\\#104](https://github.com/AY2021S1-CS2103T-W17-3/tp/pull/104)"
+      },
+      {
+        "lineNumber": 63,
+        "author": {
+          "gitId": "aidoxe-123"
+        },
+        "content": " * Contributed to forum discussion: "
+      },
+      {
+        "lineNumber": 64,
+        "author": {
+          "gitId": "aidoxe-123"
+        },
+        "content": "   1. Help fix trailing white space [forum#276](https://github.com/nus-cs2103-AY2021S1/forum/issues/276)"
+      },
+      {
+        "lineNumber": 65,
+        "author": {
+          "gitId": "aidoxe-123"
+        },
+        "content": "   2. Share how to temporary disable checkstyle [forum#260](https://github.com/nus-cs2103-AY2021S1/forum/issues/260)"
+      },
+      {
+        "lineNumber": 66,
+        "author": {
+          "gitId": "aidoxe-123"
+        },
+        "content": "   3. Explain why a test fails: [forum\\#65](https://github.com/nus-cs2103-AY2021S1/forum/issues/65)"
+      },
+      {
+        "lineNumber": 67,
+        "author": {
+          "gitId": "aidoxe-123"
+        },
+        "content": " * Reported bugs and suggestions for other teams in the class: [List of bugs and suggestions](https://github.com/aidoxe-123/ped/issues)"
+      }
+    ],
+    "authorContributionMap": {
+      "aidoxe-123": 67
+    }
+  },
+  {
+    "path": "docs/team/joeychensmart.md",
+    "fileType": "docs",
+    "lines": [
+      {
+        "lineNumber": 1,
+        "author": {
+          "gitId": "joeychensmart"
+        },
+        "content": "---"
+      },
+      {
+        "lineNumber": 2,
+        "author": {
+          "gitId": "joeychensmart"
+        },
+        "content": "layout: page"
+      },
+      {
+        "lineNumber": 3,
+        "author": {
+          "gitId": "joeychensmart"
+        },
+        "content": "title: Joey Chen\u0027s Project Portfolio Page"
+      },
+      {
+        "lineNumber": 4,
+        "author": {
+          "gitId": "joeychensmart"
+        },
+        "content": "---"
+      },
+      {
+        "lineNumber": 5,
+        "author": {
+          "gitId": "joeychensmart"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 6,
+        "author": {
+          "gitId": "joeychensmart"
+        },
+        "content": "## Project: McGymmy"
+      },
+      {
+        "lineNumber": 7,
+        "author": {
+          "gitId": "joeychensmart"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 8,
+        "author": {
+          "gitId": "joeychensmart"
+        },
+        "content": "McGymmy is a desktop diet tracker application for health-conscious software engineers."
+      },
+      {
+        "lineNumber": 9,
+        "author": {
+          "gitId": "joeychensmart"
+        },
+        "content": "The user interacts with it using a CLI, and it has a GUI created with JavaFX. It is written in Java, and has about 10 kLoC."
+      },
+      {
+        "lineNumber": 10,
+        "author": {
+          "gitId": "joeychensmart"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 11,
+        "author": {
+          "gitId": "joeychensmart"
+        },
+        "content": "Given below are my contributions to the project."
+      },
+      {
+        "lineNumber": 12,
+        "author": {
+          "gitId": "joeychensmart"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 13,
+        "author": {
+          "gitId": "joeychensmart"
+        },
+        "content": "* **Redesigned Feature**: Redesigned the logic component of McGymmy."
+      },
+      {
+        "lineNumber": 14,
+        "author": {
+          "gitId": "joeychensmart"
+        },
+        "content": "  * What I changed: Replaced the existing parser with the [Apache commons-cli](https://github.com/apache/commons-cli) library, and made the creation of commands follow"
+      },
+      {
+        "lineNumber": 15,
+        "author": {
+          "gitId": "joeychensmart"
+        },
+        "content": "  a more declarative style. Also eliminated the need for parsers for each command."
+      },
+      {
+        "lineNumber": 16,
+        "author": {
+          "gitId": "joeychensmart"
+        },
+        "content": "  * Justification: I found that the old architecture was problematic as it required the programmer to create a lot of boilerplate just to achieve simple tasks."
+      },
+      {
+        "lineNumber": 17,
+        "author": {
+          "gitId": "joeychensmart"
+        },
+        "content": "  This new architecture also made it easier for me to implement the macro feature below. For more information on the justification, you can visit"
+      },
+      {
+        "lineNumber": 18,
+        "author": {
+          "gitId": "joeychensmart"
+        },
+        "content": "  [the pull request](https://github.com/AY2021S1-CS2103T-W17-3/tp/pull/39)."
+      },
+      {
+        "lineNumber": 19,
+        "author": {
+          "gitId": "joeychensmart"
+        },
+        "content": "  * Highlights: Developers now need to write about half the amount of code to get new features working (instead of creating a command and a parser class, now they only"
+      },
+      {
+        "lineNumber": 20,
+        "author": {
+          "gitId": "joeychensmart"
+        },
+        "content": "  needed to create the command class). The code in each command class was also neater, and more intuitive by virtue of being more declarative."
+      },
+      {
+        "lineNumber": 21,
+        "author": {
+          "gitId": "joeychensmart"
+        },
+        "content": "  The design had to be carefully thought out to maximize developer productivity, and cost-benefit analysis had to be carried out for many design alternatives, including the original."
+      },
+      {
+        "lineNumber": 22,
+        "author": {
+          "gitId": "joeychensmart"
+        },
+        "content": "  The implementation was non-trivial, and required changing about 3 kLoC. The new API also had to be documented well enough for fellow developers to understand."
+      },
+      {
+        "lineNumber": 23,
+        "author": {
+          "gitId": "joeychensmart"
+        },
+        "content": "  * Credits: As mentioned above, this design made use of the [Apache commons-cli](https://github.com/apache/commons-cli) library for parsing text from the user, and automatically"
+      },
+      {
+        "lineNumber": 24,
+        "author": {
+          "gitId": "joeychensmart"
+        },
+        "content": "  generating help text. All other work is solely by me."
+      },
+      {
+        "lineNumber": 25,
+        "author": {
+          "gitId": "joeychensmart"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 26,
+        "author": {
+          "gitId": "joeychensmart"
+        },
+        "content": "* **New Feature**: Added the ability to create macros."
+      },
+      {
+        "lineNumber": 27,
+        "author": {
+          "gitId": "joeychensmart"
+        },
+        "content": "  * What it does: allows the user to create a \u0027macro\u0027 to run several commands in succession. Macros are saved on disk, and can be deleted in the CLI."
+      },
+      {
+        "lineNumber": 28,
+        "author": {
+          "gitId": "joeychensmart"
+        },
+        "content": "  * Justification: This feature allows users to automate routine, repetitive tasks by creating a macro or alias for it."
+      },
+      {
+        "lineNumber": 29,
+        "author": {
+          "gitId": "joeychensmart"
+        },
+        "content": "  For example, if I have a piece of toast and an egg for breakfast every morning, i would have to key in 2 commands `add -n toast -c 100` and `add -n egg -p 50` every morning."
+      },
+      {
+        "lineNumber": 30,
+        "author": {
+          "gitId": "joeychensmart"
+        },
+        "content": "  With this feature I can simply create a new macro called `breakfast`, and simply enter that instead of the same 2 commands every morning."
+      },
+      {
+        "lineNumber": 31,
+        "author": {
+          "gitId": "joeychensmart"
+        },
+        "content": "  * Highlights: This enhancement works for all commands in the app. The design had to be carefully crafted to ensure the implementation was easy to carry out and understand,"
+      },
+      {
+        "lineNumber": 32,
+        "author": {
+          "gitId": "joeychensmart"
+        },
+        "content": "  and followed good design principles, and also to avoid bugs such as infinite loops. The implementation was also non-trivial, and required creating many different classes."
+      },
+      {
+        "lineNumber": 33,
+        "author": {
+          "gitId": "joeychensmart"
+        },
+        "content": "  * Credits: The design and implementation was inspired by [my ip](https://github.com/JoeyChenSmart/ip), but many design and implementation details were revisited and"
+      },
+      {
+        "lineNumber": 34,
+        "author": {
+          "gitId": "joeychensmart"
+        },
+        "content": "  tweaked to fit with McGymmy (e.g. saving to storage). Both implementations also rely on the redesigned logic component above."
+      },
+      {
+        "lineNumber": 35,
+        "author": {
+          "gitId": "joeychensmart"
+        },
+        "content": "  "
+      },
+      {
+        "lineNumber": 36,
+        "author": {
+          "gitId": "joeychensmart"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 37,
+        "author": {
+          "gitId": "joeychensmart"
+        },
+        "content": "* **New Feature**: Added a help command."
+      },
+      {
+        "lineNumber": 38,
+        "author": {
+          "gitId": "joeychensmart"
+        },
+        "content": "  * What it does: shows a list of all commands to the user, along with a short description of each command. The user can also request for information on a specific command."
+      },
+      {
+        "lineNumber": 39,
+        "author": {
+          "gitId": "joeychensmart"
+        },
+        "content": "  * Justification: allows the user to very conveniently get assistance on how to use the app, within the app itself."
+      },
+      {
+        "lineNumber": 40,
+        "author": {
+          "gitId": "joeychensmart"
+        },
+        "content": "  * Highlights: This feature leverages on the above redesigned logic component. Cleverly reusing information provided by the developer using the declarative style,"
+      },
+      {
+        "lineNumber": 41,
+        "author": {
+          "gitId": "joeychensmart"
+        },
+        "content": "  this feature automatically generates help strings for each command. The design was carefully thought out to follow the DRY (don\u0027t repeat yourself) principle, to minimize"
+      },
+      {
+        "lineNumber": 42,
+        "author": {
+          "gitId": "joeychensmart"
+        },
+        "content": "  bugs due to code duplication."
+      },
+      {
+        "lineNumber": 43,
+        "author": {
+          "gitId": "joeychensmart"
+        },
+        "content": "  * Credits: The idea, design and implementation were all carried out by me."
+      },
+      {
+        "lineNumber": 44,
+        "author": {
+          "gitId": "joeychensmart"
+        },
+        "content": "  "
+      },
+      {
+        "lineNumber": 45,
+        "author": {
+          "gitId": "joeychensmart"
+        },
+        "content": "* **Code contributed**: [RepoSense link](https://nus-cs2103-ay2021s1.github.io/tp-dashboard/#breakdown\u003dtrue\u0026search\u003djoeychensmart\u0026sort\u003dgroupTitle\u0026sortWithin\u003dtitle\u0026since\u003d2020-08-14\u0026timeframe\u003dcommit\u0026mergegroup\u003d\u0026groupSelect\u003dgroupByRepos\u0026checkedFileTypes\u003ddocs~functional-code~test-code~other\u0026tabOpen\u003dtrue\u0026tabType\u003dauthorship\u0026tabAuthor\u003djoeychensmart\u0026tabRepo\u003dAY2021S1-CS2103T-W17-3%2Ftp%5Bmaster%5D\u0026authorshipIsMergeGroup\u003dfalse\u0026authorshipFileTypes\u003ddocs~functional-code~test-code~other)"
+      },
+      {
+        "lineNumber": 46,
+        "author": {
+          "gitId": "joeychensmart"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 47,
+        "author": {
+          "gitId": "joeychensmart"
+        },
+        "content": "* **Project management**:"
+      },
+      {
+        "lineNumber": 48,
+        "author": {
+          "gitId": "joeychensmart"
+        },
+        "content": "  * Created the github organization for the group and project repository."
+      },
+      {
+        "lineNumber": 49,
+        "author": {
+          "gitId": "joeychensmart"
+        },
+        "content": "  * Created the issue label `code quality improvements` and several issues related to it (e.g. [214](https://github.com/AY2021S1-CS2103T-W17-3/tp/issues/214), [215](https://github.com/AY2021S1-CS2103T-W17-3/tp/issues/215)."
+      },
+      {
+        "lineNumber": 50,
+        "author": {
+          "gitId": "joeychensmart"
+        },
+        "content": "  * Copied over draft UG from google docs to the repo. [\\#22](https://github.com/AY2021S1-CS2103T-W17-3/tp/pull/22)."
+      },
+      {
+        "lineNumber": 51,
+        "author": {
+          "gitId": "joeychensmart"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 52,
+        "author": {
+          "gitId": "joeychensmart"
+        },
+        "content": "* **Enhancements to existing features**:"
+      },
+      {
+        "lineNumber": 53,
+        "author": {
+          "gitId": "joeychensmart"
+        },
+        "content": "  * Fixed bug related to `RuntimeExceptions` with Jun Hua [216](https://github.com/AY2021S1-CS2103T-W17-3/tp/pull/216)."
+      },
+      {
+        "lineNumber": 54,
+        "author": {
+          "gitId": "joeychensmart"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 55,
+        "author": {
+          "gitId": "joeychensmart"
+        },
+        "content": "* **Documentation**:"
+      },
+      {
+        "lineNumber": 56,
+        "author": {
+          "gitId": "joeychensmart"
+        },
+        "content": "  * User Guide:"
+      },
+      {
+        "lineNumber": 57,
+        "author": {
+          "gitId": "joeychensmart"
+        },
+        "content": "    * Add documentation for the features `macro` [\\#63](https://github.com/AY2021S1-CS2103T-W17-3/tp/pull/63), `listmacro` and `remmacro` [\\#142](https://github.com/AY2021S1-CS2103T-W17-3/tp/pull/142)"
+      },
+      {
+        "lineNumber": 58,
+        "author": {
+          "gitId": "joeychensmart"
+        },
+        "content": "    * * Note: I wrote the documentation for macro in the PR comment [\\#63](https://github.com/AY2021S1-CS2103T-W17-3/tp/pull/63), and Jun Hua helped me copy it into the UG in another PR."
+      },
+      {
+        "lineNumber": 59,
+        "author": {
+          "gitId": "joeychensmart"
+        },
+        "content": "    * Added reader-friendly elaboration on command format: [\\#93](https://github.com/AY2021S1-CS2103T-W17-3/tp/pull/93)"
+      },
+      {
+        "lineNumber": 60,
+        "author": {
+          "gitId": "joeychensmart"
+        },
+        "content": "  * Developer Guide:"
+      },
+      {
+        "lineNumber": 61,
+        "author": {
+          "gitId": "joeychensmart"
+        },
+        "content": "    * Added implementation details of the `macro` feature, and updated the section on the `logic` component under project architecture."
+      },
+      {
+        "lineNumber": 62,
+        "author": {
+          "gitId": "joeychensmart"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 63,
+        "author": {
+          "gitId": "joeychensmart"
+        },
+        "content": "* **Community**:"
+      },
+      {
+        "lineNumber": 64,
+        "author": {
+          "gitId": "joeychensmart"
+        },
+        "content": "  * PRs reviewed (with non-trivial review comments): [\\#49](https://github.com/AY2021S1-CS2103T-W17-3/tp/pull/49), [\\#53](https://github.com/AY2021S1-CS2103T-W17-3/tp/pull/53),"
+      },
+      {
+        "lineNumber": 65,
+        "author": {
+          "gitId": "joeychensmart"
+        },
+        "content": "  [\\#56](https://github.com/AY2021S1-CS2103T-W17-3/tp/pull/56), [\\#97](https://github.com/AY2021S1-CS2103T-W17-3/tp/pull/97), "
+      },
+      {
+        "lineNumber": 66,
+        "author": {
+          "gitId": "joeychensmart"
+        },
+        "content": "  [\\#104](https://github.com/AY2021S1-CS2103T-W17-3/tp/pull/104), [\\#105](https://github.com/AY2021S1-CS2103T-W17-3/tp/pull/105), "
+      },
+      {
+        "lineNumber": 67,
+        "author": {
+          "gitId": "joeychensmart"
+        },
+        "content": "  [\\#106](https://github.com/AY2021S1-CS2103T-W17-3/tp/pull/106)"
+      },
+      {
+        "lineNumber": 68,
+        "author": {
+          "gitId": "joeychensmart"
+        },
+        "content": "  * Contributed to forum discussions: [Discussion on CI](https://github.com/nus-cs2103-AY2021S1/forum/issues/264)"
+      },
+      {
+        "lineNumber": 69,
+        "author": {
+          "gitId": "joeychensmart"
+        },
+        "content": "  * Reported bugs and suggestions for other teams in the class (examples: [1](https://github.com/JoeyChenSmart/ped/issues/1), [2](https://github.com/JoeyChenSmart/ped/issues/2), [3](https://github.com/JoeyChenSmart/ped/issues/3), [4](https://github.com/JoeyChenSmart/ped/issues/4))"
+      },
+      {
+        "lineNumber": 70,
+        "author": {
+          "gitId": "joeychensmart"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 71,
+        "author": {
+          "gitId": "joeychensmart"
+        },
+        "content": "* **Tools**:"
+      },
+      {
+        "lineNumber": 72,
+        "author": {
+          "gitId": "joeychensmart"
+        },
+        "content": "  * Integrated a third party library [Apache commons-cli](https://github.com/apache/commons-cli) to the project ([\\#39](https://github.com/AY2021S1-CS2103T-W17-3/tp/pull/39))"
+      }
+    ],
+    "authorContributionMap": {
+      "joeychensmart": 72
     }
   },
   {
@@ -50009,65 +50979,65 @@
       {
         "lineNumber": 18,
         "author": {
-          "gitId": "joeychensmart"
+          "gitId": "aidoxe-123"
         },
-        "content": "    private boolean checkIfSameWithPreviousState(McGymmy otherMcGymmy, Predicate\u003cFood\u003e otherPredicate,"
+        "content": "    /**"
       },
       {
         "lineNumber": 19,
         "author": {
-          "gitId": "joeychensmart"
+          "gitId": "aidoxe-123"
         },
-        "content": "                                                 MacroList otherMacroList) {"
+        "content": "     * Saves the mcGymmy, predicate and macrolist of \u003ccode\u003eModelManager\u003c/code\u003e to history"
       },
       {
         "lineNumber": 20,
         "author": {
           "gitId": "aidoxe-123"
         },
-        "content": "        if (stack.empty()) {"
+        "content": "     */"
       },
       {
         "lineNumber": 21,
         "author": {
           "gitId": "aidoxe-123"
         },
-        "content": "            return false;"
+        "content": "    void save(ModelManager modelManager) {"
       },
       {
         "lineNumber": 22,
         "author": {
           "gitId": "aidoxe-123"
         },
-        "content": "        }"
+        "content": "        McGymmy mcGymmy \u003d new McGymmy(modelManager.getMcGymmy());"
       },
       {
         "lineNumber": 23,
         "author": {
           "gitId": "aidoxe-123"
         },
-        "content": ""
+        "content": "        Predicate\u003cFood\u003e predicate \u003d modelManager.getFilterPredicate();"
       },
       {
         "lineNumber": 24,
         "author": {
           "gitId": "joeychensmart"
         },
-        "content": "        McGymmy mcGymmy \u003d getMcGymmy();"
+        "content": "        MacroList macroList \u003d modelManager.getMacroList();"
       },
       {
         "lineNumber": 25,
         "author": {
           "gitId": "joeychensmart"
         },
-        "content": "        Predicate\u003cFood\u003e predicate \u003d getPredicate();"
+        "content": "        stack.push(new Pair\u003c\u003e(mcGymmy, new Pair\u003c\u003e(predicate, macroList)));"
       },
       {
         "lineNumber": 26,
         "author": {
-          "gitId": "joeychensmart"
+          "gitId": "aidoxe-123"
         },
-        "content": "        MacroList macroList \u003d getMacroList();"
+        "content": "    }"
       },
       {
         "lineNumber": 27,
@@ -50081,110 +51051,110 @@
         "author": {
           "gitId": "aidoxe-123"
         },
-        "content": "        boolean isSameMcGymmy \u003d otherMcGymmy.equals(mcGymmy);"
+        "content": "    /**"
       },
       {
         "lineNumber": 29,
         "author": {
           "gitId": "aidoxe-123"
         },
-        "content": "        boolean isSamePredicate \u003d otherPredicate.equals(predicate);"
+        "content": "     * @return True if the history is empty"
       },
       {
         "lineNumber": 30,
         "author": {
-          "gitId": "joeychensmart"
+          "gitId": "aidoxe-123"
         },
-        "content": "        boolean isSameMacroList \u003d otherMacroList.equals(macroList);"
+        "content": "     */"
       },
       {
         "lineNumber": 31,
         "author": {
-          "gitId": "joeychensmart"
+          "gitId": "aidoxe-123"
         },
-        "content": "        return isSameMcGymmy \u0026\u0026 isSamePredicate \u0026\u0026 isSameMacroList;"
+        "content": "    boolean empty() {"
       },
       {
         "lineNumber": 32,
         "author": {
           "gitId": "aidoxe-123"
         },
-        "content": "    }"
+        "content": "        return stack.empty();"
       },
       {
         "lineNumber": 33,
         "author": {
           "gitId": "aidoxe-123"
         },
-        "content": ""
+        "content": "    }"
       },
       {
         "lineNumber": 34,
         "author": {
           "gitId": "aidoxe-123"
         },
-        "content": "    void save(ModelManager modelManager) {"
+        "content": ""
       },
       {
         "lineNumber": 35,
         "author": {
           "gitId": "aidoxe-123"
         },
-        "content": "        McGymmy mcGymmy \u003d new McGymmy(modelManager.getMcGymmy());"
+        "content": "    /**"
       },
       {
         "lineNumber": 36,
         "author": {
           "gitId": "aidoxe-123"
         },
-        "content": "        Predicate\u003cFood\u003e predicate \u003d modelManager.getFilterPredicate();"
+        "content": "     * Get the previous state from history"
       },
       {
         "lineNumber": 37,
         "author": {
-          "gitId": "joeychensmart"
+          "gitId": "aidoxe-123"
         },
-        "content": "        MacroList macroList \u003d modelManager.getMacroList();"
+        "content": "     * @throws EmptyStackException"
       },
       {
         "lineNumber": 38,
         "author": {
-          "gitId": "joeychensmart"
+          "gitId": "aidoxe-123"
         },
-        "content": "        boolean isSameWithPreviousState \u003d checkIfSameWithPreviousState(mcGymmy, predicate, macroList);"
+        "content": "     */"
       },
       {
         "lineNumber": 39,
         "author": {
-          "gitId": "aidoxe-123"
+          "gitId": "joeychensmart"
         },
-        "content": "        if (!isSameWithPreviousState) {"
+        "content": "    void pop() throws EmptyStackException {"
       },
       {
         "lineNumber": 40,
         "author": {
-          "gitId": "joeychensmart"
+          "gitId": "aidoxe-123"
         },
-        "content": "            stack.push(new Pair\u003c\u003e(mcGymmy, new Pair\u003c\u003e(predicate, macroList)));"
+        "content": "        assert !stack.empty() : \"History is empty\";"
       },
       {
         "lineNumber": 41,
         "author": {
-          "gitId": "aidoxe-123"
+          "gitId": "joeychensmart"
         },
-        "content": "        }"
+        "content": "        stack.pop();"
       },
       {
         "lineNumber": 42,
         "author": {
-          "gitId": "aidoxe-123"
+          "gitId": "joeychensmart"
         },
         "content": "    }"
       },
       {
         "lineNumber": 43,
         "author": {
-          "gitId": "aidoxe-123"
+          "gitId": "joeychensmart"
         },
         "content": ""
       },
@@ -50193,171 +51163,108 @@
         "author": {
           "gitId": "aidoxe-123"
         },
-        "content": "    boolean empty() {"
+        "content": "    McGymmy peekMcGymmy() throws EmptyStackException {"
       },
       {
         "lineNumber": 45,
         "author": {
-          "gitId": "aidoxe-123"
+          "gitId": "joeychensmart"
         },
-        "content": "        return stack.empty();"
+        "content": "        assert !stack.empty() : \"History is empty\";"
       },
       {
         "lineNumber": 46,
-        "author": {
-          "gitId": "aidoxe-123"
-        },
-        "content": "    }"
-      },
-      {
-        "lineNumber": 47,
-        "author": {
-          "gitId": "aidoxe-123"
-        },
-        "content": ""
-      },
-      {
-        "lineNumber": 48,
-        "author": {
-          "gitId": "joeychensmart"
-        },
-        "content": "    void pop() throws EmptyStackException {"
-      },
-      {
-        "lineNumber": 49,
-        "author": {
-          "gitId": "aidoxe-123"
-        },
-        "content": "        assert !stack.empty() : \"History is empty\";"
-      },
-      {
-        "lineNumber": 50,
-        "author": {
-          "gitId": "joeychensmart"
-        },
-        "content": "        stack.pop();"
-      },
-      {
-        "lineNumber": 51,
-        "author": {
-          "gitId": "joeychensmart"
-        },
-        "content": "    }"
-      },
-      {
-        "lineNumber": 52,
-        "author": {
-          "gitId": "joeychensmart"
-        },
-        "content": ""
-      },
-      {
-        "lineNumber": 53,
-        "author": {
-          "gitId": "joeychensmart"
-        },
-        "content": "    McGymmy getMcGymmy() throws EmptyStackException {"
-      },
-      {
-        "lineNumber": 54,
-        "author": {
-          "gitId": "joeychensmart"
-        },
-        "content": "        assert !stack.empty() : \"History is empty\";"
-      },
-      {
-        "lineNumber": 55,
         "author": {
           "gitId": "joeychensmart"
         },
         "content": "        return stack.peek().getKey();"
       },
       {
-        "lineNumber": 56,
+        "lineNumber": 47,
         "author": {
           "gitId": "joeychensmart"
         },
         "content": "    }"
       },
       {
-        "lineNumber": 57,
+        "lineNumber": 48,
         "author": {
           "gitId": "joeychensmart"
         },
         "content": ""
       },
       {
-        "lineNumber": 58,
+        "lineNumber": 49,
         "author": {
-          "gitId": "joeychensmart"
+          "gitId": "aidoxe-123"
         },
-        "content": "    Predicate\u003cFood\u003e getPredicate() throws EmptyStackException {"
+        "content": "    Predicate\u003cFood\u003e peekPredicate() throws EmptyStackException {"
       },
       {
-        "lineNumber": 59,
+        "lineNumber": 50,
         "author": {
           "gitId": "joeychensmart"
         },
         "content": "        assert !stack.empty() : \"History is empty\";"
       },
       {
-        "lineNumber": 60,
+        "lineNumber": 51,
         "author": {
           "gitId": "joeychensmart"
         },
         "content": "        return stack.peek().getValue().getKey();"
       },
       {
-        "lineNumber": 61,
+        "lineNumber": 52,
         "author": {
           "gitId": "joeychensmart"
         },
         "content": "    }"
       },
       {
-        "lineNumber": 62,
+        "lineNumber": 53,
         "author": {
           "gitId": "joeychensmart"
         },
         "content": ""
       },
       {
-        "lineNumber": 63,
+        "lineNumber": 54,
         "author": {
-          "gitId": "joeychensmart"
+          "gitId": "aidoxe-123"
         },
-        "content": "    MacroList getMacroList() throws EmptyStackException {"
+        "content": "    MacroList peekMacroList() throws EmptyStackException {"
       },
       {
-        "lineNumber": 64,
+        "lineNumber": 55,
         "author": {
           "gitId": "joeychensmart"
         },
         "content": "        assert !stack.empty() : \"History is empty\";"
       },
       {
-        "lineNumber": 65,
+        "lineNumber": 56,
         "author": {
           "gitId": "joeychensmart"
         },
         "content": "        return stack.peek().getValue().getValue();"
       },
       {
-        "lineNumber": 66,
+        "lineNumber": 57,
         "author": {
           "gitId": "aidoxe-123"
         },
         "content": "    }"
       },
       {
-        "lineNumber": 67,
+        "lineNumber": 58,
         "author": {
           "gitId": "aidoxe-123"
         },
         "content": "}"
       },
       {
-        "lineNumber": 68,
+        "lineNumber": 59,
         "author": {
           "gitId": "aidoxe-123"
         },
@@ -50365,8 +51272,8 @@
       }
     ],
     "authorContributionMap": {
-      "joeychensmart": 29,
-      "aidoxe-123": 39
+      "joeychensmart": 18,
+      "aidoxe-123": 41
     }
   },
   {
@@ -53382,23 +54289,23 @@
       {
         "lineNumber": 188,
         "author": {
-          "gitId": "joeychensmart"
+          "gitId": "aidoxe-123"
         },
-        "content": "            McGymmy prevMcGymmy \u003d history.getMcGymmy();"
+        "content": "            McGymmy prevMcGymmy \u003d history.peekMcGymmy();"
       },
       {
         "lineNumber": 189,
         "author": {
-          "gitId": "joeychensmart"
+          "gitId": "aidoxe-123"
         },
-        "content": "            Predicate\u003cFood\u003e prevPredicate \u003d history.getPredicate();"
+        "content": "            Predicate\u003cFood\u003e prevPredicate \u003d history.peekPredicate();"
       },
       {
         "lineNumber": 190,
         "author": {
-          "gitId": "joeychensmart"
+          "gitId": "aidoxe-123"
         },
-        "content": "            MacroList macroList \u003d history.getMacroList();"
+        "content": "            MacroList macroList \u003d history.peekMacroList();"
       },
       {
         "lineNumber": 191,
@@ -53685,248 +54592,234 @@
         "author": {
           "gitId": "aidoxe-123"
         },
-        "content": "        if (!predicate.equals(filterPredicate)) {"
+        "content": "        saveCurrentStateToHistory();"
       },
       {
         "lineNumber": 232,
         "author": {
           "gitId": "aidoxe-123"
         },
-        "content": "            saveCurrentStateToHistory();"
+        "content": "        updateFilterPredicate(predicate);"
       },
       {
         "lineNumber": 233,
         "author": {
           "gitId": "aidoxe-123"
         },
-        "content": "            updateFilterPredicate(predicate);"
+        "content": "    }"
       },
       {
         "lineNumber": 234,
         "author": {
           "gitId": "aidoxe-123"
         },
-        "content": "        }"
+        "content": ""
       },
       {
         "lineNumber": 235,
         "author": {
           "gitId": "aidoxe-123"
         },
-        "content": "    }"
+        "content": "    private void updateFilterPredicate(Predicate\u003cFood\u003e predicate) {"
       },
       {
         "lineNumber": 236,
         "author": {
           "gitId": "aidoxe-123"
         },
-        "content": ""
+        "content": "        filterPredicate \u003d predicate;"
       },
       {
         "lineNumber": 237,
         "author": {
           "gitId": "aidoxe-123"
         },
-        "content": "    private void updateFilterPredicate(Predicate\u003cFood\u003e predicate) {"
+        "content": "        filteredFoodItems.setPredicate(filterPredicate);"
       },
       {
         "lineNumber": 238,
         "author": {
           "gitId": "aidoxe-123"
         },
-        "content": "        filterPredicate \u003d predicate;"
+        "content": "    }"
       },
       {
         "lineNumber": 239,
         "author": {
           "gitId": "aidoxe-123"
         },
-        "content": "        filteredFoodItems.setPredicate(filterPredicate);"
+        "content": ""
       },
       {
         "lineNumber": 240,
         "author": {
           "gitId": "aidoxe-123"
         },
-        "content": "    }"
+        "content": "    Predicate\u003cFood\u003e getFilterPredicate() {"
       },
       {
         "lineNumber": 241,
         "author": {
           "gitId": "aidoxe-123"
         },
-        "content": ""
+        "content": "        return filterPredicate;"
       },
       {
         "lineNumber": 242,
         "author": {
-          "gitId": "aidoxe-123"
+          "gitId": "-"
         },
-        "content": "    Predicate\u003cFood\u003e getFilterPredicate() {"
+        "content": "    }"
       },
       {
         "lineNumber": 243,
         "author": {
-          "gitId": "aidoxe-123"
+          "gitId": "-"
         },
-        "content": "        return filterPredicate;"
+        "content": ""
       },
       {
         "lineNumber": 244,
         "author": {
           "gitId": "-"
         },
-        "content": "    }"
+        "content": "    @Override"
       },
       {
         "lineNumber": 245,
         "author": {
           "gitId": "-"
         },
-        "content": ""
+        "content": "    public boolean equals(Object obj) {"
       },
       {
         "lineNumber": 246,
         "author": {
           "gitId": "-"
         },
-        "content": "    @Override"
+        "content": "        // short circuit if same object"
       },
       {
         "lineNumber": 247,
         "author": {
           "gitId": "-"
         },
-        "content": "    public boolean equals(Object obj) {"
+        "content": "        if (obj \u003d\u003d this) {"
       },
       {
         "lineNumber": 248,
         "author": {
           "gitId": "-"
         },
-        "content": "        // short circuit if same object"
+        "content": "            return true;"
       },
       {
         "lineNumber": 249,
         "author": {
           "gitId": "-"
         },
-        "content": "        if (obj \u003d\u003d this) {"
+        "content": "        }"
       },
       {
         "lineNumber": 250,
         "author": {
           "gitId": "-"
         },
-        "content": "            return true;"
+        "content": ""
       },
       {
         "lineNumber": 251,
         "author": {
           "gitId": "-"
         },
-        "content": "        }"
+        "content": "        // instanceof handles nulls"
       },
       {
         "lineNumber": 252,
         "author": {
           "gitId": "-"
         },
-        "content": ""
+        "content": "        if (!(obj instanceof ModelManager)) {"
       },
       {
         "lineNumber": 253,
         "author": {
           "gitId": "-"
         },
-        "content": "        // instanceof handles nulls"
+        "content": "            return false;"
       },
       {
         "lineNumber": 254,
         "author": {
           "gitId": "-"
         },
-        "content": "        if (!(obj instanceof ModelManager)) {"
+        "content": "        }"
       },
       {
         "lineNumber": 255,
         "author": {
           "gitId": "-"
         },
-        "content": "            return false;"
+        "content": ""
       },
       {
         "lineNumber": 256,
         "author": {
           "gitId": "-"
         },
-        "content": "        }"
+        "content": "        // state check"
       },
       {
         "lineNumber": 257,
         "author": {
           "gitId": "-"
         },
-        "content": ""
-      },
-      {
-        "lineNumber": 258,
-        "author": {
-          "gitId": "-"
-        },
-        "content": "        // state check"
-      },
-      {
-        "lineNumber": 259,
-        "author": {
-          "gitId": "-"
-        },
         "content": "        ModelManager other \u003d (ModelManager) obj;"
       },
       {
-        "lineNumber": 260,
+        "lineNumber": 258,
         "author": {
           "gitId": "chewypiano"
         },
         "content": ""
       },
       {
-        "lineNumber": 261,
+        "lineNumber": 259,
         "author": {
           "gitId": "jh123x"
         },
         "content": "        return mcGymmy.equals(other.mcGymmy)"
       },
       {
-        "lineNumber": 262,
+        "lineNumber": 260,
         "author": {
           "gitId": "jh123x"
         },
         "content": "                \u0026\u0026 userPrefs.equals(other.userPrefs)"
       },
       {
-        "lineNumber": 263,
+        "lineNumber": 261,
         "author": {
           "gitId": "jh123x"
         },
         "content": "                \u0026\u0026 filteredFoodItems.equals(other.filteredFoodItems);"
       },
       {
-        "lineNumber": 264,
+        "lineNumber": 262,
         "author": {
           "gitId": "-"
         },
         "content": "    }"
       },
       {
-        "lineNumber": 265,
+        "lineNumber": 263,
         "author": {
           "gitId": "-"
         },
         "content": ""
       },
       {
-        "lineNumber": 266,
+        "lineNumber": 264,
         "author": {
           "gitId": "-"
         },
@@ -53937,9 +54830,9 @@
       "chewypiano": 7,
       "dcchan98": 11,
       "jh123x": 42,
-      "joeychensmart": 32,
+      "joeychensmart": 29,
       "-": 101,
-      "aidoxe-123": 73
+      "aidoxe-123": 74
     }
   },
   {
@@ -105405,21 +106298,21 @@
         "author": {
           "gitId": "aidoxe-123"
         },
-        "content": "        ModelManager expectedModelManager \u003d new ModelManager(expectedMcGymmy, new UserPrefs());"
+        "content": "        modelManager.addFood(CHICKEN_RICE);"
       },
       {
         "lineNumber": 182,
         "author": {
           "gitId": "aidoxe-123"
         },
-        "content": "        modelManager.addFood(CHICKEN_RICE);"
+        "content": "        modelManager.addFood(DANISH_COOKIES);"
       },
       {
         "lineNumber": 183,
         "author": {
           "gitId": "aidoxe-123"
         },
-        "content": "        modelManager.addFood(DANISH_COOKIES);"
+        "content": "        modelManager.updateFilteredFoodList(food -\u003e food.equals(CHICKEN_RICE));"
       },
       {
         "lineNumber": 184,
@@ -105440,7 +106333,7 @@
         "author": {
           "gitId": "aidoxe-123"
         },
-        "content": "        assertEquals(modelManager, expectedModelManager);"
+        "content": "        assertEquals(modelManager.getMcGymmy(), expectedMcGymmy);"
       },
       {
         "lineNumber": 187,
@@ -106049,7 +106942,7 @@
         "author": {
           "gitId": "aidoxe-123"
         },
-        "content": "    public void undo_updateFilteredFoodListWithSamePredicateMultipleTime_onlyUndoOnce() {"
+        "content": "    public void undo_updateFilteredFoodListWithSamePredicateMultipleTime_undoMultipleTimes() {"
       },
       {
         "lineNumber": 274,
@@ -106105,290 +106998,297 @@
         "author": {
           "gitId": "aidoxe-123"
         },
-        "content": "        assertFalse(modelManager.canUndo());"
+        "content": "        assertTrue(modelManager.canUndo());"
       },
       {
         "lineNumber": 282,
         "author": {
           "gitId": "aidoxe-123"
         },
-        "content": "        assertEquals(modelManager, expectedModelManager);"
+        "content": "        modelManager.undo();"
       },
       {
         "lineNumber": 283,
         "author": {
           "gitId": "aidoxe-123"
         },
-        "content": "    }"
+        "content": "        assertEquals(modelManager, expectedModelManager);"
       },
       {
         "lineNumber": 284,
         "author": {
           "gitId": "aidoxe-123"
         },
-        "content": ""
+        "content": "    }"
       },
       {
         "lineNumber": 285,
         "author": {
-          "gitId": "-"
+          "gitId": "aidoxe-123"
         },
-        "content": "    @Test"
+        "content": ""
       },
       {
         "lineNumber": 286,
         "author": {
           "gitId": "-"
         },
-        "content": "    public void equals() {"
+        "content": "    @Test"
       },
       {
         "lineNumber": 287,
         "author": {
-          "gitId": "jh123x"
+          "gitId": "-"
         },
-        "content": "        McGymmy mcGymmy \u003d new McGymmyBuilder().withFood(TypicalFoods.CHICKEN_RICE).withFood("
+        "content": "    public void equals() {"
       },
       {
         "lineNumber": 288,
         "author": {
           "gitId": "jh123x"
         },
-        "content": "                TypicalFoods.NASI_LEMAK).build();"
+        "content": "        McGymmy mcGymmy \u003d new McGymmyBuilder().withFood(TypicalFoods.CHICKEN_RICE).withFood("
       },
       {
         "lineNumber": 289,
         "author": {
           "gitId": "jh123x"
         },
-        "content": "        McGymmy differentMcGymmy \u003d new McGymmy();"
+        "content": "                TypicalFoods.NASI_LEMAK).build();"
       },
       {
         "lineNumber": 290,
         "author": {
-          "gitId": "-"
+          "gitId": "jh123x"
         },
-        "content": "        UserPrefs userPrefs \u003d new UserPrefs();"
+        "content": "        McGymmy differentMcGymmy \u003d new McGymmy();"
       },
       {
         "lineNumber": 291,
         "author": {
           "gitId": "-"
         },
-        "content": ""
+        "content": "        UserPrefs userPrefs \u003d new UserPrefs();"
       },
       {
         "lineNumber": 292,
         "author": {
           "gitId": "-"
         },
-        "content": "        // same values -\u003e returns true"
+        "content": ""
       },
       {
         "lineNumber": 293,
         "author": {
-          "gitId": "jh123x"
+          "gitId": "-"
         },
-        "content": "        modelManager \u003d new ModelManager(mcGymmy, userPrefs);"
+        "content": "        // same values -\u003e returns true"
       },
       {
         "lineNumber": 294,
         "author": {
           "gitId": "jh123x"
         },
-        "content": "        ModelManager modelManagerCopy \u003d new ModelManager(mcGymmy, userPrefs);"
+        "content": "        modelManager \u003d new ModelManager(mcGymmy, userPrefs);"
       },
       {
         "lineNumber": 295,
         "author": {
-          "gitId": "-"
+          "gitId": "jh123x"
         },
-        "content": "        assertTrue(modelManager.equals(modelManagerCopy));"
+        "content": "        ModelManager modelManagerCopy \u003d new ModelManager(mcGymmy, userPrefs);"
       },
       {
         "lineNumber": 296,
         "author": {
           "gitId": "-"
         },
-        "content": ""
+        "content": "        assertTrue(modelManager.equals(modelManagerCopy));"
       },
       {
         "lineNumber": 297,
         "author": {
           "gitId": "-"
         },
-        "content": "        // same object -\u003e returns true"
+        "content": ""
       },
       {
         "lineNumber": 298,
         "author": {
           "gitId": "-"
         },
-        "content": "        assertTrue(modelManager.equals(modelManager));"
+        "content": "        // same object -\u003e returns true"
       },
       {
         "lineNumber": 299,
         "author": {
           "gitId": "-"
         },
-        "content": ""
+        "content": "        assertTrue(modelManager.equals(modelManager));"
       },
       {
         "lineNumber": 300,
         "author": {
           "gitId": "-"
         },
-        "content": "        // null -\u003e returns false"
+        "content": ""
       },
       {
         "lineNumber": 301,
         "author": {
           "gitId": "-"
         },
-        "content": "        assertFalse(modelManager.equals(null));"
+        "content": "        // null -\u003e returns false"
       },
       {
         "lineNumber": 302,
         "author": {
           "gitId": "-"
         },
-        "content": ""
+        "content": "        assertFalse(modelManager.equals(null));"
       },
       {
         "lineNumber": 303,
         "author": {
           "gitId": "-"
         },
-        "content": "        // different types -\u003e returns false"
+        "content": ""
       },
       {
         "lineNumber": 304,
         "author": {
           "gitId": "-"
         },
-        "content": "        assertFalse(modelManager.equals(5));"
+        "content": "        // different types -\u003e returns false"
       },
       {
         "lineNumber": 305,
         "author": {
           "gitId": "-"
         },
-        "content": ""
+        "content": "        assertFalse(modelManager.equals(5));"
       },
       {
         "lineNumber": 306,
         "author": {
-          "gitId": "jh123x"
+          "gitId": "-"
         },
-        "content": "        // different mcGymmy -\u003e returns false"
+        "content": ""
       },
       {
         "lineNumber": 307,
         "author": {
           "gitId": "jh123x"
         },
-        "content": "        assertFalse(modelManager.equals(new ModelManager(differentMcGymmy, userPrefs)));"
+        "content": "        // different mcGymmy -\u003e returns false"
       },
       {
         "lineNumber": 308,
         "author": {
-          "gitId": "-"
+          "gitId": "jh123x"
         },
-        "content": ""
+        "content": "        assertFalse(modelManager.equals(new ModelManager(differentMcGymmy, userPrefs)));"
       },
       {
         "lineNumber": 309,
         "author": {
           "gitId": "-"
         },
-        "content": "        // different filteredList -\u003e returns false"
+        "content": ""
       },
       {
         "lineNumber": 310,
         "author": {
-          "gitId": "jh123x"
+          "gitId": "-"
         },
-        "content": "        String[] keywords \u003d CHICKEN_RICE.getName().fullName.split(\"\\\\s+\");"
+        "content": "        // different filteredList -\u003e returns false"
       },
       {
         "lineNumber": 311,
         "author": {
           "gitId": "jh123x"
         },
-        "content": "        modelManager.updateFilteredFoodList(new NameContainsKeywordsPredicate(Arrays.asList(keywords)));"
+        "content": "        String[] keywords \u003d CHICKEN_RICE.getName().fullName.split(\"\\\\s+\");"
       },
       {
         "lineNumber": 312,
         "author": {
           "gitId": "jh123x"
         },
-        "content": "        assertFalse(modelManager.equals(new ModelManager(mcGymmy, userPrefs)));"
+        "content": "        modelManager.updateFilteredFoodList(new NameContainsKeywordsPredicate(Arrays.asList(keywords)));"
       },
       {
         "lineNumber": 313,
         "author": {
-          "gitId": "-"
+          "gitId": "jh123x"
         },
-        "content": ""
+        "content": "        assertFalse(modelManager.equals(new ModelManager(mcGymmy, userPrefs)));"
       },
       {
         "lineNumber": 314,
         "author": {
           "gitId": "-"
         },
-        "content": "        // resets modelManager to initial state for upcoming tests"
+        "content": ""
       },
       {
         "lineNumber": 315,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "        // resets modelManager to initial state for upcoming tests"
+      },
+      {
+        "lineNumber": 316,
         "author": {
           "gitId": "jh123x"
         },
         "content": "        modelManager.updateFilteredFoodList(Model.PREDICATE_SHOW_ALL_FOODS);"
       },
       {
-        "lineNumber": 316,
+        "lineNumber": 317,
         "author": {
           "gitId": "-"
         },
         "content": ""
       },
       {
-        "lineNumber": 317,
+        "lineNumber": 318,
         "author": {
           "gitId": "-"
         },
         "content": "        // different userPrefs -\u003e returns false"
       },
       {
-        "lineNumber": 318,
+        "lineNumber": 319,
         "author": {
           "gitId": "-"
         },
         "content": "        UserPrefs differentUserPrefs \u003d new UserPrefs();"
       },
       {
-        "lineNumber": 319,
+        "lineNumber": 320,
         "author": {
           "gitId": "jh123x"
         },
         "content": "        differentUserPrefs.setMcGymmyFilePath(Paths.get(\"differentFilePath\"));"
       },
       {
-        "lineNumber": 320,
+        "lineNumber": 321,
         "author": {
           "gitId": "jh123x"
         },
         "content": "        assertFalse(modelManager.equals(new ModelManager(mcGymmy, differentUserPrefs)));"
       },
       {
-        "lineNumber": 321,
+        "lineNumber": 322,
         "author": {
           "gitId": "-"
         },
         "content": "    }"
       },
       {
-        "lineNumber": 322,
+        "lineNumber": 323,
         "author": {
           "gitId": "-"
         },
@@ -106399,7 +107299,7 @@
       "jh123x": 43,
       "joeychensmart": 51,
       "-": 87,
-      "aidoxe-123": 141
+      "aidoxe-123": 142
     }
   },
   {
