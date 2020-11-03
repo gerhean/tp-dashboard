@@ -7305,7 +7305,7 @@
         "author": {
           "gitId": "gabrielsimbingyang"
         },
-        "content": "to you at the end of the game."
+        "content": "to you at the end of the game. Note the slash `/` in the command."
       },
       {
         "lineNumber": 299,
@@ -7319,7 +7319,7 @@
         "author": {
           "gitId": "gabrielsimbingyang"
         },
-        "content": "Format: `play`"
+        "content": "Format: `/play`"
       },
       {
         "lineNumber": 301,
@@ -7396,7 +7396,7 @@
         "author": {
           "gitId": "gabrielsimbingyang"
         },
-        "content": "Stop the current game prematurely. Note the slash `/` in the command"
+        "content": "Stop the current game prematurely. Note the slash `/` in the command."
       },
       {
         "lineNumber": 312,
@@ -7893,7 +7893,7 @@
         "author": {
           "gitId": "gabrielsimbingyang"
         },
-        "content": "| **Play**                                                                                           | `play`       |  | Starts a New FlashCard Game with the Selected Deck"
+        "content": "| **Play**                                                                                           | `/play`       |  | Starts a New FlashCard Game with the Selected Deck"
       },
       {
         "lineNumber": 383,
@@ -19625,7 +19625,7 @@
         "author": {
           "gitId": "gabrielsimbingyang"
         },
-        "content": "        if (commandText.equals(\"play\")) {"
+        "content": "        if (commandText.equals(\"/play\") \u0026\u0026 !playMode.isPlayMode()) {"
       },
       {
         "lineNumber": 59,
@@ -19688,640 +19688,668 @@
         "author": {
           "gitId": "gabrielsimbingyang"
         },
-        "content": "        }"
+        "content": "            return playModeParser.parseCommand(commandText).execute(model);"
       },
       {
         "lineNumber": 68,
         "author": {
           "gitId": "gabrielsimbingyang"
         },
-        "content": ""
+        "content": "        }"
       },
       {
         "lineNumber": 69,
         "author": {
           "gitId": "gabrielsimbingyang"
         },
-        "content": "        if (playMode.isPlayMode()) {"
+        "content": ""
       },
       {
         "lineNumber": 70,
+        "author": {
+          "gitId": "gabrielsimbingyang"
+        },
+        "content": "        if (playMode.isPlayMode()) {"
+      },
+      {
+        "lineNumber": 71,
         "author": {
           "gitId": "geoboom"
         },
         "content": "            assert (playMode.isPlayMode());"
       },
       {
-        "lineNumber": 71,
+        "lineNumber": 72,
         "author": {
           "gitId": "gabrielsimbingyang"
         },
         "content": "            command \u003d playModeParser.parseCommand(commandText);"
       },
       {
-        "lineNumber": 72,
-        "author": {
-          "gitId": "gabrielsimbingyang"
-        },
-        "content": "            if (commandText.equals(\"/stop\") || model.checkScore()) {"
-      },
-      {
         "lineNumber": 73,
         "author": {
           "gitId": "gabrielsimbingyang"
         },
-        "content": "                playMode.turnOff();"
+        "content": "            if (commandText.equals(\"/play\")) {"
       },
       {
         "lineNumber": 74,
         "author": {
           "gitId": "gabrielsimbingyang"
         },
-        "content": "            }"
+        "content": "                throw new CommandException(\"Already in play mode\");"
       },
       {
         "lineNumber": 75,
         "author": {
           "gitId": "gabrielsimbingyang"
         },
-        "content": "        } else {"
+        "content": "            }"
       },
       {
         "lineNumber": 76,
         "author": {
           "gitId": "gabrielsimbingyang"
         },
-        "content": "            command \u003d addressBookParser.parseCommand(commandText);"
+        "content": "            if (commandText.equals(\"/stop\") || model.checkScore()) {"
       },
       {
         "lineNumber": 77,
         "author": {
           "gitId": "gabrielsimbingyang"
         },
-        "content": "        }"
+        "content": "                playMode.turnOff();"
       },
       {
         "lineNumber": 78,
         "author": {
           "gitId": "gabrielsimbingyang"
         },
-        "content": ""
+        "content": "            }"
       },
       {
         "lineNumber": 79,
         "author": {
-          "gitId": "-"
+          "gitId": "gabrielsimbingyang"
         },
-        "content": "        commandResult \u003d command.execute(model);"
+        "content": "        } else {"
       },
       {
         "lineNumber": 80,
         "author": {
-          "gitId": "-"
+          "gitId": "gabrielsimbingyang"
         },
-        "content": ""
+        "content": "            command \u003d addressBookParser.parseCommand(commandText);"
       },
       {
         "lineNumber": 81,
         "author": {
-          "gitId": "-"
+          "gitId": "gabrielsimbingyang"
         },
-        "content": "        try {"
+        "content": "        }"
       },
       {
         "lineNumber": 82,
         "author": {
-          "gitId": "-"
+          "gitId": "gabrielsimbingyang"
         },
-        "content": "            storage.saveAddressBook(model.getAddressBook());"
+        "content": ""
       },
       {
         "lineNumber": 83,
         "author": {
           "gitId": "-"
         },
-        "content": "        } catch (IOException ioe) {"
+        "content": "        commandResult \u003d command.execute(model);"
       },
       {
         "lineNumber": 84,
         "author": {
           "gitId": "-"
         },
-        "content": "            throw new CommandException(FILE_OPS_ERROR_MESSAGE + ioe, ioe);"
+        "content": ""
       },
       {
         "lineNumber": 85,
         "author": {
           "gitId": "-"
         },
-        "content": "        }"
+        "content": "        try {"
       },
       {
         "lineNumber": 86,
         "author": {
           "gitId": "-"
         },
-        "content": ""
+        "content": "            storage.saveAddressBook(model.getAddressBook());"
       },
       {
         "lineNumber": 87,
         "author": {
           "gitId": "-"
         },
-        "content": "        return commandResult;"
+        "content": "        } catch (IOException ioe) {"
       },
       {
         "lineNumber": 88,
         "author": {
           "gitId": "-"
         },
-        "content": "    }"
+        "content": "            throw new CommandException(FILE_OPS_ERROR_MESSAGE + ioe, ioe);"
       },
       {
         "lineNumber": 89,
         "author": {
           "gitId": "-"
         },
-        "content": ""
+        "content": "        }"
       },
       {
         "lineNumber": 90,
         "author": {
           "gitId": "-"
         },
-        "content": "    @Override"
+        "content": ""
       },
       {
         "lineNumber": 91,
         "author": {
           "gitId": "-"
         },
-        "content": "    public ReadOnlyAddressBook getAddressBook() {"
+        "content": "        return commandResult;"
       },
       {
         "lineNumber": 92,
         "author": {
           "gitId": "-"
         },
-        "content": "        return model.getAddressBook();"
+        "content": "    }"
       },
       {
         "lineNumber": 93,
         "author": {
           "gitId": "-"
         },
-        "content": "    }"
+        "content": ""
       },
       {
         "lineNumber": 94,
         "author": {
           "gitId": "-"
         },
-        "content": ""
+        "content": "    @Override"
       },
       {
         "lineNumber": 95,
         "author": {
           "gitId": "-"
         },
-        "content": "    @Override"
+        "content": "    public ReadOnlyAddressBook getAddressBook() {"
       },
       {
         "lineNumber": 96,
         "author": {
-          "gitId": "IlyaRin"
+          "gitId": "-"
         },
-        "content": "    public ObservableList\u003cDeck\u003e getFilteredDeckList() {"
+        "content": "        return model.getAddressBook();"
       },
       {
         "lineNumber": 97,
         "author": {
-          "gitId": "IlyaRin"
+          "gitId": "-"
         },
-        "content": "        return model.getFilteredDeckList();"
+        "content": "    }"
       },
       {
         "lineNumber": 98,
         "author": {
           "gitId": "-"
         },
-        "content": "    }"
+        "content": ""
       },
       {
         "lineNumber": 99,
         "author": {
           "gitId": "-"
         },
-        "content": ""
+        "content": "    @Override"
       },
       {
         "lineNumber": 100,
         "author": {
-          "gitId": "-"
+          "gitId": "IlyaRin"
         },
-        "content": "    @Override"
+        "content": "    public ObservableList\u003cDeck\u003e getFilteredDeckList() {"
       },
       {
         "lineNumber": 101,
         "author": {
-          "gitId": "-"
+          "gitId": "IlyaRin"
         },
-        "content": "    public Path getAddressBookFilePath() {"
+        "content": "        return model.getFilteredDeckList();"
       },
       {
         "lineNumber": 102,
         "author": {
           "gitId": "-"
         },
-        "content": "        return model.getAddressBookFilePath();"
+        "content": "    }"
       },
       {
         "lineNumber": 103,
         "author": {
           "gitId": "-"
         },
-        "content": "    }"
+        "content": ""
       },
       {
         "lineNumber": 104,
         "author": {
           "gitId": "-"
         },
-        "content": ""
+        "content": "    @Override"
       },
       {
         "lineNumber": 105,
         "author": {
           "gitId": "-"
         },
-        "content": "    @Override"
+        "content": "    public Path getAddressBookFilePath() {"
       },
       {
         "lineNumber": 106,
         "author": {
           "gitId": "-"
         },
-        "content": "    public GuiSettings getGuiSettings() {"
+        "content": "        return model.getAddressBookFilePath();"
       },
       {
         "lineNumber": 107,
         "author": {
           "gitId": "-"
         },
-        "content": "        return model.getGuiSettings();"
+        "content": "    }"
       },
       {
         "lineNumber": 108,
         "author": {
           "gitId": "-"
         },
-        "content": "    }"
+        "content": ""
       },
       {
         "lineNumber": 109,
         "author": {
           "gitId": "-"
         },
-        "content": ""
+        "content": "    @Override"
       },
       {
         "lineNumber": 110,
         "author": {
           "gitId": "-"
         },
-        "content": "    @Override"
+        "content": "    public GuiSettings getGuiSettings() {"
       },
       {
         "lineNumber": 111,
         "author": {
           "gitId": "-"
         },
-        "content": "    public void setGuiSettings(GuiSettings guiSettings) {"
+        "content": "        return model.getGuiSettings();"
       },
       {
         "lineNumber": 112,
         "author": {
           "gitId": "-"
         },
-        "content": "        model.setGuiSettings(guiSettings);"
+        "content": "    }"
       },
       {
         "lineNumber": 113,
         "author": {
           "gitId": "-"
         },
-        "content": "    }"
+        "content": ""
       },
       {
         "lineNumber": 114,
         "author": {
-          "gitId": "gabrielsimbingyang"
-        },
-        "content": ""
-      },
-      {
-        "lineNumber": 115,
-        "author": {
-          "gitId": "gabrielsimbingyang"
+          "gitId": "-"
         },
         "content": "    @Override"
       },
       {
+        "lineNumber": 115,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "    public void setGuiSettings(GuiSettings guiSettings) {"
+      },
+      {
         "lineNumber": 116,
         "author": {
-          "gitId": "gabrielsimbingyang"
+          "gitId": "-"
         },
-        "content": "    public ObservableList\u003cEntry\u003e getFilteredEntryList() {"
+        "content": "        model.setGuiSettings(guiSettings);"
       },
       {
         "lineNumber": 117,
         "author": {
-          "gitId": "gabrielsimbingyang"
+          "gitId": "-"
         },
-        "content": "        return model.getFilteredEntryList();"
+        "content": "    }"
       },
       {
         "lineNumber": 118,
         "author": {
           "gitId": "gabrielsimbingyang"
         },
-        "content": "    }"
+        "content": ""
       },
       {
         "lineNumber": 119,
         "author": {
-          "gitId": "IlyaRin"
-        },
-        "content": ""
-      },
-      {
-        "lineNumber": 120,
-        "author": {
-          "gitId": "IlyaRin"
-        },
-        "content": "    //Methods called by the UI"
-      },
-      {
-        "lineNumber": 121,
-        "author": {
-          "gitId": "IlyaRin"
+          "gitId": "gabrielsimbingyang"
         },
         "content": "    @Override"
       },
       {
+        "lineNumber": 120,
+        "author": {
+          "gitId": "gabrielsimbingyang"
+        },
+        "content": "    public ObservableList\u003cEntry\u003e getFilteredEntryList() {"
+      },
+      {
+        "lineNumber": 121,
+        "author": {
+          "gitId": "gabrielsimbingyang"
+        },
+        "content": "        return model.getFilteredEntryList();"
+      },
+      {
         "lineNumber": 122,
         "author": {
-          "gitId": "IlyaRin"
+          "gitId": "gabrielsimbingyang"
         },
-        "content": "    public View getCurrentView() {"
+        "content": "    }"
       },
       {
         "lineNumber": 123,
         "author": {
           "gitId": "IlyaRin"
         },
-        "content": "        return model.getCurrentView();"
+        "content": ""
       },
       {
         "lineNumber": 124,
         "author": {
           "gitId": "IlyaRin"
         },
-        "content": "    }"
+        "content": "    //Methods called by the UI"
       },
       {
         "lineNumber": 125,
         "author": {
           "gitId": "IlyaRin"
         },
-        "content": ""
+        "content": "    @Override"
       },
       {
         "lineNumber": 126,
         "author": {
           "gitId": "IlyaRin"
         },
-        "content": "    @Override"
+        "content": "    public View getCurrentView() {"
       },
       {
         "lineNumber": 127,
         "author": {
           "gitId": "IlyaRin"
         },
-        "content": "    public Leitner getLeitner() {"
+        "content": "        return model.getCurrentView();"
       },
       {
         "lineNumber": 128,
         "author": {
           "gitId": "IlyaRin"
         },
-        "content": "        return model.getLeitner();"
+        "content": "    }"
       },
       {
         "lineNumber": 129,
         "author": {
           "gitId": "IlyaRin"
         },
-        "content": "    }"
+        "content": ""
       },
       {
         "lineNumber": 130,
         "author": {
           "gitId": "IlyaRin"
         },
-        "content": ""
+        "content": "    @Override"
       },
       {
         "lineNumber": 131,
         "author": {
           "gitId": "IlyaRin"
         },
-        "content": "    @Override"
+        "content": "    public Leitner getLeitner() {"
       },
       {
         "lineNumber": 132,
         "author": {
           "gitId": "IlyaRin"
         },
-        "content": "    public int getCurrentIndex() {"
+        "content": "        return model.getLeitner();"
       },
       {
         "lineNumber": 133,
         "author": {
           "gitId": "IlyaRin"
         },
-        "content": "        return model.getCurrentIndex();"
+        "content": "    }"
       },
       {
         "lineNumber": 134,
         "author": {
           "gitId": "IlyaRin"
         },
-        "content": "    }"
+        "content": ""
       },
       {
         "lineNumber": 135,
         "author": {
-          "gitId": "geoboom"
-        },
-        "content": ""
-      },
-      {
-        "lineNumber": 136,
-        "author": {
-          "gitId": "geoboom"
+          "gitId": "IlyaRin"
         },
         "content": "    @Override"
       },
       {
+        "lineNumber": 136,
+        "author": {
+          "gitId": "IlyaRin"
+        },
+        "content": "    public int getCurrentIndex() {"
+      },
+      {
         "lineNumber": 137,
         "author": {
-          "gitId": "geoboom"
+          "gitId": "IlyaRin"
         },
-        "content": "    public int getStatisticsDeckId() {"
+        "content": "        return model.getCurrentIndex();"
       },
       {
         "lineNumber": 138,
         "author": {
-          "gitId": "geoboom"
+          "gitId": "IlyaRin"
         },
-        "content": "        return model.getStatisticsDeckId();"
+        "content": "    }"
       },
       {
         "lineNumber": 139,
         "author": {
           "gitId": "geoboom"
         },
-        "content": "    }"
+        "content": ""
       },
       {
         "lineNumber": 140,
         "author": {
           "gitId": "geoboom"
         },
-        "content": ""
+        "content": "    @Override"
       },
       {
         "lineNumber": 141,
         "author": {
           "gitId": "geoboom"
         },
-        "content": "    @Override"
+        "content": "    public int getStatisticsDeckId() {"
       },
       {
         "lineNumber": 142,
         "author": {
           "gitId": "geoboom"
         },
-        "content": "    public StatisticsManager getStatisticsManager() {"
+        "content": "        return model.getStatisticsDeckId();"
       },
       {
         "lineNumber": 143,
         "author": {
           "gitId": "geoboom"
         },
-        "content": "        return statisticsManager;"
+        "content": "    }"
       },
       {
         "lineNumber": 144,
         "author": {
           "gitId": "geoboom"
         },
-        "content": "    }"
+        "content": ""
       },
       {
         "lineNumber": 145,
         "author": {
           "gitId": "geoboom"
         },
-        "content": ""
+        "content": "    @Override"
       },
       {
         "lineNumber": 146,
         "author": {
           "gitId": "geoboom"
         },
-        "content": "    @Override"
+        "content": "    public StatisticsManager getStatisticsManager() {"
       },
       {
         "lineNumber": 147,
         "author": {
           "gitId": "geoboom"
         },
-        "content": "    public double getLastScore() {"
+        "content": "        return statisticsManager;"
       },
       {
         "lineNumber": 148,
         "author": {
           "gitId": "geoboom"
         },
-        "content": "        return model.getQuizAttempt().getScore().getYourScore();"
+        "content": "    }"
       },
       {
         "lineNumber": 149,
         "author": {
           "gitId": "geoboom"
         },
-        "content": "    }"
+        "content": ""
       },
       {
         "lineNumber": 150,
         "author": {
           "gitId": "geoboom"
         },
-        "content": ""
+        "content": "    @Override"
       },
       {
         "lineNumber": 151,
         "author": {
           "gitId": "geoboom"
         },
-        "content": "    @Override"
+        "content": "    public double getLastScore() {"
       },
       {
         "lineNumber": 152,
         "author": {
           "gitId": "geoboom"
         },
-        "content": "    public void doCleanup() {"
+        "content": "        return model.getQuizAttempt().getScore().getYourScore();"
       },
       {
         "lineNumber": 153,
         "author": {
           "gitId": "geoboom"
         },
-        "content": "        // TODO: save stats to json file on disk"
+        "content": "    }"
       },
       {
         "lineNumber": 154,
         "author": {
           "gitId": "geoboom"
         },
-        "content": "        statisticsManager.doCleanup();"
+        "content": ""
       },
       {
         "lineNumber": 155,
         "author": {
           "gitId": "geoboom"
         },
-        "content": "        System.out.println(\"cleaning up:\");"
+        "content": "    @Override"
       },
       {
         "lineNumber": 156,
         "author": {
           "gitId": "geoboom"
         },
-        "content": "        System.out.println(statisticsManager.getStatistics());"
+        "content": "    public void doCleanup() {"
       },
       {
         "lineNumber": 157,
         "author": {
           "gitId": "geoboom"
         },
-        "content": "    }"
+        "content": "        // TODO: save stats to json file on disk"
       },
       {
         "lineNumber": 158,
+        "author": {
+          "gitId": "geoboom"
+        },
+        "content": "        statisticsManager.doCleanup();"
+      },
+      {
+        "lineNumber": 159,
+        "author": {
+          "gitId": "geoboom"
+        },
+        "content": "        System.out.println(\"cleaning up:\");"
+      },
+      {
+        "lineNumber": 160,
+        "author": {
+          "gitId": "geoboom"
+        },
+        "content": "        System.out.println(statisticsManager.getStatistics());"
+      },
+      {
+        "lineNumber": 161,
+        "author": {
+          "gitId": "geoboom"
+        },
+        "content": "    }"
+      },
+      {
+        "lineNumber": 162,
         "author": {
           "gitId": "-"
         },
@@ -20332,7 +20360,7 @@
       "geoboom": 29,
       "IlyaRin": 21,
       "-": 77,
-      "gabrielsimbingyang": 31
+      "gabrielsimbingyang": 35
     }
   },
   {
@@ -22167,7 +22195,7 @@
         "author": {
           "gitId": "gabrielsimbingyang"
         },
-        "content": "    public static final String MESSAGES_FORBIDDEN \u003d \"Word or translations can\u0027t be \\\"/stop\\\" \";"
+        "content": "    public static final String MESSAGES_FORBIDDEN \u003d \"Word or translations can\u0027t be %s \";"
       },
       {
         "lineNumber": 34,
@@ -22286,7 +22314,7 @@
         "author": {
           "gitId": "gabrielsimbingyang"
         },
-        "content": "            throw new CommandException(MESSAGES_FORBIDDEN);"
+        "content": "            throw new CommandException(String.format(MESSAGES_FORBIDDEN, \"/stop\"));"
       },
       {
         "lineNumber": 51,
@@ -22298,21 +22326,21 @@
       {
         "lineNumber": 52,
         "author": {
-          "gitId": "IlyaRin"
+          "gitId": "gabrielsimbingyang"
         },
-        "content": "        if (model.getCurrentDeck() \u003d\u003d null) {"
+        "content": "        if (toAdd.getWord().toString().equals(\"/play\") || toAdd.getTranslation().toString().equals(\"/play\")) {"
       },
       {
         "lineNumber": 53,
         "author": {
-          "gitId": "IlyaRin"
+          "gitId": "gabrielsimbingyang"
         },
-        "content": "            throw new CommandException(Messages.MESSAGE_NO_DECK_SELECTED);"
+        "content": "            throw new CommandException(String.format(MESSAGES_FORBIDDEN, \"/play\"));"
       },
       {
         "lineNumber": 54,
         "author": {
-          "gitId": "IlyaRin"
+          "gitId": "gabrielsimbingyang"
         },
         "content": "        }"
       },
@@ -22321,115 +22349,136 @@
         "author": {
           "gitId": "IlyaRin"
         },
-        "content": "        if (model.hasEntry(toAdd)) {"
+        "content": "        if (model.getCurrentDeck() \u003d\u003d null) {"
       },
       {
         "lineNumber": 56,
         "author": {
           "gitId": "IlyaRin"
         },
-        "content": "            throw new CommandException(MESSAGE_DUPLICATE_ENTRY);"
+        "content": "            throw new CommandException(Messages.MESSAGE_NO_DECK_SELECTED);"
       },
       {
         "lineNumber": 57,
         "author": {
-          "gitId": "-"
+          "gitId": "IlyaRin"
         },
         "content": "        }"
       },
       {
         "lineNumber": 58,
         "author": {
-          "gitId": "-"
+          "gitId": "IlyaRin"
         },
-        "content": ""
+        "content": "        if (model.hasEntry(toAdd)) {"
       },
       {
         "lineNumber": 59,
         "author": {
           "gitId": "IlyaRin"
         },
-        "content": "        model.addEntry(toAdd);"
+        "content": "            throw new CommandException(MESSAGE_DUPLICATE_ENTRY);"
       },
       {
         "lineNumber": 60,
         "author": {
-          "gitId": "gabrielsimbingyang"
+          "gitId": "-"
         },
-        "content": "        model.replaceEntryList();"
+        "content": "        }"
       },
       {
         "lineNumber": 61,
-        "author": {
-          "gitId": "IlyaRin"
-        },
-        "content": "        model.setCurrentView(View.ENTRY_VIEW);"
-      },
-      {
-        "lineNumber": 62,
-        "author": {
-          "gitId": "-"
-        },
-        "content": "        return new CommandResult(String.format(MESSAGE_SUCCESS, toAdd));"
-      },
-      {
-        "lineNumber": 63,
-        "author": {
-          "gitId": "-"
-        },
-        "content": "    }"
-      },
-      {
-        "lineNumber": 64,
         "author": {
           "gitId": "-"
         },
         "content": ""
       },
       {
+        "lineNumber": 62,
+        "author": {
+          "gitId": "IlyaRin"
+        },
+        "content": "        model.addEntry(toAdd);"
+      },
+      {
+        "lineNumber": 63,
+        "author": {
+          "gitId": "gabrielsimbingyang"
+        },
+        "content": "        model.replaceEntryList();"
+      },
+      {
+        "lineNumber": 64,
+        "author": {
+          "gitId": "IlyaRin"
+        },
+        "content": "        model.setCurrentView(View.ENTRY_VIEW);"
+      },
+      {
         "lineNumber": 65,
         "author": {
           "gitId": "-"
         },
-        "content": "    @Override"
+        "content": "        return new CommandResult(String.format(MESSAGE_SUCCESS, toAdd));"
       },
       {
         "lineNumber": 66,
         "author": {
           "gitId": "-"
         },
-        "content": "    public boolean equals(Object other) {"
+        "content": "    }"
       },
       {
         "lineNumber": 67,
         "author": {
           "gitId": "-"
         },
-        "content": "        return other \u003d\u003d this // short circuit if same object"
+        "content": ""
       },
       {
         "lineNumber": 68,
         "author": {
           "gitId": "-"
         },
-        "content": "                || (other instanceof AddCommand // instanceof handles nulls"
+        "content": "    @Override"
       },
       {
         "lineNumber": 69,
         "author": {
           "gitId": "-"
         },
-        "content": "                \u0026\u0026 toAdd.equals(((AddCommand) other).toAdd));"
+        "content": "    public boolean equals(Object other) {"
       },
       {
         "lineNumber": 70,
         "author": {
           "gitId": "-"
         },
-        "content": "    }"
+        "content": "        return other \u003d\u003d this // short circuit if same object"
       },
       {
         "lineNumber": 71,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "                || (other instanceof AddCommand // instanceof handles nulls"
+      },
+      {
+        "lineNumber": 72,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "                \u0026\u0026 toAdd.equals(((AddCommand) other).toAdd));"
+      },
+      {
+        "lineNumber": 73,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "    }"
+      },
+      {
+        "lineNumber": 74,
         "author": {
           "gitId": "-"
         },
@@ -22439,7 +22488,7 @@
     "authorContributionMap": {
       "IlyaRin": 29,
       "-": 37,
-      "gabrielsimbingyang": 5
+      "gabrielsimbingyang": 8
     }
   },
   {
@@ -24894,150 +24943,171 @@
         "author": {
           "gitId": "gabrielsimbingyang"
         },
-        "content": "    public static final String MESSAGE_SUCCESS \u003d \"Your Answer was: \";"
+        "content": "    public static final String MESSAGE_SCORE \u003d \"Your score was %d / %d\";"
       },
       {
         "lineNumber": 17,
         "author": {
           "gitId": "gabrielsimbingyang"
         },
-        "content": "    private String answer;"
+        "content": "    public static final String MESSAGE_RESULT \u003d \"Your answer was: \";"
       },
       {
         "lineNumber": 18,
         "author": {
           "gitId": "gabrielsimbingyang"
         },
-        "content": ""
+        "content": "    private String answer;"
       },
       {
         "lineNumber": 19,
         "author": {
           "gitId": "gabrielsimbingyang"
         },
-        "content": "    /**"
+        "content": ""
       },
       {
         "lineNumber": 20,
         "author": {
           "gitId": "gabrielsimbingyang"
         },
-        "content": "     * Creates a new answer command that takes in the raw user input"
+        "content": "    /**"
       },
       {
         "lineNumber": 21,
         "author": {
           "gitId": "gabrielsimbingyang"
         },
-        "content": "     */"
+        "content": "     * Creates a new answer command that takes in the raw user input"
       },
       {
         "lineNumber": 22,
         "author": {
           "gitId": "gabrielsimbingyang"
         },
-        "content": "    public AnswerCommand(String answer) {"
+        "content": "     */"
       },
       {
         "lineNumber": 23,
         "author": {
           "gitId": "gabrielsimbingyang"
         },
-        "content": "        requireNonNull(answer);"
+        "content": "    public AnswerCommand(String answer) {"
       },
       {
         "lineNumber": 24,
         "author": {
           "gitId": "gabrielsimbingyang"
         },
-        "content": "        this.answer \u003d answer;"
+        "content": "        requireNonNull(answer);"
       },
       {
         "lineNumber": 25,
         "author": {
           "gitId": "gabrielsimbingyang"
         },
-        "content": "    }"
+        "content": "        this.answer \u003d answer;"
       },
       {
         "lineNumber": 26,
         "author": {
           "gitId": "gabrielsimbingyang"
         },
-        "content": ""
+        "content": "    }"
       },
       {
         "lineNumber": 27,
         "author": {
           "gitId": "gabrielsimbingyang"
         },
-        "content": "    @Override"
+        "content": ""
       },
       {
         "lineNumber": 28,
         "author": {
           "gitId": "gabrielsimbingyang"
         },
-        "content": "    public CommandResult execute(Model model) {"
+        "content": "    @Override"
       },
       {
         "lineNumber": 29,
         "author": {
           "gitId": "gabrielsimbingyang"
         },
-        "content": "        requireNonNull(model);"
+        "content": "    public CommandResult execute(Model model) {"
       },
       {
         "lineNumber": 30,
         "author": {
           "gitId": "gabrielsimbingyang"
         },
-        "content": "        model.playGame(answer);"
+        "content": "        requireNonNull(model);"
       },
       {
         "lineNumber": 31,
         "author": {
           "gitId": "gabrielsimbingyang"
         },
-        "content": "        if (model.checkScoreTwo()) { //answerCommand sees into the future by 1 move, so have to delay by 1"
+        "content": "        model.playGame(answer);"
       },
       {
         "lineNumber": 32,
         "author": {
-          "gitId": "geoboom"
+          "gitId": "gabrielsimbingyang"
         },
-        "content": "            Score score \u003d model.endGame();"
+        "content": "        if (model.checkScoreTwo()) { //answerCommand sees into the future by 1 move, so have to delay by 1"
       },
       {
         "lineNumber": 33,
         "author": {
           "gitId": "geoboom"
         },
-        "content": "            return new CommandResult(MESSAGE_SUCCESS + score.toString());"
+        "content": "            Score score \u003d model.endGame();"
       },
       {
         "lineNumber": 34,
         "author": {
           "gitId": "gabrielsimbingyang"
         },
-        "content": "        }"
+        "content": "            int playerScore \u003d (int) score.getYourScore();"
       },
       {
         "lineNumber": 35,
         "author": {
           "gitId": "gabrielsimbingyang"
         },
-        "content": "        return new CommandResult(MESSAGE_SUCCESS + answer);"
+        "content": "            int maxScore \u003d (int) score.getMaxScore();"
       },
       {
         "lineNumber": 36,
         "author": {
           "gitId": "gabrielsimbingyang"
         },
-        "content": "    }"
+        "content": "            return new CommandResult(String.format(MESSAGE_SCORE, playerScore, maxScore));"
       },
       {
         "lineNumber": 37,
+        "author": {
+          "gitId": "gabrielsimbingyang"
+        },
+        "content": "        }"
+      },
+      {
+        "lineNumber": 38,
+        "author": {
+          "gitId": "gabrielsimbingyang"
+        },
+        "content": "        return new CommandResult(MESSAGE_RESULT + answer);"
+      },
+      {
+        "lineNumber": 39,
+        "author": {
+          "gitId": "gabrielsimbingyang"
+        },
+        "content": "    }"
+      },
+      {
+        "lineNumber": 40,
         "author": {
           "gitId": "gabrielsimbingyang"
         },
@@ -25045,8 +25115,8 @@
       }
     ],
     "authorContributionMap": {
-      "geoboom": 3,
-      "gabrielsimbingyang": 34
+      "geoboom": 2,
+      "gabrielsimbingyang": 38
     }
   },
   {
@@ -25341,7 +25411,7 @@
         "author": {
           "gitId": "gabrielsimbingyang"
         },
-        "content": "    public static final String MESSAGE_SUCCESS \u003d \"Playmode Stopped! \";"
+        "content": "    public static final String MESSAGE_SUCCESS \u003d \"Playmode stopped! Your score was not recorded!\";"
       },
       {
         "lineNumber": 16,
@@ -25397,7 +25467,7 @@
         "author": {
           "gitId": "gabrielsimbingyang"
         },
-        "content": "        return new CommandResult(MESSAGE_SUCCESS + score);"
+        "content": "        return new CommandResult(MESSAGE_SUCCESS);"
       },
       {
         "lineNumber": 24,
@@ -27345,107 +27415,107 @@
       {
         "lineNumber": 42,
         "author": {
-          "gitId": "geoboom"
+          "gitId": "gabrielsimbingyang"
         },
-        "content": "        case \"play\":"
+        "content": "        case \"/play\":"
       },
       {
         "lineNumber": 43,
         "author": {
           "gitId": "gabrielsimbingyang"
         },
-        "content": "            return new PlayCommand();"
+        "content": ""
       },
       {
         "lineNumber": 44,
         "author": {
           "gitId": "gabrielsimbingyang"
         },
-        "content": "        case \"/stop\":"
+        "content": "            return new PlayCommand();"
       },
       {
         "lineNumber": 45,
         "author": {
           "gitId": "gabrielsimbingyang"
         },
-        "content": "            return new StopCommand();"
+        "content": "        case \"/stop\":"
       },
       {
         "lineNumber": 46,
         "author": {
-          "gitId": "geoboom"
+          "gitId": "gabrielsimbingyang"
         },
-        "content": "        default:"
+        "content": "            return new StopCommand();"
       },
       {
         "lineNumber": 47,
         "author": {
           "gitId": "geoboom"
         },
-        "content": "            // for commands with additional args"
+        "content": "        default:"
       },
       {
         "lineNumber": 48,
         "author": {
-          "gitId": "gabrielsimbingyang"
+          "gitId": "geoboom"
         },
-        "content": "            if (arguments.isEmpty()) {"
+        "content": "            // for commands with additional args"
       },
       {
         "lineNumber": 49,
         "author": {
           "gitId": "gabrielsimbingyang"
         },
-        "content": "                return new AnswerCommandParser().parse(commandWord);"
+        "content": "            if (arguments.isEmpty()) {"
       },
       {
         "lineNumber": 50,
         "author": {
           "gitId": "gabrielsimbingyang"
         },
-        "content": "            } else {"
+        "content": "                return new AnswerCommandParser().parse(commandWord);"
       },
       {
         "lineNumber": 51,
         "author": {
           "gitId": "gabrielsimbingyang"
         },
-        "content": "                return new AnswerCommandParser().parse(commandWord + arguments);"
+        "content": "            } else {"
       },
       {
         "lineNumber": 52,
         "author": {
           "gitId": "gabrielsimbingyang"
         },
-        "content": "            }"
+        "content": "                return new AnswerCommandParser().parse(commandWord + arguments);"
       },
       {
         "lineNumber": 53,
+        "author": {
+          "gitId": "gabrielsimbingyang"
+        },
+        "content": "            }"
+      },
+      {
+        "lineNumber": 54,
         "author": {
           "gitId": "geoboom"
         },
         "content": "        }"
       },
       {
-        "lineNumber": 54,
+        "lineNumber": 55,
         "author": {
           "gitId": "gabrielsimbingyang"
         },
         "content": "    }"
       },
       {
-        "lineNumber": 55,
-        "author": {
-          "gitId": "gabrielsimbingyang"
-        },
-        "content": "}"
-      },
-      {
         "lineNumber": 56,
         "author": {
           "gitId": "gabrielsimbingyang"
         },
-        "content": ""
+        "content": "}"
       },
       {
         "lineNumber": 57,
@@ -27453,11 +27523,18 @@
           "gitId": "gabrielsimbingyang"
         },
         "content": ""
+      },
+      {
+        "lineNumber": 58,
+        "author": {
+          "gitId": "gabrielsimbingyang"
+        },
+        "content": ""
       }
     ],
     "authorContributionMap": {
-      "geoboom": 5,
-      "gabrielsimbingyang": 52
+      "geoboom": 4,
+      "gabrielsimbingyang": 54
     }
   },
   {
