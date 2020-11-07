@@ -4515,65 +4515,65 @@
       {
         "lineNumber": 394,
         "author": {
-          "gitId": "-"
+          "gitId": "sun-yitao"
         },
-        "content": "### \\[Proposed\\] Undo/redo feature"
+        "content": "### Export attendance"
       },
       {
         "lineNumber": 395,
         "author": {
-          "gitId": "-"
+          "gitId": "sun-yitao"
         },
         "content": ""
       },
       {
         "lineNumber": 396,
         "author": {
-          "gitId": "-"
+          "gitId": "sun-yitao"
         },
-        "content": "#### Proposed Implementation"
+        "content": "The `ExportAttendanceCommand` writes a new csv to `data/attendance_{CURRENT_DATE}_{CURRENT_TIME}.csv`. The csv columns headers are the names of the students and the rows are the dates. Each cell is marked with `ATTENDED` or `ABSENT` depending on whether the attendance for that student on that particular date has been marked."
       },
       {
         "lineNumber": 397,
         "author": {
-          "gitId": "-"
+          "gitId": "sun-yitao"
         },
         "content": ""
       },
       {
         "lineNumber": 398,
         "author": {
-          "gitId": "chrisgzf"
+          "gitId": "sun-yitao"
         },
-        "content": "The proposed undo/redo mechanism is facilitated by `VersionedAddressBook`. It extends `Tasker` with an undo/redo history, stored internally as an `addressBookStateList` and `currentStatePointer`. Additionally, it implements the following operations:"
+        "content": "The details of the implementation are as follows. First, we iterate through each student, calling `person.getAttendances` and adding the resulting attendances to a TreeSet called `allAttendances` that will contain all the dates in sorted order so we can form the rows of the csv. We also create a new HashSet of `Attendance` for each student, stored in an ArrayList so that the queries for the following part can be made faster. Next, we go through each date in `allAttendances`, and iterate through the ArrayList of HashSet of `Attendance`. If a date exists in that HashSet, the cell corresponding to the student and date will be marked as `ATTENDED`, and `ABSENT` otherwise."
       },
       {
         "lineNumber": 399,
         "author": {
-          "gitId": "-"
+          "gitId": "sun-yitao"
         },
         "content": ""
       },
       {
         "lineNumber": 400,
         "author": {
-          "gitId": "chrisgzf"
+          "gitId": "-"
         },
-        "content": "- `VersionedAddressBook#commit()` — Saves the current address book state in its history."
+        "content": "### \\[Proposed\\] Undo/redo feature"
       },
       {
         "lineNumber": 401,
         "author": {
-          "gitId": "chrisgzf"
+          "gitId": "-"
         },
-        "content": "- `VersionedAddressBook#undo()` — Restores the previous address book state from its history."
+        "content": ""
       },
       {
         "lineNumber": 402,
         "author": {
-          "gitId": "chrisgzf"
+          "gitId": "-"
         },
-        "content": "- `VersionedAddressBook#redo()` — Restores a previously undone address book state from its history."
+        "content": "#### Proposed Implementation"
       },
       {
         "lineNumber": 403,
@@ -4585,9 +4585,9 @@
       {
         "lineNumber": 404,
         "author": {
-          "gitId": "-"
+          "gitId": "chrisgzf"
         },
-        "content": "These operations are exposed in the `Model` interface as `Model#commitAddressBook()`, `Model#undoAddressBook()` and `Model#redoAddressBook()` respectively."
+        "content": "The proposed undo/redo mechanism is facilitated by `VersionedAddressBook`. It extends `Tasker` with an undo/redo history, stored internally as an `addressBookStateList` and `currentStatePointer`. Additionally, it implements the following operations:"
       },
       {
         "lineNumber": 405,
@@ -4599,23 +4599,23 @@
       {
         "lineNumber": 406,
         "author": {
-          "gitId": "-"
+          "gitId": "chrisgzf"
         },
-        "content": "Given below is an example usage scenario and how the undo/redo mechanism behaves at each step."
+        "content": "- `VersionedAddressBook#commit()` — Saves the current address book state in its history."
       },
       {
         "lineNumber": 407,
         "author": {
-          "gitId": "-"
+          "gitId": "chrisgzf"
         },
-        "content": ""
+        "content": "- `VersionedAddressBook#undo()` — Restores the previous address book state from its history."
       },
       {
         "lineNumber": 408,
         "author": {
-          "gitId": "-"
+          "gitId": "chrisgzf"
         },
-        "content": "Step 1. The user launches the application for the first time. The `VersionedAddressBook` will be initialized with the initial address book state, and the `currentStatePointer` pointing to that single address book state."
+        "content": "- `VersionedAddressBook#redo()` — Restores a previously undone address book state from its history."
       },
       {
         "lineNumber": 409,
@@ -4629,7 +4629,7 @@
         "author": {
           "gitId": "-"
         },
-        "content": "![UndoRedoState0](images/UndoRedoState0.png)"
+        "content": "These operations are exposed in the `Model` interface as `Model#commitAddressBook()`, `Model#undoAddressBook()` and `Model#redoAddressBook()` respectively."
       },
       {
         "lineNumber": 411,
@@ -4643,7 +4643,7 @@
         "author": {
           "gitId": "-"
         },
-        "content": "Step 2. The user executes `delete 5` command to delete the 5th person in the address book. The `delete` command calls `Model#commitAddressBook()`, causing the modified state of the address book after the `delete 5` command executes to be saved in the `addressBookStateList`, and the `currentStatePointer` is shifted to the newly inserted address book state."
+        "content": "Given below is an example usage scenario and how the undo/redo mechanism behaves at each step."
       },
       {
         "lineNumber": 413,
@@ -4657,7 +4657,7 @@
         "author": {
           "gitId": "-"
         },
-        "content": "![UndoRedoState1](images/UndoRedoState1.png)"
+        "content": "Step 1. The user launches the application for the first time. The `VersionedAddressBook` will be initialized with the initial address book state, and the `currentStatePointer` pointing to that single address book state."
       },
       {
         "lineNumber": 415,
@@ -4671,7 +4671,7 @@
         "author": {
           "gitId": "-"
         },
-        "content": "Step 3. The user executes `add n/David …​` to add a new person. The `add` command also calls `Model#commitAddressBook()`, causing another modified address book state to be saved into the `addressBookStateList`."
+        "content": "![UndoRedoState0](images/UndoRedoState0.png)"
       },
       {
         "lineNumber": 417,
@@ -4685,7 +4685,7 @@
         "author": {
           "gitId": "-"
         },
-        "content": "![UndoRedoState2](images/UndoRedoState2.png)"
+        "content": "Step 2. The user executes `delete 5` command to delete the 5th person in the address book. The `delete` command calls `Model#commitAddressBook()`, causing the modified state of the address book after the `delete 5` command executes to be saved in the `addressBookStateList`, and the `currentStatePointer` is shifted to the newly inserted address book state."
       },
       {
         "lineNumber": 419,
@@ -4699,7 +4699,7 @@
         "author": {
           "gitId": "-"
         },
-        "content": "\u003cdiv markdown\u003d\"span\" class\u003d\"alert alert-info\"\u003e:information_source: **Note:** If a command fails its execution, it will not call `Model#commitAddressBook()`, so the address book state will not be saved into the `addressBookStateList`."
+        "content": "![UndoRedoState1](images/UndoRedoState1.png)"
       },
       {
         "lineNumber": 421,
@@ -4713,7 +4713,7 @@
         "author": {
           "gitId": "-"
         },
-        "content": "\u003c/div\u003e"
+        "content": "Step 3. The user executes `add n/David …​` to add a new person. The `add` command also calls `Model#commitAddressBook()`, causing another modified address book state to be saved into the `addressBookStateList`."
       },
       {
         "lineNumber": 423,
@@ -4727,7 +4727,7 @@
         "author": {
           "gitId": "-"
         },
-        "content": "Step 4. The user now decides that adding the person was a mistake, and decides to undo that action by executing the `undo` command. The `undo` command will call `Model#undoAddressBook()`, which will shift the `currentStatePointer` once to the left, pointing it to the previous address book state, and restores the address book to that state."
+        "content": "![UndoRedoState2](images/UndoRedoState2.png)"
       },
       {
         "lineNumber": 425,
@@ -4741,7 +4741,7 @@
         "author": {
           "gitId": "-"
         },
-        "content": "![UndoRedoState3](images/UndoRedoState3.png)"
+        "content": "\u003cdiv markdown\u003d\"span\" class\u003d\"alert alert-info\"\u003e:information_source: **Note:** If a command fails its execution, it will not call `Model#commitAddressBook()`, so the address book state will not be saved into the `addressBookStateList`."
       },
       {
         "lineNumber": 427,
@@ -4753,58 +4753,58 @@
       {
         "lineNumber": 428,
         "author": {
-          "gitId": "chrisgzf"
+          "gitId": "-"
         },
-        "content": "\u003cdiv markdown\u003d\"span\" class\u003d\"alert alert-info\"\u003e:information_source: **Note:** If the `currentStatePointer` is at index 0, pointing to the initial Tasker state, then there are no previous Tasker states to restore. The `undo` command uses `Model#canUndoAddressBook()` to check if this is the case. If so, it will return an error to the user rather"
+        "content": "\u003c/div\u003e"
       },
       {
         "lineNumber": 429,
         "author": {
           "gitId": "-"
         },
-        "content": "than attempting to perform the undo."
+        "content": ""
       },
       {
         "lineNumber": 430,
         "author": {
           "gitId": "-"
         },
-        "content": ""
+        "content": "Step 4. The user now decides that adding the person was a mistake, and decides to undo that action by executing the `undo` command. The `undo` command will call `Model#undoAddressBook()`, which will shift the `currentStatePointer` once to the left, pointing it to the previous address book state, and restores the address book to that state."
       },
       {
         "lineNumber": 431,
         "author": {
           "gitId": "-"
         },
-        "content": "\u003c/div\u003e"
+        "content": ""
       },
       {
         "lineNumber": 432,
         "author": {
           "gitId": "-"
         },
-        "content": ""
+        "content": "![UndoRedoState3](images/UndoRedoState3.png)"
       },
       {
         "lineNumber": 433,
         "author": {
           "gitId": "-"
         },
-        "content": "The following sequence diagram shows how the undo operation works:"
+        "content": ""
       },
       {
         "lineNumber": 434,
         "author": {
-          "gitId": "-"
+          "gitId": "chrisgzf"
         },
-        "content": ""
+        "content": "\u003cdiv markdown\u003d\"span\" class\u003d\"alert alert-info\"\u003e:information_source: **Note:** If the `currentStatePointer` is at index 0, pointing to the initial Tasker state, then there are no previous Tasker states to restore. The `undo` command uses `Model#canUndoAddressBook()` to check if this is the case. If so, it will return an error to the user rather"
       },
       {
         "lineNumber": 435,
         "author": {
           "gitId": "-"
         },
-        "content": "![UndoSequenceDiagram](images/UndoSequenceDiagram.png)"
+        "content": "than attempting to perform the undo."
       },
       {
         "lineNumber": 436,
@@ -4818,7 +4818,7 @@
         "author": {
           "gitId": "-"
         },
-        "content": "\u003cdiv markdown\u003d\"span\" class\u003d\"alert alert-info\"\u003e:information_source: **Note:** The lifeline for `UndoCommand` should end at the destroy marker (X) but due to a limitation of PlantUML, the lifeline reaches the end of diagram."
+        "content": "\u003c/div\u003e"
       },
       {
         "lineNumber": 438,
@@ -4832,7 +4832,7 @@
         "author": {
           "gitId": "-"
         },
-        "content": "\u003c/div\u003e"
+        "content": "The following sequence diagram shows how the undo operation works:"
       },
       {
         "lineNumber": 440,
@@ -4846,7 +4846,7 @@
         "author": {
           "gitId": "-"
         },
-        "content": "The `redo` command does the opposite — it calls `Model#redoAddressBook()`, which shifts the `currentStatePointer` once to the right, pointing to the previously undone state, and restores the address book to that state."
+        "content": "![UndoSequenceDiagram](images/UndoSequenceDiagram.png)"
       },
       {
         "lineNumber": 442,
@@ -4858,9 +4858,9 @@
       {
         "lineNumber": 443,
         "author": {
-          "gitId": "chrisgzf"
+          "gitId": "-"
         },
-        "content": "\u003cdiv markdown\u003d\"span\" class\u003d\"alert alert-info\"\u003e:information_source: **Note:** If the `currentStatePointer` is at index `addressBookStateList.size() - 1`, pointing to the latest address book state, then there are no undone Tasker states to restore. The `redo` command uses `Model#canRedoAddressBook()` to check if this is the case. If so, it will return an error to the user rather than attempting to perform the redo."
+        "content": "\u003cdiv markdown\u003d\"span\" class\u003d\"alert alert-info\"\u003e:information_source: **Note:** The lifeline for `UndoCommand` should end at the destroy marker (X) but due to a limitation of PlantUML, the lifeline reaches the end of diagram."
       },
       {
         "lineNumber": 444,
@@ -4888,7 +4888,7 @@
         "author": {
           "gitId": "-"
         },
-        "content": "Step 5. The user then decides to execute the command `list`. Commands that do not modify the address book, such as `list`, will usually not call `Model#commitAddressBook()`, `Model#undoAddressBook()` or `Model#redoAddressBook()`. Thus, the `addressBookStateList` remains unchanged."
+        "content": "The `redo` command does the opposite — it calls `Model#redoAddressBook()`, which shifts the `currentStatePointer` once to the right, pointing to the previously undone state, and restores the address book to that state."
       },
       {
         "lineNumber": 448,
@@ -4900,9 +4900,9 @@
       {
         "lineNumber": 449,
         "author": {
-          "gitId": "-"
+          "gitId": "chrisgzf"
         },
-        "content": "![UndoRedoState4](images/UndoRedoState4.png)"
+        "content": "\u003cdiv markdown\u003d\"span\" class\u003d\"alert alert-info\"\u003e:information_source: **Note:** If the `currentStatePointer` is at index `addressBookStateList.size() - 1`, pointing to the latest address book state, then there are no undone Tasker states to restore. The `redo` command uses `Model#canRedoAddressBook()` to check if this is the case. If so, it will return an error to the user rather than attempting to perform the redo."
       },
       {
         "lineNumber": 450,
@@ -4916,7 +4916,7 @@
         "author": {
           "gitId": "-"
         },
-        "content": "Step 6. The user executes `clear`, which calls `Model#commitAddressBook()`. Since the `currentStatePointer` is not pointing at the end of the `addressBookStateList`, all address book states after the `currentStatePointer` will be purged. Reason: It no longer makes sense to redo the `add n/David …​` command. This is the behavior that most modern desktop applications follow."
+        "content": "\u003c/div\u003e"
       },
       {
         "lineNumber": 452,
@@ -4930,7 +4930,7 @@
         "author": {
           "gitId": "-"
         },
-        "content": "![UndoRedoState5](images/UndoRedoState5.png)"
+        "content": "Step 5. The user then decides to execute the command `list`. Commands that do not modify the address book, such as `list`, will usually not call `Model#commitAddressBook()`, `Model#undoAddressBook()` or `Model#redoAddressBook()`. Thus, the `addressBookStateList` remains unchanged."
       },
       {
         "lineNumber": 454,
@@ -4944,7 +4944,7 @@
         "author": {
           "gitId": "-"
         },
-        "content": "The following activity diagram summarizes what happens when a user executes a new command:"
+        "content": "![UndoRedoState4](images/UndoRedoState4.png)"
       },
       {
         "lineNumber": 456,
@@ -4958,7 +4958,7 @@
         "author": {
           "gitId": "-"
         },
-        "content": "![CommitActivityDiagram](images/CommitActivityDiagram.png)"
+        "content": "Step 6. The user executes `clear`, which calls `Model#commitAddressBook()`. Since the `currentStatePointer` is not pointing at the end of the `addressBookStateList`, all address book states after the `currentStatePointer` will be purged. Reason: It no longer makes sense to redo the `add n/David …​` command. This is the behavior that most modern desktop applications follow."
       },
       {
         "lineNumber": 458,
@@ -4972,7 +4972,7 @@
         "author": {
           "gitId": "-"
         },
-        "content": "#### Design consideration:"
+        "content": "![UndoRedoState5](images/UndoRedoState5.png)"
       },
       {
         "lineNumber": 460,
@@ -4986,7 +4986,7 @@
         "author": {
           "gitId": "-"
         },
-        "content": "##### Aspect: How undo \u0026 redo executes"
+        "content": "The following activity diagram summarizes what happens when a user executes a new command:"
       },
       {
         "lineNumber": 462,
@@ -4998,107 +4998,107 @@
       {
         "lineNumber": 463,
         "author": {
-          "gitId": "chrisgzf"
+          "gitId": "-"
         },
-        "content": "- **Alternative 1 (current choice):** Saves the entire address book."
+        "content": "![CommitActivityDiagram](images/CommitActivityDiagram.png)"
       },
       {
         "lineNumber": 464,
         "author": {
-          "gitId": "chrisgzf"
+          "gitId": "-"
         },
         "content": ""
       },
       {
         "lineNumber": 465,
         "author": {
-          "gitId": "chrisgzf"
+          "gitId": "-"
         },
-        "content": "  - Pros: Easy to implement."
+        "content": "#### Design consideration:"
       },
       {
         "lineNumber": 466,
         "author": {
-          "gitId": "chrisgzf"
+          "gitId": "-"
         },
-        "content": "  - Cons: May have performance issues in terms of memory usage."
+        "content": ""
       },
       {
         "lineNumber": 467,
         "author": {
           "gitId": "-"
         },
-        "content": ""
+        "content": "##### Aspect: How undo \u0026 redo executes"
       },
       {
         "lineNumber": 468,
         "author": {
-          "gitId": "chrisgzf"
+          "gitId": "-"
         },
-        "content": "- **Alternative 2:** Individual command knows how to undo/redo by"
+        "content": ""
       },
       {
         "lineNumber": 469,
         "author": {
-          "gitId": "-"
+          "gitId": "chrisgzf"
         },
-        "content": "  itself."
+        "content": "- **Alternative 1 (current choice):** Saves the entire address book."
       },
       {
         "lineNumber": 470,
         "author": {
           "gitId": "chrisgzf"
         },
-        "content": "  - Pros: Will use less memory (e.g. for `delete`, just save the person being deleted)."
+        "content": ""
       },
       {
         "lineNumber": 471,
         "author": {
           "gitId": "chrisgzf"
         },
-        "content": "  - Cons: We must ensure that the implementation of each individual command are correct."
+        "content": "  - Pros: Easy to implement."
       },
       {
         "lineNumber": 472,
         "author": {
-          "gitId": "-"
+          "gitId": "chrisgzf"
         },
-        "content": ""
+        "content": "  - Cons: May have performance issues in terms of memory usage."
       },
       {
         "lineNumber": 473,
         "author": {
           "gitId": "-"
         },
-        "content": "_{more aspects and alternatives to be added}_"
+        "content": ""
       },
       {
         "lineNumber": 474,
         "author": {
-          "gitId": "-"
+          "gitId": "chrisgzf"
         },
-        "content": ""
+        "content": "- **Alternative 2:** Individual command knows how to undo/redo by"
       },
       {
         "lineNumber": 475,
         "author": {
           "gitId": "-"
         },
-        "content": "### \\[Proposed\\] Data archiving"
+        "content": "  itself."
       },
       {
         "lineNumber": 476,
         "author": {
-          "gitId": "-"
+          "gitId": "chrisgzf"
         },
-        "content": ""
+        "content": "  - Pros: Will use less memory (e.g. for `delete`, just save the person being deleted)."
       },
       {
         "lineNumber": 477,
         "author": {
-          "gitId": "-"
+          "gitId": "chrisgzf"
         },
-        "content": "_{Explain here how the data archiving feature will be implemented}_"
+        "content": "  - Cons: We must ensure that the implementation of each individual command are correct."
       },
       {
         "lineNumber": 478,
@@ -5110,9 +5110,9 @@
       {
         "lineNumber": 479,
         "author": {
-          "gitId": "chrisgzf"
+          "gitId": "-"
         },
-        "content": "---"
+        "content": "_{more aspects and alternatives to be added}_"
       },
       {
         "lineNumber": 480,
@@ -5126,7 +5126,7 @@
         "author": {
           "gitId": "-"
         },
-        "content": "## **Documentation, logging, testing, configuration, dev-ops**"
+        "content": "### \\[Proposed\\] Data archiving"
       },
       {
         "lineNumber": 482,
@@ -5138,37 +5138,37 @@
       {
         "lineNumber": 483,
         "author": {
-          "gitId": "chrisgzf"
+          "gitId": "-"
         },
-        "content": "- [Documentation guide](Documentation.md)"
+        "content": "_{Explain here how the data archiving feature will be implemented}_"
       },
       {
         "lineNumber": 484,
         "author": {
-          "gitId": "chrisgzf"
+          "gitId": "-"
         },
-        "content": "- [Testing guide](Testing.md)"
+        "content": ""
       },
       {
         "lineNumber": 485,
         "author": {
           "gitId": "chrisgzf"
         },
-        "content": "- [Logging guide](Logging.md)"
+        "content": "---"
       },
       {
         "lineNumber": 486,
         "author": {
-          "gitId": "chrisgzf"
+          "gitId": "-"
         },
-        "content": "- [Configuration guide](Configuration.md)"
+        "content": ""
       },
       {
         "lineNumber": 487,
         "author": {
-          "gitId": "chrisgzf"
+          "gitId": "-"
         },
-        "content": "- [DevOps guide](DevOps.md)"
+        "content": "## **Documentation, logging, testing, configuration, dev-ops**"
       },
       {
         "lineNumber": 488,
@@ -5182,35 +5182,35 @@
         "author": {
           "gitId": "chrisgzf"
         },
-        "content": "---"
+        "content": "- [Documentation guide](Documentation.md)"
       },
       {
         "lineNumber": 490,
         "author": {
-          "gitId": "-"
+          "gitId": "chrisgzf"
         },
-        "content": ""
+        "content": "- [Testing guide](Testing.md)"
       },
       {
         "lineNumber": 491,
         "author": {
-          "gitId": "-"
+          "gitId": "chrisgzf"
         },
-        "content": "## **Appendix: Requirements**"
+        "content": "- [Logging guide](Logging.md)"
       },
       {
         "lineNumber": 492,
         "author": {
-          "gitId": "-"
+          "gitId": "chrisgzf"
         },
-        "content": ""
+        "content": "- [Configuration guide](Configuration.md)"
       },
       {
         "lineNumber": 493,
         "author": {
-          "gitId": "-"
+          "gitId": "chrisgzf"
         },
-        "content": "### Product scope"
+        "content": "- [DevOps guide](DevOps.md)"
       },
       {
         "lineNumber": 494,
@@ -5224,7 +5224,7 @@
         "author": {
           "gitId": "chrisgzf"
         },
-        "content": "**Target user profile (user persona)**:"
+        "content": "---"
       },
       {
         "lineNumber": 496,
@@ -5236,23 +5236,23 @@
       {
         "lineNumber": 497,
         "author": {
-          "gitId": "chrisgzf"
+          "gitId": "-"
         },
-        "content": "\u003cimg width\u003d\"400\" src\u003d\"https://qph.fs.quoracdn.net/main-qimg-99674b15041e648e58263efc5ec0dcdb\" /\u003e"
+        "content": "## **Appendix: Requirements**"
       },
       {
         "lineNumber": 498,
         "author": {
-          "gitId": "chrisgzf"
+          "gitId": "-"
         },
         "content": ""
       },
       {
         "lineNumber": 499,
         "author": {
-          "gitId": "chrisgzf"
+          "gitId": "-"
         },
-        "content": "Name: Jane"
+        "content": "### Product scope"
       },
       {
         "lineNumber": 500,
@@ -5266,7 +5266,7 @@
         "author": {
           "gitId": "chrisgzf"
         },
-        "content": "Age: 19"
+        "content": "**Target user profile (user persona)**:"
       },
       {
         "lineNumber": 502,
@@ -5280,7 +5280,7 @@
         "author": {
           "gitId": "chrisgzf"
         },
-        "content": "Undergraduate NUS CS Student, and a part-time teaching assistant"
+        "content": "\u003cimg width\u003d\"400\" src\u003d\"https://qph.fs.quoracdn.net/main-qimg-99674b15041e648e58263efc5ec0dcdb\" /\u003e"
       },
       {
         "lineNumber": 504,
@@ -5294,91 +5294,91 @@
         "author": {
           "gitId": "chrisgzf"
         },
-        "content": "- is a teaching assistant for CS modules"
+        "content": "Name: Jane"
       },
       {
         "lineNumber": 506,
         "author": {
-          "gitId": "chrisgzf"
+          "gitId": "-"
         },
-        "content": "- is busy because she is a overachieving student with lots of modules"
+        "content": ""
       },
       {
         "lineNumber": 507,
         "author": {
           "gitId": "chrisgzf"
         },
-        "content": "- needs to take attendance"
+        "content": "Age: 19"
       },
       {
         "lineNumber": 508,
         "author": {
           "gitId": "chrisgzf"
         },
-        "content": "- needs to keep track of student’s assignments and their submission status"
+        "content": ""
       },
       {
         "lineNumber": 509,
         "author": {
           "gitId": "chrisgzf"
         },
-        "content": "- prefer desktop apps over other types"
+        "content": "Undergraduate NUS CS Student, and a part-time teaching assistant"
       },
       {
         "lineNumber": 510,
         "author": {
           "gitId": "chrisgzf"
         },
-        "content": "- can type fast"
+        "content": ""
       },
       {
         "lineNumber": 511,
         "author": {
           "gitId": "chrisgzf"
         },
-        "content": "- codes a lot, so she prefers keyboard-based interfaces"
+        "content": "- is a teaching assistant for CS modules"
       },
       {
         "lineNumber": 512,
         "author": {
-          "gitId": "-"
+          "gitId": "chrisgzf"
         },
-        "content": ""
+        "content": "- is busy because she is a overachieving student with lots of modules"
       },
       {
         "lineNumber": 513,
         "author": {
           "gitId": "chrisgzf"
         },
-        "content": "**Value proposition**: TAs can track students\u0027 details and submissions in a efficient and structured manner"
+        "content": "- needs to take attendance"
       },
       {
         "lineNumber": 514,
         "author": {
-          "gitId": "-"
+          "gitId": "chrisgzf"
         },
-        "content": ""
+        "content": "- needs to keep track of student’s assignments and their submission status"
       },
       {
         "lineNumber": 515,
         "author": {
-          "gitId": "-"
+          "gitId": "chrisgzf"
         },
-        "content": "### User stories"
+        "content": "- prefer desktop apps over other types"
       },
       {
         "lineNumber": 516,
         "author": {
-          "gitId": "-"
+          "gitId": "chrisgzf"
         },
-        "content": ""
+        "content": "- can type fast"
       },
       {
         "lineNumber": 517,
         "author": {
-          "gitId": "-"
+          "gitId": "chrisgzf"
         },
-        "content": "Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unlikely to have) - `*`"
+        "content": "- codes a lot, so she prefers keyboard-based interfaces"
       },
       {
         "lineNumber": 518,
@@ -5390,114 +5390,114 @@
       {
         "lineNumber": 519,
         "author": {
-          "gitId": "-"
+          "gitId": "chrisgzf"
         },
-        "content": "| Priority | As a …​  | I want to …​                                                            | So that I can…​                                                            |"
+        "content": "**Value proposition**: TAs can track students\u0027 details and submissions in a efficient and structured manner"
       },
       {
         "lineNumber": 520,
         "author": {
-          "gitId": "chrisgzf"
+          "gitId": "-"
         },
-        "content": "| -------- | -------- | ----------------------------------------------------------------------- | -------------------------------------------------------------------------- |"
+        "content": ""
       },
       {
         "lineNumber": 521,
         "author": {
-          "gitId": "chrisgzf"
+          "gitId": "-"
         },
-        "content": "| `* * *`  | user     | CRUD student details into my data                                       | add/remove my students data when they join/drop the module                 |"
+        "content": "### User stories"
       },
       {
         "lineNumber": 522,
         "author": {
-          "gitId": "chrisgzf"
+          "gitId": "-"
         },
-        "content": "| `* * *`  | user     | CRUD my students’ attendance                                            |                                                                            |"
+        "content": ""
       },
       {
         "lineNumber": 523,
         "author": {
-          "gitId": "chrisgzf"
+          "gitId": "-"
         },
-        "content": "| `* * *`  | user     | CRUD my students’ assignments \u0026 status                                  | keep track of my students’ assignment’s submission status                  |"
+        "content": "Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unlikely to have) - `*`"
       },
       {
         "lineNumber": 524,
         "author": {
-          "gitId": "chrisgzf"
+          "gitId": "-"
         },
-        "content": "| `* *`    | user     | CRUD my student’s consultation requests                                 | keep track of my students’ consultation requests                           |"
+        "content": ""
       },
       {
         "lineNumber": 525,
         "author": {
-          "gitId": "chrisgzf"
+          "gitId": "-"
         },
-        "content": "| `* *`    | user     | view all my upcoming consultations for the week, in chronological order | keep track of when my consultations are supposed to happen                 |"
+        "content": "| Priority | As a …​  | I want to …​                                                            | So that I can…​                                                            |"
       },
       {
         "lineNumber": 526,
         "author": {
           "gitId": "chrisgzf"
         },
-        "content": "| `* *`    | user     | mark when I end each of my consultations                                | keep track of the time elapsed of each consultation session                |"
+        "content": "| -------- | -------- | ----------------------------------------------------------------------- | -------------------------------------------------------------------------- |"
       },
       {
         "lineNumber": 527,
         "author": {
           "gitId": "chrisgzf"
         },
-        "content": "| `*`      | user     | generate a summary of my weekly consultation hours                      | keep track of the total amount of consultation time, for claiming purposes |"
+        "content": "| `* * *`  | user     | CRUD student details into my data                                       | add/remove my students data when they join/drop the module                 |"
       },
       {
         "lineNumber": 528,
         "author": {
           "gitId": "chrisgzf"
         },
-        "content": "| `*`      | new user | see usage instructions                                                  | refer to instructions when I forget how to use the App                     |"
+        "content": "| `* * *`  | user     | CRUD my students’ attendance                                            |                                                                            |"
       },
       {
         "lineNumber": 529,
         "author": {
-          "gitId": "-"
+          "gitId": "chrisgzf"
         },
-        "content": ""
+        "content": "| `* * *`  | user     | CRUD my students’ assignments \u0026 status                                  | keep track of my students’ assignment’s submission status                  |"
       },
       {
         "lineNumber": 530,
         "author": {
           "gitId": "chrisgzf"
         },
-        "content": "_{More to be added}_"
+        "content": "| `* *`    | user     | CRUD my student’s consultation requests                                 | keep track of my students’ consultation requests                           |"
       },
       {
         "lineNumber": 531,
         "author": {
-          "gitId": "-"
+          "gitId": "chrisgzf"
         },
-        "content": ""
+        "content": "| `* *`    | user     | view all my upcoming consultations for the week, in chronological order | keep track of when my consultations are supposed to happen                 |"
       },
       {
         "lineNumber": 532,
         "author": {
-          "gitId": "-"
+          "gitId": "chrisgzf"
         },
-        "content": "### Use cases"
+        "content": "| `* *`    | user     | mark when I end each of my consultations                                | keep track of the time elapsed of each consultation session                |"
       },
       {
         "lineNumber": 533,
         "author": {
-          "gitId": "-"
+          "gitId": "chrisgzf"
         },
-        "content": ""
+        "content": "| `*`      | user     | generate a summary of my weekly consultation hours                      | keep track of the total amount of consultation time, for claiming purposes |"
       },
       {
         "lineNumber": 534,
         "author": {
           "gitId": "chrisgzf"
         },
-        "content": "(For all use cases below, the **System** is `TAsker` and the **Actor** is the `user`, unless specified otherwise)"
+        "content": "| `*`      | new user | see usage instructions                                                  | refer to instructions when I forget how to use the App                     |"
       },
       {
         "lineNumber": 535,
@@ -5511,7 +5511,7 @@
         "author": {
           "gitId": "chrisgzf"
         },
-        "content": "**Use case: List all students**"
+        "content": "_{More to be added}_"
       },
       {
         "lineNumber": 537,
@@ -5525,7 +5525,7 @@
         "author": {
           "gitId": "-"
         },
-        "content": "**MSS**"
+        "content": "### Use cases"
       },
       {
         "lineNumber": 539,
@@ -5539,89 +5539,89 @@
         "author": {
           "gitId": "chrisgzf"
         },
-        "content": "1.  User requests to list students"
+        "content": "(For all use cases below, the **System** is `TAsker` and the **Actor** is the `user`, unless specified otherwise)"
       },
       {
         "lineNumber": 541,
         "author": {
-          "gitId": "chrisgzf"
+          "gitId": "-"
         },
-        "content": "2.  TAsker shows a list of students"
+        "content": ""
       },
       {
         "lineNumber": 542,
         "author": {
           "gitId": "chrisgzf"
         },
-        "content": ""
+        "content": "**Use case: List all students**"
       },
       {
         "lineNumber": 543,
         "author": {
-          "gitId": "chrisgzf"
-        },
-        "content": "    Use case ends."
-      },
-      {
-        "lineNumber": 544,
-        "author": {
-          "gitId": "chrisgzf"
+          "gitId": "-"
         },
         "content": ""
       },
       {
+        "lineNumber": 544,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "**MSS**"
+      },
+      {
         "lineNumber": 545,
         "author": {
-          "gitId": "chrisgzf"
+          "gitId": "-"
         },
-        "content": "**Extensions**"
+        "content": ""
       },
       {
         "lineNumber": 546,
         "author": {
           "gitId": "chrisgzf"
         },
-        "content": ""
+        "content": "1.  User requests to list students"
       },
       {
         "lineNumber": 547,
         "author": {
           "gitId": "chrisgzf"
         },
-        "content": "- 2a. The list is empty."
+        "content": "2.  TAsker shows a list of students"
       },
       {
         "lineNumber": 548,
         "author": {
-          "gitId": "chrisgzf"
+          "gitId": "-"
         },
         "content": ""
       },
       {
         "lineNumber": 549,
         "author": {
-          "gitId": "chrisgzf"
+          "gitId": "-"
         },
-        "content": "  Use case ends."
+        "content": "    Use case ends."
       },
       {
         "lineNumber": 550,
         "author": {
-          "gitId": "chrisgzf"
+          "gitId": "-"
         },
         "content": ""
       },
       {
         "lineNumber": 551,
         "author": {
-          "gitId": "chrisgzf"
+          "gitId": "-"
         },
-        "content": "**Use case: Add a student**"
+        "content": "**Extensions**"
       },
       {
         "lineNumber": 552,
         "author": {
-          "gitId": "chrisgzf"
+          "gitId": "-"
         },
         "content": ""
       },
@@ -5630,89 +5630,89 @@
         "author": {
           "gitId": "chrisgzf"
         },
-        "content": "**MSS**"
+        "content": "- 2a. The list is empty."
       },
       {
         "lineNumber": 554,
         "author": {
-          "gitId": "chrisgzf"
+          "gitId": "-"
         },
         "content": ""
       },
       {
         "lineNumber": 555,
         "author": {
-          "gitId": "chrisgzf"
+          "gitId": "-"
         },
-        "content": "1.  User requests to list students"
+        "content": "  Use case ends."
       },
       {
         "lineNumber": 556,
         "author": {
-          "gitId": "chrisgzf"
+          "gitId": "-"
         },
-        "content": "2.  TAsker shows a list of students"
+        "content": ""
       },
       {
         "lineNumber": 557,
         "author": {
           "gitId": "chrisgzf"
         },
-        "content": "3.  User requests to add a specific student to the list"
+        "content": "**Use case: Add a student**"
       },
       {
         "lineNumber": 558,
         "author": {
           "gitId": "chrisgzf"
         },
-        "content": "4.  TAsker adds the student to the list"
+        "content": ""
       },
       {
         "lineNumber": 559,
         "author": {
           "gitId": "chrisgzf"
         },
-        "content": ""
+        "content": "**MSS**"
       },
       {
         "lineNumber": 560,
         "author": {
           "gitId": "chrisgzf"
         },
-        "content": "    Use case ends."
+        "content": ""
       },
       {
         "lineNumber": 561,
         "author": {
           "gitId": "chrisgzf"
         },
-        "content": ""
+        "content": "1.  User requests to list students"
       },
       {
         "lineNumber": 562,
         "author": {
           "gitId": "chrisgzf"
         },
-        "content": "**Extensions**"
+        "content": "2.  TAsker shows a list of students"
       },
       {
         "lineNumber": 563,
         "author": {
           "gitId": "chrisgzf"
         },
-        "content": ""
+        "content": "3.  User requests to add a specific student to the list"
       },
       {
         "lineNumber": 564,
         "author": {
           "gitId": "chrisgzf"
         },
-        "content": "- 2a. The student\u0027s details are insufficient/cannot be parsed."
+        "content": "4.  TAsker adds the student to the list"
       },
       {
         "lineNumber": 565,
         "author": {
-          "gitId": "-"
+          "gitId": "chrisgzf"
         },
         "content": ""
       },
@@ -5721,7 +5721,7 @@
         "author": {
           "gitId": "chrisgzf"
         },
-        "content": "  - 2a1. TAsker shows an error message."
+        "content": "    Use case ends."
       },
       {
         "lineNumber": 567,
@@ -5735,7 +5735,7 @@
         "author": {
           "gitId": "chrisgzf"
         },
-        "content": "    Use case resumes at step 2."
+        "content": "**Extensions**"
       },
       {
         "lineNumber": 569,
@@ -5749,7 +5749,7 @@
         "author": {
           "gitId": "chrisgzf"
         },
-        "content": "**Use case: Delete a student**"
+        "content": "- 2a. The student\u0027s details are insufficient/cannot be parsed."
       },
       {
         "lineNumber": 571,
@@ -5761,9 +5761,9 @@
       {
         "lineNumber": 572,
         "author": {
-          "gitId": "-"
+          "gitId": "chrisgzf"
         },
-        "content": "**MSS**"
+        "content": "  - 2a1. TAsker shows an error message."
       },
       {
         "lineNumber": 573,
@@ -5777,70 +5777,70 @@
         "author": {
           "gitId": "chrisgzf"
         },
-        "content": "1.  User requests to list students"
+        "content": "    Use case resumes at step 2."
       },
       {
         "lineNumber": 575,
         "author": {
           "gitId": "chrisgzf"
         },
-        "content": "2.  TAsker shows a list of students"
+        "content": ""
       },
       {
         "lineNumber": 576,
         "author": {
           "gitId": "chrisgzf"
         },
-        "content": "3.  User requests to delete a specific student in the list"
+        "content": "**Use case: Delete a student**"
       },
       {
         "lineNumber": 577,
         "author": {
           "gitId": "chrisgzf"
         },
-        "content": "4.  TAsker deletes the student"
+        "content": ""
       },
       {
         "lineNumber": 578,
         "author": {
-          "gitId": "-"
+          "gitId": "chrisgzf"
         },
-        "content": ""
+        "content": "**MSS**"
       },
       {
         "lineNumber": 579,
         "author": {
-          "gitId": "-"
+          "gitId": "chrisgzf"
         },
-        "content": "    Use case ends."
+        "content": ""
       },
       {
         "lineNumber": 580,
         "author": {
-          "gitId": "-"
+          "gitId": "chrisgzf"
         },
-        "content": ""
+        "content": "1.  User requests to list students"
       },
       {
         "lineNumber": 581,
         "author": {
-          "gitId": "-"
+          "gitId": "chrisgzf"
         },
-        "content": "**Extensions**"
+        "content": "2.  TAsker shows a list of students"
       },
       {
         "lineNumber": 582,
         "author": {
-          "gitId": "-"
+          "gitId": "chrisgzf"
         },
-        "content": ""
+        "content": "3.  User requests to delete a specific student in the list"
       },
       {
         "lineNumber": 583,
         "author": {
           "gitId": "chrisgzf"
         },
-        "content": "- 2a. The list is empty."
+        "content": "4.  TAsker deletes the student"
       },
       {
         "lineNumber": 584,
@@ -5854,7 +5854,7 @@
         "author": {
           "gitId": "-"
         },
-        "content": "  Use case ends."
+        "content": "    Use case ends."
       },
       {
         "lineNumber": 586,
@@ -5866,9 +5866,9 @@
       {
         "lineNumber": 587,
         "author": {
-          "gitId": "chrisgzf"
+          "gitId": "-"
         },
-        "content": "- 3a. The given index is invalid."
+        "content": "**Extensions**"
       },
       {
         "lineNumber": 588,
@@ -5882,7 +5882,7 @@
         "author": {
           "gitId": "chrisgzf"
         },
-        "content": "  - 3a1. TAsker shows an error message."
+        "content": "- 2a. The list is empty."
       },
       {
         "lineNumber": 590,
@@ -5894,14 +5894,14 @@
       {
         "lineNumber": 591,
         "author": {
-          "gitId": "chrisgzf"
+          "gitId": "-"
         },
-        "content": "    Use case resumes at step 2."
+        "content": "  Use case ends."
       },
       {
         "lineNumber": 592,
         "author": {
-          "gitId": "chrisgzf"
+          "gitId": "-"
         },
         "content": ""
       },
@@ -5910,12 +5910,12 @@
         "author": {
           "gitId": "chrisgzf"
         },
-        "content": "**Use case: Update a student\u0027s details**"
+        "content": "- 3a. The given index is invalid."
       },
       {
         "lineNumber": 594,
         "author": {
-          "gitId": "chrisgzf"
+          "gitId": "-"
         },
         "content": ""
       },
@@ -5924,7 +5924,7 @@
         "author": {
           "gitId": "chrisgzf"
         },
-        "content": "**MSS**"
+        "content": "  - 3a1. TAsker shows an error message."
       },
       {
         "lineNumber": 596,
@@ -5938,75 +5938,75 @@
         "author": {
           "gitId": "chrisgzf"
         },
-        "content": "1.  User requests to list students"
+        "content": "    Use case resumes at step 2."
       },
       {
         "lineNumber": 598,
         "author": {
           "gitId": "chrisgzf"
         },
-        "content": "2.  TAsker shows a list of students"
+        "content": ""
       },
       {
         "lineNumber": 599,
         "author": {
           "gitId": "chrisgzf"
         },
-        "content": "3.  User requests to update a specific student\u0027s details in the list"
+        "content": "**Use case: Update a student\u0027s details**"
       },
       {
         "lineNumber": 600,
         "author": {
           "gitId": "chrisgzf"
         },
-        "content": "4.  TAsker updates the student\u0027s details"
+        "content": ""
       },
       {
         "lineNumber": 601,
         "author": {
           "gitId": "chrisgzf"
         },
-        "content": ""
+        "content": "**MSS**"
       },
       {
         "lineNumber": 602,
         "author": {
           "gitId": "chrisgzf"
         },
-        "content": "    Use case ends."
+        "content": ""
       },
       {
         "lineNumber": 603,
         "author": {
           "gitId": "chrisgzf"
         },
-        "content": ""
+        "content": "1.  User requests to list students"
       },
       {
         "lineNumber": 604,
         "author": {
           "gitId": "chrisgzf"
         },
-        "content": "**Extensions**"
+        "content": "2.  TAsker shows a list of students"
       },
       {
         "lineNumber": 605,
         "author": {
-          "gitId": "-"
+          "gitId": "chrisgzf"
         },
-        "content": ""
+        "content": "3.  User requests to update a specific student\u0027s details in the list"
       },
       {
         "lineNumber": 606,
         "author": {
           "gitId": "chrisgzf"
         },
-        "content": "- 2a. The given index is invalid."
+        "content": "4.  TAsker updates the student\u0027s details"
       },
       {
         "lineNumber": 607,
         "author": {
-          "gitId": "-"
+          "gitId": "chrisgzf"
         },
         "content": ""
       },
@@ -6015,7 +6015,7 @@
         "author": {
           "gitId": "chrisgzf"
         },
-        "content": "  - 2a1. TAsker shows an error message."
+        "content": "    Use case ends."
       },
       {
         "lineNumber": 609,
@@ -6029,7 +6029,7 @@
         "author": {
           "gitId": "chrisgzf"
         },
-        "content": "    Use case resumes at step 2."
+        "content": "**Extensions**"
       },
       {
         "lineNumber": 611,
@@ -6043,7 +6043,7 @@
         "author": {
           "gitId": "chrisgzf"
         },
-        "content": "- 3a. The student\u0027s details are insufficient/cannot be parsed."
+        "content": "- 2a. The given index is invalid."
       },
       {
         "lineNumber": 613,
@@ -6057,7 +6057,7 @@
         "author": {
           "gitId": "chrisgzf"
         },
-        "content": "  - 3a1. TAsker shows an error message."
+        "content": "  - 2a1. TAsker shows an error message."
       },
       {
         "lineNumber": 615,
@@ -6085,7 +6085,7 @@
         "author": {
           "gitId": "chrisgzf"
         },
-        "content": "**Use case: See all assignment statuses**"
+        "content": "- 3a. The student\u0027s details are insufficient/cannot be parsed."
       },
       {
         "lineNumber": 619,
@@ -6099,7 +6099,7 @@
         "author": {
           "gitId": "chrisgzf"
         },
-        "content": "**MSS**"
+        "content": "  - 3a1. TAsker shows an error message."
       },
       {
         "lineNumber": 621,
@@ -6113,56 +6113,56 @@
         "author": {
           "gitId": "chrisgzf"
         },
-        "content": "1.  User requests to list students"
+        "content": "    Use case resumes at step 2."
       },
       {
         "lineNumber": 623,
         "author": {
           "gitId": "chrisgzf"
         },
-        "content": "1.  TAsker shows a list of students, with their assignment statuses"
+        "content": ""
       },
       {
         "lineNumber": 624,
         "author": {
           "gitId": "chrisgzf"
         },
-        "content": ""
+        "content": "**Use case: See all assignment statuses**"
       },
       {
         "lineNumber": 625,
         "author": {
           "gitId": "chrisgzf"
         },
-        "content": "    Use case ends."
+        "content": ""
       },
       {
         "lineNumber": 626,
         "author": {
           "gitId": "chrisgzf"
         },
-        "content": ""
+        "content": "**MSS**"
       },
       {
         "lineNumber": 627,
         "author": {
           "gitId": "chrisgzf"
         },
-        "content": "**Extensions**"
+        "content": ""
       },
       {
         "lineNumber": 628,
         "author": {
           "gitId": "chrisgzf"
         },
-        "content": ""
+        "content": "1.  User requests to list students"
       },
       {
         "lineNumber": 629,
         "author": {
           "gitId": "chrisgzf"
         },
-        "content": "- 2a. No assignments are added."
+        "content": "1.  TAsker shows a list of students, with their assignment statuses"
       },
       {
         "lineNumber": 630,
@@ -6176,7 +6176,7 @@
         "author": {
           "gitId": "chrisgzf"
         },
-        "content": "  - 2a1. TAsker will just show the student\u0027s information"
+        "content": "    Use case ends."
       },
       {
         "lineNumber": 632,
@@ -6190,7 +6190,7 @@
         "author": {
           "gitId": "chrisgzf"
         },
-        "content": "    Use case resumes at step 2."
+        "content": "**Extensions**"
       },
       {
         "lineNumber": 634,
@@ -6204,7 +6204,7 @@
         "author": {
           "gitId": "chrisgzf"
         },
-        "content": "**Use case: Add an assignment**"
+        "content": "- 2a. No assignments are added."
       },
       {
         "lineNumber": 636,
@@ -6218,7 +6218,7 @@
         "author": {
           "gitId": "chrisgzf"
         },
-        "content": "**MSS**"
+        "content": "  - 2a1. TAsker will just show the student\u0027s information"
       },
       {
         "lineNumber": 638,
@@ -6232,56 +6232,56 @@
         "author": {
           "gitId": "chrisgzf"
         },
-        "content": "1.  User requests to add a assignment to the list"
+        "content": "    Use case resumes at step 2."
       },
       {
         "lineNumber": 640,
         "author": {
           "gitId": "chrisgzf"
         },
-        "content": "1.  TAsker adds the assignment to the list"
+        "content": ""
       },
       {
         "lineNumber": 641,
         "author": {
           "gitId": "chrisgzf"
         },
-        "content": ""
+        "content": "**Use case: Add an assignment**"
       },
       {
         "lineNumber": 642,
         "author": {
           "gitId": "chrisgzf"
         },
-        "content": "    Use case ends."
+        "content": ""
       },
       {
         "lineNumber": 643,
         "author": {
           "gitId": "chrisgzf"
         },
-        "content": ""
+        "content": "**MSS**"
       },
       {
         "lineNumber": 644,
         "author": {
           "gitId": "chrisgzf"
         },
-        "content": "**Use case: Delete an assignment**"
+        "content": ""
       },
       {
         "lineNumber": 645,
         "author": {
           "gitId": "chrisgzf"
         },
-        "content": ""
+        "content": "1.  User requests to add a assignment to the list"
       },
       {
         "lineNumber": 646,
         "author": {
           "gitId": "chrisgzf"
         },
-        "content": "**MSS**"
+        "content": "1.  TAsker adds the assignment to the list"
       },
       {
         "lineNumber": 647,
@@ -6295,70 +6295,70 @@
         "author": {
           "gitId": "chrisgzf"
         },
-        "content": "1.  User requests to list students"
+        "content": "    Use case ends."
       },
       {
         "lineNumber": 649,
         "author": {
           "gitId": "chrisgzf"
         },
-        "content": "1.  TAsker shows a list of students, with their assignment statuses"
+        "content": ""
       },
       {
         "lineNumber": 650,
         "author": {
           "gitId": "chrisgzf"
         },
-        "content": "1.  User requests to delete an assignment from the list"
+        "content": "**Use case: Delete an assignment**"
       },
       {
         "lineNumber": 651,
         "author": {
           "gitId": "chrisgzf"
         },
-        "content": "1.  TAsker deletes the assignment from the list"
+        "content": ""
       },
       {
         "lineNumber": 652,
         "author": {
           "gitId": "chrisgzf"
         },
-        "content": ""
+        "content": "**MSS**"
       },
       {
         "lineNumber": 653,
         "author": {
           "gitId": "chrisgzf"
         },
-        "content": "    Use case ends."
+        "content": ""
       },
       {
         "lineNumber": 654,
         "author": {
           "gitId": "chrisgzf"
         },
-        "content": ""
+        "content": "1.  User requests to list students"
       },
       {
         "lineNumber": 655,
         "author": {
           "gitId": "chrisgzf"
         },
-        "content": "**Extensions**"
+        "content": "1.  TAsker shows a list of students, with their assignment statuses"
       },
       {
         "lineNumber": 656,
         "author": {
           "gitId": "chrisgzf"
         },
-        "content": ""
+        "content": "1.  User requests to delete an assignment from the list"
       },
       {
         "lineNumber": 657,
         "author": {
           "gitId": "chrisgzf"
         },
-        "content": "- 2a. The given assignment is invalid."
+        "content": "1.  TAsker deletes the assignment from the list"
       },
       {
         "lineNumber": 658,
@@ -6372,7 +6372,7 @@
         "author": {
           "gitId": "chrisgzf"
         },
-        "content": "  - 2a1. TAsker shows an error message."
+        "content": "    Use case ends."
       },
       {
         "lineNumber": 660,
@@ -6386,7 +6386,7 @@
         "author": {
           "gitId": "chrisgzf"
         },
-        "content": "    Use case resumes at step 2."
+        "content": "**Extensions**"
       },
       {
         "lineNumber": 662,
@@ -6400,7 +6400,7 @@
         "author": {
           "gitId": "chrisgzf"
         },
-        "content": "**Use case: Update a student\u0027s assignment submission status**"
+        "content": "- 2a. The given assignment is invalid."
       },
       {
         "lineNumber": 664,
@@ -6414,7 +6414,7 @@
         "author": {
           "gitId": "chrisgzf"
         },
-        "content": "**MSS**"
+        "content": "  - 2a1. TAsker shows an error message."
       },
       {
         "lineNumber": 666,
@@ -6428,70 +6428,70 @@
         "author": {
           "gitId": "chrisgzf"
         },
-        "content": "1.  User requests to list students"
+        "content": "    Use case resumes at step 2."
       },
       {
         "lineNumber": 668,
         "author": {
           "gitId": "chrisgzf"
         },
-        "content": "2.  TAsker shows a list of students, along with their assignment statuses"
+        "content": ""
       },
       {
         "lineNumber": 669,
         "author": {
           "gitId": "chrisgzf"
         },
-        "content": "3.  User requests to update a specific student\u0027s assignment submission status"
+        "content": "**Use case: Update a student\u0027s assignment submission status**"
       },
       {
         "lineNumber": 670,
         "author": {
           "gitId": "chrisgzf"
         },
-        "content": "4.  TAsker updates the specific student\u0027s assignment submission status"
+        "content": ""
       },
       {
         "lineNumber": 671,
         "author": {
           "gitId": "chrisgzf"
         },
-        "content": ""
+        "content": "**MSS**"
       },
       {
         "lineNumber": 672,
         "author": {
           "gitId": "chrisgzf"
         },
-        "content": "    Use case ends."
+        "content": ""
       },
       {
         "lineNumber": 673,
         "author": {
           "gitId": "chrisgzf"
         },
-        "content": ""
+        "content": "1.  User requests to list students"
       },
       {
         "lineNumber": 674,
         "author": {
           "gitId": "chrisgzf"
         },
-        "content": "**Extensions**"
+        "content": "2.  TAsker shows a list of students, along with their assignment statuses"
       },
       {
         "lineNumber": 675,
         "author": {
           "gitId": "chrisgzf"
         },
-        "content": ""
+        "content": "3.  User requests to update a specific student\u0027s assignment submission status"
       },
       {
         "lineNumber": 676,
         "author": {
           "gitId": "chrisgzf"
         },
-        "content": "- 2a. The given index is invalid."
+        "content": "4.  TAsker updates the specific student\u0027s assignment submission status"
       },
       {
         "lineNumber": 677,
@@ -6505,7 +6505,7 @@
         "author": {
           "gitId": "chrisgzf"
         },
-        "content": "  - 2a1. TAsker shows an error message."
+        "content": "    Use case ends."
       },
       {
         "lineNumber": 679,
@@ -6519,7 +6519,7 @@
         "author": {
           "gitId": "chrisgzf"
         },
-        "content": "    Use case resumes at step 2."
+        "content": "**Extensions**"
       },
       {
         "lineNumber": 681,
@@ -6533,7 +6533,7 @@
         "author": {
           "gitId": "chrisgzf"
         },
-        "content": "- 3a. The given assignment is invalid."
+        "content": "- 2a. The given index is invalid."
       },
       {
         "lineNumber": 683,
@@ -6547,7 +6547,7 @@
         "author": {
           "gitId": "chrisgzf"
         },
-        "content": "  - 3a1. TAsker shows an error message."
+        "content": "  - 2a1. TAsker shows an error message."
       },
       {
         "lineNumber": 685,
@@ -6575,7 +6575,7 @@
         "author": {
           "gitId": "chrisgzf"
         },
-        "content": "- 4a. The given assignment status is invalid."
+        "content": "- 3a. The given assignment is invalid."
       },
       {
         "lineNumber": 689,
@@ -6589,26 +6589,26 @@
         "author": {
           "gitId": "chrisgzf"
         },
-        "content": "  - 4a1. TAsker shows an error message."
+        "content": "  - 3a1. TAsker shows an error message."
       },
       {
         "lineNumber": 691,
         "author": {
-          "gitId": "-"
+          "gitId": "chrisgzf"
         },
         "content": ""
       },
       {
         "lineNumber": 692,
         "author": {
-          "gitId": "-"
+          "gitId": "chrisgzf"
         },
         "content": "    Use case resumes at step 2."
       },
       {
         "lineNumber": 693,
         "author": {
-          "gitId": "-"
+          "gitId": "chrisgzf"
         },
         "content": ""
       },
@@ -6617,21 +6617,21 @@
         "author": {
           "gitId": "chrisgzf"
         },
-        "content": "_{More to be added}_"
+        "content": "- 4a. The given assignment status is invalid."
       },
       {
         "lineNumber": 695,
         "author": {
-          "gitId": "-"
+          "gitId": "chrisgzf"
         },
         "content": ""
       },
       {
         "lineNumber": 696,
         "author": {
-          "gitId": "-"
+          "gitId": "chrisgzf"
         },
-        "content": "### Non-Functional Requirements"
+        "content": "  - 4a1. TAsker shows an error message."
       },
       {
         "lineNumber": 697,
@@ -6643,135 +6643,135 @@
       {
         "lineNumber": 698,
         "author": {
-          "gitId": "chrisgzf"
+          "gitId": "-"
         },
-        "content": "1.  Should be able to work offline, without any internet connection requirement."
+        "content": "    Use case resumes at step 2."
       },
       {
         "lineNumber": 699,
         "author": {
-          "gitId": "chrisgzf"
+          "gitId": "-"
         },
-        "content": "1.  Should work on any _mainstream OS_ as long as it has Java `11` or above"
+        "content": ""
       },
       {
         "lineNumber": 700,
         "author": {
           "gitId": "chrisgzf"
         },
-        "content": "    installed."
+        "content": "_{More to be added}_"
       },
       {
         "lineNumber": 701,
         "author": {
-          "gitId": "chrisgzf"
+          "gitId": "-"
         },
-        "content": "1.  Should be able to hold up to 1000 persons without a noticeable sluggishness"
+        "content": ""
       },
       {
         "lineNumber": 702,
         "author": {
-          "gitId": "chrisgzf"
+          "gitId": "-"
         },
-        "content": "    in performance for typical usage."
+        "content": "### Non-Functional Requirements"
       },
       {
         "lineNumber": 703,
         "author": {
-          "gitId": "chrisgzf"
+          "gitId": "-"
         },
-        "content": "1.  Should not be too bright or even have a dark mode, at night timings."
+        "content": ""
       },
       {
         "lineNumber": 704,
         "author": {
           "gitId": "chrisgzf"
         },
-        "content": "1.  A user with above average typing speed for regular English text (i.e. not code,"
+        "content": "1.  Should be able to work offline, without any internet connection requirement."
       },
       {
         "lineNumber": 705,
         "author": {
           "gitId": "chrisgzf"
         },
-        "content": "    not system admin commands) should be able to accomplish most of the tasks faster"
+        "content": "1.  Should work on any _mainstream OS_ as long as it has Java `11` or above"
       },
       {
         "lineNumber": 706,
         "author": {
           "gitId": "chrisgzf"
         },
-        "content": "    using commands than using the mouse."
+        "content": "    installed."
       },
       {
         "lineNumber": 707,
         "author": {
-          "gitId": "-"
+          "gitId": "chrisgzf"
         },
-        "content": ""
+        "content": "1.  Should be able to hold up to 1000 persons without a noticeable sluggishness"
       },
       {
         "lineNumber": 708,
         "author": {
           "gitId": "chrisgzf"
         },
-        "content": "_{More to be added}_"
+        "content": "    in performance for typical usage."
       },
       {
         "lineNumber": 709,
         "author": {
-          "gitId": "-"
+          "gitId": "chrisgzf"
         },
-        "content": ""
+        "content": "1.  Should not be too bright or even have a dark mode, at night timings."
       },
       {
         "lineNumber": 710,
         "author": {
-          "gitId": "-"
+          "gitId": "chrisgzf"
         },
-        "content": "### Glossary"
+        "content": "1.  A user with above average typing speed for regular English text (i.e. not code,"
       },
       {
         "lineNumber": 711,
         "author": {
-          "gitId": "-"
+          "gitId": "chrisgzf"
         },
-        "content": ""
+        "content": "    not system admin commands) should be able to accomplish most of the tasks faster"
       },
       {
         "lineNumber": 712,
         "author": {
           "gitId": "chrisgzf"
         },
-        "content": "- **Mainstream OS**: Windows, Linux, Unix, macOS"
+        "content": "    using commands than using the mouse."
       },
       {
         "lineNumber": 713,
         "author": {
-          "gitId": "chrisgzf"
+          "gitId": "-"
         },
-        "content": "- **Private contact detail**: A contact detail that is not meant to be shared with others"
+        "content": ""
       },
       {
         "lineNumber": 714,
         "author": {
           "gitId": "chrisgzf"
         },
-        "content": "- **TA**: Teaching Assistant"
+        "content": "_{More to be added}_"
       },
       {
         "lineNumber": 715,
         "author": {
-          "gitId": "chrisgzf"
+          "gitId": "-"
         },
-        "content": "- **CS**: Computer Science"
+        "content": ""
       },
       {
         "lineNumber": 716,
         "author": {
-          "gitId": "chrisgzf"
+          "gitId": "-"
         },
-        "content": "- **CRUD**: Create, Read, Update, Delete"
+        "content": "### Glossary"
       },
       {
         "lineNumber": 717,
@@ -6785,35 +6785,35 @@
         "author": {
           "gitId": "chrisgzf"
         },
-        "content": "---"
+        "content": "- **Mainstream OS**: Windows, Linux, Unix, macOS"
       },
       {
         "lineNumber": 719,
         "author": {
-          "gitId": "-"
+          "gitId": "chrisgzf"
         },
-        "content": ""
+        "content": "- **Private contact detail**: A contact detail that is not meant to be shared with others"
       },
       {
         "lineNumber": 720,
         "author": {
-          "gitId": "-"
+          "gitId": "chrisgzf"
         },
-        "content": "## **Appendix: Instructions for manual testing**"
+        "content": "- **TA**: Teaching Assistant"
       },
       {
         "lineNumber": 721,
         "author": {
-          "gitId": "-"
+          "gitId": "chrisgzf"
         },
-        "content": ""
+        "content": "- **CS**: Computer Science"
       },
       {
         "lineNumber": 722,
         "author": {
-          "gitId": "-"
+          "gitId": "chrisgzf"
         },
-        "content": "Given below are instructions to test the app manually."
+        "content": "- **CRUD**: Create, Read, Update, Delete"
       },
       {
         "lineNumber": 723,
@@ -6825,58 +6825,58 @@
       {
         "lineNumber": 724,
         "author": {
-          "gitId": "-"
+          "gitId": "chrisgzf"
         },
-        "content": "\u003cdiv markdown\u003d\"span\" class\u003d\"alert alert-info\"\u003e:information_source: **Note:** These instructions only provide a starting point for testers to work on;"
+        "content": "---"
       },
       {
         "lineNumber": 725,
         "author": {
           "gitId": "-"
         },
-        "content": "testers are expected to do more *exploratory* testing."
+        "content": ""
       },
       {
         "lineNumber": 726,
         "author": {
           "gitId": "-"
         },
-        "content": ""
+        "content": "## **Appendix: Instructions for manual testing**"
       },
       {
         "lineNumber": 727,
         "author": {
           "gitId": "-"
         },
-        "content": "\u003c/div\u003e"
+        "content": ""
       },
       {
         "lineNumber": 728,
         "author": {
           "gitId": "-"
         },
-        "content": ""
+        "content": "Given below are instructions to test the app manually."
       },
       {
         "lineNumber": 729,
         "author": {
           "gitId": "-"
         },
-        "content": "### Launch and shutdown"
+        "content": ""
       },
       {
         "lineNumber": 730,
         "author": {
           "gitId": "-"
         },
-        "content": ""
+        "content": "\u003cdiv markdown\u003d\"span\" class\u003d\"alert alert-info\"\u003e:information_source: **Note:** These instructions only provide a starting point for testers to work on;"
       },
       {
         "lineNumber": 731,
         "author": {
           "gitId": "-"
         },
-        "content": "1. Initial launch"
+        "content": "testers are expected to do more *exploratory* testing."
       },
       {
         "lineNumber": 732,
@@ -6890,7 +6890,7 @@
         "author": {
           "gitId": "-"
         },
-        "content": "   1. Download the jar file and copy into an empty folder"
+        "content": "\u003c/div\u003e"
       },
       {
         "lineNumber": 734,
@@ -6904,7 +6904,7 @@
         "author": {
           "gitId": "-"
         },
-        "content": "   1. Double-click the jar file Expected: Shows the GUI with a set of sample contacts. The window size may not be optimum."
+        "content": "### Launch and shutdown"
       },
       {
         "lineNumber": 736,
@@ -6918,7 +6918,7 @@
         "author": {
           "gitId": "-"
         },
-        "content": "1. Saving window preferences"
+        "content": "1. Initial launch"
       },
       {
         "lineNumber": 738,
@@ -6932,7 +6932,7 @@
         "author": {
           "gitId": "-"
         },
-        "content": "   1. Resize the window to an optimum size. Move the window to a different location. Close the window."
+        "content": "   1. Download the jar file and copy into an empty folder"
       },
       {
         "lineNumber": 740,
@@ -6946,56 +6946,56 @@
         "author": {
           "gitId": "-"
         },
-        "content": "   1. Re-launch the app by double-clicking the jar file.\u003cbr\u003e"
+        "content": "   1. Double-click the jar file Expected: Shows the GUI with a set of sample contacts. The window size may not be optimum."
       },
       {
         "lineNumber": 742,
         "author": {
           "gitId": "-"
         },
-        "content": "      Expected: The most recent window size and location is retained."
+        "content": ""
       },
       {
         "lineNumber": 743,
         "author": {
           "gitId": "-"
         },
-        "content": ""
+        "content": "1. Saving window preferences"
       },
       {
         "lineNumber": 744,
         "author": {
           "gitId": "-"
         },
-        "content": "1. _{ more test cases …​ }_"
+        "content": ""
       },
       {
         "lineNumber": 745,
         "author": {
           "gitId": "-"
         },
-        "content": ""
+        "content": "   1. Resize the window to an optimum size. Move the window to a different location. Close the window."
       },
       {
         "lineNumber": 746,
         "author": {
           "gitId": "-"
         },
-        "content": "### Deleting a person"
+        "content": ""
       },
       {
         "lineNumber": 747,
         "author": {
           "gitId": "-"
         },
-        "content": ""
+        "content": "   1. Re-launch the app by double-clicking the jar file.\u003cbr\u003e"
       },
       {
         "lineNumber": 748,
         "author": {
           "gitId": "-"
         },
-        "content": "1. Deleting a person while all persons are being shown"
+        "content": "      Expected: The most recent window size and location is retained."
       },
       {
         "lineNumber": 749,
@@ -7009,7 +7009,7 @@
         "author": {
           "gitId": "-"
         },
-        "content": "   1. Prerequisites: List all persons using the `list` command. Multiple persons in the list."
+        "content": "1. _{ more test cases …​ }_"
       },
       {
         "lineNumber": 751,
@@ -7023,35 +7023,35 @@
         "author": {
           "gitId": "-"
         },
-        "content": "   1. Test case: `delete 1`\u003cbr\u003e"
+        "content": "### Deleting a person"
       },
       {
         "lineNumber": 753,
         "author": {
           "gitId": "-"
         },
-        "content": "      Expected: First contact is deleted from the list. Details of the deleted contact shown in the status message. Timestamp in the status bar is updated."
+        "content": ""
       },
       {
         "lineNumber": 754,
         "author": {
           "gitId": "-"
         },
-        "content": ""
+        "content": "1. Deleting a person while all persons are being shown"
       },
       {
         "lineNumber": 755,
         "author": {
           "gitId": "-"
         },
-        "content": "   1. Test case: `delete 0`\u003cbr\u003e"
+        "content": ""
       },
       {
         "lineNumber": 756,
         "author": {
           "gitId": "-"
         },
-        "content": "      Expected: No person is deleted. Error details shown in the status message. Status bar remains the same."
+        "content": "   1. Prerequisites: List all persons using the `list` command. Multiple persons in the list."
       },
       {
         "lineNumber": 757,
@@ -7065,14 +7065,14 @@
         "author": {
           "gitId": "-"
         },
-        "content": "   1. Other incorrect delete commands to try: `delete`, `delete x`, `...` (where x is larger than the list size)\u003cbr\u003e"
+        "content": "   1. Test case: `delete 1`\u003cbr\u003e"
       },
       {
         "lineNumber": 759,
         "author": {
           "gitId": "-"
         },
-        "content": "      Expected: Similar to previous."
+        "content": "      Expected: First contact is deleted from the list. Details of the deleted contact shown in the status message. Timestamp in the status bar is updated."
       },
       {
         "lineNumber": 760,
@@ -7086,35 +7086,35 @@
         "author": {
           "gitId": "-"
         },
-        "content": "1. _{ more test cases …​ }_"
+        "content": "   1. Test case: `delete 0`\u003cbr\u003e"
       },
       {
         "lineNumber": 762,
         "author": {
           "gitId": "-"
         },
-        "content": ""
+        "content": "      Expected: No person is deleted. Error details shown in the status message. Status bar remains the same."
       },
       {
         "lineNumber": 763,
         "author": {
           "gitId": "-"
         },
-        "content": "### Saving data"
+        "content": ""
       },
       {
         "lineNumber": 764,
         "author": {
           "gitId": "-"
         },
-        "content": ""
+        "content": "   1. Other incorrect delete commands to try: `delete`, `delete x`, `...` (where x is larger than the list size)\u003cbr\u003e"
       },
       {
         "lineNumber": 765,
         "author": {
           "gitId": "-"
         },
-        "content": "1. Dealing with missing/corrupted data files"
+        "content": "      Expected: Similar to previous."
       },
       {
         "lineNumber": 766,
@@ -7128,7 +7128,7 @@
         "author": {
           "gitId": "-"
         },
-        "content": "   1. _{explain how to simulate a missing/corrupted file, and the expected behavior}_"
+        "content": "1. _{ more test cases …​ }_"
       },
       {
         "lineNumber": 768,
@@ -7142,15 +7142,58 @@
         "author": {
           "gitId": "-"
         },
+        "content": "### Saving data"
+      },
+      {
+        "lineNumber": 770,
+        "author": {
+          "gitId": "-"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 771,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "1. Dealing with missing/corrupted data files"
+      },
+      {
+        "lineNumber": 772,
+        "author": {
+          "gitId": "-"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 773,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "   1. _{explain how to simulate a missing/corrupted file, and the expected behavior}_"
+      },
+      {
+        "lineNumber": 774,
+        "author": {
+          "gitId": "-"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 775,
+        "author": {
+          "gitId": "-"
+        },
         "content": "1. _{ more test cases …​ }_"
       }
     ],
     "authorContributionMap": {
       "Rishi5154": 40,
+      "sun-yitao": 6,
       "kwannoel": 116,
-      "-": 281,
+      "-": 283,
       "rnmy": 39,
-      "chrisgzf": 293
+      "chrisgzf": 291
     }
   },
   {

@@ -2109,7 +2109,7 @@
         "author": {
           "gitId": "yuki-cell"
         },
-        "content": "*diagram to be included*"
+        "content": "The following sequence diagrams show how the edit operation works."
       },
       {
         "lineNumber": 156,
@@ -2121,303 +2121,303 @@
       {
         "lineNumber": 157,
         "author": {
+          "gitId": "yuki-cell"
+        },
+        "content": "![Sequence Diagram for Search Command in Logic Component](images/SearchSequenceDiagram.png)"
+      },
+      {
+        "lineNumber": 158,
+        "author": {
+          "gitId": "-"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 159,
+        "author": {
+          "gitId": "yuki-cell"
+        },
+        "content": "1. The user executes `search k/apple` to search flashcards that has matching title, description, or tag to the keyword in the list currently shown."
+      },
+      {
+        "lineNumber": 160,
+        "author": {
+          "gitId": "yuki-cell"
+        },
+        "content": "2. `BagelParser` creates an `SearchCommandParser` and calls its parse method with the arguments passed in by the user."
+      },
+      {
+        "lineNumber": 161,
+        "author": {
+          "gitId": "yuki-cell"
+        },
+        "content": "3. `SearchCommandParser` returns a new `SearchCommand` with the `keyword` to be searched."
+      },
+      {
+        "lineNumber": 162,
+        "author": {
+          "gitId": "yuki-cell"
+        },
+        "content": "4. When its execute method is called, `SearchCommand` calls `updateFilteredFlashcardList()` with predicate, `searchFlashcard`."
+      },
+      {
+        "lineNumber": 163,
+        "author": {
+          "gitId": "yuki-cell"
+        },
+        "content": "5. `Model` will update flashcards based on the predicate."
+      },
+      {
+        "lineNumber": 164,
+        "author": {
+          "gitId": "yuki-cell"
+        },
+        "content": "7. The result of this command is returned."
+      },
+      {
+        "lineNumber": 165,
+        "author": {
+          "gitId": "-"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 166,
+        "author": {
+          "gitId": "yuki-cell"
+        },
+        "content": "#### Design consideration"
+      },
+      {
+        "lineNumber": 167,
+        "author": {
+          "gitId": "-"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 168,
+        "author": {
+          "gitId": "yuki-cell"
+        },
+        "content": "##### Aspect: How to pass fields to be edited"
+      },
+      {
+        "lineNumber": 169,
+        "author": {
+          "gitId": "-"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 170,
+        "author": {
+          "gitId": "yuki-cell"
+        },
+        "content": "* **Alternative 1 (current choice):** Pass fields to be edited into `SearchCommand` directly"
+      },
+      {
+        "lineNumber": 171,
+        "author": {
+          "gitId": "yuki-cell"
+        },
+        "content": "  * Pros: Easier to implement."
+      },
+      {
+        "lineNumber": 172,
+        "author": {
+          "gitId": "yuki-cell"
+        },
+        "content": "  * Cons: `SearchCommand` will have more responsibilities."
+      },
+      {
+        "lineNumber": 173,
+        "author": {
+          "gitId": "yuki-cell"
+        },
+        "content": "* **Alternative 2:** Store fields in `SearchFlashcardDescriptor` and pass it into `SearchCommand`"
+      },
+      {
+        "lineNumber": 174,
+        "author": {
+          "gitId": "yuki-cell"
+        },
+        "content": "  * Pros: Better separation of concerns."
+      },
+      {
+        "lineNumber": 175,
+        "author": {
+          "gitId": "yuki-cell"
+        },
+        "content": "  * Cons: More code to write."
+      },
+      {
+        "lineNumber": 176,
+        "author": {
+          "gitId": "-"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 177,
+        "author": {
+          "gitId": "yuki-cell"
+        },
+        "content": "I chose alternative 1, because only field for search command is `keyword` and amount of responsibilities for `SearchCommand` will not increase a lot."
+      },
+      {
+        "lineNumber": 178,
+        "author": {
+          "gitId": "yuki-cell"
+        },
+        "content": "  "
+      },
+      {
+        "lineNumber": 179,
+        "author": {
           "gitId": "liuyxxy"
         },
         "content": "### View feature"
       },
       {
-        "lineNumber": 158,
+        "lineNumber": 180,
         "author": {
           "gitId": "liuyxxy"
         },
         "content": "This mechanism makes use of the unmodifiable `ObservableList\u003cFlashcard\u003e` in `Model`. It filters the given list by searching"
       },
       {
-        "lineNumber": 159,
+        "lineNumber": 181,
         "author": {
           "gitId": "liuyxxy"
         },
         "content": "for the flashcard that matches the given index."
       },
       {
-        "lineNumber": 160,
+        "lineNumber": 182,
         "author": {
           "gitId": "-"
         },
         "content": ""
       },
       {
-        "lineNumber": 161,
+        "lineNumber": 183,
         "author": {
           "gitId": "liuyxxy"
         },
         "content": "*diagram to be included*"
       },
       {
-        "lineNumber": 162,
+        "lineNumber": 184,
         "author": {
           "gitId": "-"
         },
         "content": ""
       },
       {
-        "lineNumber": 163,
+        "lineNumber": 185,
         "author": {
           "gitId": "ysr25"
         },
         "content": "### Edit Feature"
       },
       {
-        "lineNumber": 164,
+        "lineNumber": 186,
         "author": {
           "gitId": "-"
         },
         "content": ""
       },
       {
-        "lineNumber": 165,
+        "lineNumber": 187,
         "author": {
           "gitId": "ysr25"
         },
         "content": "#### Implementation"
       },
       {
-        "lineNumber": 166,
+        "lineNumber": 188,
         "author": {
           "gitId": "-"
         },
         "content": ""
       },
       {
-        "lineNumber": 167,
+        "lineNumber": 189,
         "author": {
           "gitId": "ysr25"
         },
         "content": "The edit mechanism involves an additional `EditFlashcardDescriptor` class to pass the content of the fields to be edited into `EditCommand`."
       },
       {
-        "lineNumber": 168,
-        "author": {
-          "gitId": "-"
-        },
-        "content": ""
-      },
-      {
-        "lineNumber": 169,
-        "author": {
-          "gitId": "ysr25"
-        },
-        "content": "The following sequence diagrams show how the edit operation works."
-      },
-      {
-        "lineNumber": 170,
-        "author": {
-          "gitId": "-"
-        },
-        "content": ""
-      },
-      {
-        "lineNumber": 171,
-        "author": {
-          "gitId": "ysr25"
-        },
-        "content": "![Sequence Diagram for Edit Command in Logic Component](images/EditSequenceDiagram.png)"
-      },
-      {
-        "lineNumber": 172,
-        "author": {
-          "gitId": "-"
-        },
-        "content": ""
-      },
-      {
-        "lineNumber": 173,
-        "author": {
-          "gitId": "ysr25"
-        },
-        "content": "1. The user executes `edit 1 t/New Title` to edit the title of the first flashcard in the list currently shown."
-      },
-      {
-        "lineNumber": 174,
-        "author": {
-          "gitId": "ysr25"
-        },
-        "content": "2. `BagelParser` creates an `EditCommandParser` and calls its parse method with the arguments passed in by the user."
-      },
-      {
-        "lineNumber": 175,
-        "author": {
-          "gitId": "ysr25"
-        },
-        "content": "3. `EditCommandParser` creates an `EditFlashcardDescriptor`."
-      },
-      {
-        "lineNumber": 176,
-        "author": {
-          "gitId": "ysr25"
-        },
-        "content": "4. For each field in the flashcard, `EditCommandParser` checks if there is an updated version provided by the user. If there is, the new content is added into the `EditFlashcardDescriptor`."
-      },
-      {
-        "lineNumber": 177,
-        "author": {
-          "gitId": "ysr25"
-        },
-        "content": "5. `EditCommandParser` returns a new `EditCommand` with the index of the `Flashcard` to be edited and the `EditFlashcardDescriptor`."
-      },
-      {
-        "lineNumber": 178,
-        "author": {
-          "gitId": "-"
-        },
-        "content": ""
-      },
-      {
-        "lineNumber": 179,
-        "author": {
-          "gitId": "ysr25"
-        },
-        "content": "![Sequence Diagram for Edit Command in Logic Component 2](images/EditSequenceDiagram2.png)"
-      },
-      {
-        "lineNumber": 180,
-        "author": {
-          "gitId": "-"
-        },
-        "content": ""
-      },
-      {
-        "lineNumber": 181,
-        "author": {
-          "gitId": "ysr25"
-        },
-        "content": "1. When its execute method is called, `EditCommand` gets the `Flashcard` to edit from `Model`."
-      },
-      {
-        "lineNumber": 182,
-        "author": {
-          "gitId": "ysr25"
-        },
-        "content": "2. `EditCommand` creates a new `Flashcard` based on the `EditFlashcardDescriptor` and the `Flashcard` to be edited."
-      },
-      {
-        "lineNumber": 183,
-        "author": {
-          "gitId": "ysr25"
-        },
-        "content": "3. This new `Flashcard` replaces the old `Flashcard` in `Model`."
-      },
-      {
-        "lineNumber": 184,
-        "author": {
-          "gitId": "ysr25"
-        },
-        "content": "4. The result of this command is returned."
-      },
-      {
-        "lineNumber": 185,
-        "author": {
-          "gitId": "-"
-        },
-        "content": ""
-      },
-      {
-        "lineNumber": 186,
-        "author": {
-          "gitId": "ysr25"
-        },
-        "content": "#### Design consideration"
-      },
-      {
-        "lineNumber": 187,
-        "author": {
-          "gitId": "-"
-        },
-        "content": ""
-      },
-      {
-        "lineNumber": 188,
-        "author": {
-          "gitId": "ysr25"
-        },
-        "content": "##### Aspect: How to pass fields to be edited"
-      },
-      {
-        "lineNumber": 189,
-        "author": {
-          "gitId": "-"
-        },
-        "content": ""
-      },
-      {
         "lineNumber": 190,
         "author": {
-          "gitId": "ysr25"
+          "gitId": "-"
         },
-        "content": "* **Alternative 1 (current choice):** Store fields in `EditFlashcardDescriptor` and pass it into `EditCommand`"
+        "content": ""
       },
       {
         "lineNumber": 191,
         "author": {
           "gitId": "ysr25"
         },
-        "content": "  * Pros: Better separation of concerns."
+        "content": "The following sequence diagrams show how the edit operation works."
       },
       {
         "lineNumber": 192,
         "author": {
-          "gitId": "ysr25"
+          "gitId": "-"
         },
-        "content": "  * Cons: More code to write."
+        "content": ""
       },
       {
         "lineNumber": 193,
         "author": {
           "gitId": "ysr25"
         },
-        "content": "* **Alternative 2:** Pass fields to be edited into `EditCommand` directly"
+        "content": "![Sequence Diagram for Edit Command in Logic Component](images/EditSequenceDiagram.png)"
       },
       {
         "lineNumber": 194,
         "author": {
-          "gitId": "ysr25"
+          "gitId": "-"
         },
-        "content": "  * Pros: Easier to implement."
+        "content": ""
       },
       {
         "lineNumber": 195,
         "author": {
           "gitId": "ysr25"
         },
-        "content": "  * Cons: `EditCommand` will have more responsibilities."
+        "content": "1. The user executes `edit 1 t/New Title` to edit the title of the first flashcard in the list currently shown."
       },
       {
         "lineNumber": 196,
         "author": {
-          "gitId": "-"
+          "gitId": "ysr25"
         },
-        "content": ""
+        "content": "2. `BagelParser` creates an `EditCommandParser` and calls its parse method with the arguments passed in by the user."
       },
       {
         "lineNumber": 197,
         "author": {
-          "gitId": "-"
+          "gitId": "ysr25"
         },
-        "content": "--------------------------------------------------------------------------------------------------------------------"
+        "content": "3. `EditCommandParser` creates an `EditFlashcardDescriptor`."
       },
       {
         "lineNumber": 198,
         "author": {
-          "gitId": "-"
+          "gitId": "ysr25"
         },
-        "content": ""
+        "content": "4. For each field in the flashcard, `EditCommandParser` checks if there is an updated version provided by the user. If there is, the new content is added into the `EditFlashcardDescriptor`."
       },
       {
         "lineNumber": 199,
         "author": {
-          "gitId": "-"
+          "gitId": "ysr25"
         },
-        "content": "## **Documentation, logging, testing, configuration, dev-ops**"
+        "content": "5. `EditCommandParser` returns a new `EditCommand` with the index of the `Flashcard` to be edited and the `EditFlashcardDescriptor`."
       },
       {
         "lineNumber": 200,
@@ -2429,331 +2429,331 @@
       {
         "lineNumber": 201,
         "author": {
-          "gitId": "-"
+          "gitId": "ysr25"
         },
-        "content": "* [Documentation guide](Documentation.md)"
+        "content": "![Sequence Diagram for Edit Command in Logic Component 2](images/EditSequenceDiagram2.png)"
       },
       {
         "lineNumber": 202,
         "author": {
           "gitId": "-"
         },
-        "content": "* [Testing guide](Testing.md)"
+        "content": ""
       },
       {
         "lineNumber": 203,
         "author": {
-          "gitId": "-"
+          "gitId": "ysr25"
         },
-        "content": "* [Logging guide](Logging.md)"
+        "content": "1. When its execute method is called, `EditCommand` gets the `Flashcard` to edit from `Model`."
       },
       {
         "lineNumber": 204,
         "author": {
-          "gitId": "-"
+          "gitId": "ysr25"
         },
-        "content": "* [Configuration guide](Configuration.md)"
+        "content": "2. `EditCommand` creates a new `Flashcard` based on the `EditFlashcardDescriptor` and the `Flashcard` to be edited."
       },
       {
         "lineNumber": 205,
         "author": {
-          "gitId": "-"
+          "gitId": "ysr25"
         },
-        "content": "* [DevOps guide](DevOps.md)"
+        "content": "3. This new `Flashcard` replaces the old `Flashcard` in `Model`."
       },
       {
         "lineNumber": 206,
         "author": {
-          "gitId": "-"
+          "gitId": "ysr25"
         },
-        "content": ""
+        "content": "4. The result of this command is returned."
       },
       {
         "lineNumber": 207,
         "author": {
           "gitId": "-"
         },
-        "content": "--------------------------------------------------------------------------------------------------------------------"
+        "content": ""
       },
       {
         "lineNumber": 208,
         "author": {
-          "gitId": "-"
+          "gitId": "ysr25"
         },
-        "content": ""
+        "content": "#### Design consideration"
       },
       {
         "lineNumber": 209,
         "author": {
           "gitId": "-"
         },
-        "content": "## **Appendix: Requirements**"
+        "content": ""
       },
       {
         "lineNumber": 210,
         "author": {
-          "gitId": "-"
+          "gitId": "ysr25"
         },
-        "content": ""
+        "content": "##### Aspect: How to pass fields to be edited"
       },
       {
         "lineNumber": 211,
         "author": {
           "gitId": "-"
         },
-        "content": "### Product scope"
+        "content": ""
       },
       {
         "lineNumber": 212,
         "author": {
-          "gitId": "-"
+          "gitId": "ysr25"
         },
-        "content": ""
+        "content": "* **Alternative 1 (current choice):** Store fields in `EditFlashcardDescriptor` and pass it into `EditCommand`"
       },
       {
         "lineNumber": 213,
         "author": {
-          "gitId": "-"
+          "gitId": "ysr25"
         },
-        "content": "**Target user profile**:"
+        "content": "  * Pros: Better separation of concerns."
       },
       {
         "lineNumber": 214,
         "author": {
-          "gitId": "-"
+          "gitId": "ysr25"
         },
-        "content": ""
+        "content": "  * Cons: More code to write."
       },
       {
         "lineNumber": 215,
         "author": {
-          "gitId": "rgabelarde"
+          "gitId": "ysr25"
         },
-        "content": "* computing students taking GER1000"
+        "content": "* **Alternative 2:** Pass fields to be edited into `EditCommand` directly"
       },
       {
         "lineNumber": 216,
         "author": {
-          "gitId": "rgabelarde"
+          "gitId": "ysr25"
         },
-        "content": "* has a need to manage a significant number of flashcards"
+        "content": "  * Pros: Easier to implement."
       },
       {
         "lineNumber": 217,
         "author": {
-          "gitId": "-"
+          "gitId": "ysr25"
         },
-        "content": "* prefer desktop apps over other types"
+        "content": "  * Cons: `EditCommand` will have more responsibilities."
       },
       {
         "lineNumber": 218,
         "author": {
           "gitId": "-"
         },
-        "content": "* can type fast"
+        "content": ""
       },
       {
         "lineNumber": 219,
         "author": {
           "gitId": "-"
         },
-        "content": "* prefers typing to mouse interactions"
+        "content": "--------------------------------------------------------------------------------------------------------------------"
       },
       {
         "lineNumber": 220,
         "author": {
           "gitId": "-"
         },
-        "content": "* is reasonably comfortable using CLI apps"
+        "content": ""
       },
       {
         "lineNumber": 221,
         "author": {
           "gitId": "-"
         },
-        "content": ""
+        "content": "## **Documentation, logging, testing, configuration, dev-ops**"
       },
       {
         "lineNumber": 222,
         "author": {
-          "gitId": "liuyxxy"
+          "gitId": "-"
         },
-        "content": "**Value proposition**:"
+        "content": ""
       },
       {
         "lineNumber": 223,
         "author": {
-          "gitId": "liuyxxy"
+          "gitId": "-"
         },
-        "content": "Bagel is a flashcard application faster than a typical mouse/GUI driven app with additional functionality such as"
+        "content": "* [Documentation guide](Documentation.md)"
       },
       {
         "lineNumber": 224,
         "author": {
-          "gitId": "liuyxxy"
+          "gitId": "-"
         },
-        "content": "adding tags, links, or comments. It targets computing students taking GER1000 because it is a module that requires"
+        "content": "* [Testing guide](Testing.md)"
       },
       {
         "lineNumber": 225,
         "author": {
-          "gitId": "liuyxxy"
+          "gitId": "-"
         },
-        "content": "memorising many keywords and items, and computing students would prefer typing over other means of input."
+        "content": "* [Logging guide](Logging.md)"
       },
       {
         "lineNumber": 226,
         "author": {
           "gitId": "-"
         },
-        "content": ""
+        "content": "* [Configuration guide](Configuration.md)"
       },
       {
         "lineNumber": 227,
         "author": {
           "gitId": "-"
         },
-        "content": ""
+        "content": "* [DevOps guide](DevOps.md)"
       },
       {
         "lineNumber": 228,
         "author": {
           "gitId": "-"
         },
-        "content": "### User stories"
+        "content": ""
       },
       {
         "lineNumber": 229,
         "author": {
           "gitId": "-"
         },
-        "content": ""
+        "content": "--------------------------------------------------------------------------------------------------------------------"
       },
       {
         "lineNumber": 230,
         "author": {
           "gitId": "-"
         },
-        "content": "Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unlikely to have) - `*`"
+        "content": ""
       },
       {
         "lineNumber": 231,
         "author": {
           "gitId": "-"
         },
-        "content": ""
+        "content": "## **Appendix: Requirements**"
       },
       {
         "lineNumber": 232,
         "author": {
           "gitId": "-"
         },
-        "content": "| Priority | As a …​                                    | I want to …​                     | So that I can…​                                                        |"
+        "content": ""
       },
       {
         "lineNumber": 233,
         "author": {
           "gitId": "-"
         },
-        "content": "| -------- | ------------------------------------------ | ------------------------------ | ---------------------------------------------------------------------- |"
+        "content": "### Product scope"
       },
       {
         "lineNumber": 234,
         "author": {
-          "gitId": "liuyxxy"
+          "gitId": "-"
         },
-        "content": "| `* * *`  | user                                       | add flashcards                 | memorise them                 |"
+        "content": ""
       },
       {
         "lineNumber": 235,
         "author": {
-          "gitId": "liuyxxy"
+          "gitId": "-"
         },
-        "content": "| `* * *`  | user                                       | delete my flashcards when I am done with them               | keep the list organised                                                                       |"
+        "content": "**Target user profile**:"
       },
       {
         "lineNumber": 236,
         "author": {
-          "gitId": "liuyxxy"
+          "gitId": "-"
         },
-        "content": "| `* * *`  | user                                       | edit a flashcard                |  rephrase or fix mistakes that I originally wrote                                   |"
+        "content": ""
       },
       {
         "lineNumber": 237,
         "author": {
-          "gitId": "liuyxxy"
+          "gitId": "rgabelarde"
         },
-        "content": "| `* * *`  | user                                       | view individual flashcards          | read them |"
+        "content": "* computing students taking GER1000"
       },
       {
         "lineNumber": 238,
         "author": {
-          "gitId": "liuyxxy"
+          "gitId": "rgabelarde"
         },
-        "content": "| `* * *`    | user                                       | view a list of sets of flashcards that I currently have   | not mix them up                |"
+        "content": "* has a need to manage a significant number of flashcards"
       },
       {
         "lineNumber": 239,
         "author": {
-          "gitId": "liuyxxy"
+          "gitId": "-"
         },
-        "content": "| `* * *`      | user  | “flip” through a set of flashcards           | memorise them                                                 |"
+        "content": "* prefer desktop apps over other types"
       },
       {
         "lineNumber": 240,
         "author": {
           "gitId": "-"
         },
-        "content": ""
+        "content": "* can type fast"
       },
       {
         "lineNumber": 241,
         "author": {
           "gitId": "-"
         },
-        "content": "### Use cases"
+        "content": "* prefers typing to mouse interactions"
       },
       {
         "lineNumber": 242,
         "author": {
           "gitId": "-"
         },
-        "content": ""
+        "content": "* is reasonably comfortable using CLI apps"
       },
       {
         "lineNumber": 243,
         "author": {
-          "gitId": "rgabelarde"
+          "gitId": "-"
         },
-        "content": "(For all use cases below, the **System** is `Bagel` and the **Actor** is the `user`, unless specified otherwise)"
+        "content": ""
       },
       {
         "lineNumber": 244,
         "author": {
-          "gitId": "-"
+          "gitId": "liuyxxy"
         },
-        "content": ""
+        "content": "**Value proposition**:"
       },
       {
         "lineNumber": 245,
         "author": {
-          "gitId": "rgabelarde"
+          "gitId": "liuyxxy"
         },
-        "content": "**Use case: UC01 - Finding a flashcard**"
+        "content": "Bagel is a flashcard application faster than a typical mouse/GUI driven app with additional functionality such as"
       },
       {
         "lineNumber": 246,
         "author": {
-          "gitId": "-"
+          "gitId": "liuyxxy"
         },
-        "content": ""
+        "content": "adding tags, links, or comments. It targets computing students taking GER1000 because it is a module that requires"
       },
       {
         "lineNumber": 247,
         "author": {
-          "gitId": "-"
+          "gitId": "liuyxxy"
         },
-        "content": "**MSS**"
+        "content": "memorising many keywords and items, and computing students would prefer typing over other means of input."
       },
       {
         "lineNumber": 248,
@@ -2765,93 +2765,93 @@
       {
         "lineNumber": 249,
         "author": {
-          "gitId": "rgabelarde"
+          "gitId": "-"
         },
-        "content": "1. User chooses to find a flashcard."
+        "content": ""
       },
       {
         "lineNumber": 250,
         "author": {
-          "gitId": "rgabelarde"
+          "gitId": "-"
         },
-        "content": "2. User enters the keyword they would like to search for."
+        "content": "### User stories"
       },
       {
         "lineNumber": 251,
         "author": {
-          "gitId": "rgabelarde"
+          "gitId": "-"
         },
-        "content": "3. Bagel finds the flashcard and shows a list of flashcards that contain that keyword."
+        "content": ""
       },
       {
         "lineNumber": 252,
         "author": {
           "gitId": "-"
         },
-        "content": ""
+        "content": "Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unlikely to have) - `*`"
       },
       {
         "lineNumber": 253,
         "author": {
-          "gitId": "rgabelarde"
+          "gitId": "-"
         },
-        "content": "Use case ends."
+        "content": ""
       },
       {
         "lineNumber": 254,
         "author": {
           "gitId": "-"
         },
-        "content": ""
+        "content": "| Priority | As a …​                                    | I want to …​                     | So that I can…​                                                        |"
       },
       {
         "lineNumber": 255,
         "author": {
           "gitId": "-"
         },
-        "content": ""
+        "content": "| -------- | ------------------------------------------ | ------------------------------ | ---------------------------------------------------------------------- |"
       },
       {
         "lineNumber": 256,
         "author": {
-          "gitId": "rgabelarde"
+          "gitId": "liuyxxy"
         },
-        "content": "**Extensions**"
+        "content": "| `* * *`  | user                                       | add flashcards                 | memorise them                 |"
       },
       {
         "lineNumber": 257,
         "author": {
-          "gitId": "-"
+          "gitId": "liuyxxy"
         },
-        "content": ""
+        "content": "| `* * *`  | user                                       | delete my flashcards when I am done with them               | keep the list organised                                                                       |"
       },
       {
         "lineNumber": 258,
         "author": {
-          "gitId": "ysr25"
+          "gitId": "liuyxxy"
         },
-        "content": "* 2a. Bagel detects an error in the entered data."
+        "content": "| `* * *`  | user                                       | edit a flashcard                |  rephrase or fix mistakes that I originally wrote                                   |"
       },
       {
         "lineNumber": 259,
         "author": {
-          "gitId": "ysr25"
+          "gitId": "liuyxxy"
         },
-        "content": "    * 2a1. Bagel requests for the correct data."
+        "content": "| `* * *`  | user                                       | view individual flashcards          | read them |"
       },
       {
         "lineNumber": 260,
         "author": {
-          "gitId": "ysr25"
+          "gitId": "liuyxxy"
         },
-        "content": "    * 2a2. User enters new details."
+        "content": "| `* * *`    | user                                       | view a list of sets of flashcards that I currently have   | not mix them up                |"
       },
       {
         "lineNumber": 261,
         "author": {
-          "gitId": "ysr25"
+          "gitId": "liuyxxy"
         },
-        "content": "    * Steps 2a1-2a2 are repeated until the data entered are correct."
+        "content": "| `* * *`      | user  | “flip” through a set of flashcards           | memorise them                                                 |"
       },
       {
         "lineNumber": 262,
@@ -2863,9 +2863,9 @@
       {
         "lineNumber": 263,
         "author": {
-          "gitId": "rgabelarde"
+          "gitId": "-"
         },
-        "content": "Use case resumes from step 3."
+        "content": "### Use cases"
       },
       {
         "lineNumber": 264,
@@ -2877,72 +2877,72 @@
       {
         "lineNumber": 265,
         "author": {
-          "gitId": "-"
+          "gitId": "rgabelarde"
         },
-        "content": ""
+        "content": "(For all use cases below, the **System** is `Bagel` and the **Actor** is the `user`, unless specified otherwise)"
       },
       {
         "lineNumber": 266,
         "author": {
-          "gitId": "rgabelarde"
-        },
-        "content": "**Use case: UC02 - Editing a flashcard**"
-      },
-      {
-        "lineNumber": 267,
-        "author": {
           "gitId": "-"
         },
         "content": ""
       },
       {
-        "lineNumber": 268,
+        "lineNumber": 267,
         "author": {
           "gitId": "rgabelarde"
         },
-        "content": "**MSS**"
+        "content": "**Use case: UC01 - Finding a flashcard**"
+      },
+      {
+        "lineNumber": 268,
+        "author": {
+          "gitId": "-"
+        },
+        "content": ""
       },
       {
         "lineNumber": 269,
         "author": {
           "gitId": "-"
         },
-        "content": ""
+        "content": "**MSS**"
       },
       {
         "lineNumber": 270,
         "author": {
-          "gitId": "rgabelarde"
+          "gitId": "-"
         },
-        "content": "1. User chooses to edit a flashcard."
+        "content": ""
       },
       {
         "lineNumber": 271,
         "author": {
           "gitId": "rgabelarde"
         },
-        "content": "2. User enters ‘list’ to view indexes of flashcards."
+        "content": "1. User chooses to find a flashcard."
       },
       {
         "lineNumber": 272,
         "author": {
           "gitId": "rgabelarde"
         },
-        "content": "3. Bagel shows the list of flashcards."
+        "content": "2. User enters the keyword they would like to search for."
       },
       {
         "lineNumber": 273,
         "author": {
           "gitId": "rgabelarde"
         },
-        "content": "4. User enters the index of the flashcard they would like to edit, and the details to edit."
+        "content": "3. Bagel finds the flashcard and shows a list of flashcards that contain that keyword."
       },
       {
         "lineNumber": 274,
         "author": {
-          "gitId": "rgabelarde"
+          "gitId": "ysr25"
         },
-        "content": "5. Bagel edits the flashcard and shows the edited flashcard."
+        "content": ""
       },
       {
         "lineNumber": 275,
@@ -2968,7 +2968,7 @@
       {
         "lineNumber": 278,
         "author": {
-          "gitId": "rgabelarde"
+          "gitId": "-"
         },
         "content": "**Extensions**"
       },
@@ -2984,28 +2984,28 @@
         "author": {
           "gitId": "ysr25"
         },
-        "content": "* 4a. Bagel detects an error in the entered data."
+        "content": "* 2a. Bagel detects an error in the entered data."
       },
       {
         "lineNumber": 281,
         "author": {
           "gitId": "ysr25"
         },
-        "content": "    * 4a1. Bagel requests for the correct data."
+        "content": "    * 2a1. Bagel requests for the correct data."
       },
       {
         "lineNumber": 282,
         "author": {
           "gitId": "ysr25"
         },
-        "content": "    * 4a2. User enters new details."
+        "content": "    * 2a2. User enters new details."
       },
       {
         "lineNumber": 283,
         "author": {
           "gitId": "ysr25"
         },
-        "content": "    * Steps 4a1-4a2 are repeated until the data entered are correct."
+        "content": "    * Steps 2a1-2a2 are repeated until the data entered are correct."
       },
       {
         "lineNumber": 284,
@@ -3019,7 +3019,7 @@
         "author": {
           "gitId": "rgabelarde"
         },
-        "content": "Use case resumes from step 5."
+        "content": "Use case resumes from step 3."
       },
       {
         "lineNumber": 286,
@@ -3040,7 +3040,7 @@
         "author": {
           "gitId": "rgabelarde"
         },
-        "content": "**Use case: UC03 - Deleting a flashcard**"
+        "content": "**Use case: UC02 - Editing a flashcard**"
       },
       {
         "lineNumber": 289,
@@ -3068,7 +3068,7 @@
         "author": {
           "gitId": "rgabelarde"
         },
-        "content": "1. User chooses to delete a flashcard."
+        "content": "1. User chooses to edit a flashcard."
       },
       {
         "lineNumber": 293,
@@ -3089,28 +3089,28 @@
         "author": {
           "gitId": "rgabelarde"
         },
-        "content": "4. User enters the index of the flashcard they would like to delete."
+        "content": "4. User enters the index of the flashcard they would like to edit, and the details to edit."
       },
       {
         "lineNumber": 296,
         "author": {
           "gitId": "rgabelarde"
         },
-        "content": "5. Bagel deletes the flashcard and shows the new list of flashcards."
+        "content": "5. Bagel edits the flashcard and shows the edited flashcard."
       },
       {
         "lineNumber": 297,
         "author": {
-          "gitId": "-"
+          "gitId": "rgabelarde"
         },
-        "content": ""
+        "content": "Use case ends."
       },
       {
         "lineNumber": 298,
         "author": {
           "gitId": "-"
         },
-        "content": "Use case ends."
+        "content": ""
       },
       {
         "lineNumber": 299,
@@ -3122,161 +3122,161 @@
       {
         "lineNumber": 300,
         "author": {
-          "gitId": "-"
-        },
-        "content": ""
-      },
-      {
-        "lineNumber": 301,
-        "author": {
-          "gitId": "-"
+          "gitId": "rgabelarde"
         },
         "content": "**Extensions**"
       },
       {
-        "lineNumber": 302,
+        "lineNumber": 301,
         "author": {
-          "gitId": "-"
+          "gitId": "rgabelarde"
         },
         "content": ""
       },
       {
-        "lineNumber": 303,
+        "lineNumber": 302,
         "author": {
           "gitId": "ysr25"
         },
         "content": "* 4a. Bagel detects an error in the entered data."
       },
       {
-        "lineNumber": 304,
+        "lineNumber": 303,
         "author": {
           "gitId": "ysr25"
         },
         "content": "    * 4a1. Bagel requests for the correct data."
       },
       {
-        "lineNumber": 305,
+        "lineNumber": 304,
         "author": {
           "gitId": "ysr25"
         },
         "content": "    * 4a2. User enters new details."
       },
       {
-        "lineNumber": 306,
+        "lineNumber": 305,
         "author": {
           "gitId": "ysr25"
         },
         "content": "    * Steps 4a1-4a2 are repeated until the data entered are correct."
       },
       {
-        "lineNumber": 307,
+        "lineNumber": 306,
         "author": {
-          "gitId": "-"
+          "gitId": "ysr25"
         },
         "content": ""
       },
       {
-        "lineNumber": 308,
+        "lineNumber": 307,
         "author": {
           "gitId": "rgabelarde"
         },
         "content": "Use case resumes from step 5."
       },
       {
+        "lineNumber": 308,
+        "author": {
+          "gitId": "rgabelarde"
+        },
+        "content": ""
+      },
+      {
         "lineNumber": 309,
         "author": {
-          "gitId": "-"
+          "gitId": "rgabelarde"
         },
         "content": ""
       },
       {
         "lineNumber": 310,
         "author": {
-          "gitId": "-"
+          "gitId": "rgabelarde"
         },
-        "content": ""
+        "content": "**Use case: UC03 - Deleting a flashcard**"
       },
       {
         "lineNumber": 311,
         "author": {
-          "gitId": "rgabelarde"
-        },
-        "content": "**Use case: UC04 - Flipping through flashcards**"
-      },
-      {
-        "lineNumber": 312,
-        "author": {
           "gitId": "-"
         },
         "content": ""
       },
       {
-        "lineNumber": 313,
+        "lineNumber": 312,
         "author": {
           "gitId": "rgabelarde"
         },
         "content": "**MSS**"
       },
       {
-        "lineNumber": 314,
+        "lineNumber": 313,
         "author": {
-          "gitId": "-"
+          "gitId": "rgabelarde"
         },
         "content": ""
+      },
+      {
+        "lineNumber": 314,
+        "author": {
+          "gitId": "rgabelarde"
+        },
+        "content": "1. User chooses to delete a flashcard."
       },
       {
         "lineNumber": 315,
         "author": {
           "gitId": "rgabelarde"
         },
-        "content": "1. User chooses to flip through the list of flashcards."
+        "content": "2. User enters ‘list’ to view indexes of flashcards."
       },
       {
         "lineNumber": 316,
         "author": {
           "gitId": "rgabelarde"
         },
-        "content": "2. User enters ‘flip’ to start viewing from the first flashcard in the list."
+        "content": "3. Bagel shows the list of flashcards."
       },
       {
         "lineNumber": 317,
         "author": {
           "gitId": "rgabelarde"
         },
-        "content": "3. Bagel shows the first flashcard."
+        "content": "4. User enters the index of the flashcard they would like to delete."
       },
       {
         "lineNumber": 318,
         "author": {
           "gitId": "rgabelarde"
         },
-        "content": "4. User enters ‘flip’ to view the next flashcard in the list."
+        "content": "5. Bagel deletes the flashcard and shows the new list of flashcards."
       },
       {
         "lineNumber": 319,
         "author": {
-          "gitId": "rgabelarde"
+          "gitId": "ysr25"
         },
-        "content": "5. Bagel shows the next flashcard."
+        "content": ""
       },
       {
         "lineNumber": 320,
         "author": {
-          "gitId": "rgabelarde"
+          "gitId": "-"
         },
-        "content": "Steps 4-5 are repeated for each flashcard, until the user reaches the end of the list."
+        "content": "Use case ends."
       },
       {
         "lineNumber": 321,
         "author": {
-          "gitId": "rgabelarde"
+          "gitId": "-"
         },
-        "content": "6. Bagel shows the current list of flashcards."
+        "content": ""
       },
       {
         "lineNumber": 322,
         "author": {
-          "gitId": "-"
+          "gitId": "rgabelarde"
         },
         "content": ""
       },
@@ -3285,7 +3285,7 @@
         "author": {
           "gitId": "-"
         },
-        "content": "Use case ends."
+        "content": "**Extensions**"
       },
       {
         "lineNumber": 324,
@@ -3297,56 +3297,56 @@
       {
         "lineNumber": 325,
         "author": {
-          "gitId": "-"
+          "gitId": "ysr25"
         },
-        "content": ""
+        "content": "* 4a. Bagel detects an error in the entered data."
       },
       {
         "lineNumber": 326,
         "author": {
-          "gitId": "rgabelarde"
+          "gitId": "ysr25"
         },
-        "content": "**Extensions**"
+        "content": "    * 4a1. Bagel requests for the correct data."
       },
       {
         "lineNumber": 327,
         "author": {
-          "gitId": "-"
+          "gitId": "ysr25"
         },
-        "content": ""
+        "content": "    * 4a2. User enters new details."
       },
       {
         "lineNumber": 328,
         "author": {
           "gitId": "ysr25"
         },
-        "content": "* 2a/4a. Bagel detects an error in the entered data."
+        "content": "    * Steps 4a1-4a2 are repeated until the data entered are correct."
       },
       {
         "lineNumber": 329,
         "author": {
           "gitId": "ysr25"
         },
-        "content": "    * 2a1/4a1. Bagel requests for the correct data."
+        "content": ""
       },
       {
         "lineNumber": 330,
         "author": {
-          "gitId": "ysr25"
+          "gitId": "rgabelarde"
         },
-        "content": "    * 2a2/4a2. User enters new details."
+        "content": "Use case resumes from step 5."
       },
       {
         "lineNumber": 331,
         "author": {
-          "gitId": "ysr25"
+          "gitId": "-"
         },
-        "content": "    * Steps 2a1-2a2/4a1-4a2 are repeated until the data entered are correct."
+        "content": ""
       },
       {
         "lineNumber": 332,
         "author": {
-          "gitId": "-"
+          "gitId": "rgabelarde"
         },
         "content": ""
       },
@@ -3355,161 +3355,161 @@
         "author": {
           "gitId": "rgabelarde"
         },
-        "content": "Use case resumes from step 3/5."
+        "content": "**Use case: UC04 - Flipping through flashcards**"
       },
       {
         "lineNumber": 334,
         "author": {
-          "gitId": "-"
+          "gitId": "rgabelarde"
         },
         "content": ""
       },
       {
         "lineNumber": 335,
         "author": {
-          "gitId": "-"
+          "gitId": "rgabelarde"
         },
-        "content": ""
+        "content": "**MSS**"
       },
       {
         "lineNumber": 336,
         "author": {
-          "gitId": "-"
+          "gitId": "rgabelarde"
         },
-        "content": "### Non-Functional Requirements"
+        "content": ""
       },
       {
         "lineNumber": 337,
         "author": {
-          "gitId": "-"
+          "gitId": "rgabelarde"
         },
-        "content": ""
+        "content": "1. User chooses to flip through the list of flashcards."
       },
       {
         "lineNumber": 338,
         "author": {
-          "gitId": "liuyxxy"
+          "gitId": "rgabelarde"
         },
-        "content": "1. Bagel should work on any _mainstream OS_ as long as it has Java `11` or above installed."
+        "content": "2. User enters ‘flip’ to start viewing from the first flashcard in the list."
       },
       {
         "lineNumber": 339,
         "author": {
-          "gitId": "liuyxxy"
+          "gitId": "rgabelarde"
         },
-        "content": "2. Bagel should be able to hold up to 500 flashcards without a noticeable sluggishness in performance for typical usage."
+        "content": "3. Bagel shows the first flashcard."
       },
       {
         "lineNumber": 340,
         "author": {
-          "gitId": "liuyxxy"
+          "gitId": "rgabelarde"
         },
-        "content": "3. Bagel should be intuitive to use for first time users."
+        "content": "4. User enters ‘flip’ to view the next flashcard in the list."
       },
       {
         "lineNumber": 341,
         "author": {
-          "gitId": "liuyxxy"
+          "gitId": "rgabelarde"
         },
-        "content": "4. Bagel should be targeting users who can type fast and prefer typing over other means of input."
+        "content": "5. Bagel shows the next flashcard."
       },
       {
         "lineNumber": 342,
         "author": {
-          "gitId": "liuyxxy"
+          "gitId": "rgabelarde"
         },
-        "content": "5. Bagel should respond within two seconds."
+        "content": "Steps 4-5 are repeated for each flashcard, until the user reaches the end of the list."
       },
       {
         "lineNumber": 343,
         "author": {
-          "gitId": "liuyxxy"
+          "gitId": "rgabelarde"
         },
-        "content": "6. Bagel should show flashcards within one second of inputting the command."
+        "content": "6. Bagel shows the current list of flashcards."
       },
       {
         "lineNumber": 344,
         "author": {
-          "gitId": "liuyxxy"
+          "gitId": "ysr25"
         },
-        "content": "7. Any version of Bagel should function as long as the user has it installed."
+        "content": ""
       },
       {
         "lineNumber": 345,
         "author": {
-          "gitId": "liuyxxy"
+          "gitId": "-"
         },
-        "content": "8. Bagel is expected to adhere to the CS2103T schedule."
+        "content": "Use case ends."
       },
       {
         "lineNumber": 346,
         "author": {
-          "gitId": "liuyxxy"
+          "gitId": "-"
         },
-        "content": "9. Bagel is not expected to quiz the user."
+        "content": ""
       },
       {
         "lineNumber": 347,
         "author": {
-          "gitId": "liuyxxy"
+          "gitId": "-"
         },
-        "content": "10. Bagel should be for a single user."
+        "content": ""
       },
       {
         "lineNumber": 348,
         "author": {
-          "gitId": "-"
+          "gitId": "rgabelarde"
         },
-        "content": ""
+        "content": "**Extensions**"
       },
       {
         "lineNumber": 349,
         "author": {
           "gitId": "-"
         },
-        "content": "### Glossary"
+        "content": ""
       },
       {
         "lineNumber": 350,
         "author": {
-          "gitId": "-"
+          "gitId": "ysr25"
         },
-        "content": ""
+        "content": "* 2a/4a. Bagel detects an error in the entered data."
       },
       {
         "lineNumber": 351,
         "author": {
-          "gitId": "-"
+          "gitId": "ysr25"
         },
-        "content": "* **Mainstream OS**: Windows, Linux, Unix, OS-X"
+        "content": "    * 2a1/4a1. Bagel requests for the correct data."
       },
       {
         "lineNumber": 352,
         "author": {
-          "gitId": "-"
+          "gitId": "ysr25"
         },
-        "content": ""
+        "content": "    * 2a2/4a2. User enters new details."
       },
       {
         "lineNumber": 353,
         "author": {
-          "gitId": "-"
+          "gitId": "ysr25"
         },
-        "content": "--------------------------------------------------------------------------------------------------------------------"
+        "content": "    * Steps 2a1-2a2/4a1-4a2 are repeated until the data entered are correct."
       },
       {
         "lineNumber": 354,
         "author": {
-          "gitId": "-"
+          "gitId": "ysr25"
         },
         "content": ""
       },
       {
         "lineNumber": 355,
         "author": {
-          "gitId": "-"
+          "gitId": "rgabelarde"
         },
-        "content": "## **Appendix: Instructions for manual testing**"
+        "content": "Use case resumes from step 3/5."
       },
       {
         "lineNumber": 356,
@@ -3523,105 +3523,105 @@
         "author": {
           "gitId": "-"
         },
-        "content": "Given below are instructions to test the app manually."
+        "content": ""
       },
       {
         "lineNumber": 358,
         "author": {
           "gitId": "-"
         },
-        "content": ""
+        "content": "### Non-Functional Requirements"
       },
       {
         "lineNumber": 359,
         "author": {
           "gitId": "-"
         },
-        "content": "\u003cdiv markdown\u003d\"span\" class\u003d\"alert alert-info\"\u003e:information_source: **Note:** These instructions only provide a starting point for testers to work on;"
+        "content": ""
       },
       {
         "lineNumber": 360,
         "author": {
-          "gitId": "-"
+          "gitId": "liuyxxy"
         },
-        "content": "testers are expected to do more *exploratory* testing."
+        "content": "1. Bagel should work on any _mainstream OS_ as long as it has Java `11` or above installed."
       },
       {
         "lineNumber": 361,
         "author": {
-          "gitId": "-"
+          "gitId": "liuyxxy"
         },
-        "content": ""
+        "content": "2. Bagel should be able to hold up to 500 flashcards without a noticeable sluggishness in performance for typical usage."
       },
       {
         "lineNumber": 362,
         "author": {
-          "gitId": "-"
+          "gitId": "liuyxxy"
         },
-        "content": "\u003c/div\u003e"
+        "content": "3. Bagel should be intuitive to use for first time users."
       },
       {
         "lineNumber": 363,
         "author": {
-          "gitId": "-"
+          "gitId": "liuyxxy"
         },
-        "content": ""
+        "content": "4. Bagel should be targeting users who can type fast and prefer typing over other means of input."
       },
       {
         "lineNumber": 364,
         "author": {
-          "gitId": "-"
+          "gitId": "liuyxxy"
         },
-        "content": "### Launch and shutdown"
+        "content": "5. Bagel should respond within two seconds."
       },
       {
         "lineNumber": 365,
         "author": {
-          "gitId": "-"
+          "gitId": "liuyxxy"
         },
-        "content": ""
+        "content": "6. Bagel should show flashcards within one second of inputting the command."
       },
       {
         "lineNumber": 366,
         "author": {
-          "gitId": "-"
+          "gitId": "liuyxxy"
         },
-        "content": "1. Initial launch"
+        "content": "7. Any version of Bagel should function as long as the user has it installed."
       },
       {
         "lineNumber": 367,
         "author": {
-          "gitId": "-"
+          "gitId": "liuyxxy"
         },
-        "content": ""
+        "content": "8. Bagel is expected to adhere to the CS2103T schedule."
       },
       {
         "lineNumber": 368,
         "author": {
-          "gitId": "ysr25"
+          "gitId": "liuyxxy"
         },
-        "content": "   1. Download the jar file and copy into an empty folder."
+        "content": "9. Bagel is not expected to quiz the user."
       },
       {
         "lineNumber": 369,
+        "author": {
+          "gitId": "liuyxxy"
+        },
+        "content": "10. Bagel should be for a single user."
+      },
+      {
+        "lineNumber": 370,
         "author": {
           "gitId": "-"
         },
         "content": ""
       },
       {
-        "lineNumber": 370,
-        "author": {
-          "gitId": "ysr25"
-        },
-        "content": "   1. Double-click the jar file.\u003cbr\u003e"
-      },
-      {
         "lineNumber": 371,
         "author": {
-          "gitId": "ysr25"
+          "gitId": "-"
         },
-        "content": "      Expected: Shows the GUI with a set of sample contacts. The window size may not be optimum."
+        "content": "### Glossary"
       },
       {
         "lineNumber": 372,
@@ -3635,7 +3635,7 @@
         "author": {
           "gitId": "-"
         },
-        "content": "1. Saving window preferences"
+        "content": "* **Mainstream OS**: Windows, Linux, Unix, OS-X"
       },
       {
         "lineNumber": 374,
@@ -3649,7 +3649,7 @@
         "author": {
           "gitId": "-"
         },
-        "content": "   1. Resize the window to an optimum size. Move the window to a different location. Close the window."
+        "content": "--------------------------------------------------------------------------------------------------------------------"
       },
       {
         "lineNumber": 376,
@@ -3663,42 +3663,42 @@
         "author": {
           "gitId": "-"
         },
-        "content": "   1. Re-launch the app by double-clicking the jar file.\u003cbr\u003e"
+        "content": "## **Appendix: Instructions for manual testing**"
       },
       {
         "lineNumber": 378,
         "author": {
           "gitId": "-"
         },
-        "content": "      Expected: The most recent window size and location is retained."
+        "content": ""
       },
       {
         "lineNumber": 379,
         "author": {
           "gitId": "-"
         },
-        "content": ""
+        "content": "Given below are instructions to test the app manually."
       },
       {
         "lineNumber": 380,
-        "author": {
-          "gitId": "liuyxxy"
-        },
-        "content": "### Deleting a flashcard"
-      },
-      {
-        "lineNumber": 381,
         "author": {
           "gitId": "-"
         },
         "content": ""
       },
       {
+        "lineNumber": 381,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "\u003cdiv markdown\u003d\"span\" class\u003d\"alert alert-info\"\u003e:information_source: **Note:** These instructions only provide a starting point for testers to work on;"
+      },
+      {
         "lineNumber": 382,
         "author": {
-          "gitId": "liuyxxy"
+          "gitId": "-"
         },
-        "content": "1. Deleting a flashcard while all flashcards are being shown"
+        "content": "testers are expected to do more *exploratory* testing."
       },
       {
         "lineNumber": 383,
@@ -3710,9 +3710,9 @@
       {
         "lineNumber": 384,
         "author": {
-          "gitId": "liuyxxy"
+          "gitId": "-"
         },
-        "content": "   1. Prerequisites: List all flashcards using the `list` command. Multiple flashcards in the list."
+        "content": "\u003c/div\u003e"
       },
       {
         "lineNumber": 385,
@@ -3726,35 +3726,35 @@
         "author": {
           "gitId": "-"
         },
-        "content": "   1. Test case: `delete 1`\u003cbr\u003e"
+        "content": "### Launch and shutdown"
       },
       {
         "lineNumber": 387,
         "author": {
           "gitId": "-"
         },
-        "content": "      Expected: First contact is deleted from the list. Details of the deleted contact shown in the status message. Timestamp in the status bar is updated."
+        "content": ""
       },
       {
         "lineNumber": 388,
         "author": {
           "gitId": "-"
         },
-        "content": ""
+        "content": "1. Initial launch"
       },
       {
         "lineNumber": 389,
         "author": {
           "gitId": "-"
         },
-        "content": "   1. Test case: `delete 0`\u003cbr\u003e"
+        "content": ""
       },
       {
         "lineNumber": 390,
         "author": {
-          "gitId": "liuyxxy"
+          "gitId": "ysr25"
         },
-        "content": "      Expected: No flashcard is deleted. Error details shown in the status message. Status bar remains the same."
+        "content": "   1. Download the jar file and copy into an empty folder."
       },
       {
         "lineNumber": 391,
@@ -3766,16 +3766,16 @@
       {
         "lineNumber": 392,
         "author": {
-          "gitId": "-"
+          "gitId": "ysr25"
         },
-        "content": "   1. Other incorrect delete commands to try: `delete`, `delete x`, `...` (where x is larger than the list size)\u003cbr\u003e"
+        "content": "   1. Double-click the jar file.\u003cbr\u003e"
       },
       {
         "lineNumber": 393,
         "author": {
-          "gitId": "-"
+          "gitId": "ysr25"
         },
-        "content": "      Expected: Similar to previous."
+        "content": "      Expected: Shows the GUI with a set of sample contacts. The window size may not be optimum."
       },
       {
         "lineNumber": 394,
@@ -3789,7 +3789,7 @@
         "author": {
           "gitId": "-"
         },
-        "content": "### Saving data"
+        "content": "1. Saving window preferences"
       },
       {
         "lineNumber": 396,
@@ -3803,7 +3803,7 @@
         "author": {
           "gitId": "-"
         },
-        "content": "1. Dealing with missing/corrupted data files"
+        "content": "   1. Resize the window to an optimum size. Move the window to a different location. Close the window."
       },
       {
         "lineNumber": 398,
@@ -3817,10 +3817,164 @@
         "author": {
           "gitId": "-"
         },
-        "content": "   1. _{explain how to simulate a missing/corrupted file, and the expected behavior}_"
+        "content": "   1. Re-launch the app by double-clicking the jar file.\u003cbr\u003e"
       },
       {
         "lineNumber": 400,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "      Expected: The most recent window size and location is retained."
+      },
+      {
+        "lineNumber": 401,
+        "author": {
+          "gitId": "-"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 402,
+        "author": {
+          "gitId": "liuyxxy"
+        },
+        "content": "### Deleting a flashcard"
+      },
+      {
+        "lineNumber": 403,
+        "author": {
+          "gitId": "-"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 404,
+        "author": {
+          "gitId": "liuyxxy"
+        },
+        "content": "1. Deleting a flashcard while all flashcards are being shown"
+      },
+      {
+        "lineNumber": 405,
+        "author": {
+          "gitId": "-"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 406,
+        "author": {
+          "gitId": "liuyxxy"
+        },
+        "content": "   1. Prerequisites: List all flashcards using the `list` command. Multiple flashcards in the list."
+      },
+      {
+        "lineNumber": 407,
+        "author": {
+          "gitId": "-"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 408,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "   1. Test case: `delete 1`\u003cbr\u003e"
+      },
+      {
+        "lineNumber": 409,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "      Expected: First contact is deleted from the list. Details of the deleted contact shown in the status message. Timestamp in the status bar is updated."
+      },
+      {
+        "lineNumber": 410,
+        "author": {
+          "gitId": "-"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 411,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "   1. Test case: `delete 0`\u003cbr\u003e"
+      },
+      {
+        "lineNumber": 412,
+        "author": {
+          "gitId": "liuyxxy"
+        },
+        "content": "      Expected: No flashcard is deleted. Error details shown in the status message. Status bar remains the same."
+      },
+      {
+        "lineNumber": 413,
+        "author": {
+          "gitId": "-"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 414,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "   1. Other incorrect delete commands to try: `delete`, `delete x`, `...` (where x is larger than the list size)\u003cbr\u003e"
+      },
+      {
+        "lineNumber": 415,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "      Expected: Similar to previous."
+      },
+      {
+        "lineNumber": 416,
+        "author": {
+          "gitId": "-"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 417,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "### Saving data"
+      },
+      {
+        "lineNumber": 418,
+        "author": {
+          "gitId": "-"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 419,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "1. Dealing with missing/corrupted data files"
+      },
+      {
+        "lineNumber": 420,
+        "author": {
+          "gitId": "-"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 421,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "   1. _{explain how to simulate a missing/corrupted file, and the expected behavior}_"
+      },
+      {
+        "lineNumber": 422,
         "author": {
           "gitId": "-"
         },
@@ -3828,11 +3982,11 @@
       }
     ],
     "authorContributionMap": {
-      "ysr25": 43,
-      "rgabelarde": 40,
+      "ysr25": 49,
+      "rgabelarde": 47,
       "jacetjy": 17,
-      "yuki-cell": 4,
-      "-": 252,
+      "yuki-cell": 21,
+      "-": 244,
       "liuyxxy": 44
     }
   },
@@ -5607,7 +5761,7 @@
       {
         "lineNumber": 159,
         "author": {
-          "gitId": "-"
+          "gitId": "jacetjy"
         },
         "content": ""
       },
@@ -5635,7 +5789,7 @@
       {
         "lineNumber": 163,
         "author": {
-          "gitId": "-"
+          "gitId": "liuyxxy"
         },
         "content": ""
       },
@@ -5663,7 +5817,7 @@
       {
         "lineNumber": 167,
         "author": {
-          "gitId": "-"
+          "gitId": "rgabelarde"
         },
         "content": ""
       },
@@ -5684,23 +5838,23 @@
       {
         "lineNumber": 170,
         "author": {
-          "gitId": "ysr25"
+          "gitId": "yuki-cell"
         },
-        "content": "Flips from the current flashcard to the next flashcard in the list."
+        "content": "Flips from the current flashcard to the next flashcard in the sequence."
       },
       {
         "lineNumber": 171,
         "author": {
-          "gitId": "-"
+          "gitId": "yuki-cell"
         },
-        "content": ""
+        "content": "* If multiple flashcards are shown, first flashcard at top will be shown"
       },
       {
         "lineNumber": 172,
         "author": {
-          "gitId": "ysr25"
+          "gitId": "yuki-cell"
         },
-        "content": "Format: `flip`"
+        "content": "* Go back to first flashcard once reach the end of the sequence."
       },
       {
         "lineNumber": 173,
@@ -5712,58 +5866,58 @@
       {
         "lineNumber": 174,
         "author": {
-          "gitId": "-"
+          "gitId": "ysr25"
         },
-        "content": ""
+        "content": "Format: `flip`"
       },
       {
         "lineNumber": 175,
         "author": {
-          "gitId": "ysr25"
+          "gitId": "-"
         },
-        "content": "### Searching through flashcards: `search`"
+        "content": "Examples:"
       },
       {
         "lineNumber": 176,
         "author": {
-          "gitId": "-"
+          "gitId": "yuki-cell"
         },
-        "content": ""
+        "content": "1. Current flashcards in the sequence"
       },
       {
         "lineNumber": 177,
         "author": {
-          "gitId": "ysr25"
+          "gitId": "yuki-cell"
         },
-        "content": "Searches for flashcards that have a matching title or description with `KEYWORD` from all flashcards."
+        "content": "![flip example](images/flipExample1.png)"
       },
       {
         "lineNumber": 178,
         "author": {
-          "gitId": "-"
+          "gitId": "yuki-cell"
         },
-        "content": ""
+        "content": "2. type \"flip\" and show first flashcard in the sequence"
       },
       {
         "lineNumber": 179,
         "author": {
-          "gitId": "rgabelarde"
+          "gitId": "yuki-cell"
         },
-        "content": "Format: `search k/KEYWORD`"
+        "content": "![flip example](images/flipExample2.png)"
       },
       {
         "lineNumber": 180,
         "author": {
-          "gitId": "-"
+          "gitId": "yuki-cell"
         },
-        "content": ""
+        "content": "3. type \"flip\" and show next flashcard in the sequence"
       },
       {
         "lineNumber": 181,
         "author": {
-          "gitId": "ysr25"
+          "gitId": "yuki-cell"
         },
-        "content": "* Searches for flashcards that match with `KEYWORD`."
+        "content": "![flip example](images/flipExample3.png)"
       },
       {
         "lineNumber": 182,
@@ -5775,404 +5929,474 @@
       {
         "lineNumber": 183,
         "author": {
-          "gitId": "rgabelarde"
-        },
-        "content": "Examples:"
-      },
-      {
-        "lineNumber": 184,
-        "author": {
-          "gitId": "rgabelarde"
-        },
-        "content": "*  `search k/testing` returns `testing1`, `testing2` and `testing23` "
-      },
-      {
-        "lineNumber": 185,
-        "author": {
-          "gitId": "rgabelarde"
-        },
-        "content": "![search example](images/searchExample.png)"
-      },
-      {
-        "lineNumber": 186,
-        "author": {
-          "gitId": "rgabelarde"
+          "gitId": "-"
         },
         "content": ""
       },
       {
+        "lineNumber": 184,
+        "author": {
+          "gitId": "ysr25"
+        },
+        "content": "### Searching through flashcards: `search`"
+      },
+      {
+        "lineNumber": 185,
+        "author": {
+          "gitId": "-"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 186,
+        "author": {
+          "gitId": "yuki-cell"
+        },
+        "content": "Searches for flashcards that have a matching title or description or tag with `KEYWORD` from all flashcards."
+      },
+      {
         "lineNumber": 187,
         "author": {
-          "gitId": "rgabelarde"
+          "gitId": "-"
         },
         "content": ""
       },
       {
         "lineNumber": 188,
         "author": {
-          "gitId": "liuyxxy"
+          "gitId": "rgabelarde"
         },
-        "content": "### Sorting flashcards: `sort`"
+        "content": "Format: `search k/KEYWORD`"
       },
       {
         "lineNumber": 189,
         "author": {
-          "gitId": "liuyxxy"
+          "gitId": "-"
         },
         "content": ""
       },
       {
         "lineNumber": 190,
         "author": {
-          "gitId": "liuyxxy"
+          "gitId": "ysr25"
         },
-        "content": "Sorts the current flashcard list. "
+        "content": "* Searches for flashcards that match with `KEYWORD`."
       },
       {
         "lineNumber": 191,
         "author": {
-          "gitId": "liuyxxy"
+          "gitId": "yuki-cell"
         },
-        "content": ""
+        "content": "* Search is case insensitive. Ex) k/apple can search \"apple\" and \"APPLe\""
       },
       {
         "lineNumber": 192,
         "author": {
-          "gitId": "liuyxxy"
-        },
-        "content": "Format: `sort r/REQUIREMENT`"
-      },
-      {
-        "lineNumber": 193,
-        "author": {
-          "gitId": "liuyxxy"
+          "gitId": "yuki-cell"
         },
         "content": ""
       },
       {
+        "lineNumber": 193,
+        "author": {
+          "gitId": "rgabelarde"
+        },
+        "content": "Examples:"
+      },
+      {
         "lineNumber": 194,
         "author": {
-          "gitId": "liuyxxy"
+          "gitId": "rgabelarde"
         },
-        "content": "* Sorts the list by the specified requirement. "
+        "content": "*  `search k/testing` returns `testing1`, `testing2` and `testing23` "
       },
       {
         "lineNumber": 195,
         "author": {
-          "gitId": "liuyxxy"
+          "gitId": "rgabelarde"
         },
-        "content": "* The requirement **must be one of the following**:"
+        "content": "![search example](images/searchExample.png)"
       },
       {
         "lineNumber": 196,
         "author": {
-          "gitId": "liuyxxy"
+          "gitId": "-"
         },
-        "content": "    * title"
+        "content": ""
       },
       {
         "lineNumber": 197,
         "author": {
-          "gitId": "liuyxxy"
+          "gitId": "-"
         },
-        "content": "    * tag"
+        "content": ""
       },
       {
         "lineNumber": 198,
         "author": {
           "gitId": "liuyxxy"
         },
-        "content": "    "
+        "content": "### Sorting flashcards: `sort`"
       },
       {
         "lineNumber": 199,
         "author": {
-          "gitId": "liuyxxy"
+          "gitId": "-"
         },
-        "content": "Examples:"
+        "content": ""
       },
       {
         "lineNumber": 200,
         "author": {
           "gitId": "liuyxxy"
         },
-        "content": "* `sort r/title` returns the list of flashcards, sorted in ascending alphabetical order."
+        "content": "Sorts the current flashcard list. "
       },
       {
         "lineNumber": 201,
         "author": {
-          "gitId": "liuyxxy"
+          "gitId": "-"
         },
-        "content": "* `sort r/tag` returns the list of flashcards, sorted according to each flashcard\u0027s first tag."
+        "content": ""
       },
       {
         "lineNumber": 202,
         "author": {
           "gitId": "liuyxxy"
         },
-        "content": ""
+        "content": "Format: `sort r/REQUIREMENT`"
       },
       {
         "lineNumber": 203,
         "author": {
-          "gitId": "rgabelarde"
+          "gitId": "-"
         },
         "content": ""
       },
       {
         "lineNumber": 204,
         "author": {
-          "gitId": "-"
+          "gitId": "liuyxxy"
         },
-        "content": "### Exiting the program: `exit`"
+        "content": "* Sorts the list by the specified requirement. "
       },
       {
         "lineNumber": 205,
         "author": {
-          "gitId": "-"
+          "gitId": "liuyxxy"
         },
-        "content": ""
+        "content": "* The requirement **must be one of the following**:"
       },
       {
         "lineNumber": 206,
         "author": {
-          "gitId": "-"
+          "gitId": "liuyxxy"
         },
-        "content": "Exits the program."
+        "content": "    * title"
       },
       {
         "lineNumber": 207,
         "author": {
-          "gitId": "-"
+          "gitId": "liuyxxy"
         },
-        "content": ""
+        "content": "    * tag"
       },
       {
         "lineNumber": 208,
         "author": {
-          "gitId": "-"
+          "gitId": "liuyxxy"
         },
-        "content": "Format: `exit`"
+        "content": "    "
       },
       {
         "lineNumber": 209,
         "author": {
-          "gitId": "-"
+          "gitId": "liuyxxy"
         },
-        "content": ""
+        "content": "Examples:"
       },
       {
         "lineNumber": 210,
         "author": {
-          "gitId": "-"
+          "gitId": "liuyxxy"
         },
-        "content": "--------------------------------------------------------------------------------------------------------------------"
+        "content": "* `sort r/title` returns the list of flashcards, sorted in ascending alphabetical order."
       },
       {
         "lineNumber": 211,
         "author": {
-          "gitId": "-"
+          "gitId": "liuyxxy"
         },
-        "content": ""
+        "content": "* `sort r/tag` returns the list of flashcards, sorted according to each flashcard\u0027s first tag."
       },
       {
         "lineNumber": 212,
         "author": {
-          "gitId": "-"
+          "gitId": "liuyxxy"
         },
-        "content": "## FAQ"
+        "content": ""
       },
       {
         "lineNumber": 213,
         "author": {
-          "gitId": "-"
+          "gitId": "rgabelarde"
         },
         "content": ""
       },
       {
         "lineNumber": 214,
         "author": {
-          "gitId": "rgabelarde"
+          "gitId": "-"
         },
-        "content": "**Q**: Placeholder Question\u003cbr\u003e"
+        "content": "### Exiting the program: `exit`"
       },
       {
         "lineNumber": 215,
         "author": {
-          "gitId": "rgabelarde"
+          "gitId": "-"
         },
-        "content": "**A**: Placeholder Answer"
+        "content": ""
       },
       {
         "lineNumber": 216,
         "author": {
           "gitId": "-"
         },
-        "content": ""
+        "content": "Exits the program."
       },
       {
         "lineNumber": 217,
         "author": {
           "gitId": "-"
         },
-        "content": "--------------------------------------------------------------------------------------------------------------------"
+        "content": ""
       },
       {
         "lineNumber": 218,
         "author": {
           "gitId": "-"
         },
-        "content": ""
+        "content": "Format: `exit`"
       },
       {
         "lineNumber": 219,
         "author": {
-          "gitId": "jacetjy"
-        },
-        "content": "## Glossary"
-      },
-      {
-        "lineNumber": 220,
-        "author": {
-          "gitId": "jacetjy"
+          "gitId": "-"
         },
         "content": ""
       },
       {
+        "lineNumber": 220,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "--------------------------------------------------------------------------------------------------------------------"
+      },
+      {
         "lineNumber": 221,
         "author": {
-          "gitId": "jacetjy"
+          "gitId": "-"
         },
-        "content": "* __Set__: It acts similarly to a folder in the real world. If you want to categorize your flashcards, you can make use of "
+        "content": ""
       },
       {
         "lineNumber": 222,
         "author": {
-          "gitId": "jacetjy"
+          "gitId": "-"
         },
-        "content": "the \u0027set\u0027 feature to place each flashcard into different sets. "
+        "content": "## FAQ"
       },
       {
         "lineNumber": 223,
         "author": {
-          "gitId": "jacetjy"
+          "gitId": "-"
         },
         "content": ""
       },
       {
         "lineNumber": 224,
         "author": {
-          "gitId": "jacetjy"
+          "gitId": "rgabelarde"
         },
-        "content": ""
+        "content": "**Q**: Placeholder Question\u003cbr\u003e"
       },
       {
         "lineNumber": 225,
         "author": {
-          "gitId": "jacetjy"
+          "gitId": "rgabelarde"
         },
-        "content": "--------------------------------------------------------------------------------------------------------------------"
+        "content": "**A**: Placeholder Answer"
       },
       {
         "lineNumber": 226,
         "author": {
           "gitId": "-"
         },
-        "content": "## Command summary"
+        "content": ""
       },
       {
         "lineNumber": 227,
         "author": {
           "gitId": "-"
         },
-        "content": ""
+        "content": "--------------------------------------------------------------------------------------------------------------------"
       },
       {
         "lineNumber": 228,
         "author": {
           "gitId": "-"
         },
-        "content": "Action | Format, Examples"
+        "content": ""
       },
       {
         "lineNumber": 229,
         "author": {
-          "gitId": "-"
+          "gitId": "jacetjy"
         },
-        "content": "--------|------------------"
+        "content": "## Glossary"
       },
       {
         "lineNumber": 230,
         "author": {
-          "gitId": "ysr25"
+          "gitId": "jacetjy"
         },
-        "content": "**Add** | `add t/TITLE d/DESCRIPTION [s/SET] [l/LINK] [tag/TAG]…`\u003cbr\u003e e.g., `add t/Data Analysis d/The definition of Data Analysis is…`"
+        "content": ""
       },
       {
         "lineNumber": 231,
         "author": {
-          "gitId": "-"
+          "gitId": "jacetjy"
         },
-        "content": "**Clear** | `clear`"
+        "content": "* __Set__: It acts similarly to a folder in the real world. If you want to categorize your flashcards, you can make use of "
       },
       {
         "lineNumber": 232,
         "author": {
-          "gitId": "-"
+          "gitId": "jacetjy"
         },
-        "content": "**Delete** | `delete INDEX`\u003cbr\u003e e.g., `delete 3`"
+        "content": "the \u0027set\u0027 feature to place each flashcard into different sets. "
       },
       {
         "lineNumber": 233,
         "author": {
-          "gitId": "ysr25"
+          "gitId": "jacetjy"
         },
-        "content": "**Edit** | `edit INDEX [t/TITLE] [d/DESCRIPTION] [s/SET] [l/LINK] [tag/TAG]`\u003cbr\u003e e.g.,`edit 1 t/Data analysis`"
+        "content": ""
       },
       {
         "lineNumber": 234,
         "author": {
-          "gitId": "rgabelarde"
+          "gitId": "jacetjy"
         },
-        "content": "**View** | `view INDEX`\u003cbr\u003e e.g., `view 1`"
+        "content": ""
       },
       {
         "lineNumber": 235,
         "author": {
-          "gitId": "-"
+          "gitId": "jacetjy"
         },
-        "content": "**List** | `list`"
+        "content": "--------------------------------------------------------------------------------------------------------------------"
       },
       {
         "lineNumber": 236,
         "author": {
-          "gitId": "rgabelarde"
+          "gitId": "-"
         },
-        "content": "**Flip** | `flip`"
+        "content": "## Command summary"
       },
       {
         "lineNumber": 237,
         "author": {
-          "gitId": "rgabelarde"
+          "gitId": "-"
         },
-        "content": "**Search** | `search [k/KEYWORD]` \u003cbr\u003e e.g., `search k/Data`"
+        "content": ""
       },
       {
         "lineNumber": 238,
         "author": {
-          "gitId": "rgabelarde"
+          "gitId": "-"
         },
-        "content": "**Sort** | `sort r/REQUIREMENT` \u003cbr\u003e e.g., `search r/tag`"
+        "content": "Action | Format, Examples"
       },
       {
         "lineNumber": 239,
         "author": {
           "gitId": "-"
         },
-        "content": "**Help** | `help`"
+        "content": "--------|------------------"
       },
       {
         "lineNumber": 240,
+        "author": {
+          "gitId": "ysr25"
+        },
+        "content": "**Add** | `add t/TITLE d/DESCRIPTION [s/SET] [l/LINK] [tag/TAG]…`\u003cbr\u003e e.g., `add t/Data Analysis d/The definition of Data Analysis is…`"
+      },
+      {
+        "lineNumber": 241,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "**Clear** | `clear`"
+      },
+      {
+        "lineNumber": 242,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "**Delete** | `delete INDEX`\u003cbr\u003e e.g., `delete 3`"
+      },
+      {
+        "lineNumber": 243,
+        "author": {
+          "gitId": "ysr25"
+        },
+        "content": "**Edit** | `edit INDEX [t/TITLE] [d/DESCRIPTION] [s/SET] [l/LINK] [tag/TAG]`\u003cbr\u003e e.g.,`edit 1 t/Data analysis`"
+      },
+      {
+        "lineNumber": 244,
+        "author": {
+          "gitId": "rgabelarde"
+        },
+        "content": "**View** | `view INDEX`\u003cbr\u003e e.g., `view 1`"
+      },
+      {
+        "lineNumber": 245,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "**List** | `list`"
+      },
+      {
+        "lineNumber": 246,
+        "author": {
+          "gitId": "rgabelarde"
+        },
+        "content": "**Flip** | `flip`"
+      },
+      {
+        "lineNumber": 247,
+        "author": {
+          "gitId": "rgabelarde"
+        },
+        "content": "**Search** | `search [k/KEYWORD]` \u003cbr\u003e e.g., `search k/Data`"
+      },
+      {
+        "lineNumber": 248,
+        "author": {
+          "gitId": "rgabelarde"
+        },
+        "content": "**Sort** | `sort r/REQUIREMENT` \u003cbr\u003e e.g., `search r/tag`"
+      },
+      {
+        "lineNumber": 249,
+        "author": {
+          "gitId": "-"
+        },
+        "content": "**Help** | `help`"
+      },
+      {
+        "lineNumber": 250,
         "author": {
           "gitId": "rgabelarde"
         },
@@ -6180,12 +6404,12 @@
       }
     ],
     "authorContributionMap": {
-      "ysr25": 41,
-      "rgabelarde": 53,
-      "jacetjy": 19,
-      "yuki-cell": 1,
-      "-": 99,
-      "liuyxxy": 27
+      "ysr25": 39,
+      "rgabelarde": 52,
+      "jacetjy": 20,
+      "yuki-cell": 13,
+      "-": 101,
+      "liuyxxy": 25
     }
   },
   {
@@ -8847,6 +9071,498 @@
     "authorContributionMap": {
       "ysr25": 24,
       "-": 33
+    }
+  },
+  {
+    "path": "docs/diagrams/SearchSequenceDiagram.puml",
+    "fileType": "docs",
+    "lines": [
+      {
+        "lineNumber": 1,
+        "author": {
+          "gitId": "yuki-cell"
+        },
+        "content": "@startuml"
+      },
+      {
+        "lineNumber": 2,
+        "author": {
+          "gitId": "yuki-cell"
+        },
+        "content": "!include style.puml"
+      },
+      {
+        "lineNumber": 3,
+        "author": {
+          "gitId": "yuki-cell"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 4,
+        "author": {
+          "gitId": "yuki-cell"
+        },
+        "content": "box Logic LOGIC_COLOR_T1"
+      },
+      {
+        "lineNumber": 5,
+        "author": {
+          "gitId": "yuki-cell"
+        },
+        "content": "participant \":LogicManager\" as LogicManager LOGIC_COLOR"
+      },
+      {
+        "lineNumber": 6,
+        "author": {
+          "gitId": "yuki-cell"
+        },
+        "content": "participant \":BagelParser\" as BagelParser LOGIC_COLOR"
+      },
+      {
+        "lineNumber": 7,
+        "author": {
+          "gitId": "yuki-cell"
+        },
+        "content": "participant \":SearchCommandParser\" as SearchCommandParser LOGIC_COLOR"
+      },
+      {
+        "lineNumber": 8,
+        "author": {
+          "gitId": "yuki-cell"
+        },
+        "content": "participant \"sc:SearchCommand\" as SearchCommand LOGIC_COLOR"
+      },
+      {
+        "lineNumber": 9,
+        "author": {
+          "gitId": "yuki-cell"
+        },
+        "content": "participant \":CommandResult\" as CommandResult LOGIC_COLOR"
+      },
+      {
+        "lineNumber": 10,
+        "author": {
+          "gitId": "yuki-cell"
+        },
+        "content": "end box"
+      },
+      {
+        "lineNumber": 11,
+        "author": {
+          "gitId": "yuki-cell"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 12,
+        "author": {
+          "gitId": "yuki-cell"
+        },
+        "content": "box Model MODEL_COLOR_T1"
+      },
+      {
+        "lineNumber": 13,
+        "author": {
+          "gitId": "yuki-cell"
+        },
+        "content": "participant \":Model\" as Model MODEL_COLOR"
+      },
+      {
+        "lineNumber": 14,
+        "author": {
+          "gitId": "yuki-cell"
+        },
+        "content": "end box"
+      },
+      {
+        "lineNumber": 15,
+        "author": {
+          "gitId": "yuki-cell"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 16,
+        "author": {
+          "gitId": "yuki-cell"
+        },
+        "content": "[-\u003e LogicManager : execute(\"search k/apple\")"
+      },
+      {
+        "lineNumber": 17,
+        "author": {
+          "gitId": "yuki-cell"
+        },
+        "content": "activate LogicManager"
+      },
+      {
+        "lineNumber": 18,
+        "author": {
+          "gitId": "yuki-cell"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 19,
+        "author": {
+          "gitId": "yuki-cell"
+        },
+        "content": "LogicManager -\u003e BagelParser : parseCommand(\"search k/apple\")"
+      },
+      {
+        "lineNumber": 20,
+        "author": {
+          "gitId": "yuki-cell"
+        },
+        "content": "activate BagelParser"
+      },
+      {
+        "lineNumber": 21,
+        "author": {
+          "gitId": "yuki-cell"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 22,
+        "author": {
+          "gitId": "yuki-cell"
+        },
+        "content": "create SearchCommandParser"
+      },
+      {
+        "lineNumber": 23,
+        "author": {
+          "gitId": "yuki-cell"
+        },
+        "content": "BagelParser -\u003e SearchCommandParser"
+      },
+      {
+        "lineNumber": 24,
+        "author": {
+          "gitId": "yuki-cell"
+        },
+        "content": "activate SearchCommandParser"
+      },
+      {
+        "lineNumber": 25,
+        "author": {
+          "gitId": "yuki-cell"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 26,
+        "author": {
+          "gitId": "yuki-cell"
+        },
+        "content": "SearchCommandParser --\u003e BagelParser"
+      },
+      {
+        "lineNumber": 27,
+        "author": {
+          "gitId": "yuki-cell"
+        },
+        "content": "deactivate SearchCommandParser"
+      },
+      {
+        "lineNumber": 28,
+        "author": {
+          "gitId": "yuki-cell"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 29,
+        "author": {
+          "gitId": "yuki-cell"
+        },
+        "content": "BagelParser -\u003e SearchCommandParser : parse(\"k/keyword\")"
+      },
+      {
+        "lineNumber": 30,
+        "author": {
+          "gitId": "yuki-cell"
+        },
+        "content": "activate SearchCommandParser"
+      },
+      {
+        "lineNumber": 31,
+        "author": {
+          "gitId": "yuki-cell"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 32,
+        "author": {
+          "gitId": "yuki-cell"
+        },
+        "content": "create SearchCommand"
+      },
+      {
+        "lineNumber": 33,
+        "author": {
+          "gitId": "yuki-cell"
+        },
+        "content": "SearchCommandParser -\u003e SearchCommand"
+      },
+      {
+        "lineNumber": 34,
+        "author": {
+          "gitId": "yuki-cell"
+        },
+        "content": "activate SearchCommand"
+      },
+      {
+        "lineNumber": 35,
+        "author": {
+          "gitId": "yuki-cell"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 36,
+        "author": {
+          "gitId": "yuki-cell"
+        },
+        "content": "SearchCommand --\u003e SearchCommandParser : sc"
+      },
+      {
+        "lineNumber": 37,
+        "author": {
+          "gitId": "yuki-cell"
+        },
+        "content": "deactivate SearchCommand"
+      },
+      {
+        "lineNumber": 38,
+        "author": {
+          "gitId": "yuki-cell"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 39,
+        "author": {
+          "gitId": "yuki-cell"
+        },
+        "content": "SearchCommandParser --\u003e BagelParser : sc"
+      },
+      {
+        "lineNumber": 40,
+        "author": {
+          "gitId": "yuki-cell"
+        },
+        "content": "deactivate SearchCommandParser"
+      },
+      {
+        "lineNumber": 41,
+        "author": {
+          "gitId": "yuki-cell"
+        },
+        "content": "\u0027Hidden arrow to position the destroy marker below the end of the activation bar."
+      },
+      {
+        "lineNumber": 42,
+        "author": {
+          "gitId": "yuki-cell"
+        },
+        "content": "SearchCommandParser -[hidden]-\u003e BagelParser"
+      },
+      {
+        "lineNumber": 43,
+        "author": {
+          "gitId": "yuki-cell"
+        },
+        "content": "destroy SearchCommandParser"
+      },
+      {
+        "lineNumber": 44,
+        "author": {
+          "gitId": "yuki-cell"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 45,
+        "author": {
+          "gitId": "yuki-cell"
+        },
+        "content": "BagelParser --\u003e LogicManager : sc"
+      },
+      {
+        "lineNumber": 46,
+        "author": {
+          "gitId": "yuki-cell"
+        },
+        "content": "deactivate BagelParser"
+      },
+      {
+        "lineNumber": 47,
+        "author": {
+          "gitId": "yuki-cell"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 48,
+        "author": {
+          "gitId": "yuki-cell"
+        },
+        "content": "LogicManager -\u003e SearchCommand : execute()"
+      },
+      {
+        "lineNumber": 49,
+        "author": {
+          "gitId": "yuki-cell"
+        },
+        "content": "activate SearchCommand"
+      },
+      {
+        "lineNumber": 50,
+        "author": {
+          "gitId": "yuki-cell"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 51,
+        "author": {
+          "gitId": "yuki-cell"
+        },
+        "content": "SearchCommand -\u003e Model : updateFilteredFlashcardList(searchFlashcard);"
+      },
+      {
+        "lineNumber": 52,
+        "author": {
+          "gitId": "yuki-cell"
+        },
+        "content": "activate Model"
+      },
+      {
+        "lineNumber": 53,
+        "author": {
+          "gitId": "yuki-cell"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 54,
+        "author": {
+          "gitId": "yuki-cell"
+        },
+        "content": "Model --\u003e SearchCommand"
+      },
+      {
+        "lineNumber": 55,
+        "author": {
+          "gitId": "yuki-cell"
+        },
+        "content": "deactivate Model"
+      },
+      {
+        "lineNumber": 56,
+        "author": {
+          "gitId": "yuki-cell"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 57,
+        "author": {
+          "gitId": "yuki-cell"
+        },
+        "content": "create CommandResult"
+      },
+      {
+        "lineNumber": 58,
+        "author": {
+          "gitId": "yuki-cell"
+        },
+        "content": "SearchCommand -\u003e CommandResult"
+      },
+      {
+        "lineNumber": 59,
+        "author": {
+          "gitId": "yuki-cell"
+        },
+        "content": "activate CommandResult"
+      },
+      {
+        "lineNumber": 60,
+        "author": {
+          "gitId": "yuki-cell"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 61,
+        "author": {
+          "gitId": "yuki-cell"
+        },
+        "content": "CommandResult --\u003e SearchCommand"
+      },
+      {
+        "lineNumber": 62,
+        "author": {
+          "gitId": "yuki-cell"
+        },
+        "content": "deactivate CommandResult"
+      },
+      {
+        "lineNumber": 63,
+        "author": {
+          "gitId": "yuki-cell"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 64,
+        "author": {
+          "gitId": "yuki-cell"
+        },
+        "content": "SearchCommand --\u003e LogicManager : result"
+      },
+      {
+        "lineNumber": 65,
+        "author": {
+          "gitId": "yuki-cell"
+        },
+        "content": "deactivate SearchCommand"
+      },
+      {
+        "lineNumber": 66,
+        "author": {
+          "gitId": "yuki-cell"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 67,
+        "author": {
+          "gitId": "yuki-cell"
+        },
+        "content": "[\u003c--LogicManager"
+      },
+      {
+        "lineNumber": 68,
+        "author": {
+          "gitId": "yuki-cell"
+        },
+        "content": "deactivate LogicManager"
+      },
+      {
+        "lineNumber": 69,
+        "author": {
+          "gitId": "yuki-cell"
+        },
+        "content": "@enduml"
+      }
+    ],
+    "authorContributionMap": {
+      "yuki-cell": 69
     }
   },
   {
@@ -29130,122 +29846,192 @@
         "author": {
           "gitId": "yuki-cell"
         },
-        "content": "        // find the index of flashcard currently shown"
+        "content": "        // find index of flashcard displaying next"
       },
       {
         "lineNumber": 31,
         "author": {
-          "gitId": "ysr25"
+          "gitId": "yuki-cell"
         },
-        "content": "        currentIndex \u003d flashcards.indexOf(filteredFlashcards.get(0));"
+        "content": "        if (flashcards.size() \u003d\u003d 0) {"
       },
       {
         "lineNumber": 32,
         "author": {
           "gitId": "yuki-cell"
         },
-        "content": "        // find index of next flashcard"
+        "content": "            // empty flashcard"
       },
       {
         "lineNumber": 33,
-        "author": {
-          "gitId": "yuki-cell"
-        },
-        "content": "        if (filteredFlashcards.size() !\u003d 1) {"
-      },
-      {
-        "lineNumber": 34,
-        "author": {
-          "gitId": "ysr25"
-        },
-        "content": "            nextIndex \u003d currentIndex;"
-      },
-      {
-        "lineNumber": 35,
-        "author": {
-          "gitId": "ysr25"
-        },
-        "content": "        } else if ((flashcards.size() - 1) \u003c\u003d currentIndex) {"
-      },
-      {
-        "lineNumber": 36,
         "author": {
           "gitId": "ysr25"
         },
         "content": "            nextIndex \u003d 0;"
       },
       {
+        "lineNumber": 34,
+        "author": {
+          "gitId": "yuki-cell"
+        },
+        "content": "        } else if (filteredFlashcards.size() \u003d\u003d 0) {"
+      },
+      {
+        "lineNumber": 35,
+        "author": {
+          "gitId": "yuki-cell"
+        },
+        "content": "            // flashcard is deleted"
+      },
+      {
+        "lineNumber": 36,
+        "author": {
+          "gitId": "yuki-cell"
+        },
+        "content": "            nextIndex \u003d currentIndex;"
+      },
+      {
         "lineNumber": 37,
         "author": {
           "gitId": "yuki-cell"
         },
-        "content": "        } else {"
+        "content": "        } else if (filteredFlashcards.size() \u003e 1) {"
       },
       {
         "lineNumber": 38,
         "author": {
-          "gitId": "ysr25"
+          "gitId": "yuki-cell"
         },
-        "content": "            nextIndex \u003d currentIndex + 1;"
+        "content": "            // multiple flashcards are visible, show top flashcard"
       },
       {
         "lineNumber": 39,
         "author": {
           "gitId": "yuki-cell"
         },
-        "content": "        }"
+        "content": "            nextIndex \u003d flashcards.indexOf(filteredFlashcards.get(0));"
       },
       {
         "lineNumber": 40,
         "author": {
           "gitId": "yuki-cell"
         },
-        "content": ""
+        "content": "        } else if (filteredFlashcards.size() \u003d\u003d 1) {"
       },
       {
         "lineNumber": 41,
         "author": {
-          "gitId": "ysr25"
+          "gitId": "yuki-cell"
         },
-        "content": "        Predicate\u003cFlashcard\u003e nextFlashcard \u003d flashcard -\u003e flashcards.indexOf(flashcard) \u003d\u003d nextIndex;"
+        "content": "            // single flashcard is visible"
       },
       {
         "lineNumber": 42,
         "author": {
-          "gitId": "ysr25"
+          "gitId": "yuki-cell"
         },
-        "content": "        model.updateFilteredFlashcardList(nextFlashcard);"
+        "content": "            currentIndex \u003d flashcards.indexOf(filteredFlashcards.get(0));"
       },
       {
         "lineNumber": 43,
         "author": {
-          "gitId": "yuki-cell"
+          "gitId": "ysr25"
         },
-        "content": ""
+        "content": "            nextIndex \u003d currentIndex + 1;"
       },
       {
         "lineNumber": 44,
         "author": {
           "gitId": "yuki-cell"
         },
-        "content": "        return new CommandResult(MESSAGE_SUCCESS);"
+        "content": "        }"
       },
       {
         "lineNumber": 45,
         "author": {
           "gitId": "yuki-cell"
         },
-        "content": "    }"
+        "content": ""
       },
       {
         "lineNumber": 46,
         "author": {
           "gitId": "yuki-cell"
         },
-        "content": ""
+        "content": "        // go back to start of list when reached end"
       },
       {
         "lineNumber": 47,
+        "author": {
+          "gitId": "yuki-cell"
+        },
+        "content": "        if ((flashcards.size() - 1) \u003c\u003d currentIndex) {"
+      },
+      {
+        "lineNumber": 48,
+        "author": {
+          "gitId": "yuki-cell"
+        },
+        "content": "            nextIndex \u003d 0;"
+      },
+      {
+        "lineNumber": 49,
+        "author": {
+          "gitId": "yuki-cell"
+        },
+        "content": "        }"
+      },
+      {
+        "lineNumber": 50,
+        "author": {
+          "gitId": "yuki-cell"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 51,
+        "author": {
+          "gitId": "ysr25"
+        },
+        "content": "        Predicate\u003cFlashcard\u003e nextFlashcard \u003d flashcard -\u003e flashcards.indexOf(flashcard) \u003d\u003d nextIndex;"
+      },
+      {
+        "lineNumber": 52,
+        "author": {
+          "gitId": "ysr25"
+        },
+        "content": "        model.updateFilteredFlashcardList(nextFlashcard);"
+      },
+      {
+        "lineNumber": 53,
+        "author": {
+          "gitId": "yuki-cell"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 54,
+        "author": {
+          "gitId": "yuki-cell"
+        },
+        "content": "        return new CommandResult(MESSAGE_SUCCESS);"
+      },
+      {
+        "lineNumber": 55,
+        "author": {
+          "gitId": "yuki-cell"
+        },
+        "content": "    }"
+      },
+      {
+        "lineNumber": 56,
+        "author": {
+          "gitId": "yuki-cell"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 57,
         "author": {
           "gitId": "yuki-cell"
         },
@@ -29253,9 +30039,9 @@
       }
     ],
     "authorContributionMap": {
-      "ysr25": 10,
+      "ysr25": 7,
       "rgabelarde": 4,
-      "yuki-cell": 31,
+      "yuki-cell": 44,
       "jacetjy": 1,
       "liuyxxy": 1
     }
@@ -29898,7 +30684,7 @@
       {
         "lineNumber": 13,
         "author": {
-          "gitId": "jacetjy"
+          "gitId": "yuki-cell"
         },
         "content": "import seedu.bagel.model.tag.Tag;"
       },
@@ -30061,171 +30847,374 @@
         "author": {
           "gitId": "yuki-cell"
         },
-        "content": "    @Override"
+        "content": "    private boolean has_matching_tag(Flashcard flashcard, String keyword) {"
       },
       {
         "lineNumber": 37,
         "author": {
-          "gitId": "jacetjy"
+          "gitId": "yuki-cell"
         },
-        "content": "    public CommandResult execute(Model model) {"
+        "content": "        boolean is_find \u003d false;"
       },
       {
         "lineNumber": 38,
         "author": {
           "gitId": "yuki-cell"
         },
-        "content": "        requireNonNull(model);"
+        "content": "        for (Tag tag : flashcard.getTags()) {"
       },
       {
         "lineNumber": 39,
         "author": {
-          "gitId": "ysr25"
+          "gitId": "yuki-cell"
         },
-        "content": "        assert true; // required for week 10 tP"
+        "content": "            if (tag.tagName.toLowerCase().contains(keyword.toLowerCase())) {"
       },
       {
         "lineNumber": 40,
         "author": {
           "gitId": "yuki-cell"
         },
-        "content": "        Logger logger \u003d Logger.getLogger(\"logger\"); // required for week 10 tP"
+        "content": "                is_find \u003d true;"
       },
       {
         "lineNumber": 41,
         "author": {
           "gitId": "yuki-cell"
         },
-        "content": "        logger.log(Level.INFO, \"log test\"); // required for week 10 tP"
+        "content": "                break;"
       },
       {
         "lineNumber": 42,
         "author": {
-          "gitId": "jacetjy"
+          "gitId": "yuki-cell"
         },
-        "content": ""
+        "content": "            }"
       },
       {
         "lineNumber": 43,
         "author": {
-          "gitId": "jacetjy"
+          "gitId": "yuki-cell"
         },
-        "content": "        Predicate\u003cFlashcard\u003e searchFlashcard \u003d flashcard -\u003e"
+        "content": "        }"
       },
       {
         "lineNumber": 44,
         "author": {
-          "gitId": "jacetjy"
+          "gitId": "yuki-cell"
         },
-        "content": "                flashcard.getDescription().toString().toLowerCase().contains(keyword.toLowerCase())"
+        "content": "        return is_find;"
       },
       {
         "lineNumber": 45,
         "author": {
-          "gitId": "jacetjy"
+          "gitId": "yuki-cell"
         },
-        "content": "                || flashcard.getTitle().toString().toLowerCase().contains(keyword.toLowerCase())"
+        "content": "    }"
       },
       {
         "lineNumber": 46,
         "author": {
-          "gitId": "jacetjy"
+          "gitId": "yuki-cell"
         },
-        "content": "                || searchFlashcardTags(flashcard.getTags());"
+        "content": ""
       },
       {
         "lineNumber": 47,
         "author": {
           "gitId": "yuki-cell"
         },
-        "content": "        model.updateFilteredFlashcardList(searchFlashcard);"
+        "content": "    private boolean has_matching_title(Flashcard flashcard, String keyword) {"
       },
       {
         "lineNumber": 48,
         "author": {
           "gitId": "yuki-cell"
         },
-        "content": ""
+        "content": "        String title \u003d flashcard.getTitle().fullTitle.toLowerCase();"
       },
       {
         "lineNumber": 49,
         "author": {
           "gitId": "yuki-cell"
         },
-        "content": "        return new CommandResult(String.format(MESSAGE_SEARCH_FLASHCARD_SUCCESS, keyword));"
+        "content": "        if (title.contains(keyword.toLowerCase())) {"
       },
       {
         "lineNumber": 50,
         "author": {
           "gitId": "yuki-cell"
         },
-        "content": "    }"
+        "content": "            return true;"
       },
       {
         "lineNumber": 51,
         "author": {
           "gitId": "yuki-cell"
         },
-        "content": ""
+        "content": "        } else {"
       },
       {
         "lineNumber": 52,
+        "author": {
+          "gitId": "yuki-cell"
+        },
+        "content": "            return false;"
+      },
+      {
+        "lineNumber": 53,
+        "author": {
+          "gitId": "yuki-cell"
+        },
+        "content": "        }"
+      },
+      {
+        "lineNumber": 54,
+        "author": {
+          "gitId": "yuki-cell"
+        },
+        "content": "    }"
+      },
+      {
+        "lineNumber": 55,
+        "author": {
+          "gitId": "yuki-cell"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 56,
+        "author": {
+          "gitId": "yuki-cell"
+        },
+        "content": "    private boolean has_matching_description(Flashcard flashcard, String keyword) {"
+      },
+      {
+        "lineNumber": 57,
+        "author": {
+          "gitId": "yuki-cell"
+        },
+        "content": "        String description \u003d flashcard.getDescription().value.toLowerCase();"
+      },
+      {
+        "lineNumber": 58,
+        "author": {
+          "gitId": "yuki-cell"
+        },
+        "content": "        if (description.contains(keyword.toLowerCase())) {"
+      },
+      {
+        "lineNumber": 59,
+        "author": {
+          "gitId": "yuki-cell"
+        },
+        "content": "            return true;"
+      },
+      {
+        "lineNumber": 60,
+        "author": {
+          "gitId": "yuki-cell"
+        },
+        "content": "        } else {"
+      },
+      {
+        "lineNumber": 61,
+        "author": {
+          "gitId": "yuki-cell"
+        },
+        "content": "            return false;"
+      },
+      {
+        "lineNumber": 62,
+        "author": {
+          "gitId": "yuki-cell"
+        },
+        "content": "        }"
+      },
+      {
+        "lineNumber": 63,
+        "author": {
+          "gitId": "yuki-cell"
+        },
+        "content": "    }"
+      },
+      {
+        "lineNumber": 64,
+        "author": {
+          "gitId": "yuki-cell"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 65,
+        "author": {
+          "gitId": "yuki-cell"
+        },
+        "content": "    @Override"
+      },
+      {
+        "lineNumber": 66,
+        "author": {
+          "gitId": "jacetjy"
+        },
+        "content": "    public CommandResult execute(Model model) {"
+      },
+      {
+        "lineNumber": 67,
+        "author": {
+          "gitId": "yuki-cell"
+        },
+        "content": "        requireNonNull(model);"
+      },
+      {
+        "lineNumber": 68,
+        "author": {
+          "gitId": "ysr25"
+        },
+        "content": "        assert true; // required for week 10 tP"
+      },
+      {
+        "lineNumber": 69,
+        "author": {
+          "gitId": "yuki-cell"
+        },
+        "content": "        Logger logger \u003d Logger.getLogger(\"logger\"); // required for week 10 tP"
+      },
+      {
+        "lineNumber": 70,
+        "author": {
+          "gitId": "yuki-cell"
+        },
+        "content": "        logger.log(Level.INFO, \"log test\"); // required for week 10 tP"
+      },
+      {
+        "lineNumber": 71,
+        "author": {
+          "gitId": "yuki-cell"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 72,
+        "author": {
+          "gitId": "yuki-cell"
+        },
+        "content": "        // search flaschard that have matching title, description or tag"
+      },
+      {
+        "lineNumber": 73,
+        "author": {
+          "gitId": "yuki-cell"
+        },
+        "content": "        Predicate\u003cFlashcard\u003e searchFlashcard \u003d flashcard -\u003e has_matching_title(flashcard, keyword)"
+      },
+      {
+        "lineNumber": 74,
+        "author": {
+          "gitId": "yuki-cell"
+        },
+        "content": "                || has_matching_description(flashcard, keyword)"
+      },
+      {
+        "lineNumber": 75,
+        "author": {
+          "gitId": "yuki-cell"
+        },
+        "content": "                || has_matching_tag(flashcard, keyword);"
+      },
+      {
+        "lineNumber": 76,
+        "author": {
+          "gitId": "yuki-cell"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 77,
+        "author": {
+          "gitId": "yuki-cell"
+        },
+        "content": "        model.updateFilteredFlashcardList(searchFlashcard);"
+      },
+      {
+        "lineNumber": 78,
+        "author": {
+          "gitId": "yuki-cell"
+        },
+        "content": "        return new CommandResult(String.format(MESSAGE_SEARCH_FLASHCARD_SUCCESS, keyword));"
+      },
+      {
+        "lineNumber": 79,
+        "author": {
+          "gitId": "yuki-cell"
+        },
+        "content": "    }"
+      },
+      {
+        "lineNumber": 80,
+        "author": {
+          "gitId": "yuki-cell"
+        },
+        "content": ""
+      },
+      {
+        "lineNumber": 81,
         "author": {
           "gitId": "jacetjy"
         },
         "content": "    private boolean searchFlashcardTags(Set\u003cTag\u003e tags) {"
       },
       {
-        "lineNumber": 53,
+        "lineNumber": 82,
         "author": {
           "gitId": "jacetjy"
         },
         "content": "        for (Tag tag : tags) {"
       },
       {
-        "lineNumber": 54,
+        "lineNumber": 83,
         "author": {
           "gitId": "jacetjy"
         },
         "content": "            if (tag.getTagName().toLowerCase().contains(keyword.toLowerCase())) {"
       },
       {
-        "lineNumber": 55,
+        "lineNumber": 84,
         "author": {
           "gitId": "jacetjy"
         },
         "content": "                return true;"
       },
       {
-        "lineNumber": 56,
+        "lineNumber": 85,
         "author": {
           "gitId": "jacetjy"
         },
         "content": "            }"
       },
       {
-        "lineNumber": 57,
+        "lineNumber": 86,
         "author": {
           "gitId": "jacetjy"
         },
         "content": "        }"
       },
       {
-        "lineNumber": 58,
+        "lineNumber": 87,
         "author": {
           "gitId": "jacetjy"
         },
         "content": "        return false;"
       },
       {
-        "lineNumber": 59,
+        "lineNumber": 88,
         "author": {
           "gitId": "jacetjy"
         },
         "content": "    }"
       },
       {
-        "lineNumber": 60,
+        "lineNumber": 89,
         "author": {
           "gitId": "yuki-cell"
         },
@@ -30235,8 +31224,8 @@
     "authorContributionMap": {
       "ysr25": 3,
       "rgabelarde": 4,
-      "yuki-cell": 36,
-      "jacetjy": 17
+      "yuki-cell": 71,
+      "jacetjy": 11
     }
   },
   {
