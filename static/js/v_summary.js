@@ -63,8 +63,8 @@ window.vSummary = {
 
       this.$store.commit('updateIsLoadingOverlayEnabled', true);
       setTimeout(() => {
-         this.getFilteredRepos();
-         this.getMergedGroup();
+        this.getFilteredRepos();
+        this.getMergedGroup(allGroupsMerged);
       });
     },
 
@@ -316,8 +316,8 @@ window.vSummary = {
       this.$store.commit('updateIsLoadingOverlayEnabled', true);
       // Use setTimeout() to force this.filtered to update only after loading screen is displayed.
       setTimeout(() => {
-         this.getFilteredRepos();
-         this.getMergedRepos();
+        this.getFilteredRepos();
+        this.getMergedRepos();
       });
     },
 
@@ -361,7 +361,7 @@ window.vSummary = {
       this.filtered = this.sortFiltered(this.filtered, filterControl);
     },
 
-    getMergedGroup() {
+    getMergedGroup(allGroupsMerged) {
       // merge group is not allowed when group by none
       // also reset merged groups
       if (this.filterGroupSelection === 'groupByNone' || !allGroupsMerged) {
