@@ -9,6 +9,7 @@ const filesSortDict = {
 
 const repoCache = [];
 const minimatch = require('minimatch');
+const renderAuthorshipMessage = "Rendering Code Panel, Please wait ...";
 
 window.vAuthorship = {
   props: ['info'],
@@ -314,7 +315,8 @@ window.vAuthorship = {
     },
 
     updateSelectedFiles() {
-      this.$store.commit('updateIsLoadingOverlayEnabled', true);
+      this.$store.commit('incrementLoadingOverlayCount', 1);
+      this.$store.commit('updateLoadingOverlayMessage', renderAuthorshipMessage);
       const selectedFiles = this.files.filter(
           (file) => this.selectedFileTypes.includes(file.fileType)
           && minimatch(file.path, this.searchBarValue || '*', { matchBase: true, dot: true }),
@@ -322,6 +324,7 @@ window.vAuthorship = {
           .sort(this.sortingFunction);
       setTimeout(() => {
         this.selectedFiles = selectedFiles;
+        this.$store.commit('incrementLoadingOverlayCount', -1);
       });
     },
 
@@ -407,10 +410,6 @@ window.vAuthorship = {
 
   beforeDestroy() {
     this.removeAuthorshipHashes();
-  },
-
-  updated() {
-    this.$store.commit('updateIsLoadingOverlayEnabled', false);
   },
 
   components: {
