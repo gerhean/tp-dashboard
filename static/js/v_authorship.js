@@ -33,15 +33,21 @@ window.vAuthorship = {
     filesSortType() {
       window.addHash('authorshipSortBy', this.filesSortType);
       window.encodeHash();
+      this.updateSelectedFiles();
     },
 
-    selectedFilesWatchable() {
+    searchBarValue() {
+      this.updateSelectedFiles();
+    },
+
+    selectedFileTypes() {
       this.updateSelectedFiles();
     },
 
     toReverseSortFiles() {
       window.addHash('reverseAuthorshipOrder', this.toReverseSortFiles);
       window.encodeHash();
+      this.updateSelectedFiles();
     },
 
     isLoaded() {
@@ -348,14 +354,6 @@ window.vAuthorship = {
   },
 
   computed: {
-    selectedFilesWatchable() {
-      this.filesSortType;
-      this.searchBarValue;
-      this.selectedFileTypes;
-      this.toReverseSortFiles;
-      return Date.now();
-    },
-
     sortingFunction() {
       return (a, b) => (this.toReverseSortFiles ? -1 : 1)
         * window.comparator(filesSortDict[this.filesSortType])(a, b);
