@@ -163,6 +163,13 @@ module.exports = __webpack_require__("56d7");
 
 /***/ }),
 
+/***/ 1:
+/***/ (function(module, exports) {
+
+/* (ignored) */
+
+/***/ }),
+
 /***/ "151c":
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -2252,14 +2259,18 @@ var es_regexp_to_string = __webpack_require__("25f0");
 // EXTERNAL MODULE: ./node_modules/core-js/modules/es.string.pad-start.js
 var es_string_pad_start = __webpack_require__("4d90");
 
+// EXTERNAL MODULE: ./node_modules/seedrandom/index.js
+var seedrandom = __webpack_require__("6125");
+var seedrandom_default = /*#__PURE__*/__webpack_require__.n(seedrandom);
+
 // CONCATENATED MODULE: ./src/utils/ramp-colour-generator.js
 
 
 
 
 
-// eslint-disable-next-line new-cap
-var randomGenerator = new Math.seedrandom('Seeded Random Generator');
+
+var randomGenerator = seedrandom_default()('Seeded Random Generator');
 
 function getRandomHex() {
   var maxHexColorValue = 16777214; // excludes #000000 and #FFFFFF as they are reserved
@@ -5107,4 +5118,4 @@ main_app.directive('hljs', {
 /***/ })
 
 /******/ });
-//# sourceMappingURL=app.83067c25.js.map
+//# sourceMappingURL=app.3428a036.js.map
